@@ -1,6 +1,9 @@
 {
   "navigationBarTitleText": "订单改价",
   "usingComponents": {
-    "bood-block": "/pagesBill/components/PriceBlock--Good"
+    "bood-block": "/pagesBill/components/PriceBlock--Good",
+    "info-block": "/pagesBill/components/PriceBlock--Info",
+    "block-input": "/pagesBill/components/PriceBlock--Input",
+    "page-foot": "/pagesBill/components/priceBlock--Foot"
   }
 }

@@ -11,7 +11,9 @@
       "root": "pagesBill",
       "pages": [
         "pages/index",
-        "pages/changePrice"
+        "pages/changePrice",
+        "pages/billProvide",
+        "pages/billAddition"
       ]
     },
     {

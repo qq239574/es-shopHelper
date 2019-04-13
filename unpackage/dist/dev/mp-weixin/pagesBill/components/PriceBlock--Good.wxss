@@ -1,10 +1,11 @@
 .card--good.data-v-4e64c3ae {
-  width: 670rpx;
+  width: 100%;
   margin: auto;
   padding: 5rpx 0 15rpx;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
+  background: #fcfcfc;
 }
 .card--good .card--good-item.data-v-4e64c3ae {
     width: 100%;

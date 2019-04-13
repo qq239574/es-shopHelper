@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "cell-block": "/pagesBill/components/BillDetailCell"
+  },
+  "component": true
+}
