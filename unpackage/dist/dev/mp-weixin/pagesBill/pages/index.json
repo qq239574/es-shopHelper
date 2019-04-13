@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "订单详情",
+  "usingComponents": {
+    "block1": "/pagesBill/components/BillBlock1",
+    "block2": "/pagesBill/components/BillBlock2",
+    "block3": "/pagesBill/components/BillBlock3",
+    "block4": "/pagesBill/components/BillBlock4",
+    "good-block": "/pages/bill/index/Card--Good",
+    "express-block": "/pagesBill/components/BillExpressInfo",
+    "my-button": "/components/my-components/RoundButton",
+    "my-rights-block": "/pagesBill/components/BillRightsBlock"
+  }
+}

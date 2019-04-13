@@ -1,0 +1,1 @@
+<view class="my-cell-block data-v-f7e218dc" bind:__l="__l"><view class="my-cell-block__pre my-cell-block__slot data-v-f7e218dc"><slot name="pre"></slot></view><view class="my-cell-block__mid my-cell-block__slot data-v-f7e218dc"><slot name="mid"></slot></view><view class="my-cell-block__aft my-cell-block__slot data-v-f7e218dc"><slot name="aft"></slot></view></view>

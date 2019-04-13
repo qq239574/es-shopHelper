@@ -1,0 +1,171 @@
+{
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			"navigationBarTitleText": "首页主包",
+			"usingComponents": {},
+			"enablePullDownRefresh": true
+		}
+	}, {
+		"path": "pages/login/index",
+		"style": {
+			"navigationBarTitleText": "登录",
+			"enablePullDownRefresh": false,
+			"usingComponents": {
+				"van-cell": "/wxcomponents/vant-weapp/cell/index",
+				"van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+				"van-icon": "/wxcomponents/vant-weapp/icon/index",
+				"van-field": "/wxcomponents/vant-weapp/field/index"
+			}
+		}
+	}, {
+		"path": "pages/bill/index",
+		"style": {
+			"navigationBarTitleText": "订单主包"
+		}
+	}, {
+		"path": "pages/self/index",
+		"style": {
+			"navigationBarTitleText": "我的主包"
+		}
+	}, {
+		"path": "pages/commodity/index",
+		"style": {
+			"navigationBarTitleText": "商品主包"
+		}
+	}],
+	"subPackages": [{
+		"root": "pagesBill",
+		"pages": [{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},{
+			"path": "pages/changePrice",
+			"style": {
+				"navigationBarTitleText": "订单改价"
+			}
+		}]
+	}, {
+		"root": "pagesCommodity",
+		"pages": [{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "商品分包"
+			}
+		}]
+	}, {
+		"root": "pagesIndex",
+		"pages": [{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "首页分包"
+			}
+		}]
+	}, {
+		"root": "pagesLogin",
+		"pages": [{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "登录分包"
+			}
+		},{
+			"path": "pages/telOrEmail",
+			"style": {
+				"navigationBarTitleText": "登录分包",
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+					"van-icon": "/wxcomponents/vant-weapp/icon/index",
+					"van-field": "/wxcomponents/vant-weapp/field/index"
+				}
+			}
+		},{
+			"path": "pages/questions",
+			"style": {
+				"navigationBarTitleText": "登录分包",
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+					"van-icon": "/wxcomponents/vant-weapp/icon/index",
+					"van-field": "/wxcomponents/vant-weapp/field/index",
+					"van-popup": "/wxcomponents/vant-weapp/popup/index"
+				}
+			}
+		},{
+			"path": "pages/setNew",
+			"style": {
+				"navigationBarTitleText": "登录分包",
+				"usingComponents": {
+					"van-cell": "/wxcomponents/vant-weapp/cell/index",
+					"van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+					"van-icon": "/wxcomponents/vant-weapp/icon/index",
+					"van-field": "/wxcomponents/vant-weapp/field/index"
+				}
+			}
+		}]
+	}, {
+		"root": "pagesTest",
+		"pages": [{
+			"path": "pages/test",
+			"style": {
+				"navigationBarTitleText": "测试用例"
+			}
+		}, {
+			"path": "pages/echarts",
+			"style": {
+				"navigationBarTitleText": "ECharts"
+			}
+		}]
+	}],
+	"tabBar": {
+		"color": "#7a7e83",
+		"selectedColor": "#0faeff",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"text": "首页",
+			"iconPath": "static/img/global/tmp.png",
+			"selectedIconPath": "static/img/global/tmpAct.png"
+		}, {
+			"pagePath": "pages/commodity/index",
+			"text": "商品",
+			"iconPath": "static/img/global/tmp.png",
+			"selectedIconPath": "static/img/global/tmpAct.png"
+		}, {
+			"pagePath": "pages/bill/index",
+			"text": "订单",
+			"iconPath": "static/img/global/tmp.png",
+			"selectedIconPath": "static/img/global/tmpAct.png"
+		}, {
+			"pagePath": "pages/self/index",
+			"text": "我的",
+			"iconPath": "static/img/global/tmp.png",
+			"selectedIconPath": "static/img/global/tmpAct.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarBackgroundColor": "#0faeff",
+		"backgroundColor": "#fbf9fe"
+	},
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "all",
+			"packages": ["pagesIndex", "pagesLogin"]
+		},
+		"pages/bill/index": {
+			"network": "all",
+			"packages": ["pagesBill"]
+		},
+		"pages/commodity/index": {
+			"network": "all",
+			"packages": ["pagesCommodity"]
+		},
+		"pages/login/index": {
+			"network": "all",
+			"packages": ["pagesLogin"]
+		}
+	}
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "登录",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "van-cell": "/wxcomponents/vant-weapp/cell/index",
+    "van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "van-field": "/wxcomponents/vant-weapp/field/index",
+    "long-button": "/components/my-components/LongButton"
+  }
+}

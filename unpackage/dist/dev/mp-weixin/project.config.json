@@ -1,0 +1,53 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "",
+	"appid": "wxea0039639afb8d4c",
+	"projectname": "MobileManager",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "bill",
+					"pathName": "pages/bill/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "changePrice",
+					"pathName": "pagesBill/pages/changePrice",
+					"scene": null
+				}
+			]
+		}
+	}
+}

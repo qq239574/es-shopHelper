@@ -1,0 +1,16 @@
+.my-popup .grace-scroll-y {
+  width: 750rpx;
+  height: 100%;
+  -webkit-transition: all 1.5s;
+  -o-transition: all 1.5s;
+  transition: all 1.5s;
+}
+.my-popup .grace-items {
+  height: 96rpx;
+  width: 704rpx;
+  margin: auto;
+  line-height: 96rpx;
+  border-bottom: 1rpx solid #eee;
+  padding: 0 15rpx;
+}
+

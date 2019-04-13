@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "订单主包",
+  "usingComponents": {
+    "tab-card": "/components/my-components/Tabs",
+    "card": "/pages/bill/index/Card",
+    "search-input": "/components/my-components/SearchInput"
+  }
+}

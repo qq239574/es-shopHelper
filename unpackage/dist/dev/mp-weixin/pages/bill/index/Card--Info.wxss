@@ -1,0 +1,77 @@
+.card--info.data-v-4649be90 {
+  width: 670rpx;
+  margin: auto;
+  border-top: 1rpx solid #eee;
+}
+.card--info .card--info__row.data-v-4649be90 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin-top: 18rpx;
+}
+.card--info .card--info__row view.data-v-4649be90 {
+      font-size: 24rpx;
+      color: #33373a;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+}
+.card--info .card--info__row .card--info__row__tile.data-v-4649be90 {
+      color: #6e7685;
+}
+.card--info .card--info__row .item1.data-v-4649be90 {
+      font-size: 24rpx;
+}
+.card--info .card--info__row .item2.data-v-4649be90 {
+      font-size: 24rpx;
+      line-height: 30rpx;
+      position: relative;
+}
+.card--info .card--info__row .item2 image.data-v-4649be90 {
+        position: absolute;
+        display: inline-block;
+        width: 30rpx;
+        height: 30rpx;
+        top: 4rpx;
+        right: 0;
+}
+.card--info .card--info__row .item2.pay-type.data-v-4649be90 {
+        padding-right: 32rpx;
+}
+.card--info .card--info__row .card--info__footer-item__price.data-v-4649be90 {
+      display: inline;
+      color: #fd6b3e;
+      font-weight: 700;
+      font-size: 34rpx;
+}
+.card--info .card--info__footer.data-v-4649be90 {
+    margin: 30rpx auto;
+}
+.card--info .button-group.data-v-4649be90 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    height: 91rpx;
+    width: 100%;
+}
+.card--info .button-group my-button.data-v-4649be90 {
+      margin: 0 0 0 20rpx;
+}
+

@@ -1,0 +1,25 @@
+.block {
+    width: 710upx;
+    box-sizing: border-box;
+    background: #fff;
+    margin: 0 auto 20upx;
+    border-radius: 8upx;
+    padding: 21upx 0; 
+
+    .bill__item {
+        color: #000;
+        font-weight: 600;
+        line-height: 35upx;
+    }
+
+    .body,
+    .foot {
+        padding: 2upx 0;
+        font-size: 24upx;
+        font-weight: 500;
+        color: #6e7685;
+    }
+    .label{
+        white-space: nowrap;
+    }
+}

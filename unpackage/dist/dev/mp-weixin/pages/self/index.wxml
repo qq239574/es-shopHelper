@@ -1,0 +1,1 @@
+<view class="pages-self-index _div data-v-04b29112" bind:__l="__l">self<button data-event-opts="{{[['tap',[['toTest',['$event']]]]]}}" bindtap="__e" class="data-v-04b29112">Test</button><button data-event-opts="{{[['tap',[['toEcharts',['$event']]]]]}}" bindtap="__e" class="data-v-04b29112">echarts</button></view>

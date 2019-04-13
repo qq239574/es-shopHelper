@@ -1,0 +1,111 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/index",
+    "pages/bill/index",
+    "pages/self/index",
+    "pages/commodity/index"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesBill",
+      "pages": [
+        "pages/index",
+        "pages/changePrice"
+      ]
+    },
+    {
+      "root": "pagesCommodity",
+      "pages": [
+        "pages/index"
+      ]
+    },
+    {
+      "root": "pagesIndex",
+      "pages": [
+        "pages/index"
+      ]
+    },
+    {
+      "root": "pagesLogin",
+      "pages": [
+        "pages/index",
+        "pages/telOrEmail",
+        "pages/questions",
+        "pages/setNew"
+      ]
+    },
+    {
+      "root": "pagesTest",
+      "pages": [
+        "pages/test",
+        "pages/echarts"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0faeff",
+    "backgroundColor": "#fbf9fe"
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#0faeff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/img/global/tmp.png",
+        "selectedIconPath": "static/img/global/tmpAct.png"
+      },
+      {
+        "pagePath": "pages/commodity/index",
+        "text": "商品",
+        "iconPath": "static/img/global/tmp.png",
+        "selectedIconPath": "static/img/global/tmpAct.png"
+      },
+      {
+        "pagePath": "pages/bill/index",
+        "text": "订单",
+        "iconPath": "static/img/global/tmp.png",
+        "selectedIconPath": "static/img/global/tmpAct.png"
+      },
+      {
+        "pagePath": "pages/self/index",
+        "text": "我的",
+        "iconPath": "static/img/global/tmp.png",
+        "selectedIconPath": "static/img/global/tmpAct.png"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "pagesIndex",
+        "pagesLogin"
+      ]
+    },
+    "pages/bill/index": {
+      "network": "all",
+      "packages": [
+        "pagesBill"
+      ]
+    },
+    "pages/commodity/index": {
+      "network": "all",
+      "packages": [
+        "pagesCommodity"
+      ]
+    },
+    "pages/login/index": {
+      "network": "all",
+      "packages": [
+        "pagesLogin"
+      ]
+    }
+  },
+  "permission": {},
+  "usingComponents": {}
+}

@@ -1,0 +1,1 @@
+<view class="my-popup" bind:__l="__l"><grace-mask-view show="{{show2}}" bgcolor="none" data-event-opts="{{[['^close',[['closeBanner2']]]]}}" bind:close="__e" vue-slots="{{['default']}}"><scroll-view class="{{['grace-scroll-y ',show2?'show':'']}}" scroll-y><slot></slot></scroll-view></grace-mask-view></view>

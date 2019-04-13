@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "登录分包",
+  "usingComponents": {
+    "van-cell": "/wxcomponents/vant-weapp/cell/index",
+    "van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "van-field": "/wxcomponents/vant-weapp/field/index",
+    "van-popup": "/wxcomponents/vant-weapp/popup/index",
+    "long-button": "/components/my-components/LongButton",
+    "pop-up": "/components/my-components/PopUp"
+  }
+}

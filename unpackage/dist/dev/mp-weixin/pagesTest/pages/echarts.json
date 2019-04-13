@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "ECharts",
+  "usingComponents": {
+    "mpvue-echarts": "/components/mpvue-echarts/src/echarts"
+  }
+}

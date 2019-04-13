@@ -1,0 +1,78 @@
+.pages-login-index {
+  background: #fff;
+}
+.pages-login-index .field-index--van-field {
+    padding-right: 0;
+}
+.pages-login-index .grace-center {
+    margin: 60rpx auto 16rpx;
+}
+.pages-login-index .grace-center .web-logo {
+      width: 138rpx;
+      height: 138rpx;
+      -webkit-box-shadow: 5rpx 10rpx 20rpx 0 rgba(252, 115, 61, 0.2);
+              box-shadow: 5rpx 10rpx 20rpx 0 rgba(252, 115, 61, 0.2);
+}
+.pages-login-index .item-border {
+    border-bottom: 1px solid #E0E0E0 !important;
+}
+.pages-login-index .tips {
+    width: 670rpx;
+    height: 64rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    background: #fff4f1;
+    margin: auto;
+    border-radius: 8rpx;
+    position: relative;
+    padding: 0 20rpx 0 64rpx;
+    line-height: 64rpx;
+    color: #fd463e;
+    font-size: 25rpx;
+}
+.pages-login-index .tips .tips__round {
+      position: absolute;
+      left: 25rpx;
+      top: 20rpx;
+      width: 25rpx;
+      height: 25rpx;
+}
+.pages-login-index .grace-form {
+    width: 670rpx;
+    margin: 22rpx auto 81rpx;
+}
+.pages-login-index .to-index {
+    margin: 81rpx auto 30rpx;
+}
+.pages-login-index .forget-pw {
+    width: 100%;
+    text-align: right;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    margin-top: 32rpx;
+}
+.pages-login-index .forget-pw view {
+      font-size: 26rpx;
+      color: #999ca7;
+      display: inline;
+      margin-right: 68rpx;
+}
+.pages-login-index .icon {
+    width: 29rpx;
+    height: 30rpx;
+    margin: 10rpx 24rpx 0 12rpx;
+}
+.pages-login-index .login-sendmsg-btn {
+    border: 1px solid #00C777 !important;
+    background: none !important;
+    color: #00C777 !important;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    margin-top: 6px;
+    font-size: 14px !important;
+}
+.pages-login-index .van-cell__right-icon {
+    margin-right: 22rpx;
+}
+

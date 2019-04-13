@@ -1,0 +1,88 @@
+.card--good.data-v-4e64c3ae {
+  width: 670rpx;
+  margin: auto;
+  padding: 5rpx 0 15rpx;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.card--good .card--good-item.data-v-4e64c3ae {
+    width: 100%;
+    height: 150rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.card--good .card--good-item .imgbox.data-v-4e64c3ae {
+      width: 120rpx;
+      height: 100%;
+}
+.card--good .card--good-item .imgbox image.data-v-4e64c3ae {
+        width: 100%;
+        height: 120rpx;
+        margin: 15rpx 0;
+}
+.card--good .card--good-item .good-info.data-v-4e64c3ae {
+      height: 100%;
+      width: 527rpx;
+      padding: 23rpx 0 0;
+}
+.card--good .card--good-item .good-info .good-name.data-v-4e64c3ae {
+        width: 100%;
+        font-size: 28rpx;
+        line-height: 36rpx;
+}
+.card--good .card--good-item .good-info .good-others.data-v-4e64c3ae {
+        width: 100%;
+        -webkit-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+                flex-wrap: nowrap;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        margin: 10rpx 0 0;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+}
+.card--good .card--good-item .good-info .good-others view.data-v-4e64c3ae {
+          font-size: 24rpx;
+          color: #6e7685;
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
+          line-height: 28rpx;
+}
+.card--good .card--good-item .good-info .good-others .color.data-v-4e64c3ae {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-flex-wrap: nowrap;
+              -ms-flex-wrap: nowrap;
+                  flex-wrap: nowrap;
+          width: -webkit-fit-content;
+          width: -moz-fit-content;
+          width: fit-content;
+}
+.card--good .card--good-item .good-info .good-others .color view.data-v-4e64c3ae {
+            margin: 0 8rpx 0 0;
+            line-height: 32rpx;
+}
+.card--good .card--good-item .good-info .good-others .price.data-v-4e64c3ae {
+          color: #000;
+          font-weight: 600;
+          font-size: 28rpx;
+          padding: 0 10rpx;
+}
+

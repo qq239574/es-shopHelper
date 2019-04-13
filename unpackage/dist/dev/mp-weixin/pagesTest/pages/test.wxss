@@ -1,0 +1,12 @@
+.test > .grace-list.data-v-9835b664 {
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.test > .grace-list > .items.data-v-9835b664 {
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    overflow: hidden;
+}
+

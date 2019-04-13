@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "测试用例",
+  "usingComponents": {
+    "my-button-group": "/components/my-components/ButtonGroup",
+    "my-cell-simple": "/components/my-components/CellSimple",
+    "my-cell-block": "/components/my-components/CellBlock",
+    "mu-long-button": "/components/my-components/LongButton",
+    "mu-round-button": "/components/my-components/RoundButton",
+    "my-data-shower": "/components/my-components/DataShower",
+    "grace-loading": "/graceUI/components/graceLoading"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "首页主包",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "long-button": "/components/my-components/LongButton"
+  }
+}
