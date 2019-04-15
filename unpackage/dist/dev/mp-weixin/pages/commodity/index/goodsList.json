@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "item": "/pages/commodity/index/goodsList--Item",
+    "pop-up": "/components/my-components/PopUp"
+  },
+  "component": true
+}

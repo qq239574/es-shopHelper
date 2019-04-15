@@ -1,4 +1,8 @@
 {
   "navigationBarTitleText": "订单发货",
-  "usingComponents": {}
+  "usingComponents": {
+    "provide-goods": "/pagesBill/components/ProvideBoods",
+    "provide-block": "/pagesBill/components/ProvideBlock",
+    "long-button": "/components/my-components/LongButton"
+  }
 }

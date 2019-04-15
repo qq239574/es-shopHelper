@@ -1,4 +1,8 @@
 {
   "navigationBarTitleText": "商品主包",
-  "usingComponents": {}
+  "usingComponents": {
+    "tab-card": "/components/my-components/Tabs",
+    "search-input": "/components/my-components/SearchInput",
+    "card": "/pages/commodity/index/goodsList"
+  }
 }

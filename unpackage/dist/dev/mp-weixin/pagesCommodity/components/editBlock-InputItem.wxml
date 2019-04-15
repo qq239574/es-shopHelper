@@ -1,0 +1,1 @@
+<view class="editGood-block-selectItem  data-v-b0184b50" bind:__l="__l"><view class="grace-items data-v-b0184b50"><view class="grace-label data-v-b0184b50">输入</view><input class="input data-v-b0184b50" placeholder="{{placeholder}}" disabled="{{disabled}}" value="{{value}}"/></view></view>

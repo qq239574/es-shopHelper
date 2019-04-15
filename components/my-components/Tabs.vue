@@ -12,19 +12,23 @@
                 type: Array,
                 default: [{
                         cateid: 0,
-                        name: "全部"
+                        name: "代付款"
                     },
                     {
                         cateid: 1,
-                        name: "风景"
+                        name: "代发货"
                     },
                     {
                         cateid: 2,
-                        name: "游记"
+                        name: "待收货"
                     },
                     {
                         cateid: 3,
-                        name: "世界"
+                        name: "已完成"
+                    },
+                    {
+                        cateid: 4,
+                        name: "已关闭"
                     }
                 ],
             }
@@ -52,7 +56,8 @@
                 // 动态替换内容
                 this.$emit('tabChange', {
                     cateid,
-                    index
+                    index,
+                    name:this.categories[index].name
                 })
             }
         }
@@ -61,7 +66,7 @@
 <style lang='scss'>
     .my-tabs {
         width: 100%;
-        margin:0 0 20upx;
+        margin: 0 0 20upx;
         .grace-tab-title {
             width: 100%;
             border: 1upx solid #eee;
@@ -70,6 +75,7 @@
             color: #ccc;
             border: none;
             font-size: 24upx;
+            margin: 0;
         }
     }
     .grace-tab-current {

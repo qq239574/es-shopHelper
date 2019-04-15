@@ -1,0 +1,16 @@
+.editGood-block-selectItem.data-v-b7049538 {
+  width: 100%;
+}
+.editGood-block-selectItem .grace-items.data-v-b7049538 {
+    width: 710rpx;
+    margin: auto;
+    padding: 2rpx auto;
+}
+.editGood-block-selectItem .grace-items .address.data-v-b7049538 {
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      width: 490rpx;
+      line-height: 38rpx;
+}
+

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "商品编辑-无规格",
+  "usingComponents": {
+    "block": "/pagesCommodity/components/editGood-Block1"
+  }
+}

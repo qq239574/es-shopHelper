@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "物流单号",
+  "usingComponents": {
+    "long-button": "/components/my-components/LongButton"
+  }
+}

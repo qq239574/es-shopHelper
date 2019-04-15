@@ -10,6 +10,7 @@
     color: #ccc;
     border: none;
     font-size: 24rpx;
+    margin: 0;
 }
 .grace-tab-current {
   color: #000 !important;

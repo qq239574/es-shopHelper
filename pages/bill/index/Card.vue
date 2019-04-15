@@ -32,7 +32,8 @@
                             content: '哈哈哈'
                         }],
                         payType: '',
-                        subStatus: 0 //订单子状态，1：维权
+                        subStatus: 0 ,//订单子状态，1：维权
+                        status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
                     },
                     bill: {
                         billId: '',
@@ -49,11 +50,7 @@
                     }],
                     rights: {
                         status: '退款退货',
-                        addition: [
-                        //     {
-                        //     content: '',
-                        // }
-                        ]
+                        addition: [],//{content:''}
                     }
                 })
             }

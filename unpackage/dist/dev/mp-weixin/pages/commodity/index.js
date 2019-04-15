@@ -8,14 +8,64 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-var _default =
-{};exports.default = _default;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/commodity/index/goodsList */ "pages/commodity/index/goodsList").then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var _default =
+
+
+{
+  components: {
+    TabCard: TabCard,
+    SearchInput: SearchInput,
+    Card: Card },
+
+  data: function data() {
+    return {
+      categories: [{
+        cateid: 0,
+        name: "出售中" },
+
+      {
+        cateid: 1,
+        name: "已售罄" },
+
+      {
+        cateid: 2,
+        name: "仓库中" },
+
+      {
+        cateid: 3,
+        name: "回收站" }] };
+
+
+
+  },
+  methods: _objectSpread({},
+  (0, _vuex.mapMutations)({
+    setGood: "setGoodDetail" }), {
+
+    search: function search(val) {},
+    clickGood: function clickGood(item) {
+      if (item.type == 'menu-item') {
+        if (item.name == '编辑') {
+          this.setGood(item);
+          uni.navigateTo({
+            url: '../../pagesCommodity/pages/index' });
+
+        }
+      }
+    } }) };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

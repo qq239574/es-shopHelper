@@ -16,7 +16,7 @@
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    margin-top: 18rpx;
+    margin-top: 10rpx;
 }
 .card--info .card--info__row view.data-v-4649be90 {
       font-size: 24rpx;
@@ -30,10 +30,11 @@
 }
 .card--info .card--info__row .item1.data-v-4649be90 {
       font-size: 24rpx;
+      line-height: 74rpx;
 }
 .card--info .card--info__row .item2.data-v-4649be90 {
       font-size: 24rpx;
-      line-height: 30rpx;
+      line-height: 20rpx;
       position: relative;
 }
 .card--info .card--info__row .item2 image.data-v-4649be90 {
@@ -41,7 +42,7 @@
         display: inline-block;
         width: 30rpx;
         height: 30rpx;
-        top: 4rpx;
+        top: 24rpx;
         right: 0;
 }
 .card--info .card--info__row .item2.pay-type.data-v-4649be90 {
@@ -50,11 +51,11 @@
 .card--info .card--info__row .card--info__footer-item__price.data-v-4649be90 {
       display: inline;
       color: #fd6b3e;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 34rpx;
 }
 .card--info .card--info__footer.data-v-4649be90 {
-    margin: 30rpx auto;
+    margin: 10rpx auto 10rpx;
 }
 .card--info .button-group.data-v-4649be90 {
     display: -webkit-box;

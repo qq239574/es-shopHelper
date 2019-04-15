@@ -1,7 +1,7 @@
 <template>
     <view class='pages-bill-index page'>
         <SearchInput @input='search'></SearchInput>
-        <TabCard></TabCard>
+        <TabCard @tabChange='tabChange'></TabCard>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
     </view>
 </template>
@@ -61,10 +61,19 @@
                             content: '摔坏了'
                         }], //维权备注
                     }
-                }]
+                }],
+                curTab: { //当前标签
+                    cateid: 0,
+                    index: 0,
+                    name: "代付款"
+                }, //{cateid: 0, index: 0, name: "代付款"}
             }
         },
         methods: {
+            tabChange(tab) {
+                console.log(tab);
+                this.curTab = tab;
+            },
             ...mapMutations({
                 saveBill: 'setBillDetail'
             }),
@@ -79,15 +88,24 @@
                     })
                 } else if (val.type == 'button') {
                     console.log(val.detail.val)
-                    if (val.detail.val=='备注') {
-                    }else if (val.detail.val=='改价') {
+                    if (val.detail.val == '备注') {
                         uni.navigateTo({
-                            url:'../../pagesBill/pages/changePrice'
+                            url: '../../pagesBill/pages/billAddition'
                         })
-                    }else if (val.detail.val=='确认付款') {
-                    }else if (val.detail.val=='维权备注') {
-                    }else if (val.detail.val=='维权中') {
-                    }
+                    } else if (val.detail.val == '改价') {
+                        uni.navigateTo({
+                            url: '../../pagesBill/pages/changePrice'
+                        })
+                    } else if (val.detail.val == '确认付款') {
+                    } else if (val.detail.val == '维权备注') {
+                        uni.navigateTo({
+                            url: '../../pagesBill/pages/billAddition'
+                        })
+                    } else if (val.detail.val == '维权中') {} else if (val.detail.val == '确认发货') {
+                        uni.navigateTo({
+                            url: '../../pagesBill/pages/billProvide'
+                        })
+                    } else if (val.detail.val == '确认收货') {}
                 }
             }
         },

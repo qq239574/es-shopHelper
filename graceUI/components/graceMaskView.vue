@@ -1,7 +1,7 @@
 <template name="graceMaskView">
 	<view class="grace-mask" v-if="show" >
 		<view class="grace-mask-view" :style="{width: width}" v-if="show">
-			<view class="grace-mask-close" @tap="close"><text class="grace-mask-icon icon-close"></text></view>
+			<view class="grace-mask-close" v-if='!customClose' @tap="close"><text class="grace-mask-icon icon-close"></text></view>
 			<view class="grace-mask-view-content" :style="{background:bgcolor}">
 				<slot></slot>
 			</view>
@@ -12,6 +12,10 @@
 export default {
 	name : "graceMaskView",
 	props :{
+		customClose:{
+			type:Boolean,
+			default:false
+		},
 		width:{
 			type : String,
 			default : "80%"

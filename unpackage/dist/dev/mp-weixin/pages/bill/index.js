@@ -70,11 +70,20 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
           addition: [{
             content: '摔坏了' }]
           //维权备注
-        } }] };
+        } }],
 
-
+      curTab: { //当前标签
+        cateid: 0,
+        index: 0,
+        name: "代付款" }
+      //{cateid: 0, index: 0, name: "代付款"}
+    };
   },
-  methods: _objectSpread({},
+  methods: _objectSpread({
+    tabChange: function tabChange(tab) {
+      console.log(tab);
+      this.curTab = tab;
+    } },
   (0, _vuex.mapMutations)({
     saveBill: 'setBillDetail' }), {
 
@@ -90,14 +99,23 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
       } else if (val.type == 'button') {
         console.log(val.detail.val);
         if (val.detail.val == '备注') {
+          uni.navigateTo({
+            url: '../../pagesBill/pages/billAddition' });
+
         } else if (val.detail.val == '改价') {
           uni.navigateTo({
             url: '../../pagesBill/pages/changePrice' });
 
         } else if (val.detail.val == '确认付款') {
         } else if (val.detail.val == '维权备注') {
-        } else if (val.detail.val == '维权中') {
-        }
+          uni.navigateTo({
+            url: '../../pagesBill/pages/billAddition' });
+
+        } else if (val.detail.val == '维权中') {} else if (val.detail.val == '确认发货') {
+          uni.navigateTo({
+            url: '../../pagesBill/pages/billProvide' });
+
+        } else if (val.detail.val == '确认收货') {}
       }
     } }) };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

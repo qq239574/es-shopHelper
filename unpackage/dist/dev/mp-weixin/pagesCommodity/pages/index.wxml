@@ -1,1 +1,1 @@
-<view class="pagesCommodity-pages-index _div data-v-1f26b799" bind:__l="__l"></view>
+<view class="pagesCommodity-pages-index page _div data-v-1f26b799" bind:__l="__l"><good-info class="data-v-1f26b799"></good-info><good-info2 class="data-v-1f26b799"></good-info2></view>

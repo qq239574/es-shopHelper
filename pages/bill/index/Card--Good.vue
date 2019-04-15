@@ -27,10 +27,10 @@
     export default {
         methods: {
             clickGood(item) {
-                this.$emit('click',{
-                    type:'good',
-                    detail:{
-                        val:item
+                this.$emit('click', {
+                    type: 'good',
+                    detail: {
+                        val: item
                     }
                 })
             },
@@ -98,6 +98,8 @@
             .imgbox {
                 width: 120upx;
                 height: 100%;
+                border-radius: 6upx;
+                overflow: hidden;
                 image {
                     width: 100%;
                     height: 120upx;

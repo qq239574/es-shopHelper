@@ -15,6 +15,8 @@
 <style lang='scss'>
 	/*每个页面公共css */
 	@import "./common/scss/gobal.scss";
+	@import "./graceUI2.0/graceUI.css";
+	@import "./graceUI2.0/graceIcons.css";
 	@import "./graceUI/graceUI.css";
 	@font-face {
 		font-family: 'iconfont';
@@ -23,12 +25,12 @@
 		src: url('//at.alicdn.com/t/font_1139013_dnw0k7unsus.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1139013_dnw0k7unsus.woff2') format('woff2'), url('//at.alicdn.com/t/font_1139013_dnw0k7unsus.woff') format('woff'), url('//at.alicdn.com/t/font_1139013_dnw0k7unsus.ttf') format('truetype'), url('//at.alicdn.com/t/font_1139013_dnw0k7unsus.svg#iconfont') format('svg');
 	}
 	/* #ifdef APP-PLUS */
-	
 	/* #endif */
 	body,
 	page {
 		width: 100%;
-		overflow: auto;
+		overflow-x: hidden;
+		overflow-y: scroll;
 		min-height: 100%;
 		display: flex;
 		view {

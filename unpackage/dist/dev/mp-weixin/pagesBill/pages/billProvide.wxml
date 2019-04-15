@@ -1,1 +1,1 @@
-<view class="bill-provide page data-v-4311b4c3" bind:__l="__l"></view>
+<view class="bill-provide page data-v-4311b4c3" bind:__l="__l"><provide-goods class="data-v-4311b4c3"></provide-goods><provide-block data-event-opts="{{[['^click',[['clickCell']]]]}}" bind:click="__e" class="data-v-4311b4c3"></provide-block><long-button class="data-v-4311b4c3" vue-slots="{{['default']}}">确认发货</long-button></view>

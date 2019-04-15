@@ -1,0 +1,9 @@
+.editGood-block-selectItem.data-v-b0184b50 {
+  width: 100%;
+}
+.editGood-block-selectItem .grace-items.data-v-b0184b50 {
+    width: 710rpx;
+    margin: auto;
+    padding: 2rpx auto;
+}
+

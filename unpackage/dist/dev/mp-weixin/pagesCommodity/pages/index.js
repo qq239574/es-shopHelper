@@ -8,14 +8,32 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-var _default =
-{};exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var goodInfo = function goodInfo() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editGood-Block1 */ "pagesCommodity/components/editGood-Block1").then(__webpack_require__.bind(null, /*! ../components/editGood-Block1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var goodInfo2 = function goodInfo2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block2.vue"));};var _default =
+
+
+{
+  components: {
+    goodInfo: goodInfo,
+    goodInfo2: goodInfo2 },
+
+  computed: _objectSpread({},
+  (0, _vuex.mapState)({
+    good: 'goodDetail' })),
+
+
+  beforeMount: function beforeMount() {
+    console.log(this.good);
+  } };exports.default = _default;
 
 /***/ }),
 

@@ -19,6 +19,8 @@
             <myButton @click='clickButton("备注")' :badge='info.addtion'>备注</myButton>
             <myButton @click='clickButton("改价")'>改价</myButton>
             <myButton type='primary' @click='clickButton("确认付款")'>确认付款</myButton>
+            <myButton @click='clickButton("确认发货")'>确认发货</myButton>
+            <myButton @click='clickButton("确认收货")'>确认收货</myButton>
         </view>
     </view>
 </template>
@@ -80,7 +82,7 @@
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-between;
-            margin-top: 18upx;
+            margin-top: 10upx;
             view {
                 font-size: 24upx;
                 color: #33373a;
@@ -91,17 +93,18 @@
             }
             .item1 {
                 font-size: 24upx;
+                line-height:74upx;
             }
             .item2 {
                 font-size: 24upx;
-                line-height: 30upx;
+                line-height: 20upx;
                 position: relative;
                 image {
                     position: absolute;
                     display: inline-block;
                     width: 30upx;
                     height: 30upx;
-                    top: 4upx;
+                    top: 24upx;
                     right: 0;
                 }
                 &.pay-type {
@@ -111,12 +114,12 @@
             .card--info__footer-item__price {
                 display: inline;
                 color: #fd6b3e;
-                font-weight: 700;
+                font-weight: 600;
                 font-size: 34upx;
             }
         }
         .card--info__footer {
-            margin: 30upx auto;
+            margin: 10upx auto 10upx;
         }
         .button-group {
             display: flex;

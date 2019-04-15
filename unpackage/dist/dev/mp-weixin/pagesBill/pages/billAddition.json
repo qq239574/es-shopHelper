@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "订单备注",
-  "usingComponents": {}
+  "usingComponents": {
+    "long-button": "/components/my-components/LongButton"
+  }
 }

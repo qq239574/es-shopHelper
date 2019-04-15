@@ -10,7 +10,7 @@
     "minified": true
   },
   "compileType": "miniprogram",
-  "libVersion": "",
+  "libVersion": "2.6.4",
   "appid": "wxea0039639afb8d4c",
   "projectname": "MobileManager",
   "condition": {

@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "mpvue-picker": "/graceUI2.0/threeComponents/mpvuePicker",
+    "choose-img": "/pagesCommodity/components/editGood-ChooseImg",
+    "select-item": "/pagesCommodity/components/editBlock-SelectItem",
+    "input-item": "/pagesCommodity/components/editBlock-InputItem",
+    "switch-item": "/pagesCommodity/components/editBlock-SwitchItem",
+    "choose-img-item": "/pagesCommodity/components/editBlock-ChooseImageItem"
+  },
+  "component": true
+}

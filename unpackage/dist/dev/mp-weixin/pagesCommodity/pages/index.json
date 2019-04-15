@@ -1,4 +1,7 @@
 {
-  "navigationBarTitleText": "商品分包",
-  "usingComponents": {}
+  "navigationBarTitleText": "商品编辑",
+  "usingComponents": {
+    "good-info": "/pagesCommodity/components/editGood-Block1",
+    "good-info2": "/pagesCommodity/components/editGood-Block2"
+  }
 }

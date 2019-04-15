@@ -11,11 +11,15 @@ const store = new Vuex.Store({
         forcedLogin: false,
         hasLogin: false,
         userName: "",
-        billDetail: {},//订单管理页面跳转详情页面的缓存
+        billDetail: {}, //订单管理页面跳转详情页面的缓存
+        goodDetail: {}, //商品页面操作的商品信息缓存
     },
     mutations: {
         setBillDetail(state, info) {
             state.billDetail = info
+        },
+        setGoodDetail(state, info) {
+            state.goodDetail = info;
         },
         login(state, userName) {
             state.userName = userName || '新用户';

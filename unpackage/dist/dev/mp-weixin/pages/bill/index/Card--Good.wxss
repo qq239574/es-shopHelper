@@ -24,6 +24,8 @@
 .card--good .card--good-item .imgbox.data-v-8ba389c2 {
       width: 120rpx;
       height: 100%;
+      border-radius: 6rpx;
+      overflow: hidden;
 }
 .card--good .card--good-item .imgbox image.data-v-8ba389c2 {
         width: 100%;

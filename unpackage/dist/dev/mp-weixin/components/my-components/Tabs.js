@@ -22,19 +22,23 @@ var _default =
       type: Array,
       default: [{
         cateid: 0,
-        name: "全部" },
+        name: "代付款" },
 
       {
         cateid: 1,
-        name: "风景" },
+        name: "代发货" },
 
       {
         cateid: 2,
-        name: "游记" },
+        name: "待收货" },
 
       {
         cateid: 3,
-        name: "世界" }] } },
+        name: "已完成" },
+
+      {
+        cateid: 4,
+        name: "已关闭" }] } },
 
 
 
@@ -62,7 +66,8 @@ var _default =
       // 动态替换内容
       this.$emit('tabChange', {
         cateid: cateid,
-        index: index });
+        index: index,
+        name: this.categories[index].name });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

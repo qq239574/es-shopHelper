@@ -13,13 +13,19 @@
         "pages/index",
         "pages/changePrice",
         "pages/billProvide",
-        "pages/billAddition"
+        "pages/billAddition",
+        "pages/billId"
       ]
     },
     {
       "root": "pagesCommodity",
       "pages": [
-        "pages/index"
+        "pages/index",
+        "pages/editGood",
+        "pages/editName",
+        "pages/multiSpecifications",
+        "pages/selectType",
+        "pages/setFreight"
       ]
     },
     {

@@ -21,7 +21,7 @@
 	}, {
 		"path": "pages/bill/index",
 		"style": {
-			"navigationBarTitleText": "订单主包"
+			"navigationBarTitleText": "订单管理"
 		}
 	}, {
 		"path": "pages/self/index",
@@ -56,13 +56,43 @@
 			"style": {
 				"navigationBarTitleText": "订单备注"
 			}
+		},{
+			"path": "pages/billId",
+			"style": {
+				"navigationBarTitleText": "物流单号"
+			}
 		}]
 	}, {
 		"root": "pagesCommodity",
 		"pages": [{
 			"path": "pages/index",
 			"style": {
-				"navigationBarTitleText": "商品分包"
+				"navigationBarTitleText": "商品编辑"
+			}
+		},{
+			"path": "pages/editGood",
+			"style": {
+				"navigationBarTitleText": "商品编辑-无规格"
+			}
+		},{
+			"path": "pages/editName",
+			"style": {
+				"navigationBarTitleText": "商品编辑-编辑名称"
+			}
+		},{
+			"path": "pages/multiSpecifications",
+			"style": {
+				"navigationBarTitleText": "商品编辑-多规格"
+			}
+		},{
+			"path": "pages/selectType",
+			"style": {
+				"navigationBarTitleText": "商品编辑-选择分类"
+			}
+		},{
+			"path": "pages/setFreight",
+			"style": {
+				"navigationBarTitleText": "商品编辑-运费设置"
 			}
 		}]
 	}, {
