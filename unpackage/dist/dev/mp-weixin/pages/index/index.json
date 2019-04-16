@@ -5,6 +5,9 @@
     "long-button": "/components/my-components/LongButton",
     "select-item": "/components/my-components/editBlock-SelectItem",
     "input-item": "/components/my-components/editBlock-InputItem",
-    "switch-item": "/components/my-components/editBlock-SwitchItem"
+    "switch-item": "/components/my-components/editBlock-SwitchItem",
+    "data-shower": "/pages/index/components/IndexDataShower",
+    "goods-block": "/pages/index/components/IndexGoods",
+    "apps": "/pages/index/components/IndexApps"
   }
 }

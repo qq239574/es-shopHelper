@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择店铺",
+  "usingComponents": {
+    "search": "/components/my-components/SearchInput",
+    "shop-block": "/pagesLogin/pages/SelectShop--Item"
+  }
+}

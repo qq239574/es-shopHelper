@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "首页分包",
-  "usingComponents": {}
+  "usingComponents": {
+    "mpvue-echarts": "/components/mpvue-echarts/src/echarts"
+  }
 }

@@ -148,6 +148,16 @@
 					"van-field": "/wxcomponents/vant-weapp/field/index"
 				}
 			}
+		}, {
+			"path": "pages/searchShop",
+			"style": {
+				"navigationBarTitleText": "搜索店铺"
+			}
+		}, {
+			"path": "pages/selectShop",
+			"style": {
+				"navigationBarTitleText": "选择店铺"
+			}
 		}]
 	}, {
 		"root": "pagesTest",

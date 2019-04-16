@@ -40,7 +40,9 @@
         "pages/index",
         "pages/telOrEmail",
         "pages/questions",
-        "pages/setNew"
+        "pages/setNew",
+        "pages/searchShop",
+        "pages/selectShop"
       ]
     },
     {

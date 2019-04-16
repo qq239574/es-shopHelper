@@ -11,7 +11,7 @@
 		<selectItem label='联系方式' value='15456989898'></selectItem>
 		<selectItem label='修改密码' value=' '></selectItem>
 		<view class="margin20"></view>
-		<selectItem label='微信：Forever' value='重新绑定' aftStyle='color:#fb6638;'></selectItem>
+		<selectItem label='微信：Forever' value='重新绑定' valueStyle='color:#fb6638;'></selectItem>
 		<view class="margin20"></view>
 		<view class="button">退出登录</view>
 		<Button @click='toTest'>Test</Button>

@@ -21,6 +21,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
   props: {
@@ -36,7 +38,15 @@ var _default =
       type: String,
       default: '请选择' },
 
-    aftStyle: {
+    contentStyle: {
+      type: String,
+      default: '' },
+
+    labelStyle: {
+      type: String,
+      default: '' },
+
+    valueStyle: {
       type: String,
       default: '' } },
 

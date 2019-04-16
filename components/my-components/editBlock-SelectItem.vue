@@ -1,8 +1,10 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
-        <view class='grace-items'>
-            <view class="grace-label">{{label}}</view>
-            <view @click.stop="selectCell" class="other"  :style='"display:inline;"+aftStyle' >
+        <view class='grace-items' :style='contentStyle'>
+            <view class="grace-label">
+                <slot name='icon'></slot>{{label}}
+                </view>
+            <view @click.stop="selectCell" class="other" :style='"display:inline;"+valueStyle'>
                 {{value}}
                 <view style='display:inline;' v-if='value===""'>{{placeholder}}</view>
                 <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
@@ -25,10 +27,18 @@
             placeholder: {
                 type: String,
                 default: '请选择'
+            }, 
+            contentStyle: {
+                type: String,
+                default: ''
             },
-            aftStyle:{
-                type:String,
-                default:''
+            labelStyle: {
+                type: String,
+                default: ''
+            },
+            valueStyle: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -57,13 +67,13 @@
             margin: auto;
             padding: 2upx auto;
             box-sizing: border-box;
-            height:100upx;
+            height: 100upx;
             .address {
                 height: fit-content;
                 width: 490upx;
                 line-height: 38upx; // padding: 40upx 0 20upx;
             }
-            .grace-label{
+            .grace-label {
                 white-space: nowrap;
                 overflow: visible;
             }

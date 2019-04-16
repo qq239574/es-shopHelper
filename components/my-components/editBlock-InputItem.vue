@@ -1,8 +1,9 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
-        <view class='grace-items' @click='selectCell'>
-            <view class="grace-label">{{label}}</view>
-            <input :value='value' :type='type' :placeholder="placeholder" :disabled='disabled' class='input' @input='inputVal' />
+        <view class='grace-items' @click='selectCell' :style='contentStyle'>
+            <view class="grace-label" :style='labelStyle'>
+                <slot name='icon'></slot>{{label}}</view>
+            <input :value='value' :type='type' :placeholder="placeholder" :style='valueStyle' :disabled='disabled' class='input' @input='inputVal' />
         </view>
     </view>
 </template>
@@ -26,9 +27,21 @@
                 type: Boolean,
                 default: false
             },
-            type:{
-                type:String,
-                default:'text'
+            type: {
+                type: String,
+                default: 'text'
+            },
+            contentStyle: {
+                type: String,
+                default: ''
+            },
+            labelStyle: {
+                type: String,
+                default: ''
+            },
+            valueStyle: {
+                type: String,
+                default: ''
             }
         },
         data() {
@@ -37,7 +50,7 @@
             }
         },
         methods: {
-            inputVal(val) { 
+            inputVal(val) {
                 this.$emit('input', {
                     label: this.label,
                     value: val.detail.value,
@@ -64,7 +77,7 @@
             margin: auto;
             padding: 2upx auto;
             box-sizing: border-box;
-            height:100upx;
+            height: 100upx;
         }
     }
 </style>

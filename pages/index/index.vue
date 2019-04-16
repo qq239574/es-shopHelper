@@ -1,11 +1,24 @@
 <template>
     <view class='page pages-index-index'>
-        <view class="grace-padding grace-bg-white grace-common-mt grace-common-border">
-            <view class="grace-form">
-                
+        <view class="tunshop">
+            <view class='title'>
+                花花的店铺-网红自营直销第一店铺
             </view>
+            <view class="button" @click='changeShop'>
+                <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
-        <LongButton @click='toLogin'></LongButton>
+        <dataShower></dataShower>
+        <view class="block">
+            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费'>
+                <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
+            </inputItem>
+            <selectItem label='微信系统于7月10日出现警告' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;'>
+                <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
+            </selectItem>
+        </view>
+        <goodsBlock @click='toBill'></goodsBlock>
+        <apps @click='toApp'></apps>
+        <LongButton @click='toLogin'>登录</LongButton>
     </view>
 </template>
 <script>
@@ -13,12 +26,18 @@
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import switchItem from '../../components/my-components/editBlock-SwitchItem.vue'
+    import dataShower from './components/IndexDataShower.vue'
+    import goodsBlock from './components/IndexGoods.vue'
+    import apps from './components/IndexApps.vue'
     export default {
         components: {
             LongButton,
             selectItem,
             inputItem,
-            switchItem
+            switchItem,
+            dataShower,
+            goodsBlock,
+            apps
         },
         data() {
             return {
@@ -28,25 +47,71 @@
             }
         },
         methods: {
+            changeShop() {
+                uni.navigateTo({
+                    url: '../../pagesLogin/pages/selectShop'
+                })
+            },
             toLogin() {
                 uni.redirectTo({
                     url: '../login/index'
                 })
             },
-            bindPickerChange: function(e) {
-                console.log(e);
-                this.genderIndex = e.detail.value;
+            toApp(val) {
+                console.log(val);
+                if (val.title == '数据统计') {
+                    uni.navigateTo({
+                        url: '../../pagesIndex/pages/index'
+                    })
+                }
             },
-            bindDateChange: function(e) {
-                this.dateValue = e.detail.value;
-            },
-            formSubmit: function(e) {
-                uni.showToast({
-                    title: '请观察控制台',
-                    icon: 'none'
-                });
-                console.log(JSON.stringify(e.detail.value));
+            toBill(val) {
+                console.log(val);
             }
         }
     }
 </script>
+<style lang="scss" scoped>
+    .pages-index-index {
+        .tunshop {
+            width: 100%;
+            height: 88upx;
+            display: flex;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding: 0 24upx;
+            .button {
+                margin: auto 0;
+                font-size: 24upx;
+                border: 1upx solid #dbc8df;
+                line-height: 40upx;
+                text-align: center;
+                color: #6e7685;
+                border-radius: 20upx;
+                box-sizing: border-box;
+                padding: 0 20upx;
+                image {
+                    width: 20upx;
+                    height: 22upx;
+                    display: inline-block;
+                    margin-right: 8upx;
+                }
+            }
+            .title {
+                height: 100%;
+                line-height: 88upx;
+                font-size: 24upx;
+                color: #6e7685;
+            }
+        }
+        .block {
+            background: #fff;
+            width: 704upx;
+            margin: 24upx auto 0;
+            border-radius: 8upx;
+            .grace-icons {
+                margin: 0 12upx 0 24upx;
+            }
+        }
+    }
+</style>

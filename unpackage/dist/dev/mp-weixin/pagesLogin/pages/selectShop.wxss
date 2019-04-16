@@ -1,0 +1,12 @@
+.my-shops.data-v-3417471f {
+  background: #fff;
+}
+.my-shops .h1.data-v-3417471f {
+    height: 116rpx;
+    width: 702rpx;
+    margin: 0 auto;
+    line-height: 110rpx;
+    font-size: 28rpx;
+    color: #495576;
+}
+
