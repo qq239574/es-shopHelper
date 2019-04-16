@@ -2,6 +2,9 @@
   "navigationBarTitleText": "首页主包",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "long-button": "/components/my-components/LongButton"
+    "long-button": "/components/my-components/LongButton",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "switch-item": "/components/my-components/editBlock-SwitchItem"
   }
 }

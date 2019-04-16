@@ -8,14 +8,17 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-var _default =
-{};exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectTabs */ "components/my-components/editBlock-SelectTabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectTabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectTabs.vue"));};var _default =
+
+
+
+
+
+
+
+{
+  components: {
+    tabs: tabs } };exports.default = _default;
 
 /***/ }),
 

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "商品编辑-选择分类",
-  "usingComponents": {}
+  "usingComponents": {
+    "tabs": "/components/my-components/editBlock-SelectTabs"
+  }
 }

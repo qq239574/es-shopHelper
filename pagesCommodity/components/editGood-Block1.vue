@@ -2,44 +2,12 @@
 <template>
 	<view class="provide-block">
 		<form @submit="formSubmit" class="grace-form">
-			<view class="grace-items">
-				<view class="grace-label">商品类型</view>
-				<view class='address'>{{goddType}}</view>
-			</view>
-			<view class="grace-items">
-				<view class="grace-label">商品名称</view>
-				<view @click.stop="selectCell(1,goodName)" class="other">
-					{{goodName}}
-					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
-				</view>
-			</view>
-			<view class="grace-items">
-				<view class="grace-label">副标题</view>
-				<view @click.stop="selectCell(2,subTitle)" class="other">
-					{{subTitle}}
-					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
-				</view>
-			</view>
-			<view class="grace-items">
-				<view class="grace-label">商品分类</view>
-				<view @click.stop="selectCell(3,classification)" class="other">
-					{{classification}}
-					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
-				</view>
-			</view>
-			<view class="grace-items mainImage">
-				<view class="grace-label " style='text-indent:1em;'>主图</view>
-				<view class="imgbox">
-					<chooseImg @getImages='getImages' imgTitle='主图'></chooseImg>
-				</view>
-			</view>
-			<view class="grace-items swiper-imgs">
-				<view class="grace-label" style='text-indent:1em;'>轮播图</view>
-				<view class="imgbox">
-					<chooseImg @getImages='getImages' :maxNum='10'></chooseImg>
-					<view class='tips'>建议大小：750*750，长按图片可拖拽调整顺序</view>
-				</view>
-			</view>
+			<multiLine label='商品类型' :value='goodType' @click='selectCell' @inpiut='inputValue'></multiLine>
+			<selectItem label='商品名称' @click.stop="selectCell"></selectItem>
+			<selectItem label='副标题' @click.stop="selectCell"></selectItem>
+			<selectItem label='商品分类' @click.stop="selectCell"></selectItem>
+			<chooseImgItem label='主图' @getImages='getImages' :sortable='false'></chooseImgItem>
+			<chooseImgItem label='轮播图' button='轮播图' @getImages='getImages' :maxNum='10' tips='建议大小：750*750，长按图片可拖拽调整顺序'></chooseImgItem>
 		</form>
 		<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
 		</mpvue-picker>
@@ -48,16 +16,48 @@
 <script>
 	import mpvuePicker from '../../graceUI2.0/threeComponents/mpvuePicker.vue';
 	var graceChecker = require("../../graceUI2.0/jsTools/graceChecker.js");
-    import chooseImgItem from './editBlock-ChooseImageItem.vue'
-    import chooseImg from './editGood-ChooseImg.vue'
-    import inputItem from './editBlock-InputItem.vue'
-    import switchItem from './editBlock-SwitchItem.vue'
-	import chooseImg from './editGood-ChooseImg.vue'
+	import chooseImgItem from '../../components/my-components/editBlock-ChooseImageItem.vue'
+	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
+	import switchItem from '../../components/my-components/editBlock-SwitchItem.vue'
+	import multiLine from '../../components/my-components/editBlock-MultiLine.vue'
+	import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
 	var _self;
 	export default {
+		props: {
+			info: {
+				type: Object,
+				default: {
+					goodType: {
+						label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+						id: '',
+						value: ''
+					},
+					goodName: {
+						label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+						id: '',
+						value: ''
+					},
+					subTitle: {
+						label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+						id: '',
+						value: ''
+					},
+					classification: {
+						label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+						id: '',
+						value: ''
+					},
+					mainImage: {},
+					swiperList: [{}]
+				}
+			}
+		},
+		watch: {
+			info() {}
+		},
 		data() {
 			return {
-				goddType: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+				goodType: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
 				goodName: '请选择',
 				subTitle: '请选择',
 				classification: '填写',
@@ -115,7 +115,6 @@
 						title: "验证通过! 请观察控制台",
 						icon: "none"
 					});
-					console.log(formData);
 				} else {
 					uni.showToast({
 						title: graceChecker.error,
@@ -123,47 +122,31 @@
 					});
 				}
 			},
-			selectCell(num, cont) {
-				if (num == 1) { //配送方式
-					this.$refs.mpvuePicker.show();
-				} else if (num == 2) { //物流公司
-					this.$emit('click', {
-						index: num,
-						name: '物流公司',
-						content: cont
-					})
-				} else if (num == 3) { //物流单号
-					this.$emit('click', {
-						index: num,
-						name: '物流单号',
-						content: cont
-					})
-				} else if (num == 4) { //备注
-					this.$emit('click', {
-						index: num,
-						name: '备注',
-						content: cont
-					})
-				}
-			},
 			onConfirm(e) {
 				var cityText1 = e.label;
 				var cityValue1 = e.value;
 				var cityCode1 = e.cityCode;
-				console.log(cityText1, cityValue1, cityCode1);
 				this.cityText1 = cityText1;
 				this.cityPickerValueDefault1 = cityValue1;
 				this.city1 = e;
 			},
+			selectCell(cont) {
+				this.$emit('click', cont);
+			},
+			inputValue(val) {
+				this.$emit('input', val);
+			},
 			getImages(list) {
-				console.log(list)
+				this.$emit('getImages', list);
 			}
 		},
 		components: {
 			mpvuePicker,
-			chooseImg,
+			chooseImgItem,
 			switchItem,
-			inputItem
+			inputItem,
+			multiLine,
+			selectItem
 		}
 	}
 </script>
@@ -181,22 +164,22 @@
 				width: 490upx;
 				line-height: 38upx; // padding: 40upx 0 20upx;
 			}
-			.imgbox{
-				width:490upx;
+			.imgbox {
+				width: 490upx;
 				padding-bottom: 10upx;
-				.tips{
-					width:100%;
+				.tips {
+					width: 100%;
 					font-size: 20upx;
 					text-align: left;
-					color:#9ea3ae;
+					color: #9ea3ae;
 					line-height: 60upx;
 				}
 			}
-			&.mainImage{
-				height:200upx;
-				padding-top:0;
+			&.mainImage {
+				height: 200upx;
+				padding-top: 0;
 			}
-			&.swiper-imgs{
+			&.swiper-imgs {
 				min-height: 200upx;
 				padding: 0 0 10upx;
 			}

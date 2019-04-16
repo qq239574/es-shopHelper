@@ -8,17 +8,14 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block = function Block() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editGood-Block1 */ "pagesCommodity/components/editGood-Block1").then(__webpack_require__.bind(null, /*! ../components/editGood-Block1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var _default =
-
-
-
-
-
-
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+//
+//
+//
+var _default =
 {
-  components: {
-    Block: Block } };exports.default = _default;
+  components: {} };exports.default = _default;
 
 /***/ }),
 

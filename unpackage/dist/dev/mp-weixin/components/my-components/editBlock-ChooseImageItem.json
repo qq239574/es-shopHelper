@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "choose-img": "/components/my-components/editGood-ChooseImg"
+  },
+  "component": true
+}

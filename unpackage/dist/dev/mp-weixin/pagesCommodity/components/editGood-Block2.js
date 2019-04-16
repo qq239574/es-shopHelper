@@ -24,54 +24,54 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var graceChecker = __webpack_require__(/*! ../../graceUI2.0/jsTools/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\graceChecker.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editBlock-SelectItem */ "pagesCommodity/components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ./editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editBlock-SelectItem.vue"));};var chooseImg = function chooseImg() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editGood-ChooseImg */ "pagesCommodity/components/editGood-ChooseImg").then(__webpack_require__.bind(null, /*! ./editGood-ChooseImg.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-ChooseImg.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editBlock-InputItem */ "pagesCommodity/components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ./editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editBlock-SwitchItem */ "pagesCommodity/components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ./editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editBlock-SwitchItem.vue"));};var chooseImgItem = function chooseImgItem() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editBlock-ChooseImageItem */ "pagesCommodity/components/editBlock-ChooseImageItem").then(__webpack_require__.bind(null, /*! ./editBlock-ChooseImageItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editBlock-ChooseImageItem.vue"));};
-
-
+var graceChecker = __webpack_require__(/*! ../../graceUI2.0/jsTools/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\graceChecker.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};
 
 
 
 var _self;var _default =
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        goodClass: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        delPrice: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        showStock: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: false },
+
+        soldNum: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: 0 },
+
+        showSold: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: false } } } },
+
+
+
+
+  watch: {
+    info: function info() {} },
+
   data: function data() {
     return {
-      goddType: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
-      goodName: '请选择',
-      subTitle: '请选择',
-      classification: '填写',
+      goodClass: '',
+      delPrice: '',
+      showStock: false,
+      soldNum: 0,
+      showSold: false,
       list: [{
         label: '飞机',
         value: 0 },
@@ -134,49 +134,27 @@ var _self;var _default =
 
       }
     },
-    selectCell: function selectCell(num, cont) {
-      if (num == 1) {//配送方式
-        this.$refs.mpvuePicker.show();
-      } else if (num == 2) {//物流公司
-        this.$emit('click', {
-          index: num,
-          name: '物流公司',
-          content: cont });
+    selectCell: function selectCell(cont) {
+      this.$emit('click', cont);
+    },
 
-      } else if (num == 3) {//物流单号
-        this.$emit('click', {
-          index: num,
-          name: '物流单号',
-          content: cont });
-
-      } else if (num == 4) {//备注
-        this.$emit('click', {
-          index: num,
-          name: '备注',
-          content: cont });
-
-      }
+    inpuitValue: function inpuitValue(val) {
+      this.$emit('input', val);
     },
     onConfirm: function onConfirm(e) {
       var cityText1 = e.label;
       var cityValue1 = e.value;
       var cityCode1 = e.cityCode;
-      console.log(cityText1, cityValue1, cityCode1);
       this.cityText1 = cityText1;
       this.cityPickerValueDefault1 = cityValue1;
       this.city1 = e;
-    },
-    getImages: function getImages(list) {
-      console.log(list);
     } },
 
   components: {
     mpvuePicker: mpvuePicker,
-    chooseImg: chooseImg,
     selectItem: selectItem,
     inputItem: inputItem,
-    switchItem: switchItem,
-    chooseImgItem: chooseImgItem } };exports.default = _default;
+    switchItem: switchItem } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

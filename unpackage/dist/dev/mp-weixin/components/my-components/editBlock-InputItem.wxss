@@ -1,0 +1,13 @@
+.editGood-block-selectItem.data-v-359ba1da {
+  width: 100%;
+  background: #fff;
+}
+.editGood-block-selectItem .grace-items.data-v-359ba1da {
+    width: 94.67%;
+    margin: auto;
+    padding: 2rpx auto;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    height: 100rpx;
+}
+

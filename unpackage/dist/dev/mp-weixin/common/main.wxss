@@ -1066,6 +1066,7 @@ page {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  overflow: auto;
 }
 page view,
   page view {

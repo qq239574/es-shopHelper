@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "商品编辑-编辑名称",
-  "usingComponents": {}
+  "usingComponents": {
+    "long-button": "/components/my-components/LongButton"
+  }
 }

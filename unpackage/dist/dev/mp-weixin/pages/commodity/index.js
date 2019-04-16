@@ -60,7 +60,7 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
         if (item.name == '编辑') {
           this.setGood(item);
           uni.navigateTo({
-            url: '../../pagesCommodity/pages/index' });
+            url: '../../pagesCommodity/pages/multiSpecifications' });
 
         }
       }

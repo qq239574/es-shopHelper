@@ -41,22 +41,22 @@
 			"style": {
 				"navigationBarTitleText": "订单详情"
 			}
-		},{
+		}, {
 			"path": "pages/changePrice",
 			"style": {
 				"navigationBarTitleText": "订单改价"
 			}
-		},{
+		}, {
 			"path": "pages/billProvide",
 			"style": {
 				"navigationBarTitleText": "订单发货"
 			}
-		},{
+		}, {
 			"path": "pages/billAddition",
 			"style": {
 				"navigationBarTitleText": "订单备注"
 			}
-		},{
+		}, {
 			"path": "pages/billId",
 			"style": {
 				"navigationBarTitleText": "物流单号"
@@ -65,36 +65,40 @@
 	}, {
 		"root": "pagesCommodity",
 		"pages": [{
-			"path": "pages/index",
-			"style": {
-				"navigationBarTitleText": "商品编辑"
+				"path": "pages/index",
+				"style": {
+					"navigationBarTitleText": "商品编辑"
+				}
+			},
+			{
+				"path": "pages/editGood",
+				"style": {
+					"navigationBarTitleText": "商品编辑-无规格"
+				}
+			},
+			{
+				"path": "pages/editName",
+				"style": {
+					"navigationBarTitleText": "商品编辑-编辑名称"
+				}
+			},
+			{
+				"path": "pages/multiSpecifications",
+				"style": {
+					"navigationBarTitleText": "商品编辑-多规格"
+				}
+			}, {
+				"path": "pages/selectType",
+				"style": {
+					"navigationBarTitleText": "商品编辑-选择分类"
+				}
+			}, {
+				"path": "pages/setFreight",
+				"style": {
+					"navigationBarTitleText": "商品编辑-运费设置"
+				}
 			}
-		},{
-			"path": "pages/editGood",
-			"style": {
-				"navigationBarTitleText": "商品编辑-无规格"
-			}
-		},{
-			"path": "pages/editName",
-			"style": {
-				"navigationBarTitleText": "商品编辑-编辑名称"
-			}
-		},{
-			"path": "pages/multiSpecifications",
-			"style": {
-				"navigationBarTitleText": "商品编辑-多规格"
-			}
-		},{
-			"path": "pages/selectType",
-			"style": {
-				"navigationBarTitleText": "商品编辑-选择分类"
-			}
-		},{
-			"path": "pages/setFreight",
-			"style": {
-				"navigationBarTitleText": "商品编辑-运费设置"
-			}
-		}]
+		]
 	}, {
 		"root": "pagesIndex",
 		"pages": [{
@@ -110,7 +114,7 @@
 			"style": {
 				"navigationBarTitleText": "登录分包"
 			}
-		},{
+		}, {
 			"path": "pages/telOrEmail",
 			"style": {
 				"navigationBarTitleText": "登录分包",
@@ -121,7 +125,7 @@
 					"van-field": "/wxcomponents/vant-weapp/field/index"
 				}
 			}
-		},{
+		}, {
 			"path": "pages/questions",
 			"style": {
 				"navigationBarTitleText": "登录分包",
@@ -133,7 +137,7 @@
 					"van-popup": "/wxcomponents/vant-weapp/popup/index"
 				}
 			}
-		},{
+		}, {
 			"path": "pages/setNew",
 			"style": {
 				"navigationBarTitleText": "登录分包",

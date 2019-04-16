@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "商品编辑-多规格",
-  "usingComponents": {}
+  "usingComponents": {
+    "multi-block": "/pagesCommodity/components/editGood-BlockMult"
+  }
 }

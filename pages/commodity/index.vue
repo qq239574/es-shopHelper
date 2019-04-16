@@ -50,7 +50,7 @@
                     if (item.name == '编辑') {
                         this.setGood(item);
                         uni.navigateTo({
-                            url: '../../pagesCommodity/pages/index'
+                            url: '../../pagesCommodity/pages/multiSpecifications'
                         })
                     }
                 }

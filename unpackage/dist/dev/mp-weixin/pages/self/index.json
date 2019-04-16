@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "我的主包",
-  "usingComponents": {}
+  "usingComponents": {
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem"
+  }
 }

@@ -5,9 +5,159 @@
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/editGood-Block1.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js):\nTypeError: Cannot read property 'buildError' of undefined\n    at Scope.checkBlockScopedCollisions (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:347:22)\n    at Scope.registerBinding (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:504:16)\n    at Scope.registerDeclaration (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:452:14)\n    at Object.Declaration (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:125:12)\n    at NodePath._call (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\path\\context.js:53:20)\n    at NodePath.call (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\path\\context.js:40:17)\n    at NodePath.visit (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\path\\context.js:88:12)\n    at TraversalContext.visitQueue (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\context.js:118:16)\n    at TraversalContext.visitMultiple (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\context.js:85:17)\n    at TraversalContext.visit (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\context.js:144:19)\n    at Function.traverse.node (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\index.js:94:17)\n    at traverse (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\index.js:76:12)\n    at NodePath.traverse (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\path\\index.js:161:24)\n    at Scope.crawl (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:684:10)\n    at Scope.init (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\scope\\index.js:634:32)\n    at NodePath.setScope (G:\\HBuilderX\\plugins\\uniapp-cli\\node_modules\\@babel\\traverse\\lib\\path\\context.js:126:30)");
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mpvuePicker = function mpvuePicker() {return __webpack_require__.e(/*! import() | graceUI2.0/threeComponents/mpvuePicker */ "graceUI2.0/threeComponents/mpvuePicker").then(__webpack_require__.bind(null, /*! ../../graceUI2.0/threeComponents/mpvuePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\threeComponents\\mpvuePicker.vue"));};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var graceChecker = __webpack_require__(/*! ../../graceUI2.0/jsTools/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\graceChecker.js");var chooseImgItem = function chooseImgItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-ChooseImageItem */ "components/my-components/editBlock-ChooseImageItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-ChooseImageItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-ChooseImageItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var multiLine = function multiLine() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-MultiLine */ "components/my-components/editBlock-MultiLine").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-MultiLine.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-MultiLine.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};
+
+
+
+
+
+var _self;var _default =
+{
+  props: {
+    info: {
+      type: Object,
+      default: {
+        goodType: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        goodName: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        subTitle: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        classification: {
+          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          id: '',
+          value: '' },
+
+        mainImage: {},
+        swiperList: [{}] } } },
+
+
+
+  watch: {
+    info: function info() {} },
+
+  data: function data() {
+    return {
+      goodType: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+      goodName: '请选择',
+      subTitle: '请选择',
+      classification: '填写',
+      list: [{
+        label: '飞机',
+        value: 0 },
+
+      {
+        label: '火车票',
+        value: 1 }],
+
+
+      themeColor: '#007AFF', //颜色
+      cityText1: "请选择", //文本
+      defaultVal: [0] //默认选项
+    };
+  },
+  onLoad: function onLoad() {
+    _self = this;
+  },
+  methods: {
+    // 表单提交
+    formSubmit: function formSubmit(e) {
+      if (this.provideType == null) {
+        uni.showToast({
+          title: "请选择地区",
+          icon: "none" });
+
+        return false;
+      }
+      var rule = [{
+        name: "name",
+        checkType: "string",
+        checkRule: "1,10",
+        errorMsg: "联系人应为1-20个字符" },
+
+      {
+        name: "phoneno",
+        checkType: "phoneno",
+        checkRule: "",
+        errorMsg: "请正确填写手机号" },
+
+      {
+        name: "address",
+        checkType: "string",
+        checkRule: "5,100",
+        errorMsg: "请正确填写详细地址" }];
+
+
+      var formData = e.detail.value;
+      formData.city1 = _self.city1.cityCode; //此处以保存用户城市代码为例
+      var checkRes = graceChecker.check(formData, rule);
+      if (checkRes) {
+        uni.showToast({
+          title: "验证通过! 请观察控制台",
+          icon: "none" });
+
+      } else {
+        uni.showToast({
+          title: graceChecker.error,
+          icon: "none" });
+
+      }
+    },
+    onConfirm: function onConfirm(e) {
+      var cityText1 = e.label;
+      var cityValue1 = e.value;
+      var cityCode1 = e.cityCode;
+      this.cityText1 = cityText1;
+      this.cityPickerValueDefault1 = cityValue1;
+      this.city1 = e;
+    },
+    selectCell: function selectCell(cont) {
+      this.$emit('click', cont);
+    },
+    inputValue: function inputValue(val) {
+      this.$emit('input', val);
+    },
+    getImages: function getImages(list) {
+      this.$emit('getImages', list);
+    } },
+
+  components: {
+    mpvuePicker: mpvuePicker,
+    chooseImgItem: chooseImgItem,
+    switchItem: switchItem,
+    inputItem: inputItem,
+    multiLine: multiLine,
+    selectItem: selectItem } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -137,3 +287,12 @@ __webpack_require__.r(__webpack_exports__);
 
 }]);
 //# sourceMappingURL=../../../.sourcemap/mp-weixin/pagesCommodity/components/editGood-Block1.js.map
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'pagesCommodity/components/editGood-Block1-create-component',
+    {
+        'pagesCommodity/components/editGood-Block1-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('./node_modules/@dcloudio/uni-mp-weixin/dist/index.js')['createComponent'](__webpack_require__("I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"))
+        })
+    },
+    [['pagesCommodity/components/editGood-Block1-create-component']]
+]);                

@@ -32,7 +32,8 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 		min-height: 100%;
-		display: flex;
+		display: flex; 
+		overflow: auto;
 		view {
 			box-sizing: border-box;
 		}

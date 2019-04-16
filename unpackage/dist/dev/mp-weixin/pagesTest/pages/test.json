@@ -7,6 +7,7 @@
     "mu-long-button": "/components/my-components/LongButton",
     "mu-round-button": "/components/my-components/RoundButton",
     "my-data-shower": "/components/my-components/DataShower",
-    "grace-loading": "/graceUI/components/graceLoading"
+    "grace-loading": "/graceUI/components/graceLoading",
+    "move": "/components/my-components/editBlock-RadioBlock"
   }
 }
