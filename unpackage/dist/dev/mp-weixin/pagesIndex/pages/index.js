@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -27,25 +27,11 @@
 
 
 
+var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/echarts/echarts.simple.min.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\echarts\\echarts.simple.min.js"));
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/echarts/echarts.simple.min.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\echarts\\echarts.simple.min.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
+var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOption.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
 //
 //
 //
@@ -63,98 +49,107 @@ var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/e
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var cityList = [{ value: 55, name: '北京' }, { value: 38, name: '上海' }, { value: 20, name: '广州' }];var pieOption = { animation: false, backgroundColor: '#F8F8F8', color: ['#37A2DA', '#32C5E9', '#67E0E3', '#91F2DE', '#FFDB5C', '#FF9F7F'], series: [{ label: { normal: { fontSize: 14 } }, type: 'pie', center: ['50%', '50%'], radius: [0, '60%'], data: [], itemStyle: { emphasis: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 2, 2, 0.3)' } } }] };var lineOption = { animation: true,
-  color: ['#fff'],
-  grid: {
-    x: 0,
-    x2: 0,
-    y: 0,
-    y2: 0
-    // show:false
-  },
-  calculable: false,
-  xAxis: [{
-    type: 'category',
-    data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-    show: false }],
-
-  yAxis: [{
-    type: 'value',
-    show: false,
-    splitArea: {
-      show: true } }],
-
-
-  series: [{
-    name: '蒸发量',
-    type: 'line',
-    smooth: true,
-    symbol: "none",
-    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3] }] };var _default =
-
-
-{
-  data: function data() {
-    return {
-      // echarts: echarts,
-      updateStatus: false,
-      dataList: [{
-        title: '成交额（元）',
-        subTitle: '累计总成成交额：5,000,000.00',
-        today: 15000000,
-        yesterday: 1336588,
-        x: [],
-        y: [] }] };
+var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));}; /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 缓存接口数据
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */var dataList1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];var _default = { data: function data() {return { dataList: [{ title: '成交额（元）', subTitle: '累计总成成交额：5,000,000.00', today: 15000000, yesterday: 1336588 },
+      {
+        title: '付款订单数（个）',
+        subTitle: '',
+        today: 777,
+        yesterday: 555 },
+      {
+        title: '付款商品数（件）',
+        subTitle: '',
+        today: 5757,
+        yesterday: 755 },
+      {
+        title: '付款会员数',
+        subTitle: '',
+        today: 1000,
+        yesterday: 7457 }] };
 
 
   },
   onLoad: function onLoad() {
-    pieOption.series[0].data = cityList.slice(0);
+    this.initPage();
+  },
+  onShow: function onShow() {
+    this.initPage();
   },
   methods: {
-    goBrowser: function goBrowser() {
-
-
-
-
-      uni.showModal({
-        content: '请复制链接在浏览器里打开',
-        showCancel: false });
-
-
+    initPage: function initPage() {var _this = this;
+      this.initLine1([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      this.initLine2([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      this.initLine3([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      this.initLine4([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setTimeout(function () {//数据请求后在此初始化
+        _this.initLine1([1, 4.9, 7.0, 23.2, 15.6, 76.7, 35.6, 12.2, 32.6, 20.0, 6.4, 3.3]);
+        _this.initLine2([2.0, 4.9, 7.0, 23.2, 25.6, 11, 1, 5, 32.6, 20.0, 6.4, 3.3]);
+        _this.initLine3([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 5.6, 162.2, 32.6, 20.0, 6.4, 3.3]);
+        _this.initLine4([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 6.4, 3.3]);
+      }, 2000);
     },
-    lineInit: function lineInit(canvas, width, height) {
+    initLine1: function initLine1(datalist) {//初始化第1个echarts,入参为数据数组
+      dataList1 = datalist;
+      this.$refs.lineChart1.init();
+    },
+    initLine2: function initLine2(datalist) {//初始化第2个echarts,入参为数据数组
+      dataList2 = datalist;
+      this.$refs.lineChart2.init();
+    },
+    initLine3: function initLine3(datalist) {//初始化第3个echarts,入参为数据数组
+      dataList3 = datalist;
+      this.$refs.lineChart3.init();
+    },
+    initLine4: function initLine4(datalist) {//初始化第4个echarts,入参为数据数组
+      dataList4 = datalist;
+      this.$refs.lineChart4.init();
+    },
+    lineInit1: function lineInit1(canvas, width, height) {
       echarts.setCanvasCreator(function () {return canvas;});
       var lineChart = echarts.init(canvas, null, {
         width: width,
         height: height });
 
       canvas.setChart(lineChart);
-      lineChart.setOption(lineOption);
+      lineChart.setOption((0, _IndexEchartsOption.getLineOption1)(dataList1));
+      return lineChart;
+    },
+    lineInit2: function lineInit2(canvas, width, height) {
+      echarts.setCanvasCreator(function () {return canvas;});
+      var lineChart = echarts.init(canvas, null, {
+        width: width,
+        height: height });
+
+      canvas.setChart(lineChart);
+      lineChart.setOption((0, _IndexEchartsOption.getLineOption2)(dataList2));
+      return lineChart;
+    },
+    lineInit3: function lineInit3(canvas, width, height) {
+      echarts.setCanvasCreator(function () {return canvas;});
+      var lineChart = echarts.init(canvas, null, {
+        width: width,
+        height: height });
+
+      canvas.setChart(lineChart);
+      lineChart.setOption((0, _IndexEchartsOption.getLineOption3)(dataList3));
+      return lineChart;
+    },
+    lineInit4: function lineInit4(canvas, width, height) {
+      echarts.setCanvasCreator(function () {return canvas;});
+      var lineChart = echarts.init(canvas, null, {
+        width: width,
+        height: height });
+
+      canvas.setChart(lineChart);
+      lineChart.setOption((0, _IndexEchartsOption.getLineOption4)(dataList4));
       return lineChart;
     } },
 
   components: {
-    mpvueEcharts: mpvueEcharts } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+    mpvueEcharts: mpvueEcharts,
+    echartBlock: echartBlock,
+    topList: topList } };exports.default = _default;
 
 /***/ }),
 

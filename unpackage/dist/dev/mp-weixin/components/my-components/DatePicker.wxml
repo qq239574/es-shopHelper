@@ -1,0 +1,1 @@
+<picker mode="date" value="{{date}}" start="{{startDate}}" end="{{endDate}}" data-event-opts="{{[['change',[['bindDateChange',['$event']]]]]}}" bindchange="__e" bind:__l="__l"><slot></slot></picker>

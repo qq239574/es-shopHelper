@@ -2,7 +2,8 @@
 	"pages": [{
 		"path": "pages/index/index",
 		"style": {
-			"navigationBarTitleText": "首页主包",
+			"navigationBarTitleText": "店铺助手",
+			"navigationBarBackgroundColor": "#f3f5f9",
 			"usingComponents": {},
 			"enablePullDownRefresh": true
 		}
@@ -106,6 +107,25 @@
 			"style": {
 				"navigationBarTitleText": "首页分包"
 			}
+		}, {
+			"path": "pages/filterDate",
+			"style": {
+				"navigationBarTitleText": "筛选日期",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index"
+				}
+
+			}
+		}, {
+			"path": "pages/moneyDetail",
+			"style": {
+				"navigationBarTitleText": "数据详情"
+			}
+		}, {
+			"path": "pages/toper",
+			"style": {
+				"navigationBarTitleText": "Top"
+			}
 		}]
 	}, {
 		"root": "pagesLogin",
@@ -174,35 +194,37 @@
 		}]
 	}],
 	"tabBar": {
-		"color": "#7a7e83",
-		"selectedColor": "#0faeff",
+		"color": "#c9ccd0",
+		"selectedColor": "#7a7e83",
 		"backgroundColor": "#ffffff",
 		"list": [{
 			"pagePath": "pages/index/index",
 			"text": "首页",
-			"iconPath": "static/img/global/tmp.png",
-			"selectedIconPath": "static/img/global/tmpAct.png"
+			"iconPath": "static/img/tabbar/tab_home1.png",
+			"selectedIconPath": "static/img/tabbar/tab_home.png"
 		}, {
 			"pagePath": "pages/commodity/index",
 			"text": "商品",
-			"iconPath": "static/img/global/tmp.png",
-			"selectedIconPath": "static/img/global/tmpAct.png"
+			"iconPath": "static/img/tabbar/tab_goods1.png",
+			"selectedIconPath": "static/img/tabbar/tab_goods.png"
 		}, {
 			"pagePath": "pages/bill/index",
 			"text": "订单",
-			"iconPath": "static/img/global/tmp.png",
-			"selectedIconPath": "static/img/global/tmpAct.png"
+			"iconPath": "static/img/tabbar/tab_order1.png",
+			"selectedIconPath": "static/img/tabbar/tab_order.png"
 		}, {
 			"pagePath": "pages/self/index",
 			"text": "我的",
-			"iconPath": "static/img/global/tmp.png",
-			"selectedIconPath": "static/img/global/tmpAct.png"
+			"iconPath": "static/img/tabbar/tab_me1.png",
+			"selectedIconPath": "static/img/tabbar/tab_me.png"
 		}]
 	},
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#0faeff",
-		"backgroundColor": "#fbf9fe"
+		"navigationBarTextStyle": "black",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff",
+		"enablePullDownRefresh": true,
+		"onReachBottomDistance": 50
 	},
 	"preloadRule": {
 		"pages/index/index": {

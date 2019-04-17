@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "筛选日期",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "date-block": "/pagesIndex/components/FilteDate--radioGroup",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "lang-button": "/components/my-components/LongButton",
+    "date-picker": "/components/my-components/DatePicker"
+  }
+}

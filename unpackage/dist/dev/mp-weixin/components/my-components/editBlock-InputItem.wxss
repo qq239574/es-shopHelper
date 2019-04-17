@@ -10,4 +10,10 @@
             box-sizing: border-box;
     height: 100rpx;
 }
+.editGood-block-selectItem .grace-items .grace-label.data-v-359ba1da {
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      white-space: nowrap;
+}
 

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "数据详情",
+  "usingComponents": {
+    "mpvue-echarts": "/components/mpvue-echarts/src/echarts",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "uni-pagination": "/components/uni-pagination/uni-pagination",
+    "input-item": "/components/my-components/editBlock-InputItem"
+  }
+}

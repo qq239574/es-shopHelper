@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "首页主包",
+  "navigationBarTitleText": "店铺助手",
+  "navigationBarBackgroundColor": "#f3f5f9",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "long-button": "/components/my-components/LongButton",

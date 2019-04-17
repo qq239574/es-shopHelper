@@ -4,7 +4,7 @@
             <view class="grace-label">
                 <slot name='icon'></slot>{{label}}
                 </view>
-            <view @click.stop="selectCell" class="other" :style='"display:inline;"+valueStyle'>
+            <view @click="selectCell" class="other" :style='"display:inline;"+valueStyle'>
                 {{value}}
                 <view style='display:inline;' v-if='value===""'>{{placeholder}}</view>
                 <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>

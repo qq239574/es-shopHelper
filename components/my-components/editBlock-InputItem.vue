@@ -78,6 +78,10 @@
             padding: 2upx auto;
             box-sizing: border-box;
             height: 100upx;
+            .grace-label {
+                width: fit-content;
+                white-space: nowrap;
+            }
         }
     }
 </style>
