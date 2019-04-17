@@ -5,6 +5,9 @@
 .my-tabs .grace-tab-title {
     width: 100%;
     border: 1rpx solid #eee;
+    padding: 0 20rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 .my-tabs .grace-tab-title__item {
     color: #ccc;

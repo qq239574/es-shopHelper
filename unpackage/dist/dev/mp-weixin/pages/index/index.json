@@ -2,6 +2,7 @@
   "navigationBarTitleText": "店铺助手",
   "navigationBarBackgroundColor": "#f3f5f9",
   "enablePullDownRefresh": true,
+  "backgroundColor": "#f3f5f9",
   "usingComponents": {
     "long-button": "/components/my-components/LongButton",
     "select-item": "/components/my-components/editBlock-SelectItem",

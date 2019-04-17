@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Top",
+  "navigationBarTitleText": "Top10",
   "usingComponents": {
     "select-item": "/components/my-components/editBlock-SelectItem",
     "items": "/pagesIndex/components/Toper-list"

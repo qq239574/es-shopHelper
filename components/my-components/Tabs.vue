@@ -1,7 +1,7 @@
 <template>
     <view class='my-tabs'>
         <scroll-view class="grace-tab-title grace-center" scroll-x="true" id="grace-tab-title">
-            <view class='grace-tab-title__item' v-for="(cate, index) in categories" :key="index" :data-cateid="cate.cateid" :data-index="index" :class="[cateCurrentIndex == index ? 'grace-tab-current' : '']" @tap="tabChange">{{cate.name}}</view>
+            <view class='grace-tab-title__item' :style='getWidth' v-for="(cate, index) in categories" :key="index" :data-cateid="cate.cateid" :data-index="index" :class="[cateCurrentIndex == index ? 'grace-tab-current' : '']" @tap="tabChange">{{cate.name}}</view>
         </scroll-view>
     </view>
 </template>
@@ -33,6 +33,11 @@
                 ],
             }
         },
+        computed: {
+            getWidth() {
+                return 'width:' + Math.floor(1 / this.categories.length * 100) + '%';
+            }
+        },
         data() {
             return {
                 // 当前选择的分类
@@ -57,7 +62,7 @@
                 this.$emit('tabChange', {
                     cateid,
                     index,
-                    name:this.categories[index].name
+                    name: this.categories[index].name
                 })
             }
         }
@@ -70,6 +75,8 @@
         .grace-tab-title {
             width: 100%;
             border: 1upx solid #eee;
+            padding: 0 20upx;
+            box-sizing: border-box;
         }
         .grace-tab-title__item {
             color: #ccc;

@@ -73,6 +73,11 @@
         uni.navigateTo({
           url: '../../pagesIndex/pages/index' });
 
+      } else if (val.title == '会员管理') {
+        uni.navigateTo({
+          url: '../../pagesIndex/pages/vipManage' });
+
+      } else if (val.title == '自提核销') {
       }
     },
     toBill: function toBill(val) {

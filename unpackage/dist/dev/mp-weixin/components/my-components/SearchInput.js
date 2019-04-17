@@ -20,6 +20,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 var _default =
 {
+  props: {
+    placeholder: {
+      type: String,
+      default: '手机号/微信昵称/姓名' },
+
+    bgStyle: {
+      type: String,
+      default: '' },
+    inputStyle: {
+      type: String,
+      default: '' } },
+
+
+
   data: function data() {
     return {
       val: '' };

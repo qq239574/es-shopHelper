@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "增加余额",
+  "usingComponents": {
+    "surplus-win": "/pagesIndex/components/Vip-Surplus-Window",
+    "long-button": "/components/my-components/LongButton"
+  }
+}

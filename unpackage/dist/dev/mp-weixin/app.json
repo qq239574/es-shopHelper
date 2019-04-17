@@ -34,7 +34,11 @@
         "pages/index",
         "pages/filterDate",
         "pages/moneyDetail",
-        "pages/toper"
+        "pages/toper",
+        "pages/addSurplus",
+        "pages/coupon",
+        "pages/vipDetail",
+        "pages/vipManage"
       ]
     },
     {
@@ -59,7 +63,7 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#f3f5f9",
     "enablePullDownRefresh": true,
     "onReachBottomDistance": 50
   },
@@ -122,5 +126,7 @@
     }
   },
   "permission": {},
-  "usingComponents": {}
+  "usingComponents": {
+    "page-loading": "/graceUI/components/graceFullLoading"
+  }
 }

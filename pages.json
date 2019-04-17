@@ -5,7 +5,8 @@
 			"navigationBarTitleText": "店铺助手",
 			"navigationBarBackgroundColor": "#f3f5f9",
 			"usingComponents": {},
-			"enablePullDownRefresh": true
+			"enablePullDownRefresh": true,
+			"backgroundColor":"#f3f5f9"
 		}
 	}, {
 		"path": "pages/login/index",
@@ -124,7 +125,27 @@
 		}, {
 			"path": "pages/toper",
 			"style": {
-				"navigationBarTitleText": "Top"
+				"navigationBarTitleText": "Top10"
+			}
+		}, {
+			"path": "pages/addSurplus",
+			"style": {
+				"navigationBarTitleText": "增加余额"
+			}
+		}, {
+			"path": "pages/coupon",
+			"style": {
+				"navigationBarTitleText": "优惠券"
+			}
+		}, {
+			"path": "pages/vipDetail",
+			"style": {
+				"navigationBarTitleText": "会员详情"
+			}
+		}, {
+			"path": "pages/vipManage",
+			"style": {
+				"navigationBarTitleText": "会员详情"
 			}
 		}]
 	}, {
@@ -222,7 +243,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarBackgroundColor": "#ffffff",
-		"backgroundColor": "#ffffff",
+		"backgroundColor": "#f3f5f9",
 		"enablePullDownRefresh": true,
 		"onReachBottomDistance": 50
 	},

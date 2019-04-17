@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "block1": "/pagesIndex/components/Vip-CommissionInfo-Block1",
+    "block2": "/pagesIndex/components/Vip-CommissionInfo-Block2"
+  },
+  "component": true
+}

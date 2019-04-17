@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "会员详情",
+  "usingComponents": {
+    "tabs": "/components/my-components/Tabs",
+    "vip-base-info": "/pagesIndex/components/Vip-BaseInfo",
+    "vip-bussiness": "/pagesIndex/components/Vip-Business",
+    "vip-commission": "/pagesIndex/components/Vip-CommissionInfo",
+    "vip-win": "/pagesIndex/components/Vip-Detail-Window"
+  }
+}

@@ -43,6 +43,11 @@ var _default =
 
 
 
+  computed: {
+    getWidth: function getWidth() {
+      return 'width:' + Math.floor(1 / this.categories.length * 100) + '%';
+    } },
+
   data: function data() {
     return {
       // 当前选择的分类

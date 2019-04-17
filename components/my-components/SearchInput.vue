@@ -1,8 +1,8 @@
 <template>
-    <view class='my-search-input'>
-        <view class="grace-items">
+    <view class='my-search-input' :style='bgStyle'>
+        <view class="grace-items" :style='inputStyle' >
             <view class="grace-boxes-img grace-iconfont icon-search"></view>
-            <input type="text" class="input" name="name" :value='val' placeholder="手机号/微信昵称/姓名" @input='getInput' @change='getInput' />
+            <input type="text" class="input" name="name" :value='val' :placeholder="placeholder" @input='getInput' @change='getInput' />
             <view class="grace-boxes-img grace-iconfont icon-close" style='margin:0;' @click='getInput("clear")' v-show='showClear'></view>
         </view>
     </view>
@@ -10,6 +10,20 @@
 
 <script>
     export default {
+        props:{
+            placeholder:{
+                type:String,
+                default:'手机号/微信昵称/姓名'
+            },
+            bgStyle:{
+                 type:String,
+                default:''
+            },inputStyle:{
+                 type:String,
+                default:''
+            }
+            
+        },
         data() {
             return {
                 val: ''

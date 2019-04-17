@@ -1,0 +1,34 @@
+.margin30.data-v-1fa08866 {
+  height: 30rpx;
+}
+.margin30 .curMoney.data-v-1fa08866 {
+    width: 100%;
+    height: 220rpx;
+    background: #fff;
+}
+.margin30 .curMoney .tit.data-v-1fa08866 {
+      width: 100%;
+      font-size: 28rpx;
+      color: #8494af;
+      line-height: 28rpx;
+      height: 28rpx;
+      margin: 40rpx auto 32rpx;
+      text-align: center;
+}
+.margin30 .curMoney .num.data-v-1fa08866 {
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      text-align: center;
+      width: fit-content;
+      margin: auto;
+}
+.margin30 .curMoney .num text.data-v-1fa08866 {
+        color: #213354;
+        font-size: 30rpx;
+}
+.margin30 .curMoney .num .no.data-v-1fa08866 {
+        font-size: 60rpx;
+        line-height: 60rpx;
+}
+
