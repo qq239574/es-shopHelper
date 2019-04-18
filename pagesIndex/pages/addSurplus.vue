@@ -2,7 +2,7 @@
     <view class='surplus page'>
         <surplusWin></surplusWin>
         <view class="curMoney">
-            <view class="tit">当前余额</view>
+            <view class="tit">当前{{label}}</view>
             <view class="num"><text>￥</text><text class='no'>25000</text></view>
         </view>
         <view class="money">
@@ -14,7 +14,7 @@
             <view class='counter'>{{textLength}}/40</view>
         </view>
         <view class="margin30"></view>
-        <longButton :disable='disabled' @click='sure'>确认增加</longButton>
+        <longButton :disable='disabled' @click='sure'>确认{{type}}</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -31,16 +31,44 @@
         data() {
             return {
                 textLength: 0,
-                disabled: true
+                disabled: true,
+                label: '',
+                type: ''
             }
         },
         methods: {
+            initPage() {
+                let title = ''
+                let data = this.Cacher.getData('vipDetail');
+                if (data.type == 'add') {
+                    title = '增加' + data.label;
+                    this.type = '增加';
+                } else {
+                    title = '扣除' + data.label;
+                    this.type = '扣除';
+                }
+                this.label = data.label;
+                uni.setNavigationBarTitle({
+                    title: title
+                });
+            },
             getAddition(val) {
                 this.textLength = val.detail.value.length;
             },
             sure() {
                 uni.navigateBack();
             },
+        },
+        beforeCreate() {
+            uni.setNavigationBarTitle({
+                title: ''
+            });
+        },
+        onLoad() {
+            this.initPage();
+        },
+        onShow() {
+            this.initPage();
         }
     }
 </script>

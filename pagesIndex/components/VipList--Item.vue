@@ -1,19 +1,19 @@
 <template>
     <view class='card--vip'>
-        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index' @click='clickVip(item)'>
-            <view class="imgbox">
+        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index'>
+            <view class="imgbox" @click='clickItem(index,item)'>
                 <image :src='item.img'></image>
             </view>
-            <view class="vip-info">
+            <view class="vip-info" @click='clickItem(index,item)'>
                 <view class="vip-name van-multi-ellipsis--l2">
-                    {{item.vipName}}
+                    {{item.title}}
                 </view>
                 <view class="vip-others">
                     <view class="color">
-                        <view class='vip-class'>铂金超级会员</view>
-                        <view>15656556511</view>
-                        <view>余额：965656</view>
-                        <view>积分：5656</view>
+                        <view class='vip-class'>{{item.vipClass}}</view>
+                        <view>{{item.tel}}</view>
+                        <view>余额：{{item.money}}</view>
+                        <view>积分：{{item.score}}</view>
                     </view>
                 </view>
             </view>
@@ -22,15 +22,15 @@
             </view>
             <view class="model" v-if='menuIndex==="vip-"+index' @click.stop='showMenu("")'>
                 <view class="item" @click.stop='clickMenuItem(index,item,"查看")'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>查看</view>
                 </view>
                 <view class="item" @click.stop='clickMenuItem(index,item,"充值")'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>充值</view>
                 </view>
                 <view class="item" @click.stop='clickMenuItem(index,item,"订单")'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>订单</view>
                 </view>
             </view>
@@ -48,9 +48,31 @@
                 menuIndex: ''
             }
         },
+        props: {
+            vipsList: {
+                type: Array,
+                default: [{
+                    img: '/static/img/global/home_order_tobepay.png',
+                    title: '',
+                    vipClass: '会员',
+                    tel: 1524516566,
+                    money: 0,
+                    score: 0
+                }]
+            }
+        },
         methods: {
             showMenu(vipindex) {
                 this.menuIndex = 'vip-' + vipindex;
+            },
+            clickItem(vipindex, item) {
+                this.$emit('click', {
+                    type: 'item',
+                    detail: {
+                        vipIndex: vipindex,
+                        ...item
+                    }
+                })
             },
             clickMenuItem(vipindex, item, name) {
                 this.menuIndex = '';
@@ -63,50 +85,10 @@
                     }
                 })
             },
-            clickVip(item) {
-                this.$emit('click', {
-                    type: 'vip',
-                    detail: {
-                        val: item
-                    }
-                })
-            },
             formatePrice(val) {
                 return number_format(val, 2, '.', ',')
             }
-        },
-        props: {
-            vipsList: {
-                type: Array,
-                default () {
-                    return [{
-                        img: '/static/img/global/tmp.png',
-                        vipName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '15455.2',
-                        saled: 1
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        vipName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '152344.2',
-                        saled: 1
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        vipName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '1533334',
-                        saled: 1
-                    }]
-                }
-            }
-        },
+        }
     }
 </script>
 
@@ -174,12 +156,12 @@
                             margin: 0 36upx 0 0;
                             line-height: 44upx;
                         }
-                        .vip-class{
-                            height:36upx;
+                        .vip-class {
+                            height: 36upx;
                             padding: 0 16upx;
-                            color:#fff;
+                            color: #fff;
                             text-align: center;
-                            background: linear-gradient(90deg ,#bd8e61,#d4b18f);
+                            background: linear-gradient(90deg, #bd8e61, #d4b18f);
                             font-size: 20upx;
                             line-height: 36upx;
                             border-radius: 18upx;

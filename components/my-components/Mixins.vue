@@ -13,13 +13,14 @@
             return {
                 showReachBottom: false,
                 pageIsLoading: false,
-                Cacher:cacher,
+                Cacher: cacher,
                 Toast,
-                Dialog
+                Dialog,
+                DataFrom:'',//页面传参
             };
         },
         methods: {
-            Request(){
+            Request() {
                 return request;
             },
             pageLoading() {
@@ -59,12 +60,19 @@
             this.showReachBottom = true;
         },
         created() {
-            
             this.pageLoading();
         },
         onHide() {
             this.closePageLoading();
-        }
+        },
+        onLoad(option) {
+            console.log(option);
+            if (!option.from) { //如果没有from就说明是刚进入小程序
+            } else {
+                this.DataFrom=this.Cacher.getData(option.from);
+                console.log('DataFrom:  ',this.Cacher.getData(option.from)); //获取页面传参
+            }
+        },
     }
 </script>
 

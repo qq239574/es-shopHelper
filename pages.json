@@ -204,6 +204,8 @@
 			"path": "pages/addSurplus",
 			"style": {
 				"navigationBarTitleText": "增加余额",
+				"navigationBarTextStyle":"#fff",
+				"navigationBarBackgroundColor":"#203352", 
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
@@ -222,6 +224,9 @@
 			"path": "pages/vipDetail",
 			"style": {
 				"navigationBarTitleText": "会员详情",
+				"navigationBarTextStyle":"#fff",
+				"navigationBarBackgroundColor":"#203352", 
+				"enablePullDownRefresh": false,
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
@@ -230,7 +235,7 @@
 		}, {
 			"path": "pages/vipManage",
 			"style": {
-				"navigationBarTitleText": "会员详情",
+				"navigationBarTitleText": "会员管理",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
@@ -249,6 +254,24 @@
 			"path": "pages/additionList",
 			"style": {
 				"navigationBarTitleText": "备注",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		}, {
+			"path": "pages/noticeList",
+			"style": {
+				"navigationBarTitleText": "公告",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		}, {
+			"path": "pages/noticeDetail",
+			"style": {
+				"navigationBarTitleText": "公告详情",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"

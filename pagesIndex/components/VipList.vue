@@ -1,6 +1,6 @@
 <template>
     <view class='vip-list'>
-        <item @click='clickItem'></item>
+        <itemList @click='clickItem' :vipsList='vipsList'></itemList>
         <view class="grace-shade grace-shade-black" v-if="show" @click='closeAll'>
             <view class="  grace-animate fadeIn">
                 <view class="body">
@@ -50,11 +50,11 @@
 </template>
 
 <script>
-    import item from './VipList--Item.vue';
+    import itemList from './VipList--Item.vue';
     import PopUp from '../../components/my-components/PopUp.vue';
     export default {
         components: {
-            item,
+            itemList,
             PopUp
         },
         data() {
@@ -63,7 +63,15 @@
                 goodData: {},
                 staticUrl: '/static/img/global/tmpAct.png',
                 show: false,
-                show2: false
+                show2: false,
+                vipsList: [{
+                    img: '/static/img/global/home_order_tobepay.png',
+                    title: '的看风景上课了几分了快速减肥',
+                    vipClass: '铂金超级会员',
+                    tel: 1524516566,
+                    money: 152444,
+                    score: 154666
+                }]
             }
         },
         methods: {
@@ -71,19 +79,28 @@
                 this.show = false;
                 this.show2 = false;
             },
-            clickItem(val) { 
+            clickItem(val) {
+                this.Cacher.setData('vipManage', {
+                    from: 'vipManage',
+                    ...val
+                });
                 if (val.type == 'menu-item') {
                     // this.show = true;
-
                     if (val.name == '查看') {
                         uni.navigateTo({
-                            url:'../pages/vipDetail'
+                            url: '../pages/vipDetail?from=vipManage'
                         })
                     } else if (val.name == '充值') {
-
+                        this.Toast('暂未开放')
                     } else if (val.name == '订单') {
-                        
+                        uni.reLaunch({
+                            url: '../../pages/bill/index?from=vipManage'
+                        })
                     }
+                } else if (val.type == 'item') {
+                    uni.navigateTo({
+                        url: '../pages/vipDetail?from=vipManage'
+                    })
                 }
             },
             showBanner: function() {

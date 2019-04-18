@@ -60,6 +60,7 @@ var _default = {
       password: '',
       idError: false //用户信息错误
     };
+
   },
   computed: {
     disableButton: function disableButton() {
@@ -67,6 +68,14 @@ var _default = {
       return !this.userId || !this.password;
     } },
 
+  onLoad: function onLoad(option) {
+    console.log(option);
+    if (!option.from) {//如果没有from就说明是刚进入小程序
+
+    } else {
+      console.log(this.Cacher.getData(option.from)); //获取页面传参
+    }
+  },
   methods: {
     initPage: function initPage() {
       this.openEye = false;

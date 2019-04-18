@@ -49,6 +49,7 @@
 				userId: '',
 				password: '',
 				idError: false, //用户信息错误
+				
 			}
 		},
 		computed: {
@@ -57,6 +58,14 @@
 				return !this.userId || !this.password;
 			}
 		}, 
+		onLoad(option){
+			console.log(option);
+			if(!option.from){//如果没有from就说明是刚进入小程序
+
+			}else{
+				console.log(this.Cacher.getData(option.from));//获取页面传参
+			}
+		},
 		methods: {
 			initPage() {
 				this.openEye = false;

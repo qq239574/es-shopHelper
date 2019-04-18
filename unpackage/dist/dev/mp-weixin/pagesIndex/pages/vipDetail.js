@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var vipBaseInfo = function vipBaseInfo() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo */ "pagesIndex/components/Vip-BaseInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-BaseInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo.vue"));};var vipBussiness = function vipBussiness() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Business */ "pagesIndex/components/Vip-Business").then(__webpack_require__.bind(null, /*! ../components/Vip-Business.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Business.vue"));};var vipCommission = function vipCommission() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo */ "pagesIndex/components/Vip-CommissionInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-CommissionInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo.vue"));};var vipWin = function vipWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Detail-Window */ "pagesIndex/components/Vip-Detail-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Detail-Window.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Detail-Window.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var vipBaseInfo = function vipBaseInfo() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo */ "pagesIndex/components/Vip-BaseInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-BaseInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo.vue"));};var vipBussiness = function vipBussiness() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Business */ "pagesIndex/components/Vip-Business").then(__webpack_require__.bind(null, /*! ../components/Vip-Business.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Business.vue"));};var vipCommission = function vipCommission() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo */ "pagesIndex/components/Vip-CommissionInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-CommissionInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo.vue"));};var vipWin = function vipWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Detail-Window */ "pagesIndex/components/Vip-Detail-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Detail-Window.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Detail-Window.vue"));};var _default =
 
 
 
@@ -55,7 +55,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   methods: {
     clickTab: function clickTab(val) {
       this.tabIndex = val.index;
+    },
+    clickBaseInfo: function clickBaseInfo(val) {
+      if (val.label == '余额' || val.label == '积分') {
+        if (val.type == 'add' || val.type == 'minus') {//增加或扣除
+          this.Cacher.setData('vipDetail', val);
+          uni.navigateTo({
+            url: './addSurplus?from=vipDetail' });
+
+        } else if (val.type == 'clear') {//清空操作
+          this.pageLoading();
+        }
+      } else if (val.label == '优惠券') {
+        uni.navigateTo({
+          url: './coupon' });
+
+      }
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

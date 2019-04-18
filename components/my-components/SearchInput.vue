@@ -1,37 +1,53 @@
 <template>
-    <view class='my-search-input' :style='bgStyle'>
-        <view class="grace-items" :style='inputStyle' >
+    <view class='my-search-input' :style='bgStyle' @click='clickSearch'>
+        <view class="grace-items" :style='inputStyle'>
             <view class="grace-boxes-img grace-iconfont icon-search"></view>
-            <input type="text" class="input" name="name" :value='val' :placeholder="placeholder" @input='getInput' @change='getInput' />
-            <view class="grace-boxes-img grace-iconfont icon-close" style='margin:0;' @click='getInput("clear")' v-show='showClear'></view>
+            <input type="text" class="input" name="name" :value='val' :disabled='disabled' :placeholder="placeholder" @input='getInput' @change='getInput' />
+            <view class="grace-boxes-img grace-iconfont icon-close" style='margin:0;' @click='getInput("clear")' v-show='showClear&&!disabled'></view>
         </view>
     </view>
 </template>
 
 <script>
     export default {
-        props:{
-            placeholder:{
-                type:String,
-                default:'手机号/微信昵称/姓名'
+        props: {
+            placeholder: {
+                type: String,
+                default: '手机号/微信昵称/姓名'
             },
-            bgStyle:{
-                 type:String,
-                default:''
-            },inputStyle:{
-                 type:String,
+            bgStyle: {
+                type: String,
+                default: ''
+            },
+            inputStyle: {
+                type: String,
+                default: ''
+            },
+            disabled: {
+                type: Boolean,
+                default: false
+            },
+            value:{
+                type:String, 
                 default:''
             }
-            
+        },
+        watch:{
+            value(){
+                this.val=this.value; 
+            }
         },
         data() {
             return {
                 val: ''
             }
         },
-        computed:{
-            showClear(){
-                return this.val!=='';
+        mounted(){
+            this.val=this.value; 
+        },
+        computed: {
+            showClear() {
+                return this.val !== '';
             }
         },
         methods: {
@@ -43,6 +59,9 @@
                     this.val = val.detail.value;
                     this.$emit(val.type, val.detail)
                 }
+            },
+            clickSearch(){
+                this.$emit('click',this.val)
             }
         },
     }

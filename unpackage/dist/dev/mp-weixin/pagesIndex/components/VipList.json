@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "item": "/pagesIndex/components/VipList--Item",
+    "item-list": "/pagesIndex/components/VipList--Item",
     "pop-up": "/components/my-components/PopUp"
   },
   "component": true

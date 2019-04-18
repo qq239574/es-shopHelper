@@ -34,6 +34,7 @@ var userInfo = {};var _default =
 
   data: function data() {
     return {
+      searchShop: '',
       shops: [{
         title: '花花的店铺1',
         left: '30天后到期',
@@ -44,7 +45,8 @@ var userInfo = {};var _default =
   },
   methods: {
     selectShop: function selectShop(item) {
-      console.log(item);
+      this.Cacher.setData('selectShop', item);
+      this.toInex('from=selectShop&status=selectShop');
     },
     reLogin: function reLogin() {
       uni.reLaunch({
@@ -57,15 +59,43 @@ var userInfo = {};var _default =
 
     },
     checkUserInfo: function checkUserInfo() {
-      this.Dialog.alert({
-        title: '标题',
-        message: '弹窗内容' }).
+      this.Dialog.confirm({
+        title: '绑定微信',
+        message: '绑定后，可使用微信快捷登录您的管理员账号',
+        confirmButtonText: '立即绑定' }).
       then(function () {
-        // on close
-      });
+        uni.login({
+          provider: 'weixin',
+          success: function success(loginRes) {
+            console.log(loginRes.authResult);
+            // 获取用户信息
+            uni.getUserInfo({
+              provider: 'weixin',
+              success: function success(infoRes) {
+                console.log('用户昵称为：' + infoRes.userInfo.nickName);
+              } });
+
+          } });
+
+      }).catch(function () {});
+    },
+    toSearch: function toSearch() {
+      uni.navigateTo({
+        url: './searchShop' });
+
+    },
+    initPage: function initPage() {
+      var searchData = this.Cacher.getData('searchShop');
+      if (searchData && searchData.from == 'searchShop') {
+        this.searchShop = searchData.value;
+      }
     } },
 
+  onShow: function onShow() {
+    this.initPage();
+  },
   onLoad: function onLoad(option) {var _this = this;
+    this.initPage();
     setTimeout(function () {
       userInfo = _this.Cacher.getData('userInfo');
       console.log(userInfo);
@@ -101,7 +131,6 @@ var userInfo = {};var _default =
       } else {
         _this.checkUserInfo();
       }
-
     }, 1000);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

@@ -28,7 +28,7 @@ var GRT = [
 	// h6 样式
 	['h6', "font-size:0.9em; line-height:2em;"],
 	// p 样式
-	['p', "font-size:1em; line-height:2em;"],
+	['p', "font-size:1em; line-height:1.7em;"],
 	// b 样式
 	['b', "font-size:1em; line-height:2em;"],
 	// strong 样式
@@ -36,7 +36,7 @@ var GRT = [
 	// code 样式
 	['code', "font-size:1em; line-height:1.2em; background:#F6F7F8; padding:8px 2%; width:96%;"],
 	// img 样式
-	['img', "width:100%; margin:8px 0;"],
+	['img', "width:100%; margin:13px 0;border-radius:5px;"],
 	// blockquote
 	['blockquote', "font-size:1em; border-left:3px solid #D1D1D1; line-height:2em; border-radius:5px; background:#F6F7F8; padding:8px 2%;"],
 	// li 样式

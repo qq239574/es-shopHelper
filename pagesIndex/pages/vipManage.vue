@@ -1,6 +1,6 @@
 <template>
     <view class='vip-manage page'>
-        <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput> 
+        <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
         <Card @click='clickGood'></Card>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -11,6 +11,7 @@
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import Card from '../components/VipList.vue';
+    let bar = ''
     export default {
         components: {
             TabCard,
@@ -18,12 +19,19 @@
             Card
         },
         data() {
-            return { 
+            return {
+                searching: false
             }
         },
         methods: {
-            search(val) {},
-            clickGood(item) {
+            search(val) {
+                clearTimeout(bar);
+                bar = setTimeout(() => {
+                    console.log(val);
+                    this.pageLoading()
+                }, 500)
+            },
+            clickGood(item) { 
                 if (item.type == 'menu-item') {
                     if (item.name == '编辑') {
                         this.setGood(item);

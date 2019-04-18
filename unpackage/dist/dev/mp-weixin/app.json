@@ -40,7 +40,9 @@
         "pages/vipDetail",
         "pages/vipManage",
         "pages/selectCoupon",
-        "pages/additionList"
+        "pages/additionList",
+        "pages/noticeList",
+        "pages/noticeDetail"
       ]
     },
     {

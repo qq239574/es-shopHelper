@@ -1,0 +1,1 @@
+<view class="notice page _div data-v-070c7e4c" bind:__l="__l"><block wx:for="{{list}}" wx:for-item="item" wx:for-index="index" wx:key="index"><block class="data-v-070c7e4c"><item info="{{item}}" data-event-opts="{{[['^click',[['clickItem']]]]}}" bind:click="__e" class="data-v-070c7e4c"></item></block></block></view>

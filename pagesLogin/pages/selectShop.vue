@@ -1,6 +1,6 @@
 <template>
     <view class='my-shops page'>
-        <search placeholder='搜索店铺'></search>
+        <search placeholder='搜索店铺' :value='searchShop' :disabled='true' @click='toSearch'></search>
         <view class="h1">我管理的店铺({{shops.length}})</view>
         <shopBlock :shops='shops' @click='selectShop'></shopBlock>
         <view class="foot">
@@ -24,6 +24,7 @@
         },
         data() {
             return {
+                searchShop: '',
                 shops: [{
                     title: '花花的店铺1',
                     left: '30天后到期',
@@ -34,7 +35,8 @@
         },
         methods: {
             selectShop(item) {
-                console.log(item)
+                this.Cacher.setData('selectShop', item);
+                this.toInex('from=selectShop&status=selectShop');
             },
             reLogin() {
                 uni.reLaunch({
@@ -47,15 +49,43 @@
                 })
             },
             checkUserInfo() {
-                this.Dialog.alert({
-                    title: '标题',
-                    message: '弹窗内容'
+                this.Dialog.confirm({
+                    title: '绑定微信',
+                    message: '绑定后，可使用微信快捷登录您的管理员账号',
+                    confirmButtonText: '立即绑定'
                 }).then(() => {
-                    // on close
-                });
+                    uni.login({
+                        provider: 'weixin',
+                        success: function(loginRes) {
+                            console.log(loginRes.authResult);
+                            // 获取用户信息
+                            uni.getUserInfo({
+                                provider: 'weixin',
+                                success: function(infoRes) {
+                                    console.log('用户昵称为：' + infoRes.userInfo.nickName);
+                                }
+                            });
+                        }
+                    });
+                }).catch(() => {});
+            },
+            toSearch() {
+                uni.navigateTo({
+                    url: './searchShop'
+                })
+            },
+            initPage() {
+                let searchData = this.Cacher.getData('searchShop'); 
+                if (searchData && searchData.from == 'searchShop') {
+                    this.searchShop = searchData.value;
+                }
             }
         },
+        onShow() {
+            this.initPage();
+        },
         onLoad(option) {
+             this.initPage();
             setTimeout(() => {
                 userInfo = this.Cacher.getData('userInfo');
                 console.log(userInfo);
@@ -91,7 +121,6 @@
                 } else {
                     this.checkUserInfo()
                 }
-                
             }, 1000)
         }
     }

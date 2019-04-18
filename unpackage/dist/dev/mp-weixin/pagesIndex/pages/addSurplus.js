@@ -41,16 +41,45 @@
   data: function data() {
     return {
       textLength: 0,
-      disabled: true };
+      disabled: true,
+      label: '',
+      type: '' };
 
   },
   methods: {
+    initPage: function initPage() {
+      var title = '';
+      var data = this.Cacher.getData('vipDetail');
+      if (data.type == 'add') {
+        title = '增加' + data.label;
+        this.type = '增加';
+      } else {
+        title = '扣除' + data.label;
+        this.type = '扣除';
+      }
+      this.label = data.label;
+      uni.setNavigationBarTitle({
+        title: title });
+
+    },
     getAddition: function getAddition(val) {
       this.textLength = val.detail.value.length;
     },
     sure: function sure() {
       uni.navigateBack();
-    } } };exports.default = _default;
+    } },
+
+  beforeCreate: function beforeCreate() {
+    uni.setNavigationBarTitle({
+      title: '' });
+
+  },
+  onLoad: function onLoad() {
+    this.initPage();
+  },
+  onShow: function onShow() {
+    this.initPage();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

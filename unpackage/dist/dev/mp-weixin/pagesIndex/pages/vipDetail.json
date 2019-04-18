@@ -1,5 +1,8 @@
 {
   "navigationBarTitleText": "会员详情",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#203352",
+  "enablePullDownRefresh": false,
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",

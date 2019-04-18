@@ -47,8 +47,9 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
       pageIsLoading: false,
       Cacher: cacher,
       Toast: _toast.default,
-      Dialog: _dialog.default };
-
+      Dialog: _dialog.default,
+      DataFrom: '' //页面传参
+    };
   },
   methods: {
     Request: function Request() {
@@ -91,11 +92,18 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
     this.showReachBottom = true;
   },
   created: function created() {
-
     this.pageLoading();
   },
   onHide: function onHide() {
     this.closePageLoading();
+  },
+  onLoad: function onLoad(option) {
+    console.log(option);
+    if (!option.from) {//如果没有from就说明是刚进入小程序
+    } else {
+      this.DataFrom = this.Cacher.getData(option.from);
+      console.log('DataFrom:  ', this.Cacher.getData(option.from)); //获取页面传参
+    }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

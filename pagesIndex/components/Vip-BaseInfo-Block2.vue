@@ -1,8 +1,8 @@
 <template>
     <view class='vip-baseinfo-block2'>
-        <selectItem label='余额' value='2564452' @click='toSurplus'></selectItem>
-        <selectItem label='积分' value='2564452'></selectItem>
-        <selectItem label='优惠券' value='2564452' @click='toCoupon'></selectItem>
+        <selectItem label='余额' value='2564452' @click='clickItem'></selectItem>
+        <selectItem label='积分' value='2564452'  @click='clickItem'></selectItem>
+        <selectItem label='优惠券' value='2564452' @click='clickItem'></selectItem>
     </view>
 </template>
 
@@ -13,16 +13,9 @@
             selectItem,
         },
         methods: {
-            toSurplus() {
-                uni.navigateTo({
-                    url: '../pages/addSurplus'
-                })
-            },
-            toCoupon() {
-                uni.navigateTo({
-                    url: '../pages/coupon'
-                })
-            }
+            clickItem(val) {
+               this.$emit('click',val)
+            }, 
         },
     }
 </script>

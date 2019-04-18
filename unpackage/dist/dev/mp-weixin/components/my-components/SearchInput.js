@@ -28,16 +28,32 @@ var _default =
     bgStyle: {
       type: String,
       default: '' },
+
     inputStyle: {
+      type: String,
+      default: '' },
+
+    disabled: {
+      type: Boolean,
+      default: false },
+
+    value: {
       type: String,
       default: '' } },
 
 
+  watch: {
+    value: function value() {
+      this.val = this.value;
+    } },
 
   data: function data() {
     return {
       val: '' };
 
+  },
+  mounted: function mounted() {
+    this.val = this.value;
   },
   computed: {
     showClear: function showClear() {
@@ -53,6 +69,9 @@ var _default =
         this.val = val.detail.value;
         this.$emit(val.type, val.detail);
       }
+    },
+    clickSearch: function clickSearch() {
+      this.$emit('click', this.val);
     } } };exports.default = _default;
 
 /***/ }),

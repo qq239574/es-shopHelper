@@ -36,8 +36,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "select shop",
-					"pathName": "pagesLogin/pages/selectShop",
+					"name": "ddd",
+					"pathName": "pagesIndex/pages/vipDetail",
 					"scene": null
 				}
 			]

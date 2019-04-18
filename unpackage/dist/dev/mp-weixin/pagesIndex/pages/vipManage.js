@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};
 
 
 
@@ -21,6 +21,7 @@
 
 
 
+var bar = '';var _default =
 {
   components: {
     TabCard: TabCard,
@@ -28,11 +29,18 @@
     Card: Card },
 
   data: function data() {
-    return {};
+    return {
+      searching: false };
 
   },
   methods: {
-    search: function search(val) {},
+    search: function search(val) {var _this = this;
+      clearTimeout(bar);
+      bar = setTimeout(function () {
+        console.log(val);
+        _this.pageLoading();
+      }, 500);
+    },
     clickGood: function clickGood(item) {
       if (item.type == 'menu-item') {
         if (item.name == '编辑') {

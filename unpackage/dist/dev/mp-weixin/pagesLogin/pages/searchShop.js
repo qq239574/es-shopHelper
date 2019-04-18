@@ -8,15 +8,28 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-var _default =
-{};exports.default = _default;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInputWithButton */ "components/my-components/SearchInputWithButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInputWithButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInputWithButton.vue"));};var _default =
+
+
+
+
+
+
+
+
+{
+  components: {
+    search: search },
+
+  methods: {
+    search: function search(val) {
+      this.Cacher.setData('searchShop', {
+        from: 'searchShop',
+        value: val });
+
+      uni.navigateBack();
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

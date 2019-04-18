@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var item = function item() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var itemList = function itemList() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
 
 
 
@@ -64,7 +64,7 @@
 
 {
   components: {
-    item: item,
+    itemList: itemList,
     PopUp: PopUp },
 
   data: function data() {
@@ -73,7 +73,15 @@
       goodData: {},
       staticUrl: '/static/img/global/tmpAct.png',
       show: false,
-      show2: false };
+      show2: false,
+      vipsList: [{
+        img: '/static/img/global/home_order_tobepay.png',
+        title: '的看风景上课了几分了快速减肥',
+        vipClass: '铂金超级会员',
+        tel: 1524516566,
+        money: 152444,
+        score: 154666 }] };
+
 
   },
   methods: {
@@ -82,18 +90,27 @@
       this.show2 = false;
     },
     clickItem: function clickItem(val) {
+      this.Cacher.setData('vipManage', _objectSpread({
+        from: 'vipManage' },
+      val));
+
       if (val.type == 'menu-item') {
         // this.show = true;
-
         if (val.name == '查看') {
           uni.navigateTo({
-            url: '../pages/vipDetail' });
+            url: '../pages/vipDetail?from=vipManage' });
 
         } else if (val.name == '充值') {
-
+          this.Toast('暂未开放');
         } else if (val.name == '订单') {
+          uni.reLaunch({
+            url: '../../pages/bill/index?from=vipManage' });
 
         }
+      } else if (val.type == 'item') {
+        uni.navigateTo({
+          url: '../pages/vipDetail?from=vipManage' });
+
       }
     },
     showBanner: function showBanner() {

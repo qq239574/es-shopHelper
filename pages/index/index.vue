@@ -9,10 +9,10 @@
         </view>
         <dataShower></dataShower>
         <view class="block">
-            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费'>
+            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' @click='toPay'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </inputItem>
-            <selectItem label='微信系统于7月10日出现警告' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;'>
+            <selectItem label='微信系统于7月10日出现警告' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -52,9 +52,8 @@
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/selectShop?from=home&&status=switchShop'
                 })
-            }, 
+            },
             toApp(val) {
-                console.log(val);
                 if (val.title == '数据统计') {
                     uni.navigateTo({
                         url: '../../pagesIndex/pages/index'
@@ -63,11 +62,19 @@
                     uni.navigateTo({
                         url: '../../pagesIndex/pages/vipManage'
                     })
-                } else if (val.title == '自提核销') {
-                }
+                } else if (val.title == '自提核销') {}
             },
             toBill(val) {
                 console.log(val);
+            },
+            toPay() {
+                this.Toast('暂未开通该业务')
+            },
+            toNotice(val) {
+                this.Cacher.setData('home',{from:'home',...val});//页面传参
+                uni.navigateTo({
+                    url: '../../pagesIndex/pages/noticeList?from=home'
+                })
             }
         }
     }
