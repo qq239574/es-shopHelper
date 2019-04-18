@@ -43,7 +43,8 @@
       textLength: 0,
       disabled: true,
       label: '',
-      type: '' };
+      type: '',
+      curnum: 0 };
 
   },
   methods: {
@@ -57,6 +58,7 @@
         title = '扣除' + data.label;
         this.type = '扣除';
       }
+      this.curnum = data.value;
       this.label = data.label;
       uni.setNavigationBarTitle({
         title: title });

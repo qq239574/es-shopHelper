@@ -3,10 +3,10 @@
         <surplusWin></surplusWin>
         <view class="curMoney">
             <view class="tit">当前{{label}}</view>
-            <view class="num"><text>￥</text><text class='no'>25000</text></view>
+            <view class="num"><text v-if='label=="余额"'>￥</text><text class='no'>{{curnum}}</text></view>
         </view>
         <view class="money">
-            <view class="col col1">￥</view>
+            <view class="col col1" :style='label=="余额"?"":"opacity:0"'>￥</view>
             <view class="col col2"><input type="digit" placeholder='输入增加金额数' placeholder-style="color:#d2d5db;font-weight:500;"></view>
         </view>
         <view class="textarea">
@@ -33,7 +33,8 @@
                 textLength: 0,
                 disabled: true,
                 label: '',
-                type: ''
+                type: '',
+                curnum:0
             }
         },
         methods: {
@@ -47,6 +48,7 @@
                     title = '扣除' + data.label;
                     this.type = '扣除';
                 }
+                this.curnum=data.value;
                 this.label = data.label;
                 uni.setNavigationBarTitle({
                     title: title
