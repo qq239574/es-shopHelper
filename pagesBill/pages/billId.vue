@@ -2,6 +2,8 @@
     <view class='bill-id page'>
         <input class='textarea' :value='val' placeholder-style="color:#d2d5db" :maxlength='-1' placeholder="请填写物流单号" @input='getId' />
         <longButton :disable='disable' @click='sure'>确定</longButton>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

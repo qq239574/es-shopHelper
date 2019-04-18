@@ -44,6 +44,8 @@
 
 
 
+
+
 var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/echarts/echarts.simple.min.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\echarts\\echarts.simple.min.js"));
 
 
@@ -94,6 +96,8 @@ var _DetailEchartsOption = _interopRequireDefault(__webpack_require__(/*! ../com
 //
 //
 //
+//
+//
 var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var uniPagination = function uniPagination() {return __webpack_require__.e(/*! import() | components/uni-pagination/uni-pagination */ "components/uni-pagination/uni-pagination").then(__webpack_require__.bind(null, /*! ../../components/uni-pagination/uni-pagination.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\uni-pagination\\uni-pagination.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var searchSection = []; //搜索日期区间
 var datalist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //接口获得的数据，用于echarts
 var _default = { data: function data() {return { pageLabel: '近7日', updateStatus: false, dataList: [{ //接口数据例子
@@ -106,9 +110,7 @@ var _default = { data: function data() {return { pageLabel: '近7日', updateSta
       var info = (0, _cache.getData)('echarts-detail'); // ./index跳转过来携带的参数
       searchSection = (0, _cache.getData)('filte-date-moneyDetail') || [(0, _getDateSection.getDate)(0), (0, _getDateSection.getDate)(-1), '今天']; //默认今天
       this.$refs.lineChart.init();this.pageLabel = searchSection[2];setTimeout(function () {datalist = [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 15.6, 62.2, 32.6, 20.0, 6.4, 3.3];_this.$refs.lineChart.init();_this.tableList = (0, _DetailTableList.default)(); //获取表格数据
-      }, 2000);}, filteDate: function filteDate() {uni.navigateTo({ url: './filterDate?from=moneyDetail' });
-    },
-    changePager: function changePager(val) {
+      }, 2000);}, filteDate: function filteDate() {uni.navigateTo({ url: './filterDate?from=moneyDetail' });}, changePager: function changePager(val) {
       this.tableList = (0, _DetailTableList.default)(); //获取表格数据
     },
     clickModel: function clickModel() {

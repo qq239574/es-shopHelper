@@ -8,7 +8,12 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+
+
+
+
+
 
 
 
@@ -31,7 +36,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 {
   components: {
     surplusWin: surplusWin,
-    longButton: longButton } };exports.default = _default;
+    longButton: longButton },
+
+  data: function data() {
+    return {
+      textLength: 0,
+      disabled: true };
+
+  },
+  methods: {
+    getAddition: function getAddition(val) {
+      this.textLength = val.detail.value.length;
+    },
+    sure: function sure() {
+      uni.navigateBack();
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

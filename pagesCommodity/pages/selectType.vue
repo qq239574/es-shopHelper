@@ -1,6 +1,8 @@
 <template>
     <div class='select-type page'>
         <tabs></tabs>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 

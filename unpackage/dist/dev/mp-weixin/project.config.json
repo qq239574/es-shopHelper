@@ -32,26 +32,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
-					"name": "vip",
-					"pathName": "pagesIndex/pages/vipManage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vipdetail",
-					"pathName": "pagesIndex/pages/vipDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "surplus",
-					"pathName": "pagesIndex/pages/addSurplus",
+					"name": "select shop",
+					"pathName": "pagesLogin/pages/selectShop",
 					"scene": null
 				}
 			]

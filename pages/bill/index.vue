@@ -3,6 +3,8 @@
         <SearchInput @input='search'></SearchInput>
         <TabCard @tabChange='tabChange'></TabCard>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

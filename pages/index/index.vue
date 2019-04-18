@@ -18,7 +18,8 @@
         </view>
         <goodsBlock @click='toBill'></goodsBlock>
         <apps @click='toApp'></apps>
-        <LongButton @click='toLogin'>登录</LongButton>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 <script>
@@ -49,14 +50,9 @@
         methods: {
             changeShop() {
                 uni.navigateTo({
-                    url: '../../pagesLogin/pages/selectShop'
+                    url: '../../pagesLogin/pages/selectShop?from=home&&status=switchShop'
                 })
-            },
-            toLogin() {
-                uni.redirectTo({
-                    url: '../login/index'
-                })
-            },
+            }, 
             toApp(val) {
                 console.log(val);
                 if (val.title == '数据统计') {

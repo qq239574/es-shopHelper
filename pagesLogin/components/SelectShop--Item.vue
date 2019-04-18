@@ -1,6 +1,6 @@
 <template>
     <view class='shops-list'>
-        <view class='shop-block' v-for='(shop,index) in shops' :key='index' @click='select(shop)'>
+        <view class='shop-block' @click='select(shop)' v-for='(shop,index) in shops' :key='index' :class="states[shop.status].id">
             <image :src='shop.img'></image>
             <view class="info">
                 <view class="title">{{shop.title}}</view>
@@ -50,8 +50,11 @@
             }
         },
         methods: {
-            select(item){
-                this.$emit('click',item)
+            bgGray(shop) {
+                return (this.shop.id == 'disable' || this.shop.id == 'examing') ? 'background:"#f4f4f4"' : '';
+            },
+            select(item) {
+                this.$emit('click', item)
             }
         },
     }
@@ -134,6 +137,15 @@
         .icon {
             margin: auto 20upx auto 0;
             line-height: 50upx;
+        }
+        &.disable,
+        &.examing {
+            background: #f4f4f4;
+            .info {
+                .title ,.date{
+                    color: #9fa2aa;
+                }
+            }
         }
     }
 </style>

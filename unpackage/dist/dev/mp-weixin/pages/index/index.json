@@ -4,6 +4,8 @@
   "enablePullDownRefresh": true,
   "backgroundColor": "#f3f5f9",
   "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "long-button": "/components/my-components/LongButton",
     "select-item": "/components/my-components/editBlock-SelectItem",
     "input-item": "/components/my-components/editBlock-InputItem",

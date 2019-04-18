@@ -3,6 +3,8 @@
         <SearchInput @input='search'></SearchInput>
         <TabCard :categories='categories'></TabCard>
         <Card @click='clickGood'></Card>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 

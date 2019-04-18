@@ -1,0 +1,1 @@
+<view class="picker-item data-v-259983e8" bind:__l="__l"><view class="content data-v-259983e8">{{info.title}}</view><view class="number data-v-259983e8"><number-box value="{{info.number}}" data-event-opts="{{[['^change',[['change']]]]}}" bind:change="__e" class="data-v-259983e8"></number-box></view></view>

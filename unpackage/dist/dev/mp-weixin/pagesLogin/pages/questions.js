@@ -27,9 +27,11 @@
 //
 //
 //
+//
+//
 
 var userId = '',
-password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
+password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp2 */ "components/my-components/PopUp2").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp2.vue"));};var _default =
 
 
 {
@@ -67,14 +69,12 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
       this.question = val;
     },
     showQuestions: function showQuestions() {
-      this.showList = true;
-    },
-    closeQuestions: function closeQuestions() {
-      this.showList = false;
+      this.showList = !this.showList;
     },
     nextPage: function nextPage() {
-      uni.reLaunch({
-        url: '../../pages/index/index' });
+      this.pageLoading();
+      uni.navigateTo({
+        url: './setNew' });
 
     },
     getName: function getName(val) {

@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "搜索店铺",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+  }
 }

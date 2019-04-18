@@ -1,6 +1,7 @@
 <template>
     <view class='search-shop page'>
-        sousuo
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

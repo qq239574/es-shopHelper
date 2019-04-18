@@ -1,1 +1,1 @@
-<view class="edit-good page data-v-1fae5d70" bind:__l="__l"></view>
+<view class="edit-good page data-v-1fae5d70" bind:__l="__l"><van-toast id="van-toast" data-com-type="wx" class="data-v-1fae5d70"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-1fae5d70"></van-dialog></view>

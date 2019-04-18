@@ -1,6 +1,7 @@
 <template>
     <div>
-
+<van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 

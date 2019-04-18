@@ -13,7 +13,8 @@
         </DatePicker>
         <view class="tip">*最大筛选日期长度为90天</view>
         <langButton @click='goBack'>确定</langButton>
-        <van-toast id="van-toast" />
+      <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

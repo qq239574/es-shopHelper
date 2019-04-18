@@ -1,10 +1,12 @@
 <template>
     <view class='tip-detail page'>
         <vipWin></vipWin>
-        <tabs :categories='categories' @tabChange='clickTab'></tabs>
+        <tabs :categories='categories' @tabChange='clickTab'></tabs> 
         <vipBaseInfo v-if='tabIndex==0'></vipBaseInfo>
         <vipBussiness v-else-if='tabIndex==1'></vipBussiness>
         <vipCommission v-else></vipCommission>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -49,5 +51,11 @@
 </script>
 
 <style lang="scss" scoped>
-    .tip-detail {}
+    .tip-detail { 
+        .margin20{
+            height:20upx;
+            width:100%;
+            background: #f5f7fa;
+        }
+    }
 </style>

@@ -538,6 +538,15 @@ function processEventExtra(vm, extra) {
   return extraObj;
 }
 
+function getObjByArray(arr) {
+  var obj = {};
+  for (var i = 1; i < arr.length; i++) {
+    var element = arr[i];
+    obj[element[0]] = element[1];
+  }
+  return obj;
+}
+
 function processEventArgs(vm, event) {var args = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];var extra = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];var isCustom = arguments.length > 4 ? arguments[4] : undefined;var methodName = arguments.length > 5 ? arguments[5] : undefined;
   var isCustomMPEvent = false; // wxcomponent 组件，传递原始 event 对象
   if (isCustom) {// 自定义事件
@@ -567,7 +576,9 @@ function processEventArgs(vm, event) {var args = arguments.length > 2 && argumen
         }
       }
     } else {
-      if (typeof arg === 'string' && hasOwn(extraObj, arg)) {
+      if (Array.isArray(arg) && arg[0] === 'o') {
+        ret.push(getObjByArray(arg));
+      } else if (typeof arg === 'string' && hasOwn(extraObj, arg)) {
         ret.push(extraObj[arg]);
       } else {
         ret.push(arg);
@@ -8615,6 +8626,23 @@ createPage(_addSurplus.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FadditionList\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FadditionList"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _additionList = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/additionList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\additionList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_additionList.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2Fcoupon\"}":
 /*!****************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2Fcoupon"} ***!
@@ -8679,6 +8707,23 @@ createPage(_index.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _moneyDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/moneyDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\moneyDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_moneyDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FselectCoupon\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FselectCoupon"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _selectCoupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/selectCoupon.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\selectCoupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_selectCoupon.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -9227,6 +9272,75 @@ function isNumber(value) {
 function range(num, min, max) {
   return Math.min(Math.max(num, min), max);
 }
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/wxcomponents/vant-weapp/dialog/dialog.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var queue = [];
+function getContext() {
+  var pages = getCurrentPages();
+  return pages[pages.length - 1];
+}
+var Dialog = function Dialog(options) {
+  options = Object.assign({}, Dialog.currentOptions, options);
+  return new Promise(function (resolve, reject) {
+    var context = options.context || getContext();
+    var dialog = context.selectComponent(options.selector);
+    delete options.selector;
+    if (dialog) {
+      dialog.set(Object.assign({ onCancel: reject, onConfirm: resolve }, options));
+      queue.push(dialog);
+    } else
+    {
+      console.warn('未找到 van-dialog 节点，请确认 selector 及 context 是否正确');
+    }
+  });
+};
+Dialog.defaultOptions = {
+  show: true,
+  title: '',
+  message: '',
+  zIndex: 100,
+  overlay: true,
+  asyncClose: false,
+  messageAlign: '',
+  transition: 'scale',
+  selector: '#van-dialog',
+  confirmButtonText: '确认',
+  cancelButtonText: '取消',
+  showConfirmButton: true,
+  showCancelButton: false,
+  closeOnClickOverlay: false,
+  confirmButtonOpenType: '' };
+
+Dialog.alert = Dialog;
+Dialog.confirm = function (options) {return Dialog(Object.assign({ showCancelButton: true }, options));};
+Dialog.close = function () {
+  queue.forEach(function (dialog) {
+    dialog.close();
+  });
+  queue = [];
+};
+Dialog.stopLoading = function () {
+  queue.forEach(function (dialog) {
+    dialog.stopLoading();
+  });
+};
+Dialog.setDefaultOptions = function (options) {
+  Object.assign(Dialog.currentOptions, options);
+};
+Dialog.resetDefaultOptions = function () {
+  Dialog.currentOptions = Object.assign({}, Dialog.defaultOptions);
+};
+Dialog.resetDefaultOptions();var _default =
+Dialog;exports.default = _default;
 
 /***/ }),
 

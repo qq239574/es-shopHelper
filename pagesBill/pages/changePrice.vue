@@ -5,6 +5,8 @@
             <infoBlock></infoBlock>
             <blockInput></blockInput>
             <pageFoot></pageFoot>
+            <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
         </view>
     </view>
 </template>

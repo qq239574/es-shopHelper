@@ -2,6 +2,8 @@
     <view class='vip-manage page'>
         <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput> 
         <Card @click='clickGood'></Card>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

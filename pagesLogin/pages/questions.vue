@@ -7,13 +7,15 @@
         </van-cell-group>
         <view class='margin'></view>
         <LongButton class='button' :disable='canSub' @click='nextPage'>确定</LongButton>
-        <PopUp @close='closeQuestions' :show='showList'>
+        <PopUp :toggle='showList'>
             <van-cell-group>
                 <van-cell :title="item" v-for='(item,index) in questionList' :key='index' @tap.stop='select(item,index)'>
-                    <van-icon slot='right-icon' name="checked" class='checked' v-if='index===checkedNo' />
+                    <van-icon slot='right-icon' name="checked" class='checked' custom-style	='color:#fb6638;margin-top:6px;' v-if='index===checkedNo' />
                 </van-cell>
             </van-cell-group>
         </PopUp>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -21,7 +23,7 @@
     let userId = '',
         password = '';
     import LongButton from '../../components/my-components/LongButton';
-    import PopUp from '../../components/my-components/PopUp.vue';
+    import PopUp from '../../components/my-components/PopUp2.vue';
     export default {
         components: {
             LongButton,
@@ -57,14 +59,12 @@
                 this.question = val;
             },
             showQuestions() {
-                this.showList = true;
-            },
-            closeQuestions() {
-                this.showList = false;
+                this.showList = !this.showList;
             },
             nextPage() {
-                uni.reLaunch({
-                    url: '../../pages/index/index'
+                this.pageLoading();
+                uni.navigateTo({
+                    url: './setNew'
                 })
             },
             getName(val) {

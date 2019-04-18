@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "订单发货",
   "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "provide-goods": "/pagesBill/components/ProvideBoods",
     "provide-block": "/pagesBill/components/ProvideBlock",
     "long-button": "/components/my-components/LongButton"

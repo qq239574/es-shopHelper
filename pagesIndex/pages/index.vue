@@ -13,6 +13,8 @@
             <mpvue-echarts class="ec-canvas" lazyLoad :onInit="lineInit4" canvasId="line" ref="lineChart4" />
         </echartBlock>
         <topList></topList>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

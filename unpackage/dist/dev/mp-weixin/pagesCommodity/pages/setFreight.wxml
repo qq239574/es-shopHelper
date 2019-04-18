@@ -1,1 +1,1 @@
-<view class="_div data-v-cce5f26c" bind:__l="__l"></view>
+<view class="_div data-v-cce5f26c" bind:__l="__l"><van-toast id="van-toast" data-com-type="wx" class="data-v-cce5f26c"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-cce5f26c"></van-dialog></view>

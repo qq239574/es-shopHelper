@@ -1,0 +1,1 @@
+<view class="block-foot  data-v-575dac40" bind:__l="__l"><view class="info data-v-575dac40">已选择<view class="price data-v-575dac40">{{num}}</view>张</view><view class="button data-v-575dac40">确认添加</view></view>

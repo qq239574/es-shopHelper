@@ -8,10 +8,10 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
   onLaunch: function onLaunch() {
-    console.log('App Launch');
   },
   onShow: function onShow() {
     console.log('App Show');
@@ -35,35 +35,49 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _index = _interopRequireDefault(__webpack_require__(/*! ./api/index.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\api\\index.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _index = _interopRequireDefault(__webpack_require__(/*! ./api/index.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\api\\index.js"));
+var cacher = _interopRequireWildcard(__webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
+var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
+var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/dialog/dialog */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
-var pageLoadingBar = '';var _loadMore = '';var _default = { data: function data() {
+var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
+  data: function data() {
     return {
-      showReachBottom: false };
+      showReachBottom: false,
+      pageIsLoading: false,
+      Cacher: cacher,
+      Toast: _toast.default,
+      Dialog: _dialog.default };
 
   },
   methods: {
-    pageLoading: function pageLoading() {
+    Request: function Request() {
+      return _index.default;
+    },
+    pageLoading: function pageLoading() {var _this = this;
       clearTimeout(pageLoadingBar);
       uni.showLoading({
         title: '加载中' });
 
+      this.pageIsLoading = true;
       pageLoadingBar = setTimeout(function () {
         uni.hideLoading({
           title: '加载中' });
 
-      }, 3000);
+        _this.pageIsLoading = false;
+      }, 2000);
     },
     closePageLoading: function closePageLoading() {
       clearTimeout(pageLoadingBar);
+      this.pageIsLoading = false;
       uni.hideLoading();
     },
-    loadMore: function loadMore() {var _this = this;
+    loadMore: function loadMore() {var _this2 = this;
       clearTimeout(_loadMore);
       this.showReachBottom = true;
       _loadMore = setTimeout(function () {
-        _this.showReachBottom = false;
-      }, 3000);
+        _this2.showReachBottom = false;
+      }, 2000);
     },
     closeLoadMore: function closeLoadMore() {
       clearTimeout(_loadMore);
@@ -77,6 +91,7 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { data: function data(
     this.showReachBottom = true;
   },
   created: function created() {
+
     this.pageLoading();
   },
   onHide: function onHide() {

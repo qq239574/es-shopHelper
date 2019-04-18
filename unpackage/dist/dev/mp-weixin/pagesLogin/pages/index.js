@@ -34,16 +34,30 @@
 //
 //
 //
+//
+//
 var _default =
 {
   methods: {
     toUrl: function toUrl(val) {
       if (val == 'tel') {
         uni.navigateTo({
-          url: './telOrEmail' });
+          url: './telOrEmail?from=tel' });
 
-      } else if (val == 'email') {} else if (val == 'question') {}
-    } } };exports.default = _default;
+      } else if (val == 'email') {
+        uni.navigateTo({
+          url: './telOrEmail?from=email' });
+
+      } else if (val == 'question') {
+        uni.navigateTo({
+          url: './questions' });
+
+      }
+    } },
+
+  mounted: function mounted() {
+    this.closePageLoading();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

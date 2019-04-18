@@ -41,56 +41,74 @@
 //
 //
 //
+//
+//
+//
 
 var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
-var userId = '',
-password = '';var _default =
-{
+var requesting = false;
+var canLogin = false; //可否登录 
+var _default = {
   components: {
     LongButton: LongButton },
 
   data: function data() {
     return {
-      openEye: false };
-
+      openEye: false,
+      userId: '',
+      password: '',
+      idError: false //用户信息错误
+    };
   },
+  computed: {
+    disableButton: function disableButton() {
+      this.idError = false;
+      return !this.userId || !this.password;
+    } },
+
   methods: {
+    initPage: function initPage() {
+      this.openEye = false;
+      canLogin = false;
+      this.userId = '';
+      this.password = '';
+      this.idError = false;
+    },
     getUserId: function getUserId(val) {
-      userId = val.detail;
+      this.userId = val.detail;
     },
     getPassWord: function getPassWord(val) {
-      password = val.detail;
+      this.password = val.detail;
     },
-    clearInput: function clearInput() {
-      console.log('object');
+    clearInput: function clearInput(key) {
+      this[key] = '';
     },
-    clickUserIcon: function clickUserIcon() {
-      console.log(123);
-    },
-    clickPWIcon: function clickPWIcon() {
-      console.log(123);
+    clickPWIcon: function clickPWIcon() {//切换加密显示与明文显示
       this.openEye = !this.openEye;
     },
     loginWithWx: function loginWithWx() {
-      uni.showToast({
-        title: "请完善登录功能",
-        icon: "none" });
-
+      this.closePageLoading();
+      this.Toast('当前微信暂未绑定任何管理员账号');
     },
-    loginNow: function loginNow(e) {
-      console.log(userId, password);
-      var checkRes = true;
-      // 验证通过
-      if (checkRes) {
-        uni.reLaunch({
-          url: '../index/index' });
+    loginNow: function loginNow(e) {var _this = this;
+      if (!requesting) {//函数节流
+        requesting = true; //是否正在请求接口
+        this.pageLoading();
+        setTimeout(function () {
+          // 验证通过
+          canLogin = true;
+          requesting = false;
+          if (canLogin) {
+            uni.reLaunch({
+              url: '../../pagesLogin/pages/selectShop' });
 
-      } else {
-        uni.showToast({
-          title: graceChecker.error,
-          icon: "none" });
-
+          } else {
+            _this.idError = true;
+          }
+          _this.closePageLoading();
+          requesting = false;
+        }, 1000);
       }
     },
     reg: function reg() {//找回密码

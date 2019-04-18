@@ -1,6 +1,8 @@
 <template>
     <view class='multi-specification page'>
         <multiBlock></multiBlock>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

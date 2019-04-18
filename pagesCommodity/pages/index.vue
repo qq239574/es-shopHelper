@@ -11,6 +11,8 @@
         <view class="footer">
             <longButton>保存</longButton>
         </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 

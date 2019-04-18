@@ -23,6 +23,8 @@
 //
 //
 //
+//
+//
 
 var userId = '',
 password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var _default =
@@ -42,13 +44,28 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
     return {
       openEye: false,
       userId: '',
-      password: '' };
+      password: '',
+      placeholder1: '请输入手机号码',
+      placeholder2: '请输入短信验证码' };
 
+  },
+  onLoad: function onLoad(option) {
+    console.log(option);
+    if (option.from == 'email') {
+      this.placeholder1 = '请输入邮箱';
+      this.placeholder2 = '请输入验证码';
+    } else {
+      this.placeholder1 = '请输入手机号码';
+      this.placeholder2 = '请输入短信验证码';
+    }
+  },
+  mounted: function mounted() {
+    this.closePageLoading();
   },
   methods: {
     nextPage: function nextPage() {
-      uni.navigateTo({
-        url: './questions' });
+      uni.reLaunch({
+        url: './setNew' });
 
     },
     getVCode: function getVCode() {

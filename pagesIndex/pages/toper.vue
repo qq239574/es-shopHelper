@@ -2,6 +2,8 @@
     <view class='toper page'>
         <selectItem label='筛选' :value='pageLabel' @click='filteDate'></selectItem>
         <items :pageid='pageId'></items>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

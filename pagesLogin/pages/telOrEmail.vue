@@ -2,14 +2,16 @@
     <view class='tel-email page'>
         <view class="grace-form" style='border-top:none;'>
             <van-cell-group>
-                <van-field placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
+                <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
-                <van-field :type="openEye?'text':'password'" placeholder="请输入短信验证码" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
+                <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
                     <RoundButton slot="icon" @click='getVCode'></RoundButton>
                 </van-field>
             </van-cell-group>
         </view>
         <LongButton :disable='disable' @click='nextPage'>下一步</LongButton>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -32,13 +34,28 @@
             return {
                 openEye: false,
                 userId: '',
-                password: ''
+                password: '',
+                placeholder1: '请输入手机号码',
+                placeholder2: '请输入短信验证码'
             }
+        },
+        onLoad(option) { 
+            console.log(option)
+            if (option.from == 'email') {
+                this.placeholder1 = '请输入邮箱';
+                this.placeholder2 = '请输入验证码';
+            } else {
+                this.placeholder1 = '请输入手机号码';
+                this.placeholder2 = '请输入短信验证码';
+            }
+        },
+         mounted(){
+            this.closePageLoading(); 
         },
         methods: {
             nextPage() {
-                uni.navigateTo({
-                    url: './questions'
+                 uni.reLaunch({
+                    url: './setNew'
                 })
             },
             getVCode() {

@@ -1,5 +1,57 @@
 .pages-login-index {
   background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.pages-login-index .grace-login-three {
+    width: 670rpx;
+    height: 200rpx;
+    position: absolute;
+    left: 40rpx;
+    bottom: 0;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    margin: 0;
+}
+.pages-login-index .grace-login-three .surport {
+      color: #a4abb3;
+      width: 100%;
+      font-size: 26rpx;
+      height: 26rpx;
+      line-height: 26rpx;
+      text-align: center;
+      margin: 0;
+      position: relative;
+}
+.pages-login-index .grace-login-three .surport:before, .pages-login-index .grace-login-three .surport:after {
+        content: '';
+        position: absolute;
+        width: 240rpx;
+        border-top: 1rpx solid #eee;
+        top: 12rpx;
+}
+.pages-login-index .grace-login-three .surport:before {
+        left: 0;
+}
+.pages-login-index .grace-login-three .surport:after {
+        right: 0;
+}
+.pages-login-index .grace-login-three .surportList {
+      width: 100%;
+      height: 80rpx;
+      text-align: center;
+      margin: 0 auto 20rpx;
+}
+.pages-login-index .grace-login-three .surportList image {
+        display: inline-block;
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
 }
 .pages-login-index .field-index--van-field {
     padding-right: 0;

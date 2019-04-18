@@ -21,6 +21,8 @@
                 <view class='cell-font-black'>用户名安全问题</view>
             </view>
         </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -30,10 +32,21 @@
             toUrl(val) {
                 if (val == 'tel') {
                     uni.navigateTo({
-                        url: './telOrEmail'
+                        url: './telOrEmail?from=tel'
                     })
-                } else if (val == 'email') {} else if (val == 'question') {}
+                } else if (val == 'email') {
+                    uni.navigateTo({
+                        url: './telOrEmail?from=email'
+                    })
+                } else if (val == 'question') {
+                    uni.navigateTo({
+                        url: './questions'
+                    })
+                }
             }
+        },
+         mounted(){
+            this.closePageLoading(); 
         },
     }
 </script>

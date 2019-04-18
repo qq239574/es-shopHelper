@@ -15,6 +15,8 @@
             <myButton :badge='bill.rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
             <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
         </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 

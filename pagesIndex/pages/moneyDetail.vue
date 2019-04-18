@@ -30,6 +30,8 @@
             </uni-pagination>
             <uniPagination :total="20"></uniPagination>
         </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

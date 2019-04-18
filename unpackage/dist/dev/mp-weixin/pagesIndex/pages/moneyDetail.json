@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "数据详情",
   "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "mpvue-echarts": "/components/mpvue-echarts/src/echarts",
     "select-item": "/components/my-components/editBlock-SelectItem",
     "uni-pagination": "/components/uni-pagination/uni-pagination",

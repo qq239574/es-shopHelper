@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/login/index",
+    "pages/index/index",
     "pages/bill/index",
     "pages/self/index",
     "pages/commodity/index"
@@ -38,7 +38,9 @@
         "pages/addSurplus",
         "pages/coupon",
         "pages/vipDetail",
-        "pages/vipManage"
+        "pages/vipManage",
+        "pages/selectCoupon",
+        "pages/additionList"
       ]
     },
     {

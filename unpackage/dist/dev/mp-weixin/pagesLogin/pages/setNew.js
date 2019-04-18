@@ -8,26 +8,27 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var userId = '',
-password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var _default =
 {
   components: {
     LongButton: LongButton,
@@ -35,23 +36,40 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
 
   data: function data() {
     return {
-      openEye: false };
+      openEye: false,
+      disable: true,
+      password1: '',
+      password2: '' };
 
+  },
+  computed: {
+    disableButton: function disableButton() {
+      return !this.password1 || !this.password2;
+    } },
+
+  mounted: function mounted() {
+    this.closePageLoading();
   },
   methods: {
     nextPage: function nextPage() {
-      uni.navigateTo({
-        url: './questions' });
+      if (!this.disableButton) {
+        if (this.password1 !== this.password2) {
+          (0, _toast.default)('两次输入不一致');
+        } else {
+          uni.reLaunch({
+            url: '../../pages/index/index' });
 
+        }
+      }
     },
     getVCode: function getVCode() {
       console.log('object');
     },
     getUserId: function getUserId(val) {
-      userId = val.detail;
+      this.password1 = val.detail;
     },
     getPassWord: function getPassWord(val) {
-      password = val.detail;
+      this.password2 = val.detail;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

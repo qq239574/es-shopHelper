@@ -1,1 +1,1 @@
-<view class="select-type page _div data-v-02f1421f" bind:__l="__l"><tabs class="data-v-02f1421f"></tabs></view>
+<view class="select-type page _div data-v-02f1421f" bind:__l="__l"><tabs class="data-v-02f1421f"></tabs><van-toast id="van-toast" data-com-type="wx" class="data-v-02f1421f"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-02f1421f"></van-dialog></view>

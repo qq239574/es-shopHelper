@@ -1,34 +1,96 @@
 .margin30.data-v-1fa08866 {
   height: 30rpx;
 }
-.margin30 .curMoney.data-v-1fa08866 {
+.curMoney.data-v-1fa08866 {
+  width: 100%;
+  height: 220rpx;
+  background: #fff;
+  overflow: hidden;
+}
+.curMoney .tit.data-v-1fa08866 {
     width: 100%;
-    height: 220rpx;
-    background: #fff;
+    font-size: 28rpx;
+    color: #8494af;
+    line-height: 28rpx;
+    height: 28rpx;
+    margin: 40rpx auto 32rpx;
+    text-align: center;
 }
-.margin30 .curMoney .tit.data-v-1fa08866 {
-      width: 100%;
-      font-size: 28rpx;
-      color: #8494af;
-      line-height: 28rpx;
-      height: 28rpx;
-      margin: 40rpx auto 32rpx;
-      text-align: center;
+.curMoney .num.data-v-1fa08866 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    text-align: center;
+    width: fit-content;
+    margin: auto;
 }
-.margin30 .curMoney .num.data-v-1fa08866 {
-      width: -webkit-fit-content;
-      width: -moz-fit-content;
-      width: fit-content;
-      text-align: center;
-      width: fit-content;
-      margin: auto;
+.curMoney .num text.data-v-1fa08866 {
+      color: #213354;
+      font-size: 30rpx;
 }
-.margin30 .curMoney .num text.data-v-1fa08866 {
-        color: #213354;
-        font-size: 30rpx;
+.curMoney .num .no.data-v-1fa08866 {
+      font-size: 60rpx;
+      line-height: 60rpx;
+      font-weight: 600;
 }
-.margin30 .curMoney .num .no.data-v-1fa08866 {
-        font-size: 60rpx;
-        line-height: 60rpx;
+.money.data-v-1fa08866 {
+  background: #fff;
+  height: 120rpx;
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+.money view.data-v-1fa08866,
+  .money input.data-v-1fa08866 {
+    height: 100%;
+    line-height: 120rpx;
+    font-size: 28rpx;
+    color: #213354;
+    font-weight: 600;
+    padding: 0 5rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.money .col1.data-v-1fa08866 {
+    width: 50rpx;
+    margin-left: 20rpx;
+    border-top: 1rpx solid #eee;
+    border-bottom: 1rpx solid #eee;
+    text-align: center;
+}
+.money .col2.data-v-1fa08866 {
+    border-top: 1rpx solid #eee;
+    border-bottom: 1rpx solid #eee;
+    width: 650rpx;
+}
+.textarea.data-v-1fa08866 {
+  width: 100%;
+  height: 170rpx;
+  position: relative;
+  background: #fff;
+}
+.textarea textarea.data-v-1fa08866 {
+    width: 100%;
+    height: 100%;
+    padding: 30rpx 70rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.textarea .counter.data-v-1fa08866 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: 24rpx;
+    line-height: 24rpx;
+    color: #9da3ae;
+    font-size: 24rpx;
+    position: absolute;
+    bottom: 22rpx;
+    right: 40rpx;
 }
 

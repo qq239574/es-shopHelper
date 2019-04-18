@@ -3,84 +3,102 @@
 		<view class="grace-center">
 			<image src='../../static/img/global/logo.jpg' class='web-logo'></image>
 		</view>
-		<view class="tips">
+		<view class="tips" v-if='idError'>
 			<image src='/static/img/global/warn.png' class='tips__round'></image>
 			账号不存在！
 		</view>
 		<view class="grace-form">
 			<van-cell-group>
-				<van-field :value="userId" placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable>
+				<van-field :value="userId" placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable @clear='clearInput("userId")'>
 					<image slot='left-icon' src='/static/img/global/user-icon.jpg' class='icon user-icon'></image>
 				</van-field>
-				<van-field :value="password" :type="openEye?'text':'password'" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable>
+				<van-field :value="password" :type="openEye?'text':'password'" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")'>
 					<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
 					<van-icon slot="icon" @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
 					<van-icon slot="icon" @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
 				</van-field>
 			</van-cell-group>
 		</view>
-		<LongButton @click='loginNow'>登录</LongButton>
+		<LongButton @click='loginNow' :disable='disableButton'>登录</LongButton>
 		<view class="forget-pw cell-font-gray">
 			<view @tap="reg">忘记密码?</view>
 		</view>
 		<!-- 第三方登录 -->
-		<!-- <view class="grace-login-three" style="margin-top:8px;">
-				                            <view class="grace-iconfont icon-weixin" @tap="loginWithWx"></view>
-				                            <view class="grace-iconfont icon-qq"></view>
-				                            <view class="grace-iconfont icon-weibo"></view>
-				                        </view> -->
+		<view class="grace-login-three">
+			<view class="surport">微信登录</view>
+			<view class='surportList'>
+				<image lazy-load src='/static/img/global/wechat.png' @click='loginWithWx'></image>
+			</view>
+		</view>
+		<van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
 	</view>
 </template>
 <script>
 	var graceChecker = require("../../graceUI/graceChecker.js");
 	import LongButton from '../../components/my-components/LongButton';
-	let userId = '',
-		password = '';
+	let requesting = false;
+	let canLogin = false; //可否登录 
 	export default {
 		components: {
 			LongButton
 		},
 		data() {
 			return {
-				openEye: false
+				openEye: false,
+				userId: '',
+				password: '',
+				idError: false, //用户信息错误
 			}
 		},
+		computed: {
+			disableButton() {
+				this.idError = false;
+				return !this.userId || !this.password;
+			}
+		}, 
 		methods: {
+			initPage() {
+				this.openEye = false;
+				canLogin = false;
+				this.userId = '';
+				this.password = '';
+				this.idError = false;
+			},
 			getUserId(val) {
-				userId = val.detail;
+				this.userId = val.detail;
 			},
 			getPassWord(val) {
-				password = val.detail;
+				this.password = val.detail;
 			},
-			clearInput() {
-				console.log('object')
+			clearInput(key) {
+				this[key] = '';
 			},
-			clickUserIcon() {
-				console.log(123)
-			},
-			clickPWIcon() {
-				console.log(123);
+			clickPWIcon() { //切换加密显示与明文显示
 				this.openEye = !this.openEye;
 			},
 			loginWithWx: function() {
-				uni.showToast({
-					title: "请完善登录功能",
-					icon: "none"
-				})
+				this.closePageLoading();
+				this.Toast('当前微信暂未绑定任何管理员账号');
 			},
 			loginNow: function(e) {
-				console.log(userId, password);
-				var checkRes = true;
-				// 验证通过
-				if (checkRes) {
-					uni.reLaunch({
-						url: '../index/index'
-					})
-				} else {
-					uni.showToast({
-						title: graceChecker.error,
-						icon: "none"
-					});
+				if (!requesting) { //函数节流
+					requesting = true; //是否正在请求接口
+					this.pageLoading();
+					setTimeout(() => {
+						// 验证通过
+						canLogin = true;
+						requesting = false;
+						if (canLogin) {
+							uni.reLaunch({
+								url: '../../pagesLogin/pages/selectShop'
+							})
+						} else {
+							this.idError = true;
+						}
+						this.closePageLoading();
+						requesting = false;
+					}, 1000)
 				}
 			},
 			reg: function() { //找回密码
@@ -94,8 +112,56 @@
 <style lang='scss'>
 	.pages-login-index {
 		background: #fff;
-		.field-index--van-field{
-			padding-right:0;
+		position: relative;
+		overflow: hidden;
+		.grace-login-three {
+			width: 670upx;
+			height: 200upx;
+			position: absolute;
+			left: 40upx;
+			bottom: 0;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			margin: 0;
+			.surport {
+				color: #a4abb3;
+				width: 100%;
+				font-size: 26upx;
+				height: 26upx;
+				line-height: 26upx;
+				text-align: center;
+				margin: 0;
+				position: relative;
+				&:before,
+				&:after {
+					content: '';
+					position: absolute;
+					width: 240upx;
+					border-top: 1upx solid #eee;
+					top: 12upx;
+				}
+				&:before {
+					left: 0;
+				}
+				&:after {
+					right: 0;
+				}
+			}
+			.surportList {
+				width: 100%;
+				height: 80upx;
+				text-align: center;
+				margin: 0 auto 20upx;
+				image {
+					display: inline-block;
+					width: 80upx;
+					height: 80upx;
+					border-radius: 50%;
+				}
+			}
+		}
+		.field-index--van-field {
+			padding-right: 0;
 		}
 		.grace-center {
 			margin: 60upx auto 16upx;
@@ -139,13 +205,12 @@
 			width: 100%;
 			text-align: right;
 			box-sizing: border-box;
-			margin-top:32upx;
+			margin-top: 32upx;
 			view {
 				font-size: 26upx;
 				color: #999ca7;
 				display: inline;
-				margin-right:68upx;
-				
+				margin-right: 68upx;
 			}
 		}
 		.icon {

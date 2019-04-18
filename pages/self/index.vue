@@ -16,6 +16,8 @@
 		<view class="button">退出登录</view>
 		<Button @click='toTest'>Test</Button>
 		<Button @click='toEcharts'>echarts</Button>
+		<van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
 	</div>
 </template>
 

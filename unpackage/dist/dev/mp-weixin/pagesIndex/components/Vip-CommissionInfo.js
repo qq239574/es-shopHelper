@@ -8,7 +8,12 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block1 = function Block1() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block1 */ "pagesIndex/components/Vip-CommissionInfo-Block1").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block2 */ "pagesIndex/components/Vip-CommissionInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block2.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block1 = function Block1() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block1 */ "pagesIndex/components/Vip-CommissionInfo-Block1").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block2 */ "pagesIndex/components/Vip-CommissionInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block2.vue"));};var Block3 = function Block3() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block3 */ "pagesIndex/components/Vip-CommissionInfo-Block3").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block3.vue"));};var Block4 = function Block4() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block4 */ "pagesIndex/components/Vip-CommissionInfo-Block4").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block4.vue"));};var _default =
+
+
+
+
+
 
 
 
@@ -21,9 +26,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        isCommission: 0 //是否分销商，0不是，1曾是，2是
+      } } },
+
+
   components: {
     Block1: Block1,
-    Block2: Block2 } };exports.default = _default;
+    Block2: Block2,
+    Block3: Block3,
+    Block4: Block4 } };exports.default = _default;
 
 /***/ }),
 

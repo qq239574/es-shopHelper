@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/pages/SelectShop--Item */ "pagesLogin/pages/SelectShop--Item").then(__webpack_require__.bind(null, /*! ./SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\SelectShop--Item.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -19,14 +19,57 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+var userInfo = {};var _default =
 {
   components: {
     search: search,
-    shopBlock: shopBlock },
+    shopBlock: shopBlock,
+    longButton: longButton },
 
   data: function data() {
     return {
       shops: [{
+        title: '花花的店铺1',
+        left: '30天后到期',
+        status: 0,
+        img: '/static/img/global/yz_3.png' }] };
+
+
+  },
+  methods: {
+    selectShop: function selectShop(item) {
+      console.log(item);
+    },
+    reLogin: function reLogin() {
+      uni.reLaunch({
+        url: '../../pages/login/index?from=selectShop&&status=switchAccount' });
+
+    },
+    toInex: function toInex(info) {
+      uni.reLaunch({
+        url: '../../pages/index/index?' + info });
+
+    },
+    checkUserInfo: function checkUserInfo() {
+      this.Dialog.alert({
+        title: '标题',
+        message: '弹窗内容' }).
+      then(function () {
+        // on close
+      });
+    } },
+
+  onLoad: function onLoad(option) {var _this = this;
+    setTimeout(function () {
+      userInfo = _this.Cacher.getData('userInfo');
+      console.log(userInfo);
+      _this.shops = [{
         title: '花花的店铺1',
         left: '30天后到期',
         status: 0,
@@ -50,14 +93,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         title: '花花的店铺5',
         left: '30天后到期',
         status: 4,
-        img: '/static/img/global/yz_3.png' }] };
+        img: '/static/img/global/yz_3.png' }];
 
+      var onlyOne = true;
+      if (onlyOne && option.from != 'home' && option.status != 'switchShop') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+        _this.toInex('from=selectShop&status=onlyOne');
+      } else {
+        _this.checkUserInfo();
+      }
 
-  },
-  methods: {
-    selectShop: function selectShop(item) {
-      console.log(item);
-    } } };exports.default = _default;
+    }, 1000);
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "商品编辑-无规格",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+  }
 }

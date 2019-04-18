@@ -39,6 +39,7 @@
 
 
 
+
 {
   components: {
     LongButton: LongButton,
@@ -59,12 +60,7 @@
   methods: {
     changeShop: function changeShop() {
       uni.navigateTo({
-        url: '../../pagesLogin/pages/selectShop' });
-
-    },
-    toLogin: function toLogin() {
-      uni.redirectTo({
-        url: '../login/index' });
+        url: '../../pagesLogin/pages/selectShop?from=home&&status=switchShop' });
 
     },
     toApp: function toApp(val) {

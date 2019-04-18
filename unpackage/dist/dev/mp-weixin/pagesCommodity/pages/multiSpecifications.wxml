@@ -1,1 +1,1 @@
-<view class="multi-specification page data-v-1f589670" bind:__l="__l"><multi-block class="data-v-1f589670"></multi-block></view>
+<view class="multi-specification page data-v-1f589670" bind:__l="__l"><multi-block class="data-v-1f589670"></multi-block><van-toast id="van-toast" data-com-type="wx" class="data-v-1f589670"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-1f589670"></van-dialog></view>

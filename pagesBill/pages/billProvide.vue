@@ -3,6 +3,8 @@
         <ProvideGoods></ProvideGoods>
         <ProvideBlock @click='clickCell'></ProvideBlock>
         <longButton>确认发货</longButton>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 

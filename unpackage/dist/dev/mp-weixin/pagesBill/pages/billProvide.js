@@ -20,6 +20,8 @@
 
 
 
+
+
 {
   components: {
     ProvideGoods: ProvideGoods,

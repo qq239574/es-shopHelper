@@ -1,22 +1,65 @@
 <template>
     <view class='my-shops page'>
-        <search></search>
+        <search placeholder='搜索店铺'></search>
         <view class="h1">我管理的店铺({{shops.length}})</view>
         <shopBlock :shops='shops' @click='selectShop'></shopBlock>
+        <view class="foot">
+            <longButton @click='reLogin'>切换登录账号</longButton>
+        </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
 <script>
     import search from '../../components/my-components/SearchInput'
-    import shopBlock from './SelectShop--Item.vue'
+    import shopBlock from '../components/SelectShop--Item.vue'
+    import longButton from '../../components/my-components/LongButton.vue'
+    let userInfo = {}
     export default {
         components: {
             search,
-            shopBlock
+            shopBlock,
+            longButton
         },
         data() {
             return {
                 shops: [{
+                    title: '花花的店铺1',
+                    left: '30天后到期',
+                    status: 0,
+                    img: '/static/img/global/yz_3.png'
+                }]
+            }
+        },
+        methods: {
+            selectShop(item) {
+                console.log(item)
+            },
+            reLogin() {
+                uni.reLaunch({
+                    url: '../../pages/login/index?from=selectShop&&status=switchAccount'
+                })
+            },
+            toInex(info) {
+                uni.reLaunch({
+                    url: '../../pages/index/index?' + info
+                })
+            },
+            checkUserInfo() {
+                this.Dialog.alert({
+                    title: '标题',
+                    message: '弹窗内容'
+                }).then(() => {
+                    // on close
+                });
+            }
+        },
+        onLoad(option) {
+            setTimeout(() => {
+                userInfo = this.Cacher.getData('userInfo');
+                console.log(userInfo);
+                this.shops = [{
                     title: '花花的店铺1',
                     left: '30天后到期',
                     status: 0,
@@ -41,20 +84,33 @@
                     left: '30天后到期',
                     status: 4,
                     img: '/static/img/global/yz_3.png'
-                }, ]
-            }
-        },
-        methods: {
-            selectShop(item) {
-                console.log(item)
-            }
-        },
+                }, ];
+                let onlyOne = true;
+                if (onlyOne && option.from != 'home' && option.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+                    this.toInex('from=selectShop&status=onlyOne')
+                } else {
+                    this.checkUserInfo()
+                }
+                
+            }, 1000)
+        }
     }
 </script>
 
 <style lang="scss" scoped>
     .my-shops {
         background: #fff;
+        padding-bottom: 200upx;
+        .foot {
+            position: fixed;
+            height: 125upx;
+            width: 100%;
+            background: #fff;
+            border-top: 1upx solid #eee;
+            bottom: 0;
+            left: 0;
+            padding: 15upx 0 0;
+        }
         .h1 {
             height: 116upx;
             width: 702upx;
