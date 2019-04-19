@@ -64,6 +64,13 @@
         "pages/test",
         "pages/echarts"
       ]
+    },
+    {
+      "root": "pagesSelf",
+      "pages": [
+        "pages/myName",
+        "pages/password"
+      ]
     }
   ],
   "window": {
@@ -128,6 +135,12 @@
       "network": "all",
       "packages": [
         "pagesLogin"
+      ]
+    },
+    "pages/self/index": {
+      "network": "all",
+      "packages": [
+        "pagesSelf"
       ]
     }
   },

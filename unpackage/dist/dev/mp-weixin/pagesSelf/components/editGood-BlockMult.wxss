@@ -1,0 +1,13 @@
+.multi-block.data-v-2657882e {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 20rpx auto 0;
+}
+.multi-block .block.data-v-2657882e {
+    width: 710rpx;
+    margin: auto;
+    background: #fff;
+}
+

@@ -36,8 +36,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "sss",
-					"pathName": "pagesBill/pages/billProvide",
+					"name": "my",
+					"pathName": "pages/self/index",
 					"scene": null
 				}
 			]

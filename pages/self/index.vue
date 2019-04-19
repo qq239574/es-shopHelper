@@ -4,20 +4,18 @@
 			<image lazy-load src='/static/img/global/my_bg.png'></image>
 			<view class="name">小花花</view>
 			<view class="tel">15065656565</view>
-			<view class='manager'>管理员</view>
+			<view class='manager' @click='clickManager'>管理员</view>
 		</view>
 		<inputItem :disabled='true' label='登陆账号' value='1354'></inputItem>
-		<selectItem label='姓名' value='张三'></selectItem>
-		<selectItem label='联系方式' value='15456989898'></selectItem>
-		<selectItem label='修改密码' value=' '></selectItem>
+		<selectItem label='姓名' value='张三' @click='toPage("name")'></selectItem>
+		<selectItem label='联系方式' value='15456989898' @click='toPage("tel")'></selectItem>
+		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem label='微信：Forever' value='重新绑定' valueStyle='color:#fb6638;'></selectItem>
+		<selectItem label='微信：Forever' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX'></selectItem>
 		<view class="margin20"></view>
-		<view class="button">退出登录</view>
-		<Button @click='toTest'>Test</Button>
-		<Button @click='toEcharts'>echarts</Button>
+		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
-        <van-dialog id="van-dialog" />
+		<van-dialog id="van-dialog" />
 	</div>
 </template>
 
@@ -30,15 +28,36 @@
 			inputItem
 		},
 		methods: {
-			toTest() {
-				uni.navigateTo({
-					url: '../../pagesTest/pages/test'
-				})
+			toPage(val) {
+				if (val == 'name') {
+					uni.navigateTo({
+						url: '../../pagesSelf/pages/myName'
+					})
+				} else if (val == 'tel') {
+					uni.navigateTo({
+						url: '../../pagesSelf/pages/myName'
+					})
+				} else if (val == 'password') {
+					uni.navigateTo({
+						url: '../../pagesSelf/pages/password'
+					})
+				}
 			},
-			toEcharts() {
-				uni.navigateTo({
-					url: '../../pagesTest/pages/echarts'
-				})
+			clickManager(){},
+			bindWX() {
+				this.closePageLoading();
+				this.Toast('绑定微信成功')
+			},
+			leave() {
+				this.closePageLoading();
+				this.Dialog.confirm({
+					title: '',
+					message: '您确认退出当前账号吗？'
+				}).then(() => {
+					// on confirm
+				}).catch(() => {
+					// on cancel
+				});
 			}
 		},
 	}
@@ -77,15 +96,15 @@
 		}
 		.manager {
 			background: #fff;
-			color:#000;
+			color: #000;
 			font-size: 24upx;
 			height: 42upx;
 			line-height: 42upx;
 			text-align: center;
 			padding: 0 24upx;
-			border-radius:21upx;
-			top:76upx;
-			right:56upx;
+			border-radius: 21upx;
+			top: 76upx;
+			right: 56upx;
 		}
 	}
 	.margin20 {

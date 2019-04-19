@@ -94,7 +94,7 @@
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
-		},  {
+		}, {
 			"path": "pages/componyList",
 			"style": {
 				"navigationBarTitleText": "物流公司",
@@ -103,7 +103,7 @@
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
-		},{
+		}, {
 			"path": "pages/additionList",
 			"style": {
 				"navigationBarTitleText": "订单备注",
@@ -394,6 +394,27 @@
 				}
 			}
 		}]
+	}, {
+		"root": "pagesSelf",
+		"pages": [{
+			"path": "pages/myName",
+			"style": {
+				"navigationBarTitleText": "姓名",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		}, {
+			"path": "pages/password",
+			"style": {
+				"navigationBarTitleText": "密码",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		}]
 	}],
 	"tabBar": {
 		"color": "#c9ccd0",
@@ -444,6 +465,10 @@
 		"pages/login/index": {
 			"network": "all",
 			"packages": ["pagesLogin"]
+		},
+		"pages/self/index": {
+			"network": "all",
+			"packages": ["pagesSelf"]
 		}
 	}
 }

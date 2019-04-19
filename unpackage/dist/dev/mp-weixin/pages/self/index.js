@@ -32,23 +32,42 @@
 
 
 
-
-
 {
   components: {
     selectItem: selectItem,
     inputItem: inputItem },
 
   methods: {
-    toTest: function toTest() {
-      uni.navigateTo({
-        url: '../../pagesTest/pages/test' });
+    toPage: function toPage(val) {
+      if (val == 'name') {
+        uni.navigateTo({
+          url: '../../pagesSelf/pages/myName' });
 
+      } else if (val == 'tel') {
+        uni.navigateTo({
+          url: '../../pagesSelf/pages/myName' });
+
+      } else if (val == 'password') {
+        uni.navigateTo({
+          url: '../../pagesSelf/pages/password' });
+
+      }
     },
-    toEcharts: function toEcharts() {
-      uni.navigateTo({
-        url: '../../pagesTest/pages/echarts' });
-
+    clickManager: function clickManager() {},
+    bindWX: function bindWX() {
+      this.closePageLoading();
+      this.Toast('绑定微信成功');
+    },
+    leave: function leave() {
+      this.closePageLoading();
+      this.Dialog.confirm({
+        title: '',
+        message: '您确认退出当前账号吗？' }).
+      then(function () {
+        // on confirm
+      }).catch(function () {
+        // on cancel
+      });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
