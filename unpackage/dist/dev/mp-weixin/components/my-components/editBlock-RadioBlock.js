@@ -29,6 +29,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
+    hideRightArrow: {
+      type: Boolean,
+      default: false },
+
     placeholder: {
       type: String,
       default: '请选择' },
@@ -37,12 +41,6 @@ var _default =
       type: Array,
       default: [{
         label: 'label1',
-        value: '' },
-      {
-        label: 'label2',
-        value: '' },
-      {
-        label: 'label3',
         value: '' }] } },
 
 
@@ -55,16 +53,8 @@ var _default =
   methods: {
     clickItem: function clickItem(index) {
       this.current = index;
+      console.log(this.items[index]);
       this.$emit('change', this.items[index]);
-    },
-    radioChange: function radioChange(evt) {
-      for (var i = 0; i < this.items.length; i++) {
-        if (this.items[i].value === evt.target.value) {
-          this.current = i;
-          break;
-        }
-      }
-      this.$emit('change', this.items[this.current]);
     } } };exports.default = _default;
 
 /***/ }),

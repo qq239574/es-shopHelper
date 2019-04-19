@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "物流公司",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "radio-group": "/components/my-components/editBlock-RadioBlock"
+  }
+}

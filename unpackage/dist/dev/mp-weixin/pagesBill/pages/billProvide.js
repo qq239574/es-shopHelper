@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var ProvideGoods = function ProvideGoods() {return Promise.all(/*! import() | pagesBill/components/ProvideBoods */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideBoods")]).then(__webpack_require__.bind(null, /*! ../components/ProvideBoods */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideBoods.vue"));};var ProvideBlock = function ProvideBlock() {return Promise.all(/*! import() | pagesBill/components/ProvideBlock */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideBlock")]).then(__webpack_require__.bind(null, /*! ../components/ProvideBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideBlock.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var ProvideGoods = function ProvideGoods() {return Promise.all(/*! import() | pagesBill/components/ProvideGoods */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideGoods")]).then(__webpack_require__.bind(null, /*! ../components/ProvideGoods */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideGoods.vue"));};var ProvideBlock = function ProvideBlock() {return Promise.all(/*! import() | pagesBill/components/ProvideBlock */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideBlock")]).then(__webpack_require__.bind(null, /*! ../components/ProvideBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideBlock.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -22,12 +22,42 @@
 
 
 
+var cacheSelected = [];var _default =
 {
   components: {
     ProvideGoods: ProvideGoods,
     ProvideBlock: ProvideBlock,
     longButton: longButton },
 
+  data: function data() {
+    return {
+      goodsList: [{
+        img: '/static/img/global/tmp.png',
+        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
+        color: '浅绿色',
+        size: 'S码',
+        num: 2,
+        price: '15455.2',
+        status: 0 //0未发货
+      }, {
+        img: '/static/img/global/tmp.png',
+        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
+        color: '浅绿色',
+        size: 'S码',
+        num: 2,
+        price: '152344.2',
+        status: 0 //已发货
+      }, {
+        img: '/static/img/global/tmp.png',
+        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
+        color: '浅绿色',
+        size: 'S码',
+        num: 2,
+        price: '152344.2',
+        status: 1 //已发货
+      }] };
+
+  },
   methods: {
     clickCell: function clickCell(val) {
       console.log(val);
@@ -39,8 +69,24 @@
         uni.navigateTo({
           url: './billId' });
 
+      } else if (val.name == '物流公司') {
+        uni.navigateTo({
+          url: './componyList' });
+
       }
-    } } };exports.default = _default;
+    },
+    selectedList: function selectedList(list) {
+      cacheSelected = list;
+    },
+    sure: function sure() {var _this = this;
+      this.pageLoading();
+      setTimeout(function () {
+        _this.closePageLoading();
+        uni.navigateBack();
+      }, 2000);
+    } },
+
+  onLoad: function onLoad(option) {} };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

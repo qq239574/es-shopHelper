@@ -32,19 +32,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
-					"name": "detail",
-					"pathName": "pagesBill/pages/billDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "bill",
-					"pathName": "pages/bill/index",
+					"name": "sss",
+					"pathName": "pagesBill/pages/billProvide",
 					"scene": null
 				}
 			]

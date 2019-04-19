@@ -1,7 +1,7 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
-        <radio-group @change="radioChange" class='group'>
-            <view class='grace-items' v-for="(item, index) in items" :key="item.value" @click='clickItem(index)'>
+        <radio-group class='group'>
+            <view class='grace-items' v-for="(item, index) in items" :key="item.value" @click.stop='clickItem(index)'>
                 <view class='radio-box'>
                     <radio :value="item.value" :checked="index === current" color='#fb6638' />
                 </view>
@@ -9,7 +9,7 @@
                 <view class="other" :style="'color:#fb6638;opacity:'+(index === current?'1':'0')">
                     {{item.value}}
                     <view style='display:inline;' v-if='item.value===""'>{{placeholder}}</view>
-                    <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
+                    <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;' v-if='!hideRightArrow'></text>
                 </view>
             </view>
         </radio-group>
@@ -19,6 +19,10 @@
 <script>
     export default {
         props: {
+            hideRightArrow: {
+                type: Boolean,
+                default: false
+            },
             placeholder: {
                 type: String,
                 default: '请选择'
@@ -28,13 +32,7 @@
                 default: [{
                     label: 'label1',
                     value: ''
-                }, {
-                    label: 'label2',
-                    value: ''
-                }, {
-                    label: 'label3',
-                    value: ''
-                }, ]
+                }]
             }
         },
         data() {
@@ -45,17 +43,9 @@
         methods: {
             clickItem(index) {
                 this.current = index;
+                console.log(this.items[index])
                 this.$emit('change', this.items[index])
             },
-            radioChange: function(evt) {
-                for (let i = 0; i < this.items.length; i++) {
-                    if (this.items[i].value === evt.target.value) {
-                        this.current = i;
-                        break;
-                    }
-                }
-                this.$emit('change', this.items[this.current]);
-            }
         },
     }
 </script>

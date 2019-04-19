@@ -94,7 +94,16 @@
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
-		}, {
+		},  {
+			"path": "pages/componyList",
+			"style": {
+				"navigationBarTitleText": "物流公司",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		},{
 			"path": "pages/additionList",
 			"style": {
 				"navigationBarTitleText": "订单备注",

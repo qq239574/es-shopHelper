@@ -14,6 +14,7 @@
         "pages/changePrice",
         "pages/billProvide",
         "pages/billAddition",
+        "pages/componyList",
         "pages/additionList",
         "pages/billId"
       ]

@@ -8613,6 +8613,23 @@ createPage(_changePrice.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FcomponyList\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FcomponyList"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _componyList = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/componyList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\componyList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_componyList.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditGood\"}":
 /*!**********************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditGood"} ***!
