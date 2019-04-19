@@ -31,7 +31,20 @@
                         name: "已关闭"
                     }
                 ],
+            },
+            index:{
+                type:Number,
+                default:0
             }
+        },
+        watch:{
+            index(){
+                this.cateCurrentIndex=this.index;
+            }
+        },
+        mounted(){
+            this.cateCurrentIndex=this.index;
+            console.log(this.index,'this.index')
         },
         computed: {
             getWidth() {
@@ -74,7 +87,7 @@
         margin: 0 0 20upx;
         .grace-tab-title {
             width: 100%;
-            border: 1upx solid #eee;
+            border-bottom: 1upx solid #eee;
             padding: 0 20upx;
             box-sizing: border-box;
         }

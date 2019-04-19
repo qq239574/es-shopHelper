@@ -33,7 +33,10 @@
   },
   methods: {
     sure: function sure() {
-      uni.navigateBack();
+      this.pageLoading();
+      setTimeout(function () {
+        uni.navigateBack();
+      }, 2000);
     },
     getAddition: function getAddition(val) {
       this.length = val.detail.value.length;

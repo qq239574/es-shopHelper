@@ -36,7 +36,6 @@
         .pre {
             display: flex;
             flex-wrap: nowrap;
-            
             .mid{
                 padding-top: 0 ;
                 max-width: 530upx;

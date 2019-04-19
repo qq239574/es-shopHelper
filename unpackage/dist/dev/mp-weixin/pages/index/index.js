@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return __webpack_require__.e(/*! import() | pages/index/components/IndexDataShower */ "pages/index/components/IndexDataShower").then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var _default =
 
 
 
@@ -54,34 +54,81 @@
     return {
       genderIndex: 0,
       gender: ['男', '女'],
-      dateValue: "请选择" };
+      dateValue: "请选择",
+      onlyOneShop: false,
+      showData: {
+        money: 22110,
+        payedBill: 10,
+        payedGood: 110,
+        payedVip: 2110 } };
+
 
   },
   methods: {
+    searchData: function searchData(val) {var _this = this; //点击今日昨日按钮查询
+      console.log(val);
+      this.pageLoading();
+      setTimeout(function () {
+        _this.closePageLoading();
+        _this.showData = {
+          money: Math.random() * 10000,
+          payedBill: Math.random() * 1000,
+          payedGood: Math.random() * 1000,
+          payedVip: Math.random() * 1000 };
+
+      }, 1000);
+    },
     changeShop: function changeShop() {
+      this.Cacher.setData('home', {
+        from: 'home',
+        info: {} });
+
       uni.navigateTo({
         url: '../../pagesLogin/pages/selectShop?from=home&&status=switchShop' });
 
     },
     toApp: function toApp(val) {
+      this.Cacher.setData('home', {
+        from: 'home',
+        info: this.showData });
+
       if (val.title == '数据统计') {
         uni.navigateTo({
-          url: '../../pagesIndex/pages/index' });
+          url: '../../pagesIndex/pages/index?from=home' });
 
       } else if (val.title == '会员管理') {
         uni.navigateTo({
-          url: '../../pagesIndex/pages/vipManage' });
+          url: '../../pagesIndex/pages/vipManage?from=home' });
 
-      } else if (val.title == '自提核销') {}
+      } else if (val.title == '自提核销') {
+        this.closePageLoading();
+        this.Toast('暂未开放');
+      }
     },
-    toBill: function toBill(val) {
-      console.log(val);
+    toBill: function toBill(val) {//跳转订单页
+      this.Cacher.setData('home', _objectSpread({
+        from: 'home' },
+      val, {
+        info: this.showData }));
+      //页面传参 
+      uni.reLaunch({
+        url: '../bill/index?from=home' });
+
     },
     toPay: function toPay() {
-      this.Toast('暂未开通该业务');
+      this.Dialog.alert({
+        title: '请登录PC端后台进行续费',
+        message: '抱歉~当前版本小程序暂不支持续费操作',
+        confirmButtonText: '知道了' }).
+      then(function () {
+        // on close
+      });
     },
     toNotice: function toNotice(val) {
-      this.Cacher.setData('home', _objectSpread({ from: 'home' }, val)); //页面传参
+      this.Cacher.setData('home', _objectSpread({
+        from: 'home' },
+      val));
+      //页面传参
       uni.navigateTo({
         url: '../../pagesIndex/pages/noticeList?from=home' });
 

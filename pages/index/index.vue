@@ -1,18 +1,18 @@
 <template>
     <view class='page pages-index-index'>
         <view class="tunshop">
-            <view class='title'>
-                花花的店铺-网红自营直销第一店铺
+            <view class='title van-ellipsis '>
+                <van-icon name="shop-o" class='shop-icon' />花花的店铺-网红自营直销第一店铺电费卡就卡联动法律框架刊例价了
             </view>
-            <view class="button" @click='changeShop'>
+            <view class="button" @click='changeShop' v-if='!onlyOneShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
-        <dataShower></dataShower>
+        <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
         <view class="block">
-            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' @click='toPay'>
+            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' :disabled='true' @click='toPay'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </inputItem>
-            <selectItem label='微信系统于7月10日出现警告' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
+            <selectItem label='微信系统于7月10日出现警告d两款发动机啊快乐飞克里斯多几分了快速减肥老师看见对方流口水打飞机' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -44,34 +44,81 @@
             return {
                 genderIndex: 0,
                 gender: ['男', '女'],
-                dateValue: "请选择"
+                dateValue: "请选择",
+                onlyOneShop: false,
+                showData: {
+                    money: 22110,
+                    payedBill: 10,
+                    payedGood: 110,
+                    payedVip: 2110
+                }
             }
         },
         methods: {
+            searchData(val) { //点击今日昨日按钮查询
+                console.log(val);
+                this.pageLoading();
+                setTimeout(() => {
+                    this.closePageLoading();
+                    this.showData = {
+                        money: Math.random() * 10000,
+                        payedBill: Math.random() * 1000,
+                        payedGood: Math.random() * 1000,
+                        payedVip: Math.random() * 1000,
+                    }
+                }, 1000)
+            },
             changeShop() {
+                this.Cacher.setData('home', {
+                    from: 'home',
+                    info: {}
+                })
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/selectShop?from=home&&status=switchShop'
                 })
             },
             toApp(val) {
+                this.Cacher.setData('home', {
+                    from: 'home',
+                    info: this.showData,
+                })
                 if (val.title == '数据统计') {
                     uni.navigateTo({
-                        url: '../../pagesIndex/pages/index'
+                        url: '../../pagesIndex/pages/index?from=home'
                     })
                 } else if (val.title == '会员管理') {
                     uni.navigateTo({
-                        url: '../../pagesIndex/pages/vipManage'
+                        url: '../../pagesIndex/pages/vipManage?from=home'
                     })
-                } else if (val.title == '自提核销') {}
+                } else if (val.title == '自提核销') {
+                    this.closePageLoading();
+                    this.Toast('暂未开放')
+                }
             },
-            toBill(val) {
-                console.log(val);
+            toBill(val) { //跳转订单页
+                this.Cacher.setData('home', {
+                    from: 'home',
+                    ...val,
+                    info: this.showData,
+                }); //页面传参 
+                uni.reLaunch({
+                    url: '../bill/index?from=home'
+                });
             },
             toPay() {
-                this.Toast('暂未开通该业务')
+                this.Dialog.alert({
+                    title: '请登录PC端后台进行续费',
+                    message: '抱歉~当前版本小程序暂不支持续费操作',
+                    confirmButtonText:'知道了'
+                }).then(() => {
+                    // on close
+                }); 
             },
             toNotice(val) {
-                this.Cacher.setData('home',{from:'home',...val});//页面传参
+                this.Cacher.setData('home', {
+                    from: 'home',
+                    ...val
+                }); //页面传参
                 uni.navigateTo({
                     url: '../../pagesIndex/pages/noticeList?from=home'
                 })
@@ -82,7 +129,14 @@
 <style lang="scss" scoped>
     .pages-index-index {
         background: #f3f5f9;
+        .shop-icon {
+            line-height: 88upx;
+            height: 88upx;
+            margin: 0 5upx 0 0;
+            box-sizing: border-box;
+        }
         .tunshop {
+            vertical-align: text-bottom;
             width: 100%;
             height: 88upx;
             display: flex;
@@ -92,12 +146,15 @@
             .button {
                 margin: auto 0;
                 font-size: 24upx;
-                border: 1upx solid #dbc8df;
+                border: 1upx solid #bdc8df;
                 line-height: 40upx;
                 text-align: center;
                 color: #6e7685;
                 border-radius: 20upx;
                 box-sizing: border-box;
+                min-width: 170upx;
+                width: fit-content;
+                white-space: nowrap;
                 padding: 0 20upx;
                 image {
                     width: 20upx;
@@ -110,7 +167,7 @@
                 height: 100%;
                 line-height: 88upx;
                 font-size: 24upx;
-                color: #6e7685;
+                color: #6e7685; // max-width: 510upx;
             }
         }
         .block {

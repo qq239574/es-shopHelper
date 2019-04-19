@@ -2,27 +2,27 @@
     <view class='index-data-shower'>
         <view class="box">
             <image src='/static/img/global/my_bg.png'></image>
-            <view class="moneybox childbox">
+            <view class="moneybox childbox" @click='clickItem'>
                 <view class="title">成交额（元）</view>
-                <view class="num">952.00</view>
+                <view class="num">{{formater(info.money,2)}}</view>
             </view>
             <view class="buttonbox childbox">
-                <view class="day today" :class='activeButton==0?"active":""' @click='clickButton(0)'>今天</view>
-                <view class="day yesterday" :class='activeButton==1?"active":""' @click='clickButton(1)'>昨天</view>
-                <view class="day sevenday" :class='activeButton==2?"active":""' @click='clickButton(2)'>七日</view>
+                <view class="day today" :class='activeButton==0?"active":""' @click='clickButton(0,"今天")'>今天</view>
+                <view class="day yesterday" :class='activeButton==1?"active":""' @click='clickButton(1,"昨天")'>昨天</view>
+                <view class="day sevenday" :class='activeButton==2?"active":""' @click='clickButton(2,"七日")'>七日</view>
             </view>
-            <view class="datalist childbox">
+            <view class="datalist childbox" @click='clickItem'>
                 <view class="item">
                     <view class="title">付款订单数</view>
-                    <view class="num">233</view>
+                    <view class="num">{{formater(info.payedBill,0)}}</view>
                 </view>
                 <view class="item">
                     <view class="title">付款商品数</view>
-                    <view class="num">88</view>
+                    <view class="num">{{formater(info.payedGood,0)}}</view>
                 </view>
                 <view class="item">
                     <view class="title">付款会员数</view>
-                    <view class="num">999</view>
+                    <view class="num">{{formater(info.payedVip,0)}}</view>
                 </view>
             </view>
         </view>
@@ -31,7 +31,21 @@
 
 <script>
     import buttonGroup from '../../../components/my-components/ButtonGroup'
+    import {
+        number_format
+    } from '../../../components/my-components/formater.js'
     export default {
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    money: 0,
+                    payedBill: 0,
+                    payedGood: 0,
+                    payedVip: 0
+                }
+            }
+        },
         components: {
             buttonGroup
         },
@@ -41,8 +55,20 @@
             }
         },
         methods: {
-            clickButton(num) {
+            formater(val, decimals) {//数字格式化
+                return number_format(val, decimals, '.', ',');
+            },
+            clickButton(num, name) {
                 this.activeButton = num;
+                this.$emit('search', {
+                    index: num,
+                    name
+                })
+            },
+            clickItem() {
+                this.$emit('click', {
+                    title: '数据统计'
+                })
             }
         },
     }

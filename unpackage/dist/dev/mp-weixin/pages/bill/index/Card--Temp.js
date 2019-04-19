@@ -29,8 +29,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       type: Object,
       default: function _default() {return {
           status: '退款退货',
-          addtion: [] };} } },
-
+          addtion: [],
+          subStatus: 0 //订单子状态，1：维权
+        };} } },
 
 
   components: {

@@ -54,9 +54,16 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
           pay: 0,
           addtion: 0,
           payType: 'wx',
-          subStatus: 0 //订单状态，1：维权
+          subStatus: 0, //订单状态，1：维权
+          status: 0 ////0代付款,1代发货，2待收货，3已完成，4已关闭
         };} } },
 
+
+  computed: {
+    showPayType: function showPayType() {
+      console.log('>>>>', this.info.status);
+      return this.info.status != 0 && this.info.status != 4 && this.info.payType == "wx";
+    } },
 
   methods: {
     formatePrice: function formatePrice(val) {

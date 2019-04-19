@@ -8,7 +8,17 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+
+
+
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
 //
 //
 //
@@ -17,8 +27,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default =
-{};exports.default = _default;
+var _default = { props: { price: { type: Number, default: 0 } },
+  methods: {
+    formater: function formater(val) {
+      return (0, _formater.number_format)(val, 2, '.', ',');
+    },
+    sure: function sure() {
+      this.$emit('click');
+    } } };exports.default = _default;
 
 /***/ }),
 
@@ -48,6 +64,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.formater(_vm.price)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

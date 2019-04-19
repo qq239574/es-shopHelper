@@ -22,7 +22,8 @@
       font-weight: 500;
       color: #6e7685;
 }
-.pagesBill-bill-index .goodInfo.data-v-2cdcf48a, .pagesBill-bill-index .rightsInfo.data-v-2cdcf48a {
+.pagesBill-bill-index .goodInfo.data-v-2cdcf48a,
+  .pagesBill-bill-index .rightsInfo.data-v-2cdcf48a {
     width: 710rpx;
     background: #fff;
     margin: auto;

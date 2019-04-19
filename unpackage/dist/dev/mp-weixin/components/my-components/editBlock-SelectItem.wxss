@@ -13,6 +13,14 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     height: 100rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    overflow: hidden;
 }
 .editGood-block-selectItem .grace-items .address.data-v-686243bc {
       height: -webkit-fit-content;
@@ -23,6 +31,17 @@
 }
 .editGood-block-selectItem .grace-items .grace-label.data-v-686243bc {
       white-space: nowrap;
-      overflow: visible;
+      overflow: hidden;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      max-width: 500rpx;
+}
+.editGood-block-selectItem .grace-items .other.data-v-686243bc {
+      white-space: nowrap;
+      overflow: hidden;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
 }
 

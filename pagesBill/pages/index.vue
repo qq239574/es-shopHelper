@@ -1,5 +1,6 @@
 <template>
     <div class='pagesBill-bill-index detail page'>
+        <block0></block0>
         <block1></block1>
         <block2></block2>
         <block3></block3>
@@ -12,8 +13,17 @@
             <myRightsBlock></myRightsBlock>
         </view>
         <view class="button-group">
-            <myButton :badge='bill.rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
-            <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
+            <block v-if='!bill.info.subStatus'> 
+                <myButton :badge='badgeNum' @click='clickButton("维权备注")'>备注</myButton>
+                <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"'>改价</myButton>
+                <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"'>确认付款</myButton>
+                <myButton type='primary' @click='clickButton("确认发货")' v-if='bill.info.status=="1"'>确认发货</myButton>
+                <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"||bill.info.status=="3"'>确认收货</myButton>
+            </block>
+            <block v-else>
+                <myButton :badge='bill.rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
+                <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
+            </block>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -21,9 +31,7 @@
 </template>
 
 <script>
-    import {
-        mapState
-    } from 'vuex'
+    import block0 from '../components/BillBlock0.vue';
     import block1 from '../components/BillBlock1.vue';
     import block2 from '../components/BillBlock2.vue';
     import block3 from '../components/BillBlock3.vue';
@@ -31,9 +39,11 @@
     import goodBlock from '../../pages/bill/index/Card--Good.vue';
     import expressBlock from '../components/BillExpressInfo.vue';
     import myButton from '../../components/my-components/RoundButton';
-    import myRightsBlock from '../components/BillRightsBlock.vue'
+    import myRightsBlock from '../components/BillRightsBlock.vue';
+    let DataFrom = {};
     export default {
         components: {
+            block0,
             block1,
             block2,
             block3,
@@ -43,59 +53,89 @@
             myButton,
             myRightsBlock
         },
-        computed: {
-            ...mapState({
-                billInfo: 'billDetail'
-            })
-        },
         data() {
             return {
+                badgeNum:0,
                 bill: {
                     info: { //订单及用户信息
-                        name: '张三', //客户姓名
-                        provide: '到店自提', //配送方式
-                        num: 4, //商品数量
-                        pay: 2165653.453, //实付
+                        name: '', //客户姓名
+                        provide: '', //配送方式
+                        num: 0, //商品数量
+                        pay: 0, //实付
                         addtion: [], //备注
-                        payType: 'wx', //支付方式
+                        payType: '', //支付方式
                         subStatus: 0, //订单状态，1：维权
                         status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
                     },
                     bill: { //订单信息
-                        billId: 'ES204565656526265656565', //订单号
-                        billDate: '2018-05-12 15:23:12', //订单时间
+                        billId: '', //订单号
+                        billDate: '', //订单时间
                         billType: 0 //订单类型，0：分销订单，1：普通订单
                     },
                     goodsList: [{ //订单商品信息
                         img: '/static/img/global/tmp.png', //商品图片
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-                        color: '浅绿色', //颜色
-                        size: 'S码', //型号
-                        num: 2, //数量
-                        price: '15455.2' //价格
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '152344.2'
+                        goodName: '', //商品名
+                        color: '', //颜色
+                        size: '', //型号
+                        num: 0, //数量
+                        price: '0' //价格
                     }],
                     rights: { // 维权信息
-                        status: '退款退货', //维权状态
+                        status: '', //维权状态
                         addition: [{
-                            content: '摔坏了'
+                            content: ''
                         }], //维权备注
                     }
                 }
             }
         },
         methods: {
-            clickButton() {
+            clickButton() {},
+            initPage() {
+                this.bill = DataFrom.bill || {
+                    info: { //订单及用户信息
+                        name: '', //客户姓名
+                        provide: '', //配送方式
+                        num: 0, //商品数量
+                        pay: 0, //实付
+                        addtion: [], //备注
+                        payType: '', //支付方式
+                        subStatus: 0, //订单状态，1：维权
+                        status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
+                    },
+                    bill: { //订单信息
+                        billId: '', //订单号
+                        billDate: '', //订单时间
+                        billType: 0 //订单类型，0：分销订单，1：普通订单
+                    },
+                    goodsList: [{ //订单商品信息
+                        img: '/static/img/global/tmp.png', //商品图片
+                        goodName: '', //商品名
+                        color: '', //颜色
+                        size: '', //型号
+                        num: 0, //数量
+                        price: '0' //价格
+                    }],
+                    rights: { // 维权信息
+                        status: '', //维权状态
+                        addition: [{
+                            content: ''
+                        }], //维权备注
+                    }
+                };
+                this.badgeNum=DataFrom.bill.info.addtion.length;
+                 console.log('detail>>>>>>', DataFrom.bill.info.addtion)
             }
         },
-        beforeMount() {
-            console.log('hello', this.billInfo)
+        onShow() {
+            this.initPage();
+        },
+        onLoad(option) {
+            if (option.from) {
+                DataFrom = this.Cacher.getData(option.from);
+            }
+            this.initPage();
+           
         },
     }
 </script>
@@ -123,14 +163,15 @@
                 color: #6e7685;
             }
         }
-        .goodInfo ,.rightsInfo{
+        .goodInfo,
+        .rightsInfo {
             width: 710upx;
             background: #fff;
             margin: auto;
             border-radius: 8upx;
         }
-        .rightsInfo{
-            margin:20upx auto 0;
+        .rightsInfo {
+            margin: 20upx auto 0;
         }
         .button-group {
             display: flex;

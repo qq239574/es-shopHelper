@@ -16,7 +16,10 @@
                 Cacher: cacher,
                 Toast,
                 Dialog,
-                DataFrom:'',//页面传参
+                DataFrom: '', //页面传参
+                ShowLoadMore: false,
+                LoadingType: 1,
+                LoadingText: ['加载更多', 'loading ......', '已加载全部']
             };
         },
         methods: {
@@ -54,7 +57,11 @@
             }
         },
         onPullDownRefresh() {
-            this.pageLoading();
+            console.log('refreshing');
+            this.closePageLoading();
+            setTimeout(()=> {
+                uni.stopPullDownRefresh();
+            }, 1000);
         },
         onReachBottom() {
             this.showReachBottom = true;
@@ -64,15 +71,22 @@
         },
         onHide() {
             this.closePageLoading();
+            this.Dialog.close();
         },
         onLoad(option) {
             console.log(option);
             if (!option.from) { //如果没有from就说明是刚进入小程序
             } else {
-                this.DataFrom=this.Cacher.getData(option.from);
-                console.log('DataFrom:  ',this.Cacher.getData(option.from)); //获取页面传参
+                console.log('DataFrom:  ', this.Cacher.getData(option.from)); //获取页面传参
             }
         },
+        onReachBottom() {
+            console.log('onReachBottom')
+            this.ShowLoadMore = true;
+            setTimeout(() => {
+                this.ShowLoadMore = false;
+            }, 2000)
+        }
     }
 </script>
 

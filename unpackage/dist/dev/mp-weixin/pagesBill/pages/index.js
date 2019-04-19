@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var block0 = function block0() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock0 */ "pagesBill/components/BillBlock0").then(__webpack_require__.bind(null, /*! ../components/BillBlock0.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock0.vue"));};var block1 = function block1() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock1 */ "pagesBill/components/BillBlock1").then(__webpack_require__.bind(null, /*! ../components/BillBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock1.vue"));};var block2 = function block2() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock2 */ "pagesBill/components/BillBlock2").then(__webpack_require__.bind(null, /*! ../components/BillBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock2.vue"));};var block3 = function block3() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock3 */ "pagesBill/components/BillBlock3").then(__webpack_require__.bind(null, /*! ../components/BillBlock3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock3.vue"));};var block4 = function block4() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock4 */ "pagesBill/components/BillBlock4").then(__webpack_require__.bind(null, /*! ../components/BillBlock4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock4.vue"));};var goodBlock = function goodBlock() {return Promise.all(/*! import() | pages/bill/index/Card--Good */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/bill/index/Card--Good")]).then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card--Good.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card--Good.vue"));};var expressBlock = function expressBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillExpressInfo */ "pagesBill/components/BillExpressInfo").then(__webpack_require__.bind(null, /*! ../components/BillExpressInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillExpressInfo.vue"));};var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var myRightsBlock = function myRightsBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillRightsBlock */ "pagesBill/components/BillRightsBlock").then(__webpack_require__.bind(null, /*! ../components/BillRightsBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillRightsBlock.vue"));};
 
 
 
@@ -31,7 +31,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var block1 = function block1() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock1 */ "pagesBill/components/BillBlock1").then(__webpack_require__.bind(null, /*! ../components/BillBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock1.vue"));};var block2 = function block2() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock2 */ "pagesBill/components/BillBlock2").then(__webpack_require__.bind(null, /*! ../components/BillBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock2.vue"));};var block3 = function block3() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock3 */ "pagesBill/components/BillBlock3").then(__webpack_require__.bind(null, /*! ../components/BillBlock3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock3.vue"));};var block4 = function block4() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock4 */ "pagesBill/components/BillBlock4").then(__webpack_require__.bind(null, /*! ../components/BillBlock4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock4.vue"));};var goodBlock = function goodBlock() {return Promise.all(/*! import() | pages/bill/index/Card--Good */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/bill/index/Card--Good")]).then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card--Good.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card--Good.vue"));};var expressBlock = function expressBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillExpressInfo */ "pagesBill/components/BillExpressInfo").then(__webpack_require__.bind(null, /*! ../components/BillExpressInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillExpressInfo.vue"));};var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var myRightsBlock = function myRightsBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillRightsBlock */ "pagesBill/components/BillRightsBlock").then(__webpack_require__.bind(null, /*! ../components/BillRightsBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillRightsBlock.vue"));};var _default =
 
 
 
@@ -42,8 +41,19 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
 
 
 
+
+
+
+
+
+
+
+
+
+var DataFrom = {};var _default =
 {
   components: {
+    block0: block0,
     block1: block1,
     block2: block2,
     block3: block3,
@@ -53,59 +63,89 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
     myButton: myButton,
     myRightsBlock: myRightsBlock },
 
-  computed: _objectSpread({},
-  (0, _vuex.mapState)({
-    billInfo: 'billDetail' })),
-
-
   data: function data() {
     return {
+      badgeNum: 0,
       bill: {
         info: { //订单及用户信息
-          name: '张三', //客户姓名
-          provide: '到店自提', //配送方式
-          num: 4, //商品数量
-          pay: 2165653.453, //实付
+          name: '', //客户姓名
+          provide: '', //配送方式
+          num: 0, //商品数量
+          pay: 0, //实付
           addtion: [], //备注
-          payType: 'wx', //支付方式
+          payType: '', //支付方式
           subStatus: 0, //订单状态，1：维权
           status: 0 //0代付款,1代发货，2待收货，3已完成，4已关闭
         },
         bill: { //订单信息
-          billId: 'ES204565656526265656565', //订单号
-          billDate: '2018-05-12 15:23:12', //订单时间
+          billId: '', //订单号
+          billDate: '', //订单时间
           billType: 0 //订单类型，0：分销订单，1：普通订单
         },
         goodsList: [{ //订单商品信息
           img: '/static/img/global/tmp.png', //商品图片
-          goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-          color: '浅绿色', //颜色
-          size: 'S码', //型号
-          num: 2, //数量
-          price: '15455.2' //价格
-        }, {
-          img: '/static/img/global/tmp.png',
-          goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-          color: '浅绿色',
-          size: 'S码',
-          num: 2,
-          price: '152344.2' }],
-
+          goodName: '', //商品名
+          color: '', //颜色
+          size: '', //型号
+          num: 0, //数量
+          price: '0' //价格
+        }],
         rights: { // 维权信息
-          status: '退款退货', //维权状态
+          status: '', //维权状态
           addition: [{
-            content: '摔坏了' }]
+            content: '' }]
           //维权备注
         } } };
 
 
   },
   methods: {
-    clickButton: function clickButton() {
+    clickButton: function clickButton() {},
+    initPage: function initPage() {
+      this.bill = DataFrom.bill || {
+        info: { //订单及用户信息
+          name: '', //客户姓名
+          provide: '', //配送方式
+          num: 0, //商品数量
+          pay: 0, //实付
+          addtion: [], //备注
+          payType: '', //支付方式
+          subStatus: 0, //订单状态，1：维权
+          status: 0 //0代付款,1代发货，2待收货，3已完成，4已关闭
+        },
+        bill: { //订单信息
+          billId: '', //订单号
+          billDate: '', //订单时间
+          billType: 0 //订单类型，0：分销订单，1：普通订单
+        },
+        goodsList: [{ //订单商品信息
+          img: '/static/img/global/tmp.png', //商品图片
+          goodName: '', //商品名
+          color: '', //颜色
+          size: '', //型号
+          num: 0, //数量
+          price: '0' //价格
+        }],
+        rights: { // 维权信息
+          status: '', //维权状态
+          addition: [{
+            content: '' }]
+          //维权备注
+        } };
+
+      this.badgeNum = DataFrom.bill.info.addtion.length;
+      console.log('detail>>>>>>', DataFrom.bill.info.addtion);
     } },
 
-  beforeMount: function beforeMount() {
-    console.log('hello', this.billInfo);
+  onShow: function onShow() {
+    this.initPage();
+  },
+  onLoad: function onLoad(option) {
+    if (option.from) {
+      DataFrom = this.Cacher.getData(option.from);
+    }
+    this.initPage();
+
   } };exports.default = _default;
 
 /***/ }),

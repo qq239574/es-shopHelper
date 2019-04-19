@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var buttonGroup = function buttonGroup() {return __webpack_require__.e(/*! import() | components/my-components/ButtonGroup */ "components/my-components/ButtonGroup").then(__webpack_require__.bind(null, /*! ../../../components/my-components/ButtonGroup */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ButtonGroup.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -39,9 +39,23 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var buttonGroup = function buttonGroup() {return __webpack_require__.e(/*! import() | components/my-components/ButtonGroup */ "components/my-components/ButtonGroup").then(__webpack_require__.bind(null, /*! ../../../components/my-components/ButtonGroup */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ButtonGroup.vue"));};var _default =
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        money: 0,
+        payedBill: 0,
+        payedGood: 0,
+        payedVip: 0 } } },
+
+
+
   components: {
     buttonGroup: buttonGroup },
 
@@ -51,8 +65,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     };
   },
   methods: {
-    clickButton: function clickButton(num) {
+    formater: function formater(val, decimals) {//数字格式化
+      return (0, _formater.number_format)(val, decimals, '.', ',');
+    },
+    clickButton: function clickButton(num, name) {
       this.activeButton = num;
+      this.$emit('search', {
+        index: num,
+        name: name });
+
+    },
+    clickItem: function clickItem() {
+      this.$emit('click', {
+        title: '数据统计' });
+
     } } };exports.default = _default;
 
 /***/ }),
@@ -83,6 +109,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.formater(_vm.info.money, 2)
+  var m1 = _vm.formater(_vm.info.payedBill, 0)
+  var m2 = _vm.formater(_vm.info.payedGood, 0)
+  var m3 = _vm.formater(_vm.info.payedVip, 0)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1,
+        m2: m2,
+        m3: m3
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -8,7 +8,11 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var boodBlock = function boodBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Good */ "pagesBill/components/PriceBlock--Good").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Good.vue"));};var infoBlock = function infoBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Info */ "pagesBill/components/PriceBlock--Info").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Info.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Info.vue"));};var blockInput = function blockInput() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Input */ "pagesBill/components/PriceBlock--Input").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Input.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Input.vue"));};var pageFoot = function pageFoot() {return __webpack_require__.e(/*! import() | pagesBill/components/priceBlock--Foot */ "pagesBill/components/priceBlock--Foot").then(__webpack_require__.bind(null, /*! ../components/priceBlock--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\priceBlock--Foot.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var boodBlock = function boodBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Good */ "pagesBill/components/PriceBlock--Good").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Good.vue"));};var infoBlock = function infoBlock() {return Promise.all(/*! import() | pagesBill/components/PriceBlock--Info */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/PriceBlock--Info")]).then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Info.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Info.vue"));};var blockInput = function blockInput() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Input */ "pagesBill/components/PriceBlock--Input").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Input.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Input.vue"));};var pageFoot = function pageFoot() {return Promise.all(/*! import() | pagesBill/components/priceBlock--Foot */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/priceBlock--Foot")]).then(__webpack_require__.bind(null, /*! ../components/priceBlock--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\priceBlock--Foot.vue"));};var _default =
+
+
+
+
 
 
 
@@ -35,6 +39,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
+      totalPrice: 0,
+      billInfo: {
+        price: 12121,
+        num: 1455,
+        total: 11111 },
+
       goodsList: [{
         img: '/static/img/global/tmp.png',
         goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
@@ -58,7 +68,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         price: '1533334' }] };
 
 
-  } };exports.default = _default;
+  },
+  methods: {
+    getInput: function getInput(val) {
+      this.totalPrice = val.value.price * 1 + val.value.pay * 1;
+    },
+    sure: function sure() {
+      this.closePageLoading();
+      this.Toast('改价成功');
+      this.Cacher.setData('changePrice', {
+        from: 'changePrice' });
+
+      setTimeout(function () {
+        uni.navigateBack();
+      }, 2000);
+    } },
+
+  onLoad: function onLoad(option) {} };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

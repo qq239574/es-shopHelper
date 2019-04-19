@@ -1,8 +1,8 @@
 <template>
     <view class='card--title' @click='clickBill'>
         <view class="data card--title-item">
-            <view class="billId">ES204565656526265656565</view>
-            <view class="billDate">2018-05-12 15:23:12</view>
+            <view class="billId">{{bill.billId}}</view>
+            <view class="billDate">{{bill.billDate}}</view>
         </view>
         <view class="tab card--title-item">
             <view class="billType commision" v-if='bill.billType*1===0'>分销订单</view>

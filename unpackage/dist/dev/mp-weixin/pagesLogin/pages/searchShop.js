@@ -8,27 +8,45 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInputWithButton */ "components/my-components/SearchInputWithButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInputWithButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInputWithButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+//
+//
+//
+//
+//
+//
 
-
-
-
-
-
-
+var DataFrom = {};var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInputWithButton */ "components/my-components/SearchInputWithButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInputWithButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInputWithButton.vue"));};var _default =
 
 {
   components: {
     search: search },
 
+  data: function data() {
+    return {
+      placeholder: '搜索店铺' };
+
+
+  },
   methods: {
     search: function search(val) {
-      this.Cacher.setData('searchShop', {
+      this.Cacher.setData('searchShop', _objectSpread({
         from: 'searchShop',
-        value: val });
+        value: val },
+      DataFrom));
 
       uni.navigateBack();
-    } } };exports.default = _default;
+    } },
+
+  onLoad: function onLoad(option) {
+    if (option.from) {
+      DataFrom = this.Cacher.getData(option.from);
+      this.placeholder = DataFrom.placeholder;
+      uni.setNavigationBarTitle({
+        title: DataFrom.title });
+
+    }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

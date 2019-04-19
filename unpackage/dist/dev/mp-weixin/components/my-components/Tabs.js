@@ -38,11 +38,24 @@ var _default =
 
       {
         cateid: 4,
-        name: "已关闭" }] } },
+        name: "已关闭" }] },
 
 
 
+    index: {
+      type: Number,
+      default: 0 } },
 
+
+  watch: {
+    index: function index() {
+      this.cateCurrentIndex = this.index;
+    } },
+
+  mounted: function mounted() {
+    this.cateCurrentIndex = this.index;
+    console.log(this.index, 'this.index');
+  },
   computed: {
     getWidth: function getWidth() {
       return 'width:' + Math.floor(1 / this.categories.length * 100) + '%';

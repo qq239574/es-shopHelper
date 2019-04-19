@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -28,9 +28,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        price: 0,
+        num: 0,
+        total: 0 } } },
+
+
+
   components: {
-    cellBlock: cellBlock } };exports.default = _default;
+    cellBlock: cellBlock },
+
+  methods: {
+    formater: function formater(val) {
+      return (0, _formater.number_format)(val, 2, '.', ',');
+    } } };exports.default = _default;
 
 /***/ }),
 
@@ -60,6 +76,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.formater(_vm.info.price)
+  var m1 = _vm.formater(_vm.info.total)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

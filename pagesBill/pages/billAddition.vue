@@ -23,7 +23,10 @@
         },
         methods: {
             sure() {
-                uni.navigateBack();
+                this.pageLoading();
+                setTimeout(() => {
+                    uni.navigateBack();
+                }, 2000)
             },
             getAddition(val) {
                 this.length = val.detail.value.length;

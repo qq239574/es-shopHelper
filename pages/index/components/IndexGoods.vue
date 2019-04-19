@@ -4,12 +4,12 @@
             <view class="goodsList">
                 <view class="item item1" @click='click(0)'>
                     <image lazy-load src='/static/img/global/home_order_after.png'></image>
-                    <view class="status">代发货</view>
+                    <view class="status">待发货</view>
                     <view class="num">{{list[0].num}}</view>
                 </view>
                 <view class="item item2" @click='click(1)'>
                     <image lazy-load src='/static/img/global/home_order_tobepay.png'></image>
-                    <view class="status">代付款</view>
+                    <view class="status">待付款</view>
                     <view class="num">{{list[1].num}}</view>
                 </view>
                 <view class="item item3" @click='click(2)'>
@@ -28,11 +28,13 @@
             list: {
                 type: Array,
                 default: [{
-                    name: '代发货',
-                    num: 0
+                    name: '待发货',
+                    num: 0,
+                    cateid: 1
                 }, {
-                    name: '代付款',
-                    num: 0
+                    name: '待付款',
+                    num: 0,
+                    cateid: 0
                 }, {
                     name: '维权订单',
                     num: 0

@@ -59,6 +59,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
             price: '0' }],
 
           rights: {
+            subStatus: 0, //订单子状态，1：维权
             status: '退款退货',
             addition: [] //{content:''}
           } };} } },

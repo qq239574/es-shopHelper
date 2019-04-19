@@ -14,7 +14,7 @@
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>发货信息</view>
-            <view class='card--info__row__status'>{{rights.status}}</view>
+            <view class='card--info__row__status primary'>{{rights.status}}</view>
         </view>
     </view>
 </template>
@@ -77,6 +77,17 @@
             }
             .card--info__row__status {
                 color: #fd6b3e;
+            }
+            .primary{
+                background: #fd6b3e;
+                color:#fff;
+                line-height: 34upx;
+                padding: 0 8upx;
+                margin:auto 0;
+                height:34upx;
+                font-size: 20upx;
+                text-align: center;
+                border-radius: 6upx;
             }
         }
     }

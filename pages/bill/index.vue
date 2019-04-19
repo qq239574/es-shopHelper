@@ -1,10 +1,25 @@
 <template>
     <view class='pages-bill-index page'>
-        <SearchInput @input='search'></SearchInput>
-        <TabCard @tabChange='tabChange'></TabCard>
+        <view class="grace-fixed-top grace-gtbg-blue top1" style='background:rgba(0,0,0,0)'>
+            <SearchInput @click='search' :value='searchValue' :disabled='true'></SearchInput>
+            <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
+        </view>
+        <view class='margin180'></view>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <!-- 确认付款的弹窗 -->
+        <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
+            <view class="model__title">手动确认付款</view>
+            <view class="model__content">确保买家已经付款，并且与买家协商完毕确认付款</view>
+            <view class="model__error" :style='error?"color:red;":"color:#fff;"' v-if='error'>*密码输入错误</view>
+            <input class='model__input' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码' v-if='!surePaying'>
+            <view class="model__img" v-else>
+                <image src='/static/img/global/loading.jpg'></image>
+            </view>
+        </i-modal>
+        <!-- 交互组件 -->
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
+        <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
     </view>
 </template>
 
@@ -12,20 +27,23 @@
     import TabCard from '../../components/my-components/Tabs';
     import Card from './index/Card';
     import SearchInput from '../../components/my-components/SearchInput.vue';
-    import {
-        mapMutations
-    } from 'vuex'
+    import testdata from './index/testData.js'
+    let DataFrom = {};
+    let searchData = {};
+    let surePassword = ''; //手动确认付款密码
     export default {
         components: {
             TabCard,
             Card,
             SearchInput
         },
-        onShow() {
-            console.log('biioiiii')
-        },
         data() {
             return {
+                surePassword: '',
+                error: false,
+                surePaying: false, //正在确认付款？
+                showModel: false,
+                searchValue: '', //查询条件 
                 billList: [{
                     info: { //订单及用户信息
                         name: '张三', //客户姓名
@@ -69,51 +87,182 @@
                     index: 0,
                     name: "代付款"
                 }, //{cateid: 0, index: 0, name: "代付款"}
+                tabIndex: 0, //默认tabs的index
+            }
+        },
+        onLoad(option) {
+            console.log('object,option', option)
+            if (option.from) {
+                DataFrom = this.Cacher.getData(option.from);
+            }
+            this.initPage();
+        },
+        onShow() {
+            this.initPage();
+        },
+        watch: {
+            showModel() {
+                this.surePassword = '';
+                surePassword = '';
+                this.error = false;
             }
         },
         methods: {
-            tabChange(tab) {
-                console.log(tab);
-                this.curTab = tab;
+            sure() {
+                this.surePaying = true;
+                setTimeout(() => {
+                    this.surePaying = false;
+                    if (true) { //验证通过
+                        this.showModel = false;
+                        this.Toast('确认付款成功');
+                        this.initPage();
+                    } else {
+                        this.error = true;
+                    }
+                }, 2000);
             },
-            ...mapMutations({
-                saveBill: 'setBillDetail'
-            }),
+            cancel() {
+                this.showModel = false;
+            },
+            getSurePassword(val) {
+                surePassword = val.detail.value;
+                this.surePassword = surePassword;
+                this.error = false;
+            },
+            initPage() {
+                if (DataFrom.from == 'home') {
+                    if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
+                        this.tabIndex = DataFrom.cateid;
+                    } else {
+                        this.tabIndex = 0;
+                    }
+                } else if (DataFrom.from == 'searchShop') {
+                    searchData = this.Cacher.getData('searchShop') || {};
+                    this.searchValue = searchData.value || '';
+                    this.billList = testdata(DataFrom.cateid); //测试用的 
+                }else{
+                    this.billList = testdata(0); //测试用的 
+                }
+            },
+            tabChange(tab) {
+                this.curTab = tab; 
+                this.billList = testdata(tab.cateid); //测试用的 
+            },
             search(val) {
-                console.log(val)
+                DataFrom = { //这里预先设置返回的页面，由于back()函数无法设置query
+                    from: 'searchShop',
+                    value: ''
+                }
+                this.Cacher.setData('bill', {
+                    from: 'bill',
+                    title: '订单搜索',
+                    placeholder: '手机号/微信昵称/姓名'
+                })
+                uni.navigateTo({
+                    url: '../../pagesLogin/pages/searchShop?from=bill'
+                })
             },
             clickBill(val) {
+                console.log(val)
+                this.closePageLoading();
+                this.Cacher.setData('bill', {
+                    from: 'bill',
+                    ...val
+                });
                 if (val.type != 'button') {
-                    this.saveBill(val)
                     uni.navigateTo({ //去详情页
-                        url: '../../pagesBill/pages/index'
+                        url: '../../pagesBill/pages/index?from=bill'
                     })
                 } else if (val.type == 'button') {
-                    console.log(val.detail.val)
                     if (val.detail.val == '备注') {
+                        DataFrom = {
+                            from: 'additionList'
+                        } 
                         uni.navigateTo({
-                            url: '../../pagesBill/pages/billAddition'
+                            url: '../../pagesBill/pages/additionList?from=bill'
                         })
                     } else if (val.detail.val == '改价') {
+                        DataFrom = {
+                            from: 'changePrice'
+                        }
                         uni.navigateTo({
-                            url: '../../pagesBill/pages/changePrice'
+                            url: '../../pagesBill/pages/changePrice?from=bill'
                         })
                     } else if (val.detail.val == '确认付款') {
+                        this.showModel = true;
                     } else if (val.detail.val == '维权备注') {
+                        DataFrom = {
+                            from: 'additionList'
+                        }
                         uni.navigateTo({
-                            url: '../../pagesBill/pages/billAddition'
+                            url: '../../pagesBill/pages/additionList?from=bill'
                         })
                     } else if (val.detail.val == '维权中') {} else if (val.detail.val == '确认发货') {
                         uni.navigateTo({
-                            url: '../../pagesBill/pages/billProvide'
+                            url: '../../pagesBill/pages/billProvide?from=bill'
                         })
                     } else if (val.detail.val == '确认收货') {}
                 }
             }
         },
+        onPullDownRefresh() {
+            this.initPage();
+        }
     }
 </script>
 
 <style lang="scss" scoped>
-
+    .margin180 {
+        height: 176upx;
+    }
+    .model__title {
+        font-weight: 700;
+        font-size: 30upx;
+        line-height: 30upx;
+        height: 30upx;
+        box-sizing: border-box;
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto 15upx;
+    }
+    .model__content {
+        line-height: 36upx;
+        font-size: 26upx;
+        color: #9ca1ab;
+        width: 80%;
+        margin: 0 auto 0;
+        text-align: left;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+    .model__input {
+        height: 46upx;
+        width: 70%;
+        margin: auto;
+        border: 1upx solid #eee;
+        border-radius: 10upx;
+        line-height: 46upx;
+        text-align: left;
+        padding: 0 20upx;
+        font-size: 24upx;
+    }
+    .model__img {
+        width: 100upx;
+        height: 100upx;
+        margin: -20upx auto 0;
+        image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .model__error {
+        color: red;
+        width: 80%;
+        margin: auto;
+        font-size: 20upx;
+        line-height: 26upx;
+        height: 28upx;
+        box-sizing: border-box;
+        text-align: left;
+    }
 </style>

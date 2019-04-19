@@ -1,12 +1,16 @@
 <template>
     <view class='change-price page'>
         <view class="goodblock block">
-            <boodBlock :goodsList='goodsList'></boodBlock>
-            <infoBlock></infoBlock>
-            <blockInput></blockInput>
-            <pageFoot></pageFoot>
+            <block>
+                <boodBlock :goodsList='goodsList'></boodBlock>
+                <infoBlock :info='billInfo'></infoBlock>
+                <blockInput :info='billInfo' @input="getInput"></blockInput>
+            </block>
+            <!-- 确认修改按钮 -->
+            <pageFoot :price='totalPrice' @click='sure'></pageFoot>
+            <!-- 交互组件 -->
             <van-toast id="van-toast" />
-        <van-dialog id="van-dialog" />
+            <van-dialog id="van-dialog" />
         </view>
     </view>
 </template>
@@ -25,6 +29,12 @@
         },
         data() {
             return {
+                totalPrice: 0,
+                billInfo: {
+                    price: 12121,
+                    num: 1455,
+                    total: 11111
+                },
                 goodsList: [{
                     img: '/static/img/global/tmp.png',
                     goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
@@ -49,12 +59,28 @@
                 }]
             }
         },
+        methods: {
+            getInput(val) {
+                this.totalPrice = val.value.price * 1 + val.value.pay * 1;
+            },
+            sure() {
+                this.closePageLoading();
+                this.Toast('改价成功');
+                this.Cacher.setData('changePrice', {
+                    from: 'changePrice'
+                })
+                setTimeout(() => {
+                    uni.navigateBack();
+                }, 2000)
+            }
+        },
+        onLoad(option) {}
     }
 </script>
 
 <style lang="scss" scoped>
-.change-price{
-      .block {
+    .change-price {
+        .block {
             width: 710upx;
             box-sizing: border-box;
             background: #fff;
@@ -74,5 +100,5 @@
                 color: #6e7685;
             }
         }
-}
+    }
 </style>

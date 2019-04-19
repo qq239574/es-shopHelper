@@ -3,25 +3,41 @@
         <view class="border"></view>
         <cellBlock>
             <view class="label bill__item" slot='pre'>单价：</view>
-            <view class="body bill__item" slot='aft'>2018-12-11 18:12:11</view>
+            <view class="body bill__item" slot='aft'>￥{{formater(info.price)}}/件</view>
         </cellBlock>
         <cellBlock>
             <view class="label bill__item" slot='pre'>订单数量：</view>
-            <view class="body bill__item" slot='aft'>2018-12-11 18:12:11</view>
+            <view class="body bill__item" slot='aft'>{{info.num}}件</view>
         </cellBlock>
         <cellBlock>
             <view class="label bill__item" slot='pre'>小计：</view>
-            <view class="body bill__item" slot='aft'>2018-12-11 18:12:11</view>
+            <view class="body bill__item" slot='aft'>￥{{formater(info.total)}}</view>
         </cellBlock>
     </view>
 </template>
 
 <script>
     import cellBlock from './BillDetailCell'
+    import {number_format} from '../../components/my-components/formater.js'
     export default {
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    price: 0,
+                    num: 0,
+                    total: 0
+                }
+            }
+        },
         components: {
             cellBlock
-        }
+        },
+        methods: {
+            formater(val) {
+               return number_format(val, 2, '.', ',')
+            }
+        },
     }
 </script>
 
@@ -31,7 +47,7 @@
         width: 100%;
         padding: 0 20upx 0;
         background: #fcfcfc;
-        margin:0 auto 0;
+        margin: 0 auto 0;
         .border {
             height: 0;
             width: 670upx;

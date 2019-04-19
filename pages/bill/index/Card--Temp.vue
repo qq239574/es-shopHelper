@@ -1,5 +1,5 @@
 <template>
-    <view class='card--temp' v-if='rights.status' @click='clickBill'>
+    <view class='card--temp' v-if='rights.subStatus' @click='clickBill'>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>维权状态</view>
             <view class='card--info__row__status'>{{rights.status}}</view>
@@ -19,7 +19,8 @@
                 type: Object,
                 default: () => ({
                     status: '退款退货',
-                    addtion: []
+                    addtion: [],
+                    subStatus: 0 //订单子状态，1：维权
                 })
             }
         },

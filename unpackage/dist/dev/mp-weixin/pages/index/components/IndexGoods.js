@@ -38,11 +38,13 @@ var _default =
     list: {
       type: Array,
       default: [{
-        name: '代发货',
-        num: 0 },
+        name: '待发货',
+        num: 0,
+        cateid: 1 },
       {
-        name: '代付款',
-        num: 0 },
+        name: '待付款',
+        num: 0,
+        cateid: 0 },
       {
         name: '维权订单',
         num: 0 }] } },

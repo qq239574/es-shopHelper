@@ -2,7 +2,7 @@
     <view class='index-apps'>
         <view class="block">
             <view class="items" v-for='(item,index) in list' :key='index' @click='click(item)'>
-                <image lazy-load :src='item.img'></image>
+                <image lazy-load mode='aspectFit' :src='item.img'></image>
                 <view class="title">{{item.title}}</view>
             </view>
         </view>
@@ -15,15 +15,15 @@
             list: {
                 type: Array,
                 default: [{
-                    img: '/static/img/global/tmp.png',
+                    img: '/static/img/global/vip-manage.png',
                     title: "会员管理",
                     url: ''
                 }, {
-                    img: '/static/img/global/tmp.png',
+                    img: '/static/img/global/self-paybuy.png',
                     title: "自提核销",
                     url: ''
                 }, {
-                    img: '/static/img/global/tmp.png',
+                    img: '/static/img/global/calcu-data.png',
                     title: "数据统计",
                     url: ''
                 }]
@@ -55,7 +55,8 @@
                 box-sizing: border-box;
                 image {
                     width: 61upx;
-                    height: 48upx;
+                    // height: 48upx;
+                    max-height: 48upx;
                     display: block;
                     margin: 15upx auto 0;
                 }

@@ -10,7 +10,7 @@
 				"van-icon": "/wxcomponents/vant-weapp/icon/index",
 				"van-field": "/wxcomponents/vant-weapp/field/index",
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 			}
 		}
 	}, {
@@ -20,7 +20,8 @@
 			"navigationBarBackgroundColor": "#f3f5f9",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+				"van-icon": "/wxcomponents/vant-weapp/icon/index"
 			},
 			"enablePullDownRefresh": true,
 			"backgroundColor": "#f3f5f9"
@@ -31,7 +32,8 @@
 			"navigationBarTitleText": "订单管理",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+				"i-modal": "/wxcomponents/iview-weapp/modal/index"
 			}
 		}
 	}, {
@@ -40,7 +42,7 @@
 			"navigationBarTitleText": "我的主包",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 			}
 		}
 	}, {
@@ -49,7 +51,7 @@
 			"navigationBarTitleText": "商品主包",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 			}
 		}
 	}],
@@ -61,7 +63,7 @@
 				"navigationBarTitleText": "订单详情",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -70,7 +72,7 @@
 				"navigationBarTitleText": "订单改价",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -79,16 +81,27 @@
 				"navigationBarTitleText": "订单发货",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
 			"path": "pages/billAddition",
 			"style": {
+				"navigationBarTitleText": "备注",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+				}
+			}
+		}, {
+			"path": "pages/additionList",
+			"style": {
 				"navigationBarTitleText": "订单备注",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"van-icon": "/wxcomponents/vant-weapp/icon/index"
+
 				}
 			}
 		}, {
@@ -97,7 +110,7 @@
 				"navigationBarTitleText": "物流单号",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}]
@@ -109,7 +122,7 @@
 					"navigationBarTitleText": "商品编辑",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			},
@@ -119,7 +132,7 @@
 					"navigationBarTitleText": "商品编辑-无规格",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			},
@@ -129,7 +142,7 @@
 					"navigationBarTitleText": "商品编辑-编辑名称",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			},
@@ -139,7 +152,7 @@
 					"navigationBarTitleText": "商品编辑-多规格",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			}, {
@@ -148,7 +161,7 @@
 					"navigationBarTitleText": "商品编辑-选择分类",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			}, {
@@ -157,7 +170,7 @@
 					"navigationBarTitleText": "商品编辑-运费设置",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
-						"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
 			}
@@ -170,7 +183,7 @@
 				"navigationBarTitleText": "首页分包",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -179,7 +192,7 @@
 				"navigationBarTitleText": "筛选日期",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -188,7 +201,7 @@
 				"navigationBarTitleText": "数据详情",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -197,18 +210,18 @@
 				"navigationBarTitleText": "Top10",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
 			"path": "pages/addSurplus",
 			"style": {
 				"navigationBarTitleText": "增加余额",
-				"navigationBarTextStyle":"#fff",
-				"navigationBarBackgroundColor":"#203352", 
+				"navigationBarTextStyle": "#fff",
+				"navigationBarBackgroundColor": "#203352",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -217,19 +230,19 @@
 				"navigationBarTitleText": "优惠券",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
 			"path": "pages/vipDetail",
 			"style": {
 				"navigationBarTitleText": "会员详情",
-				"navigationBarTextStyle":"#fff",
-				"navigationBarBackgroundColor":"#203352", 
+				"navigationBarTextStyle": "#fff",
+				"navigationBarBackgroundColor": "#203352",
 				"enablePullDownRefresh": false,
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -238,7 +251,7 @@
 				"navigationBarTitleText": "会员管理",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -247,7 +260,7 @@
 				"navigationBarTitleText": "选择优惠券",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -256,7 +269,7 @@
 				"navigationBarTitleText": "备注",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -265,7 +278,7 @@
 				"navigationBarTitleText": "公告",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -274,7 +287,7 @@
 				"navigationBarTitleText": "公告详情",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}]
@@ -286,7 +299,7 @@
 				"navigationBarTitleText": "登录",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -300,7 +313,7 @@
 					"van-icon": "/wxcomponents/vant-weapp/icon/index",
 					"van-field": "/wxcomponents/vant-weapp/field/index",
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -315,7 +328,7 @@
 					"van-field": "/wxcomponents/vant-weapp/field/index",
 					"van-popup": "/wxcomponents/vant-weapp/popup/index",
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -328,7 +341,7 @@
 					"van-icon": "/wxcomponents/vant-weapp/icon/index",
 					"van-field": "/wxcomponents/vant-weapp/field/index",
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -337,7 +350,7 @@
 				"navigationBarTitleText": "搜索店铺",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -346,7 +359,7 @@
 				"navigationBarTitleText": "选择店铺",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}]
@@ -358,7 +371,7 @@
 				"navigationBarTitleText": "测试用例",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}, {
@@ -367,7 +380,7 @@
 				"navigationBarTitleText": "ECharts",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog":"/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
 		}]
@@ -379,23 +392,23 @@
 		"list": [{
 			"pagePath": "pages/index/index",
 			"text": "首页",
-			"iconPath": "static/img/tabbar/tab_home1.png",
-			"selectedIconPath": "static/img/tabbar/tab_home.png"
+			"iconPath": "static/img/tabbar/tab_home.png",
+			"selectedIconPath": "static/img/tabbar/tab_home1.png"
 		}, {
 			"pagePath": "pages/commodity/index",
 			"text": "商品",
-			"iconPath": "static/img/tabbar/tab_goods1.png",
-			"selectedIconPath": "static/img/tabbar/tab_goods.png"
+			"iconPath": "static/img/tabbar/tab_goods.png",
+			"selectedIconPath": "static/img/tabbar/tab_goods1.png"
 		}, {
 			"pagePath": "pages/bill/index",
 			"text": "订单",
-			"iconPath": "static/img/tabbar/tab_order1.png",
-			"selectedIconPath": "static/img/tabbar/tab_order.png"
+			"iconPath": "static/img/tabbar/tab_order.png",
+			"selectedIconPath": "static/img/tabbar/tab_order1.png"
 		}, {
 			"pagePath": "pages/self/index",
 			"text": "我的",
-			"iconPath": "static/img/tabbar/tab_me1.png",
-			"selectedIconPath": "static/img/tabbar/tab_me.png"
+			"iconPath": "static/img/tabbar/tab_me.png",
+			"selectedIconPath": "static/img/tabbar/tab_me1.png"
 		}]
 	},
 	"globalStyle": {

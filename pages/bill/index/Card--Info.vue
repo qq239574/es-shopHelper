@@ -10,17 +10,17 @@
         </view>
         <view class='card--info__row card--info__footer'>
             <view class='card--info__footer-item item1'>共{{info.num}}件商品</view>
-            <view class='card--info__footer-item item2' :class='info.payType?"pay-type":""'>应付：
+            <view class='card--info__footer-item item2' :style='showPayType?"":"padding-right:0;"' :class='info.payType?"pay-type":""'>应付：
                 <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>（含运费）
-                <image lazy-load src='/static/img/global/product_share_wechat.png' v-if='info.payType=="wx"'></image>
+                <image lazy-load src='/static/img/global/product_share_wechat.png' v-if='showPayType'></image>
             </view>
         </view>
         <view class="button-group" v-if='info.subStatus==0'>
-            <myButton @click='clickButton("备注")' :badge='info.addtion'>备注</myButton>
-            <myButton @click='clickButton("改价")'>改价</myButton>
-            <myButton type='primary' @click='clickButton("确认付款")'>确认付款</myButton>
-            <myButton @click='clickButton("确认发货")'>确认发货</myButton>
-            <myButton @click='clickButton("确认收货")'>确认收货</myButton>
+            <myButton @click='clickButton("备注")' :badge='info.addtion.length'>备注</myButton>
+            <myButton @click='clickButton("改价")' v-if='info.status=="0"'>改价</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"'>确认付款</myButton>
+            <myButton type='primary' @click='clickButton("确认发货")' v-if='info.status=="1"'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='info.status=="2"||info.status=="3"'>确认收货</myButton>
         </view>
     </view>
 </template>
@@ -44,8 +44,15 @@
                     pay: 0,
                     addtion: 0,
                     payType: 'wx',
-                    subStatus: 0 //订单状态，1：维权
+                    subStatus: 0, //订单状态，1：维权
+                    status: 0, ////0代付款,1代发货，2待收货，3已完成，4已关闭
                 })
+            }
+        },
+        computed: {
+            showPayType() {
+                console.log('>>>>', this.info.status)
+                return (this.info.status != 0 && this.info.status != 4) && this.info.payType == "wx"
             }
         },
         methods: {
@@ -60,11 +67,11 @@
                     }
                 })
             },
-            clickBill(){
-                 this.$emit('click', {
+            clickBill() {
+                this.$emit('click', {
                     type: 'info',
                     detail: {
-                        val:this.info
+                        val: this.info
                     }
                 })
             }
@@ -93,7 +100,7 @@
             }
             .item1 {
                 font-size: 24upx;
-                line-height:74upx;
+                line-height: 74upx;
             }
             .item2 {
                 font-size: 24upx;

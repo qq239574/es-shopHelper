@@ -32,4 +32,15 @@
 .card--temp .card--info__row .card--info__row__status.data-v-e2149e4c {
       color: #fd6b3e;
 }
+.card--temp .card--info__row .primary.data-v-e2149e4c {
+      background: #fd6b3e;
+      color: #fff;
+      line-height: 34rpx;
+      padding: 0 8rpx;
+      margin: auto 0;
+      height: 34rpx;
+      font-size: 20rpx;
+      text-align: center;
+      border-radius: 6rpx;
+}
 

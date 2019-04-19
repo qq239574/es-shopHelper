@@ -25,7 +25,7 @@
 }
 .index-apps .block .items image.data-v-519d25eb {
         width: 61rpx;
-        height: 48rpx;
+        max-height: 48rpx;
         display: block;
         margin: 15rpx auto 0;
 }

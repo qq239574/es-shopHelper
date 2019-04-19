@@ -38,9 +38,9 @@ var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ 
 var _index = _interopRequireDefault(__webpack_require__(/*! ./api/index.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\api\\index.js"));
 var cacher = _interopRequireWildcard(__webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
-var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/dialog/dialog */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/dialog/dialog */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
-var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
+var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ components: {},
   data: function data() {
     return {
       showReachBottom: false,
@@ -48,8 +48,11 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
       Cacher: cacher,
       Toast: _toast.default,
       Dialog: _dialog.default,
-      DataFrom: '' //页面传参
-    };
+      DataFrom: '', //页面传参
+      ShowLoadMore: false,
+      LoadingType: 1,
+      LoadingText: ['加载更多', 'loading ......', '已加载全部'] };
+
   },
   methods: {
     Request: function Request() {
@@ -86,7 +89,11 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
-    this.pageLoading();
+    console.log('refreshing');
+    this.closePageLoading();
+    setTimeout(function () {
+      uni.stopPullDownRefresh();
+    }, 1000);
   },
   onReachBottom: function onReachBottom() {
     this.showReachBottom = true;
@@ -96,15 +103,22 @@ var pageLoadingBar = '';var _loadMore = '';var _default = { components: {},
   },
   onHide: function onHide() {
     this.closePageLoading();
+    this.Dialog.close();
   },
   onLoad: function onLoad(option) {
     console.log(option);
     if (!option.from) {//如果没有from就说明是刚进入小程序
     } else {
-      this.DataFrom = this.Cacher.getData(option.from);
       console.log('DataFrom:  ', this.Cacher.getData(option.from)); //获取页面传参
     }
-  } };exports.default = _default;
+  } }, "onReachBottom", function onReachBottom()
+{var _this3 = this;
+  console.log('onReachBottom');
+  this.ShowLoadMore = true;
+  setTimeout(function () {
+    _this3.ShowLoadMore = false;
+  }, 2000);
+});exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

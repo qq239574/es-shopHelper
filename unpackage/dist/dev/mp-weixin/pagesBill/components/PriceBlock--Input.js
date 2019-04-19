@@ -21,8 +21,40 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-var _default =
-{};exports.default = _default;
+
+var cachePrice = '';
+var cachePay = '';var _default =
+{
+  data: function data() {
+    return {};
+  },
+  props: {
+    info: { //区分模块用的
+      type: Object,
+      default: {} } },
+
+
+  methods: {
+    inputPrice: function inputPrice(val) {
+      cachePrice = val.detail.value || 0;
+      this.$emit('input', {
+        value: {
+          price: cachePrice,
+          pay: cachePay },
+
+        info: this.info });
+
+    },
+    inputPay: function inputPay(val) {
+      cachePay = val.detail.value || 0;
+      this.$emit('input', {
+        value: {
+          price: cachePrice || 0,
+          pay: cachePay },
+
+        info: this.info });
+
+    } } };exports.default = _default;
 
 /***/ }),
 

@@ -8,7 +8,21 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -36,8 +50,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        id: 'ES20154635685565698454554554568',
+        status: '代付款',
+        billType: '普通订单',
+        billOrigin: '小程序',
+        payType: '微信支付' } } },
+
+
+
   components: {
-    cellBlock: cellBlock } };exports.default = _default;
+    cellBlock: cellBlock },
+
+  methods: {
+    copy: function copy(val) {
+      uni.setClipboardData({
+        data: val,
+        success: function success() {
+          this.Toast('复制成功');
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

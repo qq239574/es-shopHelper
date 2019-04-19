@@ -25,15 +25,15 @@ var _default =
     list: {
       type: Array,
       default: [{
-        img: '/static/img/global/tmp.png',
+        img: '/static/img/global/vip-manage.png',
         title: "会员管理",
         url: '' },
       {
-        img: '/static/img/global/tmp.png',
+        img: '/static/img/global/self-paybuy.png',
         title: "自提核销",
         url: '' },
       {
-        img: '/static/img/global/tmp.png',
+        img: '/static/img/global/calcu-data.png',
         title: "数据统计",
         url: '' }] } },
 
