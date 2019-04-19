@@ -10,7 +10,7 @@
     {
       "root": "pagesBill",
       "pages": [
-        "pages/index",
+        "pages/billDetail",
         "pages/changePrice",
         "pages/billProvide",
         "pages/billAddition",

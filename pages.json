@@ -58,12 +58,13 @@
 	"subPackages": [{
 		"root": "pagesBill",
 		"pages": [{
-			"path": "pages/index",
+			"path": "pages/billDetail",
 			"style": {
 				"navigationBarTitleText": "订单详情",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"i-modal": "/wxcomponents/iview-weapp/modal/index"
 				}
 			}
 		}, {

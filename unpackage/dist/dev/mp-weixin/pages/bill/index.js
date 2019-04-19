@@ -53,6 +53,11 @@ var _default = {
       error: false,
       surePaying: false, //正在确认付款？
       showModel: false,
+      modelTheme: {
+        title: '手动确认付款',
+        detail: '确保买家已经付款，并且与买家协商完毕确认付款',
+        state: 'pay' },
+
       searchValue: '', //查询条件 
       billList: [{
         info: { //订单及用户信息
@@ -68,8 +73,9 @@ var _default = {
         bill: { //订单信息
           billId: 'ES204565656526265656565', //订单号
           billDate: '2018-05-12 15:23:12', //订单时间
-          billType: 0 //订单类型，0：分销订单，1：普通订单
-        },
+          billType: 0, //订单类型，0：分销订单，1：普通订单
+          billPrice: 121212 },
+
         goodsList: [{ //订单商品信息
           img: '/static/img/global/tmp.png', //商品图片
           goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
@@ -101,7 +107,6 @@ var _default = {
     };
   },
   onLoad: function onLoad(option) {
-    console.log('object,option', option);
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
@@ -124,7 +129,7 @@ var _default = {
         _this.surePaying = false;
         if (true) {//验证通过
           _this.showModel = false;
-          _this.Toast('确认付款成功');
+          _this.Toast(_this.modelTheme.success);
           _this.initPage();
         } else {}
       }, 2000);
@@ -171,7 +176,6 @@ var _default = {
 
     },
     clickBill: function clickBill(val) {
-      console.log(val);
       this.closePageLoading();
       this.Cacher.setData('bill', _objectSpread({
         from: 'bill' },
@@ -179,37 +183,62 @@ var _default = {
 
       if (val.type != 'button') {
         uni.navigateTo({ //去详情页
-          url: '../../pagesBill/pages/index?from=bill' });
+          url: '../../pagesBill/pages/billDetail?from=bill' });
 
       } else if (val.type == 'button') {
         if (val.detail.val == '备注') {
-          DataFrom = {
-            from: 'additionList' };
+          DataFrom = Object.assign(DataFrom, {
+            from: 'additionList' });
 
           uni.navigateTo({
             url: '../../pagesBill/pages/additionList?from=bill' });
 
         } else if (val.detail.val == '改价') {
-          DataFrom = {
-            from: 'changePrice' };
+          DataFrom = Object.assign(DataFrom, {
+            from: 'changePrice' });
 
           uni.navigateTo({
             url: '../../pagesBill/pages/changePrice?from=bill' });
 
         } else if (val.detail.val == '确认付款') {
           this.showModel = true;
+          this.modelTheme = {
+            title: '手动确认付款',
+            detail: '确保买家已经付款，并且与买家协商完毕确认付款',
+            state: 'pay',
+            success: '确认付款成功' };
+
         } else if (val.detail.val == '维权备注') {
-          DataFrom = {
-            from: 'additionList' };
+          DataFrom = Object.assign(DataFrom, {
+            from: 'additionList' });
 
           uni.navigateTo({
             url: '../../pagesBill/pages/additionList?from=bill' });
 
-        } else if (val.detail.val == '维权中') {} else if (val.detail.val == '确认发货') {
+        } else if (val.detail.val == '维权中') {
+          this.Dialog.alert({
+            title: '',
+            message: '维权订单处理，请登录PC端后台进行操作',
+            confirmButtonText: '知道了' }).
+          then(function () {
+            // on close
+          });
+        } else if (val.detail.val == '确认发货') {
+          DataFrom = Object.assign(DataFrom, {
+            from: 'billProvide' });
+
           uni.navigateTo({
             url: '../../pagesBill/pages/billProvide?from=bill' });
 
-        } else if (val.detail.val == '确认收货') {}
+        } else if (val.detail.val == '确认收货') {
+          this.showModel = true;
+          this.modelTheme = {
+            title: '手动确认收货',
+            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收货',
+            state: 'receive',
+            success: '确认收货成功' };
+
+        }
       }
     } },
 

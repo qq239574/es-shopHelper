@@ -13,7 +13,8 @@ export default function (status) {
         bill: { //订单信息
             billId: 'ES204565656526265656565', //订单号
             billDate: '2018-05-12 15:23:12', //订单时间
-            billType: 0 //订单类型，0：分销订单，1：普通订单
+            billType: 0, //订单类型，0：分销订单，1：普通订单
+            billPrice: 7888
         },
         goodsList: [{ //订单商品信息
             img: '/static/img/global/tmp.png', //商品图片
@@ -55,7 +56,8 @@ export default function (status) {
         bill: { //订单信息
             billId: 'ES204565656526265656565', //订单号
             billDate: '2018-05-12 15:23:12', //订单时间
-            billType: 0 //订单类型，0：分销订单，1：普通订单
+            billType: 0 ,//订单类型，0：分销订单，1：普通订单
+            billPrice: 5555
         },
         goodsList: [{ //订单商品信息
             img: '/static/img/global/tmp.png', //商品图片
@@ -93,7 +95,8 @@ export default function (status) {
         bill: { //订单信息
             billId: 'ES204565656526265656565', //订单号
             billDate: '2018-05-12 15:23:12', //订单时间
-            billType: 1 //订单类型，0：分销订单，1：普通订单
+            billType: 1, //订单类型，0：分销订单，1：普通订单
+            billPrice: 453
         },
         goodsList: [{ //订单商品信息
             img: '/static/img/global/tmp.png', //商品图片
@@ -131,7 +134,8 @@ export default function (status) {
         bill: { //订单信息
             billId: 'ES204565656526265656565', //订单号
             billDate: '2018-05-12 15:23:12', //订单时间
-            billType: 0 //订单类型，0：分销订单，1：普通订单
+            billType: 0 ,//订单类型，0：分销订单，1：普通订单
+            billPrice: 989
         },
         goodsList: [{ //订单商品信息
             img: '/static/img/global/tmp.png', //商品图片

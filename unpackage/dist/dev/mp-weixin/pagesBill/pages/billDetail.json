@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "i-modal": "/wxcomponents/iview-weapp/modal/index",
     "block0": "/pagesBill/components/BillBlock0",
     "block1": "/pagesBill/components/BillBlock1",
     "block2": "/pagesBill/components/BillBlock2",

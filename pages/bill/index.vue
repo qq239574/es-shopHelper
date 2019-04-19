@@ -6,11 +6,11 @@
         </view>
         <view class='margin180'></view>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
-        <!-- 确认付款的弹窗 -->
+        <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
-            <view class="model__title">手动确认付款</view>
-            <view class="model__content">确保买家已经付款，并且与买家协商完毕确认付款</view>
-            <view class="model__error" :style='error?"color:red;":"color:#fff;"' v-if='error'>*密码输入错误</view>
+            <view class="model__title">{{modelTheme.title}}</view>
+            <view class="model__content">{{modelTheme.detail}}</view>
+            <view class="model__error" :style='error?"color:red;":"color:#fff;"'>*密码输入错误</view>
             <input class='model__input' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码' v-if='!surePaying'>
             <view class="model__img" v-else>
                 <image src='/static/img/global/loading.jpg'></image>
@@ -43,6 +43,11 @@
                 error: false,
                 surePaying: false, //正在确认付款？
                 showModel: false,
+                modelTheme: {
+                    title: '手动确认付款',
+                    detail: '确保买家已经付款，并且与买家协商完毕确认付款',
+                    state: 'pay'
+                },
                 searchValue: '', //查询条件 
                 billList: [{
                     info: { //订单及用户信息
@@ -58,7 +63,8 @@
                     bill: { //订单信息
                         billId: 'ES204565656526265656565', //订单号
                         billDate: '2018-05-12 15:23:12', //订单时间
-                        billType: 0 //订单类型，0：分销订单，1：普通订单
+                        billType: 0, //订单类型，0：分销订单，1：普通订单
+                        billPrice: 121212
                     },
                     goodsList: [{ //订单商品信息
                         img: '/static/img/global/tmp.png', //商品图片
@@ -91,7 +97,6 @@
             }
         },
         onLoad(option) {
-            console.log('object,option', option)
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
@@ -114,7 +119,7 @@
                     this.surePaying = false;
                     if (true) { //验证通过
                         this.showModel = false;
-                        this.Toast('确认付款成功');
+                        this.Toast(this.modelTheme.success);
                         this.initPage();
                     } else {
                         this.error = true;
@@ -140,12 +145,12 @@
                     searchData = this.Cacher.getData('searchShop') || {};
                     this.searchValue = searchData.value || '';
                     this.billList = testdata(DataFrom.cateid); //测试用的 
-                }else{
+                } else {
                     this.billList = testdata(0); //测试用的 
                 }
             },
             tabChange(tab) {
-                this.curTab = tab; 
+                this.curTab = tab;
                 this.billList = testdata(tab.cateid); //测试用的 
             },
             search(val) {
@@ -163,7 +168,6 @@
                 })
             },
             clickBill(val) {
-                console.log(val)
                 this.closePageLoading();
                 this.Cacher.setData('bill', {
                     from: 'bill',
@@ -171,37 +175,62 @@
                 });
                 if (val.type != 'button') {
                     uni.navigateTo({ //去详情页
-                        url: '../../pagesBill/pages/index?from=bill'
+                        url: '../../pagesBill/pages/billDetail?from=bill'
                     })
                 } else if (val.type == 'button') {
                     if (val.detail.val == '备注') {
-                        DataFrom = {
+                        DataFrom = Object.assign(DataFrom, {
                             from: 'additionList'
-                        } 
+                        })
                         uni.navigateTo({
                             url: '../../pagesBill/pages/additionList?from=bill'
                         })
                     } else if (val.detail.val == '改价') {
-                        DataFrom = {
+                        DataFrom = Object.assign(DataFrom, {
                             from: 'changePrice'
-                        }
+                        })
                         uni.navigateTo({
                             url: '../../pagesBill/pages/changePrice?from=bill'
                         })
                     } else if (val.detail.val == '确认付款') {
                         this.showModel = true;
-                    } else if (val.detail.val == '维权备注') {
-                        DataFrom = {
-                            from: 'additionList'
+                        this.modelTheme = {
+                            title: '手动确认付款',
+                            detail: '确保买家已经付款，并且与买家协商完毕确认付款',
+                            state: 'pay',
+                            success: '确认付款成功'
                         }
+                    } else if (val.detail.val == '维权备注') {
+                        DataFrom = Object.assign(DataFrom, {
+                            from: 'additionList'
+                        })
                         uni.navigateTo({
                             url: '../../pagesBill/pages/additionList?from=bill'
                         })
-                    } else if (val.detail.val == '维权中') {} else if (val.detail.val == '确认发货') {
+                    } else if (val.detail.val == '维权中') {
+                        this.Dialog.alert({
+                            title: '',
+                            message: '维权订单处理，请登录PC端后台进行操作',
+                            confirmButtonText: '知道了'
+                        }).then(() => {
+                            // on close
+                        });
+                    } else if (val.detail.val == '确认发货') {
+                        DataFrom = Object.assign(DataFrom, {
+                            from: 'billProvide'
+                        })
                         uni.navigateTo({
                             url: '../../pagesBill/pages/billProvide?from=bill'
                         })
-                    } else if (val.detail.val == '确认收货') {}
+                    } else if (val.detail.val == '确认收货') {
+                        this.showModel = true;
+                        this.modelTheme = {
+                            title: '手动确认收货',
+                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收货',
+                            state: 'receive',
+                            success: '确认收货成功'
+                        }
+                    }
                 }
             }
         },

@@ -1,0 +1,111 @@
+.pagesBill-bill-index.data-v-6dc8251f {
+  padding-bottom: 120rpx;
+}
+.pagesBill-bill-index .block.data-v-6dc8251f {
+    width: 710rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    background: #fff;
+    margin: auto;
+    border-radius: 8rpx;
+    padding: 21rpx 0;
+}
+.pagesBill-bill-index .block .bill__item.data-v-6dc8251f {
+      color: #000;
+      font-weight: 600;
+      line-height: 35rpx;
+}
+.pagesBill-bill-index .block .body.data-v-6dc8251f,
+    .pagesBill-bill-index .block .foot.data-v-6dc8251f {
+      padding: 5rpx 0;
+      font-size: 20rpx;
+      font-weight: 500;
+      color: #6e7685;
+}
+.pagesBill-bill-index .goodInfo.data-v-6dc8251f,
+  .pagesBill-bill-index .rightsInfo.data-v-6dc8251f {
+    width: 710rpx;
+    background: #fff;
+    margin: auto;
+    border-radius: 8rpx;
+}
+.pagesBill-bill-index .rightsInfo.data-v-6dc8251f {
+    margin: 20rpx auto 0;
+}
+.pagesBill-bill-index .button-group.data-v-6dc8251f {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+            justify-content: flex-end;
+    height: 100rpx;
+    width: 100%;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-top: 1rpx solid #eee;
+}
+.pagesBill-bill-index .button-group my-button.data-v-6dc8251f {
+      margin: 20rpx 20rpx 0 0;
+}
+.pagesBill-bill-index .model__title.data-v-6dc8251f {
+    font-weight: 700;
+    font-size: 30rpx;
+    line-height: 30rpx;
+    height: 30rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto 15rpx;
+}
+.pagesBill-bill-index .model__content.data-v-6dc8251f {
+    line-height: 36rpx;
+    font-size: 26rpx;
+    color: #9ca1ab;
+    width: 80%;
+    margin: 0 auto 0;
+    text-align: left;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    overflow: hidden;
+}
+.pagesBill-bill-index .model__input.data-v-6dc8251f {
+    height: 46rpx;
+    width: 70%;
+    margin: auto;
+    border: 1rpx solid #eee;
+    border-radius: 10rpx;
+    line-height: 46rpx;
+    text-align: left;
+    padding: 0 20rpx;
+    font-size: 24rpx;
+}
+.pagesBill-bill-index .model__img.data-v-6dc8251f {
+    width: 100rpx;
+    height: 100rpx;
+    margin: -20rpx auto 0;
+}
+.pagesBill-bill-index .model__img image.data-v-6dc8251f {
+      width: 100%;
+      height: 100%;
+}
+.pagesBill-bill-index .model__error.data-v-6dc8251f {
+    color: red;
+    width: 80%;
+    margin: auto;
+    font-size: 20rpx;
+    line-height: 26rpx;
+    height: 28rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    text-align: left;
+}
+

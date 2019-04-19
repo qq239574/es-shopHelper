@@ -373,7 +373,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6448,7 +6448,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -8545,6 +8545,23 @@ createPage(_billAddition.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillDetail\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillDetail"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _billDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\billDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_billDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillId\"}":
 /*!***************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillId"} ***!
@@ -8592,23 +8609,6 @@ createPage(_billProvide.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _changePrice = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/changePrice.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\changePrice.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_changePrice.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2Findex\"}":
-/*!**************************************************************************************************!*\
-  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2Findex"} ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -9067,6 +9067,75 @@ createPage(_test.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\createBillDetail.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesBill/components/createBillDetail.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default() {
+  return {
+    billInfo1: {
+      billStatus: '等待买家收货',
+      billPrice: '233.55',
+      image: '/static/img/global/vip-manage.png' },
+
+    billInfo2: {
+      billId: '', //订单编号
+      billStatus: '', //订单状态
+      billType: '', //订单类型
+      billOrigin: '', //订单来源
+      payType: '' //支付方式
+    },
+    billInfo3: {
+      billTime: '', //下单时间
+      payTime: '', //付款时间
+      receiveTime: '', //收货时间
+      payType: '' //付款方式
+    },
+    billInfo4: {
+      buyer: '', //买家
+      addtion: '', //买家备注
+      provideType: '', //配送方式
+      receiver: '', //收货人
+      address: '' //收货地址
+    },
+    billInfo5: {
+      moneyState: '', //佣金状态
+      firstOne: '', //一级分销商
+      secondOne: '', //二级分销商
+      thirdOne: '' //三级分销商
+    },
+    billInfo6: [{
+      goodsInfo: [{ //商品信息
+        img: '/static/img/global/tmp.png', //商品图片
+        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
+        color: '浅绿色',
+        size: 'S码',
+        num: 2, //商品数量
+        price: '15455.2' //价格
+      }],
+      billInfo: { //订单信息
+        sendTime: '', //发货时间
+        sendComp: '', //物流公司
+        sendId: '', //快递单号
+        sendStatus: '' //发货信息
+      } }],
+
+    billInfo7: {
+      goodTotal: '', //商品总计
+      vipCount: '', //会员折扣
+      sendCost: '', //运费
+      total: '', //合计
+      rightStatus: '' //维权信息
+    } };
+
+}
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Detail-EchartsOption.js":
 /*!***************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesIndex/components/Detail-EchartsOption.js ***!
@@ -9328,8 +9397,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     bill: { //订单信息
       billId: 'ES204565656526265656565', //订单号
       billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0 //订单类型，0：分销订单，1：普通订单
-    },
+      billType: 0, //订单类型，0：分销订单，1：普通订单
+      billPrice: 7888 },
+
     goodsList: [{ //订单商品信息
       img: '/static/img/global/tmp.png', //商品图片
       goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
@@ -9370,8 +9440,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     bill: { //订单信息
       billId: 'ES204565656526265656565', //订单号
       billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0 //订单类型，0：分销订单，1：普通订单
-    },
+      billType: 0, //订单类型，0：分销订单，1：普通订单
+      billPrice: 5555 },
+
     goodsList: [{ //订单商品信息
       img: '/static/img/global/tmp.png', //商品图片
       goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
@@ -9408,8 +9479,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     bill: { //订单信息
       billId: 'ES204565656526265656565', //订单号
       billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 1 //订单类型，0：分销订单，1：普通订单
-    },
+      billType: 1, //订单类型，0：分销订单，1：普通订单
+      billPrice: 453 },
+
     goodsList: [{ //订单商品信息
       img: '/static/img/global/tmp.png', //商品图片
       goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
@@ -9446,8 +9518,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     bill: { //订单信息
       billId: 'ES204565656526265656565', //订单号
       billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0 //订单类型，0：分销订单，1：普通订单
-    },
+      billType: 0, //订单类型，0：分销订单，1：普通订单
+      billPrice: 989 },
+
     goodsList: [{ //订单商品信息
       img: '/static/img/global/tmp.png', //商品图片
       goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名

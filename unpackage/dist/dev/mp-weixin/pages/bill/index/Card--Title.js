@@ -29,8 +29,9 @@ var _default =
       default: {
         billId: '',
         billDate: '',
-        billType: '' //订单类型，0：分销订单，1：普通订单
-      } } },
+        billType: '', //订单类型，0：分销订单，1：普通订单
+        billPrice: 0 } } },
+
 
 
   methods: {

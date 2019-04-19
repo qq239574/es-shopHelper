@@ -32,12 +32,12 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
-					"name": "eee",
-					"pathName": "pagesBill/pages/additionList",
+					"name": "detail",
+					"pathName": "pagesBill/pages/billDetail",
 					"query": "",
 					"scene": null
 				},
@@ -45,20 +45,6 @@
 					"id": -1,
 					"name": "bill",
 					"pathName": "pages/bill/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "detail",
-					"pathName": "pagesBill/pages/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "detail1",
-					"pathName": "pagesBill/pages/index",
 					"scene": null
 				}
 			]
