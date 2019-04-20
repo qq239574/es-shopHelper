@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -62,10 +62,38 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};var _default2 =
 {
   components: {
     item: item,
-    PopUp: PopUp },
+    PopUp: PopUp,
+    poster: poster },
+
+  props: {
+    goodsList: {
+      type: Array,
+      default: function _default() {
+        return [{
+          img: '/static/img/global/tmp.png',
+          goodName: '',
+          color: '',
+          size: '',
+          num: 0, //库存
+          price: '0', //价格
+          saled: 0, //销量
+          status: 0 //0出售中,1已售罄,2仓库中,3回收站
+        }];
+      } },
+
+    toggle: { //隐藏浮层
+      type: Boolean,
+      default: false } },
+
+
+  watch: {
+    toggle: function toggle() {} },
 
   data: function data() {
     return {
@@ -73,30 +101,80 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       goodData: {},
       staticUrl: '/static/img/global/tmpAct.png',
       show: false,
-      show2: false };
+      show2: false,
+      showPoster: false,
+      posteInfo: {
+        img: '/static/img/temp/poster.jpg',
+        type: 'mini' //mini:小程序，h5: H5
+      } };
 
   },
   methods: {
+    sharePoster: function sharePoster(val) {//点击海报模板后触发
+      console.log(val);
+      var that = this;
+      if (val.type == 'share') {
+        // uni.showShareMenu({
+        //     title: 'ES业务系统小程序'
+        // })
+      } else if (val.type == 'save') {
+        (0, _savePicToAlbum.default)(this, val.info.img); //保存图片至相册
+      }
+    },
     closeAll: function closeAll() {
       this.show = false;
       this.show2 = false;
     },
-    clickItem: function clickItem(val) {
+    clickItem: function clickItem(val) {var _this = this;
       if (val.type == 'menu-item') {
         // this.show = true;
         if (val.name == '编辑') {
           this.$emit('click', val);
-        } else if (val.name == '下架') {} else if (val.name == '删除') {} else if (val.name == '推广商品') {
+        } else if (val.name == '下架' || val.name == '上架' || val.name == '恢复' || val.name == '删除') {//需要二次确认
+          this.Dialog.confirm({
+            title: '',
+            message: '您确认' + val.name + '此商品吗？' }).
+          then(function () {
+            _this.$emit('click', val);
+          }).catch(function () {
+            // on cancel
+          });
+        } else if (val.name == '推广商品') {
           this.show2 = true;
         }
+      } else {
+        this.$emit('click', val);
       }
     },
-    showBanner: function showBanner() {
-      this.show = true;
-    },
-    closeBanner: function closeBanner() {
-      this.show = false;
-    } } };exports.default = _default;
+    clickModel: function clickModel(val1, val2) {
+      var that = this;
+      if (val1 == '小程序') {
+        if (val2 == '微信好友') {//分享事件onShareAppMessage
+        } else if (val2 == '二维码海报') {
+          this.posteInfo = {
+            img: '/static/img/temp/poster.jpg',
+            type: 'mini' //mini:小程序，h5: H5
+          };
+          this.showPoster = !this.showPoster;
+        }
+      } else if (val1 == 'h5') {
+        if (val2 == '微信好友') {} else if (val2 == '二维码海报') {
+          this.showPoster = !this.showPoster;
+          this.posteInfo = {
+            img: '/static/img/temp/poster.jpg',
+            type: 'h5' //mini:小程序，h5: H5
+          };
+        } else if (val2 == '复制链接') {
+          uni.setClipboardData({
+            data: '这是链接',
+            success: function success() {
+              that.Toast('链接已复制');
+            } });
+
+        }
+      }
+    } } };exports.default = _default2;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

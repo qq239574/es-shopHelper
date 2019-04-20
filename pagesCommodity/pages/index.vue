@@ -1,15 +1,15 @@
 <template>
     <!-- 单规格 -->
-    <div class='pagesCommodity-pages-index page' >
-        <goodInfo @click='clickGoodInfo' @getImages='getImages' @input='getInput'></goodInfo>
-        <goodInfo2 @click='clickGoodInfo'  @input='getInput'></goodInfo2>
+    <div class='pagesCommodity-pages-index page'>
+        <goodInfo :info='goodDetail.info1' @click='clickCell' @getImages='getImages' @input='inputCell'></goodInfo>
+        <goodInfo2 :info='goodDetail.info2' @click='clickCell' @input='inputCell'></goodInfo2>
         <view class="margin20"></view>
-        <goodInfo3 @click='clickGoodInfo'  @input='getInput'></goodInfo3>
+        <goodInfo3 :info='goodDetail.info3' @click='clickCell' @input='inputCell'></goodInfo3>
         <view class="margin20"></view>
-        <selectItem label='状态' value='上架售卖'></selectItem>
+        <selectItem :value='goodDetail.info4.status.value' label='状态' @click='clickCell'></selectItem>
         <view class="padding"></view>
         <view class="footer">
-            <longButton>保存</longButton>
+            <longButton @click='save'>保存</longButton>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -17,6 +17,9 @@
 </template>
 
 <script>
+    import {
+        singleData
+    } from '../components/testdata.js' //测试用数据
     import goodInfo from '../components/editGood-Block1';
     import goodInfo2 from '../components/editGood-Block2.vue'
     import goodInfo3 from '../components/editGood-Block3.vue'
@@ -35,7 +38,8 @@
         },
         data() {
             return {
-                moving: false
+                moving: false,
+                goodDetail: {}
             }
         },
         computed: {
@@ -44,19 +48,19 @@
             })
         },
         methods: {
-            getInput(val){
+            inputCell(val) {
                 console.log(val)
             },
             getImages(list) {
                 console.log(list)
             },
-            clickGoodInfo(val) {
+            clickCell(val) {
                 console.log(val)
-            },
-            startmove(bool) {
-                this.moving = bool;
-                console.log('object', bool)
-            }
+            }, 
+            save() {}
+        },
+        onLoad() {
+            this.goodDetail = singleData();
         },
         beforeMount() {
             console.log(this.good)

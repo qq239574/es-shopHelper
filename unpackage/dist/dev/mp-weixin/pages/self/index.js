@@ -58,13 +58,18 @@
       this.closePageLoading();
       this.Toast('绑定微信成功');
     },
-    leave: function leave() {
+    leave: function leave() {var _this = this;
       this.closePageLoading();
       this.Dialog.confirm({
         title: '',
         message: '您确认退出当前账号吗？' }).
       then(function () {
-        // on confirm
+        _this.Cacher.setData('self', {
+          from: 'self' });
+
+        uni.reLaunch({
+          url: '../login/index?from=self' });
+
       }).catch(function () {
         // on cancel
       });

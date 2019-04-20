@@ -3,6 +3,9 @@
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-    "multi-block": "/pagesCommodity/components/editGood-BlockMult"
+    "block1": "/pagesCommodity/components/editGood-MultiBlock1",
+    "block2": "/pagesCommodity/components/editGood-MultiBlock2",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "long-button": "/components/my-components/LongButton"
   }
 }

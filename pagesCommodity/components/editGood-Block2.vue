@@ -2,11 +2,13 @@
 <template>
     <view class="provide-block">
         <form @submit="formSubmit" class="grace-form">
-            <selectItem label='规格类型' :value='goodClass' @click="selectCell"></selectItem>
-            <inputItem :disable='true' label='划线价格' :value='delPrice' @input="inpuitValue"></inputItem>
-            <switchItem label='显示库存' :checked='false' @change="selectCell"></switchItem>
-            <inputItem :disable='true' label='已出售数' :value='soldNum' @input="inpuitValue"></inputItem>
-            <switchItem label='显示销量' :checked='showSold' @change="selectCell"></switchItem>
+            <inputItem label='规格类型'  :other='info.specification' :value='info.specification.value' :disabled='true' ></inputItem>
+            <inputItem label='售卖价格'  :other='info.price' :value='info.price.value' @input="inputCell"></inputItem>
+            <inputItem label='划线价格'  :other='info.delPrice' :value='info.delPrice.value' @input="inputCell"></inputItem>
+            <inputItem label='商品库存'  :other='info.stockNum' :value='info.stockNum.value' @input="inputCell"></inputItem>
+            <switchItem label='显示库存'  :other='info.showStock' :checked='info.showStock.value' @change="inputCell"></switchItem>
+            <inputItem label='已出售数'  :other='info.soldNum' :value='info.soldNum.value' @input="inputCell"></inputItem>
+            <switchItem label='显示销量'  :other='info.showSold' :checked='info.showSold.value' @change="inputCell"></switchItem>
         </form>
         <mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
         </mpvue-picker>
@@ -24,30 +26,54 @@
             info: {
                 type: Object,
                 default: {
-                    goodClass: {
-                        label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+                    specification: {
+                        label: '规格类型',
                         id: '',
-                        value: ''
+                        value: '无',
+                        disabled: true, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
-                    delPrice: {
-                        label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+                    price: { //售卖价格
+                        label: '售卖价格',
                         id: '',
-                        value: ''
+                        value: '18.9',
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
-                    showStock: {
-                        label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+                    delPrice: { //划线价格
+                        label: '划线价格',
                         id: '',
-                        value: false
+                        value: '16565',
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
-                    soldNum: {
-                        label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+                    stockNum: { //商品库存
+                        label: '商品库存',
                         id: '',
-                        value: 0
+                        value: '16565',
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
-                    showSold: {
-                        label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+                    showStock: { //显示库存
+                        label: '显示库存',
                         id: '',
-                        value: false
+                        value: false,
+                        disabled: false, //可否编辑
+                        editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    soldNum: { //已出售数
+                        label: '已出售数',
+                        id: '',
+                        value: 10,
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    showSold: { //显示销量
+                        label: '显示销量',
+                        id: '',
+                        value: false,
+                        disabled: false, //可否编辑
+                        editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     }
                 }
             }
@@ -79,66 +105,13 @@
         onLoad: function() {
             _self = this;
         },
-        methods: {
-            // 表单提交
-            formSubmit: function(e) {
-                if (this.provideType == null) {
-                    uni.showToast({
-                        title: "请选择地区",
-                        icon: "none"
-                    });
-                    return false;
-                }
-                var rule = [{
-                        name: "name",
-                        checkType: "string",
-                        checkRule: "1,10",
-                        errorMsg: "联系人应为1-20个字符"
-                    },
-                    {
-                        name: "phoneno",
-                        checkType: "phoneno",
-                        checkRule: "",
-                        errorMsg: "请正确填写手机号"
-                    },
-                    {
-                        name: "address",
-                        checkType: "string",
-                        checkRule: "5,100",
-                        errorMsg: "请正确填写详细地址"
-                    }
-                ];
-                var formData = e.detail.value;
-                formData.city1 = _self.city1.cityCode; //此处以保存用户城市代码为例
-                var checkRes = graceChecker.check(formData, rule);
-                if (checkRes) {
-                    uni.showToast({
-                        title: "验证通过! 请观察控制台",
-                        icon: "none"
-                    });
-                    console.log(formData);
-                } else {
-                    uni.showToast({
-                        title: graceChecker.error,
-                        icon: "none"
-                    });
-                }
-            },
-            selectCell(cont) {
+        methods: { 
+            clickCell(cont) {
                 this.$emit('click', cont);
             },
-            
-            inpuitValue(val) {
+            inputCell(val) {
                 this.$emit('input', val)
-            },
-            onConfirm(e) {
-                var cityText1 = e.label;
-                var cityValue1 = e.value;
-                var cityCode1 = e.cityCode;
-                this.cityText1 = cityText1;
-                this.cityPickerValueDefault1 = cityValue1;
-                this.city1 = e;
-            },
+            }, 
         },
         components: {
             mpvuePicker,

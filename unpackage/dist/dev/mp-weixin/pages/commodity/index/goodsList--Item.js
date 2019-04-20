@@ -52,15 +52,48 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
 var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default2 =
 
 
 {
+  props: {
+    goodsList: {
+      type: Array,
+      default: function _default() {
+        return [{
+          img: '/static/img/global/tmp.png',
+          goodName: '',
+          color: '',
+          size: '',
+          num: 0,
+          price: '0',
+          saled: 0 }];
+
+      } },
+
+    toggle: {
+      type: Boolean,
+      default: false } },
+
+
   data: function data() {
     return {
       menuIndex: '' };
 
   },
+  watch: {
+    toggle: function toggle() {
+      this.menuIndex = '';
+    } },
+
   methods: {
     showMenu: function showMenu(goodindex) {
       this.menuIndex = 'good-' + goodindex;
@@ -86,38 +119,7 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
     },
     formatePrice: function formatePrice(val) {
       return (0, _formater.number_format)(val, 2, '.', ',');
-    } },
-
-  props: {
-    goodsList: {
-      type: Array,
-      default: function _default() {
-        return [{
-          img: '/static/img/global/tmp.png',
-          goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-          color: '浅绿色',
-          size: 'S码',
-          num: 2,
-          price: '15455.2',
-          saled: 1 },
-        {
-          img: '/static/img/global/tmp.png',
-          goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-          color: '浅绿色',
-          size: 'S码',
-          num: 2,
-          price: '152344.2',
-          saled: 1 },
-        {
-          img: '/static/img/global/tmp.png',
-          goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-          color: '浅绿色',
-          size: 'S码',
-          num: 2,
-          price: '1533334',
-          saled: 1 }];
-
-      } } } };exports.default = _default2;
+    } } };exports.default = _default2;
 
 /***/ }),
 

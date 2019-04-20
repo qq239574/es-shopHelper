@@ -67,9 +67,37 @@ startPY = 0;var _default =
 
     button: {
       type: String,
-      default: '照片' } },
+      default: '照片' },
+
+    imglist: {
+      type: Array,
+      default: [{
+        images: [] }] },
 
 
+    other: {
+      type: [Object, Number, String, Array, Boolean],
+      default: '' } },
+
+
+  watch: {
+    imglist: function imglist() {
+      this.imgLists = this.imglist.map(function (item) {return item.img;});
+      if (this.imgLists.length >= this.maxNum) {
+        this.canAdd = false;
+      } else {
+        this.canAdd = true;
+      }
+    } },
+
+  mounted: function mounted() {
+    this.imgLists = this.imglist.map(function (item) {return item.img;});
+    if (this.imgLists.length >= this.maxNum) {
+      this.canAdd = false;
+    } else {
+      this.canAdd = true;
+    }
+  },
   methods: {
     //长按
     _longtap: function _longtap(e) {

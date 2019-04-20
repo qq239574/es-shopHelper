@@ -26,24 +26,24 @@ var _default =
 
     value: {
       type: String,
-      default: '请选择' },
+      default: '' },
 
     checked: {
       type: Boolean,
-      default: false } },
+      default: false },
+
+    other: {
+      type: [Object, Number, String, Array, Boolean],
+      default: '' } },
 
 
-  data: function data() {
-    return {
-      dataName: 'lksdjfk' };
-
-  },
   methods: {
     change: function change(val) {
       this.$emit('change', {
         label: this.label,
         checked: val.detail.value,
-        value: this.value });
+        value: this.value,
+        other: this.other });
 
     } } };exports.default = _default;
 

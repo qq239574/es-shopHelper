@@ -54,7 +54,12 @@
 					title: '',
 					message: '您确认退出当前账号吗？'
 				}).then(() => {
-					// on confirm
+					this.Cacher.setData('self',{
+						from:'self'
+					})
+					uni.reLaunch({
+						url:'../login/index?from=self'
+					})
 				}).catch(() => {
 					// on cancel
 				});

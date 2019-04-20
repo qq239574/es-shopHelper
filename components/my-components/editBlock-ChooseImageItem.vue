@@ -3,7 +3,7 @@
         <view class="grace-items swiper-imgs">
             <view class="grace-label" style='text-indent:1em;'>{{label}}</view>
             <view class="imgbox">
-                <chooseImg @getImages='getImages' @startmove='startmove' :maxNum='maxNum' :button='button'></chooseImg>
+                <chooseImg @getImages='getImages' @startmove='startmove' :imglist='imglist.list' :maxNum='maxNum' :button='button'></chooseImg>
                 <view class='tips' v-if='tips'>{{tips}}</view>
             </view>
         </view>
@@ -32,6 +32,20 @@
             button: {
                 type: String,
                 default: '照片'
+            },
+            imglist: {
+                label: '主图',
+                id: '',
+                img: '/static/img/global/home_order_tobepay.png',
+                list: [{
+                    img: '/static/img/global/home_order_tobepay.png',
+                }],
+                disabled: false, //可否编辑
+                editable: 'image', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
         },
         data() {
@@ -48,17 +62,17 @@
             },
             getImages(list) {
                 this.$emit('getImages', {
-                    images:list,
-                    label:this.label,
-                    maxNum:this.maxNum,
-                    button:this.button,
-                    tips:this.tips
+                    images: list,
+                    label: this.label,
+                    maxNum: this.maxNum,
+                    button: this.button,
+                    tips: this.tips,
+                    other:this.other
                 })
             },
-            startmove(bool){
-                 this.$emit('startmove',bool)
+            startmove(bool) {
+                this.$emit('startmove', bool)
             }
-           
         },
     }
 </script>
@@ -92,6 +106,9 @@
             &.swiper-imgs {
                 min-height: 200upx;
                 padding: 0 0 10upx;
+            }
+            .grace-label {
+                font-weight: 600;
             }
         }
     }

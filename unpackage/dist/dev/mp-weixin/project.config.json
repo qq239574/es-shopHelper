@@ -32,12 +32,26 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
-					"name": "my",
-					"pathName": "pages/self/index",
+					"name": "multi",
+					"pathName": "pagesCommodity/pages/multiSpecifications",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "ggg",
+					"pathName": "pages/commodity/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "sss",
+					"pathName": "pagesCommodity/pages/index",
 					"scene": null
 				}
 			]

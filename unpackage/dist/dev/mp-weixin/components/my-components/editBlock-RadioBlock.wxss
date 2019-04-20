@@ -30,4 +30,7 @@
           -ms-transform: scale(0.7);
               transform: scale(0.7);
 }
+.editGood-block-selectItem .grace-label.data-v-287b5876 {
+    font-weight: 600;
+}
 

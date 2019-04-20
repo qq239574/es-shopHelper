@@ -27,6 +27,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+var _testdata = __webpack_require__(/*! ../components/testdata.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js");
+
+
 
 
 
@@ -45,7 +48,8 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
 
   data: function data() {
     return {
-      moving: false };
+      moving: false,
+      goodDetail: {} };
 
   },
   computed: _objectSpread({},
@@ -54,20 +58,20 @@ var _vuex = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.j
 
 
   methods: {
-    getInput: function getInput(val) {
+    inputCell: function inputCell(val) {
       console.log(val);
     },
     getImages: function getImages(list) {
       console.log(list);
     },
-    clickGoodInfo: function clickGoodInfo(val) {
+    clickCell: function clickCell(val) {
       console.log(val);
     },
-    startmove: function startmove(bool) {
-      this.moving = bool;
-      console.log('object', bool);
-    } },
+    save: function save() {} },
 
+  onLoad: function onLoad() {
+    this.goodDetail = (0, _testdata.singleData)();
+  },
   beforeMount: function beforeMount() {
     console.log(this.good);
   } };exports.default = _default;

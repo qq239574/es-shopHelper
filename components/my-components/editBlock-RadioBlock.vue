@@ -33,6 +33,10 @@
                     label: 'label1',
                     value: ''
                 }]
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
         },
         data() {
@@ -74,5 +78,8 @@
                 transform: scale(.7)
             }
         }
+         .grace-label{
+                font-weight:600;
+            }
     }
 </style>

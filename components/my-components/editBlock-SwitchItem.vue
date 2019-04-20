@@ -16,24 +16,24 @@
             },
             value: {
                 type: String,
-                default: '请选择'
+                default: ''
             },
             checked: {
                 type: Boolean,
                 default: false
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
-        },
-        data() {
-            return {
-                dataName: 'lksdjfk'
-            }
-        },
+        }, 
         methods: {
             change(val) {
                 this.$emit('change', {
                     label: this.label,
                     checked: val.detail.value,
-                    value:this.value
+                    value:this.value,
+                    other:this.other
                 })
             }
         },
@@ -52,6 +52,9 @@
             .switch {
                margin:0;
                transform: scale(.7);
+            }
+             .grace-label{
+                font-weight:600;
             }
         }
     }

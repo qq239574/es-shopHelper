@@ -16,7 +16,7 @@
                 </view>
                 <view class="price">￥{{formatePrice(item.price)}}</view>
             </view>
-            <view class="menu" @click='showMenu(index)'>
+            <view class="menu" @click.stop='showMenu(index)'>
                 <view class="point"></view>
             </view>
             <view class="model" v-if='menuIndex==="good-"+index' @click.stop='showMenu("")'>
@@ -24,15 +24,23 @@
                     <image class='img' src='/static/img/global/product_share_download.png'></image>
                     <view class='title'>编辑</view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"下架")'>
+                <view class="item" @click.stop='clickMenuItem(index,item,"下架")' v-if='item.status=="0"||item.status=="1"'>
                     <image class='img' src='/static/img/global/product_share_download.png'></image>
                     <view class='title'>下架</view>
+                </view>
+                 <view class="item" @click.stop='clickMenuItem(index,item,"上架")' v-if='item.status=="2"'>
+                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <view class='title'>上架</view>
+                </view>
+                 <view class="item" @click.stop='clickMenuItem(index,item,"恢复")' v-if='item.status=="3"'>
+                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <view class='title'>恢复</view>
                 </view>
                 <view class="item" @click.stop='clickMenuItem(index,item,"删除")'>
                     <image class='img' src='/static/img/global/product_share_download.png'></image>
                     <view class='title'>删除</view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"推广商品")'>
+                <view class="item" @click.stop='clickMenuItem(index,item,"推广商品")' v-if='item.status=="0"||item.status=="1"'>
                     <image class='img' src='/static/img/global/product_share_download.png'></image>
                     <view class='title'>推广商品</view>
                 </view>
@@ -46,9 +54,34 @@
         number_format
     } from '../../../components/my-components/formater.js'
     export default {
+        props: {
+            goodsList: {
+                type: Array,
+                default () {
+                    return [{
+                        img: '/static/img/global/tmp.png',
+                        goodName: '',
+                        color: '',
+                        size: '',
+                        num: 0,
+                        price: '0',
+                        saled: 0
+                    }]
+                }
+            },
+            toggle: {
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 menuIndex: ''
+            }
+        },
+        watch: {
+            toggle() {
+                this.menuIndex='';
             }
         },
         methods: {
@@ -76,38 +109,6 @@
             },
             formatePrice(val) {
                 return number_format(val, 2, '.', ',')
-            }
-        },
-        props: {
-            goodsList: {
-                type: Array,
-                default () {
-                    return [{
-                        img: '/static/img/global/tmp.png',
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '15455.2',
-                        saled: 1
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '152344.2',
-                        saled: 1
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '1533334',
-                        saled: 1
-                    }]
-                }
             }
         },
     }

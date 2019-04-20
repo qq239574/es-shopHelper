@@ -56,8 +56,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
             color: '',
             size: '',
             num: 0,
-            price: '0' }],
-
+            price: '0',
+            specifications: 'single' //单规格，multi多规格
+          }],
           rights: {
             subStatus: 0, //订单子状态，1：维权
             status: '退款退货',
@@ -68,7 +69,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   methods: {
     clickBill: function clickBill(val) {
-      this.$emit('click', Object.assign({}, val, { bill: this.bill }));
+      this.$emit('click', Object.assign({}, val, {
+        bill: this.bill }));
+
     } } };exports.default = _default2;
 
 /***/ }),

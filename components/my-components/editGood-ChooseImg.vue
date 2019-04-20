@@ -58,6 +58,34 @@
             button: {
                 type: String,
                 default: '照片'
+            },
+            imglist: {
+                type: Array,
+                default: [{
+                    images: []
+                }]
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
+            }
+        },
+        watch: {
+            imglist() {
+                this.imgLists = this.imglist.map(item => item.img);
+                if (this.imgLists.length >= this.maxNum) {
+                    this.canAdd = false;
+                } else {
+                    this.canAdd = true;
+                }
+            }
+        },
+        mounted() {
+            this.imgLists = this.imglist.map(item => item.img);
+            if (this.imgLists.length >= this.maxNum) {
+                this.canAdd = false;
+            } else {
+                this.canAdd = true;
             }
         },
         methods: {

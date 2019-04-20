@@ -60,7 +60,8 @@
                             color: '浅绿色',
                             size: 'S码',
                             num: 2,
-                            price: '15455.2'
+                            price: '15455.2',
+                            specifications: 'single', //单规格，multi多规格
                         }]
                     }]
                 }

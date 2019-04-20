@@ -51,27 +51,28 @@ var _default =
 
     valueStyle: {
       type: String,
+      default: '' },
+
+    other: {
+      type: [Object, Number, String, Array, Boolean],
       default: '' } },
 
 
-  data: function data() {
-    return {
-      dataName: 'lksdjfk' };
-
-  },
   methods: {
     inputVal: function inputVal(val) {
       this.$emit('input', {
         label: this.label,
         value: val.detail.value,
-        disabled: this.disabled });
+        disabled: this.disabled,
+        other: this.other });
 
     },
     selectCell: function selectCell() {
       this.$emit('click', {
         label: this.label,
         value: this.value,
-        disabled: this.disabled });
+        disabled: this.disabled,
+        other: this.other });
 
     } } };exports.default = _default;
 

@@ -41,7 +41,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
     button: {
       type: String,
-      default: '照片' } },
+      default: '照片' },
+
+    imglist: {
+      label: '主图',
+      id: '',
+      img: '/static/img/global/home_order_tobepay.png',
+      list: [{
+        img: '/static/img/global/home_order_tobepay.png' }],
+
+      disabled: false, //可否编辑
+      editable: 'image' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+    },
+    other: {
+      type: [Object, Number, String, Array, Boolean],
+      default: '' } },
 
 
   data: function data() {
@@ -62,7 +76,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         label: this.label,
         maxNum: this.maxNum,
         button: this.button,
-        tips: this.tips });
+        tips: this.tips,
+        other: this.other });
 
     },
     startmove: function startmove(bool) {

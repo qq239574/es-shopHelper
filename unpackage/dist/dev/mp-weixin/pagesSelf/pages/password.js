@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var multiBlock = function multiBlock() {return __webpack_require__.e(/*! import() | pagesSelf/components/editGood-BlockMult */ "pagesSelf/components/editGood-BlockMult").then(__webpack_require__.bind(null, /*! ../components/editGood-BlockMult */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\components\\editGood-BlockMult.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var multiBlock = function multiBlock() {return __webpack_require__.e(/*! import() | pagesSelf/components/editPassWord-BlockMult */ "pagesSelf/components/editPassWord-BlockMult").then(__webpack_require__.bind(null, /*! ../components/editPassWord-BlockMult */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\components\\editPassWord-BlockMult.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+
+
 
 
 
@@ -20,7 +22,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   components: {
-    multiBlock: multiBlock } };exports.default = _default;
+    multiBlock: multiBlock,
+    longButton: longButton },
+
+  methods: {
+    getInput: function getInput(val) {
+      console.log(val);
+    },
+    save: function save() {var _this = this;
+      this.pageLoading();
+      setTimeout(function () {
+        _this.closePageLoading();
+        _this.Toast('修改密码成功');
+        uni.navigateBack();
+      }, 1000);
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

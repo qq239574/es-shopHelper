@@ -3,7 +3,7 @@
         <view class='grace-items' @click='selectCell' :style='contentStyle'>
             <view class="grace-label" :style='labelStyle'>
                 <slot name='icon'></slot>{{label}}</view>
-            <input :value='value' :type='type' :placeholder="placeholder" :style='valueStyle' :disabled='disabled' class='input' @input='inputVal' />
+            <input :value='value' :type='type' :placeholder="placeholder" :style='valueStyle' :disabled='disabled' class='input' :class='disabled?"disable":""' @input='inputVal' />
         </view>
     </view>
 </template>
@@ -42,11 +42,10 @@
             valueStyle: {
                 type: String,
                 default: ''
-            }
-        },
-        data() {
-            return {
-                dataName: 'lksdjfk'
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
         },
         methods: {
@@ -54,14 +53,16 @@
                 this.$emit('input', {
                     label: this.label,
                     value: val.detail.value,
-                    disabled: this.disabled
+                    disabled: this.disabled,
+                    other:this.other
                 })
             },
             selectCell() {
                 this.$emit('click', {
                     label: this.label,
                     value: this.value,
-                    disabled: this.disabled
+                    disabled: this.disabled,
+                    other:this.other
                 })
             }
         },
@@ -81,6 +82,10 @@
             .grace-label {
                 width: fit-content;
                 white-space: nowrap;
+                font-weight: 600;
+            }
+            .disable {
+                color: #9ea3ae;
             }
         }
     }

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var multiBlock = function multiBlock() {return __webpack_require__.e(/*! import() | pagesCommodity/components/editGood-BlockMult */ "pagesCommodity/components/editGood-BlockMult").then(__webpack_require__.bind(null, /*! ../components/editGood-BlockMult */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-BlockMult.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -18,9 +18,41 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-{
+
+
+
+
+
+
+
+
+var _testdata = __webpack_require__(/*! ../components/testdata.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js");var Block1 = function Block1() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock1.vue"));};var Block2 = function Block2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock2.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+
+//测试用数据
+var _default = {
   components: {
-    multiBlock: multiBlock } };exports.default = _default;
+    Block1: Block1,
+    Block2: Block2,
+    selectItem: selectItem,
+    longButton: longButton },
+
+  data: function data() {
+    return {
+      goodDetail: {} };
+
+  },
+  methods: {
+    clickCell: function clickCell(val) {
+      console.log(val);
+    },
+    inputCell: function inputCell(val) {
+      console.log(val);
+    },
+    save: function save() {} },
+
+  onLoad: function onLoad() {
+    this.goodDetail = (0, _testdata.multiData)();
+  } };exports.default = _default;
 
 /***/ }),
 

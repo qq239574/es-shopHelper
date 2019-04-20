@@ -27,6 +27,10 @@ var _default =
 
     value: {
       type: String,
+      default: '' },
+
+    other: {
+      type: [Object, Number, String, Array, Boolean],
       default: '' } },
 
 
@@ -34,7 +38,8 @@ var _default =
     selectCell: function selectCell() {
       this.$emit('click', {
         label: this.label,
-        value: this.value });
+        value: this.value,
+        other: this.other });
 
     } } };exports.default = _default;
 

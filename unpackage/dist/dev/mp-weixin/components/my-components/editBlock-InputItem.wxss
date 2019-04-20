@@ -15,5 +15,9 @@
       width: -moz-fit-content;
       width: fit-content;
       white-space: nowrap;
+      font-weight: 600;
+}
+.editGood-block-selectItem .grace-items .disable.data-v-359ba1da {
+      color: #9ea3ae;
 }
 

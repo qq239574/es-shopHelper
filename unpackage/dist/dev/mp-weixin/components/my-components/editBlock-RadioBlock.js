@@ -41,8 +41,12 @@ var _default =
       type: Array,
       default: [{
         label: 'label1',
-        value: '' }] } },
+        value: '' }] },
 
+
+    other: {
+      type: [Object, Number, String, Array, Boolean],
+      default: '' } },
 
 
   data: function data() {

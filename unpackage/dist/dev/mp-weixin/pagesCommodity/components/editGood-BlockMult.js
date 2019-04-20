@@ -8,7 +8,8 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var _default =
+
 
 
 
@@ -23,7 +24,55 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   components: {
-    inputItem: inputItem } };exports.default = _default;
+    inputItem: inputItem,
+    selectItem: selectItem },
+
+  props: {
+    info: {
+      type: Array,
+      default: [{
+        specif: {
+          label: '规格',
+          id: '',
+          value: '',
+          disabled: true, //可否编辑
+          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
+        price: {
+          label: '价格',
+          id: '',
+          value: '0',
+          disabled: false, //可否编辑
+          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
+        stock: {
+          label: '库存',
+          id: '',
+          value: '0',
+          disabled: false, //可否编辑
+          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
+        code: {
+          label: '商品编号',
+          id: '',
+          value: '',
+          disabled: false, //可否编辑
+          editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        } }] } },
+
+
+
+  methods: {
+    inputCell: function inputCell(val) {
+      this.$emit('input', Object.assign({
+        other: this.info },
+      val));
+    },
+    clickCell: function clickCell(val) {
+      this.$emit('click', Object.assign({
+        other: this.info },
+      val));
+    } } };exports.default = _default;
 
 /***/ }),
 

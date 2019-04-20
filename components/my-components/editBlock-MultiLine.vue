@@ -19,12 +19,17 @@
                 type: String,
                 default: ''
             },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
+            }
         },
         methods: {
             selectCell() {
                 this.$emit('click', {
                     label: this.label,
-                    value: this.value
+                    value: this.value,
+                    other:this.other
                 })
             }
         },
@@ -45,6 +50,9 @@
 				line-height: 38upx; // padding: 40upx 0 20upx;
                 margin-left:60upx;
 			}
+            .grace-label{
+                font-weight:600;
+            }
         }
     }
 </style>

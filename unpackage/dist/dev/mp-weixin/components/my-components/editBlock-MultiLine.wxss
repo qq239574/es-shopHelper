@@ -16,4 +16,7 @@
       line-height: 38rpx;
       margin-left: 60rpx;
 }
+.editGood-block-selectItem .grace-items .grace-label.data-v-7f601caa {
+      font-weight: 600;
+}
 

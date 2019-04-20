@@ -6,9 +6,8 @@
             </view>
             <view class="other " :style='"display:inline;"+valueStyle'>
                 {{value}}
-                <view style='display:inline;' v-if='value===""'>{{placeholder}}</view>
-                <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
-            </view>
+                <view style='display:inline;color:#9ea3ae;' v-if='value===""'>{{placeholder}}</view>
+            </view><text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
         </view>
     </view>
 </template>
@@ -39,18 +38,18 @@
             valueStyle: {
                 type: String,
                 default: ''
-            }
-        },
-        data() {
-            return {
-                dataName: 'lksdjfk'
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
         },
         methods: {
             selectCell() {
                 this.$emit('click', {
                     label: this.label,
-                    value: this.value
+                    value: this.value,
+                    other:this.other
                 })
             }
         },
@@ -63,7 +62,7 @@
         background: #fff;
         display: flex;
         .grace-items {
-            width: 710upx;
+            width: 94.67%;
             margin: auto;
             padding: 2upx auto;
             box-sizing: border-box;
@@ -81,11 +80,24 @@
                 overflow: hidden;
                 width: fit-content;
                 max-width: 500upx;
+                font-weight: 600;
             }
             .other {
                 white-space: nowrap;
                 overflow: hidden;
                 width: fit-content;
+                display: flex;
+                flex-wrap: nowrap;
+                height: 100upx;
+                text-overflow: ellipsis;
+                max-width: 550upx;
+                box-sizing: border-box;
+                padding-right: 40upx;
+                line-height: 100upx;
+            }
+            .grace-icons {
+                position: absolute;
+                right: 20upx;
             }
         }
     }

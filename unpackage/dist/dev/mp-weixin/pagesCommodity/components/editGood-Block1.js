@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mpvuePicker = function mpvuePicker() {return __webpack_require__.e(/*! import() | graceUI2.0/threeComponents/mpvuePicker */ "graceUI2.0/threeComponents/mpvuePicker").then(__webpack_require__.bind(null, /*! ../../graceUI2.0/threeComponents/mpvuePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\threeComponents\\mpvuePicker.vue"));};
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var mpvuePicker = function mpvuePicker() {return __webpack_require__.e(/*! import() | graceUI2.0/threeComponents/mpvuePicker */ "graceUI2.0/threeComponents/mpvuePicker").then(__webpack_require__.bind(null, /*! ../../graceUI2.0/threeComponents/mpvuePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\threeComponents\\mpvuePicker.vue"));};
 
 
 
@@ -38,113 +38,65 @@ var _self;var _default =
       type: Object,
       default: {
         goodType: {
-          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          label: '商品类型',
           id: '',
-          value: '' },
-
+          value: '实体商品',
+          disabled: true, //可否编辑,false可以，true不可
+          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
         goodName: {
-          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          label: '商品名称',
           id: '',
-          value: '' },
-
+          value: '',
+          disabled: false, //可否编辑
+          editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
         subTitle: {
-          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          label: '副标题',
           id: '',
-          value: '' },
-
+          value: '',
+          disabled: false, //可否编辑
+          editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
         classification: {
-          label: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
+          label: '商品分类',
           id: '',
-          value: '' },
+          value: '',
+          disabled: false, //可否编辑
+          editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
+        mainImage: {
+          label: '主图',
+          id: '',
+          img: '/static/img/global/home_order_tobepay.png',
+          list: [{
+            img: '/static/img/global/home_order_tobepay.png' }],
 
-        mainImage: {},
-        swiperList: [{}] } } },
+          disabled: false, //可否编辑
+          editable: 'image' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        },
+        swiperList: {
+          label: '',
+          list: [{
+            img: '/static/img/global/order_detail_state1.png' }],
+
+          disabled: false, //可否编辑
+          editable: 'imagelist' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        } } } },
 
 
 
   watch: {
     info: function info() {} },
 
-  data: function data() {
-    return {
-      goodType: '上东升 青岛市 市北区 龙城路 卓越世纪中心 3号楼 21楼易联互动',
-      goodName: '请选择',
-      subTitle: '请选择',
-      classification: '填写',
-      list: [{
-        label: '飞机',
-        value: 0 },
-
-      {
-        label: '火车票',
-        value: 1 }],
-
-
-      themeColor: '#007AFF', //颜色
-      cityText1: "请选择", //文本
-      defaultVal: [0] //默认选项
-    };
-  },
   onLoad: function onLoad() {
     _self = this;
   },
   methods: {
-    // 表单提交
-    formSubmit: function formSubmit(e) {
-      if (this.provideType == null) {
-        uni.showToast({
-          title: "请选择地区",
-          icon: "none" });
-
-        return false;
-      }
-      var rule = [{
-        name: "name",
-        checkType: "string",
-        checkRule: "1,10",
-        errorMsg: "联系人应为1-20个字符" },
-
-      {
-        name: "phoneno",
-        checkType: "phoneno",
-        checkRule: "",
-        errorMsg: "请正确填写手机号" },
-
-      {
-        name: "address",
-        checkType: "string",
-        checkRule: "5,100",
-        errorMsg: "请正确填写详细地址" }];
-
-
-      var formData = e.detail.value;
-      formData.city1 = _self.city1.cityCode; //此处以保存用户城市代码为例
-      var checkRes = graceChecker.check(formData, rule);
-      if (checkRes) {
-        uni.showToast({
-          title: "验证通过! 请观察控制台",
-          icon: "none" });
-
-      } else {
-        uni.showToast({
-          title: graceChecker.error,
-          icon: "none" });
-
-      }
-    },
     onConfirm: function onConfirm(e) {
-      var cityText1 = e.label;
-      var cityValue1 = e.value;
-      var cityCode1 = e.cityCode;
-      this.cityText1 = cityText1;
-      this.cityPickerValueDefault1 = cityValue1;
-      this.city1 = e;
     },
-    selectCell: function selectCell(cont) {
+    clickCell: function clickCell(cont) {
       this.$emit('click', cont);
-    },
-    inputValue: function inputValue(val) {
-      this.$emit('input', val);
     },
     getImages: function getImages(list) {
       this.$emit('getImages', list);
@@ -157,7 +109,6 @@ var _self;var _default =
     inputItem: inputItem,
     multiLine: multiLine,
     selectItem: selectItem } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

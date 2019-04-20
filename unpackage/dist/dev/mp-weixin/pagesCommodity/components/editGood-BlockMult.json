@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "input-item": "/components/my-components/editBlock-InputItem"
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "select-item": "/components/my-components/editBlock-SelectItem"
   },
   "component": true
 }

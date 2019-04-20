@@ -31,4 +31,7 @@
       min-height: 200rpx;
       padding: 0 0 10rpx;
 }
+.selectItem .grace-items .grace-label.data-v-2f70c1d4 {
+      font-weight: 600;
+}
 

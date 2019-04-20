@@ -41,7 +41,12 @@ var _testData = _interopRequireDefault(__webpack_require__(/*! ./index/testData.
 var DataFrom = {};
 var searchData = {};
 var surePassword = ''; //手动确认付款密码
-var _default = {
+var curTab = { //当前标签
+  cateid: 0,
+  index: 0,
+  name: "代付款"
+  //{cateid: 0, index: 0, name: "代付款"}
+};var _default = {
   components: {
     TabCard: TabCard,
     Card: Card,
@@ -49,17 +54,17 @@ var _default = {
 
   data: function data() {
     return {
-      surePassword: '',
-      error: false,
+      surePassword: '', //弹窗输入密码
+      error: false, //弹窗输入密码错误提示用
       surePaying: false, //正在确认付款？
-      showModel: false,
-      modelTheme: {
+      showModel: false, //是否显示弹窗
+      modelTheme: { //弹窗提示信息
         title: '手动确认付款',
         detail: '确保买家已经付款，并且与买家协商完毕确认付款',
         state: 'pay' },
 
       searchValue: '', //查询条件 
-      billList: [{
+      billList: [{ //完整数据
         info: { //订单及用户信息
           name: '张三', //客户姓名
           provide: '到店自提', //配送方式
@@ -82,15 +87,17 @@ var _default = {
           color: '浅绿色', //颜色
           size: 'S码', //型号
           num: 2, //数量
-          price: '15455.2' //价格
+          price: '15455.2', //价格
+          specifications: 'single' //单规格
         }, {
           img: '/static/img/global/tmp.png',
           goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
           color: '浅绿色',
           size: 'S码',
           num: 2,
-          price: '152344.2' }],
-
+          price: '152344.2',
+          specifications: 'multi' //单规格
+        }],
         rights: { // 维权信息
           status: '退款退货', //维权状态
           addition: [{
@@ -98,11 +105,6 @@ var _default = {
           //维权备注
         } }],
 
-      curTab: { //当前标签
-        cateid: 0,
-        index: 0,
-        name: "代付款" },
-      //{cateid: 0, index: 0, name: "代付款"}
       tabIndex: 0 //默认tabs的index
     };
   },
@@ -143,6 +145,9 @@ var _default = {
       this.error = false;
     },
     initPage: function initPage() {
+      if (DataFrom.from) {
+        DataFrom = this.Cacher.getData(DataFrom.from);
+      }
       if (DataFrom.from == 'home') {
         if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
           this.tabIndex = DataFrom.cateid;
@@ -158,13 +163,13 @@ var _default = {
       }
     },
     tabChange: function tabChange(tab) {
-      this.curTab = tab;
+      curTab = tab;
       this.billList = (0, _testData.default)(tab.cateid); //测试用的 
     },
     search: function search(val) {
-      DataFrom = { //这里预先设置返回的页面，由于back()函数无法设置query
+      DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
         from: 'searchShop',
-        value: '' };
+        value: '' });
 
       this.Cacher.setData('bill', {
         from: 'bill',

@@ -20,6 +20,10 @@
                 default: [
                     'graceUI', '测试', '关键字', '类型'
                 ],
+            },
+            other: {
+                type: [Object, Number, String, Array, Boolean],
+                default: ''
             }
         },
         data() {

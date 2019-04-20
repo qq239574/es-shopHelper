@@ -22,7 +22,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
 var _default =
 {
   props: {
@@ -48,19 +47,19 @@ var _default =
 
     valueStyle: {
       type: String,
+      default: '' },
+
+    other: {
+      type: [Object, Number, String, Array, Boolean],
       default: '' } },
 
 
-  data: function data() {
-    return {
-      dataName: 'lksdjfk' };
-
-  },
   methods: {
     selectCell: function selectCell() {
       this.$emit('click', {
         label: this.label,
-        value: this.value });
+        value: this.value,
+        other: this.other });
 
     } } };exports.default = _default;
 
