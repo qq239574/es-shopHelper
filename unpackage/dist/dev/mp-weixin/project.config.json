@@ -32,7 +32,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
@@ -51,6 +51,20 @@
 				{
 					"id": -1,
 					"name": "sss",
+					"pathName": "pagesCommodity/pages/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bill",
+					"pathName": "pages/commodity/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "ww",
 					"pathName": "pagesCommodity/pages/index",
 					"scene": null
 				}

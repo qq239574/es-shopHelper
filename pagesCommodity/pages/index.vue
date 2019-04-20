@@ -28,6 +28,7 @@
     import {
         mapState
     } from 'vuex'
+    let cacheGoodDetail={};
     export default {
         components: {
             goodInfo,
@@ -60,7 +61,8 @@
             save() {}
         },
         onLoad() {
-            this.goodDetail = singleData();
+            cacheGoodDetail= singleData();
+            this.goodDetail =cacheGoodDetail;
         },
         beforeMount() {
             console.log(this.good)

@@ -19,6 +19,8 @@
     import {
         multiData
     } from '../components/testdata.js' //测试用数据
+    let cacheGoodDetail = {};
+    let DataFrom = {};
     export default {
         components: {
             Block1,
@@ -32,16 +34,41 @@
             }
         },
         methods: {
+            initPage() {
+                if (DataFrom.from == 'editName') {//编辑名称页面，编辑分类页面，编辑运费页面
+                    DataFrom = this.Cacher.getData(DataFrom.from);
+                    cacheGoodDetail = DataFrom.goodDetail;
+                } else if (DataFrom.from) {
+                    DataFrom = this.Cacher.getData(DataFrom.from);
+                }
+                this.goodDetail = cacheGoodDetail;
+            },
             clickCell(val) {
-                console.log(val)
+                console.log(val);
+                this.Cacher.setData('multiSpecification', { //这里将整个页面的参数带到子页面修改后再带回来，由initPage中接受
+                    from: 'multiSpecification',
+                    goodDetail: cacheGoodDetail
+                })
+                if (val.label == '商品名称') {
+                    uni.navigateTo({
+                        url: './editName?from=multiSpecification'
+                    })
+                }
             },
             inputCell(val) {
                 console.log(val)
             },
             save() {}
         },
-        onLoad() {
-            this.goodDetail = multiData();
+        onLoad(option) {
+            if (option.from) {
+                DataFrom = this.Cacher.getData(option.from);
+            }
+            cacheGoodDetail = multiData(); //智能load的时候请求一次，show的时候不可
+            this.initPage()
+        },
+        onShow() {
+            this.initPage()
         }
     }
 </script>

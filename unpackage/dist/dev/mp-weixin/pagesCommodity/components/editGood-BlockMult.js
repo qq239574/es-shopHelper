@@ -64,14 +64,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   methods: {
     inputCell: function inputCell(val) {
-      this.$emit('input', Object.assign({
-        other: this.info },
-      val));
+      this.$emit('input', val);
     },
     clickCell: function clickCell(val) {
-      this.$emit('click', Object.assign({
-        other: this.info },
-      val));
+      this.$emit('click', val);
     } } };exports.default = _default;
 
 /***/ }),

@@ -1,10 +1,10 @@
 <template>
     <view class='multi-block grace-form'>
         <view class="block" v-for='(item,index) in info' :key='index'>
-            <inputItem :disabled='true' label='规格' :value='item.specif.value'></inputItem>
-            <inputItem label='价格' :value='item.price.value' @input='inputCell'></inputItem>
-            <inputItem label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
-            <selectItem label='商品编码' :value='item.code.value' @click='clickCell'></selectItem>
+            <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem>
+            <inputItem :other='item' label='价格' :value='item.price.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
+            <selectItem :other='item' label='商品编码' :value='item.code.value' @click='clickCell'></selectItem>
         </view>
     </view>
 </template>
@@ -54,14 +54,10 @@
         },
         methods: {
             inputCell(val) {
-                this.$emit('input', Object.assign({
-                    other: this.info
-                }, val))
+                this.$emit('input',val)
             },
             clickCell(val) {
-                this.$emit('click', Object.assign({
-                    other: this.info
-                }, val))
+                this.$emit('click', val)
             }
         },
     }
