@@ -1,16 +1,15 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
         <radio-group class='group'>
-            <view class='grace-items' v-for="(item, index) in items" :key="item.value" @click.stop='clickItem(index)'>
+            <view class='grace-items' v-for="(item, index) in items" :key="item.label" @click.stop='clickItem(index)'>
                 <view class='radio-box'>
                     <radio :value="item.value" :checked="index === current" color='#fb6638' />
                 </view>
                 <view class="grace-label">{{item.label}}</view>
-                <view class="other" :style="'color:#fb6638;opacity:'+(index === current?'1':'0')">
-                    {{item.value}}
+                <view class="other" :style="'color:#fb6638;opacity:'+(index === current?'1':'0;')+valueStyle">
+                    <text class="subContent" style='color:#c2c6ce;'>{{item.subValue}}</text>{{item.value}}
                     <view style='display:inline;' v-if='item.value===""'>{{placeholder}}</view>
-                    <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;' v-if='!hideRightArrow'></text>
-                </view>
+                </view><text class="grace-icons icon-arrow-right" style='color:#5E5E5E;' v-if='!hideRightArrow'></text>
             </view>
         </radio-group>
     </view>
@@ -23,6 +22,10 @@
                 type: Boolean,
                 default: false
             },
+            valueStyle: {
+                type: String,
+                default: ''
+            },
             placeholder: {
                 type: String,
                 default: '请选择'
@@ -31,7 +34,8 @@
                 type: Array,
                 default: [{
                     label: 'label1',
-                    value: ''
+                    value: '',
+                    subValue: ''
                 }]
             },
             other: {
@@ -47,7 +51,6 @@
         methods: {
             clickItem(index) {
                 this.current = index;
-                console.log(this.items[index])
                 this.$emit('change', this.items[index])
             },
         },
@@ -72,14 +75,24 @@
                 line-height: 38upx; // padding: 40upx 0 20upx;
             }
         }
+        .other {
+            display: flex;
+            justify-content: space-between;
+        }
+        .subContent {
+            font-size: 24upx;
+        }
         .radio-box {
             margin-right: 20upx;
             radio {
                 transform: scale(.7)
             }
         }
-         .grace-label{
-                font-weight:600;
-            }
+        .grace-label {
+            font-weight: 600;
+            width: fit-content;
+            white-space: nowrap;
+            overflow: hidden;
+        }
     }
 </style>

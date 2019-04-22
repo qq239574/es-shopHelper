@@ -1,12 +1,12 @@
 <template>
     <view class='vip-commission-block'>
         <block v-if='info.isCommission==2'>
-            <Block1></Block1>
-            <Block2></Block2>
-            <view class="button">取消分销商</view>
+            <Block1 :info='info'></Block1>
+            <Block2 :info='info'></Block2>
+            <view class="button" @click='removeDist'>取消分销商</view>
         </block>
-        <Block3 v-else-if='info.isCommission==1'></Block3>
-        <Block4 v-else></Block4>
+        <Block3 :info='info' @click='setDistributor' v-else-if='info.isCommission==1'></Block3>
+        <Block4 :info='info' @click='exame' v-else></Block4>
     </view>
 </template>
 
@@ -21,6 +21,43 @@
                 type: Object,
                 default: {
                     isCommission: 0, //是否分销商，0不是，1曾是，2是
+                    registerTime: '', //注册时间
+                    superDistributor: { //上级分销商
+                        name: ''
+                    },
+                    beDistributorTime: { //成为分销商时间
+                        value: ''
+                    },
+                    distributorClass: { //分销商等级
+                        name: ''
+                    },
+                    accumCommission: { //累计佣金
+                        value: 0
+                    },
+                    hadGet: { //已提现佣金
+                        value: 0
+                    },
+                    waitMoney: { //待入账佣金
+                        value: 0
+                    },
+                    commBill: { //分销订单
+                        value: 0
+                    },
+                    subDistributor: { //分销下级
+                        num: 0
+                    },
+                    firstSub: { //一级
+                        num: 0,
+                        distributor: 0
+                    },
+                    secondSub: { //二级
+                        num: 0,
+                        distributor: 0
+                    },
+                    thirdSub: { //三级
+                        num: 0,
+                        distributor: 0
+                    }
                 }
             }
         },
@@ -29,7 +66,62 @@
             Block2,
             Block3,
             Block4
-        }
+        },
+        methods: {
+            removeDist() {
+                this.Dialog.confirm({
+                    title: '',
+                    message: '您确认要取消ta的分销商资格吗？'
+                }).then(() => {
+                    // on confirm
+                    this.$emit('click', {
+                        type: 'remove',
+                    })
+                }).catch(() => {
+                    // on cancel
+                });
+            },
+            setDistributor() {
+                this.Dialog.confirm({
+                    title: '',
+                    message: '您确认要将ta设为分销商吗？'
+                }).then(() => {
+                    // on confirm
+                    this.$emit('click', {
+                        type: 'set',
+                    })
+                }).catch(() => {
+                    // on cancel
+                });
+            },
+            exame(val) {
+                if (val.type == 'refuse') {
+                    this.Dialog.confirm({
+                        title: '',
+                        message: '您确认拒绝ta的分销商申请吗？'
+                    }).then(() => {
+                        // on confirm
+                        this.$emit('click', {
+                            type: 'refuse',
+                        })
+                    }).catch(() => {
+                        // on cancel
+                    });
+                } else {
+                    this.Dialog.confirm({
+                        title: '',
+                        message: '您确认同意ta的分销商申请吗？'
+                    }).then(() => {
+                        // on confirm
+                        this.$emit('click', {
+                            type: 'allow',
+                        })
+                    }).catch(() => {
+                        // on cancel
+                    });
+                }
+            }
+        },
     }
 </script>
 

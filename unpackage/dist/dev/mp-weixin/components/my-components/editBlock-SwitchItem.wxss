@@ -17,5 +17,8 @@
 }
 .editGood-block-selectItem .grace-items .grace-label.data-v-4021a85a {
       font-weight: 600;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
 }
 

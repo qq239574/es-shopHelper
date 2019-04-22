@@ -1,7 +1,8 @@
 <template>
-    <div class='my-picker grace-mask-layer' v-if="GuideShow" @click.stop='closeGuide' >
+    <div class='my-picker grace-mask-layer' v-if="GuideShow" @click.stop='closeGuide' @touchmove.stop='stop'>
         <view class="picker" @click.stop='stop' >
             <view class="title">已选择优惠券</view>
+            <view class="items"></view>
             <view class="items">
                 <slot></slot>
                 
@@ -82,6 +83,8 @@
                 width: 710upx;
                 margin: auto;
                 border-bottom: 1upx solid #eee;
+                position: absolute;
+                top:0;
             }
             .items {
                 position: absolute;

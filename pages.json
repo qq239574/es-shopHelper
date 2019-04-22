@@ -135,11 +135,20 @@
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
+			},{
+				"path": "pages/autoDeliverContent",
+				"style": {
+					"navigationBarTitleText": "自动发货内容",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
 			},
 			{
 				"path": "pages/editGood",
 				"style": {
-					"navigationBarTitleText": "商品编辑-无规格",
+					"navigationBarTitleText": "商品表单",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -149,7 +158,25 @@
 			{
 				"path": "pages/editName",
 				"style": {
-					"navigationBarTitleText": "商品编辑-编辑名称",
+					"navigationBarTitleText": "编辑名称",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
+				"path": "pages/editCode",
+				"style": {
+					"navigationBarTitleText": "商品编码",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
+				"path": "pages/editSubTitle",
+				"style": {
+					"navigationBarTitleText": "副标题",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -159,7 +186,7 @@
 			{
 				"path": "pages/multiSpecifications",
 				"style": {
-					"navigationBarTitleText": "商品编辑-多规格",
+					"navigationBarTitleText": "多规格",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -168,7 +195,7 @@
 			}, {
 				"path": "pages/selectType",
 				"style": {
-					"navigationBarTitleText": "商品编辑-选择分类",
+					"navigationBarTitleText": "选择分类",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -177,10 +204,48 @@
 			}, {
 				"path": "pages/setFreight",
 				"style": {
-					"navigationBarTitleText": "商品编辑-运费设置",
+					"navigationBarTitleText": "运费设置",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
+				"path": "pages/setTotalFreight",
+				"style": {
+					"navigationBarTitleText": "统一运费设置",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
+				"path": "pages/editForm",
+				"style": {
+					"navigationBarTitleText": "商品表单",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
+				"path": "pages/editStatus",
+				"style": {
+					"navigationBarTitleText": "商品状态",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+						"van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index"
+					}
+				}
+			}, {
+				"path": "pages/editMultiCode",
+				"style": {
+					"navigationBarTitleText": "编辑多规格",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+						"van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index"
 					}
 				}
 			}

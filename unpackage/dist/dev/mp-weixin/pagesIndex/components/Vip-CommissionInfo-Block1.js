@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -20,11 +20,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var _default =
 
 
 {
   components: {
-    inputItem: inputItem } };exports.default = _default;
+    inputItem: inputItem },
+
+  props: {
+    info: {
+      type: Object,
+      default: {} } },
+
+
+
+  methods: {
+    formater: function formater(val) {
+      return (0, _formater.number_format)(val) + '元';
+    } } };exports.default = _default;
 
 /***/ }),
 
@@ -54,6 +69,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.formater(_vm.info.accumCommission.value)
+  var m1 = _vm.formater(_vm.info.hadGet.value)
+  var m2 = _vm.formater(_vm.info.waitMoney.value)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1,
+        m2: m2
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

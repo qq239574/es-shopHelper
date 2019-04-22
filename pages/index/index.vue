@@ -9,10 +9,10 @@
         </view>
         <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
         <view class="block">
-            <inputItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' :disabled='true' @click='toPay'>
+            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' :disabled='true' @click='toPay'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
-            </inputItem>
-            <selectItem label='微信系统于7月10日出现警告d两款发动机啊快乐飞克里斯多几分了快速减肥老师看见对方流口水打飞机' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
+            </selectItem>
+            <selectItem contentStyle='width:100%;' label='微信系统于7月10日出现警告d两款发动机啊快乐飞克里斯多几分了快速减肥老师看见对方流口水打飞机' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -109,10 +109,10 @@
                 this.Dialog.alert({
                     title: '请登录PC端后台进行续费',
                     message: '抱歉~当前版本小程序暂不支持续费操作',
-                    confirmButtonText:'知道了'
+                    confirmButtonText: '知道了'
                 }).then(() => {
                     // on close
-                }); 
+                });
             },
             toNotice(val) {
                 this.Cacher.setData('home', {

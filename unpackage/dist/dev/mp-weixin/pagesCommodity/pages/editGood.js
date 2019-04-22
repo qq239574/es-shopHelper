@@ -8,16 +8,70 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+
+
+
+
+
+
+
+
+
+var DataFrom = {};
+var cacheVal = '';
+var cacheFrom = '';
+var cache = '修改';var _default =
 {
-  components: {} };exports.default = _default;
+  components: {
+    radioBlock: radioBlock },
+
+  data: function data() {
+    return {
+      list: [{
+        label: '不使用表单',
+        value: '',
+        subValue: '' },
+      {
+        label: '西门子洗碗机表单',
+        value: ' ',
+        subValue: '' },
+      {
+        label: '吐鲁番葡萄表单',
+        value: ' ',
+        subValue: '' }] };
+
+
+  },
+  methods: {
+    initPage: function initPage() {
+      DataFrom = this.Cacher.getData('setFreight') || {};
+      if (DataFrom.from == 'setTotalFreight') {
+        this.list[0].subValue = DataFrom.value.subValue;
+        this.Cacher.setData('billDetail', {
+          from: 'setFreight',
+          needChange: {
+            label: '商品表单',
+            value: this.list[0].subValue } });
+
+
+      }
+    },
+    change: function change(val) {
+      cacheVal = val;
+      this.Cacher.setData('setFreight', {
+        from: 'setFreight',
+        value: val });
+
+      cache = val.value;
+    } },
+
+  onLoad: function onLoad(option) {
+    this.initPage();
+  },
+  onShow: function onShow() {
+    this.initPage();
+  } };exports.default = _default;
 
 /***/ }),
 

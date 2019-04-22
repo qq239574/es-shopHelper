@@ -23,11 +23,18 @@
       "root": "pagesCommodity",
       "pages": [
         "pages/index",
+        "pages/autoDeliverContent",
         "pages/editGood",
         "pages/editName",
+        "pages/editCode",
+        "pages/editSubTitle",
         "pages/multiSpecifications",
         "pages/selectType",
-        "pages/setFreight"
+        "pages/setFreight",
+        "pages/setTotalFreight",
+        "pages/editForm",
+        "pages/editStatus",
+        "pages/editMultiCode"
       ]
     },
     {

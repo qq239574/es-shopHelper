@@ -7,7 +7,8 @@
             <view class="other " :style='"display:inline;"+valueStyle'>
                 {{value}}
                 <view style='display:inline;color:#9ea3ae;' v-if='value===""'>{{placeholder}}</view>
-            </view><text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
+            </view>
+            <text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
         </view>
     </view>
 </template>
@@ -63,13 +64,15 @@
         display: flex;
         .grace-items {
             width: 94.67%;
-            margin: auto;
-            padding: 2upx auto;
+            margin: auto ;
+          
+            padding: 2upx 10upx 2upx 0;
             box-sizing: border-box;
             height: 100upx;
             display: flex;
             flex-wrap: nowrap;
             overflow: hidden;
+            justify-content: space-between;
             .address {
                 height: fit-content;
                 width: 490upx;
@@ -79,10 +82,11 @@
                 white-space: nowrap;
                 overflow: hidden;
                 width: fit-content;
-                max-width: 500upx;
+                max-width: 500upx; 
                 font-weight: 600;
             }
             .other {
+                
                 white-space: nowrap;
                 overflow: hidden;
                 width: fit-content;
@@ -94,6 +98,7 @@
                 box-sizing: border-box;
                 padding-right: 40upx;
                 line-height: 100upx;
+                text-align: right;
             }
             .grace-icons {
                 position: absolute;

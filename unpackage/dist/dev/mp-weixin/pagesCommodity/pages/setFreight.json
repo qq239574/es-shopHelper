@@ -1,7 +1,8 @@
 {
-  "navigationBarTitleText": "商品编辑-运费设置",
+  "navigationBarTitleText": "运费设置",
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
-    "van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "radio-block": "/components/my-components/editBlock-RadioBlock"
   }
 }

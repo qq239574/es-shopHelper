@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -20,6 +20,9 @@
 
 
 
+var DataFrom = {};
+var cacheVal = '';
+var cacheFrom = '';var _default =
 {
   components: {
     longButton: longButton },
@@ -33,12 +36,22 @@
   },
   methods: {
     sure: function sure() {
+      DataFrom.from = 'editName';
+      DataFrom.needChange.value = cacheVal;
+      this.Cacher.setData(cacheFrom, DataFrom);
       uni.navigateBack();
     },
     getAddition: function getAddition(val) {
       this.length = val.detail.value.length;
       this.disable = !val.detail.value.length;
-    } } };exports.default = _default;
+      cacheVal = val.detail.value;
+    } },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    cacheFrom = option.from;
+    console.log(DataFrom);
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

@@ -32,6 +32,8 @@
       width: 710rpx;
       margin: auto;
       border-bottom: 1rpx solid #eee;
+      position: absolute;
+      top: 0;
 }
 .grace-mask-layer .picker .items.data-v-316828d9 {
       position: absolute;

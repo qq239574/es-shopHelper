@@ -1,18 +1,30 @@
 <template>
     <view class='block-foot '>
-        <view class="info">已选择
+        <view class="info" @click='check'>已选择
             <view class="price">{{num}}</view>张
         </view>
-        <view class="button">确认添加</view>
+        <view class="button" @click='sure'>确认添加</view>
     </view>
 </template>
 
 <script>
     export default {
-        props:{
-            num:{
-                type:Number,
-                default:0
+        props: {
+            num: {
+                type: Number,
+                default: 0
+            }
+        },
+        methods: {
+            check() {
+                this.$emit('click', {
+                    type: 'check'
+                })
+            },
+            sure() {
+                 this.$emit('click', {
+                    type: 'sure'
+                })
             }
         }
     }
@@ -27,7 +39,9 @@
         flex-wrap: nowrap;
         justify-content: space-between;
         position: fixed;
-        bottom: 0;left: 0;
+        bottom: 0;
+        left: 0;
+        z-index:10000;
         view {
             height: 100%;
             line-height: 100upx;

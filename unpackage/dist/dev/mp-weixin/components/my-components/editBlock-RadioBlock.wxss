@@ -22,6 +22,19 @@
       width: 490rpx;
       line-height: 38rpx;
 }
+.editGood-block-selectItem .other.data-v-287b5876 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+.editGood-block-selectItem .subContent.data-v-287b5876 {
+    font-size: 24rpx;
+}
 .editGood-block-selectItem .radio-box.data-v-287b5876 {
     margin-right: 20rpx;
 }
@@ -32,5 +45,10 @@
 }
 .editGood-block-selectItem .grace-label.data-v-287b5876 {
     font-weight: 600;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    white-space: nowrap;
+    overflow: hidden;
 }
 

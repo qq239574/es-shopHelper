@@ -22,10 +22,28 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 {
   components: {
     inputItem: inputItem,
-    roundButton: roundButton } };exports.default = _default;
+    roundButton: roundButton },
+
+  data: function data() {
+    return {
+      hadRefused: true };
+
+  },
+  methods: {
+    refuse: function refuse() {
+      this.$emit('click', {
+        type: 'refuse' });
+
+    },
+    allow: function allow() {
+      this.$emit('click', {
+        type: 'alllow' });
+
+    } } };exports.default = _default;
 
 /***/ }),
 

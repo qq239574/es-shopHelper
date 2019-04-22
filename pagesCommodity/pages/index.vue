@@ -25,10 +25,10 @@
     import goodInfo3 from '../components/editGood-Block3.vue'
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     import longButton from '../../components/my-components/LongButton.vue'
-    import {
-        mapState
-    } from 'vuex'
-    let cacheGoodDetail={};
+    import updateGoodInfo from '../components/updateGoodInfo.js'
+    import toEditPage from '../components/toEditPage.js'
+    let cacheGoodDetail = {};
+    let DataFrom = {};
     export default {
         components: {
             goodInfo,
@@ -42,31 +42,37 @@
                 moving: false,
                 goodDetail: {}
             }
-        },
-        computed: {
-            ...mapState({
-                good: 'goodDetail'
-            })
-        },
+        }, 
         methods: {
             inputCell(val) {
-                console.log(val)
+                cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
+                
             },
             getImages(list) {
-                console.log(list)
+                cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail)
             },
             clickCell(val) {
-                console.log(val)
-            }, 
-            save() {}
+                toEditPage.call(this, val, cacheGoodDetail)
+            },
+            save() {
+                this.goodDetail = cacheGoodDetail;
+                uni.navigateBack();
+            },
+            initPage() {
+                DataFrom = this.Cacher.getData('billDetail'); 
+                if (DataFrom.from == 'editName' || DataFrom.from == 'editSubtitle'|| DataFrom.from == 'selectType'|| DataFrom.from == 'editCode'||DataFrom.from == 'setFreight'||DataFrom.from == 'editForm'||DataFrom.from == 'editStatus'||DataFrom.from == 'editMultiCode'||DataFrom.from == 'autoDeliverContent') { 
+                    cacheGoodDetail = updateGoodInfo.call(this, DataFrom.needChange, cacheGoodDetail);
+                    this.goodDetail = cacheGoodDetail;
+                }
+            }
         },
         onLoad() {
-            cacheGoodDetail= singleData();
-            this.goodDetail =cacheGoodDetail;
+            cacheGoodDetail = singleData();
+            this.goodDetail = cacheGoodDetail;
         },
-        beforeMount() {
-            console.log(this.good)
-        },
+        onShow() {
+            this.initPage();
+        }
     }
 </script>
 

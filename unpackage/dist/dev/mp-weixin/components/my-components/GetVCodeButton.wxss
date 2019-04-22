@@ -15,4 +15,18 @@
   color: #9da3ae;
   border: 1rpx solid #9da3ae;
 }
+.imgCode.data-v-71c24da8 {
+  width: 150rpx;
+  height: 54rpx;
+  margin: auto 10rpx auto 0;
+}
+.password-code.data-v-71c24da8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
 

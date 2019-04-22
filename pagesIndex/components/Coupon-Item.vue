@@ -1,27 +1,41 @@
 <template>
     <view class='coupon-item'>
         <view class="border">
-            <view class="top">
-                <view class="title">女神节专享通用优惠券</view>
+            <view class="top" v-for='(item,index) in list' :key='index'>
+                <view class="title">{{item.name}}</view>
                 <view class="money">
                     ￥
-                    <view class="num">20</view>
+                    <view class="num">{{item.price}}</view>
                 </view>
             </view>
-            <view class="bottom">部分商品满100减20</view>
+            <view class="bottom">{{item.info}}</view>
         </view>
     </view>
 </template>
 
 <script>
-    export default {}
+    export default {
+        props: {
+            list: {
+                type: Array,
+                default: [{
+                    name: '女神节专享通用优惠券',
+                    price: 20,
+                    info: '部分商品满100减20',
+                    num: 0
+                }]
+            }
+        },
+        methods: {
+        },
+    }
 </script>
 
 <style lang="scss" scoped>
     .coupon-item {
         width: 665upx;
         height: 217upx;
-        margin:0 auto 20upx;
+        margin: 0 auto 20upx;
         position: relative;
         overflow: hidden;
         .border {
@@ -61,8 +75,9 @@
                         font-size: 45upx;
                         height: 45upx;
                         line-height: 45upx;
-                         font-weight: 700;
-                        display: inline; color: #fb6638;
+                        font-weight: 700;
+                        display: inline;
+                        color: #fb6638;
                     }
                 }
             }

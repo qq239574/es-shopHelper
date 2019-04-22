@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item2 */ "pagesIndex/components/Coupon-Item2").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item2.vue"));};var blockFoot = function blockFoot() {return __webpack_require__.e(/*! import() | pagesIndex/components/selectCoupon--Foot */ "pagesIndex/components/selectCoupon--Foot").then(__webpack_require__.bind(null, /*! ../components/selectCoupon--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\selectCoupon--Foot.vue"));};var floatLayer = function floatLayer() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-Picker */ "pagesIndex/components/SelectCoupon-Picker").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-Picker.vue"));};var pickerItem = function pickerItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-PickerItem */ "pagesIndex/components/SelectCoupon-PickerItem").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-PickerItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-PickerItem.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item2 */ "pagesIndex/components/Coupon-Item2").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item2.vue"));};var blockFoot = function blockFoot() {return __webpack_require__.e(/*! import() | pagesIndex/components/selectCoupon--Foot */ "pagesIndex/components/selectCoupon--Foot").then(__webpack_require__.bind(null, /*! ../components/selectCoupon--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\selectCoupon--Foot.vue"));};var floatLayer = function floatLayer() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-Picker */ "pagesIndex/components/SelectCoupon-Picker").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-Picker.vue"));};var pickerItem = function pickerItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-PickerItem */ "pagesIndex/components/SelectCoupon-PickerItem").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-PickerItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-PickerItem.vue"));};
 
 
 
@@ -31,6 +31,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+var cachelist = [];var _default =
 {
   components: {
     search: search,
@@ -41,13 +44,81 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   data: function data() {
     return {
-      toggle: true };
+      toggle: true,
+      list: [{
+        name: '女神节专享通用优惠券1',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 2,
+        id: 1 },
+      {
+        name: '女神节专享通用优惠券2',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0,
+        id: 2 },
+      {
+        name: '女神节专享通用优惠券3',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0,
+        id: 3 },
+      {
+        name: '女神节专享通用优惠券4',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0,
+        id: 4 },
+      {
+        name: '女神节专享通用优惠券5',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0,
+        id: 5 }],
+
+      selected: [],
+      selectnum: 0 };
 
   },
   methods: {
     change: function change(val) {
-      console.log(val);
-    } } };exports.default = _default;
+      val.num = val.newNumber;
+      this.calc(val);
+    },
+    calc: function calc(item) {
+      this.list = this.list.map(function (val, key) {
+        if (item.id == val.id) {
+          return item;
+        } else {
+          return val;
+        }
+      });
+      cachelist = this.list.filter(function (item) {
+        return item.num > 0;
+      });
+      var tmp = 0;
+      cachelist.forEach(function (item, index) {
+        tmp += item.num;
+      });
+      this.selectnum = tmp;
+      this.selected = cachelist;
+    },
+    select: function select(item) {
+      this.calc(item);
+    },
+    clickFoot: function clickFoot(event) {
+      console.log(event);
+      this.toggle = !this.toggle;
+      if (event.type == 'check') {
+      } else {
+      }
+    } },
+
+  onLoad: function onLoad() {var _this = this;
+    this.list.map(function (item) {
+      _this.calc(item);
+    });
+  } };exports.default = _default;
 
 /***/ }),
 

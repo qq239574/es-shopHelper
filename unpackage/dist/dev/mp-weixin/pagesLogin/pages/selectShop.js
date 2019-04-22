@@ -96,6 +96,7 @@ var userInfo = {};var _default =
   },
   onLoad: function onLoad(option) {var _this = this;
     this.initPage();
+    this.Request('shoplist');
     setTimeout(function () {
       userInfo = _this.Cacher.getData('userInfo');
       console.log(userInfo);
@@ -127,7 +128,7 @@ var userInfo = {};var _default =
 
       var onlyOne = true;
       if (onlyOne && option.from != 'home' && option.status != 'switchShop') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-        _this.toInex('from=selectShop&status=onlyOne');
+        // this.toInex('from=selectShop&status=onlyOne')
       } else {
         _this.checkUserInfo();
       }

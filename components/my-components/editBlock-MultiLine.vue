@@ -42,16 +42,25 @@
         .grace-items {
             width: 710upx;
             margin: auto;
-            padding: 2upx auto;
+            padding: 0 auto;
             box-sizing: border-box; 
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            position: relative;
             .address {
-				height: fit-content;
-				width: 490upx;
-				line-height: 38upx; // padding: 40upx 0 20upx;
-                margin-left:60upx;
+				height: 100%;
+				width: fit-content;
+				line-height: 38upx; // padding: 40upx 0 20upx; 
+                margin:auto 40upx auto 60upx;
 			}
             .grace-label{
                 font-weight:600;
+            }
+            .grace-icons{
+                position: absolute;
+                right:0;
+                margin:auto;
             }
         }
     }

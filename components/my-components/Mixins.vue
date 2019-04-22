@@ -3,7 +3,7 @@
 <script>
     let pageLoadingBar = '';
     let loadMore = '';
-    import request from './api/index.js'
+    import request from '../../api/index.js'
     import * as cacher from '../../store/cache.js'
     import Toast from '../../wxcomponents/vant-weapp/toast/toast'
     import Dialog from '../../wxcomponents/vant-weapp/dialog/dialog';
@@ -23,8 +23,8 @@
             };
         },
         methods: {
-            Request() {
-                return request;
+            Request(name,data) {
+                return request(name,data);
             },
             pageLoading() {
                 clearTimeout(pageLoadingBar);

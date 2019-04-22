@@ -1,6 +1,6 @@
 <template>
     <div class='select-type page'>
-        <tabs></tabs>
+        <tabs @change='select' :searchKeys='list'></tabs>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>
@@ -8,9 +8,41 @@
 
 <script>
     import tabs from '../../components/my-components/editBlock-SelectTabs'
+    let DataFrom = {};
+    let cacheVal = '';
+    let cacheFrom = '';
     export default {
         components: {
             tabs
+        },
+        data() {
+            return {
+                list: [{
+                    name: 'name1',
+                    id: '1'
+                }, {
+                    name: 'name2',
+                    id: '2'
+                }, {
+                    name: 'name3',
+                    id: '3'
+                }, {
+                    name: 'name4',
+                    id: '4'
+                }]
+            }
+        },
+        methods: {
+            select(val) {
+                console.log(val);
+                DataFrom.from = 'selectType';
+                DataFrom.needChange.value = val;
+                this.Cacher.setData(cacheFrom, DataFrom);
+            }
+        },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            cacheFrom = option.from; 
         }
     }
 </script>

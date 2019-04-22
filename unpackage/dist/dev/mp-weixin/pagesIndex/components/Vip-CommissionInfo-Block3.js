@@ -20,7 +20,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   components: {
-    roundButton: roundButton } };exports.default = _default;
+    roundButton: roundButton },
+
+  methods: {
+    click: function click() {
+      this.$emit('click', {
+        type: 'setDistributor' });
+
+    } } };exports.default = _default;
 
 /***/ }),
 

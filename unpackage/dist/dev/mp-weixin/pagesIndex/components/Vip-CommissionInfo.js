@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block1 = function Block1() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block1 */ "pagesIndex/components/Vip-CommissionInfo-Block1").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block2 */ "pagesIndex/components/Vip-CommissionInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block2.vue"));};var Block3 = function Block3() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block3 */ "pagesIndex/components/Vip-CommissionInfo-Block3").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block3.vue"));};var Block4 = function Block4() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block4 */ "pagesIndex/components/Vip-CommissionInfo-Block4").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block4.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block1 = function Block1() {return Promise.all(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Vip-CommissionInfo-Block1")]).then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block2 */ "pagesIndex/components/Vip-CommissionInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block2.vue"));};var Block3 = function Block3() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block3 */ "pagesIndex/components/Vip-CommissionInfo-Block3").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block3.vue"));};var Block4 = function Block4() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo-Block4 */ "pagesIndex/components/Vip-CommissionInfo-Block4").then(__webpack_require__.bind(null, /*! ./Vip-CommissionInfo-Block4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo-Block4.vue"));};var _default =
 
 
 
@@ -30,15 +30,107 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     info: {
       type: Object,
       default: {
-        isCommission: 0 //是否分销商，0不是，1曾是，2是
-      } } },
+        isCommission: 0, //是否分销商，0不是，1曾是，2是
+        registerTime: '', //注册时间
+        superDistributor: { //上级分销商
+          name: '' },
+
+        beDistributorTime: { //成为分销商时间
+          value: '' },
+
+        distributorClass: { //分销商等级
+          name: '' },
+
+        accumCommission: { //累计佣金
+          value: 0 },
+
+        hadGet: { //已提现佣金
+          value: 0 },
+
+        waitMoney: { //待入账佣金
+          value: 0 },
+
+        commBill: { //分销订单
+          value: 0 },
+
+        subDistributor: { //分销下级
+          num: 0 },
+
+        firstSub: { //一级
+          num: 0,
+          distributor: 0 },
+
+        secondSub: { //二级
+          num: 0,
+          distributor: 0 },
+
+        thirdSub: { //三级
+          num: 0,
+          distributor: 0 } } } },
+
+
 
 
   components: {
     Block1: Block1,
     Block2: Block2,
     Block3: Block3,
-    Block4: Block4 } };exports.default = _default;
+    Block4: Block4 },
+
+  methods: {
+    removeDist: function removeDist() {var _this = this;
+      this.Dialog.confirm({
+        title: '',
+        message: '您确认要取消ta的分销商资格吗？' }).
+      then(function () {
+        // on confirm
+        _this.$emit('click', {
+          type: 'remove' });
+
+      }).catch(function () {
+        // on cancel
+      });
+    },
+    setDistributor: function setDistributor() {var _this2 = this;
+      this.Dialog.confirm({
+        title: '',
+        message: '您确认要将ta设为分销商吗？' }).
+      then(function () {
+        // on confirm
+        _this2.$emit('click', {
+          type: 'set' });
+
+      }).catch(function () {
+        // on cancel
+      });
+    },
+    exame: function exame(val) {var _this3 = this;
+      if (val.type == 'refuse') {
+        this.Dialog.confirm({
+          title: '',
+          message: '您确认拒绝ta的分销商申请吗？' }).
+        then(function () {
+          // on confirm
+          _this3.$emit('click', {
+            type: 'refuse' });
+
+        }).catch(function () {
+          // on cancel
+        });
+      } else {
+        this.Dialog.confirm({
+          title: '',
+          message: '您确认同意ta的分销商申请吗？' }).
+        then(function () {
+          // on confirm
+          _this3.$emit('click', {
+            type: 'allow' });
+
+        }).catch(function () {
+          // on cancel
+        });
+      }
+    } } };exports.default = _default;
 
 /***/ }),
 

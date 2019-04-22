@@ -1,6 +1,6 @@
 <template>
     <view class='vip-coupon page'>
-        <couponItem></couponItem>
+        <couponItem @click='select' :list='list'></couponItem>
         <longButton @click='addCoupon'>添加优惠券</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -15,11 +15,24 @@
             couponItem,
             longButton
         },
+        data() {
+            return {
+                list: [{
+                    name: '女神节专享通用优惠券',
+                    price: 20,
+                    info: '部分商品满100减20',
+                    num: 0
+                }]
+            }
+        },
         methods: {
             addCoupon() {
                 uni.navigateTo({
                     url: './selectCoupon'
                 })
+            },
+            select(val) {
+                console.log(val)
             }
         },
     }

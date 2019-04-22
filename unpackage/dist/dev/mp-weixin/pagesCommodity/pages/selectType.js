@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectTabs */ "components/my-components/editBlock-SelectTabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectTabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectTabs.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectTabs */ "components/my-components/editBlock-SelectTabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectTabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectTabs.vue"));};
 
 
 
@@ -18,9 +18,42 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+var DataFrom = {};
+var cacheVal = '';
+var cacheFrom = '';var _default =
 {
   components: {
-    tabs: tabs } };exports.default = _default;
+    tabs: tabs },
+
+  data: function data() {
+    return {
+      list: [{
+        name: 'name1',
+        id: '1' },
+      {
+        name: 'name2',
+        id: '2' },
+      {
+        name: 'name3',
+        id: '3' },
+      {
+        name: 'name4',
+        id: '4' }] };
+
+
+  },
+  methods: {
+    select: function select(val) {
+      console.log(val);
+      DataFrom.from = 'selectType';
+      DataFrom.needChange.value = val;
+      this.Cacher.setData(cacheFrom, DataFrom);
+    } },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    cacheFrom = option.from;
+  } };exports.default = _default;
 
 /***/ }),
 

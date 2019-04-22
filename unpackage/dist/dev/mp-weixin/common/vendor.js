@@ -373,7 +373,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6448,7 +6448,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -7871,6 +7871,162 @@ module.exports = g;
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js":
+/*!*****************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/home.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.shoplist = void 0;var shoplist = { //获取店铺列表
+
+  url: '/api/site/account/shops/list',
+  data: {
+    keywords: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.shoplist = shoplist;
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\index.js":
+/*!******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/index.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
+var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var graceRequest = __webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js");
+
+var global_settings = {
+  base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
+  attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
+};
+var indexApi = _objectSpread({},
+loginApi,
+homeApi);
+
+
+
+
+function _default(name, data) {
+  if (indexApi[name].type == 'get') {
+    return new Promise(function (resolve, reject) {
+      graceRequest.get(
+      global_settings.base_url + indexApi[name].url,
+      Object.assign(indexApi[name].data, data),
+      function (res) {
+        resolve(res);
+      });
+
+    });
+  } else {
+    return new Promise(function (resolve, reject) {
+      graceRequest.post(
+      global_settings.base_url + indexApi[name].url, data,
+      'form', {},
+      function (res) {
+        resolve(res);
+      });
+
+    });
+  }
+
+
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js":
+/*!******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/login.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getSessionid = exports.verifyCode = exports.sendVfCode = exports.beforeSendVfCode = exports.changePassword = exports.loginCheck = exports.login = void 0;var login = { //用户登录
+  url: '/api/site/account/login/post',
+  data: {
+    account: 'yilianxinpin',
+    password: 'Qm8xn4KVBMc0Wd70' },
+
+  headers: {},
+  type: 'post' };exports.login = login;
+
+var loginCheck = { //用户登录前检测[进入登录页面]
+  url: '/api/site/account/login',
+  data: {},
+
+
+  headers: {},
+  type: 'get' };exports.loginCheck = loginCheck;
+
+var changePassword = { //修改密码
+  url: '/api/site/account/change-password',
+  data: {
+    original_password: '',
+    new_password: '' },
+
+  headers: {},
+  type: 'post' };exports.changePassword = changePassword;
+
+var beforeSendVfCode = {
+  url: ' http://user.qdev.eldev.cn/utility/captcha/get',
+  data: {
+    type: 'forget',
+    width: 135,
+    height: 32,
+    timestamp: new Date().getTime() },
+
+  headers: {},
+  type: 'get' };exports.beforeSendVfCode = beforeSendVfCode;
+
+
+var sendVfCode = { //
+  url: 'api/site/account/verify-code/send',
+  data: {},
+
+
+  headers: {},
+  type: 'get' };exports.sendVfCode = sendVfCode;
+
+
+
+var verifyCode = { //找回密码验证验证码
+  url: '/api/site/account/forget/verify-code',
+  data: {
+    session_id: '',
+    type: '',
+    account: '',
+    verify_code: '',
+    question: '',
+    answer: '' },
+
+  headers: {},
+  type: 'post' };exports.verifyCode = verifyCode;
+
+var getSessionid = { //获取sessionid
+  url: '/shop/api/site/account/login/get-sessionid',
+  data: {
+    session_id: '',
+    type: '',
+    account: '',
+    verify_code: '',
+    question: '',
+    answer: '' },
+
+  headers: {},
+  type: 'get' };exports.getSessionid = getSessionid;
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\echarts\\echarts.simple.min.js":
 /*!**********************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/echarts/echarts.simple.min.js ***!
@@ -7987,38 +8143,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\api\\index.js":
-/*!*******************************************************************************************!*\
-  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/api/index.js ***!
-  \*******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default() {
-  return new Promise(function (resolve, reject) {
-    uni.request({
-      url: 'https://www.example.com/request', //仅为示例，并非真实接口地址。
-      data: {
-        text: 'uni.request' },
-
-      header: {
-        'custom-header': 'hello' //自定义请求头信息
-      },
-      success: function success(res) {
-        resolve(res);
-      },
-      fail: function fail() {
-        reject(res);
-      } });
-
-  });
-
-}
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
-
-/***/ }),
-
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js":
 /*!******************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/formater.js ***!
@@ -8082,6 +8206,81 @@ function getDate(before) {
   d = d > 9 ? d : '0' + d;
   return y + "-" + m + "-" + d;
 }
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\date.js":
+/*!********************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI2.0/jsTools/date.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+ /*
+              graceUI-JS - 时间转换函数工具
+              link : graceui.hcoder.net
+              author : 5213606@qq.com 深海
+              
+              版权声明 : 
+              GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠道！
+              侵权必究，请遵守版权约定！
+              
+              */
+
+module.exports = {
+
+  // 时间戳转 YY-mm-dd HH:ii:ss
+  formatDateTime: function formatDateTime(timeStamp, returnType) {
+    var date = new Date();
+    date.setTime(timeStamp * 1000);
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? '0' + m : m;
+    var d = date.getDate();
+    d = d < 10 ? '0' + d : d;
+    var h = date.getHours();
+    h = h < 10 ? '0' + h : h;
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    minute = minute < 10 ? '0' + minute : minute;
+    second = second < 10 ? '0' + second : second;
+    if (returnType == 'str') {return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;}
+    return [y, m, d, h, minute, second];
+  },
+
+  // 日期转时间戳
+  dateTimeToTimeStamp: function dateTimeToTimeStamp(timeStamp) {
+    var reg = /^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$/;
+    var res = timeStamp.match(reg);
+    if (res == null) {
+      var reg2 = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4}) ([0-9]{2}):([0-9]{2}):([0-9]{2})$/;
+      var res2 = timeStamp.match(reg2);
+      if (res2 == null) {
+        console.log('时间格式错误 E001');
+        return false;
+      } else {
+        var year = parseInt(res2[3]);
+        var month = parseInt(res2[1]);
+        var day = parseInt(res2[2]);
+        var h = parseInt(res2[4]);
+        var i = parseInt(res2[5]);
+        var s = parseInt(res2[6]);
+      }
+    } else {
+      var year = parseInt(res[1]);
+      var month = parseInt(res[2]);
+      var day = parseInt(res[3]);
+      var h = parseInt(res[4]);
+      var i = parseInt(res[5]);
+      var s = parseInt(res[6]);
+    }
+    if (year < 1000) {console.log('时间格式错误');return false;}
+    if (h < 0 || h > 24) {console.log('时间格式错误');return false;}
+    if (i < 0 || i > 60) {console.log('时间格式错误');return false;}
+    if (s < 0 || s > 60) {console.log('时间格式错误');return false;}
+    return Date.parse(new Date(year, month - 1, day, h, i, s)) / 1000;
+  } };
 
 /***/ }),
 
@@ -8304,6 +8503,63 @@ module.exports = {
     var reg = /^-?[1-9][0-9]?.?[0-9]*$/;
     return reg.test(checkVal);
   } };
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js":
+/*!********************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI/jsTools/request.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) { /*
+              graceUI-JS - 网络请求工具
+              link : graceui.hcoder.net
+              author : 5213606@qq.com 深海
+              
+              版权声明 : 
+              GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠道！
+              侵权必究，请遵守版权约定！
+              */
+
+module.exports = {
+
+  get: function get(url, data, callback) {
+    uni.request({
+      url: url,
+      data: data,
+      method: "GET",
+      dataType: "json",
+      success: function success(res) {callback(res.data);},
+      fail: function fail() {uni.showToast({ title: "网络请求失败", icon: "none" });} });
+
+  },
+
+  post: function post(url, data, contentType, headers, callback) {
+    switch (contentType) {
+      case "form":
+        var headerObj = { 'content-type': 'application/x-www-form-urlencoded' };
+        break;
+      case "json":
+        var headerObj = { 'content-type': 'application/json' };
+        break;
+      default:
+        var headerObj = { 'content-type': 'application/json' };}
+
+    for (var k in headers) {headerObj[k] = headers[k];}
+    uni.request({
+      url: url,
+      data: data,
+      method: "POST",
+      dataType: "json",
+      header: headerObj,
+      success: function success(res) {callback(res.data);},
+      fail: function fail() {uni.showToast({ title: "网络请求失败", icon: "none" });} });
+
+  } };
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -8630,6 +8886,57 @@ createPage(_componyList.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FautoDeliverContent\"}":
+/*!********************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FautoDeliverContent"} ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _autoDeliverContent = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/autoDeliverContent.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\autoDeliverContent.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_autoDeliverContent.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditCode\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditCode"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editCode.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editCode.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditForm\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditForm"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editForm = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editForm.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editForm.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editForm.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditGood\"}":
 /*!**********************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditGood"} ***!
@@ -8647,6 +8954,23 @@ createPage(_editGood.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditMultiCode\"}":
+/*!***************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditMultiCode"} ***!
+  \***************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editMultiCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editMultiCode.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editMultiCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editMultiCode.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditName\"}":
 /*!**********************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditName"} ***!
@@ -8660,6 +8984,40 @@ createPage(_editGood.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _editName = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editName.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editName.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editName.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditStatus\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditStatus"} ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editStatus = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editStatus.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editStatus.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editStatus.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditSubTitle\"}":
+/*!**************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditSubTitle"} ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editSubTitle = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editSubTitle.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editSubTitle.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editSubTitle.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -8728,6 +9086,23 @@ createPage(_selectType.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _setFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setFreight.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\setFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_setFreight.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FsetTotalFreight\"}":
+/*!*****************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FsetTotalFreight"} ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _setTotalFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setTotalFreight.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\setTotalFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_setTotalFreight.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -9224,6 +9599,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
         label: '商品分类',
         id: '',
         value: '男装-休闲裤；男装-牛仔裤',
+        list: [{
+          name: '男装-休闲裤',
+          id: '1' },
+        {
+          name: '男装-牛仔裤',
+          id: '2' }],
+
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
@@ -9255,8 +9637,38 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
     info2: {
       specification: {
         label: '规格类型',
-        id: '',
-        value: '无',
+        id: 'multi',
+        value: '多规格',
+        list: [{
+          specif: {
+            label: '规格',
+            id: '',
+            value: '2000W-亮黑色',
+            disabled: true, //可否编辑
+            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+          },
+          price: {
+            label: '价格',
+            id: '',
+            value: '1999.0',
+            disabled: false, //可否编辑
+            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+          },
+          stock: {
+            label: '库存',
+            id: '',
+            value: '23566',
+            disabled: false, //可否编辑
+            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+          },
+          code: {
+            label: '商品编号',
+            id: '',
+            value: 'JB12595695656565998',
+            disabled: false, //可否编辑
+            editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+          } }],
+
         disabled: true, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
@@ -9311,13 +9723,30 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
+      autoDeliver: {
+        label: '自动发货',
+        id: '',
+        value: false,
+        disabled: false, //可否编辑
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: true },
+
+      autoDeliverContent: {
+        label: '自动发货内容',
+        id: '',
+        value: '打开雷锋哈可减肥的话可接受的付款就是付款接收到付款就是付款计划谁看见大富豪看实践活动付款就是疯狂就哈萨克分',
+        disabled: false, //可否编辑
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: true },
+
       provideCost: {
         label: '快递运费',
         id: '',
         value: 10,
         disabled: false, //可否编辑
-        editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: false },
+
       showProCost: {
         label: '显示快递',
         id: '',
@@ -9325,7 +9754,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
         disabled: false, //可否编辑
         editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
-      joinCount: {
+      joivbnCount: {
         label: '参与会员折扣',
         id: '',
         value: true,
@@ -9464,6 +9893,183 @@ function multiData() {
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       } } };
 
+
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage-multi.js":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/toEditPage-multi.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(val, detail) {
+  this.Cacher.setData('billDetail', {
+    from: 'billDetail',
+    detail: detail,
+    needChange: val });
+
+  if (val.label == '商品编码') {
+    uni.navigateTo({
+      url: '../pages/editMultiCode?from=billDetail' });
+
+  } else if (val.label == '快递运费') {
+    uni.navigateTo({
+      url: '../pages/setFreight?from=billDetail' });
+
+  } else if (val.label == '商品表单') {
+    uni.navigateTo({
+      url: '../pages/editForm?from=billDetail' });
+
+  } else if (val.label == '状态') {
+    uni.navigateTo({
+      url: '../pages/editStatus?from=billDetail' });
+
+  }
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/toEditPage.js ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(val, detail) {
+  this.Cacher.setData('billDetail', {
+    from: 'billDetail',
+    detail: detail,
+    needChange: val });
+
+  if (val.label == '商品名称') {
+    uni.navigateTo({
+      url: '../pages/editName?from=billDetail' });
+
+  } else if (val.label == '副标题') {
+    uni.navigateTo({
+      url: '../pages/editSubTitle?from=billDetail' });
+
+  } else if (val.label == '商品分类') {
+    uni.navigateTo({
+      url: '../pages/selectType?from=billDetail' });
+
+  } else if (val.label == '商品编码') {
+    uni.navigateTo({
+      url: '../pages/editCode?from=billDetail' });
+
+  } else if (val.label == '快递运费') {
+    uni.navigateTo({
+      url: '../pages/setFreight?from=billDetail' });
+
+  } else if (val.label == '商品表单') {
+    uni.navigateTo({
+      url: '../pages/editForm?from=billDetail' });
+
+  } else if (val.label == '状态') {
+    uni.navigateTo({
+      url: '../pages/editStatus?from=billDetail' });
+
+  } else if (val.label == '规格类型') {
+    uni.navigateTo({
+      url: '../pages/editMultiCode?from=billDetail' });
+
+  } else if (val.label == '自动发货内容') {
+    uni.navigateTo({
+      url: '../pages/autoDeliverContent?from=billDetail' });
+
+  }
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-multi.js":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo-multi.js ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(val, cacheGoodDetail) {
+
+  if (val.label == '商品编码') {//
+    cacheGoodDetail.info1.list = val.value;
+  } else if (val.label == '快递运费') {//
+    cacheGoodDetail.info2.provideCost.value = val.value;
+  } else if (val.label == '商品表单') {//
+    cacheGoodDetail.info2.goodForm.value = val.value;
+  } else if (val.label == '状态') {//
+    cacheGoodDetail.info3.status.value = val.value;
+  }
+  return cacheGoodDetail;
+
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(val, cacheGoodDetail) {
+
+  if (val.label == '售卖价格') {
+    cacheGoodDetail.info2.price.value = val.value;
+  } else if (val.label == '划线价格') {
+    cacheGoodDetail.info2.delPrice.value = val.value;
+  } else if (val.label == '商品库存') {
+    cacheGoodDetail.info2.stockNum.value = val.value;
+  } else if (val.label == '显示库存') {
+    cacheGoodDetail.info2.showStock.value = val.value;
+  } else if (val.label == '已出售数') {
+    cacheGoodDetail.info2.soldNum.value = val.value;
+  } else if (val.label == '显示销量') {
+    cacheGoodDetail.info2.showSold.value = val.value;
+  } else if (val.label == '显示快递') {
+    cacheGoodDetail.info3.showProCost.value = val.value;
+  } else if (val.label == '参与会员折扣') {
+    cacheGoodDetail.info3.joinCount.value = val.value;
+  } else if (val.label == '主图') {
+    cacheGoodDetail.info1.mainImage.img = val.images[0];
+    cacheGoodDetail.info1.mainImage.list = val.images;
+  } else if (val.label == '轮播图') {
+    cacheGoodDetail.info1.swiperList.list = val.images;
+  } else if (val.label == '商品名称') {
+    cacheGoodDetail.info1.goodName.value = val.value;
+  } else if (val.label == '副标题') {
+    cacheGoodDetail.info1.subTitle.value = val.value;
+  } else if (val.label == '商品分类') {
+    cacheGoodDetail.info1.classification.value = val.value.map(function (item) {return item.name;}).join(';');
+    cacheGoodDetail.info1.classification.list = val.value;
+  } else if (val.label == '商品编码') {
+    cacheGoodDetail.info3.goodCode.value = val.value;
+  } else if (val.label == '快递运费') {
+    cacheGoodDetail.info3.provideCost.value = val.value;
+  } else if (val.label == '商品表单') {
+    cacheGoodDetail.info3.goodForm.value = val.value;
+  } else if (val.label == '状态') {
+    cacheGoodDetail.info4.status.value = val.value;
+  } else if (val.label == '规格类型') {
+    cacheGoodDetail.info2.specification.list = val.other.list;
+  } else if (val.label == '自动发货') {
+    cacheGoodDetail.info3.autoDeliver.value = val.value;
+    console.log('auto>>', val.value);
+  } else if (val.label == '自动发货内容') {
+    cacheGoodDetail.info3.autoDeliverContent.value = val.value;
+  }
+  return cacheGoodDetail;
 
 }
 

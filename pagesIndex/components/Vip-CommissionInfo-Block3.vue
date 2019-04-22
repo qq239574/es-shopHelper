@@ -2,7 +2,7 @@
     <view class='vip-distributor-isnot'>
         <image lazy-laod src='/static/img/global/isnot-commission.png'></image>
         <view class='title'>该会员不是分销商</view>
-        <roundButton type='primary'> 设置分销商 </roundButton>
+        <roundButton type='primary' @click='click'> 设置分销商 </roundButton>
     </view>
 </template>
 
@@ -11,6 +11,13 @@
     export default {
         components: {
             roundButton
+        },
+        methods:{
+            click(){
+                this.$emit('click',{
+                    type:'setDistributor'
+                })
+            }
         }
     }
 </script>

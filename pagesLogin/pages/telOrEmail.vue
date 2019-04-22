@@ -4,8 +4,11 @@
             <van-cell-group>
                 <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
+                <van-field :type="openEye?'text':'password'" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
+                    <imgCodeButton slot='icon' :imageCode='imageCode'></imgCodeButton>
+                </van-field>
                 <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
-                    <RoundButton slot="icon" @click='getVCode'></RoundButton>
+                    <RoundButton slot='icon' :canSend='sendVfCode' @click='getVCode'></RoundButton>
                 </van-field>
             </van-cell-group>
         </view>
@@ -20,10 +23,12 @@
         password = '';
     import LongButton from '../../components/my-components/LongButton';
     import RoundButton from '../../components/my-components/GetVCodeButton'
+    import imgCodeButton from '../../components/my-components/GetVCodeButton-image.vue'
     export default {
         components: {
             LongButton,
-            RoundButton
+            RoundButton,
+            imgCodeButton
         },
         computed: {
             disable() {
@@ -36,11 +41,12 @@
                 userId: '',
                 password: '',
                 placeholder1: '请输入手机号码',
-                placeholder2: '请输入短信验证码'
+                placeholder2: '请输入短信验证码',
+                imageCode: '',
+                sendVfCode: false,
             }
         },
-        onLoad(option) { 
-            console.log(option)
+        onLoad(option) {
             if (option.from == 'email') {
                 this.placeholder1 = '请输入邮箱';
                 this.placeholder2 = '请输入验证码';
@@ -49,16 +55,27 @@
                 this.placeholder2 = '请输入短信验证码';
             }
         },
-         mounted(){
-            this.closePageLoading(); 
+        watch: {
+            imageCode() {}
+        },
+        mounted() {
+            this.closePageLoading();
         },
         methods: {
+            getImgCode(val) {
+                this.imageCode = val.detail;
+            },
             nextPage() {
-                 uni.reLaunch({
+                uni.reLaunch({
                     url: './setNew'
                 })
             },
-            getVCode() {
+            getVCode(bool) {
+                if (this.imageCode) {
+                    this.Request('sendVfCode')
+                } else {
+                    this.Toast('请输入图形验证码')
+                }
                 console.log('object')
             },
             getUserId(val) {
@@ -85,6 +102,10 @@
         .grace-form {
             width: 670upx;
             margin: 80upx auto 81upx;
+        }
+        .imgCode {
+            width: 150upx;
+            height: 54upx;
         }
     }
 </style>

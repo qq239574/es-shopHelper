@@ -29,8 +29,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        name: '女神节专享通用优惠券',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0 } } },
+
+
+
   components: {
-    graceNumberBox: graceNumberBox } };exports.default = _default;
+    graceNumberBox: graceNumberBox },
+
+  methods: {
+    change: function change(num) {
+      this.$emit('change', Object.assign(this.info, {
+        num: num[0] }));
+
+    } } };exports.default = _default;
 
 /***/ }),
 

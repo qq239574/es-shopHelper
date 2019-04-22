@@ -28,7 +28,10 @@ var _default =
     searchKeys: {
       type: Array,
       default: [
-      'graceUI', '测试', '关键字', '类型'] },
+      {
+        name: 'name',
+        id: '' }] },
+
 
 
     other: {

@@ -103,15 +103,9 @@ var curTab = {
             from: 'good',
             item: item });
 
-          if (item.detail.specifications == 'single') {//单规格商品
-            uni.navigateTo({
-              url: '../../pagesCommodity/pages/index?from=good' });
+          uni.navigateTo({
+            url: '../../pagesCommodity/pages/index?from=good' });
 
-          } else if (item.detail.specifications == 'multi') {//多规格商品
-            uni.navigateTo({
-              url: '../../pagesCommodity/pages/multiSpecifications?from=good' });
-
-          }
         } else if (item.name == '下架') {} else if (item.name == '删除') {} else if (item.name == '上架') {} else if (item.name == '恢复') {}
         console.log('>>>>>>', item); //调用后刷新页面
       }

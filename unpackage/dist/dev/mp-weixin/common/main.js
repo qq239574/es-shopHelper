@@ -35,7 +35,7 @@ var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ 
 
 
 
-var _index = _interopRequireDefault(__webpack_require__(/*! ./api/index.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\api\\index.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ../../api/index.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\index.js"));
 var cacher = _interopRequireWildcard(__webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
 var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/dialog/dialog */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
@@ -55,8 +55,8 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
 
   },
   methods: {
-    Request: function Request() {
-      return _index.default;
+    Request: function Request(name, data) {
+      return (0, _index.default)(name, data);
     },
     pageLoading: function pageLoading() {var _this = this;
       clearTimeout(pageLoadingBar);

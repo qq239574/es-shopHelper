@@ -2,16 +2,16 @@
     <view class="coupon-item">
         <view class="border">
             <view class="top">
-                <view class="title">女神节专享通用优惠券</view>
+                <view class="title">{{info.name}}</view>
                 <view class="money">
                     ￥
-                    <view class="num">20</view>
+                    <view class="num">{{info.price}}</view>
                 </view>
             </view>
-            <view class="bottom">部分商品满100减20</view>
+            <view class="bottom">{{info.info}}</view>
         </view>
         <view class="buttons">
-            <graceNumberBox></graceNumberBox>
+            <graceNumberBox @change='change' :value='info.num'></graceNumberBox>
         </view>
     </view>
 </template>
@@ -19,9 +19,27 @@
 <script>
     import graceNumberBox from "../../components/my-components/Number-Box.vue";
     export default {
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    name: '女神节专享通用优惠券',
+                    price: 20,
+                    info: '部分商品满100减20',
+                    num: 0
+                }
+            }
+        },
         components: {
             graceNumberBox
-        }
+        },
+        methods: {
+            change(num) {
+                this.$emit('change', Object.assign(this.info, {
+                    num: num[0]
+                }))
+            }
+        },
     }
 </script>
 
@@ -30,6 +48,7 @@
         display: flex;
         flex-wrap: nowrap;
         justify-content: flex-start;
+        margin-bottom: 20upx;
         .border {
             width: 540upx;
             height: 220upx;
@@ -38,7 +57,7 @@
             overflow: hidden;
             position: relative;
             background: #fef8f8;
-            margin:0 24upx 0 20upx;
+            margin: 0 24upx 0 20upx;
             .top,
             .bottom {
                 width: 510upx;
@@ -83,8 +102,8 @@
                 border-top: 1upx dashed #fddbd2;
             }
         }
-        .buttons{
-            margin:auto 0;
+        .buttons {
+            margin: auto 0;
         }
     }
 </style>

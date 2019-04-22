@@ -7,7 +7,7 @@
                 <radio class='allSelect' value="1" style='display:inline-block;' :checked='false' color='#fb6638' v-else></radio>选择全部</view>
         </view>
         <view class="grace-search-taps">
-            <view v-for="(item, index) in searchKeys" :class='selected.indexOf(item)>-1?"selected":""' :key="index" :data-key="item" @tap="setKey(item)">{{item}}</view>
+            <view v-for="(item, index) in searchKeys" :class='selected.indexOf(item)>-1?"selected":""' :key="index" :data-key="item.name" @tap="setKey(item)">{{item.name}}</view>
         </view>
     </view>
 </template>
@@ -18,7 +18,10 @@
             searchKeys: {
                 type: Array,
                 default: [
-                    'graceUI', '测试', '关键字', '类型'
+                    {
+                        name:'name',
+                        id:''
+                    },
                 ],
             },
             other: {
@@ -89,7 +92,7 @@
         .grace-search-taps {
             border: none;
             height: 52upx;
-            line-height: 52upx;
+            line-height: 50upx;
             padding: 0 26upx;
             view {
                 border: none;

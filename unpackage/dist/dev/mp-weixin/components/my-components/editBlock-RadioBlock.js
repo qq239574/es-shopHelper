@@ -25,13 +25,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
 var _default =
 {
   props: {
     hideRightArrow: {
       type: Boolean,
       default: false },
+
+    valueStyle: {
+      type: String,
+      default: '' },
 
     placeholder: {
       type: String,
@@ -41,7 +44,8 @@ var _default =
       type: Array,
       default: [{
         label: 'label1',
-        value: '' }] },
+        value: '',
+        subValue: '' }] },
 
 
     other: {
@@ -57,7 +61,6 @@ var _default =
   methods: {
     clickItem: function clickItem(index) {
       this.current = index;
-      console.log(this.items[index]);
       this.$emit('change', this.items[index]);
     } } };exports.default = _default;
 

@@ -6,6 +6,12 @@
 
 <script>
     export default {
+        props: {
+            canSend: {
+                type: Boolean,
+                default: false
+            }
+        },
         data() {
             return {
                 timer: 60,
@@ -15,8 +21,8 @@
         },
         methods: {
             clickBuntton() {
-                if (!this.timing) {
-                    this.$emit('click');
+                if (!this.timing && this.canSend) {
+                    this.$emit('click', true);
                     this.timing = true;
                     this.bar = setInterval(() => {
                         if (this.timer > 1) {
@@ -25,6 +31,8 @@
                             this.refresh();
                         }
                     }, 1000);
+                } else {
+                    this.$emit('click', false);
                 }
             },
             refresh() {
@@ -55,5 +63,14 @@
     .my-round-button.timing {
         color: #9da3ae;
         border: 1upx solid #9da3ae;
+    }
+    .imgCode {
+        width: 150upx;
+        height: 54upx;
+        margin: auto 10upx auto 0;
+    }
+    .password-code {
+        display: flex;
+        flex-wrap: nowrap;
     }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <view class='picker-item'>
-        <view class="content">{{info.title}}</view>
+        <view class="content">{{info.name}}</view>
         <view class='number'>
-            <numberBox @change='change' :value='info.number'></numberBox>
+            <numberBox @change='change' :value='info.num'></numberBox>
         </view>
     </view>
 </template>
@@ -17,8 +17,8 @@
             info: {
                 type: Object,
                 default: {
-                    title: '标题',
-                    number: 0
+                    name: '标题',
+                    num: 0
                 }
             }
         },

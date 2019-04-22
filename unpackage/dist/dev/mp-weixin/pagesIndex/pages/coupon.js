@@ -25,11 +25,24 @@
     couponItem: couponItem,
     longButton: longButton },
 
+  data: function data() {
+    return {
+      list: [{
+        name: '女神节专享通用优惠券',
+        price: 20,
+        info: '部分商品满100减20',
+        num: 0 }] };
+
+
+  },
   methods: {
     addCoupon: function addCoupon() {
       uni.navigateTo({
         url: './selectCoupon' });
 
+    },
+    select: function select(val) {
+      console.log(val);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

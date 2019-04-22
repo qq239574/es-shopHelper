@@ -22,7 +22,20 @@ var _default =
   props: {
     num: {
       type: Number,
-      default: 0 } } };exports.default = _default;
+      default: 0 } },
+
+
+  methods: {
+    check: function check() {
+      this.$emit('click', {
+        type: 'check' });
+
+    },
+    sure: function sure() {
+      this.$emit('click', {
+        type: 'sure' });
+
+    } } };exports.default = _default;
 
 /***/ }),
 

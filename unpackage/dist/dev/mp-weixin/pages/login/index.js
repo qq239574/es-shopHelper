@@ -60,7 +60,6 @@ var _default = {
       password: '',
       idError: false //用户信息错误
     };
-
   },
   computed: {
     disableButton: function disableButton() {
@@ -69,19 +68,21 @@ var _default = {
     } },
 
   onLoad: function onLoad(option) {
-    console.log(option);
+    this.initPage();
     if (!option.from) {//如果没有from就说明是刚进入小程序
-
     } else {
       console.log(this.Cacher.getData(option.from)); //获取页面传参
     }
+  },
+  mounted: function mounted() {
+    this.closePageLoading();
   },
   methods: {
     initPage: function initPage() {
       this.openEye = false;
       canLogin = false;
-      this.userId = '';
-      this.password = '';
+      this.userId = 'yilianxinpin';
+      this.password = 'Qm8xn4KVBMc0Wd70';
       this.idError = false;
     },
     getUserId: function getUserId(val) {
@@ -100,24 +101,31 @@ var _default = {
       this.closePageLoading();
       this.Toast('当前微信暂未绑定任何管理员账号');
     },
-    loginNow: function loginNow(e) {var _this = this;
+    loginNow: function loginNow(e) {var _this = this; //点击登录
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();
-        setTimeout(function () {
+        this.Request('login', {
+          account: this.userId,
+          password: this.password }).
+        then(function (res) {
           // 验证通过
-          canLogin = true;
-          requesting = false;
-          if (canLogin) {
-            uni.reLaunch({
-              url: '../../pagesLogin/pages/selectShop' });
-
-          } else {
-            _this.idError = true;
-          }
           _this.closePageLoading();
-          requesting = false;
-        }, 1000);
+          if (res.error == 0) {
+            canLogin = true;
+            if (canLogin) {
+              uni.reLaunch({
+                url: '../../pagesLogin/pages/selectShop' });
+
+            } else {
+              _this.idError = true;
+            }
+            requesting = false;
+          } else {
+            requesting = false;
+            _this.Toast(res.message);
+          }
+        });
       }
     },
     reg: function reg() {//找回密码

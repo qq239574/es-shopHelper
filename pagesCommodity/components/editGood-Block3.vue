@@ -3,8 +3,10 @@
     <view class="provide-block" style='overflow:hidden;'>
         <form @submit="formSubmit" class="grace-form">
             <selectItem label='商品编码' :other='info.goodCode' :value='info.goodCode.value' @click="clickCell"></selectItem>
-            <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.value' @click="clickCell"></selectItem>
-            <switchItem label='显示快递' :other='info.showProCost' :checked='info.showProCost.value' @change="inputCell"></switchItem>
+            <switchItem label='自动发货' :other='info.autoDeliver' :value='info.autoDeliver.value' @change="inputCell" v-if='!item.needHide'></switchItem>
+            <selectItem label='自动发货内容' :other='info.autoDeliverContent' :value='info.autoDeliverContent.value' @click="clickCell" v-if='!item.needHide'></selectItem>
+            <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.value' @click="clickCell" v-if='item.needHide'></selectItem>
+            <switchItem label='显示快递' :other='info.showProCost' :checked='info.showProCost.value' @change="inputCell" v-if='item.needHide'></switchItem>
             <switchItem label='参与会员折扣' :other='info.joinCount' :value='info.joinCount.value' @change="inputCell"></switchItem>
             <selectItem label='商品表单' :other='info.goodForm' :value='info.goodForm.value' @click="clickCell"></selectItem>
         </form>

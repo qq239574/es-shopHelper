@@ -31,7 +31,7 @@
 			</view>
 		</view>
 		<van-toast id="van-toast" />
-        <van-dialog id="van-dialog" />
+		<van-dialog id="van-dialog" />
 	</view>
 </template>
 <script>
@@ -49,7 +49,6 @@
 				userId: '',
 				password: '',
 				idError: false, //用户信息错误
-				
 			}
 		},
 		computed: {
@@ -57,21 +56,23 @@
 				this.idError = false;
 				return !this.userId || !this.password;
 			}
-		}, 
-		onLoad(option){
-			console.log(option);
-			if(!option.from){//如果没有from就说明是刚进入小程序
-
-			}else{
-				console.log(this.Cacher.getData(option.from));//获取页面传参
+		},
+		onLoad(option) {
+			this.initPage()
+			if (!option.from) { //如果没有from就说明是刚进入小程序
+			} else {
+				console.log(this.Cacher.getData(option.from)); //获取页面传参
 			}
+		},
+		mounted() {
+			this.closePageLoading()
 		},
 		methods: {
 			initPage() {
 				this.openEye = false;
 				canLogin = false;
-				this.userId = '';
-				this.password = '';
+				this.userId = 'yilianxinpin';
+				this.password = 'Qm8xn4KVBMc0Wd70';
 				this.idError = false;
 			},
 			getUserId(val) {
@@ -90,24 +91,31 @@
 				this.closePageLoading();
 				this.Toast('当前微信暂未绑定任何管理员账号');
 			},
-			loginNow: function(e) {
+			loginNow: function(e) { //点击登录
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
-					setTimeout(() => {
+					this.Request('login', {
+						account: this.userId,
+						password: this.password
+					}).then(res => {
 						// 验证通过
-						canLogin = true;
-						requesting = false;
-						if (canLogin) {
-							uni.reLaunch({
-								url: '../../pagesLogin/pages/selectShop'
-							})
-						} else {
-							this.idError = true;
-						}
 						this.closePageLoading();
-						requesting = false;
-					}, 1000)
+						if (res.error == 0) {
+							canLogin = true;
+							if (canLogin) {
+								uni.reLaunch({
+									url: '../../pagesLogin/pages/selectShop'
+								})
+							} else {
+								this.idError = true;
+							}
+							requesting = false;
+						} else {
+							requesting = false;
+							this.Toast(res.message)
+						}
+					})
 				}
 			},
 			reg: function() { //找回密码

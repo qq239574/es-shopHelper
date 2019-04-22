@@ -27,8 +27,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     info: {
       type: Object,
       default: {
-        title: '标题',
-        number: 0 } } },
+        name: '标题',
+        num: 0 } } },
 
 
 

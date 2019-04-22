@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -26,9 +26,11 @@
 
 
 
-var _testdata = __webpack_require__(/*! ../components/testdata.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js");var Block1 = function Block1() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock1.vue"));};var Block2 = function Block2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock2.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+var _testdata = __webpack_require__(/*! ../components/testdata.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js");
 
-//测试用数据
+
+var _toEditPageMulti = _interopRequireDefault(__webpack_require__(/*! ../components/toEditPage-multi.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage-multi.js"));
+var _updateGoodInfoMulti = _interopRequireDefault(__webpack_require__(/*! ../components/updateGoodInfo-multi.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-multi.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var Block1 = function Block1() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock1.vue"));};var Block2 = function Block2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-MultiBlock2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-MultiBlock2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-MultiBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-MultiBlock2.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 var cacheGoodDetail = {};
 var DataFrom = {};var _default =
 {
@@ -54,21 +56,14 @@ var DataFrom = {};var _default =
       this.goodDetail = cacheGoodDetail;
     },
     clickCell: function clickCell(val) {
-      console.log(val);
-      this.Cacher.setData('multiSpecification', { //这里将整个页面的参数带到子页面修改后再带回来，由initPage中接受
-        from: 'multiSpecification',
-        goodDetail: cacheGoodDetail });
-
-      if (val.label == '商品名称') {
-        uni.navigateTo({
-          url: './editName?from=multiSpecification' });
-
-      }
+      _toEditPageMulti.default.call(this, val, cacheGoodDetail);
     },
     inputCell: function inputCell(val) {
-      console.log(val);
+      cacheGoodDetail = _updateGoodInfoMulti.default.call(this, val, cacheGoodDetail);
     },
-    save: function save() {} },
+    save: function save() {
+      this.goodDetail = cacheGoodDetail;
+    } },
 
   onLoad: function onLoad(option) {
     if (option.from) {
@@ -80,7 +75,6 @@ var DataFrom = {};var _default =
   onShow: function onShow() {
     this.initPage();
   } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

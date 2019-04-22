@@ -27,6 +27,13 @@ export function singleData() { //单规格商品
                 label: '商品分类',
                 id: '',
                 value: '男装-休闲裤；男装-牛仔裤',
+                list: [{
+                    name: '男装-休闲裤',
+                    id: '1'
+                }, {
+                    name: '男装-牛仔裤',
+                    id: '2'
+                }],
                 disabled: false, //可否编辑
                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
@@ -34,7 +41,7 @@ export function singleData() { //单规格商品
                 label: '主图',
                 id: '',
                 img: '/static/img/global/home_order_tobepay.png',
-                list:[{
+                list: [{
                     img: '/static/img/global/home_order_tobepay.png',
                 }],
                 disabled: false, //可否编辑
@@ -58,8 +65,38 @@ export function singleData() { //单规格商品
         info2: {
             specification: {
                 label: '规格类型',
-                id: '',
-                value: '无',
+                id: 'multi',
+                value: '多规格',
+                list: [{
+                    specif: {
+                        label: '规格',
+                        id: '',
+                        value: '2000W-亮黑色',
+                        disabled: true, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    price: {
+                        label: '价格',
+                        id: '',
+                        value: '1999.0',
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    stock: {
+                        label: '库存',
+                        id: '',
+                        value: '23566',
+                        disabled: false, //可否编辑
+                        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    code: {
+                        label: '商品编号',
+                        id: '',
+                        value: 'JB12595695656565998',
+                        disabled: false, //可否编辑
+                        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                }],
                 disabled: true, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
@@ -114,12 +151,29 @@ export function singleData() { //单规格商品
                 disabled: false, //可否编辑
                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
+            autoDeliver: {
+                label: '自动发货',
+                id: '',
+                value: false,
+                disabled: false, //可否编辑
+                editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide:true,
+            },
+            autoDeliverContent: {
+                label: '自动发货内容',
+                id: '',
+                value: '打开雷锋哈可减肥的话可接受的付款就是付款接收到付款就是付款计划谁看见大富豪看实践活动付款就是疯狂就哈萨克分',
+                disabled: false, //可否编辑
+                editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide:true,
+            },
             provideCost: {
                 label: '快递运费',
                 id: '',
                 value: 10,
                 disabled: false, //可否编辑
                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide:false,
             },
             showProCost: {
                 label: '显示快递',
@@ -128,7 +182,7 @@ export function singleData() { //单规格商品
                 disabled: false, //可否编辑
                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
-            joinCount: {
+            joivbnCount: {
                 label: '参与会员折扣',
                 id: '',
                 value: true,
@@ -198,7 +252,7 @@ export function multiData() {
                         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
                 }]
-            }, 
+            },
             delPrice: { //划线价格
                 label: '划线价格',
                 id: '',
@@ -228,7 +282,7 @@ export function multiData() {
                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             }
         },
-        info2: { 
+        info2: {
             provideCost: {
                 label: '快递运费',
                 id: '',

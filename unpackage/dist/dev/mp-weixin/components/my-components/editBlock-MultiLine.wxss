@@ -4,19 +4,36 @@
 .editGood-block-selectItem .grace-items.data-v-7f601caa {
     width: 710rpx;
     margin: auto;
-    padding: 2rpx auto;
+    padding: 0 auto;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    position: relative;
 }
 .editGood-block-selectItem .grace-items .address.data-v-7f601caa {
-      height: -webkit-fit-content;
-      height: -moz-fit-content;
-      height: fit-content;
-      width: 490rpx;
+      height: 100%;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
       line-height: 38rpx;
-      margin-left: 60rpx;
+      margin: auto 40rpx auto 60rpx;
 }
 .editGood-block-selectItem .grace-items .grace-label.data-v-7f601caa {
       font-weight: 600;
+}
+.editGood-block-selectItem .grace-items .grace-icons.data-v-7f601caa {
+      position: absolute;
+      right: 0;
+      margin: auto;
 }
 

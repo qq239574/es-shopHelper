@@ -1,0 +1,119 @@
+<template>
+    <div class='edit-status page'>
+        <radioBlock :items='list' valueStyle='color:#fb6638' @change='change'></radioBlock>
+        <view class="bg" v-show='showpicker'>
+            <van-datetime-picker class='picker' type="datetime" :value="currentDate" :min-date="minDate" :max-date="maxDate" @input="onInput" @confirm='confirm' @cancel='cancel' />
+        </view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
+    </div>
+</template>
+
+<script>
+    import radioBlock from '../../components/my-components/editBlock-RadioBlock'
+    let DataFrom = {};
+    let cacheVal = '';
+    let cacheFrom = '';
+    let cache = ' ';
+    import {
+        formatDateTime
+    } from '../../graceUI2.0/jsTools/date.js'
+    import {
+        getDate
+    } from '../../components/my-components/getDateSection.js'
+    let currentDate = [];
+    export default {
+        components: {
+            radioBlock,
+        },
+        data() {
+            return {
+                currentDate: '',
+                showpicker: false,
+                minDate: new Date().getTime() + 5 * 60000, //5分钟后
+                maxDate: new Date(getDate(365)).getTime(), //一年后
+                list: [{
+                    label: '上架售卖',
+                    value: ' ',
+                    subValue: ''
+                }, {
+                    label: '上架隐藏',
+                    value: ' ',
+                    subValue: ''
+                }, {
+                    label: '定时上架',
+                    value: '修改',
+                    subValue: '04-02 12:12:44'
+                }, {
+                    label: '防止仓库',
+                    value: ' ',
+                    subValue: ''
+                }, ]
+            }
+        },
+        methods: {
+            confirm() {
+                this.showpicker = false;
+                this.currentDate = currentDate;
+                this.list[2].subValue = currentDate;
+                console.log('datafrom,', DataFrom);
+                DataFrom.needChange.other.subValue = currentDate;
+                DataFrom.from='editStatus';
+                DataFrom.label='定时上架';
+                this.Cacher.setData('billDetail', DataFrom)
+            },
+            cancel() {
+                this.showpicker = false;
+            },
+            onInput(event) {
+                currentDate = formatDateTime(event.detail / 1000, 'str');
+            },
+            initPage() {
+                DataFrom = this.Cacher.getData('billDetail') || {};
+            },
+            change(val) {
+                cacheVal = val;
+                this.Cacher.setData('billDetail', {
+                    from: 'editStatus',
+                    needChange: {
+                        label: '状态',
+                        value: val.label,
+                        other: val
+                    }
+                })
+                if (val.value == '修改' && cache != '修改') {} else if (val.value == '修改' && cache == '修改') {
+                    this.showpicker = true;
+                    this.minDate = new Date().getTime() + 5 * 60000;
+                    this.maxDate = new Date(getDate(365)).getTime();
+                } else {}
+                cache = val.value;
+                console.log(DataFrom,this.Cacher.getData('billDetail'), val)
+            }
+        },
+        onLoad(option) {
+            this.initPage()
+        },
+        onShow() {
+            this.initPage()
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .edit-status {
+        .bg {
+            position: fixed;
+            background: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            .picker {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
+    }
+</style>

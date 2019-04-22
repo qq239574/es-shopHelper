@@ -10,6 +10,9 @@
 
 <script>
     import longButton from '../../components/my-components/LongButton.vue'
+    let DataFrom = {};
+    let cacheVal = '';
+    let cacheFrom='';
     export default {
         components: {
             longButton
@@ -23,13 +26,22 @@
         },
         methods: {
             sure() {
+                DataFrom.from = 'editName';
+                DataFrom.needChange.value = cacheVal;
+                this.Cacher.setData(cacheFrom, DataFrom)
                 uni.navigateBack();
             },
             getAddition(val) {
                 this.length = val.detail.value.length;
                 this.disable = !val.detail.value.length;
+                cacheVal = val.detail.value;
             }
         },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            cacheFrom=option.from;
+            console.log(DataFrom);
+        }
     }
 </script>
 

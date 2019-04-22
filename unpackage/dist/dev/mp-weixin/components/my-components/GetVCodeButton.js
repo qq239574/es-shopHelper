@@ -16,6 +16,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 var _default =
 {
+  props: {
+    canSend: {
+      type: Boolean,
+      default: false } },
+
+
   data: function data() {
     return {
       timer: 60,
@@ -25,8 +31,8 @@ var _default =
   },
   methods: {
     clickBuntton: function clickBuntton() {var _this = this;
-      if (!this.timing) {
-        this.$emit('click');
+      if (!this.timing && this.canSend) {
+        this.$emit('click', true);
         this.timing = true;
         this.bar = setInterval(function () {
           if (_this.timer > 1) {
@@ -35,6 +41,8 @@ var _default =
             _this.refresh();
           }
         }, 1000);
+      } else {
+        this.$emit('click', false);
       }
     },
     refresh: function refresh() {

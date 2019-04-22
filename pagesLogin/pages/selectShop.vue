@@ -75,7 +75,7 @@
                 })
             },
             initPage() {
-                let searchData = this.Cacher.getData('searchShop'); 
+                let searchData = this.Cacher.getData('searchShop');
                 if (searchData && searchData.from == 'searchShop') {
                     this.searchShop = searchData.value;
                 }
@@ -85,7 +85,8 @@
             this.initPage();
         },
         onLoad(option) {
-             this.initPage();
+            this.initPage();
+            this.Request('shoplist')
             setTimeout(() => {
                 userInfo = this.Cacher.getData('userInfo');
                 console.log(userInfo);
@@ -117,7 +118,7 @@
                 }, ];
                 let onlyOne = true;
                 if (onlyOne && option.from != 'home' && option.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                    this.toInex('from=selectShop&status=onlyOne')
+                    // this.toInex('from=selectShop&status=onlyOne')
                 } else {
                     this.checkUserInfo()
                 }

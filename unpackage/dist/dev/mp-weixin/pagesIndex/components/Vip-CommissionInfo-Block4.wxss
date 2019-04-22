@@ -12,4 +12,10 @@
       -ms-flex-pack: distribute;
           justify-content: space-around;
 }
+.vip-was-distributor .hadRefused.data-v-c0db2e2a {
+  width: 100%;
+  text-align: center;
+  color: #acb1ba;
+  line-height: 100rpx;
+}
 

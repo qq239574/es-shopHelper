@@ -9,6 +9,7 @@
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "long-button": "/components/my-components/LongButton",
-    "round-button": "/components/my-components/GetVCodeButton"
+    "round-button": "/components/my-components/GetVCodeButton",
+    "img-code-button": "/components/my-components/GetVCodeButton-image"
   }
 }

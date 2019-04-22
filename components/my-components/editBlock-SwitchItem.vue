@@ -55,6 +55,7 @@
             }
              .grace-label{
                 font-weight:600;
+                width:fit-content;
             }
         }
     }
