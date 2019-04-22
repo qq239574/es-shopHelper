@@ -7,14 +7,14 @@
         </view>
         <view class="money">
             <view class="col col1" :style='label=="余额"?"":"opacity:0"'>￥</view>
-            <view class="col col2"><input type="digit" placeholder='输入增加金额数' placeholder-style="color:#d2d5db;font-weight:500;"></view>
+            <view class="col col2"><input type="digit" placeholder='输入增加金额数' placeholder-style="color:#d2d5db;font-weight:500;" @input='inputMoney'></view>
         </view>
         <view class="textarea">
             <textarea class='textarea' :value='val' placeholder-style="color:#d2d5db" :maxlength='40' placeholder="输入备注" @input='getAddition' />
             <view class='counter'>{{textLength}}/40</view>
         </view>
         <view class="margin30"></view>
-        <longButton :disable='disabled' @click='sure'>确认{{type}}</longButton>
+        <longButton :disable='getDisabled' @click='sure'>确认{{type}}</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -31,13 +31,22 @@
         data() {
             return {
                 textLength: 0,
-                disabled: true,
                 label: '',
                 type: '',
-                curnum:0
+                curnum: 0,
+                money: '',
+                addition: ''
+            }
+        },
+        computed: {
+            getDisabled() {
+                return !this.money || !this.addition;
             }
         },
         methods: {
+            inputMoney(val) {
+                this.money = val.detail.value
+            },
             initPage() {
                 let title = ''
                 let data = this.Cacher.getData('vipDetail');
@@ -48,7 +57,7 @@
                     title = '扣除' + data.label;
                     this.type = '扣除';
                 }
-                this.curnum=data.value;
+                this.curnum = data.value;
                 this.label = data.label;
                 uni.setNavigationBarTitle({
                     title: title
@@ -56,6 +65,7 @@
             },
             getAddition(val) {
                 this.textLength = val.detail.value.length;
+                this.addition = val.detail.value
             },
             sure() {
                 uni.navigateBack();

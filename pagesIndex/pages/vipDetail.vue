@@ -26,7 +26,7 @@
         },
         data() {
             return {
-                tabIndex: 2,
+                tabIndex: 0,
                 categories: [{
                         cateid: 0,
                         name: "基本资料"

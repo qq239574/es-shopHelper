@@ -41,13 +41,22 @@
   data: function data() {
     return {
       textLength: 0,
-      disabled: true,
       label: '',
       type: '',
-      curnum: 0 };
+      curnum: 0,
+      money: '',
+      addition: '' };
 
   },
+  computed: {
+    getDisabled: function getDisabled() {
+      return !this.money || !this.addition;
+    } },
+
   methods: {
+    inputMoney: function inputMoney(val) {
+      this.money = val.detail.value;
+    },
     initPage: function initPage() {
       var title = '';
       var data = this.Cacher.getData('vipDetail');
@@ -66,6 +75,7 @@
     },
     getAddition: function getAddition(val) {
       this.textLength = val.detail.value.length;
+      this.addition = val.detail.value;
     },
     sure: function sure() {
       uni.navigateBack();
