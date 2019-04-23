@@ -5,7 +5,7 @@ export default function (status) {
             provide: '到店自提', //配送方式
             num: 40, //商品数量
             pay: 21653.43, //实付
-            addtion: [{}, {}, {}], //备注
+            addtion: 0, //备注
             payType: 'wx', //支付方式
             subStatus: 0, //订单状态，1：维权
             status, //0代付款,1代发货，2待收货，3已完成，4已关闭
@@ -91,7 +91,7 @@ export default function (status) {
             provide: '到店自提', //配送方式
             num: 4, //商品数量
             pay: 2165653.453, //实付
-            addtion: [{}], //备注
+            addtion: 0, //备注
             payType: 'wx', //支付方式
             subStatus: 1, //订单状态，1：维权
             status, //0代付款,1代发货，2待收货，3已完成，4已关闭
@@ -132,7 +132,7 @@ export default function (status) {
             provide: '到店自提', //配送方式
             num: 4, //商品数量
             pay: 2165653.453, //实付
-            addtion: [], //备注
+            addtion: 0, //备注
             payType: 'wx', //支付方式
             subStatus: 1, //订单状态，1：维权
             status, //0代付款,1代发货，2待收货，3已完成，4已关闭

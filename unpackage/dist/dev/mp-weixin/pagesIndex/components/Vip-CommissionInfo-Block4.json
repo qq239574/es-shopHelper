@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "input-item": "/components/my-components/editBlock-InputItem",
-    "round-button": "/components/my-components/RoundButton"
-  },
-  "component": true
-}

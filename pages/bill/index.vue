@@ -1,7 +1,7 @@
 <template>
     <view class='pages-bill-index page'>
         <view class="grace-fixed-top grace-gtbg-blue top1" style='background:rgba(0,0,0,0)'>
-            <SearchInput @click='search' :value='searchValue' :disabled='true'></SearchInput>
+            <SearchInput @click='search' :value='searchValue' placeholder='请输入订单号' :disabled='true'></SearchInput>
             <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
         </view>
         <view class='margin180'></view>
@@ -28,6 +28,7 @@
     import Card from './index/Card';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import testdata from './index/testData.js'
+    import getBillList from './index/getBillList.js'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
@@ -36,6 +37,7 @@
         index: 0,
         name: "代付款"
     } //{cateid: 0, index: 0, name: "代付款"}
+    let cacheBill = {}; //缓存将要操作的订单
     export default {
         components: {
             TabCard,
@@ -60,7 +62,7 @@
                         provide: '到店自提', //配送方式
                         num: 4, //商品数量
                         pay: 2165653.453, //实付
-                        addtion: [], //备注
+                        addtion: 0, //备注
                         payType: 'wx', //支付方式
                         subStatus: 0, //订单状态，1：维权
                         status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
@@ -73,26 +75,16 @@
                     },
                     goodsList: [{ //订单商品信息
                         img: '/static/img/global/tmp.png', //商品图片
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-                        color: '浅绿色', //颜色
-                        size: 'S码', //型号
-                        num: 2, //数量
-                        price: '15455.2', //价格
+                        goodName: '', //商品名
+                        color: '', //颜色
+                        size: '', //型号
+                        num: 0, //数量
+                        price: 0, //价格
                         specifications: 'single', //单规格
-                    }, {
-                        img: '/static/img/global/tmp.png',
-                        goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-                        color: '浅绿色',
-                        size: 'S码',
-                        num: 2,
-                        price: '152344.2',
-                        specifications: 'multi', //单规格
                     }],
                     rights: { // 维权信息
                         status: '退款退货', //维权状态
-                        addition: [{
-                            content: '摔坏了'
-                        }], //维权备注
+                        addition: 0, //维权备注
                     }
                 }],
                 tabIndex: 0, //默认tabs的index
@@ -117,16 +109,23 @@
         methods: {
             sure() {
                 this.surePaying = true;
-                setTimeout(() => {
-                    this.surePaying = false;
-                    if (true) { //验证通过
-                        this.showModel = false;
+                console.log('object', this.modelTheme)
+                if (this.modelTheme.state == 'pay') { //确认付款
+                    this.Request('payBill', {
+                        id: cacheBill.bill.bill.id, //订单id
+                        password: surePassword
+                    }).then(res => {
                         this.Toast(this.modelTheme.success);
-                        this.initPage();
-                    } else {
+                        this.initPage(); 
+                        this.showModel = false;
+                    }).catch(res => {
                         this.error = true;
-                    }
-                }, 2000);
+                    }).finally(res => {
+                        this.surePaying = false;
+                        this.closePageLoading();
+                    })
+                } else if (this.modelTheme.state == 'receive') { //确认收货
+                }
             },
             cancel() {
                 this.showModel = false;
@@ -149,30 +148,46 @@
                 } else if (DataFrom.from == 'searchShop') {
                     searchData = this.Cacher.getData('searchShop') || {};
                     this.searchValue = searchData.value || '';
-                    this.billList = testdata(DataFrom.cateid); //测试用的 
+                    this.tabIndex = DataFrom.cateid || 0;
                 } else {
-                    this.billList = testdata(0); //测试用的 
+                    this.tabIndex = 0;
                 }
+                getBillList.call(this, this.tabIndex, {
+                    keywords: searchData.value || '',
+                    page: 1,
+                    pageSize: 20
+                }).then(res => {
+                    this.billList = res;
+                });
             },
             tabChange(tab) {
                 curTab = tab;
-                this.billList = testdata(tab.cateid); //测试用的 
+                getBillList.call(this, tab.cateid, {
+                    keywords: searchData.value || '',
+                    page: 1,
+                    pageSize: 20
+                }).then(res => {
+                    this.billList = res;
+                });
             },
             search(val) {
                 DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
                     from: 'searchShop',
-                    value: ''
+                    value: '',
+                    cateid: this.tabIndex
                 })
                 this.Cacher.setData('bill', {
-                    from: 'bill',
+                    from: 'searchShop',
                     title: '订单搜索',
-                    placeholder: '手机号/微信昵称/姓名'
+                    placeholder: '请输入订单号'
                 })
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/searchShop?from=bill'
                 })
             },
             clickBill(val) {
+                cacheBill = val;
+                console.log(val, '******************')
                 this.closePageLoading();
                 this.Cacher.setData('bill', {
                     from: 'bill',

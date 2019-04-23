@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "item": "/pages/commodity/index/goodsList--Item",
-    "pop-up": "/components/my-components/PopUp",
-    "poster": "/pages/commodity/index/posterShare"
-  },
-  "component": true
-}

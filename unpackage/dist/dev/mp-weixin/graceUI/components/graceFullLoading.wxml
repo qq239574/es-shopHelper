@@ -1,1 +1,0 @@
-<block wx:if="{{graceFullLoading}}" bind:__l="__l"><view class="grace-full-loading" bind:__l="__l"><view><image src="{{logoUrl}}" mode="widthFix"></image></view></view></block>

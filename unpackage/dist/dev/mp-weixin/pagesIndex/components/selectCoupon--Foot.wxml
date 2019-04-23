@@ -1,1 +1,0 @@
-<view class="block-foot  data-v-575dac40" bind:__l="__l"><view data-event-opts="{{[['tap',[['check',['$event']]]]]}}" class="info data-v-575dac40" bindtap="__e">已选择<view class="price data-v-575dac40">{{num}}</view>张</view><view data-event-opts="{{[['tap',[['sure',['$event']]]]]}}" class="button data-v-575dac40" bindtap="__e">确认添加</view></view>

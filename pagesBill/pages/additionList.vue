@@ -14,6 +14,7 @@
 <script>
     import additionBlock from '../components/Addition-Block'
     import longButton from '../../components/my-components/LongButton.vue'
+    let DataFrom = {}
     export default {
         components: {
             additionBlock,
@@ -22,23 +23,42 @@
         data() {
             return {
                 list: [{
-                    name: '老板',
-                    date: '2019-10-12 12:11:11',
-                    content: '几点几分了卡机的看法看手机付款了时间对方离开就是路口附近两款手机分类看时间费了快速减肥流口水几点看法就回家谁看见电话费会计师合肥看介绍付款交水电费会计师的合肥看介绍付款就是付款接收到放空间还是打开肌肤还是的空间发挥收款机返回。'
-                }, {
-                    name: '老板',
-                    date: '2019-10-12 12:11:11',
-                    content: '几点几分了卡机的看法看手机付款了时间对方离开就是路口附近两款手机分类看时间费了快速减肥流口水几点看法就回家谁看见电话费会计师合肥看介绍付款交水电费会计师的合肥看介绍付款就是付款接收到放空间还是打开肌肤还是的空间发挥收款机返回。'
-                }, ]
+                    name: '',
+                    date: '',
+                    content: ''
+                }]
             }
         },
         methods: {
             clickButton() {
+                this.Cacher.setData('additionList', {
+                    from: 'additionList',
+                    ...DataFrom
+                })
                 uni.navigateTo({
                     url: './billAddition?from=additionList'
                 })
+            },
+            iniPage() {
+                this.Request('billAddition', {
+                    id: DataFrom.bill.bill.id
+                }).then(res => {
+                    this.list = res.list.map(item => ({
+                        name: item.name,
+                        date: item.create_time,
+                        content: item.remark,
+                        id: item.id
+                    }))
+                })
             }
         },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            this.iniPage()
+        },
+        onShow() {
+            this.iniPage()
+        }
     }
 </script>
 

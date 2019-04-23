@@ -1,1 +1,0 @@
-<view class="search-shop page _div data-v-7bdd0bcb" bind:__l="__l"><search placeholder="{{placeholder}}" data-event-opts="{{[['^search',[['search']]]]}}" bind:search="__e" class="data-v-7bdd0bcb"></search></view>

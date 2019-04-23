@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "select-item": "/components/my-components/editBlock-SelectItem"
-  },
-  "component": true
-}

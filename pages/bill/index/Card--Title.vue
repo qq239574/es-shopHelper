@@ -5,7 +5,7 @@
             <view class="billDate">{{bill.billDate}}</view>
         </view>
         <view class="tab card--title-item">
-            <view class="billType commision" v-if='bill.billType*1===0'>分销订单</view>
+            <view class="billType commision" v-if='bill.billType!=="普通订单"'>{{bill.billType}}</view>
             <view class="billType common" v-else>普通订单</view>
         </view>
     </view>
@@ -19,7 +19,7 @@
                 default: {
                     billId: '',
                     billDate: '',
-                    billType: '' ,//订单类型，0：分销订单，1：普通订单
+                    billType: '' ,//订单类型，分销订单，普通订单
                     billPrice: 0
                 }
             }

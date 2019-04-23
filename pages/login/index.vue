@@ -123,6 +123,10 @@
 							})
 						}
 					})
+				} else {
+					setTimeout(() => {
+						requesting = false;
+					}, 3000)
 				}
 			},
 			reg: function() { //找回密码

@@ -8,15 +8,15 @@ GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠
 侵权必究，请遵守版权约定！
 */
 
-module.exports = {
+export default {
 
-	get: function (url, data, header, callback) {
+	get(url, data, header, callback) {
 		uni.request({
 			url: url,
 			data: data,
 			method: "GET",
 			header: header || {},
-			dataType: "json", 
+			dataType: "json",
 			success: (res) => {
 				callback(res.data);
 			},
@@ -29,11 +29,12 @@ module.exports = {
 		});
 	},
 
-	post: function (url, data, contentType, headers, callback) {
+	post(url, data, contentType, headers, callback) {
+		console.log('uni post >>', url, data, contentType, headers, )
 		switch (contentType) {
 			case "form":
 				var headerObj = {
-					'content-type': 'application/x-www-form-urlencoded'
+					'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
 				};
 				break;
 			case "json":
@@ -49,13 +50,15 @@ module.exports = {
 		for (let k in headers) {
 			headerObj[k] = headers[k];
 		}
-		uni.request({
+		
+		wx.request({
 			url: url,
 			data: data,
 			method: "POST",
 			dataType: "json",
 			header: headerObj,
 			success: (res) => {
+				console.log('what happende::', res)
 				callback(res.data);
 			},
 			fail: () => {

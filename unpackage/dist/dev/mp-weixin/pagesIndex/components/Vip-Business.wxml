@@ -1,1 +1,0 @@
-<view class="vip-busi-block data-v-49b5f100" bind:__l="__l"><block1 class="data-v-49b5f100"></block1><block2 class="data-v-49b5f100"></block2><view class="margin50 data-v-49b5f100"></view><long-button class="data-v-49b5f100" vue-slots="{{['default']}}">查看订单</long-button></view>

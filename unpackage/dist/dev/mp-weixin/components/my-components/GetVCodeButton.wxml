@@ -1,1 +1,0 @@
-<view data-event-opts="{{[['tap',[['clickBuntton',['$event']]]]]}}" class="{{['my-round-button data-v-71c24da8',timing?'timing':'']}}" bindtap="__e" bind:__l="__l">{{''+(timing?timer+'s':'获取验证码')+''}}</view>

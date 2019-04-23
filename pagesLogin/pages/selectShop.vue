@@ -39,11 +39,17 @@
             selectShop(item) {
                 this.Cacher.setData('selectShop', item);
                 this.pageLoading();
+
                 this.Request('switchShop', {//切换店铺
                     id: item.shopInfo.id
                 }).then(res => {
+                    this.searchShop='';
                     this.toIndex('from=selectShop&status=selectShop');
                     this.closePageLoading();
+                }).catch(res=>{
+                    if(res){
+
+                    }
                 })
             },
             reLogin() {
@@ -94,8 +100,7 @@
                 }).then(res => {
                     this.shops = getShops(res.list);
                     if (this.shops.length == 1 && DataFrom.from != 'home' && DataFrom.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                        let shop = this.shops[0];
-                        console.log(shop.shopInfo.id, '??????????')
+                        let shop = this.shops[0]; 
                         this.Cacher.setData('selectShop', shop);
                         this.Request('switchShop', {
                             id: shop.shopInfo.id

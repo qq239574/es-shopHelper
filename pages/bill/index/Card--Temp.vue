@@ -5,7 +5,7 @@
             <view class='card--info__row__status'>{{rights.status}}</view>
         </view>
         <view class="button-group">
-            <myButton :badge='rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
+            <myButton :badge='rights.addition' @click='clickButton("维权备注")'>备注</myButton>
             <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
         </view>
     </view>

@@ -139,8 +139,7 @@
         onLoad(option) {
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
-            this.shopName = DataFrom.title;
-            console.log(DataFrom)
+            this.shopName = DataFrom.title; 
             this.Request('homeInfo').then(res => {
                 this.shopName = res.shop.name;
                 this.showData = {

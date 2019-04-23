@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "my-button": "/components/my-components/RoundButton"
-  },
-  "component": true
-}

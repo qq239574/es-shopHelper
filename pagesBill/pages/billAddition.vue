@@ -10,6 +10,8 @@
 
 <script>
     import longButton from '../../components/my-components/LongButton.vue'
+    let DataFrom = {};
+    let cacheVal='';
     export default {
         components: {
             longButton
@@ -24,15 +26,24 @@
         methods: {
             sure() {
                 this.pageLoading();
-                setTimeout(() => {
+                this.Request('addAddition', {
+                    id: DataFrom.bill.bill.id,
+                    remark: cacheVal
+                }).then(res => {
+                    this.closePageLoading();
                     uni.navigateBack();
-                }, 2000)
+                }) ;
             },
             getAddition(val) {
                 this.length = val.detail.value.length;
                 this.disable = !val.detail.value.length;
+                cacheVal= val.detail.value
             }
         },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from)
+            console.log(DataFrom, 'add')
+        }
     }
 </script>
 
