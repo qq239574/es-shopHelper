@@ -24,10 +24,14 @@ var graceRichText = __webpack_require__(/*! ../../graceUI/jsTools/richText.js */
 {
   data: function data() {
     return {
-      demoHtml: '' };
+      demoHtml: '',
+      notice: {} };
+
 
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
+    this.notice = this.Cacher.getData(option.from);
+    console.log();
     content = graceRichText.format(' <p>1111</p> <p>2222</p> <p>333</p> <img src="/static/img/global/cart.png" alt="">');
     this.demoHtml = content;
   } };exports.default = _default;

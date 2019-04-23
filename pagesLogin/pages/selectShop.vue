@@ -1,7 +1,7 @@
 <template>
     <view class='my-shops page'>
         <search placeholder='搜索店铺' :value='searchShop' :disabled='true' @click='toSearch'></search>
-        <view class="h1">我管理的店铺({{shops.length}})</view>
+        <view class="h1" v-if='shops.length'>我管理的店铺({{shops.length}})</view>
         <shopBlock :shops='shops' @click='selectShop'></shopBlock>
         <view class="foot">
             <longButton @click='reLogin'>切换登录账号</longButton>
@@ -15,7 +15,9 @@
     import search from '../../components/my-components/SearchInput'
     import shopBlock from '../components/SelectShop--Item.vue'
     import longButton from '../../components/my-components/LongButton.vue'
-    let userInfo = {}
+    import getShops from '../components/getShopList.js'
+    let userInfo = {};
+    let DataFrom = {};
     export default {
         components: {
             search,
@@ -27,8 +29,8 @@
                 searchShop: '',
                 shops: [{
                     title: '花花的店铺1',
-                    left: '30天后到期',
-                    status: 0,
+                    left: '',
+                    status: 0, //0营业中
                     img: '/static/img/global/yz_3.png'
                 }]
             }
@@ -36,14 +38,20 @@
         methods: {
             selectShop(item) {
                 this.Cacher.setData('selectShop', item);
-                this.toInex('from=selectShop&status=selectShop');
+                this.pageLoading();
+                this.Request('switchShop', {//切换店铺
+                    id: item.shopInfo.id
+                }).then(res => {
+                    this.toIndex('from=selectShop&status=selectShop');
+                    this.closePageLoading();
+                })
             },
             reLogin() {
                 uni.reLaunch({
                     url: '../../pages/login/index?from=selectShop&&status=switchAccount'
                 })
             },
-            toInex(info) {
+            toIndex(info) {
                 uni.reLaunch({
                     url: '../../pages/index/index?' + info
                 })
@@ -75,10 +83,30 @@
                 })
             },
             initPage() {
-                let searchData = this.Cacher.getData('searchShop');
-                if (searchData && searchData.from == 'searchShop') {
-                    this.searchShop = searchData.value;
-                }
+                this.pageLoading();
+                let searchData = this.Cacher.getData('searchShop') || '';
+                DataFrom = this.Cacher.getData('selectShop')
+                this.searchShop = searchData.value || '';
+                this.Request('shoplist', {
+                    pagesize: 20,
+                    page: 1,
+                    keywords: this.searchShop
+                }).then(res => {
+                    this.shops = getShops(res.list);
+                    if (this.shops.length == 1 && DataFrom.from != 'home' && DataFrom.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+                        let shop = this.shops[0];
+                        console.log(shop.shopInfo.id, '??????????')
+                        this.Cacher.setData('selectShop', shop);
+                        this.Request('switchShop', {
+                            id: shop.shopInfo.id
+                        }).then(res => {
+                            this.toIndex('from=selectShop&status=onlyOne')
+                        })
+                    } else {
+                        // this.checkUserInfo()
+                    }
+                    this.closePageLoading();
+                })
             }
         },
         onShow() {
@@ -86,43 +114,7 @@
         },
         onLoad(option) {
             this.initPage();
-            this.Request('shoplist')
-            setTimeout(() => {
-                userInfo = this.Cacher.getData('userInfo');
-                console.log(userInfo);
-                this.shops = [{
-                    title: '花花的店铺1',
-                    left: '30天后到期',
-                    status: 0,
-                    img: '/static/img/global/yz_3.png'
-                }, {
-                    title: '花花的店铺2',
-                    left: '30天后到期',
-                    status: 1,
-                    img: '/static/img/global/yz_3.png'
-                }, {
-                    title: '花花的店铺3',
-                    left: '30天后到期',
-                    status: 2,
-                    img: '/static/img/global/yz_3.png'
-                }, {
-                    title: '花花的店铺4',
-                    left: '30天后到期',
-                    status: 3,
-                    img: '/static/img/global/yz_3.png'
-                }, {
-                    title: '花花的店铺5',
-                    left: '30天后到期',
-                    status: 4,
-                    img: '/static/img/global/yz_3.png'
-                }, ];
-                let onlyOne = true;
-                if (onlyOne && option.from != 'home' && option.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                    // this.toInex('from=selectShop&status=onlyOne')
-                } else {
-                    this.checkUserInfo()
-                }
-            }, 1000)
+            userInfo = this.Cacher.getData('userInfo');
         }
     }
 </script>

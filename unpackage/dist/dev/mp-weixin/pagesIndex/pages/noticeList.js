@@ -29,37 +29,7 @@
         title: '标题',
         brief: '简介',
         date: '2019-01-01 12:12:12',
-        img: '/static/img/global/logo.jpg' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '/static/img/global/logo.jpg' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '' },
-      {
-        title: '标题多浪费空间啊对了疯狂就流口水地方了看见上来看附件是了看见对方离开家',
-        brief: '简介蓝色的看风景绿色空间分类看时间付款了时间分类看时间分类看几点了看法就是离开房间数量看积分了快速减肥流口水发来看看手机了看法就算了可分解落实地方',
-        date: '2019-01-01 12:12:12',
-        img: '' }] };
+        img: '/static/img/global/logo.jpg' }] };
 
 
   },
@@ -75,7 +45,20 @@
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
+  },
+  onLoad: function onLoad() {var _this = this;
+    this.Request('noticeList').then(function (res) {
+      _this.list = res.list.map(function (item) {
+        return {
+          title: item.title,
+          brief: item.content_text,
+          date: item.create_time,
+          img: item.thumb,
+          content: item.content };
 
+
+      });
+    });
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

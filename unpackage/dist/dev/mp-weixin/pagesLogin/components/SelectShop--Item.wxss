@@ -1,6 +1,26 @@
 .shops-list.data-v-551742ec {
   width: 100%;
 }
+.shops-list .img.data-v-551742ec {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+    margin: 100rpx;
+}
+.shops-list .img image.data-v-551742ec {
+      width: 150rpx;
+      height: 184rpx;
+      margin: 50rpx auto;
+}
+.shops-list .h1.data-v-551742ec {
+    text-align: center;
+    width: 100%;
+    color: #666;
+}
 .shop-block.data-v-551742ec {
   display: -webkit-box;
   display: -webkit-flex;
@@ -85,7 +105,10 @@
 .shop-block.disable.data-v-551742ec, .shop-block.examing.data-v-551742ec {
     background: #f4f4f4;
 }
-.shop-block.disable .info .title.data-v-551742ec, .shop-block.disable .info .date.data-v-551742ec, .shop-block.examing .info .title.data-v-551742ec, .shop-block.examing .info .date.data-v-551742ec {
+.shop-block.disable .info .title.data-v-551742ec,
+    .shop-block.disable .info .date.data-v-551742ec,
+    .shop-block.examing .info .title.data-v-551742ec,
+    .shop-block.examing .info .date.data-v-551742ec {
       color: #9fa2aa;
 }
 

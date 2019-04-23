@@ -39,6 +39,7 @@
 	import LongButton from '../../components/my-components/LongButton';
 	let requesting = false;
 	let canLogin = false; //可否登录 
+	let sessionId = ''
 	export default {
 		components: {
 			LongButton
@@ -91,21 +92,21 @@
 				this.closePageLoading();
 				this.Toast('当前微信暂未绑定任何管理员账号');
 			},
-			loginNow: function(e) { //点击登录
+			loginNow(e) { //点击登录
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
 					this.Request('login', {
 						account: this.userId,
 						password: this.password
-					}).then(res => {
+					}).then((res) => {
 						// 验证通过
 						this.closePageLoading();
 						if (res.error == 0) {
 							canLogin = true;
 							if (canLogin) {
 								uni.reLaunch({
-									url: '../../pagesLogin/pages/selectShop'
+									url: '../../pagesLogin/pages/selectShop?from=login'
 								})
 							} else {
 								this.idError = true;
@@ -114,6 +115,12 @@
 						} else {
 							requesting = false;
 							this.Toast(res.message)
+						}
+					}).catch(res => {
+						if (res.error == -3) {
+							uni.reLaunch({
+								url: '../../pagesLogin/pages/selectShop?from=login'
+							})
 						}
 					})
 				}

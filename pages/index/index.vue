@@ -2,17 +2,17 @@
     <view class='page pages-index-index'>
         <view class="tunshop">
             <view class='title van-ellipsis '>
-                <van-icon name="shop-o" class='shop-icon' />花花的店铺-网红自营直销第一店铺电费卡就卡联动法律框架刊例价了
+                <van-icon name="shop-o" class='shop-icon' />{{shopName}}
             </view>
             <view class="button" @click='changeShop' v-if='!onlyOneShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
         <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
         <view class="block">
-            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' label='还有29天到期' value='续费' :disabled='true' @click='toPay'>
+            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
-            <selectItem contentStyle='width:100%;' label='微信系统于7月10日出现警告d两款发动机啊快乐飞克里斯多几分了快速减肥老师看见对方流口水打飞机' value='03-28' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
+            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -30,6 +30,8 @@
     import dataShower from './components/IndexDataShower.vue'
     import goodsBlock from './components/IndexGoods.vue'
     import apps from './components/IndexApps.vue'
+    let DataFrom = {};
+    let newNotice = {};
     export default {
         components: {
             LongButton,
@@ -42,6 +44,15 @@
         },
         data() {
             return {
+                newNotice: { //最新公告
+                    label: '',
+                    date: ''
+                },
+                execInfo: { //逾期消息
+                    label: '',
+                    date: ''
+                },
+                shopName: '',
                 genderIndex: 0,
                 gender: ['男', '女'],
                 dateValue: "请选择",
@@ -117,12 +128,40 @@
             toNotice(val) {
                 this.Cacher.setData('home', {
                     from: 'home',
-                    ...val
+                    ...val,
+                    list:newNotice
                 }); //页面传参
                 uni.navigateTo({
                     url: '../../pagesIndex/pages/noticeList?from=home'
                 })
             }
+        },
+        onLoad(option) {
+            // if (option.from && option.from == 'selectShop') {
+            DataFrom = this.Cacher.getData(option.from);
+            this.shopName = DataFrom.title;
+            console.log(DataFrom)
+            this.Request('homeInfo').then(res => {
+                this.shopName = res.shop.name;
+                this.showData = {
+                    money: res.data.today_payment_amount,
+                    payedBill: res.data.today_order_paid,
+                    payedGood: -1,
+                    payedVip: -1
+                }
+                newNotice = res.notice.sort((a, b) => {
+                    return new Date('2019-' + a.date) - new Date('2019-' + b.date)
+                }); 
+                this.newNotice = {
+                    label: newNotice[0].title,
+                    date: newNotice[0].date
+                }
+                this.execInfo = {//还没写过期的功能？？？？
+                    label: '',
+                    date: ''
+                }
+            })
+            // }
         }
     }
 </script>

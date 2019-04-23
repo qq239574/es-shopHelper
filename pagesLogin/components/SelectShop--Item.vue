@@ -13,6 +13,12 @@
             </view>
             <view class="icon grace-icons icon-arrow-right" style='color:#5E5E5E;'></view>
         </view>
+        <view class="img" v-if='!shops.length'>
+            <image lazy-load src='/static/img/global/haveNoShops.png'></image>
+            <view class="h1">
+                您暂未拥有任何店铺的管理资格
+            </view>
+        </view>
     </view>
 </template>
 
@@ -45,6 +51,12 @@
                     name: '审核中'
                 }, {
                     id: 'disable',
+                    name: '弃审'
+                }, {
+                    id: 'disable',
+                    name: '未购买'
+                }, {
+                    id: 'disable',
                     name: '已禁用'
                 }]
             }
@@ -54,7 +66,17 @@
                 return (this.shop.id == 'disable' || this.shop.id == 'examing') ? 'background:"#f4f4f4"' : '';
             },
             select(item) {
-                this.$emit('click', item)
+                console.log(item)
+                if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期') { //营业中、已打烊、已过期的店铺，点击进入小程序
+                    this.$emit('click', item)
+                } else {
+                    this.Dialog.alert({
+                        title: '请登录PC端后台管理此店铺',
+                        message: '小程序仅支持管理“营业中”、“已打烊”和“已过期”状态的店铺'
+                    }).then(() => {
+                        // on close
+                    });
+                }
             }
         },
     }
@@ -63,6 +85,21 @@
 <style lang="scss" scoped>
     .shops-list {
         width: 100%;
+        .img {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 100upx;
+            image {
+                width: 150upx;
+                height: 184upx;
+                margin: 50upx auto;
+            }
+        }
+        .h1 {
+            text-align: center;
+            width: 100%;
+            color: #666;
+        }
     }
     .shop-block {
         display: flex;
@@ -142,7 +179,8 @@
         &.examing {
             background: #f4f4f4;
             .info {
-                .title ,.date{
+                .title,
+                .date {
                     color: #9fa2aa;
                 }
             }

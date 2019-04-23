@@ -32,110 +32,26 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 14,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
-					"name": "sss",
-					"pathName": "pagesCommodity/pages/editStatus",
+					"name": "shops",
+					"pathName": "pagesLogin/pages/selectShop",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "sss",
-					"pathName": "pagesCommodity/pages/editStatus",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "ddd",
-					"pathName": "pagesCommodity/pages/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "mmm",
-					"pathName": "pagesCommodity/pages/multiSpecifications",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "billdetail",
-					"pathName": "pagesCommodity/pages/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "multi",
-					"pathName": "pagesCommodity/pages/editMultiCode",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "cont",
-					"pathName": "pagesCommodity/pages/autoDeliverContent",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "indx",
+					"name": "selectshop",
 					"pathName": "pages/index/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "vip",
-					"pathName": "pagesIndex/pages/vipDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "tel",
-					"pathName": "pagesLogin/pages/telOrEmail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "index",
+					"name": "home",
 					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vip",
-					"pathName": "pagesIndex/pages/vipManage",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "vipdetail",
-					"pathName": "pagesIndex/pages/vipDetail",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "coupon",
-					"pathName": "pagesIndex/pages/coupon",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "couponlist",
-					"pathName": "pagesIndex/pages/selectCoupon",
 					"scene": null
 				}
 			]

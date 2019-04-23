@@ -7,6 +7,16 @@ export const login = { //用户登录
     headers: {},
     type: 'post'
 }
+export const sessionid = { //获取sessionid
+    url: '/shop/api/site/account/login/get-sessionid',
+    data: {
+
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
 export const loginCheck = { //用户登录前检测[进入登录页面]
     url: '/api/site/account/login',
     data: {
@@ -23,6 +33,17 @@ export const changePassword = { //修改密码
     },
     headers: {},
     type: 'post'
+}
+
+export const switchShop = {//选择(切换)店铺
+    url: '/api/site/account/shops/switch',
+    data: {
+        id: '',
+        enter_flag: 1
+    },
+    headers: {},
+    type: 'get'
+
 }
 export const beforeSendVfCode = {
     url: ' http://user.qdev.eldev.cn/utility/captcha/get',

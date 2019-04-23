@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};
 
 
 
@@ -40,6 +40,8 @@
 
 
 
+var DataFrom = {};
+var newNotice = {};var _default =
 {
   components: {
     LongButton: LongButton,
@@ -52,6 +54,15 @@
 
   data: function data() {
     return {
+      newNotice: { //最新公告
+        label: '',
+        date: '' },
+
+      execInfo: { //逾期消息
+        label: '',
+        date: '' },
+
+      shopName: '',
       genderIndex: 0,
       gender: ['男', '女'],
       dateValue: "请选择",
@@ -127,12 +138,41 @@
     toNotice: function toNotice(val) {
       this.Cacher.setData('home', _objectSpread({
         from: 'home' },
-      val));
+      val, {
+        list: newNotice }));
       //页面传参
       uni.navigateTo({
         url: '../../pagesIndex/pages/noticeList?from=home' });
 
-    } } };exports.default = _default;
+    } },
+
+  onLoad: function onLoad(option) {var _this2 = this;
+    // if (option.from && option.from == 'selectShop') {
+    DataFrom = this.Cacher.getData(option.from);
+    this.shopName = DataFrom.title;
+    console.log(DataFrom);
+    this.Request('homeInfo').then(function (res) {
+      _this2.shopName = res.shop.name;
+      _this2.showData = {
+        money: res.data.today_payment_amount,
+        payedBill: res.data.today_order_paid,
+        payedGood: -1,
+        payedVip: -1 };
+
+      newNotice = res.notice.sort(function (a, b) {
+        return new Date('2019-' + a.date) - new Date('2019-' + b.date);
+      });
+      _this2.newNotice = {
+        label: newNotice[0].title,
+        date: newNotice[0].date };
+
+      _this2.execInfo = { //还没写过期的功能？？？？
+        label: '',
+        date: '' };
+
+    });
+    // }
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

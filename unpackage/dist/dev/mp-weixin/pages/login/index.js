@@ -49,7 +49,8 @@ var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\
 
 var requesting = false;
 var canLogin = false; //可否登录 
-var _default = {
+var sessionId = '';var _default =
+{
   components: {
     LongButton: LongButton },
 
@@ -115,7 +116,7 @@ var _default = {
             canLogin = true;
             if (canLogin) {
               uni.reLaunch({
-                url: '../../pagesLogin/pages/selectShop' });
+                url: '../../pagesLogin/pages/selectShop?from=login' });
 
             } else {
               _this.idError = true;
@@ -124,6 +125,12 @@ var _default = {
           } else {
             requesting = false;
             _this.Toast(res.message);
+          }
+        }).catch(function (res) {
+          if (res.error == -3) {
+            uni.reLaunch({
+              url: '../../pagesLogin/pages/selectShop?from=login' });
+
           }
         });
       }

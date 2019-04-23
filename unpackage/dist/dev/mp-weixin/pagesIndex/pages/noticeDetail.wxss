@@ -25,7 +25,7 @@
   color: #6e7685;
   background: #f5f7fa;
   border-radius: 10rpx;
-  margin: 0  auto 26rpx;
+  margin: 0 auto 26rpx;
 }
 rich-text.data-v-9f0903e6 {
   display: block;

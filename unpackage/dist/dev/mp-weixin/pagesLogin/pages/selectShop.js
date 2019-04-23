@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -25,7 +25,9 @@
 
 
 
-var userInfo = {};var _default =
+var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+var userInfo = {};
+var DataFrom = {};var _default =
 {
   components: {
     search: search,
@@ -37,23 +39,29 @@ var userInfo = {};var _default =
       searchShop: '',
       shops: [{
         title: '花花的店铺1',
-        left: '30天后到期',
-        status: 0,
+        left: '',
+        status: 0, //0营业中
         img: '/static/img/global/yz_3.png' }] };
 
 
   },
   methods: {
-    selectShop: function selectShop(item) {
+    selectShop: function selectShop(item) {var _this = this;
       this.Cacher.setData('selectShop', item);
-      this.toInex('from=selectShop&status=selectShop');
+      this.pageLoading();
+      this.Request('switchShop', { //切换店铺
+        id: item.shopInfo.id }).
+      then(function (res) {
+        _this.toIndex('from=selectShop&status=selectShop');
+        _this.closePageLoading();
+      });
     },
     reLogin: function reLogin() {
       uni.reLaunch({
         url: '../../pages/login/index?from=selectShop&&status=switchAccount' });
 
     },
-    toInex: function toInex(info) {
+    toIndex: function toIndex(info) {
       uni.reLaunch({
         url: '../../pages/index/index?' + info });
 
@@ -84,55 +92,39 @@ var userInfo = {};var _default =
         url: './searchShop' });
 
     },
-    initPage: function initPage() {
-      var searchData = this.Cacher.getData('searchShop');
-      if (searchData && searchData.from == 'searchShop') {
-        this.searchShop = searchData.value;
-      }
+    initPage: function initPage() {var _this2 = this;
+      this.pageLoading();
+      var searchData = this.Cacher.getData('searchShop') || '';
+      DataFrom = this.Cacher.getData('selectShop');
+      this.searchShop = searchData.value || '';
+      this.Request('shoplist', {
+        pagesize: 20,
+        page: 1,
+        keywords: this.searchShop }).
+      then(function (res) {
+        _this2.shops = (0, _getShopList.default)(res.list);
+        if (_this2.shops.length == 1 && DataFrom.from != 'home' && DataFrom.status != 'switchShop') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+          var shop = _this2.shops[0];
+          console.log(shop.shopInfo.id, '??????????');
+          _this2.Cacher.setData('selectShop', shop);
+          _this2.Request('switchShop', {
+            id: shop.shopInfo.id }).
+          then(function (res) {
+            _this2.toIndex('from=selectShop&status=onlyOne');
+          });
+        } else {
+          // this.checkUserInfo()
+        }
+        _this2.closePageLoading();
+      });
     } },
 
   onShow: function onShow() {
     this.initPage();
   },
-  onLoad: function onLoad(option) {var _this = this;
+  onLoad: function onLoad(option) {
     this.initPage();
-    this.Request('shoplist');
-    setTimeout(function () {
-      userInfo = _this.Cacher.getData('userInfo');
-      console.log(userInfo);
-      _this.shops = [{
-        title: '花花的店铺1',
-        left: '30天后到期',
-        status: 0,
-        img: '/static/img/global/yz_3.png' },
-      {
-        title: '花花的店铺2',
-        left: '30天后到期',
-        status: 1,
-        img: '/static/img/global/yz_3.png' },
-      {
-        title: '花花的店铺3',
-        left: '30天后到期',
-        status: 2,
-        img: '/static/img/global/yz_3.png' },
-      {
-        title: '花花的店铺4',
-        left: '30天后到期',
-        status: 3,
-        img: '/static/img/global/yz_3.png' },
-      {
-        title: '花花的店铺5',
-        left: '30天后到期',
-        status: 4,
-        img: '/static/img/global/yz_3.png' }];
-
-      var onlyOne = true;
-      if (onlyOne && option.from != 'home' && option.status != 'switchShop') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-        // this.toInex('from=selectShop&status=onlyOne')
-      } else {
-        _this.checkUserInfo();
-      }
-    }, 1000);
+    userInfo = this.Cacher.getData('userInfo');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
