@@ -1,6 +1,6 @@
 <template>
     <view class='vip-list'>
-        <itemList @click='clickItem' :vipsList='vipsList'></itemList>
+        <itemList @click='clickItem' :vipsList='list'></itemList>
         <view class="grace-shade grace-shade-black" v-if="show" @click='closeAll'>
             <view class="  grace-animate fadeIn">
                 <view class="body">
@@ -63,14 +63,19 @@
                 goodData: {},
                 staticUrl: '/static/img/global/tmpAct.png',
                 show: false,
-                show2: false,
-                vipsList: [{
+                show2: false, 
+            }
+        },
+        props:{
+            list:{
+                type:Array,
+                default:[{
                     img: '/static/img/global/home_order_tobepay.png',
-                    title: '的看风景上课了几分了快速减肥',
-                    vipClass: '铂金超级会员',
-                    tel: 1524516566,
-                    money: 152444,
-                    score: 154666
+                    title: '',
+                    vipClass: '',
+                    tel: '',
+                    money: '',
+                    score: ''
                 }]
             }
         },

@@ -21,7 +21,8 @@
 
 
 
-var bar = '';var _default =
+var bar = '';
+var cacheSearchKey = '';var _default =
 {
   components: {
     TabCard: TabCard,
@@ -30,14 +31,23 @@ var bar = '';var _default =
 
   data: function data() {
     return {
-      searching: false };
+      searching: false,
+      viplist: [{
+        img: '/static/img/global/home_order_tobepay.png',
+        title: '',
+        vipClass: '',
+        tel: '',
+        money: '',
+        score: '' }] };
+
 
   },
   methods: {
     search: function search(val) {var _this = this;
       clearTimeout(bar);
       bar = setTimeout(function () {
-        console.log(val);
+        cacheSearchKey = val.value;
+        _this.initPage();
         _this.pageLoading();
       }, 500);
     },
@@ -50,7 +60,39 @@ var bar = '';var _default =
 
         }
       }
-    } } };exports.default = _default;
+    },
+    initPage: function initPage() {var _this2 = this;
+      this.pageLoading();
+      this.Request('vipList', {
+        keywords: '',
+        tag_id: '',
+        level_id: '',
+        create_times: [],
+        come_from: '',
+        sort: '',
+        buy: '',
+        page: 1,
+        pagesize: 20,
+        create_time: '' }).
+      then(function (res) {
+        _this2.closePageLoading();
+        _this2.viplist = res.list.map(function (item) {
+          return {
+            img: item.avatar || '/static/img/global/home_order_tobepay.png',
+            title: item.nickname,
+            vipClass: item.level_name,
+            tel: item.mobile,
+            money: item.balance,
+            score: item.credit,
+            info: item };
+
+        });
+      });
+    } },
+
+  onLoad: function onLoad() {
+    this.initPage();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

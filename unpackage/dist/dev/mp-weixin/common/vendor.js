@@ -9043,7 +9043,7 @@ var billDetail = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.vipsTop10 = exports.goodsTop10 = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -9173,6 +9173,26 @@ var vipsTop10 = { //获取前10销售商品
 
 
   type: 'get' };exports.vipsTop10 = vipsTop10;
+
+
+var vipList = { //会员列表读取
+  url: '/shop/manage/member/list',
+  data: {
+    keywords: '',
+    tag_id: '',
+    level_id: '',
+    create_times: [],
+    come_from: '',
+    sort: '',
+    buy: '',
+    page: 1,
+    pagesize: 20,
+    create_time: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.vipList = vipList;
 
 /***/ }),
 

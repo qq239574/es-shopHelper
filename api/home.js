@@ -73,7 +73,7 @@ export const getGoodDataByDate = { //获取指定日期的商品分析图表查�
     url: '/shop/manage/statistics/goods/chart',
     data: {
         start: '',
-        end:''
+        end: ''
     },
     headers: {
 
@@ -84,7 +84,7 @@ export const getVipDataByDate = { //获取指定日期的会员分析
     url: '/shop/manage/statistics/member',
     data: {
         start: '',
-        end:''
+        end: ''
     },
     headers: {
 
@@ -95,7 +95,7 @@ export const getTradeDataByDate = { //获取指定日期的交易分析
     url: '/shop/manage/statistics/trade',
     data: {
         start: '',
-        end:''
+        end: ''
     },
     headers: {
 
@@ -123,6 +123,26 @@ export const vipsTop10 = { //获取前10销售商品
         type: '', //	1:今天，2:昨天，3:7天，4:自定义
         start: '', //	自定义开始时间
         end: '' //	自定义结束时间
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+
+export const vipList = { //会员列表读取
+    url: '/shop/manage/member/list',
+    data: {
+        keywords: '',
+        tag_id: '',
+        level_id: '',
+        create_times: [],
+        come_from: '',
+        sort: '',
+        buy: '',
+        page: 1,
+        pagesize: 20,
+        create_time: '',
     },
     headers: {
 

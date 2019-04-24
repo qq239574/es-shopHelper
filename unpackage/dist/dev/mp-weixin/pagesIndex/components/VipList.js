@@ -73,17 +73,22 @@
       goodData: {},
       staticUrl: '/static/img/global/tmpAct.png',
       show: false,
-      show2: false,
-      vipsList: [{
-        img: '/static/img/global/home_order_tobepay.png',
-        title: '的看风景上课了几分了快速减肥',
-        vipClass: '铂金超级会员',
-        tel: 1524516566,
-        money: 152444,
-        score: 154666 }] };
-
+      show2: false };
 
   },
+  props: {
+    list: {
+      type: Array,
+      default: [{
+        img: '/static/img/global/home_order_tobepay.png',
+        title: '',
+        vipClass: '',
+        tel: '',
+        money: '',
+        score: '' }] } },
+
+
+
   methods: {
     closeAll: function closeAll() {
       this.show = false;
