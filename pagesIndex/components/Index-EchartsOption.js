@@ -23,6 +23,12 @@ export function getLineOption1(datalist) {
             show: false,
             splitArea: {
                 show: true
+            },
+            min: function(val){
+                return val.min*0.8;
+            },
+            max: function (val) {
+                return val.max*1.1;
             }
         }],
         series: [{

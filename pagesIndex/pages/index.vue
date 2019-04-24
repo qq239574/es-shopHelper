@@ -47,23 +47,27 @@
                     title: '成交额（元）',
                     subTitle: '累计总成成交额：0',
                     today: 0,
-                    yesterday: 0
+                    yesterday: 0,
+                    id: 'trade'
                 }, {
                     title: '付款订单数（个）',
                     subTitle: '',
                     today: 0,
-                    yesterday: 0
+                    yesterday: 0,
+                    id: 'pay'
                 }, {
                     title: '付款商品数（件）',
                     subTitle: '',
                     today: 0,
-                    yesterday: 0
+                    yesterday: 0,
+                    id: 'good'
                 }, {
                     title: '付款会员数',
                     subTitle: '',
                     today: 0,
-                    yesterday: 0
-                }, ],
+                    yesterday: 0,
+                    id: 'vip'
+                }],
             }
         },
         onLoad() {
@@ -92,7 +96,7 @@
                         this.dataList[1].today = res.order_pay_count;
                         this.dataList[3].today = res.order_member_count;
                         initing = false;
-                        this.dataList=[...this.dataList];
+                        this.dataList = [...this.dataList];
                     });
                     this.Request('getStatisticsData', { //昨天的数据
                         is_yesterday: 1
@@ -101,7 +105,7 @@
                         this.dataList[1].yesterday = res.order_pay_count;
                         this.dataList[3].yesterday = res.order_member_count;
                         initing = false;
-                        this.dataList=[...this.dataList];
+                        this.dataList = [...this.dataList];
                     })
                     this.Request('getGoodStatisticsData', { //7天的商品曲线
                         start: getDate(-6),
@@ -118,13 +122,13 @@
                         date: getDate(0)
                     }).then(res => {
                         this.dataList[2].today = res.data.goods_paid_count;
-                        this.dataList=[...this.dataList];
+                        this.dataList = [...this.dataList];
                     })
                     this.Request('getGoodNumberByDate', { //昨天的商品数
                         date: getDate(-1)
                     }).then(res => {
                         this.dataList[2].yesterday = res.data.goods_paid_count;
-                        this.dataList=[...this.dataList];
+                        this.dataList = [...this.dataList];
                     })
                 } else {
                     setTimeout(() => {

@@ -69,11 +69,16 @@ export default async function (name, data) {
                 Object.assign(indexApi[name].data, data),
                 Object.assign(indexApi[name].headers || {}, header),
                 function (res) {
-                    if (res.error == 0) {
+                    if (!res.error) {
 
                         resolve(res)
+                    } else if (res.error == -10000) { 
+                        uni.reLaunch({
+                            url:'/pages/login/index'
+                        })
                     } else {
                         console.error('接口出错了>', name, res)
+
                         reject(res)
                     }
 
@@ -89,8 +94,8 @@ export default async function (name, data) {
                 Object.assign(indexApi[name].data, data),
                 'form',
                 Object.assign(indexApi[name].headers || {}, header),
-                function (res) { 
-                    if (res.error == 0) {
+                function (res) {
+                    if (!res.error) {
                         resolve(res)
                     } else {
                         console.error('接口出错了>', name, res)

@@ -1,6 +1,7 @@
 <template>
     <view class='toper page'>
         <selectItem label='筛选' :value='pageLabel' @click='filteDate'></selectItem>
+        
         <items :list='list' :pageid='pageId'></items>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -43,10 +44,11 @@
         methods: {
             initPage() { //初始化页面 
                 let api = '';
+                this.pageId=DataFrom.show;
                 DataGo = this.Cacher.getData(DataGo.go) || {
                     from: 'filterDate',
                     date: [getDate(-1), getDate(0), '今天']
-                };;
+                };
                 if (DataFrom.show == 'vip') {
                     api = 'vipsTop10';
                 } else {
@@ -64,12 +66,21 @@
                             arr.push(res[k]);
                         }
                     }
-                    this.list = arr.map(item => ({
-                        img: '/static/img/global/product_share_download.png',
-                        label: item.title,
-                        value: item.pay_number_count,
-                        index: item.goods_id
-                    }))
+                    if (DataFrom.show == 'vip') {
+                        this.list = arr.map(item => ({
+                            img: '/static/img/global/product_share_download.png',
+                            label: item.nickname,
+                            value: item.pay_price,
+                            index: item.mobile
+                        }))
+                    } else {
+                        this.list = arr.map(item => ({
+                            img: '/static/img/global/product_share_download.png',
+                            label: item.title,
+                            value: item.pay_number_count,
+                            index: item.goods_id
+                        }))
+                    }
                 })
             },
             filteDate() {

@@ -20,6 +20,7 @@
 
 
 
+
 var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
 
 
@@ -53,10 +54,11 @@ var _default = {
   methods: {
     initPage: function initPage() {var _this = this; //初始化页面 
       var api = '';
+      this.pageId = DataFrom.show;
       DataGo = this.Cacher.getData(DataGo.go) || {
         from: 'filterDate',
         date: [(0, _getDateSection.getDate)(-1), (0, _getDateSection.getDate)(0), '今天'] };
-      ;
+
       if (DataFrom.show == 'vip') {
         api = 'vipsTop10';
       } else {
@@ -74,12 +76,21 @@ var _default = {
             arr.push(res[k]);
           }
         }
-        _this.list = arr.map(function (item) {return {
-            img: '/static/img/global/product_share_download.png',
-            label: item.title,
-            value: item.pay_number_count,
-            index: item.goods_id };});
+        if (DataFrom.show == 'vip') {
+          _this.list = arr.map(function (item) {return {
+              img: '/static/img/global/product_share_download.png',
+              label: item.nickname,
+              value: item.pay_price,
+              index: item.mobile };});
 
+        } else {
+          _this.list = arr.map(function (item) {return {
+              img: '/static/img/global/product_share_download.png',
+              label: item.title,
+              value: item.pay_number_count,
+              index: item.goods_id };});
+
+        }
       });
     },
     filteDate: function filteDate() {

@@ -1,33 +1,40 @@
-export default function getLineOption1(datalist) {
+export default function getLineOption1(datalist, keylist) { 
     return {
         animation: true,
         color: ['#fe802f'],
         grid: {
-            x: 30,
+            x: 45,
             x2: 24,
-            y: 24,
-            y2: 24,
+            y: 25,
+            y2: 25,
             show: true,
         },
         tooltip: {
             trigger: 'axis',
-            show:true
+            show: true
         },
         calculable: false,
         xAxis: [{
             type: 'category',
-            data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-            show: true
+            data: keylist,
+            show: true,
+            min: 0
         }],
         yAxis: [{
             type: 'value',
             show: true,
             splitArea: {
                 show: true
+            },
+            min: function (val) {
+                return Math.floor(val.min *0.9);
+            },
+            max: function (val) { 
+                return Math.ceil(val.max *1.1);
             }
         }],
         series: [{
-            name: '蒸发量',
+            name: '',
             type: 'line',
             smooth: true,
             symbol: "none",

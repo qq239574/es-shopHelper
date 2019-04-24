@@ -66,6 +66,45 @@ export const getGoodNumberByDate = { //获取指定日期的商品数
     },
     type: 'get'
 }
+
+
+
+export const getGoodDataByDate = { //获取指定日期的商品分析图表查询
+    url: '/shop/manage/statistics/goods/chart',
+    data: {
+        start: '',
+        end:''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const getVipDataByDate = { //获取指定日期的会员分析
+    url: '/shop/manage/statistics/member',
+    data: {
+        start: '',
+        end:''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const getTradeDataByDate = { //获取指定日期的交易分析
+    url: '/shop/manage/statistics/trade',
+    data: {
+        start: '',
+        end:''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+
+
+
 export const goodsTop10 = { //获取前10销售商品
     url: '/shop/manage/statistics/goods/get-top-good',
     data: {

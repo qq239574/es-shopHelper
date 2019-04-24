@@ -26,9 +26,6 @@
             </view>
         </view>
         <view class="pager">
-            <uni-pagination show-icon="true" total="3" current="2" @change='changePager'>
-            </uni-pagination>
-            <uniPagination :total="20"></uniPagination>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -42,39 +39,35 @@
     import uniPagination from "../../components/uni-pagination/uni-pagination.vue"
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import {
-        getDate
+        getDate,
+        GetDateDiff
     } from '../../components/my-components/getDateSection.js'
-    import {
-        getData
-    } from '../../store/cache.js'
     import {
         number_format
     } from '../../components/my-components/formater.js'
     import getTableList from '../components/Detail-TableList.js'
     import getLineOption from '../components/Detail-EchartsOption.js';
     let searchSection = []; //搜索日期区间
-    let datalist = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //接口获得的数据，用于echarts
+    let datalist = [0, 0, 0, 0, 0, 0, 0]; //接口获得的数据，用于echarts
+    let keylist = [];
+    let DataFrom = {};
+    let DataGo = {
+        go: 'filterDate'
+    };
     export default {
         data() {
             return {
                 pageLabel: '近7日',
                 updateStatus: false,
-                dataList: [{ //接口数据例子
-                    title: '成交额（元）',
-                    subTitle: '累计总成成交额：5,000,000.00',
-                    today: 15000000,
-                    yesterday: 1336588,
-                    x: [],
-                    y: []
-                }],
-                historyTotal: 1235454, //历史累计总成交额
-                selectTotal: 66455, //所选日期总成交额
+                historyTotal: 0, //历史累计总成交额
+                selectTotal: 0, //所选日期总成交额
                 tableList: [], //表格数据
                 totalPage: 5, //总分页数
                 curTableIndex: 0, //当前表格的页码
             }
         },
-        onLoad() {
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
             this.initPage();
         },
         onShow() {
@@ -84,16 +77,70 @@
             formater(val) {
                 return number_format(val);
             },
-            initPage() { //初始化页面
-                let info = getData('echarts-detail'); // ./index跳转过来携带的参数
-                searchSection = getData('filte-date-moneyDetail') || [getDate(0), getDate(-1), '今天']; //默认今天
+            initPage() { //初始化页面  
+                DataGo = this.Cacher.getData('filterDate') || {
+                    go: 'filterDate',
+                    date: [getDate(-6), getDate(0), '7日']
+                };
                 this.$refs.lineChart.init();
-                this.pageLabel = searchSection[2];
-                setTimeout(() => {
-                    datalist = [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 15.6, 62.2, 32.6, 20.0, 6.4, 3.3];
+                this.pageLabel = DataGo.date[2];
+                let dateGap = GetDateDiff(DataGo.date[0], DataGo.date[1]);
+                if (dateGap > 90) {//查询间隔最大90天
+                    this.Toast('查询日期间隔最大90天');
+                    let fromNowGap = GetDateDiff(DataGo.date[1], getDate(0)); //距离今天的间隔
+                    DataGo.date[0] = getDate(-fromNowGap - 89);//
+                }
+                 
+                this.Request('getTradeDataByDate', {
+                    start: DataGo.date[0],
+                    end: DataGo.date[1],
+                }).then(res => {
+                    let arr = [];
+                    let keys = [];
+                    let table = []
+                    let tmp = res.data;
+                    let total = '';
+                    for (let key in tmp) {
+                        if (DataFrom.id == 'vip') { //付款会员数 
+                            table.push({
+                                col1: key,
+                                col2: tmp[key].order_member_pay_count
+                            })
+                            keys.push(key)
+                            arr.push(tmp[key].order_member_pay_count);
+                            total = res.total.order_member_pay_count;
+                        } else if (DataFrom.id == 'trade') { //..成交额（元）
+                            table.push({
+                                col1: key,
+                                col2: tmp[key].order_pay_price
+                            })
+                            keys.push(key)
+                            arr.push(tmp[key].order_pay_price);
+                            total = res.total.order_pay_price;
+                        } else if (DataFrom.id == 'pay') { //付款订单数（个）
+                            table.push({
+                                col1: key,
+                                col2: tmp[key].order_pay_count
+                            })
+                            keys.push(key)
+                            arr.push(tmp[key].order_pay_count);
+                            total = res.total.order_pay_count;
+                        } else if (DataFrom.id == 'good') { //付款商品数（件） 
+                            table.push({
+                                col1: key,
+                                col2: tmp[key].goods_paid_count
+                            })
+                            keys.push(key)
+                            arr.push(tmp[key].goods_paid_count);
+                            total = res.total.goods_paid_count;
+                        }
+                    }
+                    datalist = arr;
+                    keylist = keys;
+                    this.tableList = table;
+                    this.selectTotal = total;
                     this.$refs.lineChart.init();
-                    this.tableList = getTableList(); //获取表格数据
-                }, 2000);
+                })
             },
             filteDate() {
                 uni.navigateTo({
@@ -115,7 +162,7 @@
                     height: height
                 })
                 canvas.setChart(lineChart)
-                lineChart.setOption(getLineOption(datalist));
+                lineChart.setOption(getLineOption(datalist, keylist));
                 return lineChart
             }
         },
@@ -195,7 +242,7 @@
         .pager {
             width: 100%;
             background: #fff;
-            padding: 0 0 50upx;
+            padding: 0 0 150upx;
         }
     }
 </style>

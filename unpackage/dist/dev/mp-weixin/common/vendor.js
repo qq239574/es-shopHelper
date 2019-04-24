@@ -9043,7 +9043,7 @@ var billDetail = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.vipsTop10 = exports.goodsTop10 = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.vipsTop10 = exports.goodsTop10 = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -9111,6 +9111,45 @@ var getGoodNumberByDate = { //获取指定日期的商品数
 
   type: 'get' };exports.getGoodNumberByDate = getGoodNumberByDate;
 
+
+
+
+var getGoodDataByDate = { //获取指定日期的商品分析图表查询
+  url: '/shop/manage/statistics/goods/chart',
+  data: {
+    start: '',
+    end: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getGoodDataByDate = getGoodDataByDate;
+
+var getVipDataByDate = { //获取指定日期的会员分析
+  url: '/shop/manage/statistics/member',
+  data: {
+    start: '',
+    end: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getVipDataByDate = getVipDataByDate;
+
+var getTradeDataByDate = { //获取指定日期的交易分析
+  url: '/shop/manage/statistics/trade',
+  data: {
+    start: '',
+    end: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getTradeDataByDate = getTradeDataByDate;
+
+
+
+
 var goodsTop10 = { //获取前10销售商品
   url: '/shop/manage/statistics/goods/get-top-good',
   data: {
@@ -9145,7 +9184,7 @@ var vipsTop10 = { //获取前10销售商品
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
 var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js"));
 var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
 var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js"));
@@ -9216,11 +9255,16 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               Object.assign(indexApi[name].data, data),
               Object.assign(indexApi[name].headers || {}, header),
               function (res) {
-                if (res.error == 0) {
+                if (!res.error) {
 
                   resolve(res);
+                } else if (res.error == -10000) {
+                  uni.reLaunch({
+                    url: '/pages/login/index' });
+
                 } else {
                   console.error('接口出错了>', name, res);
+
                   reject(res);
                 }
 
@@ -9237,7 +9281,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               'form',
               Object.assign(indexApi[name].headers || {}, header),
               function (res) {
-                if (res.error == 0) {
+                if (!res.error) {
                   resolve(res);
                 } else {
                   console.error('接口出错了>', name, res);
@@ -9246,6 +9290,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               });
 
             }));case 13:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -9532,9 +9577,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.number_for
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getDate = getDate; /**
-                                                                                                       * 获取当前日期之前，之后几天的日期
-                                                                                                       */
+Object.defineProperty(exports, "__esModule", { value: true });exports.getDate = getDate;exports.GetDateDiff = GetDateDiff; /**
+                                                                                                                                         * 获取当前日期之前，之后几天的日期
+                                                                                                                                         */
 function getDate(before) {
   var time = new Date();
   time.setDate(time.getDate() + before); //获取Day天后的日期 
@@ -9544,6 +9589,13 @@ function getDate(before) {
   m = m > 9 ? m : '0' + m;;
   d = d > 9 ? d : '0' + d;
   return y + "-" + m + "-" + d;
+}
+
+function GetDateDiff(startDate, endDate) {
+  var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
+  var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
+  var dates = Math.abs(startTime - endTime) / (1000 * 60 * 60 * 24);
+  return dates;
 }
 
 /***/ }),
@@ -11532,15 +11584,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = getLineOption1;function getLineOption1(datalist) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = getLineOption1;function getLineOption1(datalist, keylist) {
   return {
     animation: true,
     color: ['#fe802f'],
     grid: {
-      x: 30,
+      x: 45,
       x2: 24,
-      y: 24,
-      y2: 24,
+      y: 25,
+      y2: 25,
       show: true },
 
     tooltip: {
@@ -11550,18 +11602,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     calculable: false,
     xAxis: [{
       type: 'category',
-      data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
-      show: true }],
+      data: keylist,
+      show: true,
+      min: 0 }],
 
     yAxis: [{
       type: 'value',
       show: true,
       splitArea: {
-        show: true } }],
+        show: true },
 
+      min: function min(val) {
+        return Math.floor(val.min * 0.9);
+      },
+      max: function max(val) {
+        return Math.ceil(val.max * 1.1);
+      } }],
 
     series: [{
-      name: '蒸发量',
+      name: '',
       type: 'line',
       smooth: true,
       symbol: "none",
@@ -11648,8 +11707,14 @@ function getLineOption1(datalist) {
       type: 'value',
       show: false,
       splitArea: {
-        show: true } }],
+        show: true },
 
+      min: function min(val) {
+        return val.min * 0.8;
+      },
+      max: function max(val) {
+        return val.max * 1.1;
+      } }],
 
     series: [{
       name: '',

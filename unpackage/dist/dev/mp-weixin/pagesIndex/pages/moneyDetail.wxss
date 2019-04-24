@@ -76,6 +76,6 @@
 .echarts .pager {
   width: 100%;
   background: #fff;
-  padding: 0 0 50rpx;
+  padding: 0 0 150rpx;
 }
 

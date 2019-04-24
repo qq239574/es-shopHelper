@@ -41,9 +41,10 @@
         },
         methods: {
             clickModel() {
-                setData('echarts-detail',this.info);
+                
+                this.Cacher.setData('dataGraph',this.info);
                 uni.navigateTo({
-                    url: './moneyDetail'
+                    url: './moneyDetail?from=dataGraph'
                 })
             },
             formater(num) {

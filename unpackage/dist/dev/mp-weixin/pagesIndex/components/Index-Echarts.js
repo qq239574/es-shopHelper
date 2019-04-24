@@ -56,7 +56,8 @@ var _cache = __webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES
 //
 //
 //
-var _default = { props: { info: { type: Object, default: { title: '', subTitle: "", today: 0, yesterday: 0 } } }, methods: { clickModel: function clickModel() {(0, _cache.setData)('echarts-detail', this.info);uni.navigateTo({ url: './moneyDetail' });}, formater: function formater(num) {
+var _default = { props: { info: { type: Object, default: { title: '', subTitle: "", today: 0, yesterday: 0 } } }, methods: { clickModel: function clickModel() {this.Cacher.setData('dataGraph', this.info);uni.navigateTo({ url: './moneyDetail?from=dataGraph' });},
+    formater: function formater(num) {
       return (0, _formater.number_format)(num);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
