@@ -20,11 +20,13 @@
 
 
 
-var _cache = __webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
 
 
-var searchSection = [];var _default =
-{
+var searchSection = [];
+var DataFrom = {}; //上级页面的数据
+var DataGo = {}; //缓存下级页面的数据
+var _default = {
   components: {
     selectItem: selectItem,
     items: items },
@@ -32,24 +34,58 @@ var searchSection = [];var _default =
   data: function data() {
     return {
       pageId: 'goods',
-      pageLabel: '今天' };
+      pageLabel: '今天',
+      list: [{
+        img: '/static/img/global/product_share_download.png',
+        label: '',
+        value: '',
+        index: '' }] };
+
 
   },
   onLoad: function onLoad(option) {
-    this.pageId = option.show;
+    DataFrom = this.Cacher.getData(option.from);
     this.initPage();
   },
   onShow: function onShow() {
     this.initPage();
   },
   methods: {
-    initPage: function initPage() {//初始化页面
-      searchSection = (0, _cache.getData)('filte-date-toper-' + this.pageId) || [getDate(0), getDate(-1), '今天']; //默认今天
-      this.pageLabel = searchSection[2];
+    initPage: function initPage() {var _this = this; //初始化页面 
+      var api = '';
+      DataGo = this.Cacher.getData(DataGo.go) || {
+        from: 'filterDate',
+        date: [(0, _getDateSection.getDate)(-1), (0, _getDateSection.getDate)(0), '今天'] };
+      ;
+      if (DataFrom.show == 'vip') {
+        api = 'vipsTop10';
+      } else {
+        api = 'goodsTop10';
+      }
+      this.pageLabel = DataGo.date[2];
+      this.Request(api, {
+        type: 4, //	1:今天，2:昨天，3:7天，4:自定义
+        start: DataGo.date[0], //	自定义开始时间
+        end: DataGo.date[1] //	自定义结束时间
+      }).then(function (res) {
+        var arr = [];
+        for (var k in res) {
+          if (k !== 'error') {
+            arr.push(res[k]);
+          }
+        }
+        _this.list = arr.map(function (item) {return {
+            img: '/static/img/global/product_share_download.png',
+            label: item.title,
+            value: item.pay_number_count,
+            index: item.goods_id };});
+
+      });
     },
     filteDate: function filteDate() {
+      DataGo.go = 'filterDate';
       uni.navigateTo({
-        url: './filterDate?from=toper-' + this.pageId });
+        url: './filterDate?from=toper' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

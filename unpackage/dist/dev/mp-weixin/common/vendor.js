@@ -9043,7 +9043,7 @@ var billDetail = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.vipsTop10 = exports.goodsTop10 = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -9079,6 +9079,61 @@ var checkDealInfo = { //查询今天，昨天，7天的信息
 
 
   type: 'get' };exports.checkDealInfo = checkDealInfo;
+
+var getStatisticsData = { //数据概览
+  url: '/shop/manage/statistics/index',
+  data: {
+    is_yesterday: 0 },
+
+  headers: {},
+
+
+  type: 'get' };exports.getStatisticsData = getStatisticsData;
+
+var getGoodStatisticsData = { //商品分析图表查询
+  url: '/shop/manage/statistics/goods/chart',
+  data: {
+    start: 0,
+    end: 0 },
+
+  headers: {},
+
+
+  type: 'get' };exports.getGoodStatisticsData = getGoodStatisticsData;
+
+var getGoodNumberByDate = { //获取指定日期的商品数
+  url: '/shop/manage/statistics/goods/number',
+  data: {
+    date: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getGoodNumberByDate = getGoodNumberByDate;
+
+var goodsTop10 = { //获取前10销售商品
+  url: '/shop/manage/statistics/goods/get-top-good',
+  data: {
+    type: '', //	1:今天，2:昨天，3:7天，4:自定义
+    start: '', //	自定义开始时间
+    end: '' //	自定义结束时间
+  },
+  headers: {},
+
+
+  type: 'get' };exports.goodsTop10 = goodsTop10;
+
+var vipsTop10 = { //获取前10销售商品
+  url: '/shop/manage/statistics/member/get-top-member',
+  data: {
+    type: '', //	1:今天，2:昨天，3:7天，4:自定义
+    start: '', //	自定义开始时间
+    end: '' //	自定义结束时间
+  },
+  headers: {},
+
+
+  type: 'get' };exports.vipsTop10 = vipsTop10;
 
 /***/ }),
 

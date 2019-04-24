@@ -68,11 +68,12 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
     formater: function formater(val, decimals) {//数字格式化
       return (0, _formater.number_format)(val, decimals, '.', ',');
     },
-    clickButton: function clickButton(num, name) {
+    clickButton: function clickButton(num, name, val) {
       this.activeButton = num;
       this.$emit('search', {
         index: num,
-        name: name });
+        name: name,
+        value: val });
 
     },
     clickItem: function clickItem() {

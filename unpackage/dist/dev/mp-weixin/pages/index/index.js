@@ -54,6 +54,19 @@ var newNotice = {};var _default =
 
   data: function data() {
     return {
+      billList: [{
+        name: '待发货',
+        num: 0,
+        cateid: 1 },
+      {
+        name: '待付款',
+        num: 0,
+        cateid: 0 },
+      {
+        name: '维权订单',
+        num: 0,
+        cateid: 0 }],
+
       newNotice: { //最新公告
         label: '',
         date: '' },
@@ -76,18 +89,19 @@ var newNotice = {};var _default =
 
   },
   methods: {
-    searchData: function searchData(val) {var _this = this; //点击今日昨日按钮查询
-      console.log(val);
+    searchData: function searchData(val) {var _this = this; //点击今日昨日按钮查询 
       this.pageLoading();
-      setTimeout(function () {
+      this.Request('checkDealInfo', {
+        type: val.value }).
+      then(function (res) {
         _this.closePageLoading();
         _this.showData = {
-          money: Math.random() * 10000,
-          payedBill: Math.random() * 1000,
-          payedGood: Math.random() * 1000,
-          payedVip: Math.random() * 1000 };
+          money: res.sell_data.yesterday_turnover,
+          payedBill: res.sell_data.yesterday_order_num,
+          payedGood: res.sell_data.yesterday_goods_num,
+          payedVip: res.sell_data.yesterday_pay_member_num || -1 };
 
-      }, 1000);
+      });
     },
     changeShop: function changeShop() {
       this.Cacher.setData('home', {
@@ -150,6 +164,11 @@ var newNotice = {};var _default =
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData(option.from);
     this.shopName = DataFrom.title;
+
+    this.searchData({
+      value: 'today' });
+    //初始化数据框
+
     this.Request('homeInfo').then(function (res) {
       _this2.shopName = res.shop.name;
       _this2.showData = {
@@ -168,6 +187,18 @@ var newNotice = {};var _default =
       _this2.execInfo = { //还没写过期的功能？？？？
         label: '',
         date: '' };
+
+      _this2.billList = [{
+        name: '待发货',
+        num: res.data.order_wait_send,
+        cateid: 1 },
+      {
+        name: '待付款',
+        num: res.data.order_wait_pay,
+        cateid: 0 },
+      {
+        name: '维权订单',
+        num: res.data.order_refund }];
 
     });
     // }

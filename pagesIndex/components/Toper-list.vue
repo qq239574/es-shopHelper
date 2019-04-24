@@ -24,33 +24,17 @@
             pageid: {
                 type: String,
                 default: 'goods'
-            }
-        },
-        data() {
-            return {
-                list: [{
-                    img: '/static/img/global/product_share_download.png',
-                    label: '翻页了；的看法；莱卡对方离开三大；发来看看发来看看',
-                    value: 155698,
+            },
+            list:{
+                type:Array,
+                default:[{
+                    img: '',
+                    label: '',
+                    value: 0,
                     index: 0
-                }, {
-                    img: '/static/img/global/product_share_download.png',
-                    label: '翻页了；的看法；莱卡对方离开三大；发来看看；来说都快疯了开始；联动疯狂是；了',
-                    value: 19898,
-                    index: 1
-                }, {
-                    img: '/static/img/global/product_share_download.png',
-                    label: '翻页了；的看法；莱卡对方离开三大；发来看看；来说都快疯了开始；联动疯狂是；了',
-                    value: 68989898,
-                    index: 2
-                }, {
-                    img: '/static/img/global/product_share_download.png',
-                    label: '翻页了；的看法；莱卡对方离开三大；发来看看；来说都快疯了开始；联动疯狂是；了',
-                    value: 1589898,
-                    index: 3
-                }, ]
+                }]
             }
-        },
+        }, 
     }
 </script>
 

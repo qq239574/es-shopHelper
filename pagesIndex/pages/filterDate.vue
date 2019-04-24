@@ -13,7 +13,7 @@
         </DatePicker>
         <view class="tip">*最大筛选日期长度为90天</view>
         <langButton @click='goBack'>确定</langButton>
-      <van-toast id="van-toast" />
+        <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
 </template>
@@ -28,11 +28,8 @@
     import {
         getDate
     } from '../../components/my-components/getDateSection.js'
-    import {
-        setData
-    } from '../../store/cache.js'
     let searchSection = []; //搜索日期区间
-    let fromPage = ''; //页面传参
+    let DataFrom = {}; //页面传参
     let selectNearDays = 0;
     export default {
         components: {
@@ -64,8 +61,8 @@
             }
         },
         onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
             this.initPage();
-            fromPage = option.from;
         },
         onShow() {
             this.initPage();
@@ -97,9 +94,12 @@
                     searchSection[0] = this.startDate || searchSection[0];
                     searchSection[1] = this.endDate || searchSection[1];
                     if (selectNearDays < 0) {
-                        searchSection[2] = searchSection[0] + '-' + searchSection[1];
+                        searchSection[2] = searchSection[0] + ' ~ ' + searchSection[1];
                     }
-                    setData('filte-date-' + fromPage, searchSection);
+                    this.Cacher.setData('filterDate', {
+                        from: 'filterDate',
+                        date: searchSection
+                    });
                     uni.navigateBack({
                         animationType: 'pop-in',
                         animationDuration: 200

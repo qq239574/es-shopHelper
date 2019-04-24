@@ -29,57 +29,108 @@
         getLineOption3,
         getLineOption4
     } from '../components/Index-EchartsOption.js';
+    import {
+        getDate
+    } from '../../components/my-components/getDateSection.js'
+    let initing = false; //是否正在刷新
     /**
      * 缓存接口数据
      */
-    let dataList1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        dataList2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        dataList3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        dataList4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let dataList1 = [0, 0, 0, 0, 0, 0, 0],
+        dataList2 = [0, 0, 0, 0, 0, 0, 0],
+        dataList3 = [0, 0, 0, 0, 0, 0, 0],
+        dataList4 = [0, 0, 0, 0, 0, 0, 0];
     export default {
         data() {
             return {
                 dataList: [{
                     title: '成交额（元）',
-                    subTitle: '累计总成成交额：5,000,000.00',
-                    today: 15000000,
-                    yesterday: 1336588
+                    subTitle: '累计总成成交额：0',
+                    today: 0,
+                    yesterday: 0
                 }, {
                     title: '付款订单数（个）',
                     subTitle: '',
-                    today: 777,
-                    yesterday: 555
+                    today: 0,
+                    yesterday: 0
                 }, {
                     title: '付款商品数（件）',
                     subTitle: '',
-                    today: 5757,
-                    yesterday: 755
+                    today: 0,
+                    yesterday: 0
                 }, {
                     title: '付款会员数',
                     subTitle: '',
-                    today: 1000,
-                    yesterday: 7457
-                }, ]
+                    today: 0,
+                    yesterday: 0
+                }, ],
             }
         },
         onLoad() {
-          this.initPage()
+            this.initPage()
         },
-        onShow(){
+        onShow() {
             this.initPage()
         },
         methods: {
             initPage() {
-                this.initLine1([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                this.initLine2([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                this.initLine3([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                this.initLine4([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                setTimeout(() => { //数据请求后在此初始化
-                    this.initLine1([1, 4.9, 7.0, 23.2, 15.6, 76.7, 35.6, 12.2, 32.6, 20.0, 6.4, 3.3]);
-                    this.initLine2([2.0, 4.9, 7.0, 23.2, 25.6, 11, 1, 5, 32.6, 20.0, 6.4, 3.3]);
-                    this.initLine3([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 5.6, 162.2, 32.6, 20.0, 6.4, 3.3]);
-                    this.initLine4([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 6.4, 3.3]);
-                }, 2000);
+                if (!initing) {
+                    initing = true;
+                    this.pageLoading();
+                    this.initLine1([0, 0, 0, 0, 0, 0, 0]);
+                    this.initLine2([0, 0, 0, 0, 0, 0, 0]);
+                    this.initLine3([0, 0, 0, 0, 0, 0, 0]);
+                    this.initLine4([0, 0, 0, 0, 0, 0, 0]);
+                    this.Request('getStatisticsData', { //今天的数据
+                        is_yesterday: 0
+                    }).then(res => {
+                        this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
+                        this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
+                        this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
+                        this.closePageLoading();
+                        this.dataList[0].today = res.order_pay_price;
+                        this.dataList[1].today = res.order_pay_count;
+                        this.dataList[3].today = res.order_member_count;
+                        initing = false;
+                        this.dataList=[...this.dataList];
+                    });
+                    this.Request('getStatisticsData', { //昨天的数据
+                        is_yesterday: 1
+                    }).then(res => {
+                        this.dataList[0].yesterday = res.order_pay_price;
+                        this.dataList[1].yesterday = res.order_pay_count;
+                        this.dataList[3].yesterday = res.order_member_count;
+                        initing = false;
+                        this.dataList=[...this.dataList];
+                    })
+                    this.Request('getGoodStatisticsData', { //7天的商品曲线
+                        start: getDate(-6),
+                        end: getDate(0)
+                    }).then(res => {
+                        let arr = [],
+                            tmp = res.data.graph;
+                        for (let key in tmp) {
+                            arr.push(tmp[key].goods_paid_count)
+                        }
+                        this.initLine3(arr); //付款商品数
+                    })
+                    this.Request('getGoodNumberByDate', { //今天的商品数
+                        date: getDate(0)
+                    }).then(res => {
+                        this.dataList[2].today = res.data.goods_paid_count;
+                        this.dataList=[...this.dataList];
+                    })
+                    this.Request('getGoodNumberByDate', { //昨天的商品数
+                        date: getDate(-1)
+                    }).then(res => {
+                        this.dataList[2].yesterday = res.data.goods_paid_count;
+                        this.dataList=[...this.dataList];
+                    })
+                } else {
+                    setTimeout(() => {
+                        initing = false;
+                    }, 3000)
+                }
             },
             initLine1(datalist) { //初始化第1个echarts,入参为数据数组
                 dataList1 = datalist;

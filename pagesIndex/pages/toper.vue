@@ -1,7 +1,7 @@
 <template>
     <view class='toper page'>
         <selectItem label='筛选' :value='pageLabel' @click='filteDate'></selectItem>
-        <items :pageid='pageId'></items>
+        <items :list='list' :pageid='pageId'></items>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -11,9 +11,11 @@
     import selectItem from '../../components/my-components/editBlock-SelectItem'
     import items from '../components/Toper-list.vue'
     import {
-        getData
-    } from '../../store/cache.js'
+        getDate
+    } from '../../components/my-components/getDateSection.js'
     let searchSection = [];
+    let DataFrom = {}; //上级页面的数据
+    let DataGo = {}; //缓存下级页面的数据
     export default {
         components: {
             selectItem,
@@ -22,24 +24,58 @@
         data() {
             return {
                 pageId: 'goods',
-                pageLabel: '今天'
+                pageLabel: '今天',
+                list: [{
+                    img: '/static/img/global/product_share_download.png',
+                    label: '',
+                    value: '',
+                    index: ''
+                }, ]
             }
         },
         onLoad(option) {
-            this.pageId = option.show;
+            DataFrom = this.Cacher.getData(option.from);
             this.initPage();
         },
         onShow() {
             this.initPage();
         },
         methods: {
-            initPage() { //初始化页面
-                searchSection = getData('filte-date-toper-'+this.pageId) || [getDate(0), getDate(-1), '今天']; //默认今天
-                this.pageLabel = searchSection[2];
+            initPage() { //初始化页面 
+                let api = '';
+                DataGo = this.Cacher.getData(DataGo.go) || {
+                    from: 'filterDate',
+                    date: [getDate(-1), getDate(0), '今天']
+                };;
+                if (DataFrom.show == 'vip') {
+                    api = 'vipsTop10';
+                } else {
+                    api = 'goodsTop10';
+                }
+                this.pageLabel = DataGo.date[2];
+                this.Request(api, {
+                    type: 4, //	1:今天，2:昨天，3:7天，4:自定义
+                    start: DataGo.date[0], //	自定义开始时间
+                    end: DataGo.date[1] //	自定义结束时间
+                }).then(res => {
+                    let arr = [];
+                    for (let k in res) {
+                        if (k !== 'error') {
+                            arr.push(res[k]);
+                        }
+                    }
+                    this.list = arr.map(item => ({
+                        img: '/static/img/global/product_share_download.png',
+                        label: item.title,
+                        value: item.pay_number_count,
+                        index: item.goods_id
+                    }))
+                })
             },
             filteDate() {
+                DataGo.go = 'filterDate';
                 uni.navigateTo({
-                    url: './filterDate?from=toper-' + this.pageId
+                    url: './filterDate?from=toper'
                 })
             },
         },

@@ -33,42 +33,46 @@ var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/e
 
 
 
-var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOption.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));}; /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                               * 缓存接口数据
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                               */var dataList1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList3 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],dataList4 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];var _default = { data: function data() {return { dataList: [{ title: '成交额（元）', subTitle: '累计总成成交额：5,000,000.00', today: 15000000, yesterday: 1336588 }, { title: '付款订单数（个）',
+var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOption.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js");
+
+
+
+
+
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};
+
+
+var initing = false; //是否正在刷新
+/**
+ * 缓存接口数据
+ */
+var dataList1 = [0, 0, 0, 0, 0, 0, 0],
+dataList2 = [0, 0, 0, 0, 0, 0, 0],
+dataList3 = [0, 0, 0, 0, 0, 0, 0],
+dataList4 = [0, 0, 0, 0, 0, 0, 0];var _default =
+{
+  data: function data() {
+    return {
+      dataList: [{
+        title: '成交额（元）',
+        subTitle: '累计总成成交额：0',
+        today: 0,
+        yesterday: 0 },
+      {
+        title: '付款订单数（个）',
         subTitle: '',
-        today: 777,
-        yesterday: 555 },
+        today: 0,
+        yesterday: 0 },
       {
         title: '付款商品数（件）',
         subTitle: '',
-        today: 5757,
-        yesterday: 755 },
+        today: 0,
+        yesterday: 0 },
       {
         title: '付款会员数',
         subTitle: '',
-        today: 1000,
-        yesterday: 7457 }] };
+        today: 0,
+        yesterday: 0 }] };
 
 
   },
@@ -80,16 +84,63 @@ var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | co
   },
   methods: {
     initPage: function initPage() {var _this = this;
-      this.initLine1([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      this.initLine2([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      this.initLine3([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      this.initLine4([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      setTimeout(function () {//数据请求后在此初始化
-        _this.initLine1([1, 4.9, 7.0, 23.2, 15.6, 76.7, 35.6, 12.2, 32.6, 20.0, 6.4, 3.3]);
-        _this.initLine2([2.0, 4.9, 7.0, 23.2, 25.6, 11, 1, 5, 32.6, 20.0, 6.4, 3.3]);
-        _this.initLine3([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 5.6, 162.2, 32.6, 20.0, 6.4, 3.3]);
-        _this.initLine4([2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 35.6, 62.2, 32.6, 20.0, 6.4, 3.3]);
-      }, 2000);
+      if (!initing) {
+        initing = true;
+        this.pageLoading();
+        this.initLine1([0, 0, 0, 0, 0, 0, 0]);
+        this.initLine2([0, 0, 0, 0, 0, 0, 0]);
+        this.initLine3([0, 0, 0, 0, 0, 0, 0]);
+        this.initLine4([0, 0, 0, 0, 0, 0, 0]);
+        this.Request('getStatisticsData', { //今天的数据
+          is_yesterday: 0 }).
+        then(function (res) {
+          _this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
+          _this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
+          _this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
+          _this.closePageLoading();
+          _this.dataList[0].today = res.order_pay_price;
+          _this.dataList[1].today = res.order_pay_count;
+          _this.dataList[3].today = res.order_member_count;
+          initing = false;
+          _this.dataList = _toConsumableArray(_this.dataList);
+        });
+        this.Request('getStatisticsData', { //昨天的数据
+          is_yesterday: 1 }).
+        then(function (res) {
+          _this.dataList[0].yesterday = res.order_pay_price;
+          _this.dataList[1].yesterday = res.order_pay_count;
+          _this.dataList[3].yesterday = res.order_member_count;
+          initing = false;
+          _this.dataList = _toConsumableArray(_this.dataList);
+        });
+        this.Request('getGoodStatisticsData', { //7天的商品曲线
+          start: (0, _getDateSection.getDate)(-6),
+          end: (0, _getDateSection.getDate)(0) }).
+        then(function (res) {
+          var arr = [],
+          tmp = res.data.graph;
+          for (var key in tmp) {
+            arr.push(tmp[key].goods_paid_count);
+          }
+          _this.initLine3(arr); //付款商品数
+        });
+        this.Request('getGoodNumberByDate', { //今天的商品数
+          date: (0, _getDateSection.getDate)(0) }).
+        then(function (res) {
+          _this.dataList[2].today = res.data.goods_paid_count;
+          _this.dataList = _toConsumableArray(_this.dataList);
+        });
+        this.Request('getGoodNumberByDate', { //昨天的商品数
+          date: (0, _getDateSection.getDate)(-1) }).
+        then(function (res) {
+          _this.dataList[2].yesterday = res.data.goods_paid_count;
+          _this.dataList = _toConsumableArray(_this.dataList);
+        });
+      } else {
+        setTimeout(function () {
+          initing = false;
+        }, 3000);
+      }
     },
     initLine1: function initLine1(datalist) {//初始化第1个echarts,入参为数据数组
       dataList1 = datalist;

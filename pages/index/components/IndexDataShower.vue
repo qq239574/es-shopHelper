@@ -7,9 +7,9 @@
                 <view class="num">{{formater(info.money,2)}}</view>
             </view>
             <view class="buttonbox childbox">
-                <view class="day today" :class='activeButton==0?"active":""' @click='clickButton(0,"今天")'>今天</view>
-                <view class="day yesterday" :class='activeButton==1?"active":""' @click='clickButton(1,"昨天")'>昨天</view>
-                <view class="day sevenday" :class='activeButton==2?"active":""' @click='clickButton(2,"七日")'>七日</view>
+                <view class="day today" :class='activeButton==0?"active":""' @click='clickButton(0,"今天","today")'>今天</view>
+                <view class="day yesterday" :class='activeButton==1?"active":""' @click='clickButton(1,"昨天","yesterday")'>昨天</view>
+                <view class="day sevenday" :class='activeButton==2?"active":""' @click='clickButton(2,"七日","7day")'>七日</view>
             </view>
             <view class="datalist childbox" @click='clickItem'>
                 <view class="item">
@@ -55,14 +55,15 @@
             }
         },
         methods: {
-            formater(val, decimals) {//数字格式化
+            formater(val, decimals) { //数字格式化
                 return number_format(val, decimals, '.', ',');
             },
-            clickButton(num, name) {
+            clickButton(num, name, val) {
                 this.activeButton = num;
                 this.$emit('search', {
                     index: num,
-                    name
+                    name,
+                    value: val
                 })
             },
             clickItem() {

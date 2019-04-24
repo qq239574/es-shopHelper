@@ -16,7 +16,7 @@
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
-        <goodsBlock @click='toBill'></goodsBlock>
+        <goodsBlock :list='billList' @click='toBill'></goodsBlock>
         <apps @click='toApp'></apps>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -44,6 +44,19 @@
         },
         data() {
             return {
+                billList: [{
+                    name: '待发货',
+                    num: 0,
+                    cateid: 1
+                }, {
+                    name: '待付款',
+                    num: 0,
+                    cateid: 0
+                }, {
+                    name: '维权订单',
+                    num: 0,
+                    cateid:0
+                }],
                 newNotice: { //最新公告
                     label: '',
                     date: ''
@@ -66,18 +79,19 @@
             }
         },
         methods: {
-            searchData(val) { //点击今日昨日按钮查询
-                console.log(val);
+            searchData(val) { //点击今日昨日按钮查询 
                 this.pageLoading();
-                setTimeout(() => {
+                this.Request('checkDealInfo', {
+                    type: val.value
+                }).then(res => {
                     this.closePageLoading();
                     this.showData = {
-                        money: Math.random() * 10000,
-                        payedBill: Math.random() * 1000,
-                        payedGood: Math.random() * 1000,
-                        payedVip: Math.random() * 1000,
+                        money: res.sell_data.yesterday_turnover,
+                        payedBill: res.sell_data.yesterday_order_num,
+                        payedGood: res.sell_data.yesterday_goods_num,
+                        payedVip: res.sell_data.yesterday_pay_member_num || -1,
                     }
-                }, 1000)
+                });
             },
             changeShop() {
                 this.Cacher.setData('home', {
@@ -129,7 +143,7 @@
                 this.Cacher.setData('home', {
                     from: 'home',
                     ...val,
-                    list:newNotice
+                    list: newNotice
                 }); //页面传参
                 uni.navigateTo({
                     url: '../../pagesIndex/pages/noticeList?from=home'
@@ -139,7 +153,12 @@
         onLoad(option) {
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
-            this.shopName = DataFrom.title; 
+            this.shopName = DataFrom.title;
+
+            this.searchData({
+                value: 'today'
+            }); //初始化数据框
+
             this.Request('homeInfo').then(res => {
                 this.shopName = res.shop.name;
                 this.showData = {
@@ -150,15 +169,27 @@
                 }
                 newNotice = res.notice.sort((a, b) => {
                     return new Date('2019-' + a.date) - new Date('2019-' + b.date)
-                }); 
+                });
                 this.newNotice = {
                     label: newNotice[0].title,
                     date: newNotice[0].date
                 }
-                this.execInfo = {//还没写过期的功能？？？？
+                this.execInfo = { //还没写过期的功能？？？？
                     label: '',
                     date: ''
                 }
+                this.billList = [{
+                    name: '待发货',
+                    num: res.data.order_wait_send,
+                    cateid: 1
+                }, {
+                    name: '待付款',
+                    num: res.data.order_wait_pay,
+                    cateid: 0
+                }, {
+                    name: '维权订单',
+                    num: res.data.order_refund
+                }]
             })
             // }
         }

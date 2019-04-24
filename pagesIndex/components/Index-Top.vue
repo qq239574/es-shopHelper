@@ -1,7 +1,7 @@
 <template>
     <view class='index-top'>
         <view class="echarts-header">
-            <view class="echarts-header__title">排行榜</view> 
+            <view class="echarts-header__title">排行榜</view>
         </view>
         <view class="rankList">
             <view class="rank__item top-goods" @click='toTop("goods")'>
@@ -22,8 +22,12 @@
     export default {
         methods: {
             toTop(val) {
+                this.Cacher.setData('dataGraph', {
+                    from: 'dataGraph',
+                    show: val
+                })
                 uni.navigateTo({
-                    url: './toper?show='+val
+                    url: './toper?from=dataGraph'
                 })
             },
         },
@@ -34,10 +38,10 @@
     .index-top {
         width: 100%;
         flex-wrap: wrap;
-        margin:10upx auto 0;
+        margin: 10upx auto 0;
         justify-content: space-around;
         .echarts-header {
-            width:710upx;
+            width: 710upx;
             height: 77upx;
             color: #000;
             font-weight: 500;

@@ -32,8 +32,12 @@ var _default =
 {
   methods: {
     toTop: function toTop(val) {
+      this.Cacher.setData('dataGraph', {
+        from: 'dataGraph',
+        show: val });
+
       uni.navigateTo({
-        url: './toper?show=' + val });
+        url: './toper?from=dataGraph' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
