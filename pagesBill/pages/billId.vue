@@ -9,6 +9,8 @@
 
 <script>
     import longButton from '../../components/my-components/LongButton.vue'
+    let DataFrom={};
+    let cache='';
     export default {
         components: {
             longButton
@@ -22,10 +24,15 @@
         },
         methods: {
             sure() {
+                this.Cacher.setData('billId',{
+                    billId:cache
+                })
                 uni.navigateBack();
             },
             getId(val) { 
                 this.disable = !val.detail.value.length;
+                 
+                cache=val.detail.value
             }
         },
     }

@@ -9,7 +9,7 @@ export const shoplist = { //获取店铺列表
     },
     type: 'get'
 }
-export const homeInfo = {
+export const homeInfo = { //首页信息
     url: '/shop/manage/dashboard',
     data: {},
     headers: {
@@ -21,7 +21,17 @@ export const noticeList = { //获取公告列表
     url: '/shop/manage/site/notice/list',
     data: {},
     headers: {
-        title: ''
+         
+    },
+    type: 'get'
+}
+export const checkDealInfo = {//查询今天，昨天，7天的信息
+    url: '/shop/manage/dashboard/deal-info',
+    data: {
+        type: 'today'
+    },
+    headers: {
+         
     },
     type: 'get'
 }

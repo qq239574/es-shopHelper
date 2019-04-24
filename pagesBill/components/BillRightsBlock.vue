@@ -1,24 +1,24 @@
 <template>
-    <view class='card--temp' v-if='rights.status' @click='clickBill'>
+    <view class='card--temp' @click='clickBill'>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>商品总计</view>
-            <view class='card--info__row__status'>{{rights.status}}</view>
+            <view class='card--info__row__status'>￥{{rights.goodTotal}}</view>
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>会员折扣</view>
-            <view class='card--info__row__status'>{{rights.status}}</view>
+            <view class='card--info__row__status'>￥-{{rights.vipCount}}</view>
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>运费</view>
-            <view class='card--info__row__status'>{{rights.status}}</view>
+            <view class='card--info__row__status'>￥{{rights.sendCost}}</view>
         </view>
         <view class='card--info__row'>
-            <view class='card--info__row__tile' style='color:#fd6b3e;'>合计</view>
-            <view class='card--info__row__status total'>{{rights.status}}</view>
+            <view class='card--info__row__tile'>合计</view>
+            <view class='card--info__row__status total' style='color:#fd6b3e;'>￥{{rights.total}}</view>
         </view>
-        <view class='card--info__row foot'>
+        <view class='card--info__row foot' v-if='rights.rightStatus==1'>
             <view class='card--info__row__tile'>维权信息</view>
-            <view class='card--info__row__status' style='color:#fd6b3e;'>{{rights.status}}</view>
+            <view class='card--info__row__status' style='color:#fd6b3e;'>维权中</view>
         </view>
     </view>
 </template>
@@ -33,7 +33,7 @@
                     addtion: []
                 })
             }
-        },
+        }, 
         methods: { 
             clickBill(){
                 this.$emit('click',{

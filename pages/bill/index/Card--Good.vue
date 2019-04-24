@@ -43,30 +43,20 @@
                 type: Array,
                 default () {
                     return [{
-                        info: {
-                            name: '张三',
-                            provide: '到店自提',
-                            num: 4,
-                            pay: 2165653.453,
-                        },
-                        bill: {
-                            billId: 'ES204565656526265656565',
-                            billDate: '2018-05-12 15:23:12',
-                            billType: 0 //订单类型，0：分销订单，1：普通订单
-                        },
-                        goodsList: [{
-                            img: '/static/img/global/tmp.png',
-                            goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-                            color: '浅绿色',
-                            size: 'S码',
-                            num: 2,
-                            price: '15455.2',
-                            specifications: 'single', //单规格，multi多规格
-                        }]
+                        img: '/static/img/global/tmp.png',
+                        goodName: '',
+                        color: '',
+                        size: '',
+                        num: 0,
+                        price: '',
+                        specifications: 'single', //单规格，multi多规格
                     }]
                 }
             }
         },
+        mounted(){
+            console.log('yyyyyyyyyy',this.goodsList)
+        }
     }
 </script>
 

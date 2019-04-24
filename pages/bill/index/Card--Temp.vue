@@ -1,12 +1,12 @@
 <template>
-    <view class='card--temp' v-if='rights.subStatus' @click='clickBill'>
-        <view class='card--info__row'>
+    <view class='card--temp' v-if='rights.subStatus==1' @click='clickBill'>
+        <view class='card--info__row' v-if='rights.subStatus==1'>
             <view class='card--info__row__tile'>维权状态</view>
             <view class='card--info__row__status'>{{rights.status}}</view>
         </view>
         <view class="button-group">
             <myButton :badge='rights.addition' @click='clickButton("维权备注")'>备注</myButton>
-            <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
+            <myButton type='primary' @click='clickButton("维权中")' v-if='rights.subStatus==1'>维权中</myButton>
         </view>
     </view>
 </template>
@@ -78,7 +78,7 @@
             height: 91upx;
             width: 100%;
             my-button {
-                margin: 0 0 0 20upx;
+                margin: 15upx 0 0 20upx;
             }
         }
     }

@@ -29,8 +29,7 @@ export default {
 		});
 	},
 
-	post(url, data, contentType, headers, callback) {
-		console.log('uni post >>', url, data, contentType, headers, )
+	post(url, data, contentType, headers, callback) { 
 		switch (contentType) {
 			case "form":
 				var headerObj = {

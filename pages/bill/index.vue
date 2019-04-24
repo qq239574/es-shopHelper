@@ -37,7 +37,7 @@
         index: 0,
         name: "代付款"
     } //{cateid: 0, index: 0, name: "代付款"}
-    let cacheBill = {}; //缓存将要操作的订单
+    let cacheBill = {}; //缓存将要操作的订单 
     export default {
         components: {
             TabCard,
@@ -109,23 +109,26 @@
         methods: {
             sure() {
                 this.surePaying = true;
-                console.log('object', this.modelTheme)
+                let apiNames = ['payBill', 'receiveBill'];
+                let apiname = '';
                 if (this.modelTheme.state == 'pay') { //确认付款
-                    this.Request('payBill', {
-                        id: cacheBill.bill.bill.id, //订单id
-                        password: surePassword
-                    }).then(res => {
-                        this.Toast(this.modelTheme.success);
-                        this.initPage(); 
-                        this.showModel = false;
-                    }).catch(res => {
-                        this.error = true;
-                    }).finally(res => {
-                        this.surePaying = false;
-                        this.closePageLoading();
-                    })
+                    apiname = apiNames[0];
                 } else if (this.modelTheme.state == 'receive') { //确认收货
+                    apiname = apiNames[1];
                 }
+                this.Request(apiname, {
+                    id: cacheBill.bill.bill.id, //订单id
+                    password: surePassword
+                }).then(res => {
+                    this.Toast(this.modelTheme.success);
+                    this.initPage();
+                    this.showModel = false;
+                }).catch(res => {
+                    this.error = true;
+                }).finally(res => {
+                    this.surePaying = false;
+                    this.closePageLoading();
+                })
             },
             cancel() {
                 this.showModel = false;
@@ -136,9 +139,6 @@
                 this.error = false;
             },
             initPage() {
-                if (DataFrom.from) {
-                    DataFrom = this.Cacher.getData(DataFrom.from)
-                }
                 if (DataFrom.from == 'home') {
                     if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
                         this.tabIndex = DataFrom.cateid;
@@ -150,7 +150,7 @@
                     this.searchValue = searchData.value || '';
                     this.tabIndex = DataFrom.cateid || 0;
                 } else {
-                    this.tabIndex = 0;
+                    this.tabIndex = curTab.cateid;
                 }
                 getBillList.call(this, this.tabIndex, {
                     keywords: searchData.value || '',
@@ -161,13 +161,16 @@
                 });
             },
             tabChange(tab) {
+                this.pageLoading();
                 curTab = tab;
+                console.log(tab)
                 getBillList.call(this, tab.cateid, {
                     keywords: searchData.value || '',
                     page: 1,
                     pageSize: 20
                 }).then(res => {
                     this.billList = res;
+                    this.closePageLoading();
                 });
             },
             search(val) {
@@ -187,7 +190,6 @@
             },
             clickBill(val) {
                 cacheBill = val;
-                console.log(val, '******************')
                 this.closePageLoading();
                 this.Cacher.setData('bill', {
                     from: 'bill',

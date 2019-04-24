@@ -1,0 +1,16 @@
+.echarts {
+  background: #fff;
+}
+.echarts view {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.echarts .ec-canvas {
+    width: 100% !important;
+    height: 80% !important;
+    position: absolute;
+    top: 10%;
+}
+

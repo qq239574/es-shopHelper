@@ -1,0 +1,68 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.6.4",
+	"appid": "wxea0039639afb8d4c",
+	"projectname": "MobileManager",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"id": -1,
+					"name": "indezx",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bill",
+					"pathName": "pages/bill/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "send",
+					"pathName": "pagesBill/pages/billProvide",
+					"query": "send",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "id",
+					"pathName": "pagesBill/pages/billId",
+					"query": "send",
+					"scene": null
+				}
+			]
+		}
+	}
+}

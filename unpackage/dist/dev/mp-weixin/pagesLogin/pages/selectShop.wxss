@@ -1,0 +1,23 @@
+.my-shops.data-v-3417471f {
+  background: #fff;
+  padding-bottom: 200rpx;
+}
+.my-shops .foot.data-v-3417471f {
+    position: fixed;
+    height: 125rpx;
+    width: 100%;
+    background: #fff;
+    border-top: 1rpx solid #eee;
+    bottom: 0;
+    left: 0;
+    padding: 15rpx 0 0;
+}
+.my-shops .h1.data-v-3417471f {
+    height: 116rpx;
+    width: 702rpx;
+    margin: 0 auto;
+    line-height: 110rpx;
+    font-size: 28rpx;
+    color: #495576;
+}
+

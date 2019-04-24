@@ -1,0 +1,73 @@
+.coupon-item.data-v-5d1a0730 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-bottom: 20rpx;
+}
+.coupon-item .border.data-v-5d1a0730 {
+    width: 540rpx;
+    height: 220rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border-radius: 11rpx;
+    overflow: hidden;
+    position: relative;
+    background: #fef8f8;
+    margin: 0 24rpx 0 20rpx;
+}
+.coupon-item .border .top.data-v-5d1a0730,
+    .coupon-item .border .bottom.data-v-5d1a0730 {
+      width: 510rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      position: absolute;
+      left: 15rpx;
+}
+.coupon-item .border .top.data-v-5d1a0730 {
+      padding: 28rpx 40rpx 0;
+}
+.coupon-item .border .top .title.data-v-5d1a0730 {
+        font-size: 29rpx;
+        height: 29rpx;
+        line-height: 29rpx;
+        margin: 0 0 24rpx;
+        font-weight: 600;
+        color: #333;
+}
+.coupon-item .border .top .money.data-v-5d1a0730 {
+        font-size: 20rpx;
+        height: 45rpx;
+        line-height: 45rpx;
+        margin: 0 0 24rpx;
+        font-weight: 600;
+        color: #fb6638;
+}
+.coupon-item .border .top .money .num.data-v-5d1a0730 {
+          font-size: 45rpx;
+          height: 45rpx;
+          line-height: 45rpx;
+          font-weight: 700;
+          display: inline;
+          color: #fb6638;
+}
+.coupon-item .border .bottom.data-v-5d1a0730 {
+      height: 66rpx;
+      bottom: 0;
+      line-height: 66rpx;
+      padding: 0 40rpx;
+      font-size: 24rpx;
+      color: #9da3ae;
+      border-top: 1rpx dashed #fddbd2;
+}
+.coupon-item .buttons.data-v-5d1a0730 {
+    margin: auto 0;
+}
+

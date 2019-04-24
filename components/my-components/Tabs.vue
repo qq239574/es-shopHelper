@@ -12,7 +12,7 @@
                 type: Array,
                 default: [{
                         cateid: 0,
-                        name: "代付款"
+                        name: "代付款", 
                     },
                     {
                         cateid: 1,
@@ -39,12 +39,15 @@
         },
         watch:{
             index(){
-                this.cateCurrentIndex=this.index;
+                this.cateCurrentIndex=this.index; console.log(this.index,'this.index')
             }
         },
         mounted(){
             this.cateCurrentIndex=this.index;
             console.log(this.index,'this.index')
+        },
+        onShow(){
+            console.log('hahahhahahahahahahh')
         },
         computed: {
             getWidth() {

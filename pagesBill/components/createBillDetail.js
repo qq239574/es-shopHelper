@@ -1,58 +1,143 @@
-export default function () {
+export default function (result) {
+    let commission = result.commission || { //上级分销商信息
+        "agent_level1": { //一级上线分销商信息
+            "nickname": "", //分销商昵称
+            "avatar": "", //分销商头像
+            "level": "", //分销商层级
+            "mobile": "", //分销商手机号
+            "commission": "" //该订单分销商获得佣金
+        },
+        "agent_level2": { //二级上线分销商信息
+            "nickname": "",
+            "avatar": "",
+            "level": "",
+            "mobile": "",
+            "commission": ""
+        },
+        "agent_level3": { //三级上线分销商信息
+            "nickname": "",
+            "avatar": "",
+            "level": "",
+            "mobile": "",
+            "commission": ""
+        },
+        "commission_status": -1 //分销状态 0待入账 1已入账
+    }; //分销状态
+    let commisionState = ['待入账', '已入账']; //分销状态
+    let extra_price_package = result.order.extra_price_package || { //优惠活动
+        full: 0, //满减
+        member_discount: 0, //会员折扣
+        member_price: 0 //会员价
+    };
+    let refunding = 0; //是否维权状态//维权状态 0 无维权 1 正在维权 2 维权处理完成
     return {
         billInfo1: {
-            billStatus: '等待买家收货',
-            billPrice: '233.55',
+            billStatusText: result.order.status_text, //订单状态
+            billPrice: result.order.pay_price, //订单支付金额
+            billStatus: result.order.status, //订单状态码  -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
             image: '/static/img/global/vip-manage.png'
         },
         billInfo2: {
-            billId: '', //订单编号
-            billStatus: '', //订单状态
-            billType: '', //订单类型
-            billOrigin: '', //订单来源
-            payType: '' //支付方式
+            billId: result.order.order_no, //订单编号
+            billStatusText: result.order.status_text, //订单状态
+            billStatus: result.order.status, //订单状态 -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
+            billTypeText: result.order.type_text, //订单类型  1为实体 2为虚拟物品 3 卡密 4预约 5核销
+            billOriginText: result.order.create_from_text, //订单来源
+            billOrigin: result.order.create_from, //订单来源 0: 公众号 1: 小程序 2: wap/h5 3: app 4 :pc
+            payTypeText: result.order.pay_type_text, //支付方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付
+            payType: result.order.pay_type, //支付方式
         },
         billInfo3: {
-            billTime: '', //下单时间
-            payTime: '', //付款时间
-            receiveTime: '', //收货时间
-            payType: '' //付款方式
+            billTime: result.order.create_time, //下单时间
+            payTime: result.order.pay_time, //付款时间
+            receiveTime: result.order.finish_time, //收货时间
+            payTypeText: result.order.pay_type_text, //支付方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付
+            payType: result.order.pay_type, //支付方式
         },
         billInfo4: {
-            buyer: '', //买家
-            addtion: '', //买家备注
-            provideType: '', //配送方式
-            receiver: '', //收货人
-            address: '' //收货地址
+            buyer: result.order.member_nickname, //买家
+            addtion: result.order.remark_buyer, //买家备注
+            provideTypeText: result.order.dispatch_type_text, //配送方式
+            provideType: result.order.dispatch_type, //配送方式 0 无需发货 1快递 2自提
+            receiver: result.order.buyer_name, //收货人
+            address: result.order.address_full //收货地址
         },
         billInfo5: {
-            moneyState: '', //佣金状态
-            firstOne: '', //一级分销商
-            secondOne: '', //二级分销商
-            thirdOne: '' //三级分销商
+            moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
+            firstOne: {
+                name: commission.nickname,
+                tel: commission.mobile,
+                money: commission.commission
+            }, //一级分销商
+            secondOne: {
+                name: commission.nickname,
+                tel: commission.mobile,
+                money: commission.commission
+            }, //二级分销商
+            thirdOne: {
+                name: commission.nickname,
+                tel: commission.mobile,
+                money: commission.commission
+            } //三级分销商
         },
-        billInfo6: [{
-            goodsInfo: [{ //商品信息
-                img: '/static/img/global/tmp.png', //商品图片
-                goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-                color: '浅绿色',
-                size: 'S码',
-                num: 2, //商品数量
-                price: '15455.2' //价格
-            }],
-            billInfo: { //订单信息
-                sendTime: '', //发货时间
-                sendComp: '', //物流公司
-                sendId: '', //快递单号
-                sendStatus: '' //发货信息
+        billInfo6: [...result.goods_waits.map(item => { //未发货的商品
+            if (item.refund_status != 0) {
+                refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
             }
-        }],
+            return {
+                goodsInfo: [{ //商品信息
+                    img: item.thumb, //商品图片
+                    goodName: item.title, //商品名
+                    color: item.option_title,
+                    size: '',
+                    num: item.total, //商品数量
+                    price: item.price_unit, //价格
+                    discount: item.price_discount, //折扣
+                    total: item.price_original, //小计
+                    refund_status: item.refund_status, //维权状态 0 无维权 1 正在维权 2 维权处理完成
+                    refund_id: item.refund_id, //维权id 0：无维权
+                }],
+                billInfo: { //订单信息 
+                    sendTime: '', //发货时间
+                    sendComp: '', //物流公司
+                    sendId: '', //快递单号
+                    sendStatus: '未发货' //发货信息
+                }
+            }
+        }), ...result.package_send.map(item => { //已发货的包裹
+
+            return {
+                goodsInfo: item.order_goods.map((val, key) => { //商品信息
+                    if (val.refund_status != 0) {
+                        refunding = val.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
+                    }
+                    return {
+                        img: val.thumb, //商品图片
+                        goodName: val.title, //商品名
+                        color: val.option_title,
+                        size: '',
+                        num: val.total, //商品数量
+                        price: val.price_unit, //价格
+                        discount: val.price_discount, //折扣
+                        total: val.price_original, //小计
+                        refund_status: val.refund_status,
+                        refund_id: val.refund_id
+                    }
+                }),
+                billInfo: { //订单信息 
+                    sendTime: item.send_time, //发货时间
+                    sendComp: item.express_name, //物流公司
+                    sendId: item.express_sn, //快递单号
+                    sendStatus: '' //发货信息
+                }
+            }
+        })],
         billInfo7: {
-            goodTotal: '', //商品总计
-            vipCount: '', //会员折扣
-            sendCost: '', //运费
-            total: '', //合计
-            rightStatus: '' //维权信息
+            goodTotal: result.order.goods_price, //商品总计
+            vipCount: extra_price_package.member_discount, //会员折扣
+            sendCost: result.order.dispatch_price, //运费
+            total: result.order.pay_price, //合计
+            rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成
         },
     }
 }

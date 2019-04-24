@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "会员详情",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#203352",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "tabs": "/components/my-components/Tabs",
+    "vip-base-info": "/pagesIndex/components/Vip-BaseInfo",
+    "vip-bussiness": "/pagesIndex/components/Vip-Business",
+    "vip-commission": "/pagesIndex/components/Vip-CommissionInfo",
+    "vip-win": "/pagesIndex/components/Vip-Detail-Window"
+  }
+}

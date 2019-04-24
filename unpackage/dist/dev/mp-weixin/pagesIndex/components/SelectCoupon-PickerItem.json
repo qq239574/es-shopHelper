@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "number-box": "/components/my-components/Number-Box"
+  },
+  "component": true
+}

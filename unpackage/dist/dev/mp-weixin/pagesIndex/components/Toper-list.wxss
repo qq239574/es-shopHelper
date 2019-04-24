@@ -1,0 +1,38 @@
+.toper-list.data-v-90b8fc8e {
+  width: 702rpx;
+  margin: 20rpx auto;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+.toper-list .toper-header.data-v-90b8fc8e {
+    width: 100%;
+    height: 68rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    background: #fff;
+}
+.toper-list .toper-header .th.data-v-90b8fc8e {
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      height: 100%;
+      overflow: hidden;
+      line-height: 92rpx;
+      font-size: 26rpx;
+      color: #6f7685;
+}
+.toper-list .toper-header.vip.data-v-90b8fc8e {
+      padding: 0 30rpx 0 80rpx;
+}
+.toper-list .toper-header.goods.data-v-90b8fc8e {
+      padding: 0 50rpx 0 80rpx;
+}
+

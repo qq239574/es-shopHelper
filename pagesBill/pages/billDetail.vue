@@ -1,16 +1,16 @@
 <template>
     <div class='pagesBill-bill-index detail page'>
-        <block0></block0>
-        <block1></block1>
-        <block2></block2>
-        <block3></block3>
-        <block4></block4>
-        <view class="goodInfo">
-            <goodBlock :goodsList='bill.goodsList'></goodBlock>
-            <expressBlock :rights='bill.rights'></expressBlock>
+        <block0 :info='billDetail.billInfo1'></block0>
+        <block1 :info='billDetail.billInfo2'></block1>
+        <block2 :info='billDetail.billInfo3'></block2>
+        <block3 :info='billDetail.billInfo4'></block3>
+        <block4 :info='billDetail.billInfo5'></block4>
+        <view class="goodInfo" v-for='(item,index) in billDetail.billInfo6' :key='index'>
+            <goodBlock :goodsList='item.goodsInfo'></goodBlock>
+            <expressBlock :rights='item.billInfo'></expressBlock>
         </view>
         <view class="rightsInfo">
-            <myRightsBlock></myRightsBlock>
+            <myRightsBlock :rights='billDetail.billInfo7'></myRightsBlock>
         </view>
         <view class="button-group">
             <block v-if='!bill.info.subStatus'>
@@ -18,7 +18,7 @@
                 <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"'>改价</myButton>
                 <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"'>确认付款</myButton>
                 <myButton type='primary' @click='clickButton("确认发货")' v-if='bill.info.status=="1"'>确认发货</myButton>
-                <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"||bill.info.status=="3"'>确认收货</myButton>
+                <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"'>确认收货</myButton>
             </block>
             <block v-else>
                 <myButton :badge='bill.rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
@@ -52,7 +52,7 @@
     import myRightsBlock from '../components/BillRightsBlock.vue';
     import createBillDetail from '../components/createBillDetail.js'
     let DataFrom = {};
-    let surePassword = ''; //手动确认付款密码
+    let surePassword = ''; //手动确认付款密码 
     export default {
         components: {
             block0,
@@ -93,7 +93,7 @@
                         billId: '', //订单号
                         billDate: '', //订单时间
                         billType: 0, //订单类型，0：分销订单，1：普通订单
-                        billPrice: 121212
+                        billPrice: 0
                     },
                     goodsList: [{ //订单商品信息
                         img: '/static/img/global/tmp.png', //商品图片
@@ -110,76 +110,32 @@
                         }], //维权备注
                     }
                 },
-                billDetail: {
-                    billInfo1: {
-                        billStatus: '等待买家收货',
-                        billPrice: '233.55',
-                        image: '/static/img/global/vip-manage.png'
-                    },
-                    billInfo2: {
-                        billId: '', //订单编号
-                        billStatus: '', //订单状态
-                        billType: '', //订单类型
-                        billOrigin: '', //订单来源
-                        payType: '' //支付方式
-                    },
-                    billInfo3: {
-                        billTime: '', //下单时间
-                        payTime: '', //付款时间
-                        receiveTime: '' //收货时间
-                    },
-                    billInfo4: {
-                        buyer: '',
-                        addtion: '',
-                        provideType: '',
-                        receiver: '',
-                        address: ''
-                    },
-                    billInfo5: {
-                        moneyState: '',
-                        firstOne: '',
-                        secondOne: '',
-                        thirdOne: ''
-                    },
-                    billInfo6: [{
-                        goodsInfo: [{
-                            img: '/static/img/global/tmp.png',
-                            goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-                            color: '浅绿色',
-                            size: 'S码',
-                            num: 2,
-                            price: '15455.2'
-                        }],
-                        billInfo: {
-                            sendTime: '',
-                            sendComp: '',
-                            sendId: '',
-                            sendStatus: ''
-                        }
-                    }],
-                    billInfo7: {
-                        goodTotal: '',
-                        vipCount: '',
-                        sendCost: '',
-                        total: '',
-                        rightStatus: ''
-                    },
-                }
+                billDetail: {}
             }
         },
         methods: {
             sure() {
                 this.surePaying = true;
-                setTimeout(() => {
+                let apiNames = ['payBill', 'receiveBill'];
+                let apiname = '';
+                if (this.modelTheme.state == 'pay') { //确认付款
+                    apiname = apiNames[0];
+                } else if (this.modelTheme.state == 'receive') { //确认收货
+                    apiname = apiNames[1];
+                }
+                this.Request(apiname, {
+                    id: cacheBill.bill.bill.id, //订单id
+                    password: surePassword
+                }).then(res => {
+                    this.Toast(this.modelTheme.success);
+                    this.initPage();
+                    this.showModel = false;
+                }).catch(res => {
+                    this.error = true;
+                }).finally(res => {
                     this.surePaying = false;
-                    if (true) { //验证通过
-                        this.showModel = false;
-                        this.Toast(this.modelTheme.success);
-                        this.initPage();
-                    } else {
-                        this.error = true;
-                    }
-                }, 2000);
+                    this.closePageLoading();
+                })
             },
             cancel() {
                 this.showModel = false;
@@ -192,7 +148,8 @@
             clickButton(state) {
                 this.Cacher.setData('billDetail', {
                     from: 'billDetail',
-                    billDetail: this.billDetail
+                    billDetail: this.billDetail,
+                    bill:this.bill
                 })
                 if (state == '维权中') {
                     this.Dialog.alert({
@@ -290,9 +247,14 @@
                         }], //维权备注
                     }
                 };
-                this.badgeNum = DataFrom.bill.info.addtion.length;
-                this.billDetail = createBillDetail(); //订单详情生成
-                console.log('detail>>>>>>', DataFrom.bill.info.addtion)
+                this.badgeNum = DataFrom.bill.info.addtion;
+                
+                this.Request('billDetail',{
+                    id:DataFrom.bill.bill.id
+                }).then(res=>{ 
+                    this.billDetail = createBillDetail(res); //订单详情生成
+                })
+                console.log('detail>>>>>>', DataFrom)
             }
         },
         onShow() {

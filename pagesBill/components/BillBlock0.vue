@@ -1,22 +1,24 @@
 <template>
     <view class='bill-block0'>
         <view class="left">
-            <view class="title">等待买家收货</view>
-            <view class="money">订单金额：￥233.56</view>
+            <view class="title">{{info.billStatusText}}</view>
+            <view class="money">订单金额：￥{{info.billPrice}}</view>
         </view>
         <view class="right">
-            <image src='/static/img/global/self-paybuy.png'></image>
+            <image lazy-load :src='info.image'></image>
         </view>
     </view>
 </template>
 
 <script>
     export default {
-        props:{
-            info:{
-                type:Object,
-                default:{
-                    
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    billStatus: '',
+                    billPrice:0,
+                    image:''
                 }
             }
         }
@@ -40,7 +42,7 @@
             box-sizing: border-box;
             padding: 38upx 0;
             width: 448upx;
-            margin-left:70upx;
+            margin-left: 70upx;
             .title {
                 width: 100%;
                 line-height: 30upx;
@@ -64,7 +66,8 @@
             image {
                 width: 112upx;
                 margin: auto;
-                max-height:100upx;;
+                max-height: 100upx;
+                ;
             }
         }
     }

@@ -2,22 +2,22 @@
     <view class='bill-block1 block'>
         <cellBlock>
             <view class="label bill__item" slot='pre'>订单编号：</view>
-            <view class="body bill__item" slot='mid'>{{info.id}}
-                <view class='grace-boxes-img grace-iconfont icon-share' @click='copy(info.id)'></view>
+            <view class="body bill__item" slot='mid'>{{info.billId}}
+                <view class='grace-boxes-img grace-iconfont icon-share' @click='copy(info.billId)'></view>
             </view>
         </cellBlock>
         <cellBlock>
             <view class="label bill__item" slot='pre'>订单状态：</view>
-            <view class="body bill__item" slot='mid'>{{info.status}}</view>
+            <view class="body bill__item" slot='mid'>{{info.billStatusText}}</view>
         </cellBlock>
         <cellBlock>
             <view class="label bill__item" slot='pre'>订单类型：</view>
-            <view class="body bill__item" slot='mid'>{{info.billType}}</view>
+            <view class="body bill__item" slot='mid'>{{info.billTypeText}}</view>
         </cellBlock>
         <cellBlock>
             <view class="label bill__item" slot='pre'>订单来源：</view>
             <view class="body bill__item origin" slot='mid'>
-                <view class="content">{{info.billOrigin}}</view>
+                <view class="content">{{info.billOriginText}}</view>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
@@ -27,7 +27,7 @@
         <cellBlock>
             <view class="label bill__item" slot='pre'>支付方式：</view>
             <view class="body bill__item origin" slot='mid'>
-                <view class="content">{{info.payType}}</view>
+                <view class="content">{{info.payTypeText}}</view>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
                 <image class='paytype' src='/static/img/global/wechat.svg'></image>
@@ -44,11 +44,14 @@
             info: {
                 type: Object,
                 default: {
-                    id: 'ES20154635685565698454554554568',
-                    status: '代付款',
-                    billType: '普通订单',
-                    billOrigin: '小程序',
-                    payType: '微信支付'
+                    billId:'', //订单编号
+                    billStatusText: '', //订单状态
+                    billStatus: '', //订单状态 -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
+                    billTypeText: '', //订单类型  1为实体 2为虚拟物品 3 卡密 4预约 5核销
+                    billOriginText: '', //订单来源
+                    billOrigin: '', //订单来源 0: 公众号 1: 小程序 2: wap/h5 3: app 4 :pc
+                    payTypeText: '', //支付方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付
+                    payType: '', //支付方式
                 }
             }
         },

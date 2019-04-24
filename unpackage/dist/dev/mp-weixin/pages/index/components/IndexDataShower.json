@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "button-group": "/components/my-components/ButtonGroup"
+  },
+  "component": true
+}

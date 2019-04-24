@@ -1,0 +1,51 @@
+.my-search-input.data-v-c2b739ee {
+  background: #fff;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.my-search-input .grace-items.data-v-c2b739ee {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-pack: start;
+    -webkit-justify-content: start;
+        -ms-flex-pack: start;
+            justify-content: start;
+    background: #f5f7fa;
+    width: 710rpx;
+    height: 68rpx;
+    border-radius: 34rpx;
+}
+.my-search-input .grace-items .grace-boxes-img.data-v-c2b739ee {
+      width: 24rpx;
+      height: 100%;
+      font-size: 24rpx;
+      color: #999;
+      line-height: 72rpx;
+      margin: 0 0 0 47rpx;
+}
+.my-search-input .grace-items .icon-close.data-v-c2b739ee {
+      width: 50rpx;
+}
+.my-search-input .grace-items .input.data-v-c2b739ee {
+      width: 550rpx;
+      height: 100%;
+      line-height: 66rpx;
+      padding: 0 10rpx;
+      color: #999;
+      font-size: 24rpx;
+}
+

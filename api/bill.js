@@ -139,15 +139,63 @@ export const changeBillPrice = { //订单改价（获取数据）
     },
     type: 'post'
 }
-export const payBill={//确认付款
+export const payBill = { //确认付款
 
     url: '/shop/manage/order/op/pay',
     data: {
         id: '', //订单id
-        password:''
+        password: ''
     },
     headers: {
 
     },
     type: 'post'
+}
+export const receiveBill = { //确认收货
+
+    url: '/shop/manage/order/op/finish',
+    data: {
+        id: '', //订单id
+        password: ''
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+export const canSendGoods = { //获取发货信息
+
+    url: '/shop/manage/order/op/send',
+    data: {
+        id: '', //订单id
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const sendGoods = { //订单发货 
+    url: '/shop/manage/order/op/send',
+    data: {
+        id: '', //订单id
+        order_goods_id: '', //要发货的订单商品id集合
+        no_express: '', //	无需物流（0：需要物流 1：无需物流）
+        express_id: '', //	物流公司id
+        express_sn: '', //	物流单号
+        remark: '', //	发货备注
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+export const billDetail = {
+    url: '/shop/manage/order/detail/one',
+    data: {
+        id: '', //订单id号
+    },
+    headers: {
+
+    },
+    type: 'get'
 }

@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "设置新密码",
+  "usingComponents": {
+    "van-cell": "/wxcomponents/vant-weapp/cell/index",
+    "van-cell-group": "/wxcomponents/vant-weapp/cell-group/index",
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "van-field": "/wxcomponents/vant-weapp/field/index",
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "long-button": "/components/my-components/LongButton",
+    "round-button": "/components/my-components/GetVCodeButton"
+  }
+}

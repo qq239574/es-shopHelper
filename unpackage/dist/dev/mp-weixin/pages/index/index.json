@@ -1,0 +1,18 @@
+{
+  "navigationBarTitleText": "店铺助手",
+  "navigationBarBackgroundColor": "#f3f5f9",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f3f5f9",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "long-button": "/components/my-components/LongButton",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "switch-item": "/components/my-components/editBlock-SwitchItem",
+    "data-shower": "/pages/index/components/IndexDataShower",
+    "goods-block": "/pages/index/components/IndexGoods",
+    "apps": "/pages/index/components/IndexApps"
+  }
+}

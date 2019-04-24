@@ -11,7 +11,7 @@
 <script>
     import longButton from '../../components/my-components/LongButton.vue'
     let DataFrom = {};
-    let cacheVal='';
+    let cacheVal = '';
     export default {
         components: {
             longButton
@@ -25,19 +25,26 @@
         },
         methods: {
             sure() {
-                this.pageLoading();
-                this.Request('addAddition', {
-                    id: DataFrom.bill.bill.id,
-                    remark: cacheVal
-                }).then(res => {
-                    this.closePageLoading();
-                    uni.navigateBack();
-                }) ;
+                if (DataFrom.from == 'billProvide') {//订单发货不独自保存备注
+                    this.Cacher.setData('billAddition', {
+                        billAddition: cacheVal
+                    })
+                     uni.navigateBack();
+                } else {
+                    this.pageLoading();
+                    this.Request('addAddition', {
+                        id: DataFrom.bill.bill.id,
+                        remark: cacheVal
+                    }).then(res => {
+                        this.closePageLoading();
+                        uni.navigateBack();
+                    });
+                }
             },
             getAddition(val) {
                 this.length = val.detail.value.length;
                 this.disable = !val.detail.value.length;
-                cacheVal= val.detail.value
+                cacheVal = val.detail.value
             }
         },
         onLoad(option) {

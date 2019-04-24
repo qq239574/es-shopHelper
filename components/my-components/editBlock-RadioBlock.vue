@@ -1,7 +1,7 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
         <radio-group class='group'>
-            <view class='grace-items' v-for="(item, index) in items" :key="item.label" @click.stop='clickItem(index)'>
+            <view class='grace-items' v-for="(item, index) in items" :key="item.label" @click='clickItem(index)'>
                 <view class='radio-box'>
                     <radio :value="item.value" :checked="index === current" color='#fb6638' />
                 </view>
@@ -51,7 +51,7 @@
         methods: {
             clickItem(index) {
                 this.current = index;
-                this.$emit('change', this.items[index])
+                this.$emit('clickItem', this.items[index]);
             },
         },
     }

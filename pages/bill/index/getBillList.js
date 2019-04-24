@@ -9,7 +9,7 @@ export default function (tabid, data) {
             let goodlist = [];
             let countGood = 0;
             list = res.list.map(item => {
-                goodlist = item.order_goods;
+                goodlist = item.order_goods||[]; 
                 goodlist.forEach(item => {
                     countGood += item.total;
                 })
@@ -46,7 +46,7 @@ export default function (tabid, data) {
                     rights: { // 维权信息
                         status: '退款退货', //维权状态
                         addition: item.remark_num, //维权备注
-                        subStatus: 0, // //订单状态// 0 无维权 1 正在维权中 2 维权过
+                        subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
                     }
                 };
             });
