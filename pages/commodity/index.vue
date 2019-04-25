@@ -18,7 +18,9 @@
     import Card from './index/goodsList.vue';
     import testdata from './index/testData.js'; //测试数据
     import categories from './index/categories.js'
+    import getGoodsList from './index/getGoodsList.js'
     let DataFrom = {};
+    let DataGo = {};
     let searchData = {};
     let curTab = {
         cateid: 0,
@@ -46,13 +48,16 @@
                     status: 0, //0出售中,1已售罄,2仓库中,3回收站
                 }],
                 toggle: false, //只用于关闭各个模块的浮层效果
+                searchTab: { //当前选项
+                    cateid: 0,
+                    index: 0,
+                    name: "出售中",
+                    searchId: 1
+                }
             }
         },
         onLoad(option) {
-            if (option.from) {
-                DataFrom = this.Cacher.getData(option.from)
-            }
-            this.initPage();
+            DataFrom = this.Cacher.getData(option.from) || {};
         },
         onShow() {
             this.initPage();
@@ -60,22 +65,44 @@
         methods: {
             initPage() {
                 this.toggle = !this.toggle;
-                if (DataFrom.from) {
-                    DataFrom = this.Cacher.getData(DataFrom.from)
-                }
-                this.goodsList = testdata(curTab['cateid']); //测试数据
-            },
-            tabChange(tab) {
-                curTab = tab;
-                this.toggle = !this.toggle;
-                this.goodsList = testdata(curTab['cateid']); //测试数据
-            },
-            search(val) {
-                this.toggle = !this.toggle;
-                DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
-                    from: 'searchShop',
+                DataFrom = this.Cacher.getData(DataFrom.from) || {};
+                DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go)) || {
+                    go: 'searchShop',
                     value: ''
+                };
+                if (DataGo.go == 'searchShop') {
+                    this.searchValue = DataGo.value;
+                } else {
+                    this.searchValue = '';
+                }
+                getGoodsList.call(this, {
+                    status: this.searchTab.searchId, //1出售周 3已售罄 -2仓库中 -1回收站
+                    title: this.searchValue,
+                    category_ids: '',
+                    group_ids: '',
+                    type: '', //1实体2虚拟3电子卡密
+                    goods_sort: '',
+                    goods_by: '',
+                    pagesize: 20,
+                    page: 1
+                }).then(res => {
+                    this.goodsList = res;
+                    this.closePageLoading();
                 })
+            },
+            tabChange(tab) { //切换标签事件
+                this.searchTab = tab;
+                this.toggle = !this.toggle;
+                this.goodsList = [];
+                this.pageLoading();
+                this.initPage();
+            },
+            search(val) { //跳转搜索页面
+                this.toggle = !this.toggle;
+                DataGo = { //这里预先设置返回的页面，由于back()函数无法设置query
+                    go: 'searchShop',
+                    value: ''
+                }
                 this.Cacher.setData('good', {
                     from: 'good',
                     title: '搜索商品',
@@ -88,7 +115,11 @@
             clickGood(item) { //商品模块的点击事件
                 this.toggle = !this.toggle;
                 if (item.type == 'menu-item') { //点击的是商品的浮层菜单
+                    this.pageLoading();
                     if (item.name == '编辑') {
+                        DataGo={
+                            go:'editGood'
+                        }
                         this.Cacher.setData('good', {
                             from: 'good',
                             item
@@ -96,8 +127,41 @@
                         uni.navigateTo({
                             url: '../../pagesCommodity/pages/index?from=good'
                         })
-                    } else if (item.name == '下架') {} else if (item.name == '删除') {} else if (item.name == '上架') {} else if (item.name == '恢复') {}
-                    console.log('>>>>>>', item); //调用后刷新页面
+                    } else if (item.name == '下架') {
+                        this.Request('onOrOffGoods', {
+                            goods_ids: item.detail.goodId,
+                            status: 0, //1上架0下架
+                        }).then(res => {
+                            this.closePageLoading();
+                            this.Toast('商品成功下架');
+                            this.initPage();
+                        })
+                    } else if (item.name == '删除') {
+                        this.Request('tempDelGood', {
+                            goods_ids: item.detail.goodId,
+                        }).then(res => {
+                            this.closePageLoading();
+                            this.Toast('成功删除商品');
+                            this.initPage();
+                        })
+                    } else if (item.name == '上架') {
+                        this.Request('onOrOffGoods', {
+                            goods_ids: item.detail.goodId,
+                            status: 1, //1上架0下架
+                        }).then(res => {
+                            this.closePageLoading();
+                            this.Toast('商品成功上架');
+                            this.initPage();
+                        })
+                    } else if (item.name == '恢复') {
+                        this.Request('recycleDelGood', {
+                            goods_ids: item.detail.goodId
+                        }).then(res => {
+                            this.closePageLoading();
+                            this.Toast('成功恢复商品');
+                            this.initPage();
+                        })
+                    }
                 }
             }
         },

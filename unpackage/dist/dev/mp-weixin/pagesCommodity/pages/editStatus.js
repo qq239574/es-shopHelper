@@ -83,8 +83,7 @@ var currentDate = [];var _default =
     },
     change: function change(val) {
       cacheVal = val;
-      this.Cacher.setData('billDetail', {
-        from: 'editStatus',
+      this.Cacher.setData('editStatus', {
         needChange: {
           label: '状态',
           value: val.label,
@@ -97,10 +96,10 @@ var currentDate = [];var _default =
         this.maxDate = new Date((0, _getDateSection.getDate)(365)).getTime();
       } else {}
       cache = val.value;
-      console.log(DataFrom, this.Cacher.getData('billDetail'), val);
     } },
 
   onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from) || {};
     this.initPage();
   },
   onShow: function onShow() {

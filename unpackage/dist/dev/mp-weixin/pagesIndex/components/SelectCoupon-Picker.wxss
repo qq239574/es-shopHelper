@@ -9,6 +9,13 @@
   left: 0;
   top: 0;
 }
+.grace-mask-layer .bg.data-v-316828d9 {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 .grace-mask-layer .picker.data-v-316828d9 {
     width: 100%;
     height: 50%;

@@ -102,7 +102,7 @@
             }
             .grace-icons {
                 position: absolute;
-                right: 20upx;
+                right: 30upx;
             }
         }
     }

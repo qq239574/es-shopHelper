@@ -23,6 +23,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        registerTime: '',
+        origin: '',
+        vipClass: '',
+        vipTag: '' } } },
+
+
+
   components: {
     inputItem: inputItem },
 

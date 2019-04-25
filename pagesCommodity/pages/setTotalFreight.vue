@@ -11,27 +11,23 @@
 <script>
     import longButton from '../../components/my-components/LongButton'
     let cacheVal = '';
-    let DataFrom = {};
-    let cacheFrom = ''
+    let DataFrom = {}; 
     export default {
         components: {
             longButton
         },
         methods: {
             getVal(val) {
-                cacheVal = val.detail.value;
-                console.log(val.detail.value)
+                cacheVal = val.detail.value; 
             },
             sure() {
-                DataFrom.from = 'setTotalFreight';
                 DataFrom.value.subValue = cacheVal;
-                DataFrom = this.Cacher.setData(cacheFrom, DataFrom);
+                DataFrom = this.Cacher.setData('setTotalFreight', DataFrom);
                 uni.navigateBack();
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from)||{};
-            cacheFrom = option.from; 
+            DataFrom = this.Cacher.getData(option.from)||{}; 
         }
     }
 </script>

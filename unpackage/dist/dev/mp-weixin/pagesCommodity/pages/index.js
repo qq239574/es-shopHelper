@@ -54,9 +54,11 @@ var _toEditPage = _interopRequireDefault(__webpack_require__(/*! ../components/t
 //
 //
 //
-var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var goodInfo2 = function goodInfo2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block2.vue"));};var goodInfo3 = function goodInfo3() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block3 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block3")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var cacheGoodDetail = {};var DataFrom = {};var _default = { components: { goodInfo: goodInfo, goodInfo2: goodInfo2, goodInfo3: goodInfo3, selectItem: selectItem, longButton: longButton }, data: function data() {return { moving: false, goodDetail: {} };}, methods: { inputCell: function inputCell(val) {
+var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var goodInfo2 = function goodInfo2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block2.vue"));};var goodInfo3 = function goodInfo3() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block3 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block3")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var cacheGoodDetail = {};var DataFrom = {};var DataGo = {};var _default = { components: { goodInfo: goodInfo, goodInfo2: goodInfo2, goodInfo3: goodInfo3, selectItem: selectItem, longButton: longButton }, data: function data() {return { moving: false, goodDetail: {} };}, methods: {
+    startmove: function startmove() {
+    },
+    inputCell: function inputCell(val) {
       cacheGoodDetail = _updateGoodInfo.default.call(this, val, cacheGoodDetail);
-
     },
     getImages: function getImages(list) {
       cacheGoodDetail = _updateGoodInfo.default.call(this, list, cacheGoodDetail);
@@ -69,14 +71,21 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       uni.navigateBack();
     },
     initPage: function initPage() {
-      DataFrom = this.Cacher.getData('billDetail');
-      if (DataFrom.from == 'editName' || DataFrom.from == 'editSubtitle' || DataFrom.from == 'selectType' || DataFrom.from == 'editCode' || DataFrom.from == 'setFreight' || DataFrom.from == 'editForm' || DataFrom.from == 'editStatus' || DataFrom.from == 'editMultiCode' || DataFrom.from == 'autoDeliverContent') {
-        cacheGoodDetail = _updateGoodInfo.default.call(this, DataFrom.needChange, cacheGoodDetail);
+      DataGo = this.Cacher.getData('editGood');
+      console.log(DataGo, 'option');
+      DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
+      if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent') {
+        cacheGoodDetail = _updateGoodInfo.default.call(this, DataGo.needChange, cacheGoodDetail);
         this.goodDetail = cacheGoodDetail;
       }
     } },
 
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    this.Cacher.setData('editGood', {
+      from: option.from || '' });
+
+    this.initPage();
     cacheGoodDetail = (0, _testdata.singleData)();
     this.goodDetail = cacheGoodDetail;
   },

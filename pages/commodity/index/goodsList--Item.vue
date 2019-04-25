@@ -247,7 +247,7 @@
                         left: 50%;
                         transform: translate(-50%, 0);
                         position: absolute;
-                        bottom: 40upx;
+                        bottom: 30upx;
                         font-size: 24upx;
                         color: #c5cede;
                     }

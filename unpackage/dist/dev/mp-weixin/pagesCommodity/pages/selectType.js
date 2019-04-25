@@ -44,15 +44,12 @@ var cacheFrom = '';var _default =
   },
   methods: {
     select: function select(val) {
-      console.log(val);
-      DataFrom.from = 'selectType';
       DataFrom.needChange.value = val;
-      this.Cacher.setData(cacheFrom, DataFrom);
+      this.Cacher.setData('selectType', DataFrom);
     } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
-    cacheFrom = option.from;
   } };exports.default = _default;
 
 /***/ }),

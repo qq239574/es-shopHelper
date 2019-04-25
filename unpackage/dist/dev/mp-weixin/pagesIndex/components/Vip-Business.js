@@ -25,7 +25,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   components: {
     Block1: Block1,
     Block2: Block2,
-    longButton: longButton } };exports.default = _default;
+    longButton: longButton },
+
+  props: {
+    info: {
+      type: Object,
+      default: {
+        info1: {
+          pay: 0,
+          bill: 0,
+          rights: 0,
+          refund: 0 },
+
+        info2: {
+          newBillTime: '',
+          newBrowserTime: '' } } } } };exports.default = _default;
 
 /***/ }),
 

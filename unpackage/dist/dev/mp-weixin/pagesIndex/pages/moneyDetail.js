@@ -101,7 +101,9 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var _defaul
       DataGo = this.Cacher.getData('filterDate') || { go: 'filterDate', date: [(0, _getDateSection.getDate)(-6), (0, _getDateSection.getDate)(0), '7日'] };this.$refs.lineChart.init();this.pageLabel = DataGo.date[2];var dateGap = (0, _getDateSection.GetDateDiff)(DataGo.date[0], DataGo.date[1]);if (dateGap > 90) {//查询间隔最大90天
         this.Toast('查询日期间隔最大90天');var fromNowGap = (0, _getDateSection.GetDateDiff)(DataGo.date[1], (0, _getDateSection.getDate)(0)); //距离今天的间隔
         DataGo.date[0] = (0, _getDateSection.getDate)(-fromNowGap - 89); //
-      }this.Request('getTradeDataByDate', {
+      }this.Request('getHistoryData', {}).then(function (res) {//获取历史总成交额
+        _this.historyTotal = res.all_order_price;});
+      this.Request('getTradeDataByDate', {
         start: DataGo.date[0],
         end: DataGo.date[1] }).
       then(function (res) {

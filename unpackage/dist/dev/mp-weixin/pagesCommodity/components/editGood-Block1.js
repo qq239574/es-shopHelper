@@ -93,6 +93,9 @@ var _self;var _default =
     _self = this;
   },
   methods: {
+    startmove: function startmove() {
+      this.$emit('startmove');
+    },
     onConfirm: function onConfirm(e) {
     },
     clickCell: function clickCell(cont) {

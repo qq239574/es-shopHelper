@@ -1,6 +1,6 @@
 <template>
     <div class='edit-form page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' @change='change'></radioBlock>
+        <radioBlock :items='list' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>
@@ -34,27 +34,26 @@
             }
         },
         methods: {
-            initPage() {
-                DataFrom = this.Cacher.getData('billDetail') || {};
-            },
             change(val) {
                 cacheVal = val;
-                this.Cacher.setData('billDetail', {
-                    from: 'editForm',
+                console.log(val)
+                this.Cacher.setData('editForm', {
                     needChange: Object.assign(DataFrom.needChange, {
                         label: '商品表单',
                         value: val.label
                     })
                 })
-                console.log(DataFrom, val)
             }
         },
         onLoad(option) {
-            this.initPage()
+            DataFrom = this.Cacher.getData(option.from) || {};
+            this.Cacher.setData('editForm', {
+                needChange: Object.assign(DataFrom.needChange, {
+                    label: '商品表单',
+                    value: '不使用表单'
+                })
+            })
         },
-        onShow() {
-            this.initPage()
-        }
     }
 </script>
 

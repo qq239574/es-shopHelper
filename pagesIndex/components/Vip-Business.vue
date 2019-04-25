@@ -1,7 +1,7 @@
 <template>
     <view class='vip-busi-block'>
-        <Block1></Block1>
-        <Block2></Block2>
+        <Block1 :info='info.info1'></Block1>
+        <Block2 :info='info.info2'> </Block2>
         <view class='margin50'></view>
         <longButton>查看订单</longButton>
     </view>
@@ -16,12 +16,29 @@
             Block1,
             Block2,
             longButton
-        }
+        },
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    info1: {
+                        pay: 0,
+                        bill: 0,
+                        rights: 0,
+                        refund: 0
+                    },
+                    info2: {
+                        newBillTime: '',
+                        newBrowserTime: ''
+                    }
+                }
+            }
+        }, 
     }
 </script>
 
 <style lang="scss" scoped>
-.margin50{
-    height:50upx;
-}
+    .margin50 {
+        height: 50upx;
+    }
 </style>

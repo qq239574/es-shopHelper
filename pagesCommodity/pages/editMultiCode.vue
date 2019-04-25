@@ -4,7 +4,7 @@
             <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem>
             <inputItem :other='item' label='价格' :value='item.price.value' @input='inputCell'></inputItem>
             <inputItem :other='item' label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
-            <inputItem :other='item' label='商品编码' :value='item.code.value' @click='clickCell'></inputItem>
+            <inputItem :other='item' label='商品编码' :value='item.code.value' @input='inputCell'></inputItem>
         </view>
     </view>
 </template>
@@ -64,9 +64,9 @@
                 } else if (val.label == '商品编码') {
                     cacheList[index].code.value = val.value;
                 }
-                DataFrom.needChange.other.list=cacheList;
-                DataFrom.from='editMultiCode'
-                this.Cacher.setData('billDetail',DataFrom)
+                DataFrom.needChange.other.list=cacheList; 
+                console.log(val.value,cacheList)
+                this.Cacher.setData('editMultiCode',DataFrom)
             },
             clickCell(val) {
                 console.log(val)

@@ -54,10 +54,6 @@ var _default =
 
   mounted: function mounted() {
     this.cateCurrentIndex = this.index;
-    console.log(this.index, 'this.index');
-  },
-  onShow: function onShow() {
-    console.log('hahahhahahahahahahh');
   },
   computed: {
     getWidth: function getWidth() {
@@ -88,7 +84,8 @@ var _default =
       this.$emit('tabChange', {
         cateid: cateid,
         index: index,
-        name: this.categories[index].name });
+        name: this.categories[index].name,
+        searchId: this.categories[index].searchId });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

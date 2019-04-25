@@ -7,7 +7,7 @@
 			<selectItem label='副标题' :other='info.subTitle'  :value='info.subTitle.value' @click.stop="clickCell"></selectItem>
 			<selectItem label='商品分类'  :other='info.classification' :value='info.classification.value' @click.stop="clickCell"></selectItem>
 			<chooseImgItem label='主图'  :other='info.mainImage' @getImages='getImages' :sortable='false' :imglist='info.mainImage'></chooseImgItem>
-			<chooseImgItem label='轮播图'  :other='info.swiperList' button='轮播图' @getImages='getImages' :maxNum='10' :imglist='info.swiperList' tips='建议大小：750*750，长按图片可拖拽调整顺序'></chooseImgItem>
+			<chooseImgItem label='轮播图' @startmove='startmove' :other='info.swiperList' button='轮播图' @getImages='getImages' :maxNum='10' :imglist='info.swiperList' tips='建议大小：750*750，长按图片可拖拽调整顺序'></chooseImgItem>
 		</form>
 		<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
 		</mpvue-picker>
@@ -83,6 +83,9 @@
 			_self = this;
 		},
 		methods: {
+			startmove(){
+				this.$emit('startmove')
+			},
 			onConfirm(e) {
 			},
 			clickCell(cont) {

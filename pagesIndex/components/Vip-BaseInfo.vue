@@ -1,7 +1,7 @@
 <template>
     <view class='vip-baseinfo'>
-        <Block1></Block1>
-        <Block2 @click='clickItem'></Block2>
+        <Block1 :info='info.info1'></Block1>
+        <Block2 :info='info.info2' @click='clickItem'></Block2>
         <detailPicker :toggle='toggle'>
             <block>
                 <view class="row add" @click='clickMenu("add")'>增加</view>
@@ -19,6 +19,21 @@
     import detailPicker from './Detail-Picker.vue'
     let cache = {};
     export default {
+        props: {
+            info: {
+                info1: {
+                    registerTime: '2015-01-12 14:12:12',
+                    origin: 'wechat',
+                    vipClass: '默认会员',
+                    vipTag: '夜猫子 白领'
+                },
+                info2: {
+                    score: 0,
+                    money: 0,
+                    coupon: 0
+                }
+            }
+        },
         components: {
             Block1,
             Block2,
@@ -26,7 +41,7 @@
         },
         data() {
             return {
-                toggle: false
+                toggle: false,
             }
         },
         methods: {
@@ -50,7 +65,7 @@
                         type,
                         ...cache
                     })
-                } else if (type == 'clear') {//清空需要二次确认
+                } else if (type == 'clear') { //清空需要二次确认
                     this.Dialog.confirm({
                         title: '清空' + cache.label,
                         message: '您确认将该用户的余额/积分清零吗？'

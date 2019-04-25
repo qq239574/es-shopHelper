@@ -90,7 +90,9 @@
                     let fromNowGap = GetDateDiff(DataGo.date[1], getDate(0)); //距离今天的间隔
                     DataGo.date[0] = getDate(-fromNowGap - 89);//
                 }
-                 
+                this.Request('getHistoryData',{}).then(res=>{//获取历史总成交额
+                    this.historyTotal=res.all_order_price;
+                })
                 this.Request('getTradeDataByDate', {
                     start: DataGo.date[0],
                     end: DataGo.date[1],

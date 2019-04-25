@@ -23,6 +23,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 var _default =
 {
   props: {
@@ -31,8 +33,7 @@ var _default =
       default: [{
         name: '女神节专享通用优惠券',
         price: 20,
-        info: '部分商品满100减20',
-        num: 0 }] } },
+        info: '部分商品满100减20' }] } },
 
 
 

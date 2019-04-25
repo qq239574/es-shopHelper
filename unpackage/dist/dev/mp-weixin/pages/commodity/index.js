@@ -27,8 +27,10 @@
 
 
 var _testData = _interopRequireDefault(__webpack_require__(/*! ./index/testData.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\testData.js"));
-var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};
+var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
+var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};
 var DataFrom = {};
+var DataGo = {};
 var searchData = {};
 var curTab = {
   cateid: 0,
@@ -55,36 +57,61 @@ var curTab = {
         saled: 0, //销量
         status: 0 //0出售中,1已售罄,2仓库中,3回收站
       }],
-      toggle: false //只用于关闭各个模块的浮层效果
-    };
+      toggle: false, //只用于关闭各个模块的浮层效果
+      searchTab: { //当前选项
+        cateid: 0,
+        index: 0,
+        name: "出售中",
+        searchId: 1 } };
+
+
   },
   onLoad: function onLoad(option) {
-    if (option.from) {
-      DataFrom = this.Cacher.getData(option.from);
-    }
-    this.initPage();
+    DataFrom = this.Cacher.getData(option.from) || {};
   },
   onShow: function onShow() {
     this.initPage();
   },
   methods: {
-    initPage: function initPage() {
+    initPage: function initPage() {var _this = this;
       this.toggle = !this.toggle;
-      if (DataFrom.from) {
-        DataFrom = this.Cacher.getData(DataFrom.from);
+      DataFrom = this.Cacher.getData(DataFrom.from) || {};
+      DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go)) || {
+        go: 'searchShop',
+        value: '' };
+
+      if (DataGo.go == 'searchShop') {
+        this.searchValue = DataGo.value;
+      } else {
+        this.searchValue = '';
       }
-      this.goodsList = (0, _testData.default)(curTab['cateid']); //测试数据
+      _getGoodsList.default.call(this, {
+        status: this.searchTab.searchId, //1出售周 3已售罄 -2仓库中 -1回收站
+        title: this.searchValue,
+        category_ids: '',
+        group_ids: '',
+        type: '', //1实体2虚拟3电子卡密
+        goods_sort: '',
+        goods_by: '',
+        pagesize: 20,
+        page: 1 }).
+      then(function (res) {
+        _this.goodsList = res;
+        _this.closePageLoading();
+      });
     },
-    tabChange: function tabChange(tab) {
-      curTab = tab;
+    tabChange: function tabChange(tab) {//切换标签事件
+      this.searchTab = tab;
       this.toggle = !this.toggle;
-      this.goodsList = (0, _testData.default)(curTab['cateid']); //测试数据
+      this.goodsList = [];
+      this.pageLoading();
+      this.initPage();
     },
-    search: function search(val) {
+    search: function search(val) {//跳转搜索页面
       this.toggle = !this.toggle;
-      DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
-        from: 'searchShop',
-        value: '' });
+      DataGo = { //这里预先设置返回的页面，由于back()函数无法设置query
+        go: 'searchShop',
+        value: '' };
 
       this.Cacher.setData('good', {
         from: 'good',
@@ -95,10 +122,14 @@ var curTab = {
         url: '../../pagesLogin/pages/searchShop?from=good' });
 
     },
-    clickGood: function clickGood(item) {//商品模块的点击事件
+    clickGood: function clickGood(item) {var _this2 = this; //商品模块的点击事件
       this.toggle = !this.toggle;
       if (item.type == 'menu-item') {//点击的是商品的浮层菜单
+        this.pageLoading();
         if (item.name == '编辑') {
+          DataGo = {
+            go: 'editGood' };
+
           this.Cacher.setData('good', {
             from: 'good',
             item: item });
@@ -106,8 +137,41 @@ var curTab = {
           uni.navigateTo({
             url: '../../pagesCommodity/pages/index?from=good' });
 
-        } else if (item.name == '下架') {} else if (item.name == '删除') {} else if (item.name == '上架') {} else if (item.name == '恢复') {}
-        console.log('>>>>>>', item); //调用后刷新页面
+        } else if (item.name == '下架') {
+          this.Request('onOrOffGoods', {
+            goods_ids: item.detail.goodId,
+            status: 0 //1上架0下架
+          }).then(function (res) {
+            _this2.closePageLoading();
+            _this2.Toast('商品成功下架');
+            _this2.initPage();
+          });
+        } else if (item.name == '删除') {
+          this.Request('tempDelGood', {
+            goods_ids: item.detail.goodId }).
+          then(function (res) {
+            _this2.closePageLoading();
+            _this2.Toast('成功删除商品');
+            _this2.initPage();
+          });
+        } else if (item.name == '上架') {
+          this.Request('onOrOffGoods', {
+            goods_ids: item.detail.goodId,
+            status: 1 //1上架0下架
+          }).then(function (res) {
+            _this2.closePageLoading();
+            _this2.Toast('商品成功上架');
+            _this2.initPage();
+          });
+        } else if (item.name == '恢复') {
+          this.Request('recycleDelGood', {
+            goods_ids: item.detail.goodId }).
+          then(function (res) {
+            _this2.closePageLoading();
+            _this2.Toast('成功恢复商品');
+            _this2.initPage();
+          });
+        }
       }
     } },
 

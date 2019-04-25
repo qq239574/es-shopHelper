@@ -1,22 +1,22 @@
 <template>
-    <div class='my-picker grace-mask-layer' v-if="GuideShow" @click.stop='closeGuide' @touchmove.stop='stop'>
-        <view class="picker" @click.stop='stop' >
+    <div class='my-picker grace-mask-layer' v-if="GuideShow" @click.stop='closeGuide' @touchmove='stop'>
+        <view class="bg" @click.stop='closeGuide' @touchmove.stop='stop'></view>
+        <view class="picker" @click='stop'>
             <view class="title">已选择优惠券</view>
             <view class="items"></view>
             <view class="items">
                 <slot></slot>
-                
             </view>
         </view>
     </div>
 </template>
 
 <script>
-    export default { 
-        props:{
-            toggle:{
-                type:Boolean,
-                default:true
+    export default {
+        props: {
+            toggle: {
+                type: Boolean,
+                default: true
             }
         },
         data() {
@@ -24,13 +24,13 @@
                 GuideShow: false
             }
         },
-        watch:{
-            toggle(){
-                this.GuideShow=!this.GuideShow;
+        watch: {
+            toggle() {
+                this.GuideShow = !this.GuideShow;
             }
         },
         methods: {
-            stop(){
+            stop() {
                 console.log(111)
             },
             showLoading: function() {
@@ -54,14 +54,21 @@
 <style lang="scss" scoped>
     .grace-mask-layer {
         width: 100%;
-        top:0;
+        top: 0;
         bottom: 100upx;
-        left:0;
+        left: 0;
         background: rgba(0, 0, 0, 0.5);
         position: fixed;
         z-index: 99998;
         left: 0;
         top: 0;
+        .bg {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
         .picker {
             width: 100%;
             height: 50%;
@@ -84,7 +91,7 @@
                 margin: auto;
                 border-bottom: 1upx solid #eee;
                 position: absolute;
-                top:0;
+                top: 0;
             }
             .items {
                 position: absolute;

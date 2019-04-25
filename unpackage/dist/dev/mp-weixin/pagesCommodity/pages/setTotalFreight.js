@@ -21,8 +21,7 @@
 
 
 var cacheVal = '';
-var DataFrom = {};
-var cacheFrom = '';var _default =
+var DataFrom = {};var _default =
 {
   components: {
     longButton: longButton },
@@ -30,18 +29,15 @@ var cacheFrom = '';var _default =
   methods: {
     getVal: function getVal(val) {
       cacheVal = val.detail.value;
-      console.log(val.detail.value);
     },
     sure: function sure() {
-      DataFrom.from = 'setTotalFreight';
       DataFrom.value.subValue = cacheVal;
-      DataFrom = this.Cacher.setData(cacheFrom, DataFrom);
+      DataFrom = this.Cacher.setData('setTotalFreight', DataFrom);
       uni.navigateBack();
     } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from) || {};
-    cacheFrom = option.from;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

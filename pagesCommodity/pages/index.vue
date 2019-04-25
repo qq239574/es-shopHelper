@@ -1,7 +1,7 @@
 <template>
     <!-- 单规格 -->
-    <div class='pagesCommodity-pages-index page'>
-        <goodInfo :info='goodDetail.info1' @click='clickCell' @getImages='getImages' @input='inputCell'></goodInfo>
+    <view class='pagesCommodity-pages-index page' ref='page'>
+        <goodInfo :info='goodDetail.info1' @click='clickCell' @getImages='getImages' @input='inputCell' @startmove='startmove'></goodInfo>
         <goodInfo2 :info='goodDetail.info2' @click='clickCell' @input='inputCell'></goodInfo2>
         <view class="margin20"></view>
         <goodInfo3 :info='goodDetail.info3' @click='clickCell' @input='inputCell'></goodInfo3>
@@ -13,7 +13,7 @@
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
-    </div>
+    </view>
 </template>
 
 <script>
@@ -29,6 +29,7 @@
     import toEditPage from '../components/toEditPage.js'
     let cacheGoodDetail = {};
     let DataFrom = {};
+    let DataGo = {};
     export default {
         components: {
             goodInfo,
@@ -42,31 +43,39 @@
                 moving: false,
                 goodDetail: {}
             }
-        }, 
+        },
         methods: {
+            startmove() {
+            },
             inputCell(val) {
                 cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
-                
             },
             getImages(list) {
                 cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail)
             },
             clickCell(val) {
-                toEditPage.call(this, val, cacheGoodDetail)
+                toEditPage.call(this, val, cacheGoodDetail);
             },
             save() {
                 this.goodDetail = cacheGoodDetail;
                 uni.navigateBack();
             },
             initPage() {
-                DataFrom = this.Cacher.getData('billDetail'); 
-                if (DataFrom.from == 'editName' || DataFrom.from == 'editSubtitle'|| DataFrom.from == 'selectType'|| DataFrom.from == 'editCode'||DataFrom.from == 'setFreight'||DataFrom.from == 'editForm'||DataFrom.from == 'editStatus'||DataFrom.from == 'editMultiCode'||DataFrom.from == 'autoDeliverContent') { 
-                    cacheGoodDetail = updateGoodInfo.call(this, DataFrom.needChange, cacheGoodDetail);
+                DataGo = this.Cacher.getData('editGood');
+                console.log(DataGo, 'option')
+                DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
+                if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent') {
+                    cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
                     this.goodDetail = cacheGoodDetail;
                 }
             }
         },
-        onLoad() {
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            this.Cacher.setData('editGood', {
+                from: option.from || ''
+            })
+            this.initPage();
             cacheGoodDetail = singleData();
             this.goodDetail = cacheGoodDetail;
         },
@@ -78,6 +87,8 @@
 
 <style lang="scss" scoped>
     .pagesCommodity-pages-index {
+        width: 100%;
+        height: 100%;
         .padding {
             height: 160upx;
             background: #f7f7f7;

@@ -127,7 +127,7 @@ var sessionId = '';var _default =
             _this.Toast(res.message);
           }
         }).catch(function (res) {
-          if (res.error == -3) {
+          if (res.error == -3) {//已登录
             uni.reLaunch({
               url: '../../pagesLogin/pages/selectShop?from=login' });
 

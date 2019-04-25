@@ -29,6 +29,21 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 var cache = {};var _default =
 {
+  props: {
+    info: {
+      info1: {
+        registerTime: '2015-01-12 14:12:12',
+        origin: 'wechat',
+        vipClass: '默认会员',
+        vipTag: '夜猫子 白领' },
+
+      info2: {
+        score: 0,
+        money: 0,
+        coupon: 0 } } },
+
+
+
   components: {
     Block1: Block1,
     Block2: Block2,

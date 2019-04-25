@@ -7,7 +7,6 @@
 }
 .coupon-item .border.data-v-300b343a {
     width: 665rpx;
-    height: 217rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     border: 1rpx solid #fb6638;
@@ -15,6 +14,7 @@
     overflow: hidden;
     position: relative;
     background: #fef8f8;
+    height: 217rpx;
 }
 .coupon-item .border .top.data-v-300b343a,
     .coupon-item .border .bottom.data-v-300b343a {

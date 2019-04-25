@@ -103,7 +103,14 @@ export const getTradeDataByDate = { //获取指定日期的交易分析
     type: 'get'
 }
 
+export const getHistoryData = { //获取历史成交数
+    url: '/shop/manage/statistics/trade/get-all-pay-price',
+    data: {},
+    headers: {
 
+    },
+    type: 'get'
+}
 
 export const goodsTop10 = { //获取前10销售商品
     url: '/shop/manage/statistics/goods/get-top-good',
@@ -148,4 +155,97 @@ export const vipList = { //会员列表读取
 
     },
     type: 'get'
+}
+
+export const vipDetail = { //会员详情(单个)
+    url: '/shop/manage/member/get',
+    data: {
+        id: ''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const vipTradeInfo = { //获取会员交易信息
+    url: '/shop/manage/member/get-trade',
+    data: {
+        member_id: ''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+
+export const changeCommissionStatus = { //审核/取消审核分销商
+    url: '/shop/apps/commission/manage/agent/change-status',
+    data: {
+        member_id: '',
+        status: '' //	状态 0: 取消审核 1: 审核
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+
+export const changeVipMoney = { //余额充值
+    url: '/shop/manage/member/recharge/balance',
+    data: {
+        member_id: '',
+        sum: '', //充值数量 正数添加余额, 负数减少积分
+        remark: '' //	 
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+
+
+export const changeVipScore = { //积分充值
+    url: '/shop/manage/member/recharge/credit',
+    data: {
+        member_id: '',
+        sum: '', //充值数量 正数添加余额, 负数减少积分
+        remark: '' //	 
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+export const getCouponList = { //获取可发送优惠券列表
+    url: '/shop/manage/member/coupon/list',
+    data: {
+        keywords: ''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const getVipCoupons = { //获取已领取列表
+    url: '/shop/manage/member/coupon/record',
+    data: {
+        member_id: '',
+        status: '' //	0: 全部 1: 未使用 2: 已使用 3: 已失效
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const sendCoupon = {//发送优惠券
+    url: '/shop/manage/member/coupon/send',
+    data: {
+        // coupon_id:'',//	优惠券ID int或array
+        // member_id: '',//	会员ID int或array
+        // coupon_count: '' //	优惠券数量 int或array
+    },
+    headers: {
+
+    },
+    type: 'post'
 }

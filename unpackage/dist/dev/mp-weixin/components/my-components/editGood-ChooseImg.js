@@ -149,7 +149,7 @@ startPY = 0;var _default =
         this.y = startY + absY;
         var rowno = Math.min(Math.floor((this.y + 40) / 80), this.maxRowNum - 1);
         var colno = Math.min(Math.floor((this.x + 40) / 80), this.maxColNum - 1);
-        this.endIndex = rowno * 3 + colno;
+        this.endIndex = Math.min(rowno * 3 + colno, this.imglist.length - 1);
       }
     },
     addImg: function addImg() {

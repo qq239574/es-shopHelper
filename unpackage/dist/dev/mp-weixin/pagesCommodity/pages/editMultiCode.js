@@ -75,8 +75,8 @@ var cacheList = [];var _default =
         cacheList[index].code.value = val.value;
       }
       DataFrom.needChange.other.list = cacheList;
-      DataFrom.from = 'editMultiCode';
-      this.Cacher.setData('billDetail', DataFrom);
+      console.log(val.value, cacheList);
+      this.Cacher.setData('editMultiCode', DataFrom);
     },
     clickCell: function clickCell(val) {
       console.log(val);

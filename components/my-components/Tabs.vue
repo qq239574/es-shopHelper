@@ -44,10 +44,6 @@
         },
         mounted(){
             this.cateCurrentIndex=this.index;
-            console.log(this.index,'this.index')
-        },
-        onShow(){
-            console.log('hahahhahahahahahahh')
         },
         computed: {
             getWidth() {
@@ -78,7 +74,8 @@
                 this.$emit('tabChange', {
                     cateid,
                     index,
-                    name: this.categories[index].name
+                    name: this.categories[index].name,
+                    searchId:this.categories[index].searchId,
                 })
             }
         }

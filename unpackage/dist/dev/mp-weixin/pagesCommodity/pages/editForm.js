@@ -44,26 +44,25 @@ var cache = '修改';var _default =
 
   },
   methods: {
-    initPage: function initPage() {
-      DataFrom = this.Cacher.getData('billDetail') || {};
-    },
     change: function change(val) {
       cacheVal = val;
-      this.Cacher.setData('billDetail', {
-        from: 'editForm',
+      console.log(val);
+      this.Cacher.setData('editForm', {
         needChange: Object.assign(DataFrom.needChange, {
           label: '商品表单',
           value: val.label }) });
 
 
-      console.log(DataFrom, val);
     } },
 
   onLoad: function onLoad(option) {
-    this.initPage();
-  },
-  onShow: function onShow() {
-    this.initPage();
+    DataFrom = this.Cacher.getData(option.from) || {};
+    this.Cacher.setData('editForm', {
+      needChange: Object.assign(DataFrom.needChange, {
+        label: '商品表单',
+        value: '不使用表单' }) });
+
+
   } };exports.default = _default;
 
 /***/ }),

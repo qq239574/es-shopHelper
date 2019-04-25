@@ -17,10 +17,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
 {
   components: {
-    inputItem: inputItem } };exports.default = _default;
+    inputItem: inputItem },
+
+  props: {
+    info: {
+      type: Object,
+      default: {
+        newBillTime: '',
+        newBrowserTime: '' } } } };exports.default = _default;
 
 /***/ }),
 

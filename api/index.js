@@ -53,17 +53,17 @@ export default async function (name, data) {
     if (shopInfo && shopInfo.shopInfo) {
         header = {
             'session-id': sessionId,
-            Cookie: 'shopId=' + shopInfo.shopInfo.id + ';'
+            Cookie: 'shopId=' + shopInfo.shopInfo.id + ';',
+            'client-type': 'assistant'
         }
     } else {
         header = {
             'session-id': sessionId,
+            'client-type': 'assistant'
         }
     }
     if (indexApi[name].type == 'get') {
-
         return new Promise((resolve, reject) => {
-
             graceRequest.get(
                 global_settings.base_url + indexApi[name].url,
                 Object.assign(indexApi[name].data, data),
@@ -72,9 +72,10 @@ export default async function (name, data) {
                     if (!res.error) {
 
                         resolve(res)
-                    } else if (res.error == -10000) { 
+                    } else if (res.error == -10000) {
+
                         uni.reLaunch({
-                            url:'/pages/login/index'
+                            url: '/pages/login/index'
                         })
                     } else {
                         console.error('接口出错了>', name, res)

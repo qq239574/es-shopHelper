@@ -26,7 +26,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 var _default =
-{};exports.default = _default;
+{
+  props: {
+    info: {
+      type: Object,
+      default: {
+        img: '',
+        name: '',
+        tel: '',
+        verification: '已验证' } } } };exports.default = _default;
 
 /***/ }),
 

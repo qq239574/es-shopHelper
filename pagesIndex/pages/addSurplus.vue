@@ -1,13 +1,13 @@
 <template>
     <view class='surplus page'>
-        <surplusWin></surplusWin>
+        <surplusWin :info='info'></surplusWin>
         <view class="curMoney">
             <view class="tit">当前{{label}}</view>
             <view class="num"><text v-if='label=="余额"'>￥</text><text class='no'>{{curnum}}</text></view>
         </view>
         <view class="money">
             <view class="col col1" :style='label=="余额"?"":"opacity:0"'>￥</view>
-            <view class="col col2"><input type="digit" placeholder='输入增加金额数' placeholder-style="color:#d2d5db;font-weight:500;" @input='inputMoney'></view>
+            <view class="col col2"><input type="digit" :placeholder='placeholder' placeholder-style="color:#d2d5db;font-weight:500;" @input='inputMoney'></view>
         </view>
         <view class="textarea">
             <textarea class='textarea' :value='val' placeholder-style="color:#d2d5db" :maxlength='40' placeholder="输入备注" @input='getAddition' />
@@ -23,6 +23,7 @@
 <script>
     import surplusWin from '../components/Vip-Surplus-Window'
     import longButton from '../../components/my-components/LongButton.vue'
+    let DataFrom = {}
     export default {
         components: {
             surplusWin,
@@ -30,12 +31,17 @@
         },
         data() {
             return {
+                info: {
+                    name: '',
+                    img: ''
+                },
                 textLength: 0,
                 label: '',
                 type: '',
                 curnum: 0,
                 money: '',
-                addition: ''
+                addition: '',
+                placeholder: ''
             }
         },
         computed: {
@@ -49,16 +55,16 @@
             },
             initPage() {
                 let title = ''
-                let data = this.Cacher.getData('vipDetail');
-                if (data.type == 'add') {
-                    title = '增加' + data.label;
+                if (DataFrom.value.type == 'add') {
+                    title = '增加' + DataFrom.value.label;
                     this.type = '增加';
                 } else {
-                    title = '扣除' + data.label;
+                    title = '扣除' + DataFrom.value.label;
                     this.type = '扣除';
                 }
-                this.curnum = data.value;
-                this.label = data.label;
+                this.curnum = DataFrom.value.value;
+                this.label = DataFrom.value.label;
+                this.placeholder = '输入' + this.type + this.label + '数';
                 uni.setNavigationBarTitle({
                     title: title
                 });
@@ -68,7 +74,26 @@
                 this.addition = val.detail.value
             },
             sure() {
-                uni.navigateBack();
+                let apis = ['changeVipMoney', 'changeVipScore'];
+                let api = '';
+                let num = 0;
+                if (DataFrom.value.type == 'add') {
+                    num = this.money;
+                } else if (DataFrom.value.type == 'minus') {
+                    num = Math.min(this.money, this.curnum) * -1;
+                }
+                if (DataFrom.value.label == '余额') {
+                    api = 'changeVipMoney'
+                } else if (DataFrom.value.label == '积分') {
+                    api = 'changeVipScore'
+                }
+                this.Request(api, {
+                    member_id: DataFrom.info.id,
+                    sum: num, //充值数量 正数添加余额, 负数减少积分
+                    remark: this.addition //
+                }).then(res => {
+                    uni.navigateBack()
+                });
             },
         },
         beforeCreate() {
@@ -76,7 +101,13 @@
                 title: ''
             });
         },
-        onLoad() {
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            console.log('DataFrom', DataFrom)
+            this.info = {
+                name: DataFrom.info.nickname,
+                img: DataFrom.info.avatar
+            }
             this.initPage();
         },
         onShow() {

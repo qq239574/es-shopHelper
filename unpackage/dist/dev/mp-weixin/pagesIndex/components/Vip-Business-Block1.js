@@ -21,6 +21,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        pay: 0,
+        bill: 0,
+        rights: 0,
+        refund: 0 } } },
+
+
+
   components: {
     selectItem: selectItem,
     inputItem: inputItem } };exports.default = _default;

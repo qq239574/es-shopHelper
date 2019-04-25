@@ -2,13 +2,13 @@
     <view class='vip-detail-win'>
         <view class="center">
             <view class="image">
-                <image lazy-load src='/static/img/global/wechat.png'></image>
+                <image lazy-load :src='info.img'></image>
             </view>
             <view class="info">
-                <view class="title">小花花买花花</view>
+                <view class="title">{{info.name}}</view>
                 <view class="detail">
-                    <view class="left">已验证</view>
-                    <view class="right">1501656565</view>
+                    <view class="left">{{info.verification}}</view>
+                    <view class="right">{{info.tel}}</view>
                 </view>
             </view>
         </view>
@@ -16,7 +16,19 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        props: {
+            info: {
+                type: Object,
+                default: {
+                    img: '',
+                    name: '',
+                    tel: '',
+                    verification: '已验证'
+                }
+            }
+        }
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -63,21 +75,21 @@
                     display: flex;
                     flex-wrap: nowrap;
                     justify-content: flex-start;
-                    height:32upx;
-                    view{
-                        height:32upx;
+                    height: 32upx;
+                    view {
+                        height: 32upx;
                         box-sizing: border-box;
                         line-height: 32upx;
                         font-size: 20upx;
-                        color:#bdc8df;
+                        color: #bdc8df;
                     }
-                    .left{
-                        width:80upx;
-                        height:100%;
-                        border:1upx solid #bdc8df;
+                    .left {
+                        width: 80upx;
+                        height: 100%;
+                        border: 1upx solid #bdc8df;
                         text-align: center;
                         border-radius: 4upx;
-                        margin:0 10upx 0 0;
+                        margin: 0 10upx 0 0;
                         line-height: 30upx;
                     }
                 }

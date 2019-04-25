@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -33,6 +33,7 @@
 
 
 
+var DataFrom = {};var _default =
 {
   components: {
     surplusWin: surplusWin,
@@ -40,12 +41,17 @@
 
   data: function data() {
     return {
+      info: {
+        name: '',
+        img: '' },
+
       textLength: 0,
       label: '',
       type: '',
       curnum: 0,
       money: '',
-      addition: '' };
+      addition: '',
+      placeholder: '' };
 
   },
   computed: {
@@ -59,16 +65,16 @@
     },
     initPage: function initPage() {
       var title = '';
-      var data = this.Cacher.getData('vipDetail');
-      if (data.type == 'add') {
-        title = '增加' + data.label;
+      if (DataFrom.value.type == 'add') {
+        title = '增加' + DataFrom.value.label;
         this.type = '增加';
       } else {
-        title = '扣除' + data.label;
+        title = '扣除' + DataFrom.value.label;
         this.type = '扣除';
       }
-      this.curnum = data.value;
-      this.label = data.label;
+      this.curnum = DataFrom.value.value;
+      this.label = DataFrom.value.label;
+      this.placeholder = '输入' + this.type + this.label + '数';
       uni.setNavigationBarTitle({
         title: title });
 
@@ -78,7 +84,26 @@
       this.addition = val.detail.value;
     },
     sure: function sure() {
-      uni.navigateBack();
+      var apis = ['changeVipMoney', 'changeVipScore'];
+      var api = '';
+      var num = 0;
+      if (DataFrom.value.type == 'add') {
+        num = this.money;
+      } else if (DataFrom.value.type == 'minus') {
+        num = Math.min(this.money, this.curnum) * -1;
+      }
+      if (DataFrom.value.label == '余额') {
+        api = 'changeVipMoney';
+      } else if (DataFrom.value.label == '积分') {
+        api = 'changeVipScore';
+      }
+      this.Request(api, {
+        member_id: DataFrom.info.id,
+        sum: num, //充值数量 正数添加余额, 负数减少积分
+        remark: this.addition //
+      }).then(function (res) {
+        uni.navigateBack();
+      });
     } },
 
   beforeCreate: function beforeCreate() {
@@ -86,7 +111,13 @@
       title: '' });
 
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    console.log('DataFrom', DataFrom);
+    this.info = {
+      name: DataFrom.info.nickname,
+      img: DataFrom.info.avatar };
+
     this.initPage();
   },
   onShow: function onShow() {

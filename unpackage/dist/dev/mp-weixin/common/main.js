@@ -48,7 +48,6 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
       Cacher: cacher,
       Toast: _toast.default,
       Dialog: _dialog.default,
-      DataFrom: '', //页面传参
       ShowLoadMore: false,
       LoadingType: 1,
       LoadingText: ['加载更多', 'loading ......', '已加载全部'] };
@@ -104,13 +103,6 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
   onHide: function onHide() {
     this.closePageLoading();
     this.Dialog.close();
-  },
-  onLoad: function onLoad(option) {
-    console.log(option);
-    if (!option.from) {//如果没有from就说明是刚进入小程序
-    } else {
-      console.log('DataFrom:  ', this.Cacher.getData(option.from)); //获取页面传参
-    }
   } }, "onReachBottom", function onReachBottom()
 {var _this3 = this;
   console.log('onReachBottom');

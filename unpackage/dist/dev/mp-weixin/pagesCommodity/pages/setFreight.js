@@ -19,9 +19,11 @@
 
 
 var DataFrom = {};
+var DataGo = {};
 var cacheVal = '';
 var cacheFrom = '';
-var cache = '修改';var _default =
+var cache = '修改';
+var pageId = 'setFreight';var _default =
 {
   components: {
     radioBlock: radioBlock },
@@ -45,23 +47,22 @@ var cache = '修改';var _default =
   },
   methods: {
     initPage: function initPage() {
-      DataFrom = this.Cacher.getData('setFreight') || {};
-      if (DataFrom.from == 'setTotalFreight') {
-        this.list[0].subValue = DataFrom.value.subValue;
-        this.Cacher.setData('billDetail', {
-          from: 'setFreight',
-          needChange: {
-            label: '快递运费',
-            value: this.list[0].subValue } });
+      DataGo = this.Cacher.getData('setTotalFreight');
+      this.list[0].subValue = DataGo.value.subValue;
+      this.Cacher.setData(pageId, {
+        needChange: {
+          label: '快递运费',
+          value: this.list[0].subValue } });
 
 
-      }
     },
     change: function change(val) {
       cacheVal = val;
-      this.Cacher.setData('setFreight', {
-        from: 'setFreight',
-        value: val });
+      this.Cacher.setData(pageId, {
+        needChange: {
+          label: '快递运费',
+          value: val.subValue } });
+
 
       if (val.value == '修改' && cache != '修改') {} else if (val.value == '修改' && cache == '修改') {
         uni.navigateTo({
@@ -72,6 +73,11 @@ var cache = '修改';var _default =
     } },
 
   onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from) || {};
+    this.Cacher.setData(pageId, {
+      from: option.from || '',
+      go: 'setTotalFreight' });
+
     this.initPage();
   },
   onShow: function onShow() {

@@ -26,9 +26,8 @@
         },
         methods: {
             sure() {
-                DataFrom.from = 'editCode';
                 DataFrom.needChange.value = cacheVal;
-                this.Cacher.setData(cacheFrom, DataFrom)
+                this.Cacher.setData('editCode', DataFrom)
                 uni.navigateBack();
             },
             getAddition(val) {
@@ -38,8 +37,7 @@
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from);
-            cacheFrom = option.from; 
+            DataFrom = this.Cacher.getData(option.from); 
         }
     }
 </script>

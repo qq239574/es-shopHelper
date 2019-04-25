@@ -33,16 +33,13 @@
             }
         },
         methods: {
-            select(val) {
-                console.log(val);
-                DataFrom.from = 'selectType';
+            select(val) {  
                 DataFrom.needChange.value = val;
-                this.Cacher.setData(cacheFrom, DataFrom);
+                this.Cacher.setData('selectType', DataFrom);
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from);
-            cacheFrom = option.from; 
+            DataFrom = this.Cacher.getData(option.from); 
         }
     }
 </script>

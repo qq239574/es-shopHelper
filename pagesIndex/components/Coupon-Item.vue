@@ -1,14 +1,16 @@
 <template>
-    <view class='coupon-item'>
-        <view class="border">
-            <view class="top" v-for='(item,index) in list' :key='index'>
-                <view class="title">{{item.name}}</view>
-                <view class="money">
-                    ￥
-                    <view class="num">{{item.price}}</view>
+    <view class='coupon-items'>
+        <view class='coupon-item' v-for='(item,index) in list' :key='index'>
+            <view class="border">
+                <view class="top">
+                    <view class="title">{{item.name}}</view>
+                    <view class="money">
+                        ￥
+                        <view class="num">{{item.price}}</view>
+                    </view>
                 </view>
+                <view class="bottom">{{item.info}}</view>
             </view>
-            <view class="bottom">{{item.info}}</view>
         </view>
     </view>
 </template>
@@ -21,13 +23,11 @@
                 default: [{
                     name: '女神节专享通用优惠券',
                     price: 20,
-                    info: '部分商品满100减20',
-                    num: 0
+                    info: '部分商品满100减20', 
                 }]
             }
         },
-        methods: {
-        },
+        methods: {},
     }
 </script>
 
@@ -40,13 +40,13 @@
         overflow: hidden;
         .border {
             width: 665upx;
-            height: 217upx;
             box-sizing: border-box;
             border: 1upx solid #fb6638;
             border-radius: 11upx;
             overflow: hidden;
             position: relative;
             background: #fef8f8;
+            height: 217upx;
             .top,
             .bottom {
                 width: 100%;

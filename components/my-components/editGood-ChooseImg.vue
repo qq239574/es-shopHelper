@@ -1,6 +1,6 @@
 <template>
-    <view class="editgood-chooseimg grace-form">
-        <movable-area class='move-area' style='width:100%;height:100%;' ref='ref'>
+    <view class="editgood-chooseimg grace-form" >
+        <movable-area class='move-area' style='width:100%;height:100%;' ref='ref' >
             <view class="imglist">
                 <view class="items item" :style="endIndex==index?'border:1px dashed #ccc;':''" v-for="(item, index) in imgLists" :key="index" :id="item.index" :data-index='index' @longpress='_longtap' @touchstart='touchstart' @touchend='touchend' @touchmove='touchmove'>
                     <image mode='aspectFill' class='items--img' :src="item" :data-imgurl="item" @tap="showImgs"></image>
@@ -139,7 +139,7 @@
                     this.y = startY + absY;
                     let rowno = Math.min(Math.floor((this.y + 40) / 80), this.maxRowNum - 1);
                     let colno = Math.min(Math.floor((this.x + 40) / 80), this.maxColNum - 1);
-                    this.endIndex = rowno * 3 + colno;
+                    this.endIndex = Math.min(rowno * 3 + colno,this.imglist.length-1); 
                 }
             },
             addImg() {
@@ -182,7 +182,7 @@
                     urls: that.imgLists,
                     current: currentImg
                 })
-            }
+            }, 
         }
     }
 </script>

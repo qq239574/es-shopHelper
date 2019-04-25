@@ -19,6 +19,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    info: {
+      type: Object,
+      default: {
+        score: 0,
+        money: 0,
+        coupon: 0 } } },
+
+
+
   components: {
     selectItem: selectItem },
 

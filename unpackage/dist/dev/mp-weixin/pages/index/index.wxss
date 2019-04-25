@@ -58,6 +58,7 @@
     width: 704rpx;
     margin: 24rpx auto 0;
     border-radius: 8rpx;
+    overflow: hidden;
 }
 .pages-index-index .block .grace-icons.data-v-78b85d22 {
       margin: 0 12rpx 0 24rpx;

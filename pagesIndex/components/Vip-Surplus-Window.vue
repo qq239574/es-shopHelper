@@ -1,14 +1,24 @@
 <template>
     <view class='vip-detail-win'>
         <view class="center">
-            <image lazy-load src='/static/img/global/wechat.png'></image>
-            <view class="name">小花花买花花</view>
+            <image lazy-load :src='info.img'></image>
+            <view class="name">{{info.name}}</view>
         </view>
     </view>
 </template>
 
 <script>
-    export default {}
+    export default {
+        props:{
+            info:{
+                type:Object,
+                default:{
+                    name:'',
+                    img:''
+                }
+            }
+        }
+    }
 </script>
 
 <style lang="scss" scoped>

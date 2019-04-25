@@ -9,7 +9,7 @@
         </view>
         <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
         <view class="block">
-            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay'>
+            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
             <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
@@ -30,6 +30,10 @@
     import dataShower from './components/IndexDataShower.vue'
     import goodsBlock from './components/IndexGoods.vue'
     import apps from './components/IndexApps.vue'
+    import {
+        getDate,
+        GetDateDiff
+    } from '../../components/my-components/getDateSection.js'
     let DataFrom = {};
     let newNotice = {};
     export default {
@@ -55,7 +59,7 @@
                 }, {
                     name: '维权订单',
                     num: 0,
-                    cateid:0
+                    cateid: 0
                 }],
                 newNotice: { //最新公告
                     label: '',
@@ -63,7 +67,7 @@
                 },
                 execInfo: { //逾期消息
                     label: '',
-                    date: ''
+                    date: '续费'
                 },
                 shopName: '',
                 genderIndex: 0,
@@ -71,11 +75,12 @@
                 dateValue: "请选择",
                 onlyOneShop: false,
                 showData: {
-                    money: 22110,
-                    payedBill: 10,
-                    payedGood: 110,
-                    payedVip: 2110
-                }
+                    money: 0,
+                    payedBill: 0,
+                    payedGood: 0,
+                    payedVip: 0
+                },
+                expireDay: 0
             }
         },
         methods: {
@@ -89,7 +94,7 @@
                         money: res.sell_data.yesterday_turnover,
                         payedBill: res.sell_data.yesterday_order_num,
                         payedGood: res.sell_data.yesterday_goods_num,
-                        payedVip: res.sell_data.yesterday_pay_member_num || -1,
+                        payedVip: res.sell_data.yesterday_pay_member_num
                     }
                 });
             },
@@ -154,11 +159,9 @@
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
             this.shopName = DataFrom.title;
-
             this.searchData({
                 value: 'today'
             }); //初始化数据框
-
             this.Request('homeInfo').then(res => {
                 this.shopName = res.shop.name;
                 this.showData = {
@@ -174,9 +177,10 @@
                     label: newNotice[0].title,
                     date: newNotice[0].date
                 }
+                this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
                 this.execInfo = { //还没写过期的功能？？？？
-                    label: '',
-                    date: ''
+                    label: '还有' + this.expireDay + '天到期',
+                    date: '续费'
                 }
                 this.billList = [{
                     name: '待发货',
@@ -244,6 +248,7 @@
             width: 704upx;
             margin: 24upx auto 0;
             border-radius: 8upx;
+            overflow: hidden;
             .grace-icons {
                 margin: 0 12upx 0 24upx;
             }

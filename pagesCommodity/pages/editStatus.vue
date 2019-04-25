@@ -1,6 +1,6 @@
 <template>
     <div class='edit-status page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' @change='change'></radioBlock>
+        <radioBlock :items='list' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
         <view class="bg" v-show='showpicker'>
             <van-datetime-picker class='picker' type="datetime" :value="currentDate" :min-date="minDate" :max-date="maxDate" @input="onInput" @confirm='confirm' @cancel='cancel' />
         </view>
@@ -73,8 +73,7 @@
             },
             change(val) {
                 cacheVal = val;
-                this.Cacher.setData('billDetail', {
-                    from: 'editStatus',
+                this.Cacher.setData('editStatus', { 
                     needChange: {
                         label: '状态',
                         value: val.label,
@@ -86,11 +85,11 @@
                     this.minDate = new Date().getTime() + 5 * 60000;
                     this.maxDate = new Date(getDate(365)).getTime();
                 } else {}
-                cache = val.value;
-                console.log(DataFrom,this.Cacher.getData('billDetail'), val)
+                cache = val.value; 
             }
         },
         onLoad(option) {
+             DataFrom = this.Cacher.getData(option.from) || {};
             this.initPage()
         },
         onShow() {

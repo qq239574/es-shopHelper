@@ -49,6 +49,7 @@
         "pages/vipDetail",
         "pages/vipManage",
         "pages/selectCoupon",
+        "pages/searchCoupon",
         "pages/additionList",
         "pages/noticeList",
         "pages/noticeDetail"

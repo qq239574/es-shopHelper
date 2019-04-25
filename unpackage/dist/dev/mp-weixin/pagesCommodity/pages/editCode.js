@@ -36,9 +36,8 @@ var cacheFrom = '';var _default =
   },
   methods: {
     sure: function sure() {
-      DataFrom.from = 'editCode';
       DataFrom.needChange.value = cacheVal;
-      this.Cacher.setData(cacheFrom, DataFrom);
+      this.Cacher.setData('editCode', DataFrom);
       uni.navigateBack();
     },
     getAddition: function getAddition(val) {
@@ -49,7 +48,6 @@ var cacheFrom = '';var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
-    cacheFrom = option.from;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

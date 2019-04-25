@@ -190,7 +190,7 @@
               -ms-transform: translate(-50%, 0);
                   transform: translate(-50%, 0);
           position: absolute;
-          bottom: 40rpx;
+          bottom: 30rpx;
           font-size: 24rpx;
           color: #c5cede;
 }

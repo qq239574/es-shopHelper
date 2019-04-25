@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item */ "pagesIndex/components/Coupon-Item").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item */ "pagesIndex/components/Coupon-Item").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -20,6 +20,9 @@
 
 
 
+
+
+var DataFrom = {};var _default =
 {
   components: {
     couponItem: couponItem,
@@ -28,22 +31,45 @@
   data: function data() {
     return {
       list: [{
-        name: '女神节专享通用优惠券',
-        price: 20,
-        info: '部分商品满100减20',
+        name: '',
+        price: 0,
+        info: '',
         num: 0 }] };
 
 
   },
   methods: {
+    initPage: function initPage() {var _this = this;
+      console.log('DataFrom', DataFrom);
+      this.Request('getVipCoupons', {
+        member_id: DataFrom.info.id,
+        status: 0 //	0: 全部 1: 未使用 2: 已使用 3: 已失效
+      }).then(function (res) {
+        _this.list = res.list.map(function (item) {
+          return {
+            name: item.title,
+            price: item.amount || 0,
+            info: '满' + item.enough + '可用',
+            num: 0 };
+
+        });
+      });
+    },
     addCoupon: function addCoupon() {
+      this.Cacher.setData('coupon', {
+        from: 'coupon',
+        info: DataFrom.info });
+
       uni.navigateTo({
-        url: './selectCoupon' });
+        url: './selectCoupon?from=coupon' });
 
     },
-    select: function select(val) {
-      console.log(val);
-    } } };exports.default = _default;
+    select: function select(val) {} },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    this.initPage();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

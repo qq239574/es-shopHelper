@@ -12,7 +12,6 @@
     import longButton from '../../components/my-components/LongButton.vue'
     let DataFrom = {};
     let cacheVal = '';
-    let cacheFrom='';
     export default {
         components: {
             longButton
@@ -25,10 +24,9 @@
             }
         },
         methods: {
-            sure() {
-                DataFrom.from = 'editSubtitle';
+            sure() { 
                 DataFrom.needChange.value = cacheVal;
-                this.Cacher.setData(cacheFrom, DataFrom)
+                this.Cacher.setData('editSubTitle', DataFrom)
                 uni.navigateBack();
             },
             getAddition(val) {
@@ -38,9 +36,7 @@
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from);
-            cacheFrom=option.from;
-            console.log(DataFrom);
+            DataFrom = this.Cacher.getData(option.from);  
         }
     }
 </script>

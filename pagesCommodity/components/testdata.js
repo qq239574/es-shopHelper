@@ -157,7 +157,7 @@ export function singleData() { //单规格商品
                 value: false,
                 disabled: false, //可否编辑
                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                needHide:true,
+                needHide:false,
             },
             autoDeliverContent: {
                 label: '自动发货内容',
@@ -165,7 +165,7 @@ export function singleData() { //单规格商品
                 value: '打开雷锋哈可减肥的话可接受的付款就是付款接收到付款就是付款计划谁看见大富豪看实践活动付款就是疯狂就哈萨克分',
                 disabled: false, //可否编辑
                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                needHide:true,
+                needHide:false,
             },
             provideCost: {
                 label: '快递运费',
@@ -182,7 +182,7 @@ export function singleData() { //单规格商品
                 disabled: false, //可否编辑
                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
-            joivbnCount: {
+            joinCount: {
                 label: '参与会员折扣',
                 id: '',
                 value: true,

@@ -7,13 +7,14 @@
 		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
-		"minified": true,
-		"newFeature": true
+		"minified": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
 	"appid": "wxea0039639afb8d4c",
 	"projectname": "MobileManager",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -35,59 +36,59 @@
 			"current": 7,
 			"list": [
 				{
-					"id": -1,
-					"name": "indezx",
-					"pathName": "pages/index/index",
-					"query": "",
+					"id": 0,
+					"name": "vip",
+					"pathName": "pagesIndex/pages/vipDetail",
+					"query": "from=vipManage",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "bill",
-					"pathName": "pages/bill/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "send",
-					"pathName": "pagesBill/pages/billProvide",
-					"query": "send",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "id",
-					"pathName": "pagesBill/pages/billId",
-					"query": "send",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "data",
-					"pathName": "pagesIndex/pages/index",
-					"query": "send",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "filte",
-					"pathName": "pagesIndex/pages/toper",
-					"query": "send",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "list",
-					"pathName": "pagesIndex/pages/index",
-					"query": "send",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "viplist",
+					"name": "viplisyt",
 					"pathName": "pagesIndex/pages/vipManage",
-					"query": "send",
+					"query": "from=vipManage",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "from=vipManage",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "items",
+					"pathName": "pagesIndex/pages/coupon",
+					"query": "from=vipDetail",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "items",
+					"pathName": "pagesIndex/pages/coupon",
+					"query": "from=vipDetail",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "items",
+					"pathName": "pagesIndex/pages/selectCoupon",
+					"query": "from=vipDetail",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "good",
+					"pathName": "pages/commodity/index",
+					"query": "from=vipDetail",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "editgood",
+					"pathName": "pagesCommodity/pages/index",
+					"query": "from=good",
 					"scene": null
 				}
 			]
