@@ -30,6 +30,10 @@
 
 
 
+
+
+
+
 var DataFrom = {};
 var cacheList = [];var _default =
 {
@@ -60,28 +64,45 @@ var cacheList = [];var _default =
 
   },
   methods: {
+    inputPay: function inputPay(val) {
+      console.log('total pay', val);
+    },
     getInput: function getInput(val) {
-      console.log(val);
+      console.log('item>>', val);
       this.totalPrice = val.value.price * 1 + val.value.pay * 1;
     },
-    sure: function sure() {
-      this.closePageLoading();
-      this.Toast('改价成功');
-      this.Cacher.setData('changePrice', {
-        from: 'changePrice' });
+    sure: function sure() {var _this = this;
+      this.pageLoading();
+      var data = {
+        id: '', //订单id
+        dispatch_price: '', //运费
+        total_price: '', //订单总价
+        change_items: [{
+          "id": "", //订单商品id
+          "price_change": "0" //改价变动金额
+        }] };
 
-      setTimeout(function () {
-        uni.navigateBack();
-      }, 2000);
+      this.Request('changeBillPrice', data).then(function (res) {
+        _this.Cacher.setData('changePrice', {
+          from: 'changePrice' });
+
+        if (res.error == 0) {
+          _this.closePageLoading();
+          uni.navigateBack();
+          _this.Toast('改价成功');
+        } else {
+          _this.Toast(res.message);
+        }
+      }).catch(function (res) {
+        _this.Toast(res.message);
+      });
     } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
     this.Request('billPrice', {
       id: DataFrom.bill.bill.id }).
-    then(function (res) {
-    });
-    console.log(DataFrom);
+    then(function (res) {});
     cacheList = DataFrom.bill.goodsList.map(function (item, index) {
       return {
         billInfo: {

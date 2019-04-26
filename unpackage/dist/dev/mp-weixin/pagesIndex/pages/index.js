@@ -49,41 +49,70 @@ var initing = false; //是否正在刷新
 var dataList1 = [0, 0, 0, 0, 0, 0, 0],
 dataList2 = [0, 0, 0, 0, 0, 0, 0],
 dataList3 = [0, 0, 0, 0, 0, 0, 0],
-dataList4 = [0, 0, 0, 0, 0, 0, 0];var _default =
+dataList4 = [0, 0, 0, 0, 0, 0, 0];
+var initdata = [{
+  title: '成交额（元）',
+  subTitle: '累计总成成交额：0',
+  today: 0,
+  yesterday: 0,
+  id: 'trade' },
+{
+  title: '付款订单数（个）',
+  subTitle: '',
+  today: 0,
+  yesterday: 0,
+  id: 'pay' },
+{
+  title: '付款商品数（件）',
+  subTitle: '',
+  today: 0,
+  yesterday: 0,
+  id: 'good' },
+{
+  title: '付款会员数',
+  subTitle: '',
+  today: 0,
+  yesterday: 0,
+  id: 'vip' }];var _default =
+
 {
   data: function data() {
     return {
-      dataList: [{
-        title: '成交额（元）',
-        subTitle: '累计总成成交额：0',
-        today: 0,
-        yesterday: 0,
-        id: 'trade' },
-      {
-        title: '付款订单数（个）',
-        subTitle: '',
-        today: 0,
-        yesterday: 0,
-        id: 'pay' },
-      {
-        title: '付款商品数（件）',
-        subTitle: '',
-        today: 0,
-        yesterday: 0,
-        id: 'good' },
-      {
-        title: '付款会员数',
-        subTitle: '',
-        today: 0,
-        yesterday: 0,
-        id: 'vip' }] };
-
+      dataList: initdata };
 
   },
   onLoad: function onLoad() {
     this.initPage();
   },
   onShow: function onShow() {
+    this.initPage();
+  },
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.dataList = [{
+      title: '成交额（元）',
+      subTitle: '累计总成成交额：0',
+      today: 0,
+      yesterday: 0,
+      id: 'trade' },
+    {
+      title: '付款订单数（个）',
+      subTitle: '',
+      today: 0,
+      yesterday: 0,
+      id: 'pay' },
+    {
+      title: '付款商品数（件）',
+      subTitle: '',
+      today: 0,
+      yesterday: 0,
+      id: 'good' },
+    {
+      title: '付款会员数',
+      subTitle: '',
+      today: 0,
+      yesterday: 0,
+      id: 'vip' }];
+
     this.initPage();
   },
   methods: {

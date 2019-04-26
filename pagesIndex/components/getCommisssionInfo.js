@@ -1,27 +1,20 @@
 function judgeCommissionStatus(info) {
-    if (info.status) { //是分销商
-        return 2
-
-    } else { //不是分销商
-        if (info.apply_time && /^2.*/.test(info.apply_time)) { //有申请成为分销商时间
-            if (info.become_time && /^2.*/.test(info.become_time)) { //有成为分销商的时间
-                return 1//曾是分销商，
-            } else { //待审核
-                return 0
-            }
-
-        } else { //不是
-            return 0;
-        }
-
+    if (info.status * 1 === 1) { //是分销商
+        return 1
+    } else if (info.status * 1 === 0) { //待审核 分销商,
+        return 0
+    } else if (info.status * 1 === -1) { //曾拒绝
+        return -1
+    } else { //没申请过
+        return -2
     }
 }
 export default function (commission) {
-
+    let status = judgeCommissionStatus(commission)
     let commissionInfo = { //分销商信息
-        isCommission: judgeCommissionStatus(commission), //是否分销商，0不是，1曾是，2是
+        isCommission: status, //是否分销商，
         registerTime: commission.apply_time, //注册时间
-        registerInfo:commission.from,//申请信息
+        registerInfo: commission.from, //申请信息
         superDistributor: { //上级分销商
             name: commission.agent_nickname
         },

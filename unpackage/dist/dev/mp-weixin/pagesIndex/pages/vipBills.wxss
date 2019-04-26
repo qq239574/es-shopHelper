@@ -1,5 +1,10 @@
-.margin180.data-v-542f66f3 {
-  height: 176rpx;
+.margin200.data-v-542f66f3 {
+  height: 196rpx;
+}
+.margin20.data-v-542f66f3 {
+  height: 20rpx;
+  width: 100%;
+  background: #fff;
 }
 .model__title.data-v-542f66f3 {
   font-weight: 700;
@@ -53,5 +58,43 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   text-align: left;
+}
+.pager.data-v-542f66f3 {
+  width: 100%;
+  height: 80rpx;
+  margin: 30rpx auto 100rpx;
+}
+.pager .button.data-v-542f66f3 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    font-size: 30rpx;
+    color: 999;
+    line-height: 70rpx;
+}
+.pager.data-v-542f66f3 button {
+    height: 70rpx;
+    font-size: 30rpx;
+    color: 999;
+    line-height: 70rpx;
+    border-radius: 10rpx;
+    margin: 0;
+}
+.pager .prev.data-v-542f66f3 {
+    padding: 0 10rpx 0 5rpx;
+}
+.pager .next.data-v-542f66f3 {
+    padding: 0 5rpx 0 10rpx;
+}
+.pager.data-v-542f66f3 .pager-button {
+    line-height: 70rpx;
+    height: 70rpx;
 }
 

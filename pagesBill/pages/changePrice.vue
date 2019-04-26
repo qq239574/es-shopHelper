@@ -6,12 +6,16 @@
                 <infoBlock :info='item.billInfo'></infoBlock>
                 <blockInput :info='item.billInfo' @input="getInput"></blockInput>
             </block>
-            <!-- 确认修改按钮 -->
-            <pageFoot :price='totalPrice' @click='sure'></pageFoot>
-            <!-- 交互组件 -->
-            <van-toast id="van-toast" />
-            <van-dialog id="van-dialog" />
         </view>
+        <view class="row row2">
+            <view class="label">统一运费（元）</view>
+            <input type="digit" placeholder='0' @input='inputPay'>
+        </view>
+        <!-- 确认修改按钮 -->
+        <pageFoot :price='totalPrice' @click='sure'></pageFoot>
+        <!-- 交互组件 -->
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -50,28 +54,45 @@
             }
         },
         methods: {
+            inputPay(val) {
+                console.log('total pay', val)
+            },
             getInput(val) {
-                console.log(val)
+                console.log('item>>', val)
                 this.totalPrice = val.value.price * 1 + val.value.pay * 1;
             },
             sure() {
-                this.closePageLoading();
-                this.Toast('改价成功');
-                this.Cacher.setData('changePrice', {
-                    from: 'changePrice'
+                this.pageLoading();
+                let data = {
+                    id: '', //订单id
+                    dispatch_price: '', //运费
+                    total_price: '', //订单总价
+                    change_items: [{
+                        "id": "", //订单商品id
+                        "price_change": "0" //改价变动金额
+                    }]
+                }
+                this.Request('changeBillPrice', data).then(res => {
+                    this.Cacher.setData('changePrice', {
+                        from: 'changePrice'
+                    })
+                    if (res.error == 0) {
+                        this.closePageLoading();
+                        uni.navigateBack();
+                        this.Toast('改价成功');
+                    } else {
+                        this.Toast(res.message);
+                    }
+                }).catch(res => {
+                    this.Toast(res.message);
                 })
-                setTimeout(() => {
-                    uni.navigateBack();
-                }, 2000)
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
             this.Request('billPrice', {
                 id: DataFrom.bill.bill.id
-            }).then(res => {
-            })
-            console.log(DataFrom)
+            }).then(res => {})
             cacheList = DataFrom.bill.goodsList.map((item, index) => {
                 return {
                     billInfo: {
@@ -90,6 +111,38 @@
 
 <style lang="scss" scoped>
     .change-price {
+        .row {
+            width: 710upx;
+            height: 96upx;
+            line-height: 96upx;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            box-sizing: border-box;
+            padding: 0 20upx;
+            margin: 20upx auto;
+            background: #fff;
+            border-radius: 8upx;
+            .label {
+                font-size: 28upx;
+                line-height: 96upx;
+                font-weight: 700;
+            }
+            input {
+                height: 70upx;
+                width: 250upx;
+                background: #fcfcfc;
+                border: 1upx solid #eee;
+                border-radius: 6upx;
+                line-height: 70upx;
+                font-size: 28upx;
+                text-align: right;
+                box-sizing: border-box;
+                padding: 0 20upx;
+                margin-top: 13upx;
+                font-weight: 600;
+            }
+        }
         .block {
             width: 710upx;
             box-sizing: border-box;

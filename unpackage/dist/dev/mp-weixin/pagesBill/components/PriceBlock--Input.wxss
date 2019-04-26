@@ -21,6 +21,7 @@
 .price-input .row .label.data-v-d7048cae {
       font-size: 28rpx;
       line-height: 96rpx;
+      font-weight: 700;
 }
 .price-input .row input.data-v-d7048cae {
       height: 70rpx;

@@ -4,10 +4,6 @@
             <view class="label">定价（元）</view>
             <input type="digit" placeholder='0' :value='info.total' @input='inputPrice'>
         </view>
-        <view class="row row2">
-            <view class="label">运费（元）</view>
-            <input type="digit" placeholder='0' @input='inputPay'>
-        </view>
     </view>
 </template>
 
@@ -26,7 +22,7 @@
         },
         methods: {
             inputPrice(val) {
-                cachePrice = val.detail.value||0;
+                cachePrice = val.detail.value || 0;
                 this.$emit('input', {
                     value: {
                         price: cachePrice,
@@ -36,10 +32,10 @@
                 })
             },
             inputPay(val) {
-                cachePay = val.detail.value||0;
+                cachePay = val.detail.value || 0;
                 this.$emit('input', {
                     value: {
-                        price: cachePrice||0,
+                        price: cachePrice || 0,
                         pay: cachePay
                     },
                     info: this.info
@@ -63,6 +59,7 @@
             .label {
                 font-size: 28upx;
                 line-height: 96upx;
+                font-weight: 700;
             }
             input {
                 height: 70upx;

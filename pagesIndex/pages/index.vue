@@ -40,41 +40,70 @@
         dataList2 = [0, 0, 0, 0, 0, 0, 0],
         dataList3 = [0, 0, 0, 0, 0, 0, 0],
         dataList4 = [0, 0, 0, 0, 0, 0, 0];
+    let initdata = [{
+        title: '成交额（元）',
+        subTitle: '累计总成成交额：0',
+        today: 0,
+        yesterday: 0,
+        id: 'trade'
+    }, {
+        title: '付款订单数（个）',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'pay'
+    }, {
+        title: '付款商品数（件）',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'good'
+    }, {
+        title: '付款会员数',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'vip'
+    }]
     export default {
         data() {
             return {
-                dataList: [{
-                    title: '成交额（元）',
-                    subTitle: '累计总成成交额：0',
-                    today: 0,
-                    yesterday: 0,
-                    id: 'trade'
-                }, {
-                    title: '付款订单数（个）',
-                    subTitle: '',
-                    today: 0,
-                    yesterday: 0,
-                    id: 'pay'
-                }, {
-                    title: '付款商品数（件）',
-                    subTitle: '',
-                    today: 0,
-                    yesterday: 0,
-                    id: 'good'
-                }, {
-                    title: '付款会员数',
-                    subTitle: '',
-                    today: 0,
-                    yesterday: 0,
-                    id: 'vip'
-                }],
+                dataList: initdata,
             }
         },
         onLoad() {
-            this.initPage()
+            this.initPage();
         },
         onShow() {
             this.initPage()
+        },
+        onPullDownRefresh() {
+            this.dataList = [{
+                title: '成交额（元）',
+                subTitle: '累计总成成交额：0',
+                today: 0,
+                yesterday: 0,
+                id: 'trade'
+            }, {
+                title: '付款订单数（个）',
+                subTitle: '',
+                today: 0,
+                yesterday: 0,
+                id: 'pay'
+            }, {
+                title: '付款商品数（件）',
+                subTitle: '',
+                today: 0,
+                yesterday: 0,
+                id: 'good'
+            }, {
+                title: '付款会员数',
+                subTitle: '',
+                today: 0,
+                yesterday: 0,
+                id: 'vip'
+            }]
+            this.initPage();
         },
         methods: {
             initPage() {

@@ -34,7 +34,8 @@
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
 
 
-var _cache = __webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"); //
+var _animateAddNum = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/animateAddNum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\animateAddNum.js"));
+var _cache = __webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -56,9 +57,27 @@ var _cache = __webpack_require__(/*! ../../store/cache.js */ "I:\\CurProject\\ES
 //
 //
 //
-var _default = { props: { info: { type: Object, default: { title: '', subTitle: "", today: 0, yesterday: 0 } } }, methods: { clickModel: function clickModel() {this.Cacher.setData('dataGraph', this.info);uni.navigateTo({ url: './moneyDetail?from=dataGraph' });},
+var _default = { props: { info: { type: Object, default: { title: '', subTitle: "", today: 0, yesterday: 0 } } }, data: function data() {return { today: 0, yesterday: 0 };}, watch: { info: function info() {
+      var adder1 = new _animateAddNum.default();
+      var adder2 = new _animateAddNum.default();
+      var that = this;
+      adder1.start(this.info.today, function (num) {
+        that.today = num;
+      });
+      adder2.start(this.info.yesterday, function (num) {
+        that.yesterday = num;
+      });
+    } },
+
+  methods: {
+    clickModel: function clickModel() {
+      this.Cacher.setData('dataGraph', this.info);
+      uni.navigateTo({
+        url: './moneyDetail?from=dataGraph' });
+
+    },
     formater: function formater(num) {
-      return (0, _formater.number_format)(num);
+      return (0, _formater.number_format)(Math.min(9999999999, num));
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
@@ -90,8 +109,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.formater(_vm.info.today)
-  var m1 = _vm.formater(_vm.info.yesterday)
+  var m0 = _vm.formater(_vm.today)
+  var m1 = _vm.formater(_vm.yesterday)
   _vm.$mp.data = Object.assign(
     {},
     {

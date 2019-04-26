@@ -118,7 +118,6 @@
         },
         methods: {
             checkBill() {
-                console.log('object')
                 this.Cacher.setData('vipDetail', {
                     from: 'vipDetail',
                     member_id: DataFrom.detail.info.id
@@ -216,7 +215,7 @@
                     })
                 }
             },
-            clickDistriInfo(val) { //点击分销商信息中的组件 
+             clickDistriInfo(val) { //点击分销商信息中的组件 
                 if (val.type == 'remove') { //取消分销商
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
@@ -234,17 +233,18 @@
                 } else if (val.type == 'refuse') { //拒绝
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
-                        status: 0
+                        status: -1
                     }).then(res => {
                         this.initPage();
                     })
-                } else if (val.type == 'allow') {
+                } else if (val.type == 'allow') {//通过审核
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
                         status: 1
-                    }).then(res => {})
+                    }).then(res => {
+                        this.initPage();
+                    })
                 }
-                this.initPage();
             }
         },
         onShow() {

@@ -1,7 +1,6 @@
 <template>
     <view class='toper page'>
         <selectItem label='筛选' :value='pageLabel' @click='filteDate'></selectItem>
-        
         <items :list='list' :pageid='pageId'></items>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -41,10 +40,14 @@
         onShow() {
             this.initPage();
         },
+        onPullDownRefresh() {
+            
+            this.initPage();
+        },
         methods: {
             initPage() { //初始化页面 
                 let api = '';
-                this.pageId=DataFrom.show;
+                this.pageId = DataFrom.show;
                 DataGo = this.Cacher.getData(DataGo.go) || {
                     from: 'filterDate',
                     date: [getDate(-1), getDate(0), '今天']

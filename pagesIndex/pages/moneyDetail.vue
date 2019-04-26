@@ -54,6 +54,7 @@
     let DataGo = {
         go: 'filterDate'
     };
+    let requesting = false;
     export default {
         data() {
             return {
@@ -73,6 +74,12 @@
         onShow() {
             this.initPage();
         },
+        onUnload() {
+            this.Cacher.setData(DataGo.go, {}); //清理记录
+        },
+        onPullDownRefresh() {
+            this.initPage();
+        },
         methods: {
             formater(val) {
                 return number_format(val);
@@ -82,67 +89,76 @@
                     go: 'filterDate',
                     date: [getDate(-6), getDate(0), '7日']
                 };
-                this.$refs.lineChart.init();
-                this.pageLabel = DataGo.date[2];
-                let dateGap = GetDateDiff(DataGo.date[0], DataGo.date[1]);
-                if (dateGap > 90) {//查询间隔最大90天
-                    this.Toast('查询日期间隔最大90天');
-                    let fromNowGap = GetDateDiff(DataGo.date[1], getDate(0)); //距离今天的间隔
-                    DataGo.date[0] = getDate(-fromNowGap - 89);//
-                }
-                this.Request('getHistoryData',{}).then(res=>{//获取历史总成交额
-                    this.historyTotal=res.all_order_price;
-                })
-                this.Request('getTradeDataByDate', {
-                    start: DataGo.date[0],
-                    end: DataGo.date[1],
-                }).then(res => {
-                    let arr = [];
-                    let keys = [];
-                    let table = []
-                    let tmp = res.data;
-                    let total = '';
-                    for (let key in tmp) {
-                        if (DataFrom.id == 'vip') { //付款会员数 
-                            table.push({
-                                col1: key,
-                                col2: tmp[key].order_member_pay_count
-                            })
-                            keys.push(key)
-                            arr.push(tmp[key].order_member_pay_count);
-                            total = res.total.order_member_pay_count;
-                        } else if (DataFrom.id == 'trade') { //..成交额（元）
-                            table.push({
-                                col1: key,
-                                col2: tmp[key].order_pay_price
-                            })
-                            keys.push(key)
-                            arr.push(tmp[key].order_pay_price);
-                            total = res.total.order_pay_price;
-                        } else if (DataFrom.id == 'pay') { //付款订单数（个）
-                            table.push({
-                                col1: key,
-                                col2: tmp[key].order_pay_count
-                            })
-                            keys.push(key)
-                            arr.push(tmp[key].order_pay_count);
-                            total = res.total.order_pay_count;
-                        } else if (DataFrom.id == 'good') { //付款商品数（件） 
-                            table.push({
-                                col1: key,
-                                col2: tmp[key].goods_paid_count
-                            })
-                            keys.push(key)
-                            arr.push(tmp[key].goods_paid_count);
-                            total = res.total.goods_paid_count;
-                        }
-                    }
-                    datalist = arr;
-                    keylist = keys;
-                    this.tableList = table;
-                    this.selectTotal = total;
+                if (!requesting) {
+                    requesting = true;
                     this.$refs.lineChart.init();
-                })
+                    this.pageLabel = DataGo.date[2];
+                    let dateGap = GetDateDiff(DataGo.date[0], DataGo.date[1]);
+                    if (dateGap > 90) { //查询间隔最大90天
+                        this.Toast('查询日期间隔最大90天');
+                        let fromNowGap = GetDateDiff(DataGo.date[1], getDate(0)); //距离今天的间隔
+                        DataGo.date[0] = getDate(-fromNowGap - 89); //
+                    }
+                    this.Request('getHistoryData', {}).then(res => { //获取历史总成交额
+                        this.historyTotal = res.all_order_price;
+                    })
+                    this.Request('getTradeDataByDate', {
+                        start: DataGo.date[0],
+                        end: DataGo.date[1],
+                        pageSize: 90,
+                        page: 1
+                    }).then(res => {
+                        requesting = false;
+                        let arr = [];
+                        let keys = [];
+                        let table = []
+                        let tmp = res.data;
+                        let total = '';
+                        for (let key in tmp) {
+                            if (DataFrom.id == 'vip') { //付款会员数 
+                                table.push({
+                                    col1: key,
+                                    col2: tmp[key].order_member_pay_count
+                                })
+                                keys.push(key)
+                                arr.push(tmp[key].order_member_pay_count);
+                                total = res.total.order_member_pay_count;
+                            } else if (DataFrom.id == 'trade') { //..成交额（元）
+                                table.push({
+                                    col1: key,
+                                    col2: tmp[key].order_pay_price
+                                })
+                                keys.push(key)
+                                arr.push(tmp[key].order_pay_price);
+                                total = res.total.order_pay_price;
+                            } else if (DataFrom.id == 'pay') { //付款订单数（个）
+                                table.push({
+                                    col1: key,
+                                    col2: tmp[key].order_pay_count
+                                })
+                                keys.push(key)
+                                arr.push(tmp[key].order_pay_count);
+                                total = res.total.order_pay_count;
+                            } else if (DataFrom.id == 'good') { //付款商品数（件） 
+                                table.push({
+                                    col1: key,
+                                    col2: tmp[key].goods_paid_count
+                                })
+                                keys.push(key)
+                                arr.push(tmp[key].goods_paid_count);
+                                total = res.total.goods_paid_count;
+                            }
+                        }
+                        datalist = arr;
+                        keylist = keys;
+                        this.tableList = table;
+                        this.selectTotal = total;
+                        this.$refs.lineChart.init();
+                    }).catch(res => {
+                        requesting = false;
+                        this.Toast(res.message)
+                    })
+                }
             },
             filteDate() {
                 uni.navigateTo({

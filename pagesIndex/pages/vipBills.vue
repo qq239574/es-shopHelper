@@ -1,11 +1,25 @@
 <template>
     <view class='pages-bill-index page'>
         <view class="grace-fixed-top grace-gtbg-blue top1" style='background:rgba(0,0,0,0)'>
+            <view class="margin20"></view>
             <SearchInput @click='search' :value='searchValue' placeholder='请输入订单号' :disabled='true'></SearchInput>
             <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
         </view>
-        <view class='margin180'></view>
+        <view class='margin200'></view>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
+        <view class="pager" v-else>
+            <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
+                <view class='prev button' slot="prev">
+                    <i-icon type="return"></i-icon>
+                    上一步
+                </view>
+                <view class='next button' slot="next">
+                    下一步
+                    <i-icon type="enter"></i-icon>
+                </view>
+            </i-page>
+        </view>
         <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
             <view class="model__title">{{modelTheme.title}}</view>
@@ -27,7 +41,9 @@
     import TabCard from '../../components/my-components/Tabs';
     import Card from '../../pages/bill/index/Card';
     import SearchInput from '../../components/my-components/SearchInput.vue';
+    import testdata from '../../pages/bill/index/testData.js'
     import getBillList from '../../pages/bill/index/getBillList.js'
+    import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
@@ -42,10 +58,13 @@
         components: {
             TabCard,
             Card,
-            SearchInput
+            SearchInput,
+            nodata
         },
         data() {
             return {
+                current: 1,
+                totalPage: 1,
                 surePassword: '', //弹窗输入密码
                 error: false, //弹窗输入密码错误提示用
                 surePaying: false, //正在确认付款？
@@ -88,17 +107,22 @@
                     }
                 }],
                 tabIndex: 0, //默认tabs的index
+                searching: false
             }
         },
         onLoad(option) {
-            if (option.from) {
-                DataFrom = this.Cacher.getData(option.from);
-            }
+            this.billList = [];
+            DataFrom = this.Cacher.getData(option.from) || {};
+            console.log(DataFrom)
         },
         onShow() {
+            this.current = 1;
             this.initPage();
         },
         watch: {
+            current() {
+                this.initPage();
+            },
             showModel() {
                 this.surePassword = '';
                 surePassword = '';
@@ -106,6 +130,18 @@
             }
         },
         methods: {
+            handleChange(obj) {
+                let {
+                    detail: {
+                        type
+                    }
+                } = obj;
+                if (type == 'next') {
+                    this.current = Math.min(this.current + 1, this.totalPage);
+                } else {
+                    this.current = Math.max(this.current - 1, 1);
+                }
+            },
             sure() {
                 this.surePaying = true;
                 let apiNames = ['payBill', 'receiveBill'];
@@ -138,6 +174,8 @@
                 this.error = false;
             },
             initPage() {
+                this.searching = true;
+                this.pageLoading();
                 member_id = '';
                 if (DataFrom.from == 'home') {
                     if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
@@ -149,23 +187,28 @@
                     searchData = this.Cacher.getData('searchShop') || {};
                     this.searchValue = searchData.value || '';
                     this.tabIndex = DataFrom.cateid || 0;
-                } else if (DataFrom.from == 'vipDetail') { //来自查看会员订单
-                    console.log('from vip detail', DataFrom)
-                    member_id = DataFrom.member_id || '';
+                } else if (DataFrom.from == 'vipDetail') {
+                    member_id = DataFrom.member_id;
                 } else {
                     this.tabIndex = curTab.cateid;
                 }
                 getBillList.call(this, this.tabIndex, {
                     keywords: searchData.value || '',
-                    page: 1,
+                    page: this.current,
                     pageSize: 20
                 }).then(res => {
+                    this.closePageLoading();
                     this.billList = res;
+                    this.searching = false;
                 });
             },
             tabChange(tab) {
                 this.pageLoading();
                 curTab = tab;
+                this.current = 1;
+                this.billList = [];
+                this.searching = true;
+                this.totalPage = 1;
                 getBillList.call(this, tab.cateid, {
                     keywords: searchData.value || '',
                     member_id: member_id,
@@ -174,6 +217,7 @@
                 }).then(res => {
                     this.billList = res;
                     this.closePageLoading();
+                    this.searching = false;
                 });
             },
             search(val) {
@@ -266,8 +310,13 @@
 </script>
 
 <style lang="scss" scoped>
-    .margin180 {
-        height: 176upx;
+    .margin200 {
+        height: 196upx;
+    }
+    .margin20 {
+        height: 20upx;
+        width: 100%;
+        background: #fff;
     }
     .model__title {
         font-weight: 700;
@@ -318,5 +367,36 @@
         height: 28upx;
         box-sizing: border-box;
         text-align: left;
+    }
+    .pager {
+        width: 100%;
+        height: 80upx;
+        margin: 30upx auto 100upx;
+        .button {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+        }
+        /deep/button {
+            height: 70upx;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+            border-radius: 10upx;
+            margin: 0;
+        }
+        .prev {
+            padding: 0 10upx 0 5upx;
+        }
+        .next {
+            padding: 0 5upx 0 10upx;
+        }
+        /deep/.pager-button {
+            line-height: 70upx;
+            height: 70upx;
+        }
     }
 </style>

@@ -128,7 +128,6 @@ var DataGo = {};var _default =
   },
   methods: {
     checkBill: function checkBill() {
-      console.log('object');
       this.Cacher.setData('vipDetail', {
         from: 'vipDetail',
         member_id: DataFrom.detail.info.id });
@@ -244,17 +243,18 @@ var DataGo = {};var _default =
       } else if (val.type == 'refuse') {//拒绝
         this.Request('changeCommissionStatus', {
           member_id: DataFrom.detail.info.id,
-          status: 0 }).
+          status: -1 }).
         then(function (res) {
           _this3.initPage();
         });
-      } else if (val.type == 'allow') {
+      } else if (val.type == 'allow') {//通过审核
         this.Request('changeCommissionStatus', {
           member_id: DataFrom.detail.info.id,
           status: 1 }).
-        then(function (res) {});
+        then(function (res) {
+          _this3.initPage();
+        });
       }
-      this.initPage();
     } },
 
   onShow: function onShow() {

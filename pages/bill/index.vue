@@ -110,6 +110,7 @@
             }
         },
         onLoad(option) {
+            this.billList=[];
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
@@ -188,7 +189,7 @@
                     this.tabIndex = DataFrom.cateid || 0;
                 } else {
                     this.tabIndex = curTab.cateid;
-                }
+                } 
                 getBillList.call(this, this.tabIndex, {
                     keywords: searchData.value || '',
                     page: this.current,
@@ -202,6 +203,10 @@
             tabChange(tab) {
                 this.pageLoading();
                 curTab = tab;
+                this.current=1;
+                this.billList=[];
+                this.searching=true;
+                this.totalPage=1;
                 getBillList.call(this, tab.cateid, {
                     keywords: searchData.value || '',
                     member_id: member_id,
@@ -210,6 +215,7 @@
                 }).then(res => {
                     this.billList = res;
                     this.closePageLoading();
+                    this.searching = false;
                 });
             },
             search(val) {

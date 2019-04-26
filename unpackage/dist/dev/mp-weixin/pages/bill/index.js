@@ -120,6 +120,7 @@ var _default = {
 
   },
   onLoad: function onLoad(option) {
+    this.billList = [];
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
@@ -212,6 +213,10 @@ var _default = {
     tabChange: function tabChange(tab) {var _this3 = this;
       this.pageLoading();
       curTab = tab;
+      this.current = 1;
+      this.billList = [];
+      this.searching = true;
+      this.totalPage = 1;
       _getBillList.default.call(this, tab.cateid, {
         keywords: searchData.value || '',
         member_id: member_id,
@@ -220,6 +225,7 @@ var _default = {
       then(function (res) {
         _this3.billList = res;
         _this3.closePageLoading();
+        _this3.searching = false;
       });
     },
     search: function search(val) {

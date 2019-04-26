@@ -22,17 +22,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
 {
   components: {
     inputItem: inputItem,
     roundButton: roundButton },
 
-  data: function data() {
-    return {
-      hadRefused: true };
-
-  },
   methods: {
     refuse: function refuse() {
       this.$emit('click', {
@@ -41,7 +35,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     },
     allow: function allow() {
       this.$emit('click', {
-        type: 'alllow' });
+        type: 'allow' });
 
     } } };exports.default = _default;
 

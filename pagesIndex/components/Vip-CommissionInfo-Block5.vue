@@ -1,10 +1,10 @@
 <template>
     <view class='vip-was-distributor'>
         <inputItem label='上级分销商' :disabled='true' value='230.50元'></inputItem>
-        <inputItem label='申请时间' :disabled='true' value='230.50元'></inputItem> 
-        <view class="button">
-            <roundButton  @click='refuse'> 审核拒绝 </roundButton>
-            <roundButton @click='allow' type='primary'> 审核通过 </roundButton>
+        <inputItem label='申请时间' :disabled='true' value='230.50元'></inputItem>
+        <view class="hadRefused" >已拒绝该用户的分销商申请</view>
+        <view class="button"> 
+            <roundButton @click='allow' type='primary'> 设置为分销商 </roundButton>
         </view>
     </view>
 </template>
@@ -16,16 +16,16 @@
         components: {
             inputItem,
             roundButton
-        }, 
-        methods: {
-            refuse(){
-                this.$emit('click',{
-                    type:'refuse'
-                })
-            },
+        },
+        data() {
+            return {
+                hadRefused: true
+            }
+        },
+        methods: { 
             allow(){
                  this.$emit('click',{
-                    type:'allow'
+                    type:'set'
                 })
             }
         },

@@ -7,10 +7,10 @@
         <view class="echarts-box">
             <view class="title">
                 <view class='title__day title__today'>今日
-                    <view class="title__day__num">{{formater(info.today)}}</view>
+                    <view class="title__day__num">{{formater(today)}}</view>
                 </view>
                 <view class='title__day title__yesterday'>昨日
-                    <view class="title__day__num">{{formater(info.yesterday)}}</view>
+                    <view class="title__day__num">{{formater(yesterday)}}</view>
                 </view>
             </view>
             <view class="canvasView">
@@ -24,9 +24,10 @@
     import {
         number_format
     } from '../../components/my-components/formater.js'
+    import numAdder from '../../components/my-components/animateAddNum.js'
     import {
         setData
-    }from '../../store/cache.js'
+    } from '../../store/cache.js'
     export default {
         props: {
             info: {
@@ -39,16 +40,34 @@
                 }
             }
         },
+        data() {
+            return {
+                today: 0,
+                yesterday: 0
+            }
+        },
+        watch: {
+            info() {
+                let adder1 = new numAdder();
+                let adder2 = new numAdder();
+                let that = this;
+                adder1.start(this.info.today, function(num) {
+                    that.today = num;
+                });
+                adder2.start(this.info.yesterday, function(num) {
+                    that.yesterday = num;
+                })
+            }
+        },
         methods: {
             clickModel() {
-                
-                this.Cacher.setData('dataGraph',this.info);
+                this.Cacher.setData('dataGraph', this.info);
                 uni.navigateTo({
                     url: './moneyDetail?from=dataGraph'
                 })
             },
             formater(num) {
-                return number_format(num)
+                return number_format(Math.min(9999999999, num))
             }
         },
     }

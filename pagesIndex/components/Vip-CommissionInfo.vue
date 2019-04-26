@@ -1,12 +1,17 @@
 <template>
     <view class='vip-commission-block'>
-        <block v-if='info.isCommission==2'>
+        <!-- 分销商 -->
+        <block v-if='info.isCommission==1'>
             <Block1 :info='info'></Block1>
             <Block2 :info='info'></Block2>
             <view class="button" @click='removeDist'>取消分销商</view>
         </block>
-        <Block3 :info='info' @click='setDistributor' v-else-if='info.isCommission==1'></Block3>
-        <Block4 :info='info' @click='exame' v-else></Block4>
+        <!-- 没申请过 -->
+        <Block3 :info='info' @click='setDistributor' v-else-if='info.isCommission==-2'></Block3>
+        <!-- 待审核 -->
+        <Block4 :info='info' @click='exame' v-else-if="info.isCommission==0"></Block4>
+        <!-- 拒绝过 -->
+        <Block5 @click='setDistributor' v-else></Block5>
     </view>
 </template>
 
@@ -15,6 +20,7 @@
     import Block2 from './Vip-CommissionInfo-Block2.vue'
     import Block3 from './Vip-CommissionInfo-Block3.vue'
     import Block4 from './Vip-CommissionInfo-Block4.vue'
+    import Block5 from './Vip-CommissionInfo-Block5.vue'
     export default {
         props: {
             info: {
@@ -65,7 +71,8 @@
             Block1,
             Block2,
             Block3,
-            Block4
+            Block4,
+            Block5
         },
         methods: {
             removeDist() {

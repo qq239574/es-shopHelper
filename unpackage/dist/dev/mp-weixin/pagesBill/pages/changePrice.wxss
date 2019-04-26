@@ -1,3 +1,45 @@
+.change-price .row.data-v-23c0a7bc {
+  width: 710rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 20rpx;
+  margin: 20rpx auto;
+  background: #fff;
+  border-radius: 8rpx;
+}
+.change-price .row .label.data-v-23c0a7bc {
+    font-size: 28rpx;
+    line-height: 96rpx;
+    font-weight: 700;
+}
+.change-price .row input.data-v-23c0a7bc {
+    height: 70rpx;
+    width: 250rpx;
+    background: #fcfcfc;
+    border: 1rpx solid #eee;
+    border-radius: 6rpx;
+    line-height: 70rpx;
+    font-size: 28rpx;
+    text-align: right;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0 20rpx;
+    margin-top: 13rpx;
+    font-weight: 600;
+}
 .change-price .block.data-v-23c0a7bc {
   width: 710rpx;
   -webkit-box-sizing: border-box;
