@@ -1,0 +1,1 @@
+<view class="noresult data-v-28445e14" bind:__l="__l"><image lazy-load src="{{image.img}}" class="data-v-28445e14"></image><view class="data-v-28445e14">{{tip||image.tip}}</view></view>

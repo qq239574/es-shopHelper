@@ -134,6 +134,9 @@
             .title {
                 color: #495576;
                 margin: 60upx 0 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
             .date {
                 margin: 16upx 0 0;

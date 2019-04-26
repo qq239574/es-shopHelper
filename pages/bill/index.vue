@@ -6,6 +6,19 @@
         </view>
         <view class='margin180'></view>
         <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
+        <view class="pager" v-else>
+            <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
+                <view class='prev button' slot="prev">
+                    <i-icon type="return"></i-icon>
+                    上一步
+                </view>
+                <view class='next button' slot="next">
+                    下一步
+                    <i-icon type="enter"></i-icon>
+                </view>
+            </i-page>
+        </view>
         <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
             <view class="model__title">{{modelTheme.title}}</view>
@@ -29,9 +42,11 @@
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import testdata from './index/testData.js'
     import getBillList from './index/getBillList.js'
+    import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
+    let member_id = '';
     let curTab = { //当前标签
         cateid: 0,
         index: 0,
@@ -42,10 +57,13 @@
         components: {
             TabCard,
             Card,
-            SearchInput
+            SearchInput,
+            nodata
         },
         data() {
             return {
+                current: 1,
+                totalPage: 1,
                 surePassword: '', //弹窗输入密码
                 error: false, //弹窗输入密码错误提示用
                 surePaying: false, //正在确认付款？
@@ -88,18 +106,22 @@
                     }
                 }],
                 tabIndex: 0, //默认tabs的index
+                searching: false
             }
         },
         onLoad(option) {
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
-            this.initPage();
         },
         onShow() {
+            this.current = 1;
             this.initPage();
         },
         watch: {
+            current() {
+                this.initPage();
+            },
             showModel() {
                 this.surePassword = '';
                 surePassword = '';
@@ -107,6 +129,18 @@
             }
         },
         methods: {
+            handleChange(obj) {
+                let {
+                    detail: {
+                        type
+                    }
+                } = obj;
+                if (type == 'next') {
+                    this.current = Math.min(this.current + 1, this.totalPage);
+                } else {
+                    this.current = Math.max(this.current - 1, 1);
+                }
+            },
             sure() {
                 this.surePaying = true;
                 let apiNames = ['payBill', 'receiveBill'];
@@ -139,6 +173,9 @@
                 this.error = false;
             },
             initPage() {
+                this.searching = true;
+                this.pageLoading();
+                member_id = '';
                 if (DataFrom.from == 'home') {
                     if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
                         this.tabIndex = DataFrom.cateid;
@@ -154,18 +191,20 @@
                 }
                 getBillList.call(this, this.tabIndex, {
                     keywords: searchData.value || '',
-                    page: 1,
+                    page: this.current,
                     pageSize: 20
                 }).then(res => {
+                    this.closePageLoading();
                     this.billList = res;
+                    this.searching = false;
                 });
             },
             tabChange(tab) {
                 this.pageLoading();
                 curTab = tab;
-                console.log(tab)
                 getBillList.call(this, tab.cateid, {
                     keywords: searchData.value || '',
+                    member_id: member_id,
                     page: 1,
                     pageSize: 20
                 }).then(res => {
@@ -315,5 +354,36 @@
         height: 28upx;
         box-sizing: border-box;
         text-align: left;
+    }
+    .pager {
+        width: 100%;
+        height: 80upx;
+        margin: 30upx auto 100upx;
+        .button {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+        }
+        /deep/button {
+            height: 70upx;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+            border-radius: 10upx;
+            margin: 0;
+        }
+        .prev {
+            padding: 0 10upx 0 5upx;
+        }
+        .next {
+            padding: 0 5upx 0 10upx;
+        }
+        /deep/.pager-button {
+            line-height: 70upx;
+            height: 70upx;
+        }
     }
 </style>

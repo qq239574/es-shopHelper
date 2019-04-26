@@ -14,8 +14,8 @@
 </template>
 
 <script>
-    import Block1 from './Vip-BaseInfo-Block1'
-    import Block2 from './Vip-BaseInfo-Block2'
+    import Block1 from './Vip-BaseInfo-Block1.vue'
+    import Block2 from './Vip-BaseInfo-Block2.vue'
     import detailPicker from './Detail-Picker.vue'
     let cache = {};
     export default {

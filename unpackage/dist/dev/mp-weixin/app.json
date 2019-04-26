@@ -47,6 +47,7 @@
         "pages/addSurplus",
         "pages/coupon",
         "pages/vipDetail",
+        "pages/vipBills",
         "pages/vipManage",
         "pages/selectCoupon",
         "pages/searchCoupon",
@@ -156,6 +157,5 @@
   "usingComponents": {
     "page-loading": "/graceUI/components/graceFullLoading",
     "load-more": "/graceUI/components/graceLoading"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

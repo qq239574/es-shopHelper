@@ -38,5 +38,9 @@
 		view {
 			box-sizing: border-box;
 		}
+		.i-page-number{
+			height:70upx;
+			line-height:70upx;
+		}
 	}
 </style>

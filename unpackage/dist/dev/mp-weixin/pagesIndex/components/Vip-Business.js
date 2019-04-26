@@ -39,7 +39,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
         info2: {
           newBillTime: '',
-          newBrowserTime: '' } } } } };exports.default = _default;
+          newBrowserTime: '' } } } },
+
+
+
+
+  methods: {
+    checkBill: function checkBill() {
+      this.$emit('click', {
+        type: 'checkBill' });
+
+    } } };exports.default = _default;
 
 /***/ }),
 

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var item = function item() {return __webpack_require__.e(/*! import() | pagesIndex/components/Notice-Block */ "pagesIndex/components/Notice-Block").then(__webpack_require__.bind(null, /*! ../components/Notice-Block */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Notice-Block.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var item = function item() {return __webpack_require__.e(/*! import() | pagesIndex/components/Notice-Block */ "pagesIndex/components/Notice-Block").then(__webpack_require__.bind(null, /*! ../components/Notice-Block */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Notice-Block.vue"));};
 
 
 
@@ -24,13 +24,18 @@
 
 
 
+
+
+var requesting = false;
+var ajaxIndex = 1;var _default =
 {
   components: {
     item: item },
 
   data: function data() {
     return {
-      shopNum: 0,
+      noticeNum: 0, //公告条数
+      totalNum: -1, //公告总条数
       requesting: false, //是否正在请求
       list: [{
         title: '标题',
@@ -51,25 +56,54 @@
 
     },
     initPage: function initPage() {var _this = this;
-      this.pageLoading();
-      this.Request('noticeList').then(function (res) {
-        _this.list = res.list.map(function (item) {
-          return {
-            title: item.title,
-            brief: item.content_text,
-            date: item.create_time,
-            img: item.thumb,
-            content: item.content };
+      if (!requesting) {
+        requesting = true;
+        this.pageLoading();
+        this.Request('noticeList', {
+          page: ajaxIndex,
+          pageSize: 10 }).
+        then(function (res) {
+          if (res.error == 0) {
+            requesting = false;
+            ajaxIndex++;
+            _this.noticeNum = res.count;
+            _this.list = _this.list.concat(res.list.map(function (item) {
+              return {
+                title: item.title,
+                brief: item.content_text,
+                date: item.create_time,
+                img: item.thumb,
+                content: item.content };
 
+            }));
+          } else {
+            _this.Toast(res.message);
+          }
+          _this.closePageLoading();
+        }).catch(function (res) {
+          _this.Toast(res.message);
         });
-        _this.closePageLoading();
-      });
+      } else {}
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
+    requesting = false;
+    this.requesting = requesting;
+    ajaxIndex = 1; //请求页码初始化
+    this.list = [];
+    this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
     this.initPage();
   },
+  onReachBottom: function onReachBottom() {
+    if (this.list.length < this.noticeNum) {
+      this.initPage();
+      this.LoadingType = 0;
+    } else {
+      this.LoadingType = 1;
+    }
+  },
   onLoad: function onLoad() {
+    this.list = [];
     this.initPage();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

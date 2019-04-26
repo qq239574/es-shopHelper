@@ -1073,4 +1073,9 @@ page view,
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
+page .i-page-number,
+  page .i-page-number {
+    height: 70rpx;
+    line-height: 70rpx;
+}
 

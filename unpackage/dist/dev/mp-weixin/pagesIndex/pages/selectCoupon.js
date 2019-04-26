@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item2 */ "pagesIndex/components/Coupon-Item2").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item2.vue"));};var blockFoot = function blockFoot() {return __webpack_require__.e(/*! import() | pagesIndex/components/selectCoupon--Foot */ "pagesIndex/components/selectCoupon--Foot").then(__webpack_require__.bind(null, /*! ../components/selectCoupon--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\selectCoupon--Foot.vue"));};var floatLayer = function floatLayer() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-Picker */ "pagesIndex/components/SelectCoupon-Picker").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-Picker.vue"));};var pickerItem = function pickerItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-PickerItem */ "pagesIndex/components/SelectCoupon-PickerItem").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-PickerItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-PickerItem.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var couponItem = function couponItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/Coupon-Item2 */ "pagesIndex/components/Coupon-Item2").then(__webpack_require__.bind(null, /*! ../components/Coupon-Item2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Coupon-Item2.vue"));};var blockFoot = function blockFoot() {return __webpack_require__.e(/*! import() | pagesIndex/components/selectCoupon--Foot */ "pagesIndex/components/selectCoupon--Foot").then(__webpack_require__.bind(null, /*! ../components/selectCoupon--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\selectCoupon--Foot.vue"));};var floatLayer = function floatLayer() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-Picker */ "pagesIndex/components/SelectCoupon-Picker").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-Picker.vue"));};var pickerItem = function pickerItem() {return __webpack_require__.e(/*! import() | pagesIndex/components/SelectCoupon-PickerItem */ "pagesIndex/components/SelectCoupon-PickerItem").then(__webpack_require__.bind(null, /*! ../components/SelectCoupon-PickerItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\SelectCoupon-PickerItem.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+
+
 
 
 
@@ -44,7 +46,8 @@ var DataGo = {};var _default =
     couponItem: couponItem,
     blockFoot: blockFoot,
     floatLayer: floatLayer,
-    pickerItem: pickerItem },
+    pickerItem: pickerItem,
+    nodata: nodata },
 
   data: function data() {
     return {
@@ -58,10 +61,12 @@ var DataGo = {};var _default =
 
       selected: [],
       selectnum: 0,
-      searchKey: '' };
+      searchKey: '',
+      searching: false };
 
   },
   methods: {
+    stop: function stop() {},
     clickSearch: function clickSearch() {
       DataGo.go = 'searchCoupon';
       this.Cacher.setData('selectCoupon', {
@@ -72,14 +77,25 @@ var DataGo = {};var _default =
 
     },
     initPage: function initPage() {var _this = this;
-      DataGo = this.Cacher.getData(DataGo.go) || {
-        go: 'searchCoupon',
-        value: '' };
+      this.pageLoading();
+      if (DataGo.go) {
+        DataGo = this.Cacher.getData(DataGo.go) || {
+          go: 'searchCoupon',
+          value: '' };
 
+      } else {
+        DataGo = {
+          go: 'searchCoupon',
+          value: '' };
+
+      }
       this.searchKey = DataGo.value;
+      this.searching = true;
       this.Request('getCouponList', {
         keywords: DataGo.value }).
       then(function (res) {
+        _this.searching = false;
+        _this.closePageLoading();
         _this.list = res.list.map(function (item) {
           return {
             name: item.title,
@@ -132,14 +148,16 @@ var DataGo = {};var _default =
         }
         this.Request('sendCoupon', obj).then(function (res) {
           _this2.closePageLoading();
-          uni.naviagteBack();
+          uni.navigateBack();
         });
       }
     } },
 
   onLoad: function onLoad(option) {
+    this.pageLoading();
+    this.list = [];
     DataFrom = this.Cacher.getData(option.from);
-    this.initPage();
+    console.log(DataFrom);
   },
   onShow: function onShow() {
     this.initPage();

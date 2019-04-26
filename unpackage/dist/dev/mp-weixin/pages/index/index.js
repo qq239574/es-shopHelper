@@ -173,8 +173,8 @@ var searchDay = { value: 'today' };var _default =
         _this2.showData = {
           money: res.data.today_payment_amount,
           payedBill: res.data.today_order_paid,
-          payedGood: -1,
-          payedVip: -1 };
+          payedGood: 0,
+          payedVip: 0 };
 
         newNotice = res.notice.sort(function (a, b) {
           return new Date('2019-' + a.date) - new Date('2019-' + b.date);
@@ -185,7 +185,7 @@ var searchDay = { value: 'today' };var _default =
 
         _this2.expireDay = (0, _getDateSection.GetDateDiff)((0, _getDateSection.getDate)(0), res.shop.expire_time);
         _this2.execInfo = { //还没写过期的功能？？？？
-          label: '还有' + _this2.expireDay + '天到期',
+          label: '还有' + Math.ceil(_this2.expireDay) + '天到期',
           date: '续费' };
 
         _this2.billList = [{

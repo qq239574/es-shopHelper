@@ -58,6 +58,10 @@
 .shop-block .info .title.data-v-551742ec {
       color: #495576;
       margin: 60rpx 0 0;
+      overflow: hidden;
+      -o-text-overflow: ellipsis;
+         text-overflow: ellipsis;
+      white-space: nowrap;
 }
 .shop-block .info .date.data-v-551742ec {
       margin: 16rpx 0 0;

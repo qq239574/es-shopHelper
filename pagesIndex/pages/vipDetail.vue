@@ -3,7 +3,7 @@
         <vipWin :info='vipInfo'></vipWin>
         <tabs :categories='categories' @tabChange='clickTab'></tabs>
         <vipBaseInfo v-if='tabIndex==0' :info='baseInfo' @click='clickBaseInfo'></vipBaseInfo>
-        <vipBussiness :info='bussinessInfo' v-else-if='tabIndex==1'></vipBussiness>
+        <vipBussiness @click='checkBill' :info='bussinessInfo' v-else-if='tabIndex==1'></vipBussiness>
         <vipCommission :info='commissionInfo' @click='clickDistriInfo' v-else></vipCommission>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -117,6 +117,16 @@
             }
         },
         methods: {
+            checkBill() {
+                console.log('object')
+                this.Cacher.setData('vipDetail', {
+                    from: 'vipDetail',
+                    member_id: DataFrom.detail.info.id
+                })
+                uni.navigateTo({
+                    url: './vipBills?from=vipDetail'
+                })
+            },
             initPage() {
                 this.Request('vipDetail', { //会员信息
                     id: DataFrom.detail.info.id
@@ -241,7 +251,7 @@
             this.initPage()
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from) 
+            DataFrom = this.Cacher.getData(option.from)
         }
     }
 </script>

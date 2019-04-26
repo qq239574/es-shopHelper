@@ -29,8 +29,7 @@
             }
         },
         methods: {
-            initPage() {
-                console.log('DataFrom', DataFrom);
+            initPage() { 
                 this.Request('getVipCoupons', {
                     member_id: DataFrom.info.id,
                     status: 0 //	0: 全部 1: 未使用 2: 已使用 3: 已失效
@@ -38,8 +37,8 @@
                     this.list = res.list.map(item => {
                         return {
                             name: item.title,
-                            price: item.amount||0,
-                            info: '满'+item.enough+'可用' ,
+                            price: item.amount || 0,
+                            info: '满' + item.enough + '可用',
                             num: 0,
                         }
                     })
@@ -58,6 +57,8 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
+        },
+        onShow() {
             this.initPage();
         }
     }

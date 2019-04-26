@@ -127,6 +127,16 @@ var DataGo = {};var _default =
 
   },
   methods: {
+    checkBill: function checkBill() {
+      console.log('object');
+      this.Cacher.setData('vipDetail', {
+        from: 'vipDetail',
+        member_id: DataFrom.detail.info.id });
+
+      uni.navigateTo({
+        url: './vipBills?from=vipDetail' });
+
+    },
     initPage: function initPage() {var _this = this;
       this.Request('vipDetail', { //会员信息
         id: DataFrom.detail.info.id }).

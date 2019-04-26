@@ -2,16 +2,18 @@
     <view class='vip-manage page'>
         <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
         <Card :list='viplist' @click='clickGood'></Card>
-        <i-page :current="current" total="5" @change="handleChange">
-            <view slot="prev">
-                <i-icon type="return"></i-icon>
-                上一步
-            </view>
-            <view slot="next">
-                下一步
-                <i-icon type="enter"></i-icon>
-            </view>
-        </i-page>
+        <view class="pager">
+            <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
+                <view class='prev button' slot="prev">
+                    <i-icon type="return"></i-icon>
+                    上一步
+                </view>
+                <view class='next button' slot="next">
+                    下一步
+                    <i-icon type="enter"></i-icon>
+                </view>
+            </i-page>
+        </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -40,13 +42,32 @@
                     money: '',
                     score: ''
                 }],
-                current:1
+                current: 1,
+                totalPage: 1
+            }
+        },
+        watch: {
+            current() {
+                this.initPage();
             }
         },
         methods: {
+            handleChange(obj) {
+                let {
+                    detail: {
+                        type
+                    }
+                } = obj;
+                if (type == 'next') {
+                    this.current = Math.min(this.current + 1, this.totalPage);
+                } else {
+                    this.current = Math.max(this.current - 1, 1);
+                }
+            },
             search(val) {
                 clearTimeout(bar);
                 bar = setTimeout(() => {
+                    this.current = 1;
                     cacheSearchKey = val.value;
                     this.initPage();
                     this.pageLoading()
@@ -65,18 +86,19 @@
             initPage() {
                 this.pageLoading();
                 this.Request('vipList', {
-                    keywords: '',
+                    keywords: cacheSearchKey,
                     tag_id: '',
                     level_id: '',
                     create_times: [],
                     come_from: '',
                     sort: '',
                     buy: '',
-                    page: 1,
+                    page: this.current,
                     pagesize: 20,
                     create_time: '',
                 }).then(res => {
                     this.closePageLoading();
+                    this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
                     this.viplist = res.list.map(item => {
                         return {
                             img: item.avatar || '/static/img/global/home_order_tobepay.png',
@@ -91,12 +113,46 @@
                 })
             }
         },
+        onPullDownRefresh() { 
+            this.current = 1;
+            this.initPage();
+        },
         onLoad() {
+            this.viplist = [];
             this.initPage()
         }
     }
 </script>
 
 <style lang="scss" scoped>
-
+    .pager {
+        width: 100%;
+        height: 80upx;
+        margin: 0 auto 50upx;
+        .button {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+        }
+        /deep/button {
+            height: 70upx;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+            border-radius: 10upx;
+        }
+        .prev {
+            padding: 0 10upx 0 5upx;
+        }
+        .next {
+            padding: 0 5upx 0 10upx;
+        }
+        /deep/.pager-button {
+            line-height: 70upx;
+            height: 70upx;
+        }
+    }
 </style>

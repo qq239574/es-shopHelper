@@ -75,6 +75,7 @@ var DataFrom = {};var _default =
     } },
 
   onLoad: function onLoad(option) {
+    uni.clearStorage(); //清空缓存
     DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
     this.initPage();
     if (!DataFrom.from) {} else {}

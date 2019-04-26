@@ -3,7 +3,7 @@
         <Block1 :info='info.info1'></Block1>
         <Block2 :info='info.info2'> </Block2>
         <view class='margin50'></view>
-        <longButton>查看订单</longButton>
+        <longButton @click='checkBill'>查看订单</longButton>
     </view>
 </template>
 
@@ -33,7 +33,14 @@
                     }
                 }
             }
-        }, 
+        },
+        methods: {
+            checkBill() {
+                this.$emit('click',{
+                    type:'checkBill'
+                })
+            }
+        },
     }
 </script>
 

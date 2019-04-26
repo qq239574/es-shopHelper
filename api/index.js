@@ -53,11 +53,12 @@ export default async function (name, data) {
     if (shopInfo && shopInfo.shopInfo) {
         header = {
             'session-id': sessionId,
+            'shop-id': shopInfo.shopInfo.id,
             Cookie: 'shopId=' + shopInfo.shopInfo.id + ';',
             'client-type': 'assistant'
         }
     } else {
-        header = {
+        header = { 
             'session-id': sessionId,
             'client-type': 'assistant'
         }

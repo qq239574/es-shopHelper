@@ -40,7 +40,6 @@ var DataFrom = {};var _default =
   },
   methods: {
     initPage: function initPage() {var _this = this;
-      console.log('DataFrom', DataFrom);
       this.Request('getVipCoupons', {
         member_id: DataFrom.info.id,
         status: 0 //	0: 全部 1: 未使用 2: 已使用 3: 已失效
@@ -68,6 +67,8 @@ var DataFrom = {};var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+  },
+  onShow: function onShow() {
     this.initPage();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

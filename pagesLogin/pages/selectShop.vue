@@ -24,8 +24,8 @@
     let DataFrom = {};
     let DataGo = {};
     let pageId = 'selectShop';
-    let ajaxIndex = 1; //当前是第几次请求
-    let requesting = false; 
+    let ajaxIndex = 1; //当前是第几次请求 
+    let requesting = false;
     export default {
         components: {
             search,
@@ -38,7 +38,7 @@
                 shops: [],
                 shopNum: 0,
                 totalShop: -1,
-                requesting:false//是否正在请求
+                requesting: false //是否正在请求
             }
         },
         methods: {
@@ -110,7 +110,7 @@
                 }
                 if (!requesting) {
                     requesting = true; //函数节流
-                    this.requesting=requesting;
+                    this.requesting = requesting;
                     this.pageLoading();
                     DataFrom = this.Cacher.getData(pageId)
                     this.Request('shoplist', {
@@ -119,34 +119,44 @@
                         keywords: this.searchShop
                     }).then(res => {
                         requesting = false;
-                        this.requesting=requesting;
-                        ajaxIndex++;
-                        this.shops = this.shops.concat(getShops(res.list));
-                        this.shopNum = res.count;
-                        this.totalShop = res.total;
-                        if (res.total === 0) { //没有任何店铺
-                            this.LoadingType = 1; //
-                        }
-                        if (this.shops.length == 1 && DataFrom.from != 'home') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                            let shop = this.shops[0];
-                            this.Cacher.setData(pageId, {
-                                from: poageId,
-                                shop
-                            });
-                            this.Request('switchShop', {
-                                id: shop.shopInfo.id
-                            }).then(res => {
-                                this.toIndex('from=selectShop&status=onlyOne')
-                            })
+                        this.requesting = requesting;
+                        if (res.error == 0) {
+                            ajaxIndex++;
+                            this.shops = this.shops.concat(getShops(res.list));
+                            this.shopNum = res.count;
+                            this.totalShop = res.total;
+                            if (res.total === 0) { //没有任何店铺
+                                this.LoadingType = 1; //
+                            }
+                            if (this.shops.length == 1 && DataFrom.from != 'home') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+                                let shop = this.shops[0];
+                                this.Cacher.setData(pageId, {
+                                    from: poageId,
+                                    shop
+                                });
+                                this.Request('switchShop', {
+                                    id: shop.shopInfo.id
+                                }).then(res => {
+                                    this.toIndex('from=selectShop&status=onlyOne')
+                                })
+                            } else {
+                                // this.checkUserInfo()
+                            }
                         } else {
-                            // this.checkUserInfo()
+                            this.Toast(res.message)
                         }
                         this.closePageLoading();
+                    }).catch(res => {
+                        requesting = false;
+                        this.requesting = requesting;
+                        this.Toast(res.message);
                     })
                 }
             }
         },
         onPullDownRefresh() {
+            requesting = false;
+            this.requesting = requesting;
             this.shops = []; //清空列表
             ajaxIndex = 1; //请求页码初始化
             this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部

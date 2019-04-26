@@ -5,10 +5,11 @@
         <block v-for="(item,index) in list" :key='index'>
             <couponItem :info='item' @change='select'></couponItem>
         </block>
+        <nodata type='noresult' v-if='!searching&&!list.length'></nodata>
         <blockFoot :num='selectnum' @click='clickFoot'></blockFoot>
         <!-- 浮层 -->
         <floatLayer :toggle='toggle'>
-            <view class='item-box'>
+            <view class='item-box' @click.stop='stop'>
                 <block v-for='(item,index) in selected' :key='index'>
                     <pickerItem @change='change' :info='item'></pickerItem>
                 </block>
@@ -25,6 +26,7 @@
     import blockFoot from '../components/selectCoupon--Foot.vue'
     import floatLayer from '../components/SelectCoupon-Picker.vue'
     import pickerItem from '../components/SelectCoupon-PickerItem.vue'
+    import nodata from '../../components/my-components/nodata.vue'
     let cachelist = [];
     let DataFrom = {};
     let DataGo = {};
@@ -34,7 +36,8 @@
             couponItem,
             blockFoot,
             floatLayer,
-            pickerItem
+            pickerItem,
+            nodata
         },
         data() {
             return {
@@ -48,10 +51,12 @@
                 }],
                 selected: [],
                 selectnum: 0,
-                searchKey: ''
+                searchKey: '',
+                searching: false
             }
         },
         methods: {
+            stop() {},
             clickSearch() {
                 DataGo.go = 'searchCoupon'
                 this.Cacher.setData('selectCoupon', {
@@ -62,14 +67,25 @@
                 })
             },
             initPage() {
-                DataGo = this.Cacher.getData(DataGo.go) || {
-                    go: 'searchCoupon',
-                    value: ''
+                this.pageLoading();
+                if (DataGo.go) {
+                    DataGo = this.Cacher.getData(DataGo.go) || {
+                        go: 'searchCoupon',
+                        value: ''
+                    }
+                }else{
+                     DataGo = {
+                        go: 'searchCoupon',
+                        value: ''
+                    }
                 }
                 this.searchKey = DataGo.value;
+                this.searching = true;
                 this.Request('getCouponList', {
                     keywords: DataGo.value
                 }).then(res => {
+                    this.searching = false;
+                    this.closePageLoading();
                     this.list = res.list.map(item => {
                         return {
                             name: item.title,
@@ -122,14 +138,16 @@
                     }
                     this.Request('sendCoupon', obj).then(res => {
                         this.closePageLoading();
-                        uni.naviagteBack();
+                        uni.navigateBack();
                     })
                 }
             }
         },
         onLoad(option) {
+            this.pageLoading();
+            this.list = [];
             DataFrom = this.Cacher.getData(option.from);
-            this.initPage();
+            console.log(DataFrom)
         },
         onShow() {
             this.initPage();

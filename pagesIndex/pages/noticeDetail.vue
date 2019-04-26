@@ -3,7 +3,7 @@
         <view class="title">{{notice.title}}</view>
         <view class="subTit">{{notice.date}}</view>
         <view class="brief">简介：{{notice.brief}}</view>
-        <rich-text type="text" :nodes="notice.content"></rich-text>
+        <rich-text type="text" :nodes="demoHtml"></rich-text>
     </view>
 </template>
 
@@ -14,15 +14,13 @@
     export default {
         data() {
             return {
-                demoHtml: '',
-                notice: {
-                }
+                notice: {},
+                demoHtml: ''
             }
         },
         onLoad(option) {
             this.notice = this.Cacher.getData(option.from)
-            console.log()
-            content = graceRichText.format(' <p>1111</p> <p>2222</p> <p>333</p> <img src="/static/img/global/cart.png" alt="">');
+            content = graceRichText.format(this.notice.content);
             this.demoHtml = content;
         }
     }

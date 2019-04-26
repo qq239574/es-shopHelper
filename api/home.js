@@ -19,7 +19,9 @@ export const homeInfo = { //首页信息
 }
 export const noticeList = { //获取公告列表
     url: '/shop/manage/site/notice/list',
-    data: {},
+    data: {
+        
+    },
     headers: {
 
     },

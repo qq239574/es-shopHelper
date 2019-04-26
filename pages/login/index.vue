@@ -12,12 +12,12 @@
 				<van-field :value="userId" placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable @clear='clearInput("userId")'>
 					<image slot='left-icon' src='/static/img/global/user-icon.jpg' class='icon user-icon'></image>
 				</van-field>
-				<van-field :value="password" type="text" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"":"display:none"' >
+				<van-field :value="password" type="text" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"":"display:none"'>
 					<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
 					<van-icon slot="icon" @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
 					<van-icon slot="icon" @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
 				</van-field>
-				<van-field :value="password" type="password" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"display:none":""' >
+				<van-field :value="password" type="password" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"display:none":""'>
 					<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
 					<van-icon slot="icon" @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
 					<van-icon slot="icon" @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
@@ -65,8 +65,9 @@
 			}
 		},
 		onLoad(option) {
-			DataFrom = this.Cacher.getData(option.from) || {};//获取页面传参//如果没有from就说明是刚进入小程序
-			this.initPage(); 
+			uni.clearStorage();//清空缓存
+			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
+			this.initPage();
 			if (!DataFrom.from) {} else {}
 		},
 		mounted() {
@@ -112,7 +113,7 @@
 									url: '../../pagesLogin/pages/selectShop?from=login'
 								})
 							} else {
-								this.idError = true;//账号密码不对
+								this.idError = true; //账号密码不对
 							}
 						} else {
 							this.Toast(res.message)
@@ -121,14 +122,14 @@
 						requesting = false;
 					}).catch(res => {
 						requesting = false;
-						this.Cacher.setData('login',{
-							from:'login'
+						this.Cacher.setData('login', {
+							from: 'login'
 						})
 						if (res.error == -3) { //已登录
 							uni.reLaunch({
 								url: '../../pagesLogin/pages/selectShop?from=login'
 							})
-						}else{
+						} else {
 							this.Toast(res.message)
 						}
 					})

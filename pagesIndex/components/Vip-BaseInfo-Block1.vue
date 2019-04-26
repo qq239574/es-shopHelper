@@ -3,7 +3,7 @@
         <inputItem label='注册时间' :disabled='true' :value='info.registerTime'></inputItem>
         <view class="image">
             <inputItem label='来源' :disabled='true' value=' '></inputItem>
-            <image src='/static/img/global/wechat.png' ></image>
+            <image :src='judgeOrigin(info.origin)'></image>
         </view>
         <inputItem label='会员等级' :disabled='true' :value='info.vipClass'></inputItem>
         <inputItem label='会员标签' :disabled='true' :value='info.vipTag'></inputItem>
@@ -12,6 +12,7 @@
 
 <script>
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
+    import judgeOrigin from '../../components/my-components/dataOrigin.js'
     export default {
         props: {
             info: {
@@ -33,6 +34,11 @@
                     label: '',
                     value: '230.25元'
                 }]
+            }
+        },
+        methods: {
+            judgeOrigin(origin) {
+                return judgeOrigin(origin)
             }
         },
     }

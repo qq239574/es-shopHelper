@@ -163,8 +163,8 @@
                     this.showData = {
                         money: res.data.today_payment_amount,
                         payedBill: res.data.today_order_paid,
-                        payedGood: -1,
-                        payedVip: -1
+                        payedGood: 0,
+                        payedVip: 0
                     }
                     newNotice = res.notice.sort((a, b) => {
                         return new Date('2019-' + a.date) - new Date('2019-' + b.date)
@@ -175,7 +175,7 @@
                     }
                     this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
                     this.execInfo = { //还没写过期的功能？？？？
-                        label: '还有' + this.expireDay + '天到期',
+                        label: '还有' + Math.ceil(this.expireDay) + '天到期',
                         date: '续费'
                     }
                     this.billList = [{

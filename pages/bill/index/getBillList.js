@@ -3,13 +3,13 @@ export default function (tabid, data) {
     let billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', ];
 
     return new Promise((resolve, reject) => {
-        console.log('searching??',tabid, billtype[tabid], data)
         this.Request(billtype[tabid], data).then(res => {
             let list = [];
             let goodlist = [];
             let countGood = 0;
+            this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
             list = res.list.map(item => {
-                goodlist = item.order_goods||[]; 
+                goodlist = item.order_goods || [];
                 goodlist.forEach(item => {
                     countGood += item.total;
                 })
@@ -29,7 +29,7 @@ export default function (tabid, data) {
                         billDate: item.create_time, //订单时间
                         billType: item.type_text, //订单类型，分销订单，普通订单
                         billPrice: item.pay_price,
-                        id:item.id
+                        id: item.id
                     },
                     goodsList: goodlist.map(item => { //订单商品信息
                         return {
@@ -40,7 +40,7 @@ export default function (tabid, data) {
                             num: item.total, //数量
                             price: item.price_unit, //价格
                             specifications: item.option_title ? 'multi' : 'single', //单规格,多规格
-                            id:item.id, 
+                            id: item.id,
                         }
                     }),
                     rights: { // 维权信息

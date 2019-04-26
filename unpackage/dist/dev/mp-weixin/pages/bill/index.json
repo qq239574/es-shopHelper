@@ -4,8 +4,10 @@
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "i-modal": "/wxcomponents/iview-weapp/modal/index",
+    "i-page": "/wxcomponents/iview-weapp/page/index",
     "tab-card": "/components/my-components/Tabs",
     "card": "/pages/bill/index/Card",
-    "search-input": "/components/my-components/SearchInput"
+    "search-input": "/components/my-components/SearchInput",
+    "nodata": "/components/my-components/nodata"
   }
 }

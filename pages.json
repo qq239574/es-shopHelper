@@ -33,13 +33,14 @@
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-				"i-modal": "/wxcomponents/iview-weapp/modal/index"
+				"i-modal": "/wxcomponents/iview-weapp/modal/index",
+				"i-page": "/wxcomponents/iview-weapp/page/index"
 			}
 		}
 	}, {
 		"path": "pages/self/index",
 		"style": {
-			"navigationBarTitleText": "我的主包",
+			"navigationBarTitleText": "我的资料",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -48,7 +49,7 @@
 	}, {
 		"path": "pages/commodity/index",
 		"style": {
-			"navigationBarTitleText": "商品主包",
+			"navigationBarTitleText": "商品管理",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -135,7 +136,7 @@
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 					}
 				}
-			},{
+			}, {
 				"path": "pages/autoDeliverContent",
 				"style": {
 					"navigationBarTitleText": "自动发货内容",
@@ -321,13 +322,28 @@
 				}
 			}
 		}, {
+			"path": "pages/vipBills",
+			"style": {
+				"navigationBarTitleText": "会员订单",
+				"navigationBarTextStyle": "#fff",
+				"navigationBarBackgroundColor": "#203352",
+				"enablePullDownRefresh": false,
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"i-modal": "/wxcomponents/iview-weapp/modal/index",
+					"i-page": "/wxcomponents/iview-weapp/page/index"
+				}
+			}
+		}, {
 			"path": "pages/vipManage",
 			"style": {
 				"navigationBarTitleText": "会员管理",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-					"i-page": "/wxcomponents/iview-weapp/page/index"
+					"i-page": "/wxcomponents/iview-weapp/page/index",
+					"i-icon": "/wxcomponents/iview-weapp/icon/index"
 				}
 			}
 		}, {
@@ -348,7 +364,7 @@
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
 				}
 			}
-		},{
+		}, {
 			"path": "pages/additionList",
 			"style": {
 				"navigationBarTitleText": "备注",
@@ -445,7 +461,7 @@
 				"navigationBarTitleText": "选择店铺",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog": "/wxcomponents/vant-weapp/dialog/index" ,
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
 					"van-loading": "/wxcomponents/vant-weapp/loading/index"
 				}
 			}

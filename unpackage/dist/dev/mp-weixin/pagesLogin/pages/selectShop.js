@@ -34,7 +34,7 @@ var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/
 var DataFrom = {};
 var DataGo = {};
 var pageId = 'selectShop';
-var ajaxIndex = 1; //当前是第几次请求
+var ajaxIndex = 1; //当前是第几次请求 
 var requesting = false;var _default =
 {
   components: {
@@ -130,33 +130,43 @@ var requesting = false;var _default =
         then(function (res) {
           requesting = false;
           _this2.requesting = requesting;
-          ajaxIndex++;
-          _this2.shops = _this2.shops.concat((0, _getShopList.default)(res.list));
-          _this2.shopNum = res.count;
-          _this2.totalShop = res.total;
-          if (res.total === 0) {//没有任何店铺
-            _this2.LoadingType = 1; //
-          }
-          if (_this2.shops.length == 1 && DataFrom.from != 'home') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-            var shop = _this2.shops[0];
-            _this2.Cacher.setData(pageId, {
-              from: poageId,
-              shop: shop });
+          if (res.error == 0) {
+            ajaxIndex++;
+            _this2.shops = _this2.shops.concat((0, _getShopList.default)(res.list));
+            _this2.shopNum = res.count;
+            _this2.totalShop = res.total;
+            if (res.total === 0) {//没有任何店铺
+              _this2.LoadingType = 1; //
+            }
+            if (_this2.shops.length == 1 && DataFrom.from != 'home') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+              var shop = _this2.shops[0];
+              _this2.Cacher.setData(pageId, {
+                from: poageId,
+                shop: shop });
 
-            _this2.Request('switchShop', {
-              id: shop.shopInfo.id }).
-            then(function (res) {
-              _this2.toIndex('from=selectShop&status=onlyOne');
-            });
+              _this2.Request('switchShop', {
+                id: shop.shopInfo.id }).
+              then(function (res) {
+                _this2.toIndex('from=selectShop&status=onlyOne');
+              });
+            } else {
+              // this.checkUserInfo()
+            }
           } else {
-            // this.checkUserInfo()
+            _this2.Toast(res.message);
           }
           _this2.closePageLoading();
+        }).catch(function (res) {
+          requesting = false;
+          _this2.requesting = requesting;
+          _this2.Toast(res.message);
         });
       }
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
+    requesting = false;
+    this.requesting = requesting;
     this.shops = []; //清空列表
     ajaxIndex = 1; //请求页码初始化
     this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部

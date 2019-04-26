@@ -10701,6 +10701,8 @@ var homeInfo = { //首页信息
 var noticeList = { //获取公告列表
   url: '/shop/manage/site/notice/list',
   data: {},
+
+
   headers: {},
 
 
@@ -10995,6 +10997,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
             if (shopInfo && shopInfo.shopInfo) {
               header = {
                 'session-id': sessionId,
+                'shop-id': shopInfo.shopInfo.id,
                 Cookie: 'shopId=' + shopInfo.shopInfo.id + ';',
                 'client-type': 'assistant' };
 
@@ -11311,6 +11314,31 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         };
       });
     } }], [{ key: "initStyle", value: function initStyle(ctx) {var _arguments = arguments;var styles = ['fillStyle', 'strokeStyle', 'globalAlpha', 'textAlign', 'textBaseAlign', 'shadow', 'lineWidth', 'lineCap', 'lineJoin', 'lineDash', 'miterLimit', 'fontSize'];styles.forEach(function (style) {Object.defineProperty(ctx, style, { set: function set(value) {if (style !== 'fillStyle' && style !== 'strokeStyle' || value !== 'none' && value !== null) {ctx["set".concat(style.charAt(0).toUpperCase()).concat(style.slice(1))](value);}} });});ctx.createRadialGradient = function () {return ctx.createCircularGradient(_arguments);};} }]);return WxCanvas;}();exports.default = WxCanvas;
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\dataOrigin.js":
+/*!********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/dataOrigin.js ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(origin) {//订单或用户来源
+
+  var all = {
+    wechat: '/static/img/global/wechat.png',
+    h5: '/static/img/global/h5.svg',
+    alipay: '/static/img/global/alipay.svg',
+    wxapp: '/static/img/global/miniapp.png',
+    app: '/static/img/global/app.png' };
+
+
+
+  var name = all[origin] || '';
+  return name;
+}
 
 /***/ }),
 
@@ -12493,6 +12521,23 @@ createPage(_selectCoupon.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _toper = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/toper.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\toper.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_toper.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipBills\"}":
+/*!******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FvipBills"} ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _vipBills = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipBills.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\vipBills.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_vipBills.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -13785,11 +13830,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
 
   return new Promise(function (resolve, reject) {
-    console.log('searching??', tabid, billtype[tabid], data);
     _this.Request(billtype[tabid], data).then(function (res) {
       var list = [];
       var goodlist = [];
       var countGood = 0;
+      _this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
       list = res.list.map(function (item) {
         goodlist = item.order_goods || [];
         goodlist.forEach(function (item) {
