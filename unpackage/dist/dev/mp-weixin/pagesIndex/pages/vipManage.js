@@ -21,6 +21,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 var bar = '';
 var cacheSearchKey = '';var _default =
 {
@@ -38,8 +48,9 @@ var cacheSearchKey = '';var _default =
         vipClass: '',
         tel: '',
         money: '',
-        score: '' }] };
+        score: '' }],
 
+      current: 1 };
 
   },
   methods: {

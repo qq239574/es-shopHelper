@@ -41,8 +41,12 @@ var _default =
         title: '',
         left: '',
         status: 0,
-        img: '' }] } },
+        img: '' }] },
 
+
+    total: {
+      type: Number,
+      default: 0 } },
 
 
   data: function data() {

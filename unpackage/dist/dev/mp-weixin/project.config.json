@@ -33,62 +33,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 1,
 			"list": [
 				{
-					"id": 0,
-					"name": "vip",
-					"pathName": "pagesIndex/pages/vipDetail",
-					"query": "from=vipManage",
-					"scene": null
-				},
-				{
 					"id": -1,
-					"name": "viplisyt",
-					"pathName": "pagesIndex/pages/vipManage",
-					"query": "from=vipManage",
+					"name": "selectshops",
+					"pathName": "pagesLogin/pages/selectShop",
+					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "index",
 					"pathName": "pages/index/index",
-					"query": "from=vipManage",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "items",
-					"pathName": "pagesIndex/pages/coupon",
-					"query": "from=vipDetail",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "items",
-					"pathName": "pagesIndex/pages/coupon",
-					"query": "from=vipDetail",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "items",
-					"pathName": "pagesIndex/pages/selectCoupon",
-					"query": "from=vipDetail",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "good",
-					"pathName": "pages/commodity/index",
-					"query": "from=vipDetail",
-					"scene": null
-				},
-				{
-					"id": 7,
-					"name": "editgood",
-					"pathName": "pagesCommodity/pages/index",
-					"query": "from=good",
 					"scene": null
 				}
 			]

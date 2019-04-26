@@ -31,10 +31,14 @@
 //
 
 var userId = '',
-password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp2 */ "components/my-components/PopUp2").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp2.vue"));};var _default =
+password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp2 */ "components/my-components/PopUp2").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp2.vue"));};
 
 
-{
+var type = '';
+var session_id = ''; //
+var questions = []; //	安全问题
+var registerType = ''; //	注册类型(username,mobile,email)
+var _default = {
   components: {
     LongButton: LongButton,
     PopUp: PopUp },
@@ -47,15 +51,7 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
   data: function data() {
     return {
       openEye: false,
-      questionList: [
-      '您的母亲叫什么名字？',
-      '您配偶的生日是？',
-      '您的学号（或工号）是？',
-      '您的高中班主任的名字是？',
-      '您的父亲的生日是？',
-      '您最熟悉的学校宿舍室友的名字是？',
-      '您的小学老师叫什么名字？'],
-
+      questionList: [],
       checkedNo: '',
       showList: false,
       newName: '',
@@ -71,11 +67,39 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
     showQuestions: function showQuestions() {
       this.showList = !this.showList;
     },
-    nextPage: function nextPage() {
+    nextPage: function nextPage() {var _this = this;
       this.pageLoading();
-      uni.navigateTo({
-        url: './setNew' });
+      this.Request('verifyCode', { //验证验证码
+        session_id: session_id,
+        type: 'username', //注册方式 (mobile 或 email)
+        account: this.newName,
+        verify_code: '',
+        question: this.question,
+        answer: this.answer }).
+      then(function (res) {
+        _this.closePageLoading();
+        if (res.error == 0) {
+          _this.Cacher.setData('questions', {
+            from: 'questions',
+            info: {
+              type: 'username', //验证类型
+              session_id: session_id,
+              account: _this.newName,
+              registerType: registerType, //注册类型
+              question: _this.question,
+              answer: _this.answer,
+              verify_code: '' } });
 
+
+          uni.navigateTo({
+            url: './setNew?from=questions' });
+
+        } else {
+          _this.Toast(res.message);
+        }
+      }).catch(function (res) {
+        _this.Toast(res.message);
+      });
     },
     getName: function getName(val) {
       if (val.type == 'input') {
@@ -90,8 +114,18 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
       } else {
         this.answer = '';
       }
+    } },
 
-    } } };exports.default = _default;
+  onLoad: function onLoad() {var _this2 = this;
+    this.pageLoading();
+    this.Request('initPassword', {}).then(function (res) {
+      session_id = res.session_id;
+      questions = res.settings.questions;
+      registerType = res.settings.type;
+      _this2.questionList = questions;
+      _this2.closePageLoading();
+    });
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

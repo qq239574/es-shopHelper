@@ -25,10 +25,17 @@
 
 
 
+
+
+
+
 var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
-var userInfo = {};
-var DataFrom = {};var _default =
-{
+var DataFrom = {};
+var DataGo = {};
+var pageId = 'selectShop';
+var ajaxIndex = 1; //当前是第几次请求
+var requesting = false; //是否正在请求
+var _default = {
   components: {
     search: search,
     shopBlock: shopBlock,
@@ -37,19 +44,15 @@ var DataFrom = {};var _default =
   data: function data() {
     return {
       searchShop: '',
-      shops: [{
-        title: '花花的店铺1',
-        left: '',
-        status: 0, //0营业中
-        img: '/static/img/global/yz_3.png' }] };
-
+      shops: [],
+      shopNum: 0,
+      totalShop: 0 };
 
   },
   methods: {
     selectShop: function selectShop(item) {var _this = this;
-      this.Cacher.setData('selectShop', item);
+      this.Cacher.setData(pageId, item);
       this.pageLoading();
-
       this.Request('switchShop', { //切换店铺
         id: item.shopInfo.id }).
       then(function (res) {
@@ -57,14 +60,15 @@ var DataFrom = {};var _default =
         _this.toIndex('from=selectShop&status=selectShop');
         _this.closePageLoading();
       }).catch(function (res) {
-        if (res) {
-
-        }
+        if (res) {}
       });
     },
-    reLogin: function reLogin() {
+    reLogin: function reLogin() {//切换登录账号
+      this.Cacher.setData(pageId, {
+        from: pageId });
+
       uni.reLaunch({
-        url: '../../pages/login/index?from=selectShop&&status=switchAccount' });
+        url: '../../pages/login/index?from=selectShop' });
 
     },
     toIndex: function toIndex(info) {
@@ -81,7 +85,6 @@ var DataFrom = {};var _default =
         uni.login({
           provider: 'weixin',
           success: function success(loginRes) {
-            console.log(loginRes.authResult);
             // 获取用户信息
             uni.getUserInfo({
               provider: 'weixin',
@@ -94,42 +97,83 @@ var DataFrom = {};var _default =
       }).catch(function () {});
     },
     toSearch: function toSearch() {
+      DataGo = {
+        go: 'searchShop' };
+
       uni.navigateTo({
         url: './searchShop' });
 
     },
     initPage: function initPage() {var _this2 = this;
-      this.pageLoading();
-      var searchData = this.Cacher.getData('searchShop') || '';
-      DataFrom = this.Cacher.getData('selectShop');
-      this.searchShop = searchData.value || '';
-      this.Request('shoplist', {
-        pagesize: 20,
-        page: 1,
-        keywords: this.searchShop }).
-      then(function (res) {
-        _this2.shops = (0, _getShopList.default)(res.list);
-        if (_this2.shops.length == 1 && DataFrom.from != 'home' && DataFrom.status != 'switchShop') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-          var shop = _this2.shops[0];
-          _this2.Cacher.setData('selectShop', shop);
-          _this2.Request('switchShop', {
-            id: shop.shopInfo.id }).
-          then(function (res) {
-            _this2.toIndex('from=selectShop&status=onlyOne');
-          });
+      if (DataGo.go) {
+        DataGo = this.Cacher.getData(DataGo.go);
+        this.shops = []; //清空列表
+        ajaxIndex = 1; //请求页码初始化
+        this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
+        if (DataGo.from == 'searchShop') {//搜索店铺页传参
+          this.searchShop = DataGo.value;
         } else {
-          // this.checkUserInfo()
+          this.searchShop = '';
         }
-        _this2.closePageLoading();
-      });
+      }
+      if (!requesting) {
+        requesting = true; //函数节流
+        this.pageLoading();
+        DataFrom = this.Cacher.getData(pageId);
+        this.Request('shoplist', {
+          pageSize: 20,
+          page: ajaxIndex,
+          keywords: this.searchShop }).
+        then(function (res) {
+          requesting = false;
+          ajaxIndex++;
+          _this2.shops = _this2.shops.concat((0, _getShopList.default)(res.list));
+          _this2.shopNum = res.count;
+          _this2.totalShop = res.total;
+          if (res.total === 0) {//没有任何店铺
+            _this2.LoadingType = 1; //
+          }
+          if (_this2.shops.length == 1 && DataFrom.from != 'home') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+            var shop = _this2.shops[0];
+            _this2.Cacher.setData(pageId, {
+              from: poageId,
+              shop: shop });
+
+            _this2.Request('switchShop', {
+              id: shop.shopInfo.id }).
+            then(function (res) {
+              _this2.toIndex('from=selectShop&status=onlyOne');
+            });
+          } else {
+            // this.checkUserInfo()
+          }
+          _this2.closePageLoading();
+        });
+      }
     } },
 
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.shops = []; //清空列表
+    ajaxIndex = 1; //请求页码初始化
+    this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
+    this.initPage();
+  },
+  onReachBottom: function onReachBottom() {
+    if (this.shops.length < this.shopNum) {
+      this.initPage();
+      this.LoadingType = 0;
+    } else {
+      this.LoadingType = 1;
+    }
+  },
   onShow: function onShow() {
     this.initPage();
   },
   onLoad: function onLoad(option) {
-    this.initPage();
-    userInfo = this.Cacher.getData('userInfo');
+    DataFrom = this.Cacher.getData(option.from); //
+    DataGo = {
+      go: '' };
+
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

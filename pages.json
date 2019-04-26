@@ -326,7 +326,8 @@
 				"navigationBarTitleText": "会员管理",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"i-page": "/wxcomponents/iview-weapp/page/index"
 				}
 			}
 		}, {
@@ -443,7 +444,8 @@
 				"navigationBarTitleText": "选择店铺",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index" ,
+					"van-loading": "/wxcomponents/vant-weapp/loading/index"
 				}
 			}
 		}]

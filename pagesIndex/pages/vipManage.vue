@@ -2,6 +2,16 @@
     <view class='vip-manage page'>
         <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
         <Card :list='viplist' @click='clickGood'></Card>
+        <i-page :current="current" total="5" @change="handleChange">
+            <view slot="prev">
+                <i-icon type="return"></i-icon>
+                上一步
+            </view>
+            <view slot="next">
+                下一步
+                <i-icon type="enter"></i-icon>
+            </view>
+        </i-page>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -29,7 +39,8 @@
                     tel: '',
                     money: '',
                     score: ''
-                }]
+                }],
+                current:1
             }
         },
         methods: {

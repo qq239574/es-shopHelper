@@ -1,10 +1,14 @@
 <template>
     <view class='my-shops page'>
         <search placeholder='搜索店铺' :value='searchShop' :disabled='true' @click='toSearch'></search>
-        <view class="h1" v-if='shops.length'>我管理的店铺({{shops.length}})</view>
-        <shopBlock :shops='shops' @click='selectShop'></shopBlock>
+        <view class="h1" v-if='shops.length'>我管理的店铺({{shopNum}})</view>
+        <shopBlock :shops='shops' :total='totalShop' @click='selectShop'></shopBlock>
         <view class="foot">
             <longButton @click='reLogin'>切换登录账号</longButton>
+        </view>
+        <view class='load-more' v-if='shopNum'>
+            <van-loading size='15px' v-if='!LoadingType&&ShowLoadMore' />
+            <view class='nomore' v-else>-没有更多了-</view>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -16,8 +20,11 @@
     import shopBlock from '../components/SelectShop--Item.vue'
     import longButton from '../../components/my-components/LongButton.vue'
     import getShops from '../components/getShopList.js'
-    let userInfo = {};
     let DataFrom = {};
+    let DataGo = {};
+    let pageId = 'selectShop';
+    let ajaxIndex = 1; //当前是第几次请求
+    let requesting = false; //是否正在请求
     export default {
         components: {
             search,
@@ -27,34 +34,31 @@
         data() {
             return {
                 searchShop: '',
-                shops: [{
-                    title: '花花的店铺1',
-                    left: '',
-                    status: 0, //0营业中
-                    img: '/static/img/global/yz_3.png'
-                }]
+                shops: [],
+                shopNum: 0,
+                totalShop: 0
             }
         },
         methods: {
             selectShop(item) {
-                this.Cacher.setData('selectShop', item);
+                this.Cacher.setData(pageId, item);
                 this.pageLoading();
-
-                this.Request('switchShop', {//切换店铺
+                this.Request('switchShop', { //切换店铺
                     id: item.shopInfo.id
                 }).then(res => {
-                    this.searchShop='';
+                    this.searchShop = '';
                     this.toIndex('from=selectShop&status=selectShop');
                     this.closePageLoading();
-                }).catch(res=>{
-                    if(res){
-
-                    }
+                }).catch(res => {
+                    if (res) {}
                 })
             },
-            reLogin() {
+            reLogin() { //切换登录账号
+                this.Cacher.setData(pageId, {
+                    from: pageId
+                });
                 uni.reLaunch({
-                    url: '../../pages/login/index?from=selectShop&&status=switchAccount'
+                    url: '../../pages/login/index?from=selectShop'
                 })
             },
             toIndex(info) {
@@ -71,7 +75,6 @@
                     uni.login({
                         provider: 'weixin',
                         success: function(loginRes) {
-                            console.log(loginRes.authResult);
                             // 获取用户信息
                             uni.getUserInfo({
                                 provider: 'weixin',
@@ -84,42 +87,83 @@
                 }).catch(() => {});
             },
             toSearch() {
+                DataGo = {
+                    go: 'searchShop'
+                }
                 uni.navigateTo({
                     url: './searchShop'
                 })
             },
             initPage() {
-                this.pageLoading();
-                let searchData = this.Cacher.getData('searchShop') || '';
-                DataFrom = this.Cacher.getData('selectShop')
-                this.searchShop = searchData.value || '';
-                this.Request('shoplist', {
-                    pagesize: 20,
-                    page: 1,
-                    keywords: this.searchShop
-                }).then(res => {
-                    this.shops = getShops(res.list);
-                    if (this.shops.length == 1 && DataFrom.from != 'home' && DataFrom.status != 'switchShop') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                        let shop = this.shops[0]; 
-                        this.Cacher.setData('selectShop', shop);
-                        this.Request('switchShop', {
-                            id: shop.shopInfo.id
-                        }).then(res => {
-                            this.toIndex('from=selectShop&status=onlyOne')
-                        })
+                if (DataGo.go) {
+                    DataGo = this.Cacher.getData(DataGo.go);
+                    this.shops = []; //清空列表
+                    ajaxIndex = 1; //请求页码初始化
+                    this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
+                    if (DataGo.from == 'searchShop') { //搜索店铺页传参
+                        this.searchShop = DataGo.value;
                     } else {
-                        // this.checkUserInfo()
+                        this.searchShop = '';
                     }
-                    this.closePageLoading();
-                })
+                }
+                if (!requesting) {
+                    requesting = true; //函数节流
+                    this.pageLoading();
+                    DataFrom = this.Cacher.getData(pageId)
+                    this.Request('shoplist', {
+                        pageSize: 20,
+                        page: ajaxIndex,
+                        keywords: this.searchShop
+                    }).then(res => {
+                        requesting = false;
+                        ajaxIndex++;
+                        this.shops = this.shops.concat(getShops(res.list));
+                        this.shopNum = res.count;
+                        this.totalShop = res.total;
+                        if (res.total === 0) { //没有任何店铺
+                            this.LoadingType = 1; //
+                        }
+                        if (this.shops.length == 1 && DataFrom.from != 'home') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+                            let shop = this.shops[0];
+                            this.Cacher.setData(pageId, {
+                                from: poageId,
+                                shop
+                            });
+                            this.Request('switchShop', {
+                                id: shop.shopInfo.id
+                            }).then(res => {
+                                this.toIndex('from=selectShop&status=onlyOne')
+                            })
+                        } else {
+                            // this.checkUserInfo()
+                        }
+                        this.closePageLoading();
+                    })
+                }
+            }
+        },
+        onPullDownRefresh() {
+            this.shops = []; //清空列表
+            ajaxIndex = 1; //请求页码初始化
+            this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
+            this.initPage();
+        },
+        onReachBottom() {
+            if (this.shops.length < this.shopNum) {
+                this.initPage();
+                this.LoadingType = 0;
+            } else {
+                this.LoadingType = 1;
             }
         },
         onShow() {
             this.initPage();
         },
         onLoad(option) {
-            this.initPage();
-            userInfo = this.Cacher.getData('userInfo');
+            DataFrom = this.Cacher.getData(option.from); //
+            DataGo = {
+                go: ''
+            };
         }
     }
 </script>
@@ -145,6 +189,18 @@
             line-height: 110upx;
             font-size: 28upx;
             color: #495576;
+        }
+        .load-more {
+            display: flex;
+            justify-content: space-around;
+            font-size: 20upx;
+            flex-wrap: wrap;
+        }
+        .nomore {
+            font-size: 20upx;
+            color: #aaa;
+            width: 100%;
+            text-align: center;
         }
     }
 </style>

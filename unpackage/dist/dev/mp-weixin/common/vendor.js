@@ -11036,7 +11036,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getSessionid = exports.verifyCode = exports.sendVfCode = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
+Object.defineProperty(exports, "__esModule", { value: true });exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
   url: '/api/site/account/login/post',
   data: {
     account: 'yilianxinpin',
@@ -11084,7 +11084,7 @@ var switchShop = { //选择(切换)店铺
 
 
 var beforeSendVfCode = {
-  url: ' http://user.qdev.eldev.cn/utility/captcha/get',
+  url: '/utility/captcha/get',
   data: {
     type: 'forget',
     width: 135,
@@ -11095,14 +11095,44 @@ var beforeSendVfCode = {
   type: 'get' };exports.beforeSendVfCode = beforeSendVfCode;
 
 
-var sendVfCode = { //
-  url: 'api/site/account/verify-code/send',
+var initPassword = { //忘记密码-初始化
+  url: '/api/site/account/forget',
   data: {},
 
 
   headers: {},
-  type: 'get' };exports.sendVfCode = sendVfCode;
+  type: 'get' };exports.initPassword = initPassword;
 
+var sendVfCode = { //发送短信验证码
+  url: '/api/site/account/verify-code/send',
+  data: {
+    account: '',
+    session_id: '',
+    captcha_code: '',
+    action: '',
+    type: '' },
+
+  headers: {},
+  type: 'post' };exports.sendVfCode = sendVfCode;
+
+
+
+var setForgetPassword = { //找回密码
+  url: '/api/site/account/forget/post',
+  data: {
+    session_id: '',
+    type: '',
+    account: '',
+    captcha_code: '',
+    verify_code: '',
+    action: '',
+    question: '',
+    answer: '',
+    password: '' },
+
+
+  headers: {},
+  type: 'post' };exports.setForgetPassword = setForgetPassword;
 
 
 var verifyCode = { //找回密码验证验证码

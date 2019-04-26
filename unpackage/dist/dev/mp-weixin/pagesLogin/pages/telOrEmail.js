@@ -8,33 +8,35 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var userId = '',
-password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var imgCodeButton = function imgCodeButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton-image */ "components/my-components/GetVCodeButton-image").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton-image.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton-image.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var imgCodeButton = function imgCodeButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton-image */ "components/my-components/GetVCodeButton-image").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton-image.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton-image.vue"));};
 
 
 
-{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var type = '';
+var session_id = ''; //
+var questions = []; //	安全问题
+var registerType = ''; //	注册类型(username,mobile,email)
+var _default = {
   components: {
     LongButton: LongButton,
     RoundButton: RoundButton,
@@ -43,6 +45,14 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
   computed: {
     disable: function disable() {
       return this.userId === '' || this.password === '';
+    },
+    canSendVfCode: function canSendVfCode() {
+      if (type == 'email') {
+        var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+        return re.test(this.userId) && !!this.imageCode;
+      } else {
+        return /^1[0-9]{10}$/.test(this.userId) && !!this.imageCode;
+      }
     } },
 
   data: function data() {
@@ -53,20 +63,30 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
       placeholder1: '请输入手机号码',
       placeholder2: '请输入短信验证码',
       imageCode: '',
-      sendVfCode: false };
+      sendVfCode: false,
+      refreshButton: false };
 
   },
   onLoad: function onLoad(option) {
     if (option.from == 'email') {
+      type = 'email';
       this.placeholder1 = '请输入邮箱';
       this.placeholder2 = '请输入验证码';
     } else {
+      type = 'mobile';
       this.placeholder1 = '请输入手机号码';
       this.placeholder2 = '请输入短信验证码';
     }
+    this.Request('initPassword', {}).then(function (res) {
+      session_id = res.session_id;
+      questions = res.settings.questions;
+      registerType = res.settings.type;
+    });
   },
   watch: {
-    imageCode: function imageCode() {} },
+    imageCode: function imageCode() {
+      this.sendVfCode = true;
+    } },
 
   mounted: function mounted() {
     this.closePageLoading();
@@ -75,18 +95,76 @@ password = '';var LongButton = function LongButton() {return __webpack_require__
     getImgCode: function getImgCode(val) {
       this.imageCode = val.detail;
     },
-    nextPage: function nextPage() {
-      uni.reLaunch({
-        url: './setNew' });
+    nextPage: function nextPage() {var _this = this;
+      this.pageLoading();
+      this.Request('verifyCode', { //验证验证码
+        session_id: session_id,
+        type: type, //注册方式 (mobile 或 email)
+        account: this.userId,
+        verify_code: this.password,
+        question: '',
+        answer: '' }).
+      then(function (res) {
+        _this.closePageLoading();
+        if (res.error == 0) {
+          _this.Cacher.setData('telOrEmail', {
+            from: 'telOrEmail',
+            info: {
+              type: type, //验证类型
+              session_id: session_id,
+              account: _this.userId,
+              registerType: registerType, //注册类型
+              question: '',
+              answer: '' } });
 
+
+          uni.navigateTo({
+            url: './setNew?from=telOrEmail' });
+
+        } else {
+          _this.Toast(res.message);
+        }
+      }).catch(function (res) {
+        _this.Toast(res.message);
+      });
     },
-    getVCode: function getVCode(bool) {
-      if (this.imageCode) {
-        this.Request('sendVfCode');
-      } else {
-        this.Toast('请输入图形验证码');
+    getVCode: function getVCode(bool) {var _this2 = this;
+      if (!session_id) {//如果还没获取到session_id
+        this.pageLoading();
+        this.Request('initPassword', {}).then(function (res) {
+          session_id = res.session_id;
+          questions = res.settings.questions;
+          registerType = res.settings.type;
+          // this.getVCode(true);
+          _this2.requestCode();
+        });
+      } else if (this.imageCode && bool) {//填写了图形验证码
+        this.pageLoading();
+        this.requestCode();
+      } else if (this.canSendVfCode && !bool) {//正在请求中
+        this.Toast('请稍后');
+      } else {//验证不通过
+        this.Toast(this.placeholder1 + '与图形验证码');
       }
-      console.log('object');
+    },
+    requestCode: function requestCode() {var _this3 = this;
+      this.Request('sendVfCode', {
+        account: this.userId,
+        session_id: session_id,
+        captcha_code: this.imageCode,
+        action: 'forget',
+        type: type }).
+      then(function (res) {
+        if (error != 0) {
+          _this3.Toast(res.message);
+        }
+        _this3.closePageLoading();
+        _this3.refreshButton();
+      }).catch(function (res) {
+        _this3.Toast(res.message);
+        _this3.closePageLoading();
+        _this3.refreshButton();
+      });
     },
     getUserId: function getUserId(val) {
       if (val.type == 'input') {

@@ -7,6 +7,7 @@
     import * as cacher from '../../store/cache.js'
     import Toast from '../../wxcomponents/vant-weapp/toast/toast'
     import Dialog from '../../wxcomponents/vant-weapp/dialog/dialog';
+    let DataGo={};
     export default {
         components: {},
         data() {
@@ -17,8 +18,8 @@
                 Toast,
                 Dialog,
                 ShowLoadMore: false,
-                LoadingType: 1,
-                LoadingText: ['加载更多', 'loading ......', '已加载全部']
+                LoadingType: 0,//0'加载更多',   1'已加载全部' 
+
             };
         },
         methods: {
@@ -55,8 +56,7 @@
                 this.showReachBottom = false;
             }
         },
-        onPullDownRefresh() {
-            console.log('refreshing');
+        onPullDownRefresh() { 
             this.closePageLoading();
             setTimeout(()=> {
                 uni.stopPullDownRefresh();
@@ -71,9 +71,9 @@
         onHide() {
             this.closePageLoading();
             this.Dialog.close();
+
         }, 
-        onReachBottom() {
-            console.log('onReachBottom')
+        onReachBottom() { 
             this.ShowLoadMore = true;
             setTimeout(() => {
                 this.ShowLoadMore = false;

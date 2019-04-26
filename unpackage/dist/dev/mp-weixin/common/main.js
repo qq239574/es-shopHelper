@@ -40,7 +40,8 @@ var cacher = _interopRequireWildcard(__webpack_require__(/*! ../../store/cache.j
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
 var _dialog = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/dialog/dialog */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
-var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ components: {},
+var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defineProperty({
+  components: {},
   data: function data() {
     return {
       showReachBottom: false,
@@ -49,8 +50,8 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
       Toast: _toast.default,
       Dialog: _dialog.default,
       ShowLoadMore: false,
-      LoadingType: 1,
-      LoadingText: ['加载更多', 'loading ......', '已加载全部'] };
+      LoadingType: 0 //0'加载更多',   1'已加载全部' 
+    };
 
   },
   methods: {
@@ -88,7 +89,6 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
-    console.log('refreshing');
     this.closePageLoading();
     setTimeout(function () {
       uni.stopPullDownRefresh();
@@ -103,9 +103,9 @@ var pageLoadingBar = '';var _loadMore = '';var _default = _defineProperty({ comp
   onHide: function onHide() {
     this.closePageLoading();
     this.Dialog.close();
+
   } }, "onReachBottom", function onReachBottom()
 {var _this3 = this;
-  console.log('onReachBottom');
   this.ShowLoadMore = true;
   setTimeout(function () {
     _this3.ShowLoadMore = false;

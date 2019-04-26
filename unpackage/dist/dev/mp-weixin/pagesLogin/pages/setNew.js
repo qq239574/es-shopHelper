@@ -28,7 +28,8 @@
 
 
 
-var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var _default =
+var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};
+var DataFrom = {};var _default =
 {
   components: {
     LongButton: LongButton,
@@ -51,14 +52,33 @@ var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/v
     this.closePageLoading();
   },
   methods: {
-    nextPage: function nextPage() {
+    nextPage: function nextPage() {var _this = this;
       if (!this.disableButton) {
         if (this.password1 !== this.password2) {
           (0, _toast.default)('两次输入不一致');
         } else {
-          uni.reLaunch({
-            url: '../../pages/index/index' });
+          this.Request('setForgetPassword', {
+            session_id: DataFrom.info.session_id,
+            type: DataFrom.info.type,
+            account: DataFrom.info.account,
+            verify_code: DataFrom.info.verify_code,
+            question: DataFrom.info.question,
+            answer: DataFrom.info.answer }).
+          then(function (res) {
 
+            if (res.error == 0) {
+              _this.Cacher.setData('setNewPassword', {
+                from: 'setNewPassword' });
+
+              uni.reLaunch({
+                url: '../../pages/index/index?from=setNewPassword' });
+
+            } else {
+              _this.Toast(res.message);
+            }
+          }).catch(function (res) {
+            _this.Toast(res.message);
+          });
         }
       }
     },
@@ -70,7 +90,11 @@ var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/v
     },
     getPassWord: function getPassWord(val) {
       this.password2 = val.detail;
-    } } };exports.default = _default;
+    } },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

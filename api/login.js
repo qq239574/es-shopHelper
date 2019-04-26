@@ -35,7 +35,7 @@ export const changePassword = { //修改密码
     type: 'post'
 }
 
-export const switchShop = {//选择(切换)店铺
+export const switchShop = { //选择(切换)店铺
     url: '/api/site/account/shops/switch',
     data: {
         id: '',
@@ -46,7 +46,7 @@ export const switchShop = {//选择(切换)店铺
 
 }
 export const beforeSendVfCode = {
-    url: ' http://user.qdev.eldev.cn/utility/captcha/get',
+    url: '/utility/captcha/get',
     data: {
         type: 'forget',
         width: 135,
@@ -57,14 +57,44 @@ export const beforeSendVfCode = {
     type: 'get'
 
 }
-export const sendVfCode = { //
-    url: 'api/site/account/verify-code/send',
+export const initPassword = { //忘记密码-初始化
+    url: '/api/site/account/forget',
     data: {
 
     },
     headers: {},
     type: 'get'
+}
+export const sendVfCode = { //发送短信验证码
+    url: '/api/site/account/verify-code/send',
+    data: {
+        account: '',
+        session_id: '',
+        captcha_code: '',
+        action: '',
+        type: ''
+    },
+    headers: {},
+    type: 'post'
 
+}
+
+export const setForgetPassword = { //找回密码
+    url: '/api/site/account/forget/post',
+    data: {
+        session_id: '',
+        type: '',
+        account: '',
+        captcha_code: '',
+        verify_code:'',
+        action: '',
+        question:'',
+        answer:'',
+        password:''
+
+    },
+    headers: {},
+    type: 'post'
 }
 
 export const verifyCode = { //找回密码验证验证码

@@ -19,6 +19,7 @@
     import LongButton from '../../components/my-components/LongButton';
     import RoundButton from '../../components/my-components/GetVCodeButton'
     import Toast from '../../wxcomponents/vant-weapp/toast/toast';
+    let DataFrom = {};
     export default {
         components: {
             LongButton,
@@ -37,8 +38,8 @@
                 return !this.password1 || !this.password2
             }
         },
-        mounted(){
-            this.closePageLoading(); 
+        mounted() {
+            this.closePageLoading();
         },
         methods: {
             nextPage() {
@@ -46,8 +47,27 @@
                     if (this.password1 !== this.password2) {
                         Toast('两次输入不一致');
                     } else {
-                        uni.reLaunch({
-                            url: '../../pages/index/index'
+                        this.Request('setForgetPassword', {
+                            session_id: DataFrom.info.session_id,
+                            type: DataFrom.info.type,
+                            account: DataFrom.info.account,
+                            verify_code: DataFrom.info.verify_code,
+                            question: DataFrom.info.question,
+                            answer: DataFrom.info.answer
+                        }).then(res => {
+
+                            if (res.error == 0) {
+                                this.Cacher.setData('setNewPassword',{
+                                    from:'setNewPassword'
+                                });
+                                uni.reLaunch({
+                                    url: '../../pages/index/index?from=setNewPassword'
+                                })
+                            } else {
+                                this.Toast(res.message)
+                            }
+                        }).catch(res => {
+                            this.Toast(res.message)
                         })
                     }
                 }
@@ -62,6 +82,9 @@
                 this.password2 = val.detail;
             },
         },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from)
+        }
     }
 </script>
 

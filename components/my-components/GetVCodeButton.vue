@@ -10,6 +10,11 @@
             canSend: {
                 type: Boolean,
                 default: false
+            },
+            refreshButton:{
+                type:Boolean,
+                default:false
+
             }
         },
         data() {
@@ -17,6 +22,11 @@
                 timer: 60,
                 timing: false,
                 bar: ''
+            }
+        },
+        watch:{
+            refreshButton(){
+                this.refresh();
             }
         },
         methods: {

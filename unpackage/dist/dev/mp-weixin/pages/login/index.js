@@ -44,12 +44,18 @@
 //
 //
 //
+//
+//
+//
+//
+//
 
 var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 var requesting = false;
 var canLogin = false; //可否登录 
-var sessionId = '';var _default =
+var sessionId = '';
+var DataFrom = {};var _default =
 {
   components: {
     LongButton: LongButton },
@@ -69,11 +75,9 @@ var sessionId = '';var _default =
     } },
 
   onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
     this.initPage();
-    if (!option.from) {//如果没有from就说明是刚进入小程序
-    } else {
-      console.log(this.Cacher.getData(option.from)); //获取页面传参
-    }
+    if (!DataFrom.from) {} else {}
   },
   mounted: function mounted() {
     this.closePageLoading();
@@ -111,7 +115,6 @@ var sessionId = '';var _default =
           password: this.password }).
         then(function (res) {
           // 验证通过
-          _this.closePageLoading();
           if (res.error == 0) {
             canLogin = true;
             if (canLogin) {
@@ -119,23 +122,30 @@ var sessionId = '';var _default =
                 url: '../../pagesLogin/pages/selectShop?from=login' });
 
             } else {
-              _this.idError = true;
+              _this.idError = true; //账号密码不对
             }
-            requesting = false;
           } else {
-            requesting = false;
             _this.Toast(res.message);
           }
+          _this.closePageLoading();
+          requesting = false;
         }).catch(function (res) {
+          requesting = false;
+          _this.Cacher.setData('login', {
+            from: 'login' });
+
           if (res.error == -3) {//已登录
             uni.reLaunch({
               url: '../../pagesLogin/pages/selectShop?from=login' });
 
+          } else {
+            _this.Toast(res.message);
           }
         });
       } else {
         setTimeout(function () {
           requesting = false;
+          _this.Toast('登录时间长，请重试');
         }, 3000);
       }
     },

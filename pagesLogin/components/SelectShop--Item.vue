@@ -16,7 +16,7 @@
         <view class="img" v-if='!shops.length'>
             <image lazy-load src='/static/img/global/haveNoShops.png'></image>
             <view class="h1">
-                您暂未拥有任何店铺的管理资格
+                {{total?'没有搜索到任何店铺':'您暂未拥有任何店铺的管理资格'}}
             </view>
         </view>
     </view>
@@ -33,6 +33,10 @@
                     status: 0,
                     img: ''
                 }]
+            },
+            total:{
+                type:Number,
+                default:0
             }
         },
         data() {

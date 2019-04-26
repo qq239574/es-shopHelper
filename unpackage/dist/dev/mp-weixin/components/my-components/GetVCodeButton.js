@@ -19,7 +19,12 @@ var _default =
   props: {
     canSend: {
       type: Boolean,
+      default: false },
+
+    refreshButton: {
+      type: Boolean,
       default: false } },
+
 
 
   data: function data() {
@@ -29,6 +34,11 @@ var _default =
       bar: '' };
 
   },
+  watch: {
+    refreshButton: function refreshButton() {
+      this.refresh();
+    } },
+
   methods: {
     clickBuntton: function clickBuntton() {var _this = this;
       if (!this.timing && this.canSend) {
