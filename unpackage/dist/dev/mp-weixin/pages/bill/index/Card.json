@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "card-title": "/pages/bill/index/Card--Title",
-    "card-info": "/pages/bill/index/Card--Info",
-    "card-good": "/pages/bill/index/Card--Good",
-    "card-temp": "/pages/bill/index/Card--Temp"
-  },
-  "component": true
-}

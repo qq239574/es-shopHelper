@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "物流单号",
-  "usingComponents": {
-    "van-toast": "/wxcomponents/vant-weapp/toast/index",
-    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-    "long-button": "/components/my-components/LongButton"
-  }
-}

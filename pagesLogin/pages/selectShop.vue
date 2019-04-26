@@ -6,9 +6,10 @@
         <view class="foot">
             <longButton @click='reLogin'>切换登录账号</longButton>
         </view>
-        <view class='load-more' v-if='shopNum'>
-            <van-loading size='15px' v-if='!LoadingType&&ShowLoadMore' />
-            <view class='nomore' v-else>-没有更多了-</view>
+        <view class='load-more' v-if='shopNum&&ShowLoadMore'>
+            <van-loading size='18px' v-if='!LoadingType' />
+            <view class='nomore' v-else-if='totalShop>-1&&!requesting'>-没有更多了-</view>
+            <view class='nomore' v-else>正在搜索</view>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -24,7 +25,7 @@
     let DataGo = {};
     let pageId = 'selectShop';
     let ajaxIndex = 1; //当前是第几次请求
-    let requesting = false; //是否正在请求
+    let requesting = false; 
     export default {
         components: {
             search,
@@ -36,7 +37,8 @@
                 searchShop: '',
                 shops: [],
                 shopNum: 0,
-                totalShop: 0
+                totalShop: -1,
+                requesting:false//是否正在请求
             }
         },
         methods: {
@@ -108,6 +110,7 @@
                 }
                 if (!requesting) {
                     requesting = true; //函数节流
+                    this.requesting=requesting;
                     this.pageLoading();
                     DataFrom = this.Cacher.getData(pageId)
                     this.Request('shoplist', {
@@ -116,6 +119,7 @@
                         keywords: this.searchShop
                     }).then(res => {
                         requesting = false;
+                        this.requesting=requesting;
                         ajaxIndex++;
                         this.shops = this.shops.concat(getShops(res.list));
                         this.shopNum = res.count;
@@ -193,11 +197,11 @@
         .load-more {
             display: flex;
             justify-content: space-around;
-            font-size: 20upx;
+            font-size: 22upx;
             flex-wrap: wrap;
         }
         .nomore {
-            font-size: 20upx;
+            font-size: 22upx;
             color: #aaa;
             width: 100%;
             text-align: center;

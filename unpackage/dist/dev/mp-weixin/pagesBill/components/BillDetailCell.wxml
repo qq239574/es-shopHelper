@@ -1,1 +1,0 @@
-<view class="bill-cell data-v-671288e7" bind:__l="__l"><view class="pre data-v-671288e7"><slot name="pre"></slot><view class="mid data-v-671288e7"><slot name="mid"></slot></view></view><view class="aft data-v-671288e7"><slot name="aft"></slot></view></view>

@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "备注",
-  "usingComponents": {
-    "van-toast": "/wxcomponents/vant-weapp/toast/index",
-    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-    "addition-block": "/pagesIndex/components/AdditionShower"
-  }
-}

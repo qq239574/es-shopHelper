@@ -1,1 +1,0 @@
-<view class="addition-block data-v-fbee14ee" bind:__l="__l"><view class="block data-v-fbee14ee"><view class="title data-v-fbee14ee"><view class="left data-v-fbee14ee">{{"备注人："+info.name}}</view><view class="right data-v-fbee14ee">{{info.date}}</view></view><view class="body data-v-fbee14ee">{{''+info.content+''}}</view></view></view>

@@ -363,7 +363,8 @@
 				"navigationBarTitleText": "公告",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
-					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"van-loading": "/wxcomponents/vant-weapp/loading/index"
 				}
 			}
 		}, {

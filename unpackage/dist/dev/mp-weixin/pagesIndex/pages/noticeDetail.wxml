@@ -1,1 +1,0 @@
-<view class="notice-detail page data-v-9f0903e6" bind:__l="__l"><view class="title data-v-9f0903e6">{{notice.title}}</view><view class="subTit data-v-9f0903e6">{{notice.date}}</view><view class="brief data-v-9f0903e6">{{"简介："+notice.brief}}</view><rich-text type="text" nodes="{{notice.content}}" class="data-v-9f0903e6"></rich-text></view>

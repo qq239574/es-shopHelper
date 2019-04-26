@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "item-list": "/pagesIndex/components/VipList--Item",
-    "pop-up": "/components/my-components/PopUp"
-  },
-  "component": true
-}

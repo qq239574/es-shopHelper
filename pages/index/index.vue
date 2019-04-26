@@ -12,7 +12,7 @@
             <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
-            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'>
+            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'  v-if='newNotice.label||newNotice.date'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -36,6 +36,7 @@
     } from '../../components/my-components/getDateSection.js'
     let DataFrom = {};
     let newNotice = {};
+    let searchDay = {value:'today'};
     export default {
         components: {
             LongButton,
@@ -85,6 +86,7 @@
         },
         methods: {
             searchData(val) { //点击今日昨日按钮查询 
+                searchDay = val;
                 this.pageLoading();
                 this.Request('checkDealInfo', {
                     type: val.value
@@ -153,48 +155,52 @@
                 uni.navigateTo({
                     url: '../../pagesIndex/pages/noticeList?from=home'
                 })
+            },
+            initPage() {
+                this.searchData(searchDay); //初始化数据框
+                this.Request('homeInfo').then(res => {
+                    this.shopName = res.shop.name;
+                    this.showData = {
+                        money: res.data.today_payment_amount,
+                        payedBill: res.data.today_order_paid,
+                        payedGood: -1,
+                        payedVip: -1
+                    }
+                    newNotice = res.notice.sort((a, b) => {
+                        return new Date('2019-' + a.date) - new Date('2019-' + b.date)
+                    });
+                    this.newNotice = {
+                        label: newNotice[0].title||'',
+                        date: newNotice[0].date||''
+                    }
+                    this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
+                    this.execInfo = { //还没写过期的功能？？？？
+                        label: '还有' + this.expireDay + '天到期',
+                        date: '续费'
+                    }
+                    this.billList = [{
+                        name: '待发货',
+                        num: res.data.order_wait_send,
+                        cateid: 1
+                    }, {
+                        name: '待付款',
+                        num: res.data.order_wait_pay,
+                        cateid: 0
+                    }, {
+                        name: '维权订单',
+                        num: res.data.order_refund
+                    }]
+                })
             }
+        },
+        onPullDownRefresh() {
+            this.initPage();
         },
         onLoad(option) {
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
             this.shopName = DataFrom.title;
-            this.searchData({
-                value: 'today'
-            }); //初始化数据框
-            this.Request('homeInfo').then(res => {
-                this.shopName = res.shop.name;
-                this.showData = {
-                    money: res.data.today_payment_amount,
-                    payedBill: res.data.today_order_paid,
-                    payedGood: -1,
-                    payedVip: -1
-                }
-                newNotice = res.notice.sort((a, b) => {
-                    return new Date('2019-' + a.date) - new Date('2019-' + b.date)
-                });
-                this.newNotice = {
-                    label: newNotice[0].title,
-                    date: newNotice[0].date
-                }
-                this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
-                this.execInfo = { //还没写过期的功能？？？？
-                    label: '还有' + this.expireDay + '天到期',
-                    date: '续费'
-                }
-                this.billList = [{
-                    name: '待发货',
-                    num: res.data.order_wait_send,
-                    cateid: 1
-                }, {
-                    name: '待付款',
-                    num: res.data.order_wait_pay,
-                    cateid: 0
-                }, {
-                    name: '维权订单',
-                    num: res.data.order_refund
-                }]
-            })
+            this.initPage();
             // }
         }
     }
@@ -228,7 +234,7 @@
                 min-width: 170upx;
                 width: fit-content;
                 white-space: nowrap;
-                padding: 0 20upx;
+                padding: 0 16upx;
                 image {
                     width: 20upx;
                     height: 22upx;
@@ -238,9 +244,18 @@
             }
             .title {
                 height: 100%;
-                line-height: 88upx;
+                line-height: 86upx;
                 font-size: 24upx;
                 color: #6e7685; // max-width: 510upx;
+                position: relative;
+                padding-left: 30upx;
+                .shop-icon {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                    left: 0;
+                }
             }
         }
         .block {

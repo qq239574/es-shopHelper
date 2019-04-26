@@ -1,1 +1,0 @@
-<view class="block-foot  data-v-48c04a82" bind:__l="__l"><view class="info data-v-48c04a82">应付款：<view class="price data-v-48c04a82">{{"￥"+$root.m0}}</view></view><view data-event-opts="{{[['tap',[['sure',['$event']]]]]}}" class="button data-v-48c04a82" bindtap="__e">确认修改</view></view>

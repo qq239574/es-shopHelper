@@ -55,6 +55,7 @@
     import PopUp from '../../../components/my-components/PopUp.vue';
     import poster from './posterShare.vue'
     import savePic from './savePicToAlbum.js'
+    let cacheGood = {};
     export default {
         components: {
             item,
@@ -100,7 +101,7 @@
             }
         },
         methods: {
-            sharePoster(val) {//点击海报模板后触发
+            sharePoster(val) { //点击海报模板后触发
                 console.log(val);
                 let that = this;
                 if (val.type == 'share') {
@@ -116,6 +117,7 @@
                 this.show2 = false;
             },
             clickItem(val) {
+                cacheGood = val;
                 if (val.type == 'menu-item') {
                     // this.show = true;
                     if (val.name == '编辑') {
@@ -135,11 +137,13 @@
                 } else {
                     this.$emit('click', val)
                 }
-            },  
+            },
             clickModel(val1, val2) {
                 let that = this;
+                this.pageLoading();
                 if (val1 == '小程序') {
                     if (val2 == '微信好友') { //分享事件onShareAppMessage
+                    
                     } else if (val2 == '二维码海报') {
                         this.posteInfo = {
                             img: '/static/img/temp/poster.jpg',
@@ -149,20 +153,40 @@
                     }
                 } else if (val1 == 'h5') {
                     if (val2 == '微信好友') {} else if (val2 == '二维码海报') {
-                        this.showPoster = !this.showPoster;
-                        this.posteInfo = {
-                            img: '/static/img/temp/poster.jpg',
-                            type: 'h5', //mini:小程序，h5: H5
-                        }
-                    } else if (val2 == '复制链接') {
-                        uni.setClipboardData({
-                            data: '这是链接',
-                            success: function() {
-                                that.Toast('链接已复制')
+                        console.log(cacheGood)
+                        this.Request('goodPoster', {
+                            goods_id: cacheGood.detail.goodId
+                        }).then(res => {
+                            if (res.error == 0) {
+                                this.showPoster = !this.showPoster;
+                                this.posteInfo = {
+                                    img: res.qrcode_url,
+                                    type: 'h5', //mini:小程序，h5: H5
+                                }
                             }
-                        });
+                        }).catch(res => {
+                            this.Toast(res.message)
+                        })
+                    } else if (val2 == '复制链接') {
+                        this.Request('introGoodInfo', {
+                            id: cacheGood.detail.goodId
+                        }).then(res => {
+                            if (res.error == 0) {
+                                uni.setClipboardData({
+                                    data: res.goods_url,
+                                    success: function() {
+                                        that.closePageLoading();
+                                        that.Toast('链接已复制')
+                                    }
+                                });
+                            } else {
+                                that.Toast(res.message || '复制链接失败')
+                            }
+                        }).catch(res => {
+                            that.Toast(res.message || '复制链接失败')
+                        })
                     }
-                }  
+                }
             }
         }
     }

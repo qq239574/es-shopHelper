@@ -1,1 +1,0 @@
-<view class="my-cell-simple data-v-5e6c8dfd" bind:__l="__l"><view class="my-cell-simple__pre cell-font-gray data-v-5e6c8dfd"><slot name="pre"></slot></view><view class="my-cell-simple__aft cell-font-black  data-v-5e6c8dfd"><slot name="aft"></slot></view></view>

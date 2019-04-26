@@ -68,3 +68,27 @@ export const editGood = {
     },
     type: 'post'
 }
+
+export const goodPoster = { //获取商品海报
+    url: '/shop/apps/poster/client/goods',
+    data: {
+        goods_id: '',
+    },
+    headers: {
+
+    },
+    type: 'get'
+
+}
+
+export const introGoodInfo = {//推广信息
+    url: '/shop/manage/goods/generalize',
+    data: {
+        id: '',
+    },
+    headers: {
+
+    },
+    type: 'get'
+
+}

@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "grace-mask-view": "/components/my-components/MyGraceMaskView"
-  },
-  "component": true
-}

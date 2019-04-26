@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "block1": "/pagesIndex/components/Vip-Business-Block1",
-    "block2": "/pagesIndex/components/Vip-Business-Block2",
-    "long-button": "/components/my-components/LongButton"
-  },
-  "component": true
-}

@@ -1,1 +1,0 @@
-<view class="bill-block0 data-v-fbe21252" bind:__l="__l"><view class="left data-v-fbe21252"><view class="title data-v-fbe21252">{{info.billStatusText}}</view><view class="money data-v-fbe21252">{{"订单金额：￥"+info.billPrice}}</view></view><view class="right data-v-fbe21252"><image lazy-load src="{{info.image}}" class="data-v-fbe21252"></image></view></view>

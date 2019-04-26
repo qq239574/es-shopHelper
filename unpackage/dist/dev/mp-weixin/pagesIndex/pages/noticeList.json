@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "公告",
-  "usingComponents": {
-    "van-toast": "/wxcomponents/vant-weapp/toast/index",
-    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-    "item": "/pagesIndex/components/Notice-Block"
-  }
-}

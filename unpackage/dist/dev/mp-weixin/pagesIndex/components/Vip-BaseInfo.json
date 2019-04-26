@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "block1": "/pagesIndex/components/Vip-BaseInfo-Block1",
-    "block2": "/pagesIndex/components/Vip-BaseInfo-Block2",
-    "detail-picker": "/pagesIndex/components/Detail-Picker"
-  },
-  "component": true
-}
