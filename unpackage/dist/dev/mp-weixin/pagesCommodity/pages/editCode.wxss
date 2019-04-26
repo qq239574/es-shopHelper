@@ -1,0 +1,28 @@
+.bill-subtitle.data-v-6d7272a0 {
+  position: relative;
+}
+.bill-subtitle .counter.data-v-6d7272a0 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: 24rpx;
+    line-height: 24rpx;
+    color: #9da3ae;
+    font-size: 24rpx;
+    position: absolute;
+    top: 158rpx;
+    right: 40rpx;
+}
+.bill-subtitle .textarea.data-v-6d7272a0 {
+    width: 710rpx;
+    background: #fff;
+    height: 180rpx;
+    margin: 20rpx auto 30rpx;
+    border-radius: 6rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 20rpx;
+    font-size: 26rpx;
+    line-height: 36rpx;
+}
+

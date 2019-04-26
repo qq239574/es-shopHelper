@@ -1,0 +1,1 @@
+<view class="vip-detail-win data-v-e9e075da" bind:__l="__l"><view class="center data-v-e9e075da"><image lazy-load src="{{info.img}}" class="data-v-e9e075da"></image><view class="name data-v-e9e075da">{{info.name}}</view></view></view>

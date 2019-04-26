@@ -1,0 +1,15 @@
+.multi-block.data-v-02514f7c {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0 auto 20rpx;
+}
+.multi-block .block.data-v-02514f7c {
+    width: 710rpx;
+    margin: 20rpx auto 0;
+    background: #fff;
+    border-radius: 10rpx;
+    overflow: hidden;
+}
+

@@ -1,0 +1,1 @@
+<view class="vip-busi-block2 data-v-1ef3da02" bind:__l="__l"><input-item disabled="{{true}}" label="最近下单时间" value="{{info.newBillTime}}" class="data-v-1ef3da02"></input-item><input-item disabled="{{true}}" label="最近浏览时间" value="{{info.newBrowserTime}}" class="data-v-1ef3da02"></input-item></view>

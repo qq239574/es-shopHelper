@@ -1,0 +1,50 @@
+.bill-cell.data-v-671288e7 {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  min-height: 55rpx;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.bill-cell view.data-v-671288e7 {
+    height: 100%;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    white-space: pre-wrap;
+    word-break: break-all;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0 0 10rpx 19rpx;
+}
+.bill-cell .pre.data-v-671288e7 {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+}
+.bill-cell .pre .mid.data-v-671288e7 {
+      padding-top: 0;
+      max-width: 530rpx;
+}
+.bill-cell .aft.data-v-671288e7 {
+    padding: 0 20rpx 0 0;
+}
+

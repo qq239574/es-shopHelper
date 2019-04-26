@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "mpvue-picker": "/graceUI2.0/threeComponents/mpvuePicker",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "switch-item": "/components/my-components/editBlock-SwitchItem"
+  },
+  "component": true
+}

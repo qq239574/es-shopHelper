@@ -1,0 +1,42 @@
+.my-shops.data-v-3417471f {
+  background: #fff;
+  padding-bottom: 200rpx;
+}
+.my-shops .foot.data-v-3417471f {
+    position: fixed;
+    height: 125rpx;
+    width: 100%;
+    background: #fff;
+    border-top: 1rpx solid #eee;
+    bottom: 0;
+    left: 0;
+    padding: 15rpx 0 0;
+}
+.my-shops .h1.data-v-3417471f {
+    height: 116rpx;
+    width: 702rpx;
+    margin: 0 auto;
+    line-height: 110rpx;
+    font-size: 28rpx;
+    color: #495576;
+}
+.my-shops .load-more.data-v-3417471f {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    font-size: 22rpx;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.my-shops .nomore.data-v-3417471f {
+    font-size: 22rpx;
+    color: #aaa;
+    width: 100%;
+    text-align: center;
+}
+

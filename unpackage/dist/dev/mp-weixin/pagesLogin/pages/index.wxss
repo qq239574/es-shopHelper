@@ -1,0 +1,49 @@
+.reGetPW.data-v-27717456 {
+  background: #fff;
+}
+.reGetPW > .title.data-v-27717456 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 150rpx auto 66rpx;
+    white-space: nowrap;
+}
+.reGetPW > .reGetPW__rows.data-v-27717456 {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+}
+.reGetPW > .reGetPW__rows > .reGetPW__items.data-v-27717456 {
+      width: 34%;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+      -webkit-justify-content: space-around;
+          -ms-flex-pack: distribute;
+              justify-content: space-around;
+}
+.reGetPW > .reGetPW__rows > .reGetPW__items > .img.data-v-27717456 {
+        width: 120rpx;
+        height: 120rpx;
+        border-radius: 50%;
+        background: -o-linear-gradient(315deg, #ff884f, #fb6839);
+        background: linear-gradient(135deg, #ff884f, #fb6839);
+        margin: 0 auto 18rpx;
+}
+.reGetPW > .reGetPW__rows > .reGetPW__items > .img > image.data-v-27717456 {
+          width: 100%;
+          height: 100%;
+}
+.reGetPW > .reGetPW__rows > .reGetPW__items > view.data-v-27717456 {
+        width: 100%;
+}
+

@@ -1,0 +1,32 @@
+.my-round-button.data-v-71c24da8 {
+  width: 150rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 54rpx;
+  border-radius: 27rpx;
+  line-height: 52rpx;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: 500;
+  color: #fb6638;
+  border: 1rpx solid #fb6638;
+}
+.my-round-button.timing.data-v-71c24da8 {
+  color: #9da3ae;
+  border: 1rpx solid #9da3ae;
+}
+.imgCode.data-v-71c24da8 {
+  width: 150rpx;
+  height: 54rpx;
+  margin: auto 10rpx auto 0;
+}
+.password-code.data-v-71c24da8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+

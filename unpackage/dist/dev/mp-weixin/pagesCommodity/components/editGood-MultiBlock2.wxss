@@ -1,0 +1,18 @@
+.provide-block {
+  background: #fff;
+  margin: 20rpx 0;
+  overflow: auto;
+}
+.provide-block .grace-items {
+    width: 710rpx;
+    margin: auto;
+    padding: 2rpx auto;
+}
+.provide-block .grace-items .address {
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      width: 490rpx;
+      line-height: 38rpx;
+}
+

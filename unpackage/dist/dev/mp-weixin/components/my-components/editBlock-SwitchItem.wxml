@@ -1,0 +1,1 @@
+<view class="editGood-block-selectItem grace-form data-v-4021a85a" bind:__l="__l"><view class="grace-items data-v-4021a85a"><view class="grace-label data-v-4021a85a">{{label}}</view><switch class="switch data-v-4021a85a" name="switch" checked="{{checked}}" data-event-opts="{{[['change',[['change',['$event']]]]]}}" bindchange="__e"></switch></view></view>

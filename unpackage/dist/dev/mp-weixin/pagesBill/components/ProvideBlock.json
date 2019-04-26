@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "mpvue-picker": "/graceUI2.0/threeComponents/mpvuePicker"
+  },
+  "component": true
+}

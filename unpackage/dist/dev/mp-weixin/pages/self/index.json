@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的主包",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "input-item": "/components/my-components/editBlock-InputItem"
+  }
+}

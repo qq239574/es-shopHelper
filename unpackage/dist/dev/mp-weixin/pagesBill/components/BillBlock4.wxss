@@ -1,0 +1,25 @@
+.block.data-v-fb71564a {
+  width: 710rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #fff;
+  margin: 0 auto 20rpx;
+  border-radius: 8rpx;
+  padding: 21rpx 0;
+}
+.block .bill__item.data-v-fb71564a {
+    color: #000;
+    font-weight: 600;
+    line-height: 35rpx;
+}
+.block .body.data-v-fb71564a,
+  .block .foot.data-v-fb71564a {
+    padding: 2rpx 0;
+    font-size: 24rpx;
+    font-weight: 500;
+    color: #6e7685;
+}
+.block .label.data-v-fb71564a {
+    white-space: nowrap;
+}
+

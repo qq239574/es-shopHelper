@@ -1,0 +1,21 @@
+.multi-specification.data-v-1f589670 {
+  padding: 0 0 200rpx;
+}
+.multi-specification .footer.data-v-1f589670 {
+    position: fixed;
+    height: 124rpx;
+    width: 100%;
+    border-top: 1rpx solid #eee;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+    padding-top: 18rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.multi-specification .footer long-button.data-v-1f589670 {
+      margin: 10rpx auto 0;
+}
+

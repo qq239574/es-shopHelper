@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "订单管理",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "i-modal": "/wxcomponents/iview-weapp/modal/index",
+    "tab-card": "/components/my-components/Tabs",
+    "card": "/pages/bill/index/Card",
+    "search-input": "/components/my-components/SearchInput"
+  }
+}

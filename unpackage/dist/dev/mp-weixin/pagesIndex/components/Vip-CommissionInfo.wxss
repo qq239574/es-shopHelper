@@ -1,0 +1,14 @@
+.vip-commission-block .button.data-v-156496f9 {
+  height: 60rpx;
+  width: 240rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  line-height: 58rpx;
+  border: 1rpx solid #fd6b3e;
+  color: #fd6b3e;
+  text-align: center;
+  font-size: 27rpx;
+  margin: 40rpx auto;
+  border-radius: 30rpx;
+}
+
