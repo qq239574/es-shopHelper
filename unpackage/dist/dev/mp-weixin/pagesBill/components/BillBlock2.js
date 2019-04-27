@@ -27,17 +27,23 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 {
   components: {
     cellBlock: cellBlock },
+
+  watch: {
+    info: function info() {
+      console.log(this.info);
+    } },
 
   props: {
     info: {
       billTime: '', //下单时间
       payTime: '', //付款时间
       receiveTime: '', //收货时间
-      payType: '' //付款方式
-    } } };exports.default = _default;
+      payType: '', //付款方式
+      billStatus: 0 } } };exports.default = _default;
 
 /***/ }),
 

@@ -5,12 +5,17 @@
   background: #fff;
   margin: 0 auto 20rpx;
   border-radius: 8rpx;
-  padding: 21rpx 0;
+  padding: 21rpx 0 0;
 }
 .block .bill__item.data-v-4aff71c2 {
     color: #000;
     font-weight: 600;
     line-height: 35rpx;
+    height: 100%;
+}
+.block .bill__item.data-v-4aff71c2 view {
+      height: 100%;
+      padding: 0;
 }
 .block .body.data-v-4aff71c2,
   .block .foot.data-v-4aff71c2 {

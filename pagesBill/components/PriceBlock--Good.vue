@@ -1,12 +1,12 @@
 <template>
     <view class='card--good'>
-        <view class="card--good-item" v-for='(item,index) in goodsList' :key='index' @click='clickGood(item)'>
+        <view class="card--good-item" @click='clickGood'>
             <view class="imgbox">
-                <image :src='item.img'></image>
+                <image :src='info.img'></image>
             </view>
             <view class="good-info">
                 <view class="good-name van-multi-ellipsis--l2">
-                    {{item.goodName}}
+                    {{info.goodName}}
                 </view>
             </view>
         </view>
@@ -16,26 +16,26 @@
 <script>
     export default {
         methods: {
-            clickGood(item) {
-                this.$emit('click',{
-                    type:'good',
-                    detail:{
-                        val:item
+            clickGood() {
+                this.$emit('click', {
+                    type: 'good',
+                    detail: {
+                        ...this.info
                     }
                 })
             }
         },
         props: {
-            goodsList: {
-                type: Array,
+            info: {
+                type: Object,
                 default () {
-                    return [{
-                            img: '',
-                            goodName: '',
-                            color: '',
-                            size: '',
-                            num: 0,
-                    }]
+                    return {
+                        img: '',
+                        goodName: '',
+                        color: '',
+                        size: '',
+                        num: 0,
+                    }
                 }
             }
         },
@@ -58,6 +58,7 @@
             .imgbox {
                 width: 120upx;
                 height: 100%;
+                margin-left:20upx;
                 image {
                     width: 100%;
                     height: 120upx;
@@ -68,6 +69,8 @@
                 height: 100%;
                 width: 527upx;
                 padding: 23upx 0 0;
+                box-sizing: border-box;
+                padding-right: 20upx;
                 .good-name {
                     width: 100%;
                     font-size: 28upx;

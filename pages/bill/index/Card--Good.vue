@@ -53,10 +53,7 @@
                     }]
                 }
             }
-        },
-        mounted(){
-            console.log('yyyyyyyyyy',this.goodsList)
-        }
+        }, 
     }
 </script>
 

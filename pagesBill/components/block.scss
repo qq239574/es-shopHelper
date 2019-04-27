@@ -4,12 +4,17 @@
     background: #fff;
     margin: 0 auto 20upx;
     border-radius: 8upx;
-    padding: 21upx 0; 
+    padding: 21upx 0 0; 
 
     .bill__item {
         color: #000;
         font-weight: 600;
         line-height: 35upx;
+        height:100%;
+        /deep/view{
+            height:100%;
+            padding: 0;
+        }
     }
 
     .body,

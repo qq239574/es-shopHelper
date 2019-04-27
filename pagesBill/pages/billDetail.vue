@@ -149,7 +149,7 @@
                 this.Cacher.setData('billDetail', {
                     from: 'billDetail',
                     billDetail: this.billDetail,
-                    bill:this.bill
+                    bill: this.bill
                 })
                 if (state == '维权中') {
                     this.Dialog.alert({
@@ -247,14 +247,16 @@
                         }], //维权备注
                     }
                 };
-                this.badgeNum = DataFrom.bill.info.addtion;
-                
-                this.Request('billDetail',{
-                    id:DataFrom.bill.bill.id
-                }).then(res=>{ 
+                this.Request('billDetail', {
+                    id: DataFrom.bill.bill.id
+                }).then(res => {
                     this.billDetail = createBillDetail(res); //订单详情生成
                 })
-                console.log('detail>>>>>>', DataFrom)
+                this.Request('billAddition', {
+                    id: DataFrom.bill.bill.id
+                }).then(res => {
+                    this.badgeNum = res.list.length
+                })
             }
         },
         onShow() {

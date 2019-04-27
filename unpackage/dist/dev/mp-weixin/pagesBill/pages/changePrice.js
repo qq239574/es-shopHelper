@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var goodBlock = function goodBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Good */ "pagesBill/components/PriceBlock--Good").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Good.vue"));};var infoBlock = function infoBlock() {return Promise.all(/*! import() | pagesBill/components/PriceBlock--Info */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/PriceBlock--Info")]).then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Info.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Info.vue"));};var blockInput = function blockInput() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Input */ "pagesBill/components/PriceBlock--Input").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Input.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Input.vue"));};var pageFoot = function pageFoot() {return Promise.all(/*! import() | pagesBill/components/priceBlock--Foot */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/priceBlock--Foot")]).then(__webpack_require__.bind(null, /*! ../components/priceBlock--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\priceBlock--Foot.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -32,11 +32,15 @@
 
 
 
+
+
+var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");var goodBlock = function goodBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Good */ "pagesBill/components/PriceBlock--Good").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Good.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Good.vue"));};var infoBlock = function infoBlock() {return Promise.all(/*! import() | pagesBill/components/PriceBlock--Info */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/PriceBlock--Info")]).then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Info.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Info.vue"));};var blockInput = function blockInput() {return __webpack_require__.e(/*! import() | pagesBill/components/PriceBlock--Input */ "pagesBill/components/PriceBlock--Input").then(__webpack_require__.bind(null, /*! ../components/PriceBlock--Input.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\PriceBlock--Input.vue"));};var pageFoot = function pageFoot() {return Promise.all(/*! import() | pagesBill/components/priceBlock--Foot */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/priceBlock--Foot")]).then(__webpack_require__.bind(null, /*! ../components/priceBlock--Foot.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\priceBlock--Foot.vue"));};
 
 
 var DataFrom = {};
-var cacheList = [];var _default =
-{
+var cacheList = [];
+var cacheOldPrice = []; //保存改价前的状态
+var _default = {
   components: {
     goodBlock: goodBlock,
     infoBlock: infoBlock,
@@ -46,43 +50,61 @@ var cacheList = [];var _default =
   data: function data() {
     return {
       totalPrice: 0,
+      totalFreight: 0, //统一运费
       list: [{
-        billInfo: {
-          price: 0,
-          num: 0,
-          total: 0 },
+        goodInfo: {
+          price: '',
+          num: '',
+          total: '',
+          index: 0,
+          unit: '',
+          id: '' },
 
-        goodsList: [{
-          img: '/static/img/global/tmp.png',
+        good: {
+          img: '',
           goodName: '',
           color: '',
           size: '',
-          num: 0,
-          price: 0 }] }] };
+          num: 0 } }] };
 
 
 
   },
   methods: {
+    getTotalPrice: function getTotalPrice() {
+      var tmp = 0;
+      cacheList.forEach(function (item) {
+        tmp += item.goodInfo.total * 1;
+      });
+      this.totalPrice = this.totalFreight * 1 + tmp;
+    },
     inputPay: function inputPay(val) {
-      console.log('total pay', val);
+      this.totalFreight = val.detail.value;
+      this.getTotalPrice();
     },
     getInput: function getInput(val) {
-      console.log('item>>', val);
-      this.totalPrice = val.value.price * 1 + val.value.pay * 1;
+      var index = val.info.index; //商品的index
+      cacheList[index].goodInfo.total = val.value.price;
+      this.getTotalPrice();
     },
     sure: function sure() {var _this = this;
       this.pageLoading();
+      var goods = cacheList.map(function (item, index) {
+        var result = {
+          "id": item.goodInfo.id, //订单商品id
+          "price_change": Math.round((item.goodInfo.total - cacheOldPrice[index].goodInfo.total) * 100) / 100 //改价变动金额
+        };
+        return result;
+      });
       var data = {
-        id: '', //订单id
-        dispatch_price: '', //运费
-        total_price: '', //订单总价
-        change_items: [{
-          "id": "", //订单商品id
-          "price_change": "0" //改价变动金额
-        }] };
-
-      this.Request('changeBillPrice', data).then(function (res) {
+        id: DataFrom.bill.bill.id, //订单id
+        dispatch_price: this.totalFreight, //运费
+        total_price: this.totalPrice //订单总价 
+      };
+      goods.forEach(function (item, index) {
+        data['change_items[' + index + ']'] = item;
+      });
+      this.Request('changeBillPrice', (0, _ajaxDataFormater.flatten)(data)).then(function (res) {
         _this.Cacher.setData('changePrice', {
           from: 'changePrice' });
 
@@ -98,23 +120,54 @@ var cacheList = [];var _default =
       });
     } },
 
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this2 = this;
     DataFrom = this.Cacher.getData(option.from);
+    var goodlist = DataFrom.bill.goodsList;
     this.Request('billPrice', {
       id: DataFrom.bill.bill.id }).
-    then(function (res) {});
-    cacheList = DataFrom.bill.goodsList.map(function (item, index) {
-      return {
-        billInfo: {
-          price: item.price,
-          num: item.num,
-          total: item.price * item.num,
-          index: index },
+    then(function (res) {
+      _this2.totalFreight = res.order.dispatch_price;
+      cacheList = res.order_goods.map(function (item, index) {
+        cacheOldPrice[index] = {
+          goodInfo: {
+            total: item.price,
+            index: index,
+            id: item.id } };
 
-        goodsList: [item] };
 
+        var result = {
+          goodInfo: {
+            price: item.price_unit,
+            num: item.total,
+            total: item.price,
+            index: index,
+            unit: item.unit,
+            id: item.id },
+
+          good: {
+            img: '',
+            goodName: item.title,
+            color: item.option_title,
+            size: '',
+            num: item.total } };
+
+
+        if (goodlist[index].id == item.id) {
+          result.good.img = goodlist[index].img;
+        } else {
+          var len = goodlist.length;
+          for (var i = 0; i < len; i++) {
+            if (goodlist[i].id == item.id) {
+              result.good.img = goodlist[i].img;
+              break;
+            }
+          }
+        }
+        return result;
+      });
+      _this2.list = cacheList;
+      _this2.getTotalPrice();
     });
-    this.list = cacheList;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

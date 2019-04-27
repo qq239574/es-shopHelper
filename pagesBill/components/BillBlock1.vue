@@ -15,23 +15,19 @@
             <view class="body bill__item" slot='mid'>{{info.billTypeText}}</view>
         </cellBlock>
         <cellBlock>
+            <!-- //订单来源 0: 公众号 1: 小程序 2: wap/h5 3: app 4 :pc -->
             <view class="label bill__item" slot='pre'>订单来源：</view>
             <view class="body bill__item origin" slot='mid'>
                 <view class="content">{{info.billOriginText}}</view>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
+                <image class='paytype' :src='getBillOrigin(info&&info.billOrigin)'  ></image>
             </view>
         </cellBlock>
         <cellBlock>
+            <!-- //付款方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付 -->
             <view class="label bill__item" slot='pre'>支付方式：</view>
             <view class="body bill__item origin" slot='mid'>
                 <view class="content">{{info.payTypeText}}</view>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
-                <image class='paytype' src='/static/img/global/wechat.svg'></image>
+                <image class='paytype' :src='getPayType(info&&info.payType)'  ></image> 
             </view>
         </cellBlock>
     </view>
@@ -39,6 +35,9 @@
 
 <script>
     import cellBlock from './BillDetailCell'
+    import judgeOrigin from '../../components/my-components/dataOrigin.js'
+    import payType from '../../components/my-components/payType.js'
+  
     export default {
         props: {
             info: {
@@ -59,6 +58,12 @@
             cellBlock
         },
         methods: {
+            getPayType(no){ 
+                return no&&payType(no)
+            },
+            getBillOrigin(no){ 
+                return no&&judgeOrigin(no)
+            },
             copy(val) {
                 uni.setClipboardData({
                     data: val,

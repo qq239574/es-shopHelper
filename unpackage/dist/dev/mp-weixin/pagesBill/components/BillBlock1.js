@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -45,9 +45,8 @@
 
 
 
-
-
-
+var _dataOrigin = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/dataOrigin.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\dataOrigin.js"));
+var _payType = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
 
 {
   props: {
@@ -69,6 +68,12 @@
     cellBlock: cellBlock },
 
   methods: {
+    getPayType: function getPayType(no) {
+      return no && (0, _payType.default)(no);
+    },
+    getBillOrigin: function getBillOrigin(no) {
+      return no && (0, _dataOrigin.default)(no);
+    },
     copy: function copy(val) {
       uni.setClipboardData({
         data: val,
@@ -107,6 +112,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = _vm.getBillOrigin(_vm.info && _vm.info.billOrigin)
+  var m1 = _vm.getPayType(_vm.info && _vm.info.payType)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

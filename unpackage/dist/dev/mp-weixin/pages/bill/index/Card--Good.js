@@ -61,12 +61,7 @@ var _default2 = { methods: { clickGood: function clickGood(item) {this.$emit('cl
           price: '',
           specifications: 'single' //单规格，multi多规格
         }];
-      } } },
-
-
-  mounted: function mounted() {
-    console.log('yyyyyyyyyy', this.goodsList);
-  } };exports.default = _default2;
+      } } } };exports.default = _default2;
 
 /***/ }),
 

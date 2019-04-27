@@ -13,6 +13,8 @@
 	"libVersion": "2.6.4",
 	"appid": "wxea0039639afb8d4c",
 	"projectname": "MobileManager",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -31,48 +33,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 0,
 			"list": [
 				{
 					"id": -1,
-					"name": "bill",
+					"name": "change",
 					"pathName": "pages/bill/index",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "vipdetail",
-					"pathName": "pagesIndex/pages/vipDetail",
-					"query": "from=vipManage",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "data",
-					"pathName": "pagesIndex/pages/index",
-					"query": "from=vipManage",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "bill",
-					"pathName": "pages/bill/index",
-					"query": "from=vipManage",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": " ",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "change",
-					"pathName": "pagesBill/pages/changePrice",
-					"query": " from=bill",
 					"scene": null
 				}
 			]

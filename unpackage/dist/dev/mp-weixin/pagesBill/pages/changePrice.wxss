@@ -16,7 +16,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   padding: 0 20rpx;
-  margin: 20rpx auto;
+  margin: 20rpx auto 200rpx;
   background: #fff;
   border-radius: 8rpx;
 }
@@ -40,11 +40,14 @@
     margin-top: 13rpx;
     font-weight: 600;
 }
+.change-price .child-block.data-v-23c0a7bc {
+  margin-top: 20rpx;
+  background: #fff;
+}
 .change-price .block.data-v-23c0a7bc {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  background: #fff;
   margin: auto;
   border-radius: 8rpx;
   padding: 0 0;

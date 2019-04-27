@@ -23,6 +23,15 @@ export default function (result) {
         },
         "commission_status": -1 //分销状态 0待入账 1已入账
     }; //分销状态
+    console.log(commission)
+    let statusImages = {
+        "-2": '/static/img/global/order_detail_state6.png', // -2退款完成
+        "-1": "/static/img/global/order_detail_state4.png", //-1取消状态。
+        "0": "/static/img/global/order_detail_state3.png", //  0普通状态
+        "1": "/static/img/global/order_detail_state1.png", // 1为已付款
+        "2": "/static/img/global/order_detail_state2.png", // 2为已发货
+        "3": "/static/img/global/order_detail_state5.png", // 3为已完成。
+    }
     let commisionState = ['待入账', '已入账']; //分销状态
     let extra_price_package = result.order.extra_price_package || { //优惠活动
         full: 0, //满减
@@ -35,7 +44,7 @@ export default function (result) {
             billStatusText: result.order.status_text, //订单状态
             billPrice: result.order.pay_price, //订单支付金额
             billStatus: result.order.status, //订单状态码  -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
-            image: '/static/img/global/vip-manage.png'
+            image: statusImages[result.order.status]
         },
         billInfo2: {
             billId: result.order.order_no, //订单编号
@@ -53,31 +62,32 @@ export default function (result) {
             receiveTime: result.order.finish_time, //收货时间
             payTypeText: result.order.pay_type_text, //支付方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付
             payType: result.order.pay_type, //支付方式
+            billStatus: result.order.status, //订单状态 -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
         },
         billInfo4: {
             buyer: result.order.member_nickname, //买家
             addtion: result.order.remark_buyer, //买家备注
             provideTypeText: result.order.dispatch_type_text, //配送方式
-            provideType: result.order.dispatch_type, //配送方式 0 无需发货 1快递 2自提
+            provideType: result.order.dispatch_type_text, //配送方式 0 无需发货 1快递 2自提 3同城
             receiver: result.order.buyer_name, //收货人
             address: result.order.address_full //收货地址
         },
         billInfo5: {
             moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
             firstOne: {
-                name: commission.nickname,
-                tel: commission.mobile,
-                money: commission.commission
+                name: commission.agent_level1 && commission.agent_level1.nickname || '',
+                tel: commission.agent_level1 && commission.agent_level1.mobile || '',
+                money: commission.agent_level1 && commission.agent_level1.commission || '',
             }, //一级分销商
             secondOne: {
-                name: commission.nickname,
-                tel: commission.mobile,
-                money: commission.commission
+                name: commission.agent_level2&&commission.agent_level2.nickname||'',
+                tel: commission.agent_level2&&commission.agent_level2.mobile||'',
+                money: commission.agent_level2&&commission.agent_level2.commission||''
             }, //二级分销商
             thirdOne: {
-                name: commission.nickname,
-                tel: commission.mobile,
-                money: commission.commission
+                name: commission.agent_level3&&commission.agent_level3.nickname||'',
+                tel: commission.agent_level3&&commission.agent_level3.mobile||'',
+                money: commission.agent_level3&&commission.agent_level3.commission||''
             } //三级分销商
         },
         billInfo6: [...result.goods_waits.map(item => { //未发货的商品
@@ -134,7 +144,7 @@ export default function (result) {
         })],
         billInfo7: {
             goodTotal: result.order.goods_price, //商品总计
-            vipCount: extra_price_package.member_discount, //会员折扣
+            vipCount: extra_price_package.member_discount||0, //会员折扣
             sendCost: result.order.dispatch_price, //运费
             total: result.order.pay_price, //合计
             rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成

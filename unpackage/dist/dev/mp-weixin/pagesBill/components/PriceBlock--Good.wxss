@@ -25,6 +25,7 @@
 .card--good .card--good-item .imgbox.data-v-4e64c3ae {
       width: 120rpx;
       height: 100%;
+      margin-left: 20rpx;
 }
 .card--good .card--good-item .imgbox image.data-v-4e64c3ae {
         width: 100%;
@@ -35,6 +36,9 @@
       height: 100%;
       width: 527rpx;
       padding: 23rpx 0 0;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      padding-right: 20rpx;
 }
 .card--good .card--good-item .good-info .good-name.data-v-4e64c3ae {
         width: 100%;

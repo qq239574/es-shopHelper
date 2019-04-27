@@ -29,7 +29,7 @@ export default function (tabid, data) {
                         billDate: item.create_time, //订单时间
                         billType: item.type_text, //订单类型，分销订单，普通订单
                         billPrice: item.pay_price,
-                        id: item.id
+                        id: item.id,//订单id
                     },
                     goodsList: goodlist.map(item => { //订单商品信息
                         return {

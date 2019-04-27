@@ -40,6 +40,7 @@
         position: fixed;
         bottom: 0;
         left: 0;
+        z-index:10000;
         view {
             height: 100%;
             line-height: 100upx;

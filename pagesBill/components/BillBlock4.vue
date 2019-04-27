@@ -4,17 +4,17 @@
             <view class="label bill__item" slot='pre' style='text-indent:1em;'>佣金状态：</view>
             <view class="body bill__item" slot='mid'>{{info.moneyState}}</view>
         </cellBlock>
-        <cellBlock>
+        <cellBlock v-if='info.firstOne.name||info.firstOne.tel||info.firstOne.money'>
             <view class="label bill__item" slot='pre'>一级分销商：</view>
             <view class="body bill__item" slot='mid'>{{info.firstOne.name}} {{info.firstOne.tel}}</view>
             <view class="foot  bill__item" slot='aft'>佣金：￥{{info.firstOne.money}}</view>
         </cellBlock>
-        <cellBlock>
+        <cellBlock v-if='info.secondOne.name||info.secondOne.tel||info.secondOne.money'>
             <view class="label bill__item" slot='pre'>二级分销商：</view>
             <view class="body bill__item" slot='mid'>{{info.secondOne.name}} {{info.secondOne.tel}}</view>
             <view class="foot  bill__item" slot='aft'>佣金：￥{{info.secondOne.money}}</view>
         </cellBlock>
-        <cellBlock>
+        <cellBlock v-if='info.thirdOne.name||info.thirdOne.tel||info.thirdOne.money'>
             <view class="label bill__item" slot='pre'>三级分销商：</view>
             <view class="body bill__item" slot='mid'>{{info.thirdOne.name}} {{info.thirdOne.tel}}</view>
             <view class="foot  bill__item" slot='aft'>佣金：￥{{info.thirdOne.money}}</view>

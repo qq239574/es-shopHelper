@@ -10494,13 +10494,9 @@ var changeBillPrice = { //订单改价（获取数据）
   data: {
     id: '', //订单id
     dispatch_price: '', //运费
-    total_price: '', //订单总价
-    change_items: [{
-      "id": "", //订单商品id
-      "price_change": "0" //改价变动金额
-    }] },
-
-
+    total_price: '' //订单总价
+    // change_items: []
+  },
   headers: {},
 
 
@@ -11317,6 +11313,85 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/ajaxDataFormater.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.flatten = void 0;var flatten = function flatten(obj) {
+  var result = {};
+
+  function recurse(src, prop) {
+    var toString = Object.prototype.toString;
+    if (toString.call(src) == '[object Object]') {
+      var isEmpty = true;
+      for (var p in src) {
+        isEmpty = false;
+        recurse(src[p], prop ? prop + '[' + p + ']' : p);
+      }
+      if (isEmpty && prop) {
+        result[prop] = {};
+      }
+    } else if (toString.call(src) == '[object Array]') {
+      var len = src.length;
+      if (len > 0) {
+        src.forEach(function (item, index) {
+          recurse(item, prop ? prop + '[' + index + ']' : '[' + index + ']');
+        });
+      } else {
+        result[prop] = [];
+      }
+    } else {
+      result[prop] = src;
+    }
+  }
+  recurse(obj, '');
+
+  return result;
+};exports.flatten = flatten;
+
+var unflatten = function unflatten(data) {
+  if (Object(data) !== data || Array.isArray(data))
+  return data;
+  var regex = /\.?([^.\[\]]+)|\[(\d+)\]/g,
+  resultholder = {};
+  for (var p in data) {
+    var cur = resultholder,
+    prop = "",
+    m;
+    while (m = regex.exec(p)) {
+      cur = cur[prop] || (cur[prop] = m[2] ? [] : {});
+      prop = m[2] || m[1];
+    }
+    cur[prop] = data[p];
+  }
+  return resultholder[""] || resultholder;
+};
+
+var unflatten2 = function unflatten2(data) {
+  if (Object(data) !== data || Array.isArray(data))
+  return data;
+  var result = {},
+  cur,prop,idx,last,temp;
+  for (var p in data) {
+    cur = result, prop = "", last = 0;
+    do {
+      idx = p.indexOf(".", last);
+      temp = p.substring(last, idx !== -1 ? idx : undefined);
+      cur = cur[prop] || (cur[prop] = !isNaN(parseInt(temp)) ? [] : {});
+      prop = temp;
+      last = idx + 1;
+    } while (idx >= 0);
+    cur[prop] = data[p];
+  }
+  return result[""];
+};
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\animateAddNum.js":
 /*!***********************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/animateAddNum.js ***!
@@ -11366,13 +11441,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(origin) {//订单或用户来源
 
-  var all = {
+  var all = { //0: 公众号 1: 小程序 2: wap/h5 3: app 4 :pc
     wechat: '/static/img/global/wechat.png',
     h5: '/static/img/global/h5.svg',
     alipay: '/static/img/global/alipay.svg',
     wxapp: '/static/img/global/miniapp.png',
-    app: '/static/img/global/app.png' };
-
+    app: '/static/img/global/app.png',
+    1: '/static/img/global/miniapp.png',
+    2: '/static/img/global/h5.svg',
+    3: '/static/img/global/app.png',
+    4: '',
+    0: '' };
 
 
   var name = all[origin] || '';
@@ -11450,6 +11529,29 @@ function GetDateDiff(startDate, endDate) {
   var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
   var dates = Math.abs(startTime - endTime) / (1000 * 60 * 60 * 24);
   return dates;
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js":
+/*!*****************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/payType.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(origin) {//订单或用户来源
+
+
+  var all = {
+    10: '/static/img/global/wechat.png',
+    20: '/static/img/global/alipay.svg',
+    2: '/static/img/global/money.png'
+    //付款方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付 
+  };
+  var name = all[origin] || '';
+  return name;
 }
 
 /***/ }),
@@ -12830,6 +12932,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
     "commission_status": -1 //分销状态 0待入账 1已入账
   }; //分销状态
+  console.log(commission);
+  var statusImages = {
+    "-2": '/static/img/global/order_detail_state6.png', // -2退款完成
+    "-1": "/static/img/global/order_detail_state4.png", //-1取消状态。
+    "0": "/static/img/global/order_detail_state3.png", //  0普通状态
+    "1": "/static/img/global/order_detail_state1.png", // 1为已付款
+    "2": "/static/img/global/order_detail_state2.png", // 2为已发货
+    "3": "/static/img/global/order_detail_state5.png" // 3为已完成。
+  };
   var commisionState = ['待入账', '已入账']; //分销状态
   var extra_price_package = result.order.extra_price_package || { //优惠活动
     full: 0, //满减
@@ -12842,7 +12953,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       billStatusText: result.order.status_text, //订单状态
       billPrice: result.order.pay_price, //订单支付金额
       billStatus: result.order.status, //订单状态码  -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
-      image: '/static/img/global/vip-manage.png' },
+      image: statusImages[result.order.status] },
 
     billInfo2: {
       billId: result.order.order_no, //订单编号
@@ -12859,32 +12970,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       payTime: result.order.pay_time, //付款时间
       receiveTime: result.order.finish_time, //收货时间
       payTypeText: result.order.pay_type_text, //支付方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付
-      payType: result.order.pay_type //支付方式
+      payType: result.order.pay_type, //支付方式
+      billStatus: result.order.status //订单状态 -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。
     },
     billInfo4: {
       buyer: result.order.member_nickname, //买家
       addtion: result.order.remark_buyer, //买家备注
       provideTypeText: result.order.dispatch_type_text, //配送方式
-      provideType: result.order.dispatch_type, //配送方式 0 无需发货 1快递 2自提
+      provideType: result.order.dispatch_type_text, //配送方式 0 无需发货 1快递 2自提 3同城
       receiver: result.order.buyer_name, //收货人
       address: result.order.address_full //收货地址
     },
     billInfo5: {
       moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
       firstOne: {
-        name: commission.nickname,
-        tel: commission.mobile,
-        money: commission.commission },
+        name: commission.agent_level1 && commission.agent_level1.nickname || '',
+        tel: commission.agent_level1 && commission.agent_level1.mobile || '',
+        money: commission.agent_level1 && commission.agent_level1.commission || '' },
       //一级分销商
       secondOne: {
-        name: commission.nickname,
-        tel: commission.mobile,
-        money: commission.commission },
+        name: commission.agent_level2 && commission.agent_level2.nickname || '',
+        tel: commission.agent_level2 && commission.agent_level2.mobile || '',
+        money: commission.agent_level2 && commission.agent_level2.commission || '' },
       //二级分销商
       thirdOne: {
-        name: commission.nickname,
-        tel: commission.mobile,
-        money: commission.commission
+        name: commission.agent_level3 && commission.agent_level3.nickname || '',
+        tel: commission.agent_level3 && commission.agent_level3.mobile || '',
+        money: commission.agent_level3 && commission.agent_level3.commission || ''
         //三级分销商
       } },
     billInfo6: [].concat(_toConsumableArray(result.goods_waits.map(function (item) {//未发货的商品
@@ -12941,7 +13053,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     }))),
     billInfo7: {
       goodTotal: result.order.goods_price, //商品总计
-      vipCount: extra_price_package.member_discount, //会员折扣
+      vipCount: extra_price_package.member_discount || 0, //会员折扣
       sendCost: result.order.dispatch_price, //运费
       total: result.order.pay_price, //合计
       rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成
@@ -13888,8 +14000,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
             billDate: item.create_time, //订单时间
             billType: item.type_text, //订单类型，分销订单，普通订单
             billPrice: item.pay_price,
-            id: item.id },
-
+            id: item.id //订单id
+          },
           goodsList: goodlist.map(function (item) {//订单商品信息
             return {
               img: item.thumb, //商品图片

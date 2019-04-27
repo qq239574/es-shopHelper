@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
 //
 //
 //
@@ -26,25 +26,25 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default2 =
 {
   methods: {
-    clickGood: function clickGood(item) {
+    clickGood: function clickGood() {
       this.$emit('click', {
         type: 'good',
-        detail: {
-          val: item } });
+        detail: _objectSpread({},
+        this.info) });
 
 
     } },
 
   props: {
-    goodsList: {
-      type: Array,
+    info: {
+      type: Object,
       default: function _default() {
-        return [{
+        return {
           img: '',
           goodName: '',
           color: '',
           size: '',
-          num: 0 }];
+          num: 0 };
 
       } } } };exports.default = _default2;
 

@@ -128,11 +128,7 @@ export const changeBillPrice = { //订单改价（获取数据）
         id: '', //订单id
         dispatch_price: '', //运费
         total_price: '', //订单总价
-        change_items: [{
-            "id": "", //订单商品id
-            "price_change": "0" //改价变动金额
-
-        }]
+        // change_items: []
     },
     headers: {
 
