@@ -153,7 +153,6 @@ var cacheGood = {};var _default2 =
       this.pageLoading();
       if (val1 == '小程序') {
         if (val2 == '微信好友') {//分享事件onShareAppMessage
-
         } else if (val2 == '二维码海报') {
           this.posteInfo = {
             img: '/static/img/temp/poster.jpg',
@@ -162,7 +161,19 @@ var cacheGood = {};var _default2 =
           this.showPoster = !this.showPoster;
         }
       } else if (val1 == 'h5') {
-        if (val2 == '微信好友') {} else if (val2 == '二维码海报') {
+        if (val2 == '微信好友') {
+          uni.showShareMenu({
+            withShareTicket: true,
+            title: 'test share',
+            success: function success(res) {
+              console.log('success', res);
+            },
+            fail: function fail(res) {
+              console.log('fail', res);
+            } });
+
+          console.log('hahahahaha');
+        } else if (val2 == '二维码海报') {
           console.log(cacheGood);
           this.Request('goodPoster', {
             goods_id: cacheGood.detail.goodId }).
