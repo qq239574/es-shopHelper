@@ -1,7 +1,7 @@
 <template>
     <div class='my-name page'>
         <view class="bg">
-            <search :value='name' placeholder='请输入姓名'></search>
+            <search :value='name' @input='getInput' placeholder='请输入姓名'></search>
         </view>
         <view class="margin200"></view>
         <longButton class='save' @click='saveName'>保存</longButton>
@@ -13,6 +13,11 @@
 <script>
     import search from '../../components/my-components/SearchInput'
     import longButton from '../../components/my-components/LongButton.vue'
+    import {
+        flatten
+    } from '../../components/my-components/ajaxDataFormater.js'
+    let DataFrom = {};
+    let cache = '';
     export default {
         components: {
             longButton,
@@ -20,19 +25,40 @@
         },
         data() {
             return {
-                name: "张三"
+                name: ""
             }
         },
         methods: {
+            getInput(val) {
+                DataFrom[DataFrom.needChange.id] = val.value;
+            },
             saveName() {
                 this.pageLoading();
-                setTimeout(() => {
+                this.Request('changeUserInfo', flatten({
+                    profiles: {
+                        "contact_name": DataFrom.realName,
+                        "contact_mobile": DataFrom.userTel
+                    }
+                })).then(res => {
                     this.closePageLoading();
-                    this.Toast('保存姓名成功');
-                    uni.navigateBack();
-                }, 1000);
+                    if (res.error == 0) {
+                        uni.navigateBack();
+                    } else {
+                        this.Toast(res.message)
+                    }
+                }).catch(res => {
+                    this.closePageLoading();
+                    this.Toast(res.message)
+                })
             }
         },
+        onLoad(option) {
+            DataFrom = this.Cacher.getData(option.from);
+            uni.setNavigationBarTitle({
+                title: '修改' + DataFrom.needChange.name
+            });
+            this.name = DataFrom[DataFrom.needChange.id]
+        }
     }
 </script>
 

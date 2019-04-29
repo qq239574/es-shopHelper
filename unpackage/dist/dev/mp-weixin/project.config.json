@@ -36,8 +36,8 @@
 			"current": 0,
 			"list": [
 				{
-					"id": -1,
-					"name": "change",
+					"id": 0,
+					"name": "bill",
 					"pathName": "pages/bill/index",
 					"query": "",
 					"scene": null

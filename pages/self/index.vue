@@ -2,13 +2,13 @@
 	<div class='pages-self-index page'>
 		<view class="bg">
 			<image lazy-load src='/static/img/global/my_bg.png'></image>
-			<view class="name">小花花</view>
-			<view class="tel">15065656565</view>
-			<view class='manager' @click='clickManager'>管理员</view>
+			<view class="name">{{userName}}</view>
+			<view class="tel">{{userTel}}</view>
+			<view class='manager' @click='clickManager'>{{userRoleName}}</view>
 		</view>
 		<inputItem :disabled='true' label='登陆账号' value='1354'></inputItem>
-		<selectItem label='姓名' value='张三' @click='toPage("name")'></selectItem>
-		<selectItem label='联系方式' value='15456989898' @click='toPage("tel")'></selectItem>
+		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
+		<selectItem label='联系方式' :value='userTel' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
 		<selectItem label='微信：Forever' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX'></selectItem>
@@ -22,28 +22,66 @@
 <script>
 	import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
 	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
+	let DataFrom = {};
 	export default {
 		components: {
 			selectItem,
 			inputItem
 		},
+		data() {
+			return {
+				userName: '',
+				userTel: '',
+				userRoleName: '',
+				realName: ''
+			}
+		},
 		methods: {
+			initPage() {
+				
+				this.Request('myInfo').then(res => {
+					this.userName = res.user.username;
+					this.userTel = res.user.contact_mobile;
+					this.userRoleName = res.user.role_name;
+					this.realName = res.user.contact;
+				})
+			},
 			toPage(val) {
 				if (val == 'name') {
+					this.Cacher.setData('myself', {
+						userName: this.userName,
+						userTel: this.userTel,
+						userRoleName: this.userRoleName,
+						realName: this.realName,
+						needChange: {
+							name: '姓名',
+							id: 'realName'
+						}
+					}) 
 					uni.navigateTo({
-						url: '../../pagesSelf/pages/myName'
+						url: '../../pagesSelf/pages/myName?from=myself'
 					})
 				} else if (val == 'tel') {
+					this.Cacher.setData('myself', {
+						userName: this.userName,
+						userTel: this.userTel,
+						userRoleName: this.userRoleName,
+						realName: this.realName,
+						needChange: {
+							name: '联系方式',
+							id: 'userTel'
+						}
+					})
 					uni.navigateTo({
-						url: '../../pagesSelf/pages/myName'
+						url: '../../pagesSelf/pages/myName?from=myself'
 					})
 				} else if (val == 'password') {
 					uni.navigateTo({
-						url: '../../pagesSelf/pages/password'
+						url: '../../pagesSelf/pages/password?from=myself'
 					})
 				}
 			},
-			clickManager(){},
+			clickManager() {},
 			bindWX() {
 				this.closePageLoading();
 				this.Toast('绑定微信成功')
@@ -54,17 +92,20 @@
 					title: '',
 					message: '您确认退出当前账号吗？'
 				}).then(() => {
-					this.Cacher.setData('self',{
-						from:'self'
+					this.Cacher.setData('self', {
+						from: 'self'
 					})
 					uni.reLaunch({
-						url:'../login/index?from=self'
+						url: '../login/index?from=self'
 					})
 				}).catch(() => {
 					// on cancel
 				});
 			}
 		},
+		onShow() {
+			this.initPage();
+		}
 	}
 </script>
 

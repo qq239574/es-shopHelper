@@ -174,7 +174,7 @@ export const sendGoods = { //订单发货
     url: '/shop/manage/order/op/send',
     data: {
         id: '', //订单id
-        order_goods_id: '', //要发货的订单商品id集合
+        // order_goods_id: '', //要发货的订单商品id集合
         no_express: '', //	无需物流（0：需要物流 1：无需物流）
         express_id: '', //	物流公司id
         express_sn: '', //	物流单号

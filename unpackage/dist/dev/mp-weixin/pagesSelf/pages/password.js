@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var multiBlock = function multiBlock() {return __webpack_require__.e(/*! import() | pagesSelf/components/editPassWord-BlockMult */ "pagesSelf/components/editPassWord-BlockMult").then(__webpack_require__.bind(null, /*! ../components/editPassWord-BlockMult */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\components\\editPassWord-BlockMult.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var multiBlock = function multiBlock() {return __webpack_require__.e(/*! import() | pagesSelf/components/editPassWord-BlockMult */ "pagesSelf/components/editPassWord-BlockMult").then(__webpack_require__.bind(null, /*! ../components/editPassWord-BlockMult.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\components\\editPassWord-BlockMult.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
 
 
 
@@ -25,17 +25,51 @@
     multiBlock: multiBlock,
     longButton: longButton },
 
+  computed: {
+    disable: function disable() {
+      return this.CacheData.oldPw === '' || this.CacheData.newPw === '' || this.CacheData.surePw === '';
+    } },
+
+  data: function data() {
+    return {
+      CacheData: {
+        oldPw: '',
+        newPw: '',
+        surePw: '' } };
+
+
+  },
   methods: {
     getInput: function getInput(val) {
-      console.log(val);
+      if (val.label == '原密码') {
+        this.CacheData.oldPw = val.value;
+      } else if (val.label == '新密码') {
+        this.CacheData.newPw = val.value;
+      } else if (val.label == '确认密码') {
+        this.CacheData.surePw = val.value;
+      }
     },
     save: function save() {var _this = this;
-      this.pageLoading();
-      setTimeout(function () {
-        _this.closePageLoading();
-        _this.Toast('修改密码成功');
-        uni.navigateBack();
-      }, 1000);
+      var canset = true;
+      if (this.CacheData.newPw != this.CacheData.surePw) {
+        this.Toast('新密码两次输入不一致');
+      } else {
+        this.pageLoading();
+        this.Request('changeUserPassword', {
+          original_password: this.CacheData.oldPw,
+          new_password: this.CacheData.newPw }).
+        then(function (res) {
+          _this.closePageLoading();
+          if (res.error == 0) {
+            uni.navigateBack();
+          } else {
+            _this.Toast(res.message);
+          }
+        }).catch(function (res) {
+          _this.closePageLoading();
+          _this.Toast(res.message);
+        });
+      }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

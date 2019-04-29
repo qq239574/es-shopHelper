@@ -1,0 +1,35 @@
+export const myInfo = { //获取用户信息
+    url: '/api/site/account/profile/get-info',
+    data: {
+
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const changeUserInfo = { //修改用户名,用户联系方式
+    url: '/api/site/account/profile/set',
+    data: {
+        profiles: {
+            "contact_name": "",
+            "contact_mobile": ""
+        },
+        diy_profiles: {}
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
+export const changeUserPassword = { //修改用户密码
+    url: '/api/site/account/change-password',
+    data: {
+        original_password: '',
+        new_password: ''
+    },
+    headers: {
+
+    },
+    type: 'post'
+}

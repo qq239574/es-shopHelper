@@ -64,18 +64,37 @@ var DataFrom = {};var _default =
         provideId: '填写', //物流单号
         provideAddition: '未填写', //发货备注
         express: [] //物流公司 
-      } } },
+      } },
+
+    cityProvide: { //是否同城快递，0快递 1同城
+      type: Number,
+      default: 0 },
+
+    needProvide: {
+      type: Number,
+      default: 0 } },
 
 
   data: function data() {
     return {
-      list: [{
+      list: [
+      [{
         label: '需要物流',
         value: 0 },
 
       {
         label: '无需物流',
         value: 1 }],
+
+
+      [{
+        label: '商家自配送',
+        value: 0 },
+
+      {
+        label: '第三方配送',
+        value: 1 }]],
+
 
 
       themeColor: '#007AFF', //颜色 

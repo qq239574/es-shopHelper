@@ -50,7 +50,8 @@
     import expressBlock from '../components/BillExpressInfo.vue';
     import myButton from '../../components/my-components/RoundButton';
     import myRightsBlock from '../components/BillRightsBlock.vue';
-    import createBillDetail from '../components/createBillDetail.js'
+    import createBillDetail from '../components/createBillDetail.js';
+     let cacheBill = {}; //缓存将要操作的订单 
     let DataFrom = {};
     let surePassword = ''; //手动确认付款密码 
     export default {
@@ -122,7 +123,7 @@
                     apiname = apiNames[0];
                 } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
-                }
+                } 
                 this.Request(apiname, {
                     id: cacheBill.bill.bill.id, //订单id
                     password: surePassword
@@ -202,7 +203,7 @@
                         from: 'billProvide'
                     })
                     uni.navigateTo({
-                        url: '../../pagesBill/pages/?from=billDetail'
+                        url: '../../pagesBill/pages/billProvide?from=billDetail'
                     })
                 } else if (state == '确认收货') {
                     this.showModel = true;
@@ -266,6 +267,8 @@
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
+
+            cacheBill=DataFrom;
             this.initPage();
         },
     }

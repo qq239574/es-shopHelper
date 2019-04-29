@@ -183,6 +183,13 @@ var requesting = false;var _default =
   onShow: function onShow() {
     this.initPage();
   },
+  onUnload: function onUnload() {
+    requesting = false;
+    this.requesting = requesting;
+    this.shops = []; //清空列表
+    ajaxIndex = 1; //请求页码初始化
+    this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部 
+  },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from); //
     DataGo = {

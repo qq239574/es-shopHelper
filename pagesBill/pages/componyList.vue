@@ -42,6 +42,7 @@
                 }
             })
             this.list = compList;
+            console.log(compList)
             this.Cacher.setData('componyList', compList[0])
         }
     }

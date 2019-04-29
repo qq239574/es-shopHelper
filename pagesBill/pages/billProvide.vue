@@ -1,7 +1,7 @@
 <template>
     <view class="bill-provide page">
         <ProvideGoods :goodsList="goodsList" @click="selectedList"></ProvideGoods>
-        <ProvideBlock :info='provideInfo' @click="clickCell" @change='getDetail'></ProvideBlock>
+        <ProvideBlock :info='provideInfo' :cityProvide='cityProvide' @click="clickCell" @change='getDetail'></ProvideBlock>
         <longButton @click="sure">确认发货</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -9,8 +9,8 @@
 </template>
 
 <script>
-    import ProvideGoods from "../components/ProvideGoods";
-    import ProvideBlock from "../components/ProvideBlock";
+    import ProvideGoods from "../components/ProvideGoods.vue";
+    import ProvideBlock from "../components/ProvideBlock.vue";
     import longButton from "../../components/my-components/LongButton.vue";
     let cacheSelected = [];
     let DataFrom = {};
@@ -19,10 +19,11 @@
     let sendBillInfo = {
         id: '', //订单id
         order_goods_id: '', //要发货的订单商品id集合
-        no_express: 0, //	无需物流（0：需要物流 1：无需物流）
+        no_express: 0, //	无需物流（0：需要物流 1：无需物流）//商家配送 三方配送
         express_id: '', //	物流公司id
         express_sn: '', //	物流单号
         remark: '', //	发货备注
+        isCity: 0
     }; //发货信息
     export default {
         components: {
@@ -44,19 +45,24 @@
                 }],
                 provideInfo: {
                     address: '请选择',
-                    provideType: '需要物流',
+                    provideType: '',
                     provideComp: '请选择',
                     provideId: '填写',
                     provideAddition: '未填写',
                     express: [], //物流公司
-                }
+                },
+                cityProvide: 0, ////是否同城快递，0快递 1同城
+                needPrivide:0,//是否需要物流 0需要 1不需要
             };
         },
         methods: {
             getDetail(info) { //获取配送方式
                 this.provideInfo.provideType = info.provideType;
-                sendBillInfo.no_express = info.provideType == '需要物流' ? 0 : 1;
-                console.log(info.provideType, 'info.provideType')
+                if (!this.cityProvide) { //快递
+                    sendBillInfo.no_express = (info.provideType == '商家自配送' || info.provideType == '需要物流') ? 0 : 1;
+                } else {
+                    sendBillInfo.city_distribution_type = (info.provideType == '商家自配送' || info.provideType == '需要物流') ? 0 : 1;
+                }
             },
             clickCell(val) {
                 this.Cacher.setData('billProvide', {
@@ -89,10 +95,10 @@
             sure() {
                 // sendBillInfo.order_goods_id = cacheSelected;
                 cacheSelected.forEach((item, index) => {
-                    sendBillInfo['order_goods_id['+index+']']=item
+                    sendBillInfo['order_goods_id[' + index + ']'] = item
                 })
                 let canSend = true;
-                if (sendBillInfo['no_express'] == 0) {
+                if (!this.cityProvide&&sendBillInfo['no_express'] == 0) {//需要物流
                     if (!cacheSelected.length) {
                         canSend = false;
                         this.Toast('请选择发货商品')
@@ -124,9 +130,10 @@
                         this.provideInfo.provideId = DataGo.data.billId || '填写';
                         sendBillInfo.express_sn = DataGo.data.billId;
                     } else if (DataGo.go == 'componyList') {
-                        this.provideInfo.provideComp = DataGo.data.express || '请选择';
+                        this.provideInfo.provideComp = DataGo.data.label || '请选择';
                         sendBillInfo.express_id = DataGo.data.id;
                     }
+                    console.log(DataGo, 'DataGo')
                     this.Request("canSendGoods", {
                         id: DataFrom.bill.bill.id
                     }).then(res => {
@@ -148,6 +155,7 @@
                         }).map(item => {
                             return item.goods_id
                         });
+                        this.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
                         this.provideInfo.address = res.address;
                         this.provideInfo.express = res.express;
                     });
@@ -160,6 +168,9 @@
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
             this.initPage();
+        },
+        onUnload() {
+            this.Cacher.clearData('billProvide')
         }
     };
 </script>

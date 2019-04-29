@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var ProvideGoods = function ProvideGoods() {return Promise.all(/*! import() | pagesBill/components/ProvideGoods */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideGoods")]).then(__webpack_require__.bind(null, /*! ../components/ProvideGoods */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideGoods.vue"));};var ProvideBlock = function ProvideBlock() {return Promise.all(/*! import() | pagesBill/components/ProvideBlock */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideBlock")]).then(__webpack_require__.bind(null, /*! ../components/ProvideBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideBlock.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var ProvideGoods = function ProvideGoods() {return Promise.all(/*! import() | pagesBill/components/ProvideGoods */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideGoods")]).then(__webpack_require__.bind(null, /*! ../components/ProvideGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideGoods.vue"));};var ProvideBlock = function ProvideBlock() {return Promise.all(/*! import() | pagesBill/components/ProvideBlock */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/ProvideBlock")]).then(__webpack_require__.bind(null, /*! ../components/ProvideBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\ProvideBlock.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -29,11 +29,12 @@ var cacheBillInfo = {};
 var sendBillInfo = {
   id: '', //订单id
   order_goods_id: '', //要发货的订单商品id集合
-  no_express: 0, //	无需物流（0：需要物流 1：无需物流）
+  no_express: 0, //	无需物流（0：需要物流 1：无需物流）//商家配送 三方配送
   express_id: '', //	物流公司id
   express_sn: '', //	物流单号
-  remark: '' //	发货备注
-}; //发货信息
+  remark: '', //	发货备注
+  isCity: 0 };
+//发货信息
 var _default = {
   components: {
     ProvideGoods: ProvideGoods,
@@ -54,19 +55,24 @@ var _default = {
 
       provideInfo: {
         address: '请选择',
-        provideType: '需要物流',
+        provideType: '',
         provideComp: '请选择',
         provideId: '填写',
         provideAddition: '未填写',
         express: [] //物流公司
-      } };
-
+      },
+      cityProvide: 0, ////是否同城快递，0快递 1同城
+      needPrivide: 0 //是否需要物流 0需要 1不需要
+    };
   },
   methods: {
     getDetail: function getDetail(info) {//获取配送方式
       this.provideInfo.provideType = info.provideType;
-      sendBillInfo.no_express = info.provideType == '需要物流' ? 0 : 1;
-      console.log(info.provideType, 'info.provideType');
+      if (!this.cityProvide) {//快递
+        sendBillInfo.no_express = info.provideType == '商家自配送' || info.provideType == '需要物流' ? 0 : 1;
+      } else {
+        sendBillInfo.city_distribution_type = info.provideType == '商家自配送' || info.provideType == '需要物流' ? 0 : 1;
+      }
     },
     clickCell: function clickCell(val) {
       this.Cacher.setData('billProvide', {
@@ -102,7 +108,7 @@ var _default = {
         sendBillInfo['order_goods_id[' + index + ']'] = item;
       });
       var canSend = true;
-      if (sendBillInfo['no_express'] == 0) {
+      if (!this.cityProvide && sendBillInfo['no_express'] == 0) {//需要物流
         if (!cacheSelected.length) {
           canSend = false;
           this.Toast('请选择发货商品');
@@ -134,9 +140,10 @@ var _default = {
           this.provideInfo.provideId = DataGo.data.billId || '填写';
           sendBillInfo.express_sn = DataGo.data.billId;
         } else if (DataGo.go == 'componyList') {
-          this.provideInfo.provideComp = DataGo.data.express || '请选择';
+          this.provideInfo.provideComp = DataGo.data.label || '请选择';
           sendBillInfo.express_id = DataGo.data.id;
         }
+        console.log(DataGo, 'DataGo');
         this.Request("canSendGoods", {
           id: DataFrom.bill.bill.id }).
         then(function (res) {
@@ -158,6 +165,7 @@ var _default = {
           }).map(function (item) {
             return item.goods_id;
           });
+          _this2.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
           _this2.provideInfo.address = res.address;
           _this2.provideInfo.express = res.express;
         });
@@ -170,6 +178,9 @@ var _default = {
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
     this.initPage();
+  },
+  onUnload: function onUnload() {
+    this.Cacher.clearData('billProvide');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

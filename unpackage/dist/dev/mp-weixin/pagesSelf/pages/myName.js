@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -23,6 +23,11 @@
 
 
 
+var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+
+
+var DataFrom = {};
+var cache = '';var _default =
 {
   components: {
     longButton: longButton,
@@ -30,18 +35,40 @@
 
   data: function data() {
     return {
-      name: "张三" };
+      name: "" };
 
   },
   methods: {
+    getInput: function getInput(val) {
+      DataFrom[DataFrom.needChange.id] = val.value;
+    },
     saveName: function saveName() {var _this = this;
       this.pageLoading();
-      setTimeout(function () {
+      this.Request('changeUserInfo', (0, _ajaxDataFormater.flatten)({
+        profiles: {
+          "contact_name": DataFrom.realName,
+          "contact_mobile": DataFrom.userTel } })).
+
+      then(function (res) {
         _this.closePageLoading();
-        _this.Toast('保存姓名成功');
-        uni.navigateBack();
-      }, 1000);
-    } } };exports.default = _default;
+        if (res.error == 0) {
+          uni.navigateBack();
+        } else {
+          _this.Toast(res.message);
+        }
+      }).catch(function (res) {
+        _this.closePageLoading();
+        _this.Toast(res.message);
+      });
+    } },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    uni.setNavigationBarTitle({
+      title: '修改' + DataFrom.needChange.name });
+
+    this.name = DataFrom[DataFrom.needChange.id];
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

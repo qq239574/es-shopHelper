@@ -13,14 +13,14 @@
 					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
 				</view>
 			</view>
-			<view class="grace-items">
+			<view class="grace-items" v-if='!cityProvide&&!needProvide'>
 				<view class="grace-label">物流公司</view>
 				<view @click.stop="selectCell(2,info.provideComp)" class="other">
 					{{info.provideComp}}
 					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
 				</view>
 			</view>
-			<view class="grace-items">
+			<view class="grace-items" v-if='!needProvide'>
 				<view class="grace-label">物流单号</view>
 				<view @click.stop="selectCell(3,info.provideId)" class="other">
 					{{info.provideId}}
@@ -35,7 +35,7 @@
 				</view>
 			</view>
 		</form>
-		<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
+		<mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list[cityProvide]' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
 		</mpvue-picker>
 	</view>
 </template>
@@ -55,18 +55,37 @@
 					provideAddition: '未填写', //发货备注
 					express: [], //物流公司 
 				}
+			},
+			cityProvide: { //是否同城快递，0快递 1同城
+				type: Number,
+				default: 0
+			},
+			needProvide:{
+					type: Number,
+				default: 0
 			}
 		},
 		data() {
 			return {
-				list: [{
-						label: '需要物流',
-						value: 0
-					},
-					{
-						label: '无需物流',
-						value: 1
-					},
+				list: [
+					[{
+							label: '需要物流',
+							value: 0
+						},
+						{
+							label: '无需物流',
+							value: 1
+						},
+					],
+					[{
+							label: '商家自配送',
+							value: 0
+						},
+						{
+							label: '第三方配送',
+							value: 1
+						},
+					]
 				],
 				themeColor: '#007AFF', //颜色 
 				defaultVal: [0], //默认选项
@@ -99,9 +118,9 @@
 					})
 				}
 			},
-			onConfirm(e) {  
+			onConfirm(e) {
 				console.log(e)
-				this.$emit('change', Object.assign({},this.info, {
+				this.$emit('change', Object.assign({}, this.info, {
 					provideType: e.label
 				}))
 			},

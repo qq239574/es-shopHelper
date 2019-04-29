@@ -52,6 +52,7 @@ var compList = [];var _default =
 
     });
     this.list = compList;
+    console.log(compList);
     this.Cacher.setData('componyList', compList[0]);
   } };exports.default = _default;
 

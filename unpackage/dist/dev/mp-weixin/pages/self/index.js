@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};
 
 
 
@@ -32,24 +32,62 @@
 
 
 
+var DataFrom = {};var _default =
 {
   components: {
     selectItem: selectItem,
     inputItem: inputItem },
 
+  data: function data() {
+    return {
+      userName: '',
+      userTel: '',
+      userRoleName: '',
+      realName: '' };
+
+  },
   methods: {
+    initPage: function initPage() {var _this = this;
+
+      this.Request('myInfo').then(function (res) {
+        _this.userName = res.user.username;
+        _this.userTel = res.user.contact_mobile;
+        _this.userRoleName = res.user.role_name;
+        _this.realName = res.user.contact;
+      });
+    },
     toPage: function toPage(val) {
       if (val == 'name') {
+        this.Cacher.setData('myself', {
+          userName: this.userName,
+          userTel: this.userTel,
+          userRoleName: this.userRoleName,
+          realName: this.realName,
+          needChange: {
+            name: '姓名',
+            id: 'realName' } });
+
+
         uni.navigateTo({
-          url: '../../pagesSelf/pages/myName' });
+          url: '../../pagesSelf/pages/myName?from=myself' });
 
       } else if (val == 'tel') {
+        this.Cacher.setData('myself', {
+          userName: this.userName,
+          userTel: this.userTel,
+          userRoleName: this.userRoleName,
+          realName: this.realName,
+          needChange: {
+            name: '联系方式',
+            id: 'userTel' } });
+
+
         uni.navigateTo({
-          url: '../../pagesSelf/pages/myName' });
+          url: '../../pagesSelf/pages/myName?from=myself' });
 
       } else if (val == 'password') {
         uni.navigateTo({
-          url: '../../pagesSelf/pages/password' });
+          url: '../../pagesSelf/pages/password?from=myself' });
 
       }
     },
@@ -58,13 +96,13 @@
       this.closePageLoading();
       this.Toast('绑定微信成功');
     },
-    leave: function leave() {var _this = this;
+    leave: function leave() {var _this2 = this;
       this.closePageLoading();
       this.Dialog.confirm({
         title: '',
         message: '您确认退出当前账号吗？' }).
       then(function () {
-        _this.Cacher.setData('self', {
+        _this2.Cacher.setData('self', {
           from: 'self' });
 
         uni.reLaunch({
@@ -73,7 +111,11 @@
       }).catch(function () {
         // on cancel
       });
-    } } };exports.default = _default;
+    } },
+
+  onShow: function onShow() {
+    this.initPage();
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
