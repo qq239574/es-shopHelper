@@ -40,8 +40,7 @@
 <script>
     import TabCard from '../../components/my-components/Tabs';
     import Card from '../../pages/bill/index/Card';
-    import SearchInput from '../../components/my-components/SearchInput.vue';
-    import testdata from '../../pages/bill/index/testData.js'
+    import SearchInput from '../../components/my-components/SearchInput.vue'; 
     import getBillList from '../../pages/bill/index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};

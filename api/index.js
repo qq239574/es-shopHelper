@@ -4,8 +4,7 @@ import * as cacher from '../store/cache'
 import * as billApi from './bill'
 import * as goodApi from './good'
 import * as myApi from './myself'
-import graceRequest from '../graceUI/jsTools/request.js'
-
+import graceRequest from '../graceUI/jsTools/request.js' 
 
 let sessionId = '';
 let shopInfo = '';
@@ -24,7 +23,7 @@ const indexApi = {
 export default async function (name, data) {
 
     if (!sessionId) { //是否获取了sessionId
-        sessionId = cacher.getData('sessionId');
+        sessionId = cacher.getData('sessionId'); 
         if (!sessionId) {
             await new Promise((resolve, reject) => {
                 graceRequest.get(
@@ -35,6 +34,7 @@ export default async function (name, data) {
                     function (res) {
                         if (res.error == 0) {
                             sessionId = res.session_id;
+
                             cacher.setData('sessionId', sessionId);
                             resolve(res)
                         }
@@ -58,7 +58,7 @@ export default async function (name, data) {
             'client-type': 'assistant'
         }
     } else {
-        header = { 
+        header = {
             'session-id': sessionId,
             'client-type': 'assistant'
         }

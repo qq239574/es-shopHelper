@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectTabs */ "components/my-components/editBlock-SelectTabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectTabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectTabs.vue"));};
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectTabs */ "components/my-components/editBlock-SelectTabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectTabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectTabs.vue"));};
 
 
 
@@ -20,7 +20,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 var DataFrom = {};
 var cacheVal = '';
-var cacheFrom = '';var _default =
+var cacheFrom = '';
+var cacheSelected = {};var _default =
 {
   components: {
     tabs: tabs },
@@ -28,28 +29,36 @@ var cacheFrom = '';var _default =
   data: function data() {
     return {
       list: [{
-        name: 'name1',
-        id: '1' },
-      {
-        name: 'name2',
-        id: '2' },
-      {
-        name: 'name3',
-        id: '3' },
-      {
-        name: 'name4',
-        id: '4' }] };
+        name: '',
+        id: '',
+        selected: false,
+        children: [{
+          name: '',
+          id: '',
+          selected: false }] }] };
+
 
 
   },
   methods: {
     select: function select(val) {
-      DataFrom.needChange.value = val;
+      cacheSelected[val.index] = val.list;
+      var tmp = [];
+      for (var k in cacheSelected) {
+        tmp = tmp.concat(cacheSelected[k]);
+      }
+      DataFrom.needChange.value = tmp.map(function (item) {
+        if (item.name === undefined) {
+          item.name = item.title;
+        }
+        return item;
+      });
       this.Cacher.setData('selectType', DataFrom);
     } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    this.list = DataFrom.needChange.other.list;
   } };exports.default = _default;
 
 /***/ }),

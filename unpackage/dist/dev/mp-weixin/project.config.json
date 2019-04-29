@@ -33,13 +33,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
-					"id": 0,
-					"name": "bill",
-					"pathName": "pages/bill/index",
+					"id": -1,
+					"name": "good",
+					"pathName": "pages/commodity/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "gooddetail",
+					"pathName": "pagesCommodity/pages/index",
+					"query": "from=good",
 					"scene": null
 				}
 			]

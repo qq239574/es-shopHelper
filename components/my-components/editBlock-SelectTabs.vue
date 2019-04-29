@@ -1,13 +1,13 @@
 <template>
     <view class='select-tabs'>
         <view class="grace-title">
-            <view>搜索历史</view>
+            <view>{{typeList.name}}</view>
             <view class="grace-more" @click='clearKey'>
                 <radio class='allSelect' value="1" style='display:inline-block;' :checked='true' color='#fb6638' v-if='checked'></radio>
                 <radio class='allSelect' value="1" style='display:inline-block;' :checked='false' color='#fb6638' v-else></radio>选择全部</view>
         </view>
-        <view class="grace-search-taps">
-            <view v-for="(item, index) in searchKeys" :class='selected.indexOf(item)>-1?"selected":""' :key="index" :data-key="item.name" @tap="setKey(item)">{{item.name}}</view>
+        <view class="grace-search-taps" v-if='typeList.children.length'>
+            <view v-for="(item, index) in typeList.children" :class='selected.indexOf(item)>-1?"selected":""' :key="index" :data-key="item.name" @tap="setKey(item)">{{item.title}}</view>
         </view>
     </view>
 </template>
@@ -15,14 +15,22 @@
 <script>
     export default {
         props: {
-            searchKeys: {
-                type: Array,
-                default: [
-                    {
-                        name:'name',
-                        id:''
-                    },
-                ],
+            typeList: {
+                type: Object,
+                default: {
+                    name: '',
+                    id: '',
+                    selected: false,
+                    children: [{
+                        name: '',
+                        id: '',
+                        selected: false
+                    }]
+                }
+            },
+            infoId: {
+                type: Number,
+                default: 0
             },
             other: {
                 type: [Object, Number, String, Array, Boolean],
@@ -36,32 +44,59 @@
             }
         },
         watch: {
-            searchKeys() {
-                this.checked = this.selected.length == this.searchKeys.length;
+            typeList() {
+                if (this.typeList.children.length) {
+                    this.checked = (this.typeList.children.length == this.selected.length);
+                } else {
+                    this.checked == this.typeList.selected;
+                }
             }
         },
         beforeMount() {
-             this.checked = this.selected.length == this.searchKeys.length;
+            if (this.typeList.children.length) {
+                this.checked = (this.typeList.children.length == this.selected.length);
+            } else {
+                this.checked == this.typeList.selected;
+            }
         },
         methods: {
-            clearKey(val) {
+            clearKey(val) { //全选或全清理
                 this.checked = !this.checked;
                 if (this.checked) {
-                    this.selected = [...this.searchKeys];
+                    this.selected = [...this.typeList.children];
                 } else {
                     this.selected = [];
                 }
-                this.$emit('change', this.selected);
+                this.$emit('change', {
+                    index: this.infoId,
+                    list: this.checked ? [{
+                        name: this.typeList.name,
+                        id: this.typeList.id
+                    }, ...this.selected] : []
+                });
             },
             setKey(val) {
                 let index = this.selected.indexOf(val);
                 if (index > -1) {
-                    this.selected.splice(index, 1)
+                    this.selected.splice(index, 1);
                 } else {
-                    this.selected.push(val)
+                    this.selected.push(val);
                 }
-                this.checked = this.selected.length == this.searchKeys.length;
-                this.$emit('change', this.selected)
+                this.checked = this.selected.length == this.typeList.children.length;
+                if (this.selected.length) {
+                    this.$emit('change', {
+                        index: this.infoId,
+                        list: [{
+                            name: this.typeList.name,
+                            id: this.typeList.id
+                        }, ...this.selected]
+                    })
+                } else {
+                    this.$emit('change', {
+                        index: this.infoId,
+                        list: []
+                    })
+                }
             }
         }
     }
@@ -91,7 +126,7 @@
         }
         .grace-search-taps {
             border: none;
-            height: 52upx;
+            min-height: 52upx;
             line-height: 50upx;
             padding: 0 26upx;
             view {

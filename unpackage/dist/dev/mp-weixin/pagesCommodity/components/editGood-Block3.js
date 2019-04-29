@@ -74,6 +74,11 @@ var _self;var _default =
 
 
 
+  watch: {
+    info: function info() {
+      console.log(this.info);
+    } },
+
   data: function data() {
     return {
       goodName: '请选择',

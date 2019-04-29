@@ -7,7 +7,7 @@
             <selectItem label='自动发货内容' :other='info.autoDeliverContent' :value='info.autoDeliverContent.value' @click="clickCell" v-if='!item.needHide'></selectItem>
             <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.value' @click="clickCell" v-if='!item.needHide'></selectItem>
             <switchItem label='显示快递' :other='info.showProCost' :checked='info.showProCost.value' @change="inputCell" v-if='!item.needHide'></switchItem>
-            <switchItem label='参与会员折扣' :other='info.joinCount' :value='info.joinCount.value' @change="inputCell"></switchItem>
+            <switchItem label='参与会员折扣' :other='info.joinCount' :checked='info.joinCount.value' @change="inputCell"></switchItem>
             <selectItem label='商品表单' :other='info.goodForm' :value='info.goodForm.value' @click="clickCell"></selectItem>
         </form>
         <mpvue-picker :themeColor="themeColor" ref="mpvuePicker" :pickerValueArray='list' :pickerValueDefault="defaultVal" @onConfirm="onConfirm">
@@ -62,6 +62,11 @@
                         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     }
                 }
+            }
+        },
+        watch:{
+            info(){
+                console.log(this.info)
             }
         },
         data() {

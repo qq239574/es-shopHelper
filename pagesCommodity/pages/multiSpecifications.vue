@@ -18,7 +18,7 @@
     import longButton from '../../components/my-components/LongButton.vue'
     import {
         multiData
-    } from '../components/testdata.js' //测试用数据
+    } from '../components/goodDetail.js' //测试用数据
     import toEditPage from '../components/toEditPage-multi.js'
     import updateGoodInfo from '../components/updateGoodInfo-multi.js'
     let cacheGoodDetail = {};

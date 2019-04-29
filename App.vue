@@ -2,6 +2,11 @@
 	import cacher from './store/cache.js'
 	export default {
 		onLaunch: function() {
+			this.Request('getSettings').then(res => {
+				if (res.error == 0) {
+					this.Cacher.setData('static_resources_domain', res.settings.attachment_root)
+				} 
+			})
 		},
 		onShow: function() {
 			console.log('App Show');
@@ -34,13 +39,12 @@
 		min-height: 100%;
 		display: flex;
 		overflow: auto;
-		
 		view {
 			box-sizing: border-box;
 		}
-		.i-page-number{
-			height:70upx;
-			line-height:70upx;
+		.i-page-number {
+			height: 70upx;
+			line-height: 70upx;
 		}
 	}
 </style>

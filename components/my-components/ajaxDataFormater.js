@@ -1,4 +1,4 @@
-export let flatten = function (obj) {
+export let flatten = function (obj) {//扁平化对象
     var result = {};
 
     function recurse(src, prop) {
@@ -30,7 +30,7 @@ export let flatten = function (obj) {
     return result;
 }
 
-let unflatten = function (data) {
+let unflatten = function (data) {//反扁平化对象
     if (Object(data) !== data || Array.isArray(data))
         return data;
     var regex = /\.?([^.\[\]]+)|\[(\d+)\]/g,

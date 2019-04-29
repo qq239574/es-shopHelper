@@ -19,38 +19,40 @@
         data() {
             return {
                 list: [{
-                    label: '不使用表单',
+                    label: '',
                     value: '',
                     subValue: ''
-                }, {
-                    label: '西门子洗碗机表单',
-                    value: ' ',
-                    subValue: ''
-                }, {
-                    label: '吐鲁番葡萄表单',
-                    value: ' ',
-                    subValue: ''
-                }, ]
+                }]
             }
         },
         methods: {
             change(val) {
                 cacheVal = val;
-                console.log(val)
                 this.Cacher.setData('editForm', {
                     needChange: Object.assign(DataFrom.needChange, {
                         label: '商品表单',
-                        value: val.label
+                        value: val.label,
+                        id: val.id
                     })
-                })
+                }) 
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from) || {};
+            this.list = DataFrom.needChange.other.formList.map(item => {
+                return {
+                    label: item.name,
+                    value: ' ',
+                    subValue: '',
+                    id: item.id
+                }
+            })
+            let val = this.list[0];
             this.Cacher.setData('editForm', {
                 needChange: Object.assign(DataFrom.needChange, {
                     label: '商品表单',
-                    value: '不使用表单'
+                    value: val.label,
+                    id: val.id
                 })
             })
         },

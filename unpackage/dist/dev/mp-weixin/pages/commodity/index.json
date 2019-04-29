@@ -3,8 +3,11 @@
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "i-modal": "/wxcomponents/iview-weapp/modal/index",
+    "i-page": "/wxcomponents/iview-weapp/page/index",
     "tab-card": "/components/my-components/Tabs",
     "search-input": "/components/my-components/SearchInput",
-    "card": "/pages/commodity/index/goodsList"
+    "card": "/pages/commodity/index/goodsList",
+    "nodata": "/components/my-components/nodata"
   }
 }

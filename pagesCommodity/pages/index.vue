@@ -18,16 +18,18 @@
 
 <script>
     import {
-        singleData
-    } from '../components/testdata.js' //测试用数据
-    import goodInfo from '../components/editGood-Block1';
+        goodData
+    } from '../components/goodDetail.js' //测试用数据
+    import goodInfo from '../components/editGood-Block1.vue';
     import goodInfo2 from '../components/editGood-Block2.vue'
     import goodInfo3 from '../components/editGood-Block3.vue'
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     import longButton from '../../components/my-components/LongButton.vue'
     import updateGoodInfo from '../components/updateGoodInfo.js'
     import toEditPage from '../components/toEditPage.js'
+    import editGoodModel from '../components/goodEditDataModel.js'
     let cacheGoodDetail = {};
+    let cacheSubmitData={};
     let DataFrom = {};
     let DataGo = {};
     export default {
@@ -45,8 +47,7 @@
             }
         },
         methods: {
-            startmove() {
-            },
+            startmove() {},
             inputCell(val) {
                 cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
             },
@@ -58,12 +59,23 @@
             },
             save() {
                 this.goodDetail = cacheGoodDetail;
-                uni.navigateBack();
+                let data=editGoodModel(cacheGoodDetail,cacheSubmitData);
+                // this.Request('editGoodDetail', data).then(res => {
+                //     if (res.error == 0) {
+                //         uni.navigateBack();
+                //     } else {
+                //         this.Toast(res.message);
+                //     }
+                // }).catch(res => {
+                //     this.Toast(res.message);
+                // })
             },
             initPage() {
-                DataGo = this.Cacher.getData('editGood');
-                console.log(DataGo, 'option')
+                DataGo = this.Cacher.getData('editGood'); 
                 DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
+                if (DataGo.go) {
+                    // DataGo = this.Cacher.getData(DataGo.go);
+                }
                 if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
                     this.goodDetail = cacheGoodDetail;
@@ -74,10 +86,15 @@
             DataFrom = this.Cacher.getData(option.from);
             this.Cacher.setData('editGood', {
                 from: option.from || ''
-            })
+            }) 
             this.initPage();
-            cacheGoodDetail = singleData();
-            this.goodDetail = cacheGoodDetail;
+            this.Request('getGoodDetail', {
+                goods_id: DataFrom.item.detail.goodId,
+            }).then(res => {
+                cacheSubmitData=res;//提交的时候要一一对应
+                cacheGoodDetail = goodData.call(this,res);
+                this.goodDetail = cacheGoodDetail;
+            });
         },
         onShow() {
             this.initPage();

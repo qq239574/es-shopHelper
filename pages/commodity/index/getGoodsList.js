@@ -42,7 +42,7 @@ export default function (search = {
 
                 }
             })
-
+            this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
             resolve(list)
         })
     });

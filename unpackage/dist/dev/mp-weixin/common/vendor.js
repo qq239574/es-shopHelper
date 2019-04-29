@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10572,7 +10572,7 @@ var billDetail = {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
+Object.defineProperty(exports, "__esModule", { value: true });exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
   url: '/shop/manage/goods/list',
   data: {
     status: 1,
@@ -10664,6 +10664,95 @@ var introGoodInfo = { //推广信息
 
 
   type: 'get' };exports.introGoodInfo = introGoodInfo;
+
+
+var getGoodDetail = { //商品修改前
+  url: '/shop/manage/goods/edit',
+  data: {
+    goods_id: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getGoodDetail = getGoodDetail;
+
+var editGoodDetail = { //管理端商品修改
+  url: '/shop/manage/goods/edit',
+  data: {
+    'goods_id': '',
+    'data[goods][id]': '',
+    'data[goods][shop_id]': '',
+    'data[goods][display_order]': '',
+    'data[goods][type]': '',
+    'data[goods][title]': '',
+    'data[goods][sub_title]': '',
+    'data[goods][status]': 1,
+    'data[goods][video]': '',
+    'data[goods][video_thumb]': '',
+    'data[goods][thumb]': '',
+    'data[goods][thumbs][0]': '',
+    'data[goods][price]': 50,
+    'data[goods][original_price]': 0,
+    'data[goods][min_price]': 0.00,
+    'data[goods][max_price]': 0.00,
+    'data[goods][unit]': '',
+    'data[goods][has_option]': 0,
+    'data[goods][goods_code]': '',
+    'data[goods][product_sn]': '',
+    'data[goods][stock]': '',
+    'data[goods][stock_warning]': 0,
+    'data[goods][stock_hide]': 0,
+    'data[goods][stock_cnf]': 0,
+    'data[goods][weight]': 0.00,
+    'data[goods][volume]': 0.00,
+    'data[goods][sales_count]': '',
+    'data[goods][sales_hide]': 0,
+    'data[goods][virtual_sales]': 0,
+    'data[goods][auto_complete]': 0,
+    'data[goods][auto_complete_content]': '',
+    'data[goods][dispatch_type]': 0,
+    'data[goods][dispatch_price]': 0,
+    'data[goods][dispatch_id]': '',
+    'data[goods][dispatch_hide]': 0,
+    'data[goods][is_buy_num_limit]': 0,
+    'data[goods][max_buy_total]': 0,
+    'data[goods][max_buy_once]': 0,
+    'data[goods][min_buy]': 0,
+    'data[goods][content]': '',
+    'data[goods][create_time]': '',
+    'data[goods][sellout_time]': '',
+    'data[goods][delete_time]': '',
+    'data[goods][view_count]': '',
+    'data[goods][is_discount]': '',
+    'data[goods][params_type]': 0,
+    'data[goods][params_id]': 0,
+    'data[goods][params_img]': '',
+    'data[goods][template_id]': 0,
+    'data[goods][is_invoice_support]': 0,
+    'data[goods][is_free_dispatch]': 0,
+    'data[goods][form_id]': 0,
+    'data[goods][is_refund_support]': 1,
+    'data[goods][is_join_commission]': 1,
+    'data[goods][is_join_member_price]': 0,
+    'data[goods][auto_delivery]': 1,
+    'data[goods][auto_delivery_content]': '',
+    'data[goods][short_title]': '',
+    'data[goods][single_row_thumb]': '',
+    'data[goods][thumbs_ratio]': '',
+    'data[goods][virtual_card_id]': 0,
+    'data[goods][auto_warehouse]': 0,
+    'data[goods][is_delivery_pay]': '',
+    'data[goods][school_ids]': '',
+    'data[goods][selling_object]': 0,
+    'data[goods][category_ids]': '',
+    'data[specs][0][id]': '',
+    'data[specs][0][title]': '',
+    'data[specs][0][items][0][id]': '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.editGoodDetail = editGoodDetail;
 
 /***/ }),
 
@@ -10946,7 +11035,6 @@ var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\Cur
 var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
 var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
-
 var sessionId = '';
 var shopInfo = '';
 var global_settings = {
@@ -10975,6 +11063,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 function (res) {
                   if (res.error == 0) {
                     sessionId = res.session_id;
+
                     cacher.setData('sessionId', sessionId);
                     resolve(res);
                   }
@@ -11058,7 +11147,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
+Object.defineProperty(exports, "__esModule", { value: true });exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
   url: '/api/site/account/login/post',
   data: {
     account: 'yilianxinpin',
@@ -11182,6 +11271,13 @@ var getSessionid = { //获取sessionid
 
   headers: {},
   type: 'get' };exports.getSessionid = getSessionid;
+
+
+var getSettings = { //获取站点信息
+  url: '/api/site/settings/get',
+  data: {},
+  headers: {},
+  type: 'get' };exports.getSettings = getSettings;
 
 /***/ }),
 
@@ -11354,7 +11450,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.flatten = void 0;var flatten = function flatten(obj) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.flatten = void 0;var flatten = function flatten(obj) {//扁平化对象
   var result = {};
 
   function recurse(src, prop) {
@@ -11386,7 +11482,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.flatten = 
   return result;
 };exports.flatten = flatten;
 
-var unflatten = function unflatten(data) {
+var unflatten = function unflatten(data) {//反扁平化对象
   if (Object(data) !== data || Array.isArray(data))
   return data;
   var regex = /\.?([^.\[\]]+)|\[(\d+)\]/g,
@@ -13096,73 +13192,88 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js":
-/*!*******************************************************************************************!*\
-  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/testdata.js ***!
-  \*******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodDetail.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/goodDetail.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.singleData = singleData;exports.multiData = multiData;function singleData() {//单规格商品
+Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.multiData = multiData;function goodData(data) {var _this = this; //单规格商品
+  var typeList = ['实体商品', '虚拟物品', '电子卡密', '预约', '核销']; //商品类型
+  var goodCateList = data.cate_list.map(function (item) {
+    return {
+      name: item.title,
+      id: item.id,
+      children: item.children || [] };
+
+  }); //商品分类列表
+  var tmparr = data.goods.category_ids;
+  var goodTypes = goodCateList.filter(function (item) {
+    var len = tmparr.length;
+    var result = false;
+    for (var i = 0; i < len; i++) {
+      if (item.id == tmparr[i]) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }); //商品所属分类
+  var formList = data.form_list;
+  var statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
+
   return {
     info1: {
       goodType: {
         label: '商品类型',
-        id: '',
-        value: '实体商品',
+        id: data.goods.id,
+        type: data.goods.type, ////1为实体 2为虚拟物品 3 卡密 4预约 5核销
+        value: typeList[data.goods.type - 1],
         disabled: true, //可否编辑,false可以，true不可
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
 
       goodName: {
         label: '商品名称',
-        id: '',
-        value: '西门子（SIEMENS）  原装进口  智能5D喷淋嵌入式  西门子自动洗碗机  家用8套 大家庭SC73E610TI',
+        id: data.goods.id,
+        value: data.goods.title,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       subTitle: {
         label: '副标题',
-        id: '',
-        value: '【西门子4月春游记】即日起-4月4日23.蓝山咖啡接口莱卡多浪费空间是快乐福利时间对方离开就是地方了看见',
+        id: data.goods.id,
+        value: data.goods.sub_title,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       classification: {
         label: '商品分类',
-        id: '',
-        value: '男装-休闲裤；男装-牛仔裤',
-        list: [{
-          name: '男装-休闲裤',
-          id: '1' },
-        {
-          name: '男装-牛仔裤',
-          id: '2' }],
-
+        id: data.goods.id,
+        value: goodTypes.map(function (item) {
+          return item.name;
+        }).join(';'),
+        list: goodCateList, //全部类型 
+        goodTypes: goodTypes, //商品的类型
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       mainImage: {
         label: '主图',
         id: '',
-        img: '/static/img/global/home_order_tobepay.png',
+        img: this.static_resources_domain + data.goods.thumb,
         list: [{
-          img: '/static/img/global/home_order_tobepay.png' }],
+          img: this.static_resources_domain + data.goods.thumb }],
 
         disabled: false, //可否编辑
         editable: 'image' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       swiperList: {
         label: '',
-        list: [{
-          img: '/static/img/global/order_detail_state1.png' },
-        {
-          img: '/static/img/global/order_detail_state2.png' },
-        {
-          img: '/static/img/global/order_detail_state3.png' },
-        {
-          img: '/static/img/global/order_detail_state4.png' }],
+        list: data.goods.thumbs.map(function (item) {return {
+            img: _this.static_resources_domain + item };}),
 
         disabled: false, //可否编辑
         editable: 'imagelist' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13171,80 +13282,83 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
     info2: {
       specification: {
         label: '规格类型',
-        id: 'multi',
-        value: '多规格',
-        list: [{
-          specif: {
-            label: '规格',
-            id: '',
-            value: '2000W-亮黑色',
-            disabled: true, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          price: {
-            label: '价格',
-            id: '',
-            value: '1999.0',
-            disabled: false, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          stock: {
-            label: '库存',
-            id: '',
-            value: '23566',
-            disabled: false, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          code: {
-            label: '商品编号',
-            id: '',
-            value: 'JB12595695656565998',
-            disabled: false, //可否编辑
-            editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          } }],
+        id: data.goods.has_option == 0 ? 'single' : 'multi', //是否有多规格
+        value: data.goods.has_option == 0 ? "单规格" : "多规格",
+        list: (data.options || []).map(function (item) {
+          return {
+            specif: {
+              label: '规格',
+              id: item.id,
+              value: item.title,
+              goodsId: item.goods_id,
+              disabled: true, //可否编辑
+              editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            price: {
+              label: '价格',
+              id: '',
+              value: item.price,
+              disabled: false, //可否编辑
+              editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            stock: {
+              label: '库存',
+              id: '',
+              value: item.stock,
+              disabled: false, //可否编辑
+              editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            code: {
+              label: '商品编号',
+              id: '',
+              value: item.goods_code,
+              disabled: false, //可否编辑
+              editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            } };
 
+        }),
         disabled: true, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       price: { //售卖价格
         label: '售卖价格',
         id: '',
-        value: '18.9',
+        value: data.goods.price,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       delPrice: { //划线价格
         label: '划线价格',
         id: '',
-        value: '16565',
+        value: data.goods.original_price,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       stockNum: { //商品库存
         label: '商品库存',
         id: '',
-        value: '16565',
+        value: data.goods.stock,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       showStock: { //显示库存
         label: '显示库存',
         id: '',
-        value: true,
+        value: data.goods.stock_hide == 0,
         disabled: false, //可否编辑
         editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       soldNum: { //已出售数
         label: '已出售数',
         id: '',
-        value: 10,
+        value: data.goods.sales_count,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       showSold: { //显示销量
         label: '显示销量',
         id: '',
-        value: false,
+        value: data.goods.sales_hide == 0,
         disabled: false, //可否编辑
         editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       } },
@@ -13253,14 +13367,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
       goodCode: {
         label: '商品编码',
         id: '',
-        value: '0654656565656',
+        value: data.goods.goods_code,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       autoDeliver: {
         label: '自动发货',
         id: '',
-        value: false,
+        value: data.goods.auto_delivery == 1,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: false },
@@ -13268,7 +13382,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
       autoDeliverContent: {
         label: '自动发货内容',
         id: '',
-        value: '打开雷锋哈可减肥的话可接受的付款就是付款接收到付款就是付款计划谁看见大富豪看实践活动付款就是疯狂就哈萨克分',
+        value: data.goods.auto_delivery_content,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: false },
@@ -13276,7 +13390,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
       provideCost: {
         label: '快递运费',
         id: '',
-        value: 10,
+        value: data.goods.dispatch_price,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: false },
@@ -13284,21 +13398,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
       showProCost: {
         label: '显示快递',
         id: '',
-        value: true,
+        value: data.goods.dispatch_hide == 0,
         disabled: false, //可否编辑
         editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       joinCount: {
         label: '参与会员折扣',
         id: '',
-        value: true,
+        value: data.goods.is_discount == 1,
         disabled: false, //可否编辑
         editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       goodForm: {
         label: '商品表单',
-        id: '',
-        value: '',
+        id: data.goods.form_id,
+        value: formList.filter(function (item) {
+          var result = false;
+          for (var i = 0; i < formList.length; i++) {
+            if (item.id == data.goods.form_id) {
+              result = true;
+              break;
+            }
+          }
+          return result;
+        }).map(function (item) {
+          return item.name;
+        }).join(''),
+        formList: formList,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       } },
@@ -13306,8 +13432,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.singleData
     info4: {
       status: {
         label: '状态',
-        id: '',
-        value: '下架',
+        id: data.goods.status,
+        value: statusList[data.goods.status * 1 + 1],
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       } } };
@@ -13428,6 +13554,159 @@ function multiData() {
       } } };
 
 
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodEditDataModel.js":
+/*!****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/goodEditDataModel.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");
+
+
+var goodModel = {//商品编辑模板数据
+};
+
+
+function mapOptions(data, cache) {
+  var options = (cache.options || []).map(function (item, index) {
+    var tmp = data.info2.specification.list;
+    var obj = {};
+    if (tmp[index].specif.goodsId == item.goods_id) {
+      obj = tmp[index];
+    } else {
+      for (var i = 0; i < tmp.length; i++) {
+        if (tmp[i].specif.goodsId == item.goods_id) {
+          obj = tmp[i];
+          break;
+        }
+      }
+    };
+    return Object.assign({}, item, {
+      goods_code: obj.code.value, //
+      price: obj.price.value, //
+      stock: obj.stock.value //
+    });
+  });
+  return options;
+}
+
+function mapGoods(data, cache) {
+  var goods = {
+    title: data.info1.goodName.value,
+    sub_title: data.info1.subTitle.value,
+    category_ids: data.info1.classification.goodTypes.map(function (item) {
+      return item.id;
+    }),
+    thumb: data.info1.mainImage.list[0].img,
+    thumbs: data.info1.swiperList.list.map(function (item) {
+      return item.img;
+    }),
+    price: data.info2.price.value,
+    original_price: data.info2.delPrice.value,
+    stock: data.info2.stockNum.value,
+    stock_hide: data.info2.showStock.value ? 1 : 0,
+    sales_count: data.info2.soldNum.value,
+    sales_hide: data.info2.showSold.value ? 1 : 0,
+    goods_code: data.info3.goodCode.value,
+    auto_delivery: data.info3.autoDeliver.value ? 1 : 0,
+    auto_delivery_content: data.info3.autoDeliverContent.value,
+    dispatch_price: data.info3.provideCost.value,
+    dispatch_hide: data.info3.showProCost.value ? 1 : 0,
+    is_discount: data.info3.joinCount.value ? 1 : 0,
+    form_id: data.info3.goodForm.formId,
+    status: data.info4.status.statusId };
+
+  return goods;
+
+
+}
+function _default(data, cache) {
+
+  var specs = cache.specs || '';
+  var goods = cache.goods;
+  goodModel = { //商品编辑模板数据
+    'goods_id': cache.goods.id,
+    data: {
+      specs: specs,
+      goods: Object.assign({
+        auto_complete: '',
+        auto_complete_content: "",
+        auto_delivery: '',
+        auto_delivery_content: "",
+        auto_warehouse: '',
+        category_ids: '',
+        content: '',
+        create_time: '',
+        delete_time: '',
+        dispatch_hide: '',
+        dispatch_id: '',
+        dispatch_price: '',
+        dispatch_type: '',
+        display_order: '',
+        form_id: '',
+        goods_code: "",
+        has_option: '',
+        id: '',
+        is_buy_num_limit: '',
+        is_delivery_pay: '',
+        is_discount: '',
+        is_free_dispatch: '',
+        is_invoice_support: '',
+        is_join_commission: '',
+        is_join_member_price: '',
+        is_refund_support: '',
+        max_buy_once: '',
+        max_buy_total: '',
+        max_price: '',
+        min_buy: '',
+        min_price: '',
+        original_price: '',
+        params_id: '',
+        params_img: "",
+        params_type: '',
+        price: '',
+        product_sn: "",
+        sales_count: '',
+        sales_hide: '',
+        school_ids: "",
+        selling_object: '',
+        sellout_time: '',
+        shop_id: '',
+        short_title: "",
+        single_row_thumb: "",
+        status: '',
+        stock: '',
+        stock_cnf: '',
+        stock_hide: '',
+        stock_warning: '',
+        sub_title: "",
+        template_id: '',
+        thumb: '',
+        thumbs: [],
+        thumbs_ratio: "",
+        title: '',
+        type: '',
+        unit: "",
+        video: "",
+        video_thumb: "",
+        view_count: '',
+        virtual_card_id: '',
+        virtual_sales: '',
+        volume: '',
+        weight: '' },
+      goods, mapGoods(data, cache)) },
+
+    options: mapOptions(data, cache) };
+
+
+  console.log(goodModel);
+  return (0, _ajaxDataFormater.flatten)(goodModel);
 }
 
 /***/ }),
@@ -13557,7 +13836,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cacheGoodDetail.info2.showStock.value = val.checked;
   } else if (val.label == '已出售数') {
     cacheGoodDetail.info2.soldNum.value = val.value;
-    console.log(cacheGoodDetail.info2);
   } else if (val.label == '显示销量') {
 
     cacheGoodDetail.info2.showSold.value = val.checked;
@@ -13586,7 +13864,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } else if (val.label == '商品分类') {
     if (typeof val.value == 'object' && typeof val.value.map == 'function') {
       cacheGoodDetail.info1.classification.value = val.value.map(function (item) {return item.name;}).join(';');
-      cacheGoodDetail.info1.classification.list = val.value;
+      cacheGoodDetail.info1.classification.goodTypes = val.value;
     }
   } else if (val.label == '商品编码') {
     cacheGoodDetail.info3.goodCode.value = val.value;
@@ -13594,15 +13872,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cacheGoodDetail.info3.provideCost.value = val.value;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
+    cacheGoodDetail.info3.goodForm.formId = val.id;
   } else if (val.label == '状态') {
     cacheGoodDetail.info4.status.value = val.value;
+    cacheGoodDetail.info4.status.statusId = val.other.id;
   } else if (val.label == '规格类型') {
-
     cacheGoodDetail.info2.specification.list = val.other.list;
-    console.log(cacheGoodDetail.info2.specification.list);
   } else if (val.label == '自动发货') {
     cacheGoodDetail.info3.autoDeliver.value = val.checked;
-    console.log('auto>>', val.value);
   } else if (val.label == '自动发货内容') {
     cacheGoodDetail.info3.autoDeliverContent.value = val.value;
   }
@@ -14061,188 +14338,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\testData.js":
-/*!**********************************************************************************!*\
-  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/bill/index/testData.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(status) {
-  return [{
-    info: { //订单及用户信息
-      name: '张三', //客户姓名
-      provide: '到店自提', //配送方式
-      num: 40, //商品数量
-      pay: 21653.43, //实付
-      addtion: 0, //备注
-      payType: 'wx', //支付方式
-      subStatus: 0, //订单状态，1：维权
-      status: status //0代付款,1代发货，2待收货，3已完成，4已关闭
-    },
-    bill: { //订单信息
-      billId: 'ES204565656526265656565', //订单号
-      billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0, //订单类型，0：分销订单，1：普通订单
-      billPrice: 7888 },
-
-    goodsList: [{ //订单商品信息
-      img: '/static/img/global/tmp.png', //商品图片
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-      color: '浅绿色', //颜色
-      size: 'S码', //型号
-      num: 2, //数量
-      price: '15455.2', //价格
-      specifications: 'single' //单规格
-    }, {
-      img: '/static/img/global/tmp.png',
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-      color: '浅绿色',
-      size: 'S码',
-      num: 2,
-      price: '152344.2',
-      specifications: 'multi' //多规格
-    }],
-    rights: { // 维权信息
-      status: '退款退货', //维权状态
-      addition: [{
-        content: '摔坏了' },
-      {
-        content: '摔坏了' },
-      {
-        content: '摔坏了' }],
-      //维权备注
-      subStatus: 0 //订单状态，1：维权
-    } },
-  {
-    info: { //订单及用户信息
-      name: '张三', //客户姓名
-      provide: '到店自提', //配送方式
-      num: 4, //商品数量
-      pay: 2165653.453, //实付
-      addtion: [], //备注
-      payType: 'wx', //支付方式
-      subStatus: 0, //订单状态，1：维权
-      status: status //0代付款,1代发货，2待收货，3已完成，4已关闭
-    },
-    bill: { //订单信息
-      billId: 'ES204565656526265656565', //订单号
-      billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0, //订单类型，0：分销订单，1：普通订单
-      billPrice: 5555 },
-
-    goodsList: [{ //订单商品信息
-      img: '/static/img/global/tmp.png', //商品图片
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-      color: '浅绿色', //颜色
-      size: 'S码', //型号
-      num: 2, //数量
-      price: '15455.2', //价格
-      specifications: 'single' //单规格
-    }, {
-      img: '/static/img/global/tmp.png',
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-      color: '浅绿色',
-      size: 'S码',
-      num: 2,
-      price: '152344.2',
-      specifications: 'multi' //多规格
-    }],
-    rights: { // 维权信息
-      status: '退款退货', //维权状态
-      addition: [{
-        content: '摔坏了' }],
-      //维权备注
-      subStatus: 0 //订单状态，1：维权
-    } },
-  {
-    info: { //订单及用户信息
-      name: '张三', //客户姓名
-      provide: '到店自提', //配送方式
-      num: 4, //商品数量
-      pay: 2165653.453, //实付
-      addtion: 0, //备注
-      payType: 'wx', //支付方式
-      subStatus: 1, //订单状态，1：维权
-      status: status //0代付款,1代发货，2待收货，3已完成，4已关闭
-    },
-    bill: { //订单信息
-      billId: 'ES204565656526265656565', //订单号
-      billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 1, //订单类型，0：分销订单，1：普通订单
-      billPrice: 453 },
-
-    goodsList: [{ //订单商品信息
-      img: '/static/img/global/tmp.png', //商品图片
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-      color: '浅绿色', //颜色
-      size: 'S码', //型号
-      num: 2, //数量
-      price: '15455.2', //价格 
-      specifications: 'multi' //多规格
-    }, {
-      img: '/static/img/global/tmp.png',
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-      color: '浅绿色',
-      size: 'S码',
-      num: 2,
-      price: '152344.2',
-      specifications: 'multi' //多规格
-    }],
-    rights: { // 维权信息
-      status: '退款退货', //维权状态
-      addition: [{
-        content: '摔坏了' }],
-      //维权备注
-      subStatus: 1 //订单状态，1：维权
-    } },
-  {
-    info: { //订单及用户信息
-      name: '张三', //客户姓名
-      provide: '到店自提', //配送方式
-      num: 4, //商品数量
-      pay: 2165653.453, //实付
-      addtion: 0, //备注
-      payType: 'wx', //支付方式
-      subStatus: 1, //订单状态，1：维权
-      status: status //0代付款,1代发货，2待收货，3已完成，4已关闭
-    },
-    bill: { //订单信息
-      billId: 'ES204565656526265656565', //订单号
-      billDate: '2018-05-12 15:23:12', //订单时间
-      billType: 0, //订单类型，0：分销订单，1：普通订单
-      billPrice: 989 },
-
-    goodsList: [{ //订单商品信息
-      img: '/static/img/global/tmp.png', //商品图片
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl', //商品名
-      color: '浅绿色', //颜色
-      size: 'S码', //型号
-      num: 2, //数量
-      price: '15455.2', //价格 
-      specifications: 'multi' //多规格
-    }, {
-      img: '/static/img/global/tmp.png',
-      goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-      color: '浅绿色',
-      size: 'S码',
-      num: 2,
-      price: '152344.2',
-      specifications: 'multi' //多规格
-    }],
-    rights: { // 维权信息
-      status: '退款退货', //维权状态
-      addition: [{
-        content: '摔坏了' }],
-      //维权备注
-      subStatus: 1 //订单状态，1：维权
-    } }];
-
-}
-
-/***/ }),
-
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js":
 /*!*****************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index/categories.js ***!
@@ -14329,7 +14424,7 @@ function _default()
         };
 
       });
-
+      _this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
       resolve(list);
     });
   });
@@ -14419,80 +14514,6 @@ function _default()
 
 /***/ }),
 
-/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\testData.js":
-/*!***************************************************************************************!*\
-  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index/testData.js ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(status) {
-  return [{
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间slikfjsdfklklsjfdlkjslkdjfl',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '15455.2',
-    saled: 1,
-    status: status,
-    specifications: 'single' //单规格，multi多规格
-  }, {
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间55',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '152344.2',
-    saled: 1,
-    status: status,
-    specifications: 'single' //单规格，multi多规格
-  }, {
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '1533334',
-    saled: 1,
-    status: status,
-    specifications: 'multi' //单规格，multi多规格
-  }, {
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '1533334',
-    saled: 1,
-    status: status,
-    specifications: 'multi' //单规格，multi多规格
-  }, {
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '1533334',
-    saled: 1,
-    status: status,
-    specifications: 'multi' //单规格，multi多规格
-  }, {
-    img: '/static/img/global/tmp.png',
-    goodName: '翻页蓝色的空间疯狂大富科技上来看饭店经理看时间对方离开时间',
-    color: '浅绿色',
-    size: 'S码',
-    num: 2,
-    price: '1533334',
-    saled: 1,
-    status: status,
-    specifications: 'multi' //单规格，multi多规格
-  }];
-}
-
-/***/ }),
-
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js":
 /*!********************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/store/cache.js ***!
@@ -14520,7 +14541,7 @@ function getData(key) {
 }
 function clearData(key) {
   try {
-    return uni.clearStorage(namespace + key);
+    return uni.removeStorage(namespace + key);
   } catch (e) {
     console.error('clearData error >>', e, ' key:', key);
   }

@@ -11,7 +11,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
-  onLaunch: function onLaunch() {
+  onLaunch: function onLaunch() {var _this = this;
+    this.Request('getSettings').then(function (res) {
+      if (res.error == 0) {
+        _this.Cacher.setData('static_resources_domain', res.settings.attachment_root);
+      }
+    });
   },
   onShow: function onShow() {
     console.log('App Show');
@@ -50,8 +55,8 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
       Toast: _toast.default,
       Dialog: _dialog.default,
       ShowLoadMore: false,
-      LoadingType: 0 //0'加载更多',   1'已加载全部' 
-    };
+      LoadingType: 0, //0'加载更多',   1'已加载全部' 
+      static_resources_domain: '' };
 
   },
   methods: {
@@ -100,15 +105,25 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
   created: function created() {
     this.pageLoading();
   },
+  onLoad: function onLoad() {var _this3 = this;
+    this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名
+    if (!this.static_resources_domain) {
+      this.Request('getSettings').then(function (res) {
+        if (res.error == 0) {
+          _this3.static_resources_domain = res.settings.attachment_root;
+          _this3.Cacher.setData('static_resources_domain', res.settings.attachment_root);
+        }
+      });
+    }
+  },
   onHide: function onHide() {
     this.closePageLoading();
     this.Dialog.close();
-
   } }, "onReachBottom", function onReachBottom()
-{var _this3 = this;
+{var _this4 = this;
   this.ShowLoadMore = true;
   setTimeout(function () {
-    _this3.ShowLoadMore = false;
+    _this4.ShowLoadMore = false;
   }, 2000);
 });exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

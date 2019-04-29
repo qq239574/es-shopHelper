@@ -17,7 +17,7 @@ export function getData(key) {
 }
 export function clearData(key) {
     try {
-        return uni.clearStorage(namespace + key);
+        return uni.removeStorage(namespace + key);
     } catch (e) {
         console.error('clearData error >>', e, ' key:', key)
     }

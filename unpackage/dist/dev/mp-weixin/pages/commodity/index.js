@@ -26,9 +26,22 @@
 
 
 
-var _testData = _interopRequireDefault(__webpack_require__(/*! ./index/testData.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\testData.js"));
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
-var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};
+var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+
 var DataFrom = {};
 var DataGo = {};
 var searchData = {};
@@ -41,7 +54,8 @@ var curTab = {
   components: {
     TabCard: TabCard,
     SearchInput: SearchInput,
-    Card: Card },
+    Card: Card,
+    nodata: nodata },
 
   data: function data() {
     return {
@@ -62,9 +76,13 @@ var curTab = {
         cateid: 0,
         index: 0,
         name: "出售中",
-        searchId: 1 } };
+        searchId: 1 },
 
-
+      searching: false,
+      current: 1,
+      totalPage: 1,
+      tabIndex: 0 //默认tabs的index
+    };
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from) || {};
@@ -72,8 +90,26 @@ var curTab = {
   onShow: function onShow() {
     this.initPage();
   },
+  watch: {
+    current: function current() {
+      this.initPage();
+    } },
+
   methods: {
+    handleChange: function handleChange(obj) {var
+
+
+      type =
+
+      obj.detail.type;
+      if (type == 'next') {
+        this.current = Math.min(this.current + 1, this.totalPage);
+      } else {
+        this.current = Math.max(this.current - 1, 1);
+      }
+    },
     initPage: function initPage() {var _this = this;
+      this.searching = true;
       this.toggle = !this.toggle;
       DataFrom = this.Cacher.getData(DataFrom.from) || {};
       DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go)) || {
@@ -85,7 +121,7 @@ var curTab = {
       } else {
         this.searchValue = '';
       }
-      _getGoodsList.default.call(this, {
+      _getGoodsList.default.call(this, { //总页数在里面
         status: this.searchTab.searchId, //1出售周 3已售罄 -2仓库中 -1回收站
         title: this.searchValue,
         category_ids: '',
@@ -94,16 +130,19 @@ var curTab = {
         goods_sort: '',
         goods_by: '',
         pagesize: 20,
-        page: 1 }).
+        page: this.current }).
       then(function (res) {
         _this.goodsList = res;
         _this.closePageLoading();
+        _this.searching = false;
       });
     },
     tabChange: function tabChange(tab) {//切换标签事件
       this.searchTab = tab;
       this.toggle = !this.toggle;
       this.goodsList = [];
+      this.current = 1;
+      this.totalPage = 1;
       this.pageLoading();
       this.initPage();
     },

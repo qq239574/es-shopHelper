@@ -6,6 +6,19 @@
         </view>
         <view class='margin180'></view>
         <Card @click='clickGood' :goodsList='goodsList' :toggle='toggle'></Card>
+        <nodata type='noresult' tip='没有搜索到相关商品' v-if='!searching&&!goodsList.length'></nodata>
+        <view class="pager" v-else>
+            <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
+                <view class='prev button' slot="prev">
+                    <i-icon type="return"></i-icon>
+                    上一步
+                </view>
+                <view class='next button' slot="next">
+                    下一步
+                    <i-icon type="enter"></i-icon>
+                </view>
+            </i-page>
+        </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
@@ -15,10 +28,10 @@
 <script>
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
-    import Card from './index/goodsList.vue';
-    import testdata from './index/testData.js'; //测试数据
+    import Card from './index/goodsList.vue'; 
     import categories from './index/categories.js'
     import getGoodsList from './index/getGoodsList.js'
+    import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
     let DataGo = {};
     let searchData = {};
@@ -31,7 +44,8 @@
         components: {
             TabCard,
             SearchInput,
-            Card
+            Card,
+            nodata
         },
         data() {
             return {
@@ -53,7 +67,11 @@
                     index: 0,
                     name: "出售中",
                     searchId: 1
-                }
+                },
+                searching: false,
+                current: 1,
+                totalPage: 1,
+                tabIndex: 0, //默认tabs的index
             }
         },
         onLoad(option) {
@@ -62,8 +80,26 @@
         onShow() {
             this.initPage();
         },
+        watch: {
+            current() {
+                this.initPage();
+            },
+        },
         methods: {
+            handleChange(obj) {
+                let {
+                    detail: {
+                        type
+                    }
+                } = obj;
+                if (type == 'next') {
+                    this.current = Math.min(this.current + 1, this.totalPage);
+                } else {
+                    this.current = Math.max(this.current - 1, 1);
+                }
+            },
             initPage() {
+                this.searching = true;
                 this.toggle = !this.toggle;
                 DataFrom = this.Cacher.getData(DataFrom.from) || {};
                 DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go)) || {
@@ -75,7 +111,7 @@
                 } else {
                     this.searchValue = '';
                 }
-                getGoodsList.call(this, {
+                getGoodsList.call(this, { //总页数在里面
                     status: this.searchTab.searchId, //1出售周 3已售罄 -2仓库中 -1回收站
                     title: this.searchValue,
                     category_ids: '',
@@ -84,16 +120,19 @@
                     goods_sort: '',
                     goods_by: '',
                     pagesize: 20,
-                    page: 1
+                    page: this.current,
                 }).then(res => {
                     this.goodsList = res;
                     this.closePageLoading();
+                    this.searching = false;
                 })
             },
             tabChange(tab) { //切换标签事件
                 this.searchTab = tab;
                 this.toggle = !this.toggle;
                 this.goodsList = [];
+                this.current = 1;
+                this.totalPage = 1;
                 this.pageLoading();
                 this.initPage();
             },
@@ -117,8 +156,8 @@
                 if (item.type == 'menu-item') { //点击的是商品的浮层菜单
                     this.pageLoading();
                     if (item.name == '编辑') {
-                        DataGo={
-                            go:'editGood'
+                        DataGo = {
+                            go: 'editGood'
                         }
                         this.Cacher.setData('good', {
                             from: 'good',
@@ -184,5 +223,36 @@
 <style lang="scss" scoped>
     .margin180 {
         height: 176upx;
+    }
+    .pager {
+        width: 100%;
+        height: 80upx;
+        margin: 30upx auto 100upx;
+        .button {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+        }
+        /deep/button {
+            height: 70upx;
+            font-size: 30upx;
+            color: 999;
+            line-height: 70upx;
+            border-radius: 10upx;
+            margin: 0;
+        }
+        .prev {
+            padding: 0 10upx 0 5upx;
+        }
+        .next {
+            padding: 0 5upx 0 10upx;
+        }
+        /deep/.pager-button {
+            line-height: 70upx;
+            height: 70upx;
+        }
     }
 </style>

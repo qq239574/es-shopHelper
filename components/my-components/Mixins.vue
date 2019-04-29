@@ -7,7 +7,7 @@
     import * as cacher from '../../store/cache.js'
     import Toast from '../../wxcomponents/vant-weapp/toast/toast'
     import Dialog from '../../wxcomponents/vant-weapp/dialog/dialog';
-    let DataGo={};
+    let DataGo = {};
     export default {
         components: {},
         data() {
@@ -18,13 +18,13 @@
                 Toast,
                 Dialog,
                 ShowLoadMore: false,
-                LoadingType: 0,//0'加载更多',   1'已加载全部' 
-
+                LoadingType: 0, //0'加载更多',   1'已加载全部' 
+                static_resources_domain: ''
             };
         },
         methods: {
-            Request(name,data) {
-                return request(name,data);
+            Request(name, data) {
+                return request(name, data);
             },
             pageLoading() {
                 clearTimeout(pageLoadingBar);
@@ -56,9 +56,9 @@
                 this.showReachBottom = false;
             }
         },
-        onPullDownRefresh() { 
+        onPullDownRefresh() {
             this.closePageLoading();
-            setTimeout(()=> {
+            setTimeout(() => {
                 uni.stopPullDownRefresh();
             }, 1000);
         },
@@ -68,12 +68,22 @@
         created() {
             this.pageLoading();
         },
+        onLoad() {
+            this.static_resources_domain = this.Cacher.getData('static_resources_domain');//静态资源服务器域名
+            if (!this.static_resources_domain) {
+                this.Request('getSettings').then(res => {
+                    if (res.error == 0) {
+                        this.static_resources_domain = res.settings.attachment_root
+                        this.Cacher.setData('static_resources_domain', res.settings.attachment_root)
+                    }
+                })
+            }
+        },
         onHide() {
             this.closePageLoading();
             this.Dialog.close();
-
-        }, 
-        onReachBottom() { 
+        },
+        onReachBottom() {
             this.ShowLoadMore = true;
             setTimeout(() => {
                 this.ShowLoadMore = false;

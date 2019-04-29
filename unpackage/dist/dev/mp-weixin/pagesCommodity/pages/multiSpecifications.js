@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _testdata = __webpack_require__(/*! ../components/testdata.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\testdata.js");
+var _goodDetail = __webpack_require__(/*! ../components/goodDetail.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodDetail.js");
 
 
 var _toEditPageMulti = _interopRequireDefault(__webpack_require__(/*! ../components/toEditPage-multi.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage-multi.js"));
@@ -69,7 +69,7 @@ var DataFrom = {};var _default =
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
-    cacheGoodDetail = (0, _testdata.multiData)(); //智能load的时候请求一次，show的时候不可
+    cacheGoodDetail = (0, _goodDetail.multiData)(); //智能load的时候请求一次，show的时候不可
     this.initPage();
   },
   onShow: function onShow() {

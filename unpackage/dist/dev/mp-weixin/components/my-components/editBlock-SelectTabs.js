@@ -25,14 +25,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
-    searchKeys: {
-      type: Array,
-      default: [
-      {
-        name: 'name',
-        id: '' }] },
+    typeList: {
+      type: Object,
+      default: {
+        name: '',
+        id: '',
+        selected: false,
+        children: [{
+          name: '',
+          id: '',
+          selected: false }] } },
 
 
+
+    infoId: {
+      type: Number,
+      default: 0 },
 
     other: {
       type: [Object, Number, String, Array, Boolean],
@@ -46,22 +54,36 @@ var _default =
 
   },
   watch: {
-    searchKeys: function searchKeys() {
-      this.checked = this.selected.length == this.searchKeys.length;
+    typeList: function typeList() {
+      if (this.typeList.children.length) {
+        this.checked = this.typeList.children.length == this.selected.length;
+      } else {
+        this.checked == this.typeList.selected;
+      }
     } },
 
   beforeMount: function beforeMount() {
-    this.checked = this.selected.length == this.searchKeys.length;
+    if (this.typeList.children.length) {
+      this.checked = this.typeList.children.length == this.selected.length;
+    } else {
+      this.checked == this.typeList.selected;
+    }
   },
   methods: {
-    clearKey: function clearKey(val) {
+    clearKey: function clearKey(val) {//全选或全清理
       this.checked = !this.checked;
       if (this.checked) {
-        this.selected = _toConsumableArray(this.searchKeys);
+        this.selected = _toConsumableArray(this.typeList.children);
       } else {
         this.selected = [];
       }
-      this.$emit('change', this.selected);
+      this.$emit('change', {
+        index: this.infoId,
+        list: this.checked ? [{
+          name: this.typeList.name,
+          id: this.typeList.id }].concat(_toConsumableArray(
+        this.selected)) : [] });
+
     },
     setKey: function setKey(val) {
       var index = this.selected.indexOf(val);
@@ -70,8 +92,21 @@ var _default =
       } else {
         this.selected.push(val);
       }
-      this.checked = this.selected.length == this.searchKeys.length;
-      this.$emit('change', this.selected);
+      this.checked = this.selected.length == this.typeList.children.length;
+      if (this.selected.length) {
+        this.$emit('change', {
+          index: this.infoId,
+          list: [{
+            name: this.typeList.name,
+            id: this.typeList.id }].concat(_toConsumableArray(
+          this.selected)) });
+
+      } else {
+        this.$emit('change', {
+          index: this.infoId,
+          list: [] });
+
+      }
     } } };exports.default = _default;
 
 /***/ }),
@@ -102,7 +137,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var l0 = _vm.searchKeys.map(function(item, index) {
+  var l0 = _vm.typeList.children.map(function(item, index) {
     var g0 = _vm.selected.indexOf(item)
     return {
       $orig: _vm.__get_orig(item),

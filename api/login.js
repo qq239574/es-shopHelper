@@ -86,11 +86,11 @@ export const setForgetPassword = { //找回密码
         type: '',
         account: '',
         captcha_code: '',
-        verify_code:'',
+        verify_code: '',
         action: '',
-        question:'',
-        answer:'',
-        password:''
+        question: '',
+        answer: '',
+        password: ''
 
     },
     headers: {},
@@ -120,6 +120,13 @@ export const getSessionid = { //获取sessionid
         question: '',
         answer: ''
     },
+    headers: {},
+    type: 'get'
+}
+
+export const getSettings = {//获取站点信息
+    url: '/api/site/settings/get',
+    data: {},
     headers: {},
     type: 'get'
 }

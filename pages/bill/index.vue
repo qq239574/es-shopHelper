@@ -39,8 +39,7 @@
 <script>
     import TabCard from '../../components/my-components/Tabs';
     import Card from './index/Card';
-    import SearchInput from '../../components/my-components/SearchInput.vue';
-    import testdata from './index/testData.js'
+    import SearchInput from '../../components/my-components/SearchInput.vue'; 
     import getBillList from './index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
@@ -190,7 +189,7 @@
                 } else {
                     this.tabIndex = curTab.cateid;
                 } 
-                getBillList.call(this, this.tabIndex, {
+                getBillList.call(this, this.tabIndex, {//里面设置了总页数
                     keywords: searchData.value || '',
                     page: this.current,
                     pageSize: 20

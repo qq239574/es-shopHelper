@@ -33,21 +33,30 @@
                 minDate: new Date().getTime() + 5 * 60000, //5分钟后
                 maxDate: new Date(getDate(365)).getTime(), //一年后
                 list: [{
+                    label: '已删除',
+                    value: ' ',
+                    subValue: '',
+                    id: -1
+                }, {
+                    label: '下架',
+                    value: ' ',
+                    subValue: '',
+                    id: 0
+                }, {
                     label: '上架售卖',
                     value: ' ',
-                    subValue: ''
+                    subValue: '',
+                    id: 1
                 }, {
                     label: '上架隐藏',
                     value: ' ',
-                    subValue: ''
+                    subValue: '',
+                    id: 2
                 }, {
                     label: '定时上架',
                     value: '修改',
-                    subValue: '04-02 12:12:44'
-                }, {
-                    label: '防止仓库',
-                    value: ' ',
-                    subValue: ''
+                    subValue: '04-02 12:12:44',
+                    id: 3
                 }, ]
             }
         },
@@ -55,11 +64,18 @@
             confirm() {
                 this.showpicker = false;
                 this.currentDate = currentDate;
-                this.list[2].subValue = currentDate;
-                console.log('datafrom,', DataFrom);
-                DataFrom.needChange.other.subValue = currentDate;
-                DataFrom.from='editStatus';
-                DataFrom.label='定时上架';
+                this.list[4].subValue = currentDate;
+                DataFrom.needChange = {
+                    label: '状态',
+                    value: '定时上架',
+                    from: 'editStatus',
+                    other: {
+                        label: '状态',
+                        value: '定时上架',
+                        subValue: currentDate,
+                        id: 3
+                    }
+                }
                 this.Cacher.setData('billDetail', DataFrom)
             },
             cancel() {
@@ -73,7 +89,7 @@
             },
             change(val) {
                 cacheVal = val;
-                this.Cacher.setData('editStatus', { 
+                this.Cacher.setData('editStatus', {
                     needChange: {
                         label: '状态',
                         value: val.label,
@@ -85,11 +101,23 @@
                     this.minDate = new Date().getTime() + 5 * 60000;
                     this.maxDate = new Date(getDate(365)).getTime();
                 } else {}
-                cache = val.value; 
+                cache = val.value;
             }
         },
         onLoad(option) {
-             DataFrom = this.Cacher.getData(option.from) || {};
+            DataFrom = this.Cacher.getData(option.from) || {};
+            DataFrom.needChange = {
+                label: '状态',
+                value: '已删除',
+                from: 'editStatus',
+                other: {
+                    label: '状态',
+                    value: '已删除',
+                    subValue: ' ',
+                    id: -1
+                }
+            }
+            this.Cacher.setData('editStatus', DataFrom)
             this.initPage()
         },
         onShow() {
