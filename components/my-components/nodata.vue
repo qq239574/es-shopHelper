@@ -1,5 +1,5 @@
 <template>
-    <view class="noresult">
+    <view class="noresult" :style='bgStyle'>
         <image lazy-load :src='image.img'></image>
         <view>{{tip||image.tip}}</view>
     </view>
@@ -15,6 +15,10 @@
             tip: {
                 type: String,
                 default: '',
+            },
+            bgStyle:{
+                type:String,
+                default:''
             }
         },
         computed: {

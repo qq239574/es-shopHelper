@@ -47,11 +47,25 @@
       text-align: center;
       margin: 0 auto 20rpx;
 }
-.pages-login-index .grace-login-three .surportList image {
-        display: inline-block;
+.pages-login-index .grace-login-three .surportList .supporter {
         width: 80rpx;
         height: 80rpx;
-        border-radius: 50%;
+        display: inline-block;
+        position: relative;
+}
+.pages-login-index .grace-login-three .surportList .supporter button,
+        .pages-login-index .grace-login-three .surportList .supporter image {
+          width: 80rpx;
+          height: 80rpx;
+          border-radius: 50%;
+          padding: 0;
+          margin: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+}
+.pages-login-index .grace-login-three .surportList .supporter button {
+          opacity: 0;
 }
 .pages-login-index .field-index--van-field {
     padding-right: 0;

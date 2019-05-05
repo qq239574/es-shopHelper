@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "card-title": "/pagesSelfTakeVerify/components/Card--Title",
+    "card-info": "/pagesSelfTakeVerify/components/Card--Info",
+    "card-good": "/pagesSelfTakeVerify/components/Card--Good"
+  },
+  "component": true
+}

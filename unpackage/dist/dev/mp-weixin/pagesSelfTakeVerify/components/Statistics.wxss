@@ -1,0 +1,31 @@
+.Statistics.data-v-30777e55 {
+  width: 728rpx;
+  margin: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+.Statistics .statistic-block.data-v-30777e55 {
+    margin-bottom: 20rpx;
+    background: #fff;
+    width: 340rpx;
+    height: 322rpx;
+    text-align: center;
+    padding: 60rpx 0 84rpx 0;
+    border-radius: 8rpx;
+}
+.Statistics .statistic-block .title.data-v-30777e55 {
+      color: #999ca7;
+}
+.Statistics .statistic-block .num.data-v-30777e55 {
+      font-size: 72rpx;
+      font-weight: 700;
+}
+

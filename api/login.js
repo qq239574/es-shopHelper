@@ -124,9 +124,29 @@ export const getSessionid = { //获取sessionid
     type: 'get'
 }
 
-export const getSettings = {//获取站点信息
+export const getSettings = { //获取站点信息
     url: '/api/site/settings/get',
     data: {},
     headers: {},
     type: 'get'
+}
+
+export const wechatLogin = { //小程序获取登录session
+    url: '/shop/manage/wx-app/wx-app-login',
+    data: {
+        code: ''
+    },
+    headers: {},
+    type: 'post'
+}
+export const bindWechat = {//小程序管理中心绑定微信登录
+    url: '/shop/manage/wx-app/bind',
+    data: {
+        encrypted_data: '',
+        session_key:'',
+        iv:'',
+        user_id:''
+    },
+    headers: {},
+    type: 'post'
 }

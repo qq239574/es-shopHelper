@@ -1,0 +1,42 @@
+.pager.data-v-17fac69a {
+  width: 100%;
+  height: 80rpx;
+  margin: 30rpx auto 100rpx;
+}
+.pager .button.data-v-17fac69a {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around;
+    font-size: 30rpx;
+    color: 999;
+    line-height: 70rpx;
+}
+.pager.data-v-17fac69a button {
+    height: 70rpx;
+    font-size: 30rpx;
+    color: 999;
+    line-height: 70rpx;
+    border-radius: 10rpx;
+    margin: 0;
+}
+.pager .prev.data-v-17fac69a {
+    padding: 0 10rpx 0 5rpx;
+}
+.pager .next.data-v-17fac69a {
+    padding: 0 5rpx 0 10rpx;
+}
+.pager.data-v-17fac69a .pager-button {
+    line-height: 70rpx;
+    height: 70rpx;
+}
+.history-record.data-v-17fac69a {
+  min-height: 100%;
+}
+

@@ -8,9 +8,9 @@
 </template>
 
 <script>
-    import cardTitle from './Card--Title';
-    import cardInfo from './Card--Info';
-    import cardGood from './Card--Good';
+    import cardTitle from './Card--Title.vue';
+    import cardInfo from './Card--Info.vue';
+    import cardGood from './Card--Good.vue';
     import cardTemp from './Card--Temp.vue'
     export default {
         components: {

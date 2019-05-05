@@ -38,8 +38,8 @@
 
 <script>
     import TabCard from '../../components/my-components/Tabs';
-    import Card from './index/Card';
-    import SearchInput from '../../components/my-components/SearchInput.vue'; 
+    import Card from './index/Card.vue';
+    import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from './index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
@@ -68,30 +68,30 @@
                 surePaying: false, //正在确认付款？
                 showModel: false, //是否显示弹窗
                 modelTheme: { //弹窗提示信息
-                    title: '手动确认付款',
-                    detail: '确保买家已经付款，并且与买家协商完毕确认付款',
-                    state: 'pay'
+                    title: '',
+                    detail: '',
+                    state: ''
                 },
                 searchValue: '', //查询条件 
                 billList: [{ //完整数据
                     info: { //订单及用户信息
-                        name: '张三', //客户姓名
-                        provide: '到店自提', //配送方式
-                        num: 4, //商品数量
-                        pay: 2165653.453, //实付
+                        name: '', //客户姓名
+                        provide: '', //配送方式
+                        num: 0, //商品数量
+                        pay: 0, //实付
                         addtion: 0, //备注
-                        payType: 'wx', //支付方式
+                        payType: '', //支付方式
                         subStatus: 0, //订单状态，1：维权
                         status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
                     },
                     bill: { //订单信息
-                        billId: 'ES204565656526265656565', //订单号
-                        billDate: '2018-05-12 15:23:12', //订单时间
+                        billId: '', //订单号
+                        billDate: '', //订单时间
                         billType: 0, //订单类型，0：分销订单，1：普通订单
-                        billPrice: 121212
+                        billPrice: 0
                     },
                     goodsList: [{ //订单商品信息
-                        img: '/static/img/global/tmp.png', //商品图片
+                        img: '', //商品图片
                         goodName: '', //商品名
                         color: '', //颜色
                         size: '', //型号
@@ -100,7 +100,7 @@
                         specifications: 'single', //单规格
                     }],
                     rights: { // 维权信息
-                        status: '退款退货', //维权状态
+                        status: '', //维权状态
                         addition: 0, //维权备注
                     }
                 }],
@@ -109,7 +109,7 @@
             }
         },
         onLoad(option) {
-            this.billList=[];
+            this.billList = [];
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
@@ -185,11 +185,11 @@
                 } else if (DataFrom.from == 'searchShop') {
                     searchData = this.Cacher.getData('searchShop') || {};
                     this.searchValue = searchData.value || '';
-                    this.tabIndex = DataFrom.cateid || 0;
+                    this.tabIndex = searchData.cateId || 0;
                 } else {
                     this.tabIndex = curTab.cateid;
-                } 
-                getBillList.call(this, this.tabIndex, {//里面设置了总页数
+                }
+                getBillList.call(this, this.tabIndex, { //里面设置了总页数
                     keywords: searchData.value || '',
                     page: this.current,
                     pageSize: 20
@@ -202,10 +202,11 @@
             tabChange(tab) {
                 this.pageLoading();
                 curTab = tab;
-                this.current=1;
-                this.billList=[];
-                this.searching=true;
-                this.totalPage=1;
+                this.current = 1;
+                this.billList = [];
+                this.tabIndex=tab.cateid;
+                this.searching = true;
+                this.totalPage = 1;
                 getBillList.call(this, tab.cateid, {
                     keywords: searchData.value || '',
                     member_id: member_id,
@@ -226,7 +227,8 @@
                 this.Cacher.setData('bill', {
                     from: 'searchShop',
                     title: '订单搜索',
-                    placeholder: '请输入订单号'
+                    placeholder: '请输入订单号',
+                    cateId:this.tabIndex
                 })
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/searchShop?from=bill'
@@ -307,6 +309,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../components/my-components/pager.scss';
     .margin180 {
         height: 176upx;
     }
@@ -359,36 +362,5 @@
         height: 28upx;
         box-sizing: border-box;
         text-align: left;
-    }
-    .pager {
-        width: 100%;
-        height: 80upx;
-        margin: 30upx auto 100upx;
-        .button {
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: space-around;
-            font-size: 30upx;
-            color: 999;
-            line-height: 70upx;
-        }
-        /deep/button {
-            height: 70upx;
-            font-size: 30upx;
-            color: 999;
-            line-height: 70upx;
-            border-radius: 10upx;
-            margin: 0;
-        }
-        .prev {
-            padding: 0 10upx 0 5upx;
-        }
-        .next {
-            padding: 0 5upx 0 10upx;
-        }
-        /deep/.pager-button {
-            line-height: 70upx;
-            height: 70upx;
-        }
     }
 </style>

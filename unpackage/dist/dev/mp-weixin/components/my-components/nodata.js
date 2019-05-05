@@ -24,6 +24,10 @@ var _default =
     },
     tip: {
       type: String,
+      default: '' },
+
+    bgStyle: {
+      type: String,
       default: '' } },
 
 

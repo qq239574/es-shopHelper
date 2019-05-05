@@ -41,6 +41,8 @@
         width: 100%;
         font-size: 28rpx;
         line-height: 36rpx;
+        height: 72rpx;
+        overflow: hidden;
 }
 .card--good .card--good-item .good-info .good-others.data-v-8ba389c2 {
         width: 100%;

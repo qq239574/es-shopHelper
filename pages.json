@@ -128,6 +128,31 @@
 			}
 		}]
 	}, {
+		"root": "pagesSelfTakeVerify",
+		"pages": [{
+			"path": "pages/index",
+			"style": {
+				"navigationBarTitleText": "核销台",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"i-modal": "/wxcomponents/iview-weapp/modal/index",
+					"i-page": "/wxcomponents/iview-weapp/page/index"
+				}
+			}
+		}, {
+			"path": "pages/historyRecord",
+			"style": {
+				"navigationBarTitleText": "核销记录",
+				"usingComponents": {
+					"van-toast": "/wxcomponents/vant-weapp/toast/index",
+					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+					"i-modal": "/wxcomponents/iview-weapp/modal/index",
+					"i-page": "/wxcomponents/iview-weapp/page/index"
+				}
+			}
+		}]
+	}, {
 		"root": "pagesCommodity",
 		"pages": [{
 				"path": "pages/index",
@@ -547,7 +572,7 @@
 	"preloadRule": {
 		"pages/index/index": {
 			"network": "all",
-			"packages": ["pagesIndex", "pagesLogin"]
+			"packages": ["pagesIndex", "pagesSelfTakeVerify"]
 		},
 		"pages/bill/index": {
 			"network": "all",

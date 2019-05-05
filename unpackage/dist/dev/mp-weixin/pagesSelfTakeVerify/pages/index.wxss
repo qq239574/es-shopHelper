@@ -1,0 +1,84 @@
+.self-verification.data-v-622be200 {
+  position: relative;
+  height: 100% !important;
+}
+.self-verification .check-history.data-v-622be200 {
+    position: fixed;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 100rpx;
+    color: #fb6638;
+    text-decoration: underline;
+}
+.self-verification .code-box.data-v-622be200 {
+    width: 710rpx;
+    background: #fff;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 20rpx;
+    margin: 20rpx auto 100rpx;
+    border-radius: 10rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.self-verification .code-box .title.data-v-622be200 {
+      font-size: 28rpx;
+      color: #333;
+      font-weight: 700;
+      line-height: 50rpx;
+}
+.self-verification .code-box .vrcode.data-v-622be200 {
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      height: 50rpx;
+      font-size: 22rpx;
+      color: #fb6638;
+      background: #fff2f2;
+      line-height: 50rpx;
+      padding: 0 12rpx;
+      border-radius: 4rpx;
+}
+.self-verification .code.data-v-622be200 {
+    background: #fff;
+    height: 160rpx;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+}
+.self-verification .code view.data-v-622be200,
+    .self-verification .code input.data-v-622be200 {
+      height: 100%;
+      line-height: 120rpx;
+      font-size: 30rpx;
+      color: #213354;
+      font-weight: 600;
+      padding: 0 5rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+}
+.self-verification .code .col2.data-v-622be200 {
+      border-top: 1rpx solid #eee;
+      width: 100%;
+      margin: 30rpx auto;
+      height: 110rpx;
+}
+

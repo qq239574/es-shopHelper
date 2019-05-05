@@ -38,7 +38,6 @@
 		},
 		methods: {
 			initPage() {
-				
 				this.Request('myInfo').then(res => {
 					this.userName = res.user.username;
 					this.userTel = res.user.contact_mobile;
@@ -57,7 +56,7 @@
 							name: '姓名',
 							id: 'realName'
 						}
-					}) 
+					})
 					uni.navigateTo({
 						url: '../../pagesSelf/pages/myName?from=myself'
 					})
@@ -84,6 +83,12 @@
 			clickManager() {},
 			bindWX() {
 				this.closePageLoading();
+				this.Request('bindWechat', {
+					encrypted_data: '',
+					session_key: '',
+					iv: '',
+					user_id: ''
+				})
 				this.Toast('绑定微信成功')
 			},
 			leave() {

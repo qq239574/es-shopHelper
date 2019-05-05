@@ -1,0 +1,14 @@
+{
+  "navigationBarTitleText": "核销记录",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "i-modal": "/wxcomponents/iview-weapp/modal/index",
+    "i-page": "/wxcomponents/iview-weapp/page/index",
+    "tab-card": "/components/my-components/Tabs",
+    "search-input": "/components/my-components/SearchInput",
+    "nodata": "/components/my-components/nodata",
+    "statistic-block": "/pagesSelfTakeVerify/components/Statistics",
+    "records-list": "/pagesSelfTakeVerify/components/Card"
+  }
+}

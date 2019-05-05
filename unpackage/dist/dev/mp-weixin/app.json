@@ -20,6 +20,13 @@
       ]
     },
     {
+      "root": "pagesSelfTakeVerify",
+      "pages": [
+        "pages/index",
+        "pages/historyRecord"
+      ]
+    },
+    {
       "root": "pagesCommodity",
       "pages": [
         "pages/index",
@@ -125,7 +132,7 @@
       "network": "all",
       "packages": [
         "pagesIndex",
-        "pagesLogin"
+        "pagesSelfTakeVerify"
       ]
     },
     "pages/bill/index": {

@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -6868,6 +6868,7 @@ var LIFECYCLE_HOOKS$1 = [
     'onShow',
     'onHide',
     'onUniNViewMessage',
+    'onError',
     //Page
     'onLoad',
     // 'onShow',
@@ -10365,7 +10366,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
+Object.defineProperty(exports, "__esModule", { value: true });exports.postSelfVerifyInfo = exports.getSelfVerifyInfo = exports.verifyCount = exports.selfVerifyLog = exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
   url: '/shop/manage/order/list/pay',
   data: {
     keywords_type: 'order_no',
@@ -10561,6 +10562,52 @@ var billDetail = {
 
 
   type: 'get' };exports.billDetail = billDetail;
+
+
+var selfVerifyLog = { //核销or自提历史列表
+  url: '/shop/manage/order/verify/verify-log',
+  data: {
+    page: 1, //订单id号
+    pagesize: 20,
+    search: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.selfVerifyLog = selfVerifyLog;
+
+var verifyCount = { //自提or核销统计
+  url: '/shop/manage/order/verify/verify-count',
+  data: {},
+
+
+  headers: {},
+
+
+  type: 'get' };exports.verifyCount = verifyCount;
+
+
+var getSelfVerifyInfo = { //订单自提(获取信息)
+  url: '/shop/manage/order/verify/finish',
+  data: {
+    order_id: '',
+    finish_code: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getSelfVerifyInfo = getSelfVerifyInfo;
+
+var postSelfVerifyInfo = { //订单自提 
+  url: '/shop/manage/order/verify/finish',
+  data: {
+    order_id: '',
+    finish_code: '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.postSelfVerifyInfo = postSelfVerifyInfo;
 
 /***/ }),
 
@@ -11147,7 +11194,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
+Object.defineProperty(exports, "__esModule", { value: true });exports.bindWechat = exports.wechatLogin = exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
   url: '/api/site/account/login/post',
   data: {
     account: 'yilianxinpin',
@@ -11278,6 +11325,26 @@ var getSettings = { //获取站点信息
   data: {},
   headers: {},
   type: 'get' };exports.getSettings = getSettings;
+
+
+var wechatLogin = { //小程序获取登录session
+  url: '/shop/manage/wx-app/wx-app-login',
+  data: {
+    code: '' },
+
+  headers: {},
+  type: 'post' };exports.wechatLogin = wechatLogin;
+
+var bindWechat = { //小程序管理中心绑定微信登录
+  url: '/shop/manage/wx-app/bind',
+  data: {
+    encrypted_data: '',
+    session_key: '',
+    iv: '',
+    user_id: '' },
+
+  headers: {},
+  type: 'post' };exports.bindWechat = bindWechat;
 
 /***/ }),
 
@@ -12982,6 +13049,40 @@ createPage(_password.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2FhistoryRecord\"}":
+/*!********************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2FhistoryRecord"} ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _historyRecord = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/historyRecord.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelfTakeVerify\\pages\\historyRecord.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_historyRecord.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2Findex\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2Findex"} ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelfTakeVerify\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesTest%2Fpages%2Fecharts\"}":
 /*!****************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesTest%2Fpages%2Fecharts"} ***!
@@ -14215,55 +14316,15 @@ function _default(commission) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function judgeState(status, is_checked) {
-  function check() {
-    if (status == 0) {//状态(0关闭 1正常 -1已过期 -2未购买套餐)
-      return {
-        num: 1,
-        text: '已打烊' };
-      //已打烊
-    } else if (status == 1) {//1正常
-      return {
-        num: 0,
-        text: '营业中' };
-      //营业中
-    } else if (status == -1) {// -1已过期 
-      return {
-        num: 2,
-        text: '已过期' };
-      //已过期
-    } else if (status == -2) {//-2未购买套餐
-      return {
-        num: 5,
-        text: '未购买' };
-      //营业中
-    }
-  }
-
-  if (is_checked == 1) {//是否审核(1已审 0未审核 -1弃审)
-    return check();
-  } else if (is_checked == 0) {//0未审核
-    return {
-      num: 3,
-      text: '审核中' };
-
-  } else if (is_checked == -1) {//-1弃审
-    return {
-      num: 4,
-      text: '弃审' };
-
-  }
-
-}
-function _default(list) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(list) {
   return list.map(function (item) {
-    var tmp = judgeState(item.status, item.is_checked);
     return {
       title: item.name,
       left: item.days + '天后到期',
-      status: tmp.num,
-      statusText: tmp.text,
-      img: item.logo || '/static/img/global/tmpAct.png',
+      status: item.status,
+      is_checked: item.is_checked,
+      statusText: item.status_text,
+      img: item.logo || 'https://ceshiuser.100cms.com/static/dist/account/image/shoplogo.png',
       shopInfo: item };
 
   });
@@ -14308,13 +14369,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           bill: { //订单信息
             billId: item.order_no, //订单号
             billDate: item.create_time, //订单时间
-            billType: item.type_text, //订单类型，分销订单，普通订单
+            billType: !!item.commission > 0 ? '分销订单' : '普通订单', //订单类型，分销订单，普通订单
             billPrice: item.pay_price,
             id: item.id //订单id
           },
           goodsList: goodlist.map(function (item) {//订单商品信息
             return {
-              img: item.thumb, //商品图片
+              img: item.thumb || 'https://ceshiuser.100cms.com/static/dist/shop/image/default_picture.png', //商品图片
               goodName: item.title, //商品名
               color: item.option_title ? item.option_title : '规格：无', //颜色,规格
               size: '', //型号

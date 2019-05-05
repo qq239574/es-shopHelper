@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
   onLaunch: function onLaunch() {var _this = this;
+    var that = this;
     this.Request('getSettings').then(function (res) {
       if (res.error == 0) {
         _this.Cacher.setData('static_resources_domain', res.settings.attachment_root);
       }
     });
+
   },
   onShow: function onShow() {
     console.log('App Show');

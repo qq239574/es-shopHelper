@@ -134,7 +134,9 @@ var searchDay = { value: 'today' };var _default =
 
       } else if (val.title == '自提核销') {
         this.closePageLoading();
-        this.Toast('暂未开放');
+        uni.navigateTo({
+          url: '../../pagesSelfTakeVerify/pages/index?from=home' });
+
       }
     },
     toBill: function toBill(val) {//跳转订单页
@@ -168,7 +170,7 @@ var searchDay = { value: 'today' };var _default =
     },
     initPage: function initPage() {var _this2 = this;
       this.searchData(searchDay); //初始化数据框
-      this.Request('homeInfo').then(function (res) {
+      this.Request('homeInfo', {}).then(function (res) {
         _this2.shopName = res.shop.name;
         _this2.showData = {
           money: res.data.today_payment_amount,

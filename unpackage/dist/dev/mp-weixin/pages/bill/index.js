@@ -50,7 +50,7 @@
 
 
 
-var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
 
 var DataFrom = {};
 var searchData = {};
@@ -78,30 +78,30 @@ var _default = {
       surePaying: false, //正在确认付款？
       showModel: false, //是否显示弹窗
       modelTheme: { //弹窗提示信息
-        title: '手动确认付款',
-        detail: '确保买家已经付款，并且与买家协商完毕确认付款',
-        state: 'pay' },
+        title: '',
+        detail: '',
+        state: '' },
 
       searchValue: '', //查询条件 
       billList: [{ //完整数据
         info: { //订单及用户信息
-          name: '张三', //客户姓名
-          provide: '到店自提', //配送方式
-          num: 4, //商品数量
-          pay: 2165653.453, //实付
+          name: '', //客户姓名
+          provide: '', //配送方式
+          num: 0, //商品数量
+          pay: 0, //实付
           addtion: 0, //备注
-          payType: 'wx', //支付方式
+          payType: '', //支付方式
           subStatus: 0, //订单状态，1：维权
           status: 0 //0代付款,1代发货，2待收货，3已完成，4已关闭
         },
         bill: { //订单信息
-          billId: 'ES204565656526265656565', //订单号
-          billDate: '2018-05-12 15:23:12', //订单时间
+          billId: '', //订单号
+          billDate: '', //订单时间
           billType: 0, //订单类型，0：分销订单，1：普通订单
-          billPrice: 121212 },
+          billPrice: 0 },
 
         goodsList: [{ //订单商品信息
-          img: '/static/img/global/tmp.png', //商品图片
+          img: '', //商品图片
           goodName: '', //商品名
           color: '', //颜色
           size: '', //型号
@@ -110,7 +110,7 @@ var _default = {
           specifications: 'single' //单规格
         }],
         rights: { // 维权信息
-          status: '退款退货', //维权状态
+          status: '', //维权状态
           addition: 0 //维权备注
         } }],
 
@@ -195,7 +195,7 @@ var _default = {
       } else if (DataFrom.from == 'searchShop') {
         searchData = this.Cacher.getData('searchShop') || {};
         this.searchValue = searchData.value || '';
-        this.tabIndex = DataFrom.cateid || 0;
+        this.tabIndex = searchData.cateId || 0;
       } else {
         this.tabIndex = curTab.cateid;
       }
@@ -214,6 +214,7 @@ var _default = {
       curTab = tab;
       this.current = 1;
       this.billList = [];
+      this.tabIndex = tab.cateid;
       this.searching = true;
       this.totalPage = 1;
       _getBillList.default.call(this, tab.cateid, {
@@ -236,7 +237,8 @@ var _default = {
       this.Cacher.setData('bill', {
         from: 'searchShop',
         title: '订单搜索',
-        placeholder: '请输入订单号' });
+        placeholder: '请输入订单号',
+        cateId: this.tabIndex });
 
       uni.navigateTo({
         url: '../../pagesLogin/pages/searchShop?from=bill' });

@@ -49,8 +49,11 @@
 //
 //
 //
+//
+//
+//
 
-var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 var requesting = false;
 var canLogin = false; //可否登录 
@@ -76,14 +79,38 @@ var DataFrom = {};var _default =
 
   onLoad: function onLoad(option) {
     // uni.clearStorage();//清空缓存
+    var that = this;
     DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
     this.initPage();
     if (!DataFrom.from) {} else {}
+    uni.getProvider({
+      service: 'oauth',
+      success: function success(res) {
+        if (~res.provider.indexOf('weixin')) {
+          uni.login({
+            provider: 'weixin',
+            success: function success(loginRes) {
+              console.log('weixin>>>', loginRes);
+              that.Request('wechatLogin', {
+                code: loginRes.code }).
+              then(function (res) {
+                if (res.error == 0) {}
+              }).catch(function (res) {
+                console.log('res》》》', res);
+              });
+            } });
+
+        }
+      } });
+
   },
   mounted: function mounted() {
     this.closePageLoading();
   },
   methods: {
+    clickButton: function clickButton() {
+      console.log('object');
+    },
     initPage: function initPage() {
       this.openEye = false;
       canLogin = false;

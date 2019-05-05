@@ -1,0 +1,10 @@
+.bill-card.data-v-01442542 {
+  width: 710rpx;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background: #fff;
+  border-radius: 8rpx;
+  margin: 0 auto 20rpx;
+}
+

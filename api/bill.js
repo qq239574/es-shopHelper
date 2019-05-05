@@ -195,3 +195,49 @@ export const billDetail = {
     },
     type: 'get'
 }
+
+export const selfVerifyLog = { //核销or自提历史列表
+    url: '/shop/manage/order/verify/verify-log',
+    data: {
+        page: 1, //订单id号
+        pagesize: 20,
+        search: ''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const verifyCount = { //自提or核销统计
+    url: '/shop/manage/order/verify/verify-count',
+    data: {
+
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+
+export const getSelfVerifyInfo={//订单自提(获取信息)
+    url: '/shop/manage/order/verify/finish',
+    data: {
+        order_id:'',
+        finish_code:''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+export const postSelfVerifyInfo={//订单自提 
+    url: '/shop/manage/order/verify/finish',
+    data: {
+        order_id:'',
+        finish_code:''
+    },
+    headers: {
+
+    },
+    type: 'post'
+}

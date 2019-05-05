@@ -32,7 +32,10 @@
 		<view class="grace-login-three">
 			<view class="surport">微信登录</view>
 			<view class='surportList'>
-				<image lazy-load src='/static/img/global/wechat.png' @click='loginWithWx'></image>
+				<view class="supporter" @click='loginWithWx'>
+					<image lazy-load src='/static/img/global/wechat.png'></image>
+					<button @click='clickButton' open-type='getUserInfo' bindgetuserinfo="appletLogin" class='appletBtn'> </button>
+				</view>
 			</view>
 		</view>
 		<van-toast id="van-toast" />
@@ -41,7 +44,7 @@
 </template>
 <script>
 	var graceChecker = require("../../graceUI/graceChecker.js");
-	import LongButton from '../../components/my-components/LongButton';
+	import LongButton from '../../components/my-components/LongButton.vue';
 	let requesting = false;
 	let canLogin = false; //可否登录 
 	let sessionId = ''
@@ -66,14 +69,38 @@
 		},
 		onLoad(option) {
 			// uni.clearStorage();//清空缓存
+			let that=this;
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
 			if (!DataFrom.from) {} else {}
+			uni.getProvider({
+				service: 'oauth',
+				success: function(res) {
+					if (~res.provider.indexOf('weixin')) {
+						uni.login({
+							provider: 'weixin',
+							success: function(loginRes) {
+								console.log('weixin>>>', loginRes);
+								that.Request('wechatLogin', {
+									code: loginRes.code
+								}).then(res => {
+									if (res.error == 0) {}
+								}).catch(res => {
+									console.log('res》》》', res)
+								})
+							}
+						});
+					}
+				}
+			});
 		},
 		mounted() {
 			this.closePageLoading()
 		},
 		methods: {
+			clickButton() {
+				console.log('object')
+			},
 			initPage() {
 				this.openEye = false;
 				canLogin = false;
@@ -191,11 +218,25 @@
 				height: 80upx;
 				text-align: center;
 				margin: 0 auto 20upx;
-				image {
-					display: inline-block;
+				.supporter {
 					width: 80upx;
 					height: 80upx;
-					border-radius: 50%;
+					display: inline-block;
+					position: relative;
+					button,
+					image {
+						width: 80upx;
+						height: 80upx;
+						border-radius: 50%;
+						padding: 0;
+						margin: 0;
+						position: absolute;
+						top: 0;
+						left: 0;
+					}
+					button {
+						opacity: 0;
+					}
 				}
 			}
 		}

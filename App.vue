@@ -2,11 +2,13 @@
 	import cacher from './store/cache.js'
 	export default {
 		onLaunch: function() {
+			let that = this;
 			this.Request('getSettings').then(res => {
 				if (res.error == 0) {
 					this.Cacher.setData('static_resources_domain', res.settings.attachment_root)
-				} 
-			})
+				}
+			});
+			
 		},
 		onShow: function() {
 			console.log('App Show');

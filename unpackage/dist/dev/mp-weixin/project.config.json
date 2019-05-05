@@ -33,20 +33,41 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
-					"name": "good",
-					"pathName": "pages/commodity/index",
+					"name": "selfvery",
+					"pathName": "pagesSelfTakeVerify/pages/index",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": 1,
-					"name": "gooddetail",
-					"pathName": "pagesCommodity/pages/index",
-					"query": "from=good",
+					"id": -1,
+					"name": "history",
+					"pathName": "pagesSelfTakeVerify/pages/historyRecord",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "selectShops",
+					"pathName": "pagesLogin/pages/selectShop",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bill",
+					"pathName": "pages/bill/index",
+					"query": "",
 					"scene": null
 				}
 			]

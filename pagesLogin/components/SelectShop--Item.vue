@@ -1,14 +1,14 @@
 <template>
     <view class='shops-list'>
-        <view class='shop-block' @click='select(shop)' v-for='(shop,index) in shops' :key='index' :class="states[shop.status].id">
-            <image :src='shop.img'></image>
+        <view class='shop-block' @click='select(shop)' v-for='(shop,index) in shops' :key='index' :class="states[shop.statusText]||'disable'">
+            <image :src='shop.img' lazy-load style='border-radius:50%;'></image>
             <view class="info">
                 <view class="title">{{shop.title}}</view>
                 <view class="date">{{shop.left}}</view>
             </view>
             <view class="status">
-                <view class="tab" :class='states[shop.status].id'>
-                    {{states[shop.status].name}}
+                <view class="tab"  :class="states[shop.statusText]||'disable'">
+                    {{shop.statusText}}
                 </view>
             </view>
             <view class="icon grace-icons icon-arrow-right" style='color:#5E5E5E;'></view>
@@ -31,46 +31,33 @@
                     title: '',
                     left: '',
                     status: 0,
-                    img: ''
+                    is_checked: 0,
+                    statusText: "",
+                    img: '',
+                    shopInfo: {}
                 }]
             },
-            total:{
-                type:Number,
-                default:0
+            total: {
+                type: Number,
+                default: 0
             }
-        },
+        }, 
         data() {
             return {
-                states: [{
-                    id: 'busy',
-                    name: '营业中'
-                }, {
-                    id: 'close',
-                    name: '已打烊'
-                }, {
-                    id: 'exc',
-                    name: '已过期'
-                }, {
-                    id: 'examing',
-                    name: '审核中'
-                }, {
-                    id: 'disable',
-                    name: '弃审'
-                }, {
-                    id: 'disable',
-                    name: '未购买'
-                }, {
-                    id: 'disable',
-                    name: '已禁用'
-                }]
+                states: {
+                    '营业中': 'busy',
+                    "已打烊": "close",
+                    "已过期": "exc",
+                    "已禁用": "disable"
+                }
             }
         },
         methods: {
+            
             bgGray(shop) {
                 return (this.shop.id == 'disable' || this.shop.id == 'examing') ? 'background:"#f4f4f4"' : '';
             },
             select(item) {
-                console.log(item)
                 if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期') { //营业中、已打烊、已过期的店铺，点击进入小程序
                     this.$emit('click', item)
                 } else {

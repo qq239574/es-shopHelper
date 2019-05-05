@@ -88,6 +88,8 @@
                     width: 100%;
                     font-size: 28upx;
                     line-height: 36upx;
+                    height:72upx;
+                    overflow:hidden;
                 }
                 .good-others {
                     width: 100%;

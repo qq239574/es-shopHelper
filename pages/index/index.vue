@@ -124,7 +124,9 @@
                     })
                 } else if (val.title == '自提核销') {
                     this.closePageLoading();
-                    this.Toast('暂未开放')
+                    uni.navigateTo({
+                        url:'../../pagesSelfTakeVerify/pages/index?from=home'
+                    })
                 }
             },
             toBill(val) { //跳转订单页
@@ -158,7 +160,7 @@
             },
             initPage() {
                 this.searchData(searchDay); //初始化数据框
-                this.Request('homeInfo').then(res => {
+                this.Request('homeInfo',{}).then(res => {
                     this.shopName = res.shop.name;
                     this.showData = {
                         money: res.data.today_payment_amount,

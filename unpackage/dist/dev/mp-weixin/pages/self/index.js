@@ -48,7 +48,6 @@ var DataFrom = {};var _default =
   },
   methods: {
     initPage: function initPage() {var _this = this;
-
       this.Request('myInfo').then(function (res) {
         _this.userName = res.user.username;
         _this.userTel = res.user.contact_mobile;
@@ -94,6 +93,12 @@ var DataFrom = {};var _default =
     clickManager: function clickManager() {},
     bindWX: function bindWX() {
       this.closePageLoading();
+      this.Request('bindWechat', {
+        encrypted_data: '',
+        session_key: '',
+        iv: '',
+        user_id: '' });
+
       this.Toast('绑定微信成功');
     },
     leave: function leave() {var _this2 = this;

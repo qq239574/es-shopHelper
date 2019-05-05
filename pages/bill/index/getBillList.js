@@ -27,13 +27,13 @@ export default function (tabid, data) {
                     bill: { //订单信息
                         billId: item.order_no, //订单号
                         billDate: item.create_time, //订单时间
-                        billType: item.type_text, //订单类型，分销订单，普通订单
+                        billType: !!item.commission>0?'分销订单':'普通订单', //订单类型，分销订单，普通订单
                         billPrice: item.pay_price,
                         id: item.id,//订单id
                     },
                     goodsList: goodlist.map(item => { //订单商品信息
                         return {
-                            img: item.thumb, //商品图片
+                            img: item.thumb||'https://ceshiuser.100cms.com/static/dist/shop/image/default_picture.png', //商品图片
                             goodName: item.title, //商品名
                             color: item.option_title ? item.option_title : '规格：无', //颜色,规格
                             size: '', //型号
