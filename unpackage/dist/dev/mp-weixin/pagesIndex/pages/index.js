@@ -81,9 +81,6 @@ var initdata = [{
       dataList: initdata };
 
   },
-  onLoad: function onLoad() {
-    this.initPage();
-  },
   onShow: function onShow() {
     this.initPage();
   },
@@ -120,10 +117,10 @@ var initdata = [{
       if (!initing) {
         initing = true;
         this.pageLoading();
-        this.initLine1([0, 0, 0, 0, 0, 0, 0]);
-        this.initLine2([0, 0, 0, 0, 0, 0, 0]);
-        this.initLine3([0, 0, 0, 0, 0, 0, 0]);
-        this.initLine4([0, 0, 0, 0, 0, 0, 0]);
+        // this.initLine1([0, 0, 0, 0, 0, 0, 0]);
+        // this.initLine2([0, 0, 0, 0, 0, 0, 0]);
+        // this.initLine3([0, 0, 0, 0, 0, 0, 0]);
+        // this.initLine4([0, 0, 0, 0, 0, 0, 0]);
         this.Request('getStatisticsData', { //今天的数据
           is_yesterday: 0 }).
         then(function (res) {

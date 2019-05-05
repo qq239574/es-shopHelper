@@ -6,9 +6,10 @@ export default function () { //数字累加效果
     let cachenum = 0;
     let gap = 0;
     let rate = 0;
+    let time = 0
     this.start = function (num, fun) {
-
-        bar = requestAnimationFrame(function (time) {
+        time = new Date().getTime()
+        bar = setTimeout(function () {
             cachetime = cachetime == 0 ? time : cachetime;
             gap = time - cachetime;
             cachetime = time;
@@ -19,10 +20,9 @@ export default function () { //数字累加效果
                 that.start(num, fun);
             } else {
                 fun(num)
-                cancelAnimationFrame(bar);
-            }
-
-        })
+                clearTimeout(bar);
+            } 
+        },60)
 
     }
 }

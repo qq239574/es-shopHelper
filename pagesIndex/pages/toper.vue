@@ -35,13 +35,11 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
-            this.initPage();
         },
         onShow() {
             this.initPage();
         },
         onPullDownRefresh() {
-            
             this.initPage();
         },
         methods: {
@@ -58,11 +56,13 @@
                     api = 'goodsTop10';
                 }
                 this.pageLabel = DataGo.date[2];
+                this.pageLoading();
                 this.Request(api, {
                     type: 4, //	1:今天，2:昨天，3:7天，4:自定义
                     start: DataGo.date[0], //	自定义开始时间
                     end: DataGo.date[1] //	自定义结束时间
                 }).then(res => {
+                    this.closePageLoading();
                     let arr = [];
                     for (let k in res) {
                         if (k !== 'error') {
@@ -84,6 +84,9 @@
                             index: item.goods_id
                         }))
                     }
+                }).catch(res => {
+                    this.closePageLoading();
+                    this.Toast(res.message)
                 })
             },
             filteDate() {

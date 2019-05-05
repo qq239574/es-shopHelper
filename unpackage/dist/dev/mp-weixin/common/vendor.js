@@ -11604,9 +11604,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   var cachenum = 0;
   var gap = 0;
   var rate = 0;
+  var time = 0;
   this.start = function (num, fun) {
-
-    bar = requestAnimationFrame(function (time) {
+    time = new Date().getTime();
+    bar = setTimeout(function () {
       cachetime = cachetime == 0 ? time : cachetime;
       gap = time - cachetime;
       cachetime = time;
@@ -11617,10 +11618,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         that.start(num, fun);
       } else {
         fun(num);
-        cancelAnimationFrame(bar);
+        clearTimeout(bar);
       }
-
-    });
+    }, 60);
 
   };
 }
@@ -14106,141 +14106,92 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.getLineOption1 = getLineOption1;exports.getLineOption2 = getLineOption2;exports.getLineOption3 = getLineOption3;exports.getLineOption4 = getLineOption4;function fillArr(list) {
   return list.map(function (item) {return '';});
 }
-function getLineOption1(datalist) {
-  return {
-    animation: true,
-    color: ['#fff'],
-    grid: {
-      x: 0,
-      x2: 0,
-      y: 0,
-      y2: 0
-      // show:false
+var common = {
+  animation: true,
+  color: ['#fff'],
+  grid: {
+    x: 0,
+    x2: 0,
+    y: 0,
+    y2: 0
+    // show:false
+  },
+  calculable: false,
+  yAxis: [{
+    type: 'value',
+    show: false,
+    splitArea: {
+      show: true },
+
+    min: function min(val) {
+      return Math.floor(val.min - Math.ceil(0.1 * (val.max - val.min)));
     },
-    calculable: false,
+    max: function max(val) {
+      return val.max * 1.1;
+    } }] };
+
+
+function getLineOption1(datalist) {
+  return Object.assign({}, common, {
     xAxis: [{
       type: 'category',
       data: fillArr(datalist),
       show: false }],
-
-    yAxis: [{
-      type: 'value',
-      show: false,
-      splitArea: {
-        show: true },
-
-      min: function min(val) {
-        return val.min * 0.8;
-      },
-      max: function max(val) {
-        return val.max * 1.1;
-      } }],
 
     series: [{
       name: '',
       type: 'line',
       smooth: true,
       symbol: "none",
-      data: datalist }] };
+      data: datalist }] });
 
 
 }
 function getLineOption2(datalist) {
-  return {
-    animation: true,
-    color: ['#fff'],
-    grid: {
-      x: 0,
-      x2: 0,
-      y: 0,
-      y2: 0
-      // show:false
-    },
-    calculable: false,
+  return Object.assign({}, common, {
     xAxis: [{
       type: 'category',
       data: fillArr(datalist),
       show: false }],
-
-    yAxis: [{
-      type: 'value',
-      show: false,
-      splitArea: {
-        show: true } }],
-
 
     series: [{
       name: '',
       type: 'line',
       smooth: true,
       symbol: "none",
-      data: datalist }] };
+      data: datalist }] });
 
 
 }
 function getLineOption3(datalist) {
-  return {
-    animation: true,
-    color: ['#fff'],
-    grid: {
-      x: 0,
-      x2: 0,
-      y: 0,
-      y2: 0
-      // show:false
-    },
-    calculable: false,
+  return Object.assign({}, common, {
     xAxis: [{
       type: 'category',
       data: fillArr(datalist),
       show: false }],
-
-    yAxis: [{
-      type: 'value',
-      show: false,
-      splitArea: {
-        show: true } }],
-
 
     series: [{
       name: '',
       type: 'line',
       smooth: true,
       symbol: "none",
-      data: datalist }] };
+      data: datalist }] });
 
 
 }
 function getLineOption4(datalist) {
-  return {
-    animation: true,
-    color: ['#fff'],
-    grid: {
-      x: 0,
-      x2: 0,
-      y: 0,
-      y2: 0
-      // show:false
-    },
-    calculable: false,
+  return Object.assign({}, common, {
     xAxis: [{
       type: 'category',
       data: fillArr(datalist),
       show: false }],
-
-    yAxis: [{
-      type: 'value',
-      show: false,
-      splitArea: {
-        show: true } }],
-
 
     series: [{
       name: '',
       type: 'line',
       smooth: true,
       symbol: "none",
-      data: datalist }] };
+      data: datalist }] });
 
 
 }

@@ -5,7 +5,7 @@
             <TabCard :categories='categories' @tabChange='tabChange'></TabCard>
         </view>
         <view class='margin180'></view>
-        <Card @click='clickGood' :goodsList='goodsList' :toggle='toggle'></Card>
+        <Card @click='clickGood' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'></Card>
         <nodata type='noresult' tip='没有搜索到相关商品' v-if='!searching&&!goodsList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -28,7 +28,7 @@
 <script>
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
-    import Card from './index/goodsList.vue'; 
+    import Card from './index/goodsList.vue';
     import categories from './index/categories.js'
     import getGoodsList from './index/getGoodsList.js'
     import nodata from '../../components/my-components/nodata.vue'
@@ -108,6 +108,7 @@
                 };
                 if (DataGo.go == 'searchShop') {
                     this.searchValue = DataGo.value;
+                    this.Cacher.clearData('searchShop');
                 } else {
                     this.searchValue = '';
                 }

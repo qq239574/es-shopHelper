@@ -118,6 +118,7 @@ var curTab = {
 
       if (DataGo.go == 'searchShop') {
         this.searchValue = DataGo.value;
+        this.Cacher.clearData('searchShop');
       } else {
         this.searchValue = '';
       }

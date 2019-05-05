@@ -184,6 +184,7 @@
                     }
                 } else if (DataFrom.from == 'searchShop') {
                     searchData = this.Cacher.getData('searchShop') || {};
+                    this.Cacher.clearData('searchShop');
                     this.searchValue = searchData.value || '';
                     this.tabIndex = searchData.cateId || 0;
                 } else {
