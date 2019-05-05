@@ -59,8 +59,14 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
         };} } },
 
 
-
   computed: {
+    canSendGood: function canSendGood() {//判断可否发货
+      if (this.info.groups_success == 1 || this.info.groups_success === undefined) {
+        return !!this.info.send_able ? "primary" : "disable";
+      } else {
+        return "disable";
+      }
+    },
     showPayType: function showPayType() {
       return this.info.status != 0 && this.info.status != 4 && this.info.payType == "wx";
     } },

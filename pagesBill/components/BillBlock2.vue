@@ -9,7 +9,7 @@
             <view class="body bill__item" slot='mid'>{{info.payTime}}</view>
         </cellBlock>
         <!-- //订单状态 -2退款完成。-1取消状态。 0普通状态。1为已付款。2为已发货。3为已完成。 -->
-        <cellBlock v-if='info&&info.billStatus!=0&&info.billStatus!=1'>
+        <cellBlock v-if='info&&info.billStatus!=0&&info.billStatus!=1&&info.billStatus!=2'>
             <view class="label bill__item" slot='pre'>收货时间：</view>
             <view class="body bill__item" slot='mid'>{{info.receiveTime}}</view>
         </cellBlock>

@@ -1,7 +1,13 @@
 export default function (tabid, data) {
 
     let billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', ];
+    let rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
 
+        '0': "无效",
+        '1': "仅退款",
+        '2': "退款退货",
+        '3': "换货",
+    }
     return new Promise((resolve, reject) => {
         this.Request(billtype[tabid], data).then(res => {
             let list = [];
@@ -23,17 +29,19 @@ export default function (tabid, data) {
                         payType: item.pay_type, //支付方式
                         subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
                         status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+                        send_able: item.send_able, // 是否可发货
+                        groups_success: item.groups_success,///拼团结果
                     },
                     bill: { //订单信息
                         billId: item.order_no, //订单号
                         billDate: item.create_time, //订单时间
-                        billType: !!item.commission>0?'分销订单':'普通订单', //订单类型，分销订单，普通订单
+                        billType: !!item.commission > 0 ? '分销订单' : '普通订单', //订单类型，分销订单，普通订单
                         billPrice: item.pay_price,
-                        id: item.id,//订单id
+                        id: item.id, //订单id
                     },
                     goodsList: goodlist.map(item => { //订单商品信息
                         return {
-                            img: item.thumb||'https://ceshiuser.100cms.com/static/dist/shop/image/default_picture.png', //商品图片
+                            img: item.thumb || 'https://ceshiuser.100cms.com/static/dist/shop/image/default_picture.png', //商品图片
                             goodName: item.title, //商品名
                             color: item.option_title ? item.option_title : '规格：无', //颜色,规格
                             size: '', //型号
@@ -41,10 +49,15 @@ export default function (tabid, data) {
                             price: item.price_unit, //价格
                             specifications: item.option_title ? 'multi' : 'single', //单规格,多规格
                             id: item.id,
+                            rightStatus: item.refund_status, //-2取消 -1拒绝 0 申请 1完成  2（没用到） 3通过 4 买家填写退货快递单号 5 卖家填写换货快递单号
+                            rightsType: item.refund_type, //0 无效 1 仅退款 2 退款退货 3 换货
+                            rightsTypeText: rightsTypeText[item.refund_type]
                         }
                     }),
-                    rights: { // 维权信息
-                        status: '退款退货', //维权状态
+                    rights: { // 维权信息 
+                        status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+                        groups_success: item.groups_success,///拼团结果
+                        send_able: item.send_able, // 是否可发货
                         addition: item.remark_num, //维权备注
                         subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
                     }

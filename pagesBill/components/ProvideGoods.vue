@@ -9,8 +9,8 @@
             <!-- <radio-group name="danxuan" @change='changeSelect'> -->
             <view class="card--good-item" v-for='(item,index) in goodsList' :key='index' @click='clickGood(item,index)'>
                 <view class='radio-box'>
-                    <radio class='radio' :value="index" :checked='true' color='#fd6b3e' v-if='!item.status&&defaultIndex[index]'></radio>
-                    <radio class='radio' :value="index" :checked='false' color='#fd6b3e' v-if='!item.status&&!defaultIndex[index]'></radio>
+                    <radio class='radio' :value="index" :checked='true' color='#fd6b3e' v-if='(!item.status&&!item.refund_type)&&defaultIndex[index]'></radio>
+                    <radio class='radio' :value="index" :checked='false' color='#fd6b3e' v-if='(!item.status&&!item.refund_type)&&!defaultIndex[index]'></radio>
                 </view>
                 <view class="imgbox">
                     <image :src='item.img'></image>
@@ -24,7 +24,8 @@
                             <view>{{item.color+' '+item.size}}</view>
                             <view style='color:#fb6638;'> x {{item.num}}</view>
                         </view>
-                        <view class="status" v-show='item.status'>已发货</view>
+                        <view class="status" v-show='item.status&&!item.refund_type'>已发货</view>
+                        <view class="status" v-show='item.refund_type'>维权中</view>
                     </view>
                 </view>
             </view>
@@ -51,7 +52,7 @@
                         num: 0,
                         price: '0',
                         status: 0, //0未发货
-                    },]
+                    }, ]
                 }
             }
         },
@@ -70,7 +71,7 @@
                 let tmp = cachelist[index];
                 cachelist[index] = !tmp;
                 this.$emit('click', this.goodsList.filter((item, index) => {
-                    return cachelist[index]&&!item.status
+                    return cachelist[index] && !item.status&&!item.refund_type
                 }));
                 this.defaultIndex = [...cachelist];
             },

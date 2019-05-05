@@ -1,7 +1,7 @@
 <template>
     <view class="bill-provide page">
         <ProvideGoods :goodsList="goodsList" @click="selectedList"></ProvideGoods>
-        <ProvideBlock :info='provideInfo' :cityProvide='cityProvide' @click="clickCell" @change='getDetail'></ProvideBlock>
+        <ProvideBlock :info='provideInfo' :cityProvide='cityProvide' :needProvide='needProvide' @click="clickCell" @change='getDetail'></ProvideBlock>
         <longButton @click="sure">确认发货</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -52,7 +52,7 @@
                     express: [], //物流公司
                 },
                 cityProvide: 0, ////是否同城快递，0快递 1同城
-                needPrivide:0,//是否需要物流 0需要 1不需要
+                needProvide: 0, //是否需要物流 0需要 1不需要
             };
         },
         methods: {
@@ -60,6 +60,7 @@
                 this.provideInfo.provideType = info.provideType;
                 if (!this.cityProvide) { //快递
                     sendBillInfo.no_express = (info.provideType == '商家自配送' || info.provideType == '需要物流') ? 0 : 1;
+                    this.needProvide = info.provideType != '需要物流' ? 1 : 0; //显示隐藏物流公司选项
                 } else {
                     sendBillInfo.city_distribution_type = (info.provideType == '商家自配送' || info.provideType == '需要物流') ? 0 : 1;
                 }
@@ -69,7 +70,7 @@
                     from: 'billProvide',
                     value: val,
                     bill: DataFrom.bill
-                })
+                }) 
                 if (val.name == "备注") {
                     DataGo.go = 'billAddition';
                     uni.navigateTo({
@@ -98,7 +99,7 @@
                     sendBillInfo['order_goods_id[' + index + ']'] = item
                 })
                 let canSend = true;
-                if (!this.cityProvide&&sendBillInfo['no_express'] == 0) {//需要物流
+                if (!this.cityProvide && sendBillInfo['no_express'] == 0) { //需要物流
                     if (!cacheSelected.length) {
                         canSend = false;
                         this.Toast('请选择发货商品')
@@ -110,12 +111,14 @@
                         this.Toast('请填写物流单号')
                     }
                 }
-                console.log(sendBillInfo, 'sendBillInfo//////')
                 if (canSend) {
                     this.pageLoading();
                     this.Request('sendGoods', sendBillInfo).then(res => {
                         this.closePageLoading();
                         uni.navigateBack();
+                    }).catch(res=>{
+                        this.closePageLoading();
+                        this.Toast(res.message)
                     });
                 }
             },
@@ -133,7 +136,6 @@
                         this.provideInfo.provideComp = DataGo.data.label || '请选择';
                         sendBillInfo.express_id = DataGo.data.id;
                     }
-                    console.log(DataGo, 'DataGo')
                     this.Request("canSendGoods", {
                         id: DataFrom.bill.bill.id
                     }).then(res => {
@@ -147,7 +149,8 @@
                                 num: item.total,
                                 price: item.price_unit,
                                 status: item.can_send == 0 ? 1 : 0, //0未发货
-                                goods_id: item.id
+                                goods_id: item.id,
+                                refund_type: item.refund_type * 1, //0 无效 1 仅退款 2 退款退货 3 换货
                             };
                         });
                         cacheSelected = this.goodsList.filter(item => {

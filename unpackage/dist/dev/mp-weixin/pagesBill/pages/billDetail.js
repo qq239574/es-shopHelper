@@ -55,11 +55,6 @@
 
 
 
-
-
-
-
-
 var _createBillDetail = _interopRequireDefault(__webpack_require__(/*! ../components/createBillDetail.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\createBillDetail.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var block0 = function block0() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock0 */ "pagesBill/components/BillBlock0").then(__webpack_require__.bind(null, /*! ../components/BillBlock0.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock0.vue"));};var block1 = function block1() {return Promise.all(/*! import() | pagesBill/components/BillBlock1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/BillBlock1")]).then(__webpack_require__.bind(null, /*! ../components/BillBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock1.vue"));};var block2 = function block2() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock2 */ "pagesBill/components/BillBlock2").then(__webpack_require__.bind(null, /*! ../components/BillBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock2.vue"));};var block3 = function block3() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock3 */ "pagesBill/components/BillBlock3").then(__webpack_require__.bind(null, /*! ../components/BillBlock3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock3.vue"));};var block4 = function block4() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock4 */ "pagesBill/components/BillBlock4").then(__webpack_require__.bind(null, /*! ../components/BillBlock4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock4.vue"));};var goodBlock = function goodBlock() {return Promise.all(/*! import() | pages/bill/index/Card--Good */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/bill/index/Card--Good")]).then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card--Good.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card--Good.vue"));};var expressBlock = function expressBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillExpressInfo */ "pagesBill/components/BillExpressInfo").then(__webpack_require__.bind(null, /*! ../components/BillExpressInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillExpressInfo.vue"));};var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var myRightsBlock = function myRightsBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillRightsBlock */ "pagesBill/components/BillRightsBlock").then(__webpack_require__.bind(null, /*! ../components/BillRightsBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillRightsBlock.vue"));};
 var cacheBill = {}; //缓存将要操作的订单 
 var DataFrom = {};
@@ -116,14 +111,21 @@ var _default = {
         }],
         rights: { // 维权信息
           status: '', //维权状态
-          addition: [{
-            content: '' }]
-          //维权备注
-        } },
+          addition: 0 } },
+
 
       billDetail: {} };
 
   },
+  computed: {
+    canSendGood: function canSendGood() {//判断可否发货
+      if (this.bill.info.groups_success == 1 || this.bill.info.groups_success === undefined) {
+        return !!this.bill.info.send_able ? "primary" : "disable";
+      } else {
+        return "disable";
+      }
+    } },
+
   methods: {
     sure: function sure() {var _this = this;
       this.surePaying = true;
@@ -277,7 +279,6 @@ var _default = {
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
-
     cacheBill = DataFrom;
     this.initPage();
   } };exports.default = _default;

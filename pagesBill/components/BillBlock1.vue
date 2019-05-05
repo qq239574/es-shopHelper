@@ -22,7 +22,7 @@
                 <image class='paytype' :src='getBillOrigin(info&&info.billOrigin)'  ></image>
             </view>
         </cellBlock>
-        <cellBlock>
+        <cellBlock v-if='info.payTypeText&&info.payTypeText!="-"'>
             <!-- //付款方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付 -->
             <view class="label bill__item" slot='pre'>支付方式：</view>
             <view class="body bill__item origin" slot='mid'>

@@ -32,6 +32,11 @@
     color: #fdfdfd;
     background: #ec673e;
 }
+.my-round-button.disable.data-v-be0fc932 {
+    background: #9da3ae;
+    color: #fff;
+    border: none;
+}
 .my-round-button .grace-badge.data-v-be0fc932 {
     position: absolute;
     background: #fb6638;

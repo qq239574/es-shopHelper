@@ -60,8 +60,8 @@
 				type: Number,
 				default: 0
 			},
-			needProvide:{
-					type: Number,
+			needProvide: {
+				type: Number,
 				default: 0
 			}
 		},
@@ -119,7 +119,7 @@
 				}
 			},
 			onConfirm(e) {
-				console.log(e)
+				console.log('aaaaaaaaaa', e)
 				this.$emit('change', Object.assign({}, this.info, {
 					provideType: e.label
 				}))

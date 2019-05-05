@@ -9,7 +9,7 @@
             <view>{{info.provide}}</view>
         </view>
         <view class='card--info__row card--info__footer'>
-            <view class='card--info__footer-item item1'>共{{info.num}}件商品</view>
+            <view class='card--info__footer-item item1'>共{{info.num*1}}件商品</view>
             <view class='card--info__footer-item item2' :style='showPayType?"":"padding-right:0;"' :class='info.payType?"pay-type":""'>应付：
                 <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>（含运费）
                 <image lazy-load src='/static/img/global/product_share_wechat.png' v-if='showPayType'></image>
@@ -19,7 +19,7 @@
             <myButton @click='clickButton("备注")' :badge='info.addtion'>备注</myButton>
             <myButton @click='clickButton("改价")' v-if='info.status=="0"'>改价</myButton>
             <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"'>确认付款</myButton>
-            <myButton type='primary' @click='clickButton("确认发货")' v-if='info.status=="1"'>确认发货</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='info.status=="1"'>确认发货</myButton>
             <myButton type='primary' @click='clickButton("确认收货")' v-if='info.status=="2" '>确认收货</myButton>
         </view>
     </view>
@@ -49,9 +49,15 @@
                 })
             }
         },
-
         computed: {
-            showPayType() { 
+            canSendGood() { //判断可否发货
+                if (this.info.groups_success==1||this.info.groups_success===undefined) {
+                    return !!this.info.send_able ? "primary" : "disable"
+                } else{
+                    return "disable";
+                } 
+            },
+            showPayType() {
                 return (this.info.status != 0 && this.info.status != 4) && this.info.payType == "wx"
             }
         },

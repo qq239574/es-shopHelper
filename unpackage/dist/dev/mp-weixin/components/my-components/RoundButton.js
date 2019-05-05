@@ -38,7 +38,10 @@ var _default =
 
   methods: {
     clickBuntton: function clickBuntton() {
-      this.$emit('click');
+      this.$emit('click', {
+        type: this.type,
+        badge: this.badge });
+
     },
     clickStart: function clickStart() {
       this.tapping = true;

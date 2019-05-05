@@ -23,13 +23,19 @@ export default function (result) {
         },
         "commission_status": -1 //分销状态 0待入账 1已入账
     }; //分销状态
-    console.log(commission)
+    let rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货;商品维权状态
+
+        '0': "无效",
+        '1': "仅退款",
+        '2': "退款退货",
+        '3': "换货",
+    }
     let statusImages = {
         "-2": '/static/img/global/order_detail_state6.png', // -2退款完成
         "-1": "/static/img/global/order_detail_state4.png", //-1取消状态。
-        "0": "/static/img/global/order_detail_state3.png", //  0普通状态
-        "1": "/static/img/global/order_detail_state1.png", // 1为已付款
-        "2": "/static/img/global/order_detail_state2.png", // 2为已发货
+        "0": "/static/img/global/order_detail_state1.png", //  0普通状态
+        "1": "/static/img/global/order_detail_state2.png", // 1为已付款
+        "2": "/static/img/global/order_detail_state3.png", // 2为已发货
         "3": "/static/img/global/order_detail_state5.png", // 3为已完成。
     }
     let commisionState = ['待入账', '已入账']; //分销状态
@@ -80,14 +86,14 @@ export default function (result) {
                 money: commission.agent_level1 && commission.agent_level1.commission || '',
             }, //一级分销商
             secondOne: {
-                name: commission.agent_level2&&commission.agent_level2.nickname||'',
-                tel: commission.agent_level2&&commission.agent_level2.mobile||'',
-                money: commission.agent_level2&&commission.agent_level2.commission||''
+                name: commission.agent_level2 && commission.agent_level2.nickname || '',
+                tel: commission.agent_level2 && commission.agent_level2.mobile || '',
+                money: commission.agent_level2 && commission.agent_level2.commission || ''
             }, //二级分销商
             thirdOne: {
-                name: commission.agent_level3&&commission.agent_level3.nickname||'',
-                tel: commission.agent_level3&&commission.agent_level3.mobile||'',
-                money: commission.agent_level3&&commission.agent_level3.commission||''
+                name: commission.agent_level3 && commission.agent_level3.nickname || '',
+                tel: commission.agent_level3 && commission.agent_level3.mobile || '',
+                money: commission.agent_level3 && commission.agent_level3.commission || ''
             } //三级分销商
         },
         billInfo6: [...result.goods_waits.map(item => { //未发货的商品
@@ -105,7 +111,7 @@ export default function (result) {
                     discount: item.price_discount, //折扣
                     total: item.price_original, //小计
                     refund_status: item.refund_status, //维权状态 0 无维权 1 正在维权 2 维权处理完成
-                    refund_id: item.refund_id, //维权id 0：无维权
+                    refund_id: item.refund_id, //维权id 0：无维权 
                 }],
                 billInfo: { //订单信息 
                     sendTime: '', //发货时间
@@ -144,7 +150,7 @@ export default function (result) {
         })],
         billInfo7: {
             goodTotal: result.order.goods_price, //商品总计
-            vipCount: extra_price_package.member_discount||0, //会员折扣
+            vipCount: extra_price_package.member_price || 0, //会员折扣
             sendCost: result.order.dispatch_price, //运费
             total: result.order.pay_price, //合计
             rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成

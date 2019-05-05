@@ -28,7 +28,10 @@
         },
         methods: {
             clickBuntton() {
-                this.$emit('click')
+                this.$emit('click',{
+                    type:this.type,
+                    badge:this.badge
+                })
             },
             clickStart() {
                 this.tapping = true;
@@ -70,6 +73,11 @@
             border: none;
             color: #fdfdfd;
             background: #ec673e;
+        }
+        &.disable{
+            background: #9da3ae;
+            color:#fff;
+            border: none;
         }
         .grace-badge {
             position: absolute;

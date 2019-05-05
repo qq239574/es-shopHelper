@@ -22,7 +22,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-
 {
   props: {
     rights: {
@@ -37,6 +36,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   components: {
     myButton: myButton },
 
+  computed: {
+    canSendGood: function canSendGood() {//判断可否发货
+      if (this.rights.groups_success == 1 || this.rights.groups_success === undefined) {
+        return !!this.rights.send_able ? "primary" : "disable";
+      } else {
+        return "disable";
+      }
+    } },
+
   methods: {
     clickBill: function clickBill() {
       this.$emit('click', {
@@ -50,7 +58,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.$emit('click', {
         type: 'button',
         detail: {
-          val: val } });
+          val: val,
+          righting: false } });
 
 
     } } };exports.default = _default2;

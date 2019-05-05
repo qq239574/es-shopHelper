@@ -1,11 +1,10 @@
 <template>
     <view class='card--temp' v-if='rights.subStatus==1' @click='clickBill'>
-        <view class='card--info__row' v-if='rights.subStatus==1'>
-            <view class='card--info__row__tile'>维权状态</view>
-            <view class='card--info__row__status'>{{rights.status}}</view>
-        </view>
         <view class="button-group">
             <myButton :badge='rights.addition' @click='clickButton("维权备注")'>备注</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='rights.status=="0"'>确认付款</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='rights.status=="1"'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='rights.status=="2" '>确认收货</myButton>
             <myButton type='primary' @click='clickButton("维权中")' v-if='rights.subStatus==1'>维权中</myButton>
         </view>
     </view>
@@ -27,20 +26,30 @@
         components: {
             myButton
         },
-        methods: { 
-            clickBill(){
-                this.$emit('click',{
-                    type:'rights',
-                    detail:{
-                        val:this.rights
+        computed: {
+            canSendGood() { //判断可否发货
+                if (this.rights.groups_success == 1 || this.rights.groups_success === undefined) {
+                    return !!this.rights.send_able ? "primary" : "disable"
+                } else {
+                    return "disable";
+                }
+            },
+        },
+        methods: {
+            clickBill() {
+                this.$emit('click', {
+                    type: 'rights',
+                    detail: {
+                        val: this.rights
                     }
                 })
             },
             clickButton(val) {
-                this.$emit('click',{
-                    type:'button',
-                    detail:{
-                        val
+                this.$emit('click', {
+                    type: 'button',
+                    detail: {
+                        val,
+                        righting: false
                     }
                 })
             }

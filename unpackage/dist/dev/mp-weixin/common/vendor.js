@@ -13162,13 +13162,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
     "commission_status": -1 //分销状态 0待入账 1已入账
   }; //分销状态
-  console.log(commission);
+  var rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货;商品维权状态
+
+    '0': "无效",
+    '1': "仅退款",
+    '2': "退款退货",
+    '3': "换货" };
+
   var statusImages = {
     "-2": '/static/img/global/order_detail_state6.png', // -2退款完成
     "-1": "/static/img/global/order_detail_state4.png", //-1取消状态。
-    "0": "/static/img/global/order_detail_state3.png", //  0普通状态
-    "1": "/static/img/global/order_detail_state1.png", // 1为已付款
-    "2": "/static/img/global/order_detail_state2.png", // 2为已发货
+    "0": "/static/img/global/order_detail_state1.png", //  0普通状态
+    "1": "/static/img/global/order_detail_state2.png", // 1为已付款
+    "2": "/static/img/global/order_detail_state3.png", // 2为已发货
     "3": "/static/img/global/order_detail_state5.png" // 3为已完成。
   };
   var commisionState = ['待入账', '已入账']; //分销状态
@@ -13244,7 +13250,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           discount: item.price_discount, //折扣
           total: item.price_original, //小计
           refund_status: item.refund_status, //维权状态 0 无维权 1 正在维权 2 维权处理完成
-          refund_id: item.refund_id //维权id 0：无维权
+          refund_id: item.refund_id //维权id 0：无维权 
         }],
         billInfo: { //订单信息 
           sendTime: '', //发货时间
@@ -13283,7 +13289,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     }))),
     billInfo7: {
       goodTotal: result.order.goods_price, //商品总计
-      vipCount: extra_price_package.member_discount || 0, //会员折扣
+      vipCount: extra_price_package.member_price || 0, //会员折扣
       sendCost: result.order.dispatch_price, //运费
       total: result.order.pay_price, //合计
       rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成
@@ -14343,6 +14349,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(tabid, data) {var _this = this;
 
   var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
+  var rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
+
+    '0': "无效",
+    '1': "仅退款",
+    '2': "退款退货",
+    '3': "换货" };
 
   return new Promise(function (resolve, reject) {
     _this.Request(billtype[tabid], data).then(function (res) {
@@ -14364,7 +14376,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
             addtion: item.remark_num, //备注数量
             payType: item.pay_type, //支付方式
             subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
-            status: tabid //0代付款,1代发货，2待收货，3已完成，4已关闭
+            status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+            send_able: item.send_able, // 是否可发货
+            groups_success: item.groups_success ///拼团结果
           },
           bill: { //订单信息
             billId: item.order_no, //订单号
@@ -14382,11 +14396,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
               num: item.total, //数量
               price: item.price_unit, //价格
               specifications: item.option_title ? 'multi' : 'single', //单规格,多规格
-              id: item.id };
+              id: item.id,
+              rightStatus: item.refund_status, //-2取消 -1拒绝 0 申请 1完成  2（没用到） 3通过 4 买家填写退货快递单号 5 卖家填写换货快递单号
+              rightsType: item.refund_type, //0 无效 1 仅退款 2 退款退货 3 换货
+              rightsTypeText: rightsTypeText[item.refund_type] };
 
           }),
-          rights: { // 维权信息
-            status: '退款退货', //维权状态
+          rights: { // 维权信息 
+            status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+            groups_success: item.groups_success, ///拼团结果
+            send_able: item.send_able, // 是否可发货
             addition: item.remark_num, //维权备注
             subStatus: item.is_refund // //订单状态// 0 无维权 1 正在维权中 2 维权过
           } };

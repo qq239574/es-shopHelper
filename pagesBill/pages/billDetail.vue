@@ -13,17 +13,12 @@
             <myRightsBlock :rights='billDetail.billInfo7'></myRightsBlock>
         </view>
         <view class="button-group">
-            <block v-if='!bill.info.subStatus'>
-                <myButton :badge='badgeNum' @click='clickButton("维权备注")'>备注</myButton>
-                <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"'>改价</myButton>
-                <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"'>确认付款</myButton>
-                <myButton type='primary' @click='clickButton("确认发货")' v-if='bill.info.status=="1"'>确认发货</myButton>
-                <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"'>确认收货</myButton>
-            </block>
-            <block v-else>
-                <myButton :badge='bill.rights.addition.length' @click='clickButton("维权备注")'>备注</myButton>
-                <myButton type='primary' @click='clickButton("维权中")'>维权中</myButton>
-            </block>
+            <myButton :badge='badgeNum' @click='clickButton("维权备注")'>备注</myButton>
+            <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"'>改价</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"'>确认付款</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"'>确认收货</myButton>
+            <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus'>维权中</myButton>
         </view>
         <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
@@ -51,7 +46,7 @@
     import myButton from '../../components/my-components/RoundButton';
     import myRightsBlock from '../components/BillRightsBlock.vue';
     import createBillDetail from '../components/createBillDetail.js';
-     let cacheBill = {}; //缓存将要操作的订单 
+    let cacheBill = {}; //缓存将要操作的订单 
     let DataFrom = {};
     let surePassword = ''; //手动确认付款密码 
     export default {
@@ -106,13 +101,20 @@
                     }],
                     rights: { // 维权信息
                         status: '', //维权状态
-                        addition: [{
-                            content: ''
-                        }], //维权备注
+                        addition: 0
                     }
                 },
                 billDetail: {}
             }
+        },
+        computed: {
+            canSendGood() { //判断可否发货
+                if (this.bill.info.groups_success == 1 || this.bill.info.groups_success === undefined) {
+                    return !!this.bill.info.send_able ? "primary" : "disable"
+                } else {
+                    return "disable";
+                }
+            },
         },
         methods: {
             sure() {
@@ -123,7 +125,7 @@
                     apiname = apiNames[0];
                 } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
-                } 
+                }
                 this.Request(apiname, {
                     id: cacheBill.bill.bill.id, //订单id
                     password: surePassword
@@ -267,8 +269,7 @@
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
-
-            cacheBill=DataFrom;
+            cacheBill = DataFrom;
             this.initPage();
         },
     }

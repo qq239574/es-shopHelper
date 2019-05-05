@@ -31,6 +31,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
 var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
 //
 //
@@ -53,13 +59,13 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
 //
 //
 //
-var _default2 = { methods: { clickGood: function clickGood(item) {this.$emit('click', { type: 'good', detail: { val: item } });}, formatePrice: function formatePrice(val) {return (0, _formater.number_format)(val, 2, '.', ',');} }, props: { goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png',
-          goodName: '',
-          color: '',
-          size: '',
-          num: 0,
-          price: '',
-          specifications: 'single' //单规格，multi多规格
+//
+//
+//
+//
+//
+//
+var _default2 = { methods: { clickGood: function clickGood(item) {this.$emit('click', { type: 'good', detail: { val: item } });}, formatePrice: function formatePrice(val) {return (0, _formater.number_format)(val, 2, '.', ',');} }, props: { goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png', goodName: '', color: '', size: '', num: 0, price: '', specifications: 'single' //单规格，multi多规格
         }];
       } } } };exports.default = _default2;
 

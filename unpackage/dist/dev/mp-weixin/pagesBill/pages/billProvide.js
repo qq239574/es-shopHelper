@@ -62,7 +62,7 @@ var _default = {
         express: [] //物流公司
       },
       cityProvide: 0, ////是否同城快递，0快递 1同城
-      needPrivide: 0 //是否需要物流 0需要 1不需要
+      needProvide: 0 //是否需要物流 0需要 1不需要
     };
   },
   methods: {
@@ -70,6 +70,7 @@ var _default = {
       this.provideInfo.provideType = info.provideType;
       if (!this.cityProvide) {//快递
         sendBillInfo.no_express = info.provideType == '商家自配送' || info.provideType == '需要物流' ? 0 : 1;
+        this.needProvide = info.provideType != '需要物流' ? 1 : 0; //显示隐藏物流公司选项
       } else {
         sendBillInfo.city_distribution_type = info.provideType == '商家自配送' || info.provideType == '需要物流' ? 0 : 1;
       }
@@ -120,12 +121,14 @@ var _default = {
           this.Toast('请填写物流单号');
         }
       }
-      console.log(sendBillInfo, 'sendBillInfo//////');
       if (canSend) {
         this.pageLoading();
         this.Request('sendGoods', sendBillInfo).then(function (res) {
           _this.closePageLoading();
           uni.navigateBack();
+        }).catch(function (res) {
+          _this.closePageLoading();
+          _this.Toast(res.message);
         });
       }
     },
@@ -143,7 +146,6 @@ var _default = {
           this.provideInfo.provideComp = DataGo.data.label || '请选择';
           sendBillInfo.express_id = DataGo.data.id;
         }
-        console.log(DataGo, 'DataGo');
         this.Request("canSendGoods", {
           id: DataFrom.bill.bill.id }).
         then(function (res) {
@@ -157,8 +159,9 @@ var _default = {
               num: item.total,
               price: item.price_unit,
               status: item.can_send == 0 ? 1 : 0, //0未发货
-              goods_id: item.id };
-
+              goods_id: item.id,
+              refund_type: item.refund_type * 1 //0 无效 1 仅退款 2 退款退货 3 换货
+            };
           });
           cacheSelected = _this2.goodsList.filter(function (item) {
             return !item.status;
