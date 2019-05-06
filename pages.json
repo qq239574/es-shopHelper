@@ -164,6 +164,12 @@
 					}
 				}
 			}, {
+				"path": "pages/webViewPage",
+				"style": {
+					"navigationBarTitleText": "商品编辑",
+					"usingComponents": {}
+				}
+			}, {
 				"path": "pages/autoDeliverContent",
 				"style": {
 					"navigationBarTitleText": "自动发货内容",

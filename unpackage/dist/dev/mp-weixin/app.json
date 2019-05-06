@@ -30,6 +30,7 @@
       "root": "pagesCommodity",
       "pages": [
         "pages/index",
+        "pages/webViewPage",
         "pages/autoDeliverContent",
         "pages/editGood",
         "pages/editName",
@@ -164,6 +165,5 @@
   "usingComponents": {
     "page-loading": "/graceUI/components/graceFullLoading",
     "load-more": "/graceUI/components/graceLoading"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }

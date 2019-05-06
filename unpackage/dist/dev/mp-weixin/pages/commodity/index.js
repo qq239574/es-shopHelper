@@ -233,11 +233,11 @@ var curTab = {
     this.initPage();
   },
   onShareAppMessage: function onShareAppMessage(res) {//分享事件
-    if (res.from === 'button') {// 来自页面内分享按钮 
-      console.log(needShare[res.target.id]);
+    if (res.from === 'button') {// 来自页面内分享按钮  
+      var encode = encodeURIComponent(needShare[res.target.id]);
       return {
         title: needShare.detail.goodName,
-        path: needShare[res.target.id] || '',
+        path: '/pagesCommodity/pages/webViewPage?url=' + encode || false,
         imageUrl: needShare.detail.img };
 
     }
