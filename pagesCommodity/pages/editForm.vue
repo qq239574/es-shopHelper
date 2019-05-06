@@ -1,13 +1,13 @@
 <template>
     <div class='edit-form page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
+        <radioBlock :items='list' :defaultIndex='defaultIndex' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>
 </template>
 
 <script>
-    import radioBlock from '../../components/my-components/editBlock-RadioBlock'
+    import radioBlock from '../../components/my-components/editBlock-RadioBlock.vue'
     let DataFrom = {};
     let cacheVal = '';
     let cacheFrom = '';
@@ -18,6 +18,7 @@
         },
         data() {
             return {
+                defaultIndex: 0,
                 list: [{
                     label: '',
                     value: '',
@@ -34,12 +35,15 @@
                         value: val.label,
                         id: val.id
                     })
-                }) 
+                })
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from) || {};
-            this.list = DataFrom.needChange.other.formList.map(item => {
+            this.list = DataFrom.needChange.other.formList.map((item, index) => {
+                if (item.name == DataFrom.needChange.value) {
+                    this.defaultIndex = index;
+                }
                 return {
                     label: item.name,
                     value: ' ',
@@ -47,7 +51,7 @@
                     id: item.id
                 }
             })
-            let val = this.list[0];
+            let val = this.list[this.defaultIndex];
             this.Cacher.setData('editForm', {
                 needChange: Object.assign(DataFrom.needChange, {
                     label: '商品表单',

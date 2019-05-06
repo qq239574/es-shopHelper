@@ -1,7 +1,7 @@
 <template>
     <view class='editGood-block-selectItem grace-form'>
         <radio-group class='group'>
-            <view class='grace-items' v-for="(item, index) in items" :key="item.label" @click='clickItem(index)'>
+            <view class='grace-items' v-for="(item, index) in items" :key="index" @click='clickItem(index)'>
                 <view class='radio-box'>
                     <radio :value="item.value" :checked="index === current" color='#fb6638' />
                 </view>
@@ -18,6 +18,10 @@
 <script>
     export default {
         props: {
+            defaultIndex: {
+                type: Number,
+                default: 0
+            },
             hideRightArrow: {
                 type: Boolean,
                 default: false
@@ -42,6 +46,14 @@
                 type: [Object, Number, String, Array, Boolean],
                 default: ''
             }
+        },
+        watch: {
+            defaultIndex() {
+                this.current = this.defaultIndex;
+            }
+        },
+        mounted() {
+            this.current = this.defaultIndex;
         },
         data() {
             return {

@@ -1,13 +1,13 @@
 <template>
     <div class='setfreight page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
+        <radioBlock :items='list' :defaultIndex='defaultIndex' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>
 </template>
 
 <script>
-    import radioBlock from '../../components/my-components/editBlock-RadioBlock'
+    import radioBlock from '../../components/my-components/editBlock-RadioBlock.vue'
     let DataFrom = {};
     let DataGo = {};
     let cacheVal = '';
@@ -20,25 +20,20 @@
         },
         data() {
             return {
+                defaultIndex: 0,
                 list: [{
                     label: '统一运费（元）',
                     value: '修改',
-                    subValue: 6.2
-                }, {
-                    label: '海鲜运费模板',
-                    value: ' ',
-                    subValue: 11
-                }, {
-                    label: '蔬菜水果运费模板',
-                    value: ' ',
-                    subValue: 12
+                    subValue: 0
                 }, ]
             }
         },
         methods: {
             initPage() {
                 DataGo = this.Cacher.getData('setTotalFreight');
-                this.list[0].subValue = DataGo.value.subValue;
+                if (DataGo.needChange) {
+                    this.list[0].subValue = DataGo.needChange.value; 
+                }
                 this.Cacher.setData(pageId, {
                     needChange: {
                         label: '快递运费',
@@ -68,7 +63,21 @@
                 from: option.from || '',
                 go: 'setTotalFreight'
             })
-            this.initPage();
+            this.list = [{
+                label: '统一运费（元）',
+                value: '修改',
+                subValue: 0
+            }].concat(DataFrom.needChange.other.dispatch_list.map((item, index) => {
+                if (item.is_default * 1) {
+                    this.defaultIndex = index + 1;
+                }
+                return {
+                    label: item.name,
+                    id: item.id,
+                    value:' ',
+                    subValue: ' '
+                }
+            }))
         },
         onShow() {
             this.initPage();

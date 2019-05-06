@@ -54,25 +54,24 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};
-var cacheGood = {};var _default2 =
-{
+var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};
+var cacheGood = {};
+var shareInfo = {}; //分享商品信息
+var shareData = {}; //
+var _default2 = {
   components: {
     item: item,
     PopUp: PopUp,
     poster: poster },
 
   props: {
+    userChannels: { // 业务端启用状态 0: 未启用 1: 已经启用
+      type: Object,
+      default: {
+        h5: 0,
+        wxapp: 0 } },
+
+
     goodsList: {
       type: Array,
       default: function _default() {
@@ -84,7 +83,7 @@ var cacheGood = {};var _default2 =
           num: 0, //库存
           price: '0', //价格
           saled: 0, //销量
-          status: 0 //0出售中,1已售罄,2仓库中,3回收站
+          status: 0 //0出售中,1已售罄,2仓库中,3回收站 
         }];
       } },
 
@@ -112,7 +111,6 @@ var cacheGood = {};var _default2 =
   },
   methods: {
     sharePoster: function sharePoster(val) {//点击海报模板后触发
-      console.log(val);
       var that = this;
       if (val.type == 'share') {
         // uni.showShareMenu({
@@ -142,7 +140,21 @@ var cacheGood = {};var _default2 =
             // on cancel
           });
         } else if (val.name == '推广商品') {
-          this.show2 = true;
+          this.pageLoading();
+          this.Request('introGoodInfo', {
+            id: cacheGood.detail.goodId }).
+          then(function (res) {
+            if (!res.error) {
+              shareInfo = res;
+              _this.show2 = true;
+              _this.$emit('shareGoodInfo', Object.assign(val, {
+                shareByWxApp: res.wx_app_qrcode,
+                shareByH5: res.goods_url }));
+
+            }
+          }).catch(function (res) {
+            that.Toast(res.message);
+          });
         }
       } else {
         this.$emit('click', val);
@@ -162,19 +174,8 @@ var cacheGood = {};var _default2 =
         }
       } else if (val1 == 'h5') {
         if (val2 == '微信好友') {
-          uni.showShareMenu({
-            withShareTicket: true,
-            title: 'test share',
-            success: function success(res) {
-              console.log('success', res);
-            },
-            fail: function fail(res) {
-              console.log('fail', res);
-            } });
-
-          console.log('hahahahaha');
+          console.log('share by ', val1, val2);
         } else if (val2 == '二维码海报') {
-          console.log(cacheGood);
           this.Request('goodPoster', {
             goods_id: cacheGood.detail.goodId }).
           then(function (res) {
@@ -189,23 +190,16 @@ var cacheGood = {};var _default2 =
             _this2.Toast(res.message);
           });
         } else if (val2 == '复制链接') {
-          this.Request('introGoodInfo', {
-            id: cacheGood.detail.goodId }).
-          then(function (res) {
-            if (res.error == 0) {
-              uni.setClipboardData({
-                data: res.goods_url,
-                success: function success() {
-                  that.closePageLoading();
-                  that.Toast('链接已复制');
-                } });
+          if (shareInfo.goods_url) {
+            uni.setClipboardData({
+              data: shareInfo.goods_url,
+              success: function success() {
+                that.Toast('链接已复制');
+              } });
 
-            } else {
-              that.Toast(res.message || '复制链接失败');
-            }
-          }).catch(function (res) {
-            that.Toast(res.message || '复制链接失败');
-          });
+          } else {
+            this.Toast('复制链接失败');
+          }
         }
       }
     } } };exports.default = _default2;

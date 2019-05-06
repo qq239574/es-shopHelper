@@ -31,6 +31,7 @@
 //
 //
 
+var static_resources_domain = '';
 var startX = 0,
 startY = 0,
 startPX = 0,
@@ -99,6 +100,16 @@ startPY = 0;var _default =
     }
   },
   methods: {
+    getImgUrl: function getImgUrl(url) {
+      var newUrl = '';
+      if (static_resources_domain) {
+        newUrl = /^http.+/.test(url) ? url : static_resources_domain + url;
+      } else {
+        static_resources_domain = this.Cacher.getData('static_resources_domain');
+        newUrl = /^http.+/.test(url) ? url : static_resources_domain + url;
+      }
+      return newUrl;
+    },
     //长按
     _longtap: function _longtap(e) {
       this.hidden = false;
@@ -223,6 +234,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.imgLists.map(function(item, index) {
+    var m0 = _vm.getImgUrl(item)
+    var m1 = _vm.getImgUrl(item)
+    return {
+      $orig: _vm.__get_orig(item),
+      m0: m0,
+      m1: m1
+    }
+  })
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

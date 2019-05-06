@@ -50,7 +50,10 @@ var cacheFrom = '';var _default =
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
     cacheFrom = option.from;
-    console.log(DataFrom);
+    cacheVal = DataFrom.needChange.value;
+    this.val = cacheVal;
+    this.disable = !this.val;
+    this.Cacher.setData(cacheFrom, DataFrom);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

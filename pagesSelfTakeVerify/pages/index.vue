@@ -6,7 +6,7 @@
                 使用二维码核销
             </view>
             <view class="code">
-                <view class="col col2"><input type="text" placeholder='请输入核销码' placeholder-style="color:#d2d5db;font-weight:500;" @input='inputMoney'></view>
+                <view class="col col2"><input type="text" placeholder='请输入核销码' :value='code' placeholder-style="color:#d2d5db;font-weight:500;" @input='inputMoney'></view>
             </view>
         </view>
         <longButton @click='submit'>提交</longButton>
@@ -19,7 +19,9 @@
     let cache = '';
     export default {
         data() {
-            return {}
+            return {
+                code:''
+            }
         },
         components: {
             longButton
@@ -44,6 +46,7 @@
                 uni.scanCode({
                     success(res) {
                         cache = res.result;
+                        this.code=cache;
                     },
                     fail(res) {
                         // console.log(res)

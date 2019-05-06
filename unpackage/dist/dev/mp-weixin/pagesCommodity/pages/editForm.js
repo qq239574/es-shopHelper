@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
 
 
 
@@ -28,6 +28,7 @@ var cache = '修改';var _default =
 
   data: function data() {
     return {
+      defaultIndex: 0,
       list: [{
         label: '',
         value: '',
@@ -47,9 +48,12 @@ var cache = '修改';var _default =
 
     } },
 
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     DataFrom = this.Cacher.getData(option.from) || {};
-    this.list = DataFrom.needChange.other.formList.map(function (item) {
+    this.list = DataFrom.needChange.other.formList.map(function (item, index) {
+      if (item.name == DataFrom.needChange.value) {
+        _this.defaultIndex = index;
+      }
       return {
         label: item.name,
         value: ' ',
@@ -57,7 +61,7 @@ var cache = '修改';var _default =
         id: item.id };
 
     });
-    var val = this.list[0];
+    var val = this.list[this.defaultIndex];
     this.Cacher.setData('editForm', {
       needChange: Object.assign(DataFrom.needChange, {
         label: '商品表单',

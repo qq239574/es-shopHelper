@@ -21,7 +21,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var DataFrom = {};
 var cacheVal = '';
 var cacheFrom = '';
-var cacheSelected = {};var _default =
+var cacheSelected = {};
+var selectedList = [];var _default =
 {
   components: {
     tabs: tabs },
@@ -58,7 +59,23 @@ var cacheSelected = {};var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
-    this.list = DataFrom.needChange.other.list;
+    selectedList = DataFrom.needChange.other.category_ids;
+    this.list = DataFrom.needChange.other.list.map(function (item) {
+      if (selectedList.indexOf(item.id) > -1) {
+        item.selected = true;
+      }
+      if (item.children) {
+        item.children.map(function (val) {
+          if (selectedList.indexOf(val.id) > -1) {
+            val.selected = true;
+            item.selected = true;
+          }
+          return val;
+        });
+      }
+      return item;
+    });
+    console.log('>>>>>', this.list);
   } };exports.default = _default;
 
 /***/ }),

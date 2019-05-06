@@ -137,7 +137,7 @@
                             registerTime: data.create_time,
                             origin: data.come_from,
                             vipClass: data.level_name,
-                            vipTag: data.tags.map(item => item.name).join(' ') || ' '
+                            vipTag: data.tags.map(item => item.name).join(';') || ' '
                         },
                         info2: {
                             score: data.credit,
@@ -215,7 +215,7 @@
                     })
                 }
             },
-             clickDistriInfo(val) { //点击分销商信息中的组件 
+            clickDistriInfo(val) { //点击分销商信息中的组件 
                 if (val.type == 'remove') { //取消分销商
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
@@ -224,6 +224,12 @@
                         this.initPage();
                     })
                 } else if (val.type == 'set') { //设为分销商
+                    this.Request('manualCommissionStatus', {
+                        member_id: DataFrom.detail.info.id,
+                        // status: 1
+                    }).then(res => {
+                        this.initPage();
+                    })
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
                         status: 1
@@ -237,7 +243,7 @@
                     }).then(res => {
                         this.initPage();
                     })
-                } else if (val.type == 'allow') {//通过审核
+                } else if (val.type == 'allow') { //通过审核
                     this.Request('changeCommissionStatus', {
                         member_id: DataFrom.detail.info.id,
                         status: 1

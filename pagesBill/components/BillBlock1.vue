@@ -65,10 +65,11 @@
                 return no&&judgeOrigin(no)
             },
             copy(val) {
+                let that=this;
                 uni.setClipboardData({
                     data: val,
                     success: function() {
-                        this.Toast('复制成功')
+                        that.Toast('复制成功')
                     }
                 });
             }

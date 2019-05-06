@@ -31,13 +31,14 @@ var DataFrom = {};var _default =
       cacheVal = val.detail.value;
     },
     sure: function sure() {
-      DataFrom.value.subValue = cacheVal;
+      DataFrom.needChange.value = cacheVal;
       DataFrom = this.Cacher.setData('setTotalFreight', DataFrom);
       uni.navigateBack();
     } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from) || {};
+    console.log('heheh', DataFrom);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

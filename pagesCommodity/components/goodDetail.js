@@ -1,14 +1,36 @@
  export function goodData(data) { //单规格商品
+     let static_resources_domain = this.Cacher.getData('static_resources_domain');
+     let reg = new RegExp(static_resources_domain, 'g');
+
      let typeList = ['实体商品', '虚拟物品', '电子卡密', '预约', '核销']; //商品类型
-     let goodCateList = data.cate_list.map(item => {
+     let goodCateList = data.cate_list.map(item => { //商品一级分类
          return {
              name: item.title,
              id: item.id,
-             children:item.children||[]
+             children: item.children || []
          }
      }); //商品分类列表
+
      let tmparr = data.goods.category_ids;
-     let goodTypes = goodCateList.filter(item => {
+     let allTypes = []; //商品一二级分类
+     data.cate_list.forEach(item => {
+         allTypes.push({
+             name: item.title,
+             id: item.id,
+             children: item.children || []
+         });
+         if (item.children && item.children.length) {
+             item.children.forEach(val => {
+                 allTypes.push({
+                     name: val.title,
+                     id: val.id,
+                     children: val.children || []
+                 });
+             })
+         }
+
+     }); //商品分类列表
+     let goodTypes = allTypes.filter(item => {
          let len = tmparr.length;
          let result = false;
          for (let i = 0; i < len; i++) {
@@ -17,6 +39,7 @@
                  break;
              }
          }
+
          return result;
      }); //商品所属分类
      let formList = data.form_list;
@@ -54,6 +77,7 @@
                      return item.name;
                  }).join(';'),
                  list: goodCateList, //全部类型 
+                 category_ids: data.goods.category_ids,
                  goodTypes, //商品的类型
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -61,9 +85,9 @@
              mainImage: {
                  label: '主图',
                  id: '',
-                 img: this.static_resources_domain + data.goods.thumb,
+                 img: data.goods.thumb,
                  list: [{
-                     img: this.static_resources_domain + data.goods.thumb,
+                     img: data.goods.thumb.replace(reg, ''),
                  }],
                  disabled: false, //可否编辑
                  editable: 'image', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -71,7 +95,7 @@
              swiperList: {
                  label: '',
                  list: data.goods.thumbs.map(item => ({
-                     img: this.static_resources_domain + item
+                     img: item.replace(reg, '')
                  })),
                  disabled: false, //可否编辑
                  editable: 'imagelist', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -189,6 +213,7 @@
                  label: '快递运费',
                  id: '',
                  value: data.goods.dispatch_price,
+                 dispatch_list: data.dispatch_list,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                  needHide: false,
@@ -211,14 +236,14 @@
                  label: '商品表单',
                  id: data.goods.form_id,
                  value: formList.filter(item => {
-                     let result = false;
-                     for (let i = 0; i < formList.length; i++) {
-                         if (item.id == data.goods.form_id) {
-                             result = true;
-                             break;
-                         }
-                     }
-                     return result
+                     //  let result = false;
+                     //  for (let i = 0; i < formList.length; i++) {
+                     //      if (item.id == data.goods.form_id) {
+                     //          result = true;
+                     //          break;
+                     //      }
+                     //  }
+                     return item.id == data.goods.form_id
                  }).map(item => {
                      return item.name
                  }).join(''),
@@ -232,124 +257,125 @@
                  label: '状态',
                  id: data.goods.status,
                  value: statusList[data.goods.status * 1 + 1],
+                 putaway_time: data.goods.putaway_time,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              }
          },
      }
  }
- export function multiData() {
-     return {
-         info1: {
-             goodType: {
-                 label: '规格类型',
-                 id: '',
-                 value: '多规格',
-                 disabled: true, //可否编辑,false可以，true不可
-                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //  export function multiData() {
+ //      return {
+ //          info1: {
+ //              goodType: {
+ //                  label: '规格类型',
+ //                  id: '',
+ //                  value: '多规格',
+ //                  disabled: true, //可否编辑,false可以，true不可
+ //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
 
-             },
-             list: {
-                 disabled: false, //可否编辑,false可以，true不可
-                 editable: 'block', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 value: [{
-                     specif: {
-                         label: '规格',
-                         id: '',
-                         value: '2000W-亮黑色',
-                         disabled: true, //可否编辑
-                         editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                     },
-                     price: {
-                         label: '价格',
-                         id: '',
-                         value: '1999.0',
-                         disabled: false, //可否编辑
-                         editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                     },
-                     stock: {
-                         label: '库存',
-                         id: '',
-                         value: '23566',
-                         disabled: false, //可否编辑
-                         editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                     },
-                     code: {
-                         label: '商品编号',
-                         id: '',
-                         value: 'JB12595695656565998',
-                         disabled: false, //可否编辑
-                         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                     },
-                 }]
-             },
-             delPrice: { //划线价格
-                 label: '划线价格',
-                 id: '',
-                 value: '16565',
-                 disabled: false, //可否编辑
-                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             showStock: { //显示库存
-                 label: '显示库存',
-                 id: '',
-                 value: false,
-                 disabled: false, //可否编辑
-                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             soldNum: { //已出售数
-                 label: '已出售数',
-                 id: '',
-                 value: 10,
-                 disabled: false, //可否编辑
-                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             showSold: { //显示销量
-                 label: '显示销量',
-                 id: '',
-                 value: true,
-                 disabled: false, //可否编辑
-                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             }
-         },
-         info2: {
-             provideCost: {
-                 label: '快递运费',
-                 id: '',
-                 value: 10,
-                 disabled: false, //可否编辑
-                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             showProCost: {
-                 label: '显示快递',
-                 id: '',
-                 value: true,
-                 disabled: false, //可否编辑
-                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             joinCount: {
-                 label: '参与会员折扣',
-                 id: '',
-                 value: true,
-                 disabled: false, //可否编辑
-                 editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             },
-             goodForm: {
-                 label: '商品表单',
-                 id: '',
-                 value: '',
-                 disabled: false, //可否编辑
-                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             }
-         },
-         info3: {
-             status: {
-                 label: '状态',
-                 id: '',
-                 value: '下架',
-                 disabled: false, //可否编辑
-                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-             }
-         },
-     }
- }
+ //              },
+ //              list: {
+ //                  disabled: false, //可否编辑,false可以，true不可
+ //                  editable: 'block', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //                  value: [{
+ //                      specif: {
+ //                          label: '规格',
+ //                          id: '',
+ //                          value: '2000W-亮黑色',
+ //                          disabled: true, //可否编辑
+ //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //                      },
+ //                      price: {
+ //                          label: '价格',
+ //                          id: '',
+ //                          value: '1999.0',
+ //                          disabled: false, //可否编辑
+ //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //                      },
+ //                      stock: {
+ //                          label: '库存',
+ //                          id: '',
+ //                          value: '23566',
+ //                          disabled: false, //可否编辑
+ //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //                      },
+ //                      code: {
+ //                          label: '商品编号',
+ //                          id: '',
+ //                          value: 'JB12595695656565998',
+ //                          disabled: false, //可否编辑
+ //                          editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //                      },
+ //                  }]
+ //              },
+ //              delPrice: { //划线价格
+ //                  label: '划线价格',
+ //                  id: '',
+ //                  value: '16565',
+ //                  disabled: false, //可否编辑
+ //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              showStock: { //显示库存
+ //                  label: '显示库存',
+ //                  id: '',
+ //                  value: false,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              soldNum: { //已出售数
+ //                  label: '已出售数',
+ //                  id: '',
+ //                  value: 10,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              showSold: { //显示销量
+ //                  label: '显示销量',
+ //                  id: '',
+ //                  value: true,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              }
+ //          },
+ //          info2: {
+ //              provideCost: {
+ //                  label: '快递运费',
+ //                  id: '',
+ //                  value: 10,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              showProCost: {
+ //                  label: '显示快递',
+ //                  id: '',
+ //                  value: true,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              joinCount: {
+ //                  label: '参与会员折扣',
+ //                  id: '',
+ //                  value: true,
+ //                  disabled: false, //可否编辑
+ //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              },
+ //              goodForm: {
+ //                  label: '商品表单',
+ //                  id: '',
+ //                  value: '',
+ //                  disabled: false, //可否编辑
+ //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              }
+ //          },
+ //          info3: {
+ //              status: {
+ //                  label: '状态',
+ //                  id: '',
+ //                  value: '下架',
+ //                  disabled: false, //可否编辑
+ //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ //              }
+ //          },
+ //      }
+ //  }

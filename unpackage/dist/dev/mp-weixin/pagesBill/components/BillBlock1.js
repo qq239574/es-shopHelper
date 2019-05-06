@@ -75,10 +75,11 @@ var _payType = _interopRequireDefault(__webpack_require__(/*! ../../components/m
       return no && (0, _dataOrigin.default)(no);
     },
     copy: function copy(val) {
+      var that = this;
       uni.setClipboardData({
         data: val,
         success: function success() {
-          this.Toast('复制成功');
+          that.Toast('复制成功');
         } });
 
     } } };exports.default = _default;

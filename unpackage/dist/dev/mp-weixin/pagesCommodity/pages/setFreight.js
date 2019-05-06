@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
 
 
 
@@ -30,25 +30,20 @@ var pageId = 'setFreight';var _default =
 
   data: function data() {
     return {
+      defaultIndex: 0,
       list: [{
         label: '统一运费（元）',
         value: '修改',
-        subValue: 6.2 },
-      {
-        label: '海鲜运费模板',
-        value: ' ',
-        subValue: 11 },
-      {
-        label: '蔬菜水果运费模板',
-        value: ' ',
-        subValue: 12 }] };
+        subValue: 0 }] };
 
 
   },
   methods: {
     initPage: function initPage() {
       DataGo = this.Cacher.getData('setTotalFreight');
-      this.list[0].subValue = DataGo.value.subValue;
+      if (DataGo.needChange) {
+        this.list[0].subValue = DataGo.needChange.value;
+      }
       this.Cacher.setData(pageId, {
         needChange: {
           label: '快递运费',
@@ -72,13 +67,27 @@ var pageId = 'setFreight';var _default =
       cache = val.value;
     } },
 
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     DataFrom = this.Cacher.getData(option.from) || {};
     this.Cacher.setData(pageId, {
       from: option.from || '',
       go: 'setTotalFreight' });
 
-    this.initPage();
+    this.list = [{
+      label: '统一运费（元）',
+      value: '修改',
+      subValue: 0 }].
+    concat(DataFrom.needChange.other.dispatch_list.map(function (item, index) {
+      if (item.is_default * 1) {
+        _this.defaultIndex = index + 1;
+      }
+      return {
+        label: item.name,
+        id: item.id,
+        value: ' ',
+        subValue: ' ' };
+
+    }));
   },
   onShow: function onShow() {
     this.initPage();

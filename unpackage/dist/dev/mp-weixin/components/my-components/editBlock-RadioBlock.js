@@ -28,6 +28,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
+    defaultIndex: {
+      type: Number,
+      default: 0 },
+
     hideRightArrow: {
       type: Boolean,
       default: false },
@@ -53,6 +57,14 @@ var _default =
       default: '' } },
 
 
+  watch: {
+    defaultIndex: function defaultIndex() {
+      this.current = this.defaultIndex;
+    } },
+
+  mounted: function mounted() {
+    this.current = this.defaultIndex;
+  },
   data: function data() {
     return {
       current: 0 };

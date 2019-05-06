@@ -33,11 +33,15 @@
             getAddition(val) {
                 this.length = val.detail.value.length;
                 this.disable = !val.detail.value.length;
-                cacheVal = val.detail.value; 
+                cacheVal = val.detail.value;
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from); 
+            DataFrom = this.Cacher.getData(option.from);
+            cacheVal = DataFrom.needChange.value;
+            this.val = cacheVal;
+            this.disable = !this.val;
+             this.Cacher.setData('editCode', DataFrom)
         }
     }
 </script>

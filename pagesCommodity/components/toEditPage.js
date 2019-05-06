@@ -26,6 +26,7 @@ export default function (val, detail) {
         detail,
         needChange: val
     })
+    console.log('to edit ',val)
     uni.navigateTo({
         url: '../pages/' + DataGo + '?from=editGood'
     })

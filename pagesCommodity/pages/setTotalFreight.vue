@@ -21,13 +21,14 @@
                 cacheVal = val.detail.value; 
             },
             sure() {
-                DataFrom.value.subValue = cacheVal;
+                DataFrom.needChange.value = cacheVal;
                 DataFrom = this.Cacher.setData('setTotalFreight', DataFrom);
                 uni.navigateBack();
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from)||{}; 
+            console.log('heheh',DataFrom)
         }
     }
 </script>

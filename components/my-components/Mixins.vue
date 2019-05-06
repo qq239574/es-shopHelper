@@ -28,6 +28,7 @@
             },
             pageLoading() {
                 clearTimeout(pageLoadingBar);
+                uni.hideLoading();
                 uni.showLoading({
                     title: '加载中'
                 });
@@ -69,7 +70,7 @@
             this.pageLoading();
         },
         onLoad() {
-            this.static_resources_domain = this.Cacher.getData('static_resources_domain');//静态资源服务器域名
+            this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名
             if (!this.static_resources_domain) {
                 this.Request('getSettings').then(res => {
                     if (res.error == 0) {

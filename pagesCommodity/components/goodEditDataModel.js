@@ -6,7 +6,7 @@ let goodModel = { //商品编辑模板数据
 }
 
 function mapOptions(data, cache) {
-    let options = (cache.options||[]).map((item, index) => {
+    let options = (cache.options || []).map((item, index) => {
         let tmp = data.info2.specification.list;
         let obj = {};
         if (tmp[index].specif.goodsId == item.goods_id) {
@@ -28,31 +28,33 @@ function mapOptions(data, cache) {
     return options;
 }
 
-function mapGoods(data, cache) { 
+function mapGoods(data, cache) {
+
     let goods = {
         title: data.info1.goodName.value,
         sub_title: data.info1.subTitle.value,
         category_ids: data.info1.classification.goodTypes.map(item => {
             return item.id;
-        }),
+        }).join(','),
         thumb: data.info1.mainImage.list[0].img,
-        thumbs: data.info1.swiperList.list.map(item=>{
+        thumbs: data.info1.swiperList.list.map(item => {
             return item.img
         }),
         price: data.info2.price.value,
-        original_price:  data.info2.delPrice.value,
-        stock:data.info2.stockNum.value,
-        stock_hide: data.info2.showStock.value?1:0,
-        sales_count: data.info2.soldNum.value ,
-        sales_hide: data.info2.showSold.value?1:0,
+        original_price: data.info2.delPrice.value,
+        stock: data.info2.stockNum.value,
+        stock_hide: data.info2.showStock.value ? 0 : 1,
+        sales_count: data.info2.soldNum.value,
+        sales_hide: data.info2.showSold.value ? 0 : 1,
         goods_code: data.info3.goodCode.value,
-        auto_delivery: data.info3.autoDeliver.value?1:0,
-        auto_delivery_content:data.info3.autoDeliverContent.value,
+        auto_delivery: data.info3.autoDeliver.value ? 1: 0,
+        auto_delivery_content: data.info3.autoDeliverContent.value,
         dispatch_price: data.info3.provideCost.value,
-        dispatch_hide: data.info3.showProCost.value?1:0,
-        is_discount:data.info3.joinCount.value?1:0,
-        form_id: data.info3.goodForm.formId,
-        status: data.info4.status.statusId
+        dispatch_hide: data.info3.showProCost.value ? 0 : 1,
+        is_discount: data.info3.joinCount.value ? 1 : 0,
+        form_id: data.info3.goodForm.id||0,
+        status: data.info4.status.id,
+        putaway_time:data.info4.status.putaway_time,
     } 
     return goods;
 
@@ -60,7 +62,7 @@ function mapGoods(data, cache) {
 }
 export default function (data, cache) {
 
-    let specs = cache.specs||'';
+    let specs = cache.specs || '';
     let goods = cache.goods;
     goodModel = { //商品编辑模板数据
         'goods_id': cache.goods.id,
@@ -132,11 +134,12 @@ export default function (data, cache) {
                 virtual_sales: '',
                 volume: '',
                 weight: ''
-            }, goods, mapGoods(data, cache))
+            }, goods, mapGoods(data, cache)),
+            options: mapOptions(data, cache)
         },
-        options: mapOptions(data, cache)
 
-    } 
+
+    }
     console.log(goodModel)
     return flatten(goodModel);
 }

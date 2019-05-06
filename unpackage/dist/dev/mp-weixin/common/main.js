@@ -67,6 +67,7 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
     },
     pageLoading: function pageLoading() {var _this = this;
       clearTimeout(pageLoadingBar);
+      uni.hideLoading();
       uni.showLoading({
         title: '加载中' });
 

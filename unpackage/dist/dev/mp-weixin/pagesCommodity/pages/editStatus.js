@@ -28,7 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _date = __webpack_require__(/*! ../../graceUI2.0/jsTools/date.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\date.js");
 
 
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};var DataFrom = {};var cacheVal = '';var cacheFrom = '';var cache = ' ';
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};var DataFrom = {};var cacheVal = '';var cacheFrom = '';var cache = ' ';
 
 
 var currentDate = [];var _default =
@@ -38,6 +38,7 @@ var currentDate = [];var _default =
 
   data: function data() {
     return {
+      defaultIndex: 0,
       currentDate: '',
       showpicker: false,
       minDate: new Date().getTime() + 5 * 60000, //5分钟后
@@ -65,7 +66,7 @@ var currentDate = [];var _default =
       {
         label: '定时上架',
         value: '修改',
-        subValue: '04-02 12:12:44',
+        subValue: ' ',
         id: 3 }] };
 
 
@@ -86,7 +87,7 @@ var currentDate = [];var _default =
           id: 3 } };
 
 
-      this.Cacher.setData('billDetail', DataFrom);
+      this.Cacher.setData('editStatus', DataFrom);
     },
     cancel: function cancel() {
       this.showpicker = false;
@@ -94,8 +95,27 @@ var currentDate = [];var _default =
     onInput: function onInput(event) {
       currentDate = (0, _date.formatDateTime)(event.detail / 1000, 'str');
     },
-    initPage: function initPage() {
-      DataFrom = this.Cacher.getData('billDetail') || {};
+    initPage: function initPage() {var _this = this;
+      this.list.forEach(function (item, index) {
+        if (item.label == DataFrom.needChange.value) {
+          _this.defaultIndex = index;
+          DataFrom.needChange = {
+            label: '状态',
+            value: item.label,
+            from: 'editStatus',
+            other: {
+              label: '状态',
+              value: item.label,
+              subValue: item.label == '定时上架' ? DataFrom.detail.info4.status.putaway_time : ' ',
+              id: item.id } };
+
+
+          if (item.label == '定时上架') {
+            _this.list[4].subValue = DataFrom.detail.info4.status.putaway_time;
+          }
+          _this.Cacher.setData('editStatus', DataFrom);
+        }
+      });
     },
     change: function change(val) {
       cacheVal = val;
@@ -116,19 +136,6 @@ var currentDate = [];var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from) || {};
-    DataFrom.needChange = {
-      label: '状态',
-      value: '已删除',
-      from: 'editStatus',
-      other: {
-        label: '状态',
-        value: '已删除',
-        subValue: ' ',
-        id: -1 } };
-
-
-    this.Cacher.setData('editStatus', DataFrom);
-    this.initPage();
   },
   onShow: function onShow() {
     this.initPage();

@@ -116,7 +116,7 @@ export const editGoodDetail = { //管理端商品修改
         'data[goods][video]': '',
         'data[goods][video_thumb]': '',
         'data[goods][thumb]': '',
-        'data[goods][thumbs][0]':'',
+        'data[goods][thumbs][0]': '',
         'data[goods][price]': 50,
         'data[goods][original_price]': 0,
         'data[goods][min_price]': 0.00,
@@ -125,7 +125,7 @@ export const editGoodDetail = { //管理端商品修改
         'data[goods][has_option]': 0,
         'data[goods][goods_code]': '',
         'data[goods][product_sn]': '',
-        'data[goods][stock]':'',
+        'data[goods][stock]': '',
         'data[goods][stock_warning]': 0,
         'data[goods][stock_hide]': 0,
         'data[goods][stock_cnf]': 0,
@@ -167,7 +167,7 @@ export const editGoodDetail = { //管理端商品修改
         'data[goods][thumbs_ratio]': '',
         'data[goods][virtual_card_id]': 0,
         'data[goods][auto_warehouse]': 0,
-        'data[goods][is_delivery_pay]':'',
+        'data[goods][is_delivery_pay]': '',
         'data[goods][school_ids]': '',
         'data[goods][selling_object]': 0,
         'data[goods][category_ids]': '',
@@ -179,4 +179,13 @@ export const editGoodDetail = { //管理端商品修改
 
     },
     type: 'post'
+}
+
+export const getChannels = { //全网发布(渠道)获取信息
+    url: '/shop/apps/allnet/manage/get',
+    data: {},
+    headers: {
+
+    },
+    type: 'get'
 }

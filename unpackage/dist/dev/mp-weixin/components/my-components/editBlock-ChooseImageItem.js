@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var chooseImg = function chooseImg() {return __webpack_require__.e(/*! import() | components/my-components/editGood-ChooseImg */ "components/my-components/editGood-ChooseImg").then(__webpack_require__.bind(null, /*! ./editGood-ChooseImg */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editGood-ChooseImg.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var chooseImg = function chooseImg() {return __webpack_require__.e(/*! import() | components/my-components/editGood-ChooseImg */ "components/my-components/editGood-ChooseImg").then(__webpack_require__.bind(null, /*! ./editGood-ChooseImg.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editGood-ChooseImg.vue"));};var _default =
 
 
 

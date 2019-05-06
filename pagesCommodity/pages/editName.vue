@@ -24,9 +24,9 @@
             }
         },
         methods: {
-            sure() { 
+            sure() {
                 DataFrom.needChange.value = cacheVal;
-                this.Cacher.setData('editName', DataFrom); 
+                this.Cacher.setData('editName', DataFrom);
                 uni.navigateBack();
             },
             getAddition(val) {
@@ -37,6 +37,10 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
+            cacheVal=DataFrom.needChange.value;
+            this.val = cacheVal;
+            this.disable = !this.val;
+            this.Cacher.setData('editName', DataFrom);
         }
     }
 </script>

@@ -12,6 +12,7 @@
     let cacheVal = '';
     let cacheFrom = '';
     let cacheSelected = {};
+    let selectedList=[];
     export default {
         components: {
             tabs
@@ -27,7 +28,7 @@
                         id: '',
                         selected: false,
                     }]
-                }],
+                }]
             }
         },
         methods: {
@@ -35,11 +36,11 @@
                 cacheSelected[val.index] = val.list;
                 let tmp = [];
                 for (let k in cacheSelected) {
-                    tmp=tmp.concat(cacheSelected[k])
+                    tmp = tmp.concat(cacheSelected[k])
                 }
-                DataFrom.needChange.value = tmp.map(item=>{
-                    if(item.name===undefined){
-                        item.name=item.title
+                DataFrom.needChange.value = tmp.map(item => {
+                    if (item.name === undefined) {
+                        item.name = item.title
                     }
                     return item
                 }); 
@@ -48,7 +49,23 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
-            this.list = DataFrom.needChange.other.list;
+            selectedList = DataFrom.needChange.other.category_ids;
+            this.list = DataFrom.needChange.other.list.map(item => {
+                if (selectedList.indexOf(item.id) > -1) {
+                    item.selected = true;
+                }
+                if (item.children) {
+                    item.children.map(val => {
+                        if (selectedList.indexOf(val.id) > -1) {
+                            val.selected = true;
+                            item.selected = true;
+                        }
+                        return val;
+                    })
+                }
+                return item;
+            }); 
+            console.log('>>>>>',this.list)
         }
     }
 </script>

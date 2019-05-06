@@ -1,6 +1,6 @@
 <template>
     <div class='edit-status page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
+        <radioBlock :items='list' valueStyle='color:#fb6638' :defaultIndex='defaultIndex' @clickItem='change'></radioBlock>
         <view class="bg" v-show='showpicker'>
             <van-datetime-picker class='picker' type="datetime" :value="currentDate" :min-date="minDate" :max-date="maxDate" @input="onInput" @confirm='confirm' @cancel='cancel' />
         </view>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import radioBlock from '../../components/my-components/editBlock-RadioBlock'
+    import radioBlock from '../../components/my-components/editBlock-RadioBlock.vue'
     let DataFrom = {};
     let cacheVal = '';
     let cacheFrom = '';
@@ -28,6 +28,7 @@
         },
         data() {
             return {
+                defaultIndex: 0,
                 currentDate: '',
                 showpicker: false,
                 minDate: new Date().getTime() + 5 * 60000, //5分钟后
@@ -55,7 +56,7 @@
                 }, {
                     label: '定时上架',
                     value: '修改',
-                    subValue: '04-02 12:12:44',
+                    subValue: ' ',
                     id: 3
                 }, ]
             }
@@ -76,7 +77,7 @@
                         id: 3
                     }
                 }
-                this.Cacher.setData('billDetail', DataFrom)
+                this.Cacher.setData('editStatus', DataFrom)
             },
             cancel() {
                 this.showpicker = false;
@@ -84,8 +85,27 @@
             onInput(event) {
                 currentDate = formatDateTime(event.detail / 1000, 'str');
             },
-            initPage() {
-                DataFrom = this.Cacher.getData('billDetail') || {};
+            initPage() { 
+                this.list.forEach((item, index) => {
+                    if (item.label == DataFrom.needChange.value) {
+                        this.defaultIndex = index;
+                        DataFrom.needChange = {
+                            label: '状态',
+                            value: item.label,
+                            from: 'editStatus',
+                            other: {
+                                label: '状态',
+                                value: item.label,
+                                subValue: item.label == '定时上架' ? DataFrom.detail.info4.status.putaway_time : ' ',
+                                id: item.id
+                            }
+                        }
+                        if (item.label == '定时上架') {
+                            this.list[4].subValue = DataFrom.detail.info4.status.putaway_time;
+                        }
+                        this.Cacher.setData('editStatus', DataFrom)
+                    }
+                })
             },
             change(val) {
                 cacheVal = val;
@@ -106,19 +126,6 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from) || {};
-            DataFrom.needChange = {
-                label: '状态',
-                value: '已删除',
-                from: 'editStatus',
-                other: {
-                    label: '状态',
-                    value: '已删除',
-                    subValue: ' ',
-                    id: -1
-                }
-            }
-            this.Cacher.setData('editStatus', DataFrom)
-            this.initPage()
         },
         onShow() {
             this.initPage()

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -67,18 +67,18 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
     clickCell: function clickCell(val) {
       _toEditPage.default.call(this, val, cacheGoodDetail);
     },
-    save: function save() {
+    save: function save() {var _this = this;
       this.goodDetail = cacheGoodDetail;
       var data = (0, _goodEditDataModel.default)(cacheGoodDetail, cacheSubmitData);
-      // this.Request('editGoodDetail', data).then(res => {
-      //     if (res.error == 0) {
-      //         uni.navigateBack();
-      //     } else {
-      //         this.Toast(res.message);
-      //     }
-      // }).catch(res => {
-      //     this.Toast(res.message);
-      // })
+      this.Request('editGoodDetail', data).then(function (res) {
+        if (res.error == 0) {
+          uni.navigateBack();
+        } else {
+          _this.Toast(res.message);
+        }
+      }).catch(function (res) {
+        _this.Toast(res.message);
+      });
     },
     initPage: function initPage() {
       DataGo = this.Cacher.getData('editGood');
@@ -92,7 +92,7 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       }
     } },
 
-  onLoad: function onLoad(option) {var _this = this;
+  onLoad: function onLoad(option) {var _this2 = this;
     DataFrom = this.Cacher.getData(option.from);
     this.Cacher.setData('editGood', {
       from: option.from || '' });
@@ -102,13 +102,14 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       goods_id: DataFrom.item.detail.goodId }).
     then(function (res) {
       cacheSubmitData = res; //提交的时候要一一对应
-      cacheGoodDetail = _goodDetail.goodData.call(_this, res);
-      _this.goodDetail = cacheGoodDetail;
+      cacheGoodDetail = _goodDetail.goodData.call(_this2, res);
+      _this2.goodDetail = cacheGoodDetail;
     });
   },
   onShow: function onShow() {
     this.initPage();
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

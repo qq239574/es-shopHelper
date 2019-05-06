@@ -24,7 +24,7 @@
             }
         },
         methods: {
-            sure() { 
+            sure() {
                 DataFrom.needChange.value = cacheVal;
                 this.Cacher.setData('editSubTitle', DataFrom)
                 uni.navigateBack();
@@ -36,7 +36,11 @@
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from);  
+            DataFrom = this.Cacher.getData(option.from);
+            cacheVal = DataFrom.needChange.value;
+            this.val = cacheVal;
+            this.disable = !this.val;
+            this.Cacher.setData('editSubTitle', DataFrom);
         }
     }
 </script>

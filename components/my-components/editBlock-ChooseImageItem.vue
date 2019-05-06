@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import chooseImg from './editGood-ChooseImg'
+    import chooseImg from './editGood-ChooseImg.vue'
     export default {
         components: {
             chooseImg

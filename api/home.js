@@ -191,7 +191,16 @@ export const changeCommissionStatus = { //审核/取消审核分销商
     },
     type: 'post'
 }
+export const manualCommissionStatus = { //手动设置成为分销商
+    url: '/shop/apps/commission/manage/agent/manual-commission',
+    data: {
+        member_id: '', 
+    },
+    headers: {
 
+    },
+    type: 'post'
+}
 export const changeVipMoney = { //余额充值
     url: '/shop/manage/member/recharge/balance',
     data: {

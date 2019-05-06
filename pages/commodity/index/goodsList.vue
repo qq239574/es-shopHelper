@@ -17,22 +17,12 @@
         </view>
         <PopUp @close='closeAll' :show='show2'>
             <scroll-view class='scroll' :scroll-y='true'>
-                <view class="share-h1">使用小程序推广</view>
-                <view class="share-items model">
-                    <view class="share-item" @click='clickModel("小程序","微信好友")'>
-                        <image class='share-img' src='/static/img/global/product_share_download.png'></image>
-                        <view class='share-title'>微信好友</view>
-                    </view>
-                    <view class="share-item" @click='clickModel("小程序","二维码海报")'>
-                        <image class='share-img' src='/static/img/global/product_share_download.png'></image>
-                        <view class='share-title'>二维码海报</view>
-                    </view>
-                </view>
-                <view class="share-h1">使用h5推广</view>
+                <view class="share-h1">商品推广</view>
                 <view class="share-items model">
                     <view class="share-item" @click='clickModel("h5","微信好友")'>
                         <image class='share-img' src='/static/img/global/product_share_download.png'></image>
                         <view class='share-title'>微信好友</view>
+                        <button open-type='share' id='shareByH5' class='open-share'></button>
                     </view>
                     <view class="share-item" @click='clickModel("h5","二维码海报")'>
                         <image class='share-img' src='/static/img/global/product_share_download.png'></image>
@@ -51,11 +41,13 @@
 </template>
 
 <script>
-    import item from './goodsList--Item';
+    import item from './goodsList--Item.vue';
     import PopUp from '../../../components/my-components/PopUp.vue';
     import poster from './posterShare.vue'
     import savePic from './savePicToAlbum.js'
     let cacheGood = {};
+    let shareInfo = {}; //分享商品信息
+    let shareData = {}; //
     export default {
         components: {
             item,
@@ -63,6 +55,13 @@
             poster
         },
         props: {
+            userChannels: { // 业务端启用状态 0: 未启用 1: 已经启用
+                type: Object,
+                default: {
+                    h5: 0,
+                    wxapp: 0
+                }
+            },
             goodsList: {
                 type: Array,
                 default () {
@@ -74,7 +73,7 @@
                         num: 0, //库存
                         price: '0', //价格
                         saled: 0, //销量
-                        status: 0 //0出售中,1已售罄,2仓库中,3回收站
+                        status: 0, //0出售中,1已售罄,2仓库中,3回收站 
                     }]
                 }
             },
@@ -102,7 +101,6 @@
         },
         methods: {
             sharePoster(val) { //点击海报模板后触发
-                console.log(val);
                 let that = this;
                 if (val.type == 'share') {
                     // uni.showShareMenu({
@@ -132,7 +130,21 @@
                             // on cancel
                         });
                     } else if (val.name == '推广商品') {
-                        this.show2 = true;
+                        this.pageLoading();
+                        this.Request('introGoodInfo', {
+                            id: cacheGood.detail.goodId
+                        }).then(res => {
+                            if (!res.error) {
+                                shareInfo = res;
+                                this.show2 = true;
+                                this.$emit('shareGoodInfo', Object.assign(val, {
+                                    shareByWxApp: res.wx_app_qrcode,
+                                    shareByH5: res.goods_url
+                                }))
+                            }
+                        }).catch(res => {
+                            that.Toast(res.message)
+                        })
                     }
                 } else {
                     this.$emit('click', val)
@@ -152,19 +164,8 @@
                     }
                 } else if (val1 == 'h5') {
                     if (val2 == '微信好友') {
-                        uni.showShareMenu({
-                            withShareTicket: true,
-                            title: 'test share',
-                            success: function(res) {
-                                console.log('success',res)
-                            },
-                            fail: function(res) {
-                                console.log('fail',res)
-                            }
-                        })
-                        console.log('hahahahaha')
+                        console.log('share by ', val1, val2)
                     } else if (val2 == '二维码海报') {
-                        console.log(cacheGood)
                         this.Request('goodPoster', {
                             goods_id: cacheGood.detail.goodId
                         }).then(res => {
@@ -179,23 +180,16 @@
                             this.Toast(res.message)
                         })
                     } else if (val2 == '复制链接') {
-                        this.Request('introGoodInfo', {
-                            id: cacheGood.detail.goodId
-                        }).then(res => {
-                            if (res.error == 0) {
-                                uni.setClipboardData({
-                                    data: res.goods_url,
-                                    success: function() {
-                                        that.closePageLoading();
-                                        that.Toast('链接已复制')
-                                    }
-                                });
-                            } else {
-                                that.Toast(res.message || '复制链接失败')
-                            }
-                        }).catch(res => {
-                            that.Toast(res.message || '复制链接失败')
-                        })
+                        if (shareInfo.goods_url) {
+                            uni.setClipboardData({
+                                data: shareInfo.goods_url,
+                                success: function() {
+                                    that.Toast('链接已复制')
+                                }
+                            });
+                        } else {
+                            this.Toast('复制链接失败')
+                        }
                     }
                 }
             }
@@ -231,11 +225,14 @@
         }
         .scroll {
             width: 100%;
-            padding: 0 0 60upx;
-            ;
-            height: fit-content;
+            height: 500upx;
+            position: relative; 
             overflow: auto;
+            box-sizing: border-box;
             .cancel {
+                position: absolute;
+                bottom: 0;
+                left: 0;
                 height: 84upx;
                 width: 100%;
                 background: #fafafa;
@@ -259,6 +256,14 @@
                 height: 187upx;
                 position: relative;
                 background: #fff;
+                .open-share {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                }
                 .share-img {
                     width: 100upx;
                     height: 100upx;

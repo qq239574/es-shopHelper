@@ -5,7 +5,7 @@
             <TabCard :categories='categories' @tabChange='tabChange'></TabCard>
         </view>
         <view class='margin180'></view>
-        <Card @click='clickGood' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'></Card>
+        <Card @click='clickGood' @shareGoodInfo='shareGoodInfo' :userChannels='userChannels' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'></Card>
         <nodata type='noresult' tip='没有搜索到相关商品' v-if='!searching&&!goodsList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -32,6 +32,7 @@
     import categories from './index/categories.js'
     import getGoodsList from './index/getGoodsList.js'
     import nodata from '../../components/my-components/nodata.vue'
+    let needShare = {}
     let DataFrom = {};
     let DataGo = {};
     let searchData = {};
@@ -72,6 +73,7 @@
                 current: 1,
                 totalPage: 1,
                 tabIndex: 0, //默认tabs的index
+                userChannels: {}, //用户开通的渠道信息
             }
         },
         onLoad(option) {
@@ -86,6 +88,10 @@
             },
         },
         methods: {
+            shareGoodInfo(good) {
+                needShare = good;
+                console.log('shareGoodInfo', good)
+            },
             handleChange(obj) {
                 let {
                     detail: {
@@ -126,6 +132,14 @@
                     this.goodsList = res;
                     this.closePageLoading();
                     this.searching = false;
+                })
+                this.Request('getChannels', {}).then(res => { //获取用户开通渠道
+                    if (!res.error) {
+                        this.userChannels = {
+                            h5: res.channel.wap.open_status, //// 业务端启用状态 0: 未启用 1: 已经启用
+                            miniapp: res.channel.wxapp.open_status
+                        }
+                    }
                 })
             },
             tabChange(tab) { //切换标签事件
@@ -209,13 +223,13 @@
             this.initPage();
         },
         onShareAppMessage(res) { //分享事件
-            if (res.from === 'button') { // 来自页面内分享按钮
-                console.log(res.target)
-            }
-            return {
-                title: '自定义分享标题',
-                path: '/pages/index/index',
-                imageUrl: '/static/img/global/logo.jpg'
+            if (res.from === 'button') { // 来自页面内分享按钮 
+            console.log( needShare[res.target.id])
+                return {
+                    title: needShare.detail.goodName,
+                    path: needShare[res.target.id] || '',
+                    imageUrl: needShare.detail.img
+                }
             }
         }
     }

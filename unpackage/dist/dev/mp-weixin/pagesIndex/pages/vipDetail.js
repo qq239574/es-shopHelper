@@ -147,7 +147,7 @@ var DataGo = {};var _default =
             registerTime: data.create_time,
             origin: data.come_from,
             vipClass: data.level_name,
-            vipTag: data.tags.map(function (item) {return item.name;}).join(' ') || ' ' },
+            vipTag: data.tags.map(function (item) {return item.name;}).join(';') || ' ' },
 
           info2: {
             score: data.credit,
@@ -234,6 +234,12 @@ var DataGo = {};var _default =
           _this3.initPage();
         });
       } else if (val.type == 'set') {//设为分销商
+        this.Request('manualCommissionStatus', {
+          member_id: DataFrom.detail.info.id
+          // status: 1
+        }).then(function (res) {
+          _this3.initPage();
+        });
         this.Request('changeCommissionStatus', {
           member_id: DataFrom.detail.info.id,
           status: 1 }).

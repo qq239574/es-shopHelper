@@ -33,29 +33,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 6,
 			"list": [
-				{
-					"id": -1,
-					"name": "selfvery",
-					"pathName": "pagesSelfTakeVerify/pages/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "history",
-					"pathName": "pagesSelfTakeVerify/pages/historyRecord",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "selectShops",
-					"pathName": "pagesLogin/pages/selectShop",
-					"query": "",
-					"scene": null
-				},
 				{
 					"id": -1,
 					"name": "index",
@@ -64,10 +43,45 @@
 					"scene": null
 				},
 				{
+					"id": 1,
+					"name": "vip",
+					"pathName": "pagesIndex/pages/vipDetail",
+					"query": "from=vipManage",
+					"scene": null
+				},
+				{
 					"id": -1,
-					"name": "bill",
-					"pathName": "pages/bill/index",
-					"query": "",
+					"name": "vipbill",
+					"pathName": "pagesIndex/pages/vipBills",
+					"query": " ",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "good",
+					"pathName": "pages/commodity/index",
+					"query": " ",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "gooddetal",
+					"pathName": "pagesCommodity/pages/index",
+					"query": " from=good",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "gooddetal",
+					"pathName": "pagesCommodity/pages/index",
+					"query": " from=good",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "edittype",
+					"pathName": "pagesCommodity/pages/selectType",
+					"query": " from=editGood",
 					"scene": null
 				}
 			]

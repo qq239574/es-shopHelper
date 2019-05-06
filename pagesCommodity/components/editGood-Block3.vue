@@ -3,7 +3,7 @@
     <view class="provide-block" style='overflow:hidden;'>
         <form @submit="formSubmit" class="grace-form">
             <selectItem label='商品编码' :other='info.goodCode' :value='info.goodCode.value' @click="clickCell"></selectItem>
-            <switchItem label='自动发货' :other='info.autoDeliver' :value='info.autoDeliver.value' @change="inputCell" v-if='!item.needHide'></switchItem>
+            <switchItem label='自动发货' :other='info.autoDeliver' :checked='info.autoDeliver.value' @change="inputCell" v-if='!item.needHide'></switchItem>
             <selectItem label='自动发货内容' :other='info.autoDeliverContent' :value='info.autoDeliverContent.value' @click="clickCell" v-if='!item.needHide'></selectItem>
             <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.value' @click="clickCell" v-if='!item.needHide'></selectItem>
             <switchItem label='显示快递' :other='info.showProCost' :checked='info.showProCost.value' @change="inputCell" v-if='!item.needHide'></switchItem>
@@ -29,28 +29,35 @@
                     goodCode: {
                         label: '商品编码',
                         id: '',
-                        value: '0654656565656',
+                        value: '',
                         disabled: false, //可否编辑
                         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                    },
+                    autoDeliver: {
+                        label: '自动发货',
+                        id: '',
+                        value: false,
+                        disabled: false,
+                        editable: 'select',
                     },
                     provideCost: {
                         label: '快递运费',
                         id: '',
-                        value: 10,
+                        value: 0,
                         disabled: false, //可否编辑
                         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
                     showProCost: {
                         label: '显示快递',
                         id: '',
-                        value: true,
+                        value: false,
                         disabled: false, //可否编辑
                         editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
                     joinCount: {
                         label: '参与会员折扣',
                         id: '',
-                        value: true,
+                        value: false,
                         disabled: false, //可否编辑
                         editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                     },
@@ -63,12 +70,7 @@
                     }
                 }
             }
-        },
-        watch:{
-            info(){
-                console.log(this.info)
-            }
-        },
+        }, 
         data() {
             return {
                 goodName: '请选择',

@@ -54,21 +54,21 @@
             getImages(list) {
                 cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail)
             },
-            clickCell(val) {
+            clickCell(val) { 
                 toEditPage.call(this, val, cacheGoodDetail);
             },
             save() {
                 this.goodDetail = cacheGoodDetail;
                 let data=editGoodModel(cacheGoodDetail,cacheSubmitData);
-                // this.Request('editGoodDetail', data).then(res => {
-                //     if (res.error == 0) {
-                //         uni.navigateBack();
-                //     } else {
-                //         this.Toast(res.message);
-                //     }
-                // }).catch(res => {
-                //     this.Toast(res.message);
-                // })
+                this.Request('editGoodDetail', data).then(res => {
+                    if (res.error == 0) {
+                        uni.navigateBack();
+                    } else {
+                        this.Toast(res.message);
+                    }
+                }).catch(res => {
+                    this.Toast(res.message);
+                })
             },
             initPage() {
                 DataGo = this.Cacher.getData('editGood'); 
@@ -86,13 +86,13 @@
             DataFrom = this.Cacher.getData(option.from);
             this.Cacher.setData('editGood', {
                 from: option.from || ''
-            }) 
+            })  
             this.initPage();
             this.Request('getGoodDetail', {
                 goods_id: DataFrom.item.detail.goodId,
             }).then(res => {
                 cacheSubmitData=res;//提交的时候要一一对应
-                cacheGoodDetail = goodData.call(this,res);
+                cacheGoodDetail = goodData.call(this,res); 
                 this.goodDetail = cacheGoodDetail;
             });
         },

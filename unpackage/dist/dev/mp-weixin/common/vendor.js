@@ -10619,7 +10619,7 @@ var postSelfVerifyInfo = { //订单自提
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
+Object.defineProperty(exports, "__esModule", { value: true });exports.getChannels = exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
   url: '/shop/manage/goods/list',
   data: {
     status: 1,
@@ -10801,6 +10801,15 @@ var editGoodDetail = { //管理端商品修改
 
   type: 'post' };exports.editGoodDetail = editGoodDetail;
 
+
+var getChannels = { //全网发布(渠道)获取信息
+  url: '/shop/apps/allnet/manage/get',
+  data: {},
+  headers: {},
+
+
+  type: 'get' };exports.getChannels = getChannels;
+
 /***/ }),
 
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js":
@@ -10811,7 +10820,7 @@ var editGoodDetail = { //管理端商品修改
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.manualCommissionStatus = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -11004,6 +11013,15 @@ var changeCommissionStatus = { //审核/取消审核分销商
 
   type: 'post' };exports.changeCommissionStatus = changeCommissionStatus;
 
+var manualCommissionStatus = { //手动设置成为分销商
+  url: '/shop/apps/commission/manage/agent/manual-commission',
+  data: {
+    member_id: '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.manualCommissionStatus = manualCommissionStatus;
 
 var changeVipMoney = { //余额充值
   url: '/shop/manage/member/recharge/balance',
@@ -13307,17 +13325,39 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.multiData = multiData;function goodData(data) {var _this = this; //单规格商品
+Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;function goodData(data) {//单规格商品
+  var static_resources_domain = this.Cacher.getData('static_resources_domain');
+  var reg = new RegExp(static_resources_domain, 'g');
+
   var typeList = ['实体商品', '虚拟物品', '电子卡密', '预约', '核销']; //商品类型
-  var goodCateList = data.cate_list.map(function (item) {
+  var goodCateList = data.cate_list.map(function (item) {//商品一级分类
     return {
       name: item.title,
       id: item.id,
       children: item.children || [] };
 
   }); //商品分类列表
+
   var tmparr = data.goods.category_ids;
-  var goodTypes = goodCateList.filter(function (item) {
+  var allTypes = []; //商品一二级分类
+  data.cate_list.forEach(function (item) {
+    allTypes.push({
+      name: item.title,
+      id: item.id,
+      children: item.children || [] });
+
+    if (item.children && item.children.length) {
+      item.children.forEach(function (val) {
+        allTypes.push({
+          name: val.title,
+          id: val.id,
+          children: val.children || [] });
+
+      });
+    }
+
+  }); //商品分类列表
+  var goodTypes = allTypes.filter(function (item) {
     var len = tmparr.length;
     var result = false;
     for (var i = 0; i < len; i++) {
@@ -13326,6 +13366,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         break;
       }
     }
+
     return result;
   }); //商品所属分类
   var formList = data.form_list;
@@ -13363,6 +13404,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
           return item.name;
         }).join(';'),
         list: goodCateList, //全部类型 
+        category_ids: data.goods.category_ids,
         goodTypes: goodTypes, //商品的类型
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13370,9 +13412,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
       mainImage: {
         label: '主图',
         id: '',
-        img: this.static_resources_domain + data.goods.thumb,
+        img: data.goods.thumb,
         list: [{
-          img: this.static_resources_domain + data.goods.thumb }],
+          img: data.goods.thumb.replace(reg, '') }],
 
         disabled: false, //可否编辑
         editable: 'image' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13380,7 +13422,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
       swiperList: {
         label: '',
         list: data.goods.thumbs.map(function (item) {return {
-            img: _this.static_resources_domain + item };}),
+            img: item.replace(reg, '') };}),
 
         disabled: false, //可否编辑
         editable: 'imagelist' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13498,6 +13540,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         label: '快递运费',
         id: '',
         value: data.goods.dispatch_price,
+        dispatch_list: data.dispatch_list,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: false },
@@ -13520,14 +13563,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         label: '商品表单',
         id: data.goods.form_id,
         value: formList.filter(function (item) {
-          var result = false;
-          for (var i = 0; i < formList.length; i++) {
-            if (item.id == data.goods.form_id) {
-              result = true;
-              break;
-            }
-          }
-          return result;
+          //  let result = false;
+          //  for (let i = 0; i < formList.length; i++) {
+          //      if (item.id == data.goods.form_id) {
+          //          result = true;
+          //          break;
+          //      }
+          //  }
+          return item.id == data.goods.form_id;
         }).map(function (item) {
           return item.name;
         }).join(''),
@@ -13541,127 +13584,128 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         label: '状态',
         id: data.goods.status,
         value: statusList[data.goods.status * 1 + 1],
+        putaway_time: data.goods.putaway_time,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       } } };
 
 
 }
-function multiData() {
-  return {
-    info1: {
-      goodType: {
-        label: '规格类型',
-        id: '',
-        value: '多规格',
-        disabled: true, //可否编辑,false可以，true不可
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
+//  export function multiData() {
+//      return {
+//          info1: {
+//              goodType: {
+//                  label: '规格类型',
+//                  id: '',
+//                  value: '多规格',
+//                  disabled: true, //可否编辑,false可以，true不可
+//                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
 
-      list: {
-        disabled: false, //可否编辑,false可以，true不可
-        editable: 'block', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        value: [{
-          specif: {
-            label: '规格',
-            id: '',
-            value: '2000W-亮黑色',
-            disabled: true, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          price: {
-            label: '价格',
-            id: '',
-            value: '1999.0',
-            disabled: false, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          stock: {
-            label: '库存',
-            id: '',
-            value: '23566',
-            disabled: false, //可否编辑
-            editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          },
-          code: {
-            label: '商品编号',
-            id: '',
-            value: 'JB12595695656565998',
-            disabled: false, //可否编辑
-            editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-          } }] },
-
-
-      delPrice: { //划线价格
-        label: '划线价格',
-        id: '',
-        value: '16565',
-        disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      showStock: { //显示库存
-        label: '显示库存',
-        id: '',
-        value: false,
-        disabled: false, //可否编辑
-        editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      soldNum: { //已出售数
-        label: '已出售数',
-        id: '',
-        value: 10,
-        disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      showSold: { //显示销量
-        label: '显示销量',
-        id: '',
-        value: true,
-        disabled: false, //可否编辑
-        editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      } },
-
-    info2: {
-      provideCost: {
-        label: '快递运费',
-        id: '',
-        value: 10,
-        disabled: false, //可否编辑
-        editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      showProCost: {
-        label: '显示快递',
-        id: '',
-        value: true,
-        disabled: false, //可否编辑
-        editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      joinCount: {
-        label: '参与会员折扣',
-        id: '',
-        value: true,
-        disabled: false, //可否编辑
-        editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      goodForm: {
-        label: '商品表单',
-        id: '',
-        value: '',
-        disabled: false, //可否编辑
-        editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      } },
-
-    info3: {
-      status: {
-        label: '状态',
-        id: '',
-        value: '下架',
-        disabled: false, //可否编辑
-        editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      } } };
-
-
-}
+//              },
+//              list: {
+//                  disabled: false, //可否编辑,false可以，true不可
+//                  editable: 'block', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//                  value: [{
+//                      specif: {
+//                          label: '规格',
+//                          id: '',
+//                          value: '2000W-亮黑色',
+//                          disabled: true, //可否编辑
+//                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//                      },
+//                      price: {
+//                          label: '价格',
+//                          id: '',
+//                          value: '1999.0',
+//                          disabled: false, //可否编辑
+//                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//                      },
+//                      stock: {
+//                          label: '库存',
+//                          id: '',
+//                          value: '23566',
+//                          disabled: false, //可否编辑
+//                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//                      },
+//                      code: {
+//                          label: '商品编号',
+//                          id: '',
+//                          value: 'JB12595695656565998',
+//                          disabled: false, //可否编辑
+//                          editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//                      },
+//                  }]
+//              },
+//              delPrice: { //划线价格
+//                  label: '划线价格',
+//                  id: '',
+//                  value: '16565',
+//                  disabled: false, //可否编辑
+//                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              showStock: { //显示库存
+//                  label: '显示库存',
+//                  id: '',
+//                  value: false,
+//                  disabled: false, //可否编辑
+//                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              soldNum: { //已出售数
+//                  label: '已出售数',
+//                  id: '',
+//                  value: 10,
+//                  disabled: false, //可否编辑
+//                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              showSold: { //显示销量
+//                  label: '显示销量',
+//                  id: '',
+//                  value: true,
+//                  disabled: false, //可否编辑
+//                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              }
+//          },
+//          info2: {
+//              provideCost: {
+//                  label: '快递运费',
+//                  id: '',
+//                  value: 10,
+//                  disabled: false, //可否编辑
+//                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              showProCost: {
+//                  label: '显示快递',
+//                  id: '',
+//                  value: true,
+//                  disabled: false, //可否编辑
+//                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              joinCount: {
+//                  label: '参与会员折扣',
+//                  id: '',
+//                  value: true,
+//                  disabled: false, //可否编辑
+//                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              },
+//              goodForm: {
+//                  label: '商品表单',
+//                  id: '',
+//                  value: '',
+//                  disabled: false, //可否编辑
+//                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              }
+//          },
+//          info3: {
+//              status: {
+//                  label: '状态',
+//                  id: '',
+//                  value: '下架',
+//                  disabled: false, //可否编辑
+//                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+//              }
+//          },
+//      }
+//  }
 
 /***/ }),
 
@@ -13704,12 +13748,13 @@ function mapOptions(data, cache) {
 }
 
 function mapGoods(data, cache) {
+
   var goods = {
     title: data.info1.goodName.value,
     sub_title: data.info1.subTitle.value,
     category_ids: data.info1.classification.goodTypes.map(function (item) {
       return item.id;
-    }),
+    }).join(','),
     thumb: data.info1.mainImage.list[0].img,
     thumbs: data.info1.swiperList.list.map(function (item) {
       return item.img;
@@ -13717,17 +13762,18 @@ function mapGoods(data, cache) {
     price: data.info2.price.value,
     original_price: data.info2.delPrice.value,
     stock: data.info2.stockNum.value,
-    stock_hide: data.info2.showStock.value ? 1 : 0,
+    stock_hide: data.info2.showStock.value ? 0 : 1,
     sales_count: data.info2.soldNum.value,
-    sales_hide: data.info2.showSold.value ? 1 : 0,
+    sales_hide: data.info2.showSold.value ? 0 : 1,
     goods_code: data.info3.goodCode.value,
     auto_delivery: data.info3.autoDeliver.value ? 1 : 0,
     auto_delivery_content: data.info3.autoDeliverContent.value,
     dispatch_price: data.info3.provideCost.value,
-    dispatch_hide: data.info3.showProCost.value ? 1 : 0,
+    dispatch_hide: data.info3.showProCost.value ? 0 : 1,
     is_discount: data.info3.joinCount.value ? 1 : 0,
-    form_id: data.info3.goodForm.formId,
-    status: data.info4.status.statusId };
+    form_id: data.info3.goodForm.id || 0,
+    status: data.info4.status.id,
+    putaway_time: data.info4.status.putaway_time };
 
   return goods;
 
@@ -13807,9 +13853,10 @@ function _default(data, cache) {
         virtual_sales: '',
         volume: '',
         weight: '' },
-      goods, mapGoods(data, cache)) },
+      goods, mapGoods(data, cache)),
+      options: mapOptions(data, cache) } };
 
-    options: mapOptions(data, cache) };
+
 
 
   console.log(goodModel);
@@ -13890,6 +13937,7 @@ function _default(data, cache) {
     detail: detail,
     needChange: val });
 
+  console.log('to edit ', val);
   uni.navigateTo({
     url: '../pages/' + DataGo + '?from=editGood' });
 
@@ -13932,6 +13980,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(val, cacheGoodDetail) {
+  var static_resources_domain = this.Cacher.getData('static_resources_domain');
+  var reg = new RegExp(static_resources_domain, 'g');
 
   if (val.label == '售卖价格') {
     cacheGoodDetail.info2.price.value = val.value;
@@ -13954,14 +14004,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cacheGoodDetail.info1.mainImage.img = val.images[0] || '';
     cacheGoodDetail.info1.mainImage.list = val.images.map(function (item) {
       return {
-        img: item };
+        img: item.replace(reg, '') };
 
     });
 
   } else if (val.label == '轮播图') {
     cacheGoodDetail.info1.swiperList.list = val.images.map(function (item) {
       return {
-        img: item };
+        img: item.replace(reg, '') };
 
     });;
   } else if (val.label == '商品名称') {
@@ -13970,7 +14020,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cacheGoodDetail.info1.subTitle.value = val.value;
   } else if (val.label == '商品分类') {
     if (typeof val.value == 'object' && typeof val.value.map == 'function') {
-      cacheGoodDetail.info1.classification.value = val.value.map(function (item) {return item.name;}).join(';');
+      cacheGoodDetail.info1.classification.value = val.value.map(function (item) {return item.name;}).join(';').replace(/;+/g, ';');
       cacheGoodDetail.info1.classification.goodTypes = val.value;
     }
   } else if (val.label == '商品编码') {
@@ -13979,10 +14029,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cacheGoodDetail.info3.provideCost.value = val.value;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
-    cacheGoodDetail.info3.goodForm.formId = val.id;
+    cacheGoodDetail.info3.goodForm.id = val.id;
   } else if (val.label == '状态') {
     cacheGoodDetail.info4.status.value = val.value;
-    cacheGoodDetail.info4.status.statusId = val.other.id;
+    cacheGoodDetail.info4.status.id = val.other.id;
+    cacheGoodDetail.info4.status.putaway_time = val.other.subValue;
   } else if (val.label == '规格类型') {
     cacheGoodDetail.info2.specification.list = val.other.list;
   } else if (val.label == '自动发货') {

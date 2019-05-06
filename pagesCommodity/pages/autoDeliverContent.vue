@@ -40,7 +40,10 @@
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
             cacheFrom=option.from;
-            console.log(DataFrom);
+              cacheVal = DataFrom.needChange.value;
+            this.val = cacheVal;
+            this.disable = !this.val;
+            this.Cacher.setData(cacheFrom, DataFrom);
         }
     }
 </script>

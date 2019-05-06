@@ -43,23 +43,34 @@
                 checked: false
             }
         },
-        watch: {
-            typeList() {
-                if (this.typeList.children.length) {
-                    this.checked = (this.typeList.children.length == this.selected.length);
-                } else {
-                    this.checked == this.typeList.selected;
-                }
-            }
-        },
         beforeMount() {
-            if (this.typeList.children.length) {
-                this.checked = (this.typeList.children.length == this.selected.length);
-            } else {
-                this.checked == this.typeList.selected;
-            }
+            this.getTypeList();
         },
         methods: {
+            getTypeList() {
+                if (this.typeList.children && this.typeList.children.length) {
+                    this.typeList.children.forEach(val => {
+                        val.selected ? this.selected.push(val) : ''
+                    });
+                    this.checked = (this.typeList.children.length == this.selected.length);
+                } else {
+                    this.checked == !!this.typeList.selected;
+                } 
+                if (this.selected.length) {
+                    this.$emit('change', {
+                        index: this.infoId,
+                        list: [{
+                            name: this.typeList.name,
+                            id: this.typeList.id
+                        }, ...this.selected]
+                    })
+                } else {
+                    this.$emit('change', {
+                        index: this.infoId,
+                        list: []
+                    })
+                }
+            },
             clearKey(val) { //全选或全清理
                 this.checked = !this.checked;
                 if (this.checked) {

@@ -29,7 +29,9 @@
 var cache = '';var _default =
 {
   data: function data() {
-    return {};
+    return {
+      code: '' };
+
   },
   components: {
     longButton: longButton },
@@ -54,6 +56,7 @@ var cache = '';var _default =
       uni.scanCode({
         success: function success(res) {
           cache = res.result;
+          this.code = cache;
         },
         fail: function fail(res) {
           // console.log(res)
