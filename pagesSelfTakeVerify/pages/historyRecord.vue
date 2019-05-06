@@ -86,7 +86,8 @@
                         billId: '', //订单号
                         billDate: '2018-08-19 12:12:12', //订单时间
                         billType: 0, //订单类型，0：分销订单，1：普通订单
-                        billPrice: 0
+                        billPrice: 0,
+                        id:''
                     },
                     goodsList: [{ //订单商品信息
                         img: '/static/img/global/alipay.svg', //商品图片
@@ -203,7 +204,7 @@
                                     addition: 0, //维权备注
                                 }
                             }
-                        })
+                        }) 
                     } else {
                         this.Toast(res.message)
                     }
