@@ -1,7 +1,7 @@
 export default function (val, cacheGoodDetail) {
     let static_resources_domain = this.Cacher.getData('static_resources_domain');
     let reg = new RegExp(static_resources_domain, 'g');
-   
+
     if (val.label == '售卖价格') {
         cacheGoodDetail.info2.price.value = val.value;
     } else if (val.label == '划线价格') {
@@ -13,7 +13,6 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '已出售数') {
         cacheGoodDetail.info2.soldNum.value = val.value;
     } else if (val.label == '显示销量') {
-
         cacheGoodDetail.info2.showSold.value = val.checked;
     } else if (val.label == '显示快递') {
         cacheGoodDetail.info3.showProCost.value = val.checked;
@@ -44,15 +43,23 @@ export default function (val, cacheGoodDetail) {
         }
     } else if (val.label == '商品编码') {
         cacheGoodDetail.info3.goodCode.value = val.value;
+    } else if (val.label == '定时下架') {
+        cacheGoodDetail.info3.autoExt.value = val.checked;
+    } else if (val.label == '定时下架时间') {
+        console.log('定时下架时间', val)
+        cacheGoodDetail.info3.autoExtTime.value = val.value;
     } else if (val.label == '快递运费') {
         cacheGoodDetail.info3.provideCost.value = val.value;
     } else if (val.label == '商品表单') {
         cacheGoodDetail.info3.goodForm.value = val.value;
         cacheGoodDetail.info3.goodForm.id = val.id;
+    } else if (val.label == '卡密库') {
+        cacheGoodDetail.info2.cardStock.value = val.value;
+        cacheGoodDetail.info2.cardStock.id = val.id;
     } else if (val.label == '状态') {
         cacheGoodDetail.info4.status.value = val.value;
         cacheGoodDetail.info4.status.id = val.other.id;
-        cacheGoodDetail.info4.status.putaway_time = val.other.subValue; 
+        cacheGoodDetail.info4.status.putaway_time = val.other.subValue;
     } else if (val.label == '规格类型') {
         cacheGoodDetail.info2.specification.list = val.other.list;
     } else if (val.label == '自动发货') {

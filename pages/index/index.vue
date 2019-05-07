@@ -12,7 +12,7 @@
             <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
-            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice'  v-if='newNotice.label||newNotice.date'>
+            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -36,7 +36,9 @@
     } from '../../components/my-components/getDateSection.js'
     let DataFrom = {};
     let newNotice = {};
-    let searchDay = {value:'today'};
+    let searchDay = {
+        value: 'today'
+    };
     export default {
         components: {
             LongButton,
@@ -125,7 +127,7 @@
                 } else if (val.title == '自提核销') {
                     this.closePageLoading();
                     uni.navigateTo({
-                        url:'../../pagesSelfTakeVerify/pages/index?from=home'
+                        url: '../../pagesSelfTakeVerify/pages/index?from=home'
                     })
                 }
             },
@@ -160,7 +162,7 @@
             },
             initPage() {
                 this.searchData(searchDay); //初始化数据框
-                this.Request('homeInfo',{}).then(res => {
+                this.Request('homeInfo', {}).then(res => {
                     this.shopName = res.shop.name;
                     this.showData = {
                         money: res.data.today_payment_amount,
@@ -172,8 +174,8 @@
                         return new Date('2019-' + a.date) - new Date('2019-' + b.date)
                     });
                     this.newNotice = {
-                        label: newNotice[0].title||'',
-                        date: newNotice[0].date||''
+                        label: newNotice[0].title || '',
+                        date: newNotice[0].date || ''
                     }
                     this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
                     this.execInfo = { //还没写过期的功能？？？？
@@ -192,6 +194,35 @@
                         name: '维权订单',
                         num: res.data.order_refund
                     }]
+                })
+                let userInfo = this.Cacher.getData('login');
+                if (!userInfo.haveBindWx && userInfo.encryptedData) {
+                    this.closePageLoading();
+                    this.Dialog.confirm({
+                        title: '没有绑定微信',
+                        message: '为方便您的使用，是否与微信账号绑定？',
+                        confirmButtonText: '绑定'
+                    }).then(() => {
+                        this.pageLoading();
+                        this.Request('bindWechat', {
+                            encrypted_data: userInfo.encryptedData,
+                            session_key: userInfo.session_key,
+                            iv: userInfo.iv,
+                            user_id: userInfo.userId
+                        }).then(res => {
+                            this.closePageLoading();
+                            if (res.error == 0) {
+                                this.Toast('绑定成功')
+                            } else {
+                                this.Toast('绑定失败')
+                            }
+                        }).catch(res => {
+                            this.closePageLoading();
+                            this.Toast(res.message)
+                        })
+                    });
+                }
+                this.Request('getUserJury').then(res => { //获取用户权限
                 })
             }
         },

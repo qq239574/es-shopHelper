@@ -11,7 +11,7 @@
 		<selectItem label='联系方式' :value='userTel' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem label='微信：Forever' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX'></selectItem>
+		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX' v-if='wxInfo.nickName'></selectItem>
 		<view class="margin20"></view>
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
@@ -33,7 +33,8 @@
 				userName: '',
 				userTel: '',
 				userRoleName: '',
-				realName: ''
+				realName: '',
+				wxInfo: {}
 			}
 		},
 		methods: {
@@ -109,6 +110,8 @@
 			}
 		},
 		onShow() {
+			let info = this.Cacher.getData('login') || {};
+			this.wxInfo = info.userInfo;
 			this.initPage();
 		}
 	}

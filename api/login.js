@@ -150,3 +150,9 @@ export const bindWechat = {//小程序管理中心绑定微信登录
     headers: {},
     type: 'post'
 }
+export const getUserJury ={//获取用户权限
+    url: '/shop/manage/perm/get',
+    data: {},
+    headers: {},
+    type: 'get'
+}

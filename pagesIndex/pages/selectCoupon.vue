@@ -73,8 +73,8 @@
                         go: 'searchCoupon',
                         value: ''
                     }
-                }else{
-                     DataGo = {
+                } else {
+                    DataGo = {
                         go: 'searchCoupon',
                         value: ''
                     }
@@ -136,10 +136,15 @@
                     for (let i = 0; i < len; i++) {
                         obj['coupon_count[' + i + ']'] = this.selected[i].num;
                     }
-                    this.Request('sendCoupon', obj).then(res => {
+                    if (len) {
+                        this.Request('sendCoupon', obj).then(res => {
+                            this.closePageLoading();
+                            uni.navigateBack();
+                        })
+                    } else {
                         this.closePageLoading();
-                        uni.navigateBack();
-                    })
+                        this.Toast('请选择优惠券')
+                    }
                 }
             }
         },
@@ -147,7 +152,6 @@
             this.pageLoading();
             this.list = [];
             DataFrom = this.Cacher.getData(option.from);
-            console.log(DataFrom)
         },
         onShow() {
             this.initPage();

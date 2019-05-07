@@ -3,6 +3,7 @@
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index",
     "good-info": "/pagesCommodity/components/editGood-Block1",
     "good-info2": "/pagesCommodity/components/editGood-Block2",
     "good-info3": "/pagesCommodity/components/editGood-Block3",

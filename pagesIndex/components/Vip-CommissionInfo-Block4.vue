@@ -1,9 +1,9 @@
 <template>
     <view class='vip-was-distributor'>
-        <inputItem label='上级分销商' :disabled='true' value='230.50元'></inputItem>
-        <inputItem label='申请时间' :disabled='true' value='230.50元'></inputItem> 
+        <inputItem label='上级分销商' :disabled='true' :value='info.superDistributor.name'></inputItem>
+        <inputItem label='申请时间' :disabled='true' :value='info.registerTime'></inputItem>
         <view class="button">
-            <roundButton  @click='refuse'> 审核拒绝 </roundButton>
+            <roundButton @click='refuse'> 审核拒绝 </roundButton>
             <roundButton @click='allow' type='primary'> 审核通过 </roundButton>
         </view>
     </view>
@@ -16,16 +16,22 @@
         components: {
             inputItem,
             roundButton
-        }, 
+        },
+        props: {
+            info: {
+                type: Object,
+                default: {}
+            }
+        },
         methods: {
-            refuse(){
-                this.$emit('click',{
-                    type:'refuse'
+            refuse() {
+                this.$emit('click', {
+                    type: 'refuse'
                 })
             },
-            allow(){
-                 this.$emit('click',{
-                    type:'allow'
+            allow() {
+                this.$emit('click', {
+                    type: 'allow'
                 })
             }
         },
@@ -34,17 +40,17 @@
 
 <style lang="scss" scoped>
     .vip-was-distributor {
-        .button{
-            width:467upx;
-            margin:60upx auto;
+        .button {
+            width: 467upx;
+            margin: 60upx auto;
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-around;
         }
-        .hadRefused{
-            width:100%;
+        .hadRefused {
+            width: 100%;
             text-align: center;
-            color:#acb1ba;
+            color: #acb1ba;
             line-height: 100upx;
         }
     }

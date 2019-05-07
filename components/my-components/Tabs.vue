@@ -16,7 +16,7 @@
                     },
                     {
                         cateid: 1,
-                        name: "代发货"
+                        name: "待发货"
                     },
                     {
                         cateid: 2,

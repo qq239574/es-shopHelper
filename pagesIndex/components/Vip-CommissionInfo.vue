@@ -11,7 +11,7 @@
         <!-- 待审核 -->
         <Block4 :info='info' @click='exame' v-else-if="info.isCommission==0"></Block4>
         <!-- 拒绝过 -->
-        <Block5 @click='setDistributor' v-else></Block5>
+        <Block5 :info='info' @click='setDistributor' v-else></Block5>
     </view>
 </template>
 

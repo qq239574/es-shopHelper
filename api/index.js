@@ -8,7 +8,7 @@ import graceRequest from '../graceUI/jsTools/request.js'
 
 let sessionId = '';
 let shopInfo = '';
-const global_settings = {
+const global_settings = { 
     base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
     attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };

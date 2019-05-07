@@ -39,6 +39,10 @@
 
 
 
+
+
+
+
 var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
 var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
 
@@ -98,6 +102,17 @@ var curTab = {
     } },
 
   methods: {
+    addGoods: function addGoods() {
+      DataGo = {
+        go: 'editGood' };
+
+      this.Cacher.setData('good', {
+        from: 'addGoods' });
+
+      uni.navigateTo({
+        url: '../../pagesCommodity/pages/index?from=good' });
+
+    },
     shareGoodInfo: function shareGoodInfo(good) {
       needShare = good;
       console.log('shareGoodInfo', good);
@@ -201,7 +216,13 @@ var curTab = {
             _this2.initPage();
           });
         } else if (item.name == '删除') {
-          this.Request('tempDelGood', {
+          var delApis = {
+            '出售中': 'tempDelGood',
+            '已售罄': 'tempDelGood',
+            '仓库中': 'tempDelGood',
+            '回收站': 'realDelGood' };
+
+          this.Request(delApis[this.searchTab.name] || 'tempDelGood', {
             goods_ids: item.detail.goodId }).
           then(function (res) {
             _this2.closePageLoading();

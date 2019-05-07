@@ -43,7 +43,8 @@ var DataFrom = {};var _default =
       userName: '',
       userTel: '',
       userRoleName: '',
-      realName: '' };
+      realName: '',
+      wxInfo: {} };
 
   },
   methods: {
@@ -119,6 +120,8 @@ var DataFrom = {};var _default =
     } },
 
   onShow: function onShow() {
+    var info = this.Cacher.getData('login') || {};
+    this.wxInfo = info.userInfo;
     this.initPage();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

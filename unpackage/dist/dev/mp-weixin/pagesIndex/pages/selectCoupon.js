@@ -146,10 +146,15 @@ var DataGo = {};var _default =
         for (var _i = 0; _i < len; _i++) {
           obj['coupon_count[' + _i + ']'] = this.selected[_i].num;
         }
-        this.Request('sendCoupon', obj).then(function (res) {
-          _this2.closePageLoading();
-          uni.navigateBack();
-        });
+        if (len) {
+          this.Request('sendCoupon', obj).then(function (res) {
+            _this2.closePageLoading();
+            uni.navigateBack();
+          });
+        } else {
+          this.closePageLoading();
+          this.Toast('请选择优惠券');
+        }
       }
     } },
 
@@ -157,7 +162,6 @@ var DataGo = {};var _default =
     this.pageLoading();
     this.list = [];
     DataFrom = this.Cacher.getData(option.from);
-    console.log(DataFrom);
   },
   onShow: function onShow() {
     this.initPage();

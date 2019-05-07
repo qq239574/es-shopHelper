@@ -1,9 +1,9 @@
 <template>
     <view class='vip-was-distributor'>
-        <inputItem label='上级分销商' :disabled='true' value='230.50元'></inputItem>
-        <inputItem label='申请时间' :disabled='true' value='230.50元'></inputItem>
-        <view class="hadRefused" >已拒绝该用户的分销商申请</view>
-        <view class="button"> 
+        <inputItem label='上级分销商' :disabled='true' :value='info.superDistributor.name'></inputItem>
+        <inputItem label='申请时间' :disabled='true' :value='info.beDistributorTime.value'></inputItem>
+        <view class="hadRefused">已拒绝该用户的分销商申请</view>
+        <view class="button">
             <roundButton @click='allow' type='primary'> 设置为分销商 </roundButton>
         </view>
     </view>
@@ -17,15 +17,21 @@
             inputItem,
             roundButton
         },
+        props: {
+            info: {
+                type: Object,
+                default: {}
+            }
+        },
         data() {
             return {
                 hadRefused: true
             }
         },
-        methods: { 
-            allow(){
-                 this.$emit('click',{
-                    type:'set'
+        methods: {
+            allow() {
+                this.$emit('click', {
+                    type: 'set'
                 })
             }
         },
@@ -34,17 +40,17 @@
 
 <style lang="scss" scoped>
     .vip-was-distributor {
-        .button{
-            width:467upx;
-            margin:60upx auto;
+        .button {
+            width: 467upx;
+            margin: 60upx auto;
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-around;
         }
-        .hadRefused{
-            width:100%;
+        .hadRefused {
+            width: 100%;
             text-align: center;
-            color:#acb1ba;
+            color: #acb1ba;
             line-height: 100upx;
         }
     }

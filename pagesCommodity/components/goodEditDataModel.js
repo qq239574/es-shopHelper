@@ -40,6 +40,7 @@ function mapGoods(data, cache) {
         thumbs: data.info1.swiperList.list.map(item => {
             return item.img
         }),
+        virtual_card_id: data.info2.cardStock.id,
         price: data.info2.price.value,
         original_price: data.info2.delPrice.value,
         stock: data.info2.stockNum.value,
@@ -47,15 +48,18 @@ function mapGoods(data, cache) {
         sales_count: data.info2.soldNum.value,
         sales_hide: data.info2.showSold.value ? 0 : 1,
         goods_code: data.info3.goodCode.value,
-        auto_delivery: data.info3.autoDeliver.value ? 1: 0,
+        auto_delivery: data.info3.autoDeliver.value ? 1 : 0,
         auto_delivery_content: data.info3.autoDeliverContent.value,
         dispatch_price: data.info3.provideCost.value,
         dispatch_hide: data.info3.showProCost.value ? 0 : 1,
         is_discount: data.info3.joinCount.value ? 1 : 0,
-        form_id: data.info3.goodForm.id||0,
+        form_id: data.info3.goodForm.id || 0,
         status: data.info4.status.id,
-        putaway_time:data.info4.status.putaway_time,
-    } 
+        putaway_time: data.info4.status.putaway_time,
+        auto_warehouse: data.info3.autoExt.value ? 1 : 0,
+        auto_warehouse_time: data.info3.autoExtTime.value
+    }
+    console.log('goods',goods)
     return goods;
 
 

@@ -10,7 +10,18 @@
              children: item.children || []
          }
      }); //商品分类列表
-
+     let cardSocks = data.virtual_list || []; //卡密库
+     let virtual_card_id = data.goods.virtual_card_id || '';
+     let cardType = {};
+     let cardStocksLen = cardSocks.length;
+     let tmpCard = {};
+     for (let i = 0; i < cardStocksLen; i++) {
+         tmpCard = cardSocks[i];
+         if (tmpCard.id == virtual_card_id) {
+             cardType = tmpCard;
+             break;
+         }
+     }
      let tmparr = data.goods.category_ids;
      let allTypes = []; //商品一二级分类
      data.cate_list.forEach(item => {
@@ -54,7 +65,6 @@
                  value: typeList[data.goods.type - 1],
                  disabled: true, //可否编辑,false可以，true不可
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-
              },
              goodName: {
                  label: '商品名称',
@@ -156,6 +166,15 @@
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },
+             cardStock: { //划线价格
+                 label: '卡密库',
+                 id: virtual_card_id,
+                 value: cardType.name,
+                 formList: cardSocks,
+                 needHide: data.goods.type == 3,
+                 disabled: false, //可否编辑
+                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+             },
              stockNum: { //商品库存
                  label: '商品库存',
                  id: '',
@@ -193,13 +212,29 @@
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },
+             autoExt: {
+                 label: '定时下架',
+                 id: '',
+                 value: data.goods.auto_warehouse == 1,
+                 disabled: false, //可否编辑
+                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide: data.goods.type != 3, ///3为电子卡密
+             },
+             autoExtTime: {
+                 label: '定时下架时间',
+                 id: '',
+                 value: data.goods.auto_warehouse_time,
+                 disabled: false, //可否编辑
+                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide: data.goods.type != 3, //3为电子卡密,
+             },
              autoDeliver: {
                  label: '自动发货',
                  id: '',
                  value: data.goods.auto_delivery == 1,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: false,
+                 needHide: data.goods.type != 2,//虚拟商品无快递运费相关选项，多出自动发货相关
              },
              autoDeliverContent: {
                  label: '自动发货内容',
@@ -207,7 +242,7 @@
                  value: data.goods.auto_delivery_content,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: false,
+                 needHide: data.goods.type != 2,//虚拟商品无快递运费相关选项，多出自动发货相关
              },
              provideCost: {
                  label: '快递运费',
@@ -216,7 +251,7 @@
                  dispatch_list: data.dispatch_list,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: false,
+                 needHide: data.goods.type == 2,//虚拟商品无快递运费相关选项，多出自动发货相关
              },
              showProCost: {
                  label: '显示快递',
@@ -224,6 +259,7 @@
                  value: data.goods.dispatch_hide == 0,
                  disabled: false, //可否编辑
                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide: data.goods.type == 2,//虚拟商品无快递运费相关选项，多出自动发货相关
              },
              joinCount: {
                  label: '参与会员折扣',

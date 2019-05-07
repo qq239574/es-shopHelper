@@ -8,110 +8,114 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
-var requesting = false;
-var canLogin = false; //可否登录 
-var sessionId = '';
-var DataFrom = {};var _default =
-{
-  components: {
-    LongButton: LongButton },
 
-  data: function data() {
-    return {
-      openEye: false,
-      userId: '',
-      password: '',
-      idError: false //用户信息错误
-    };
-  },
-  computed: {
-    disableButton: function disableButton() {
-      this.idError = false;
-      return !this.userId || !this.password;
-    } },
 
-  onLoad: function onLoad(option) {
-    // uni.clearStorage();//清空缓存
-    var that = this;
-    DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
-    this.initPage();
-    if (!DataFrom.from) {} else {}
-    uni.getProvider({
-      service: 'oauth',
-      success: function success(res) {
-        if (~res.provider.indexOf('weixin')) {
-          uni.login({
-            provider: 'weixin',
-            success: function success(loginRes) {
-              console.log('weixin>>>', loginRes);
-              that.Request('wechatLogin', {
-                code: loginRes.code }).
-              then(function (res) {
-                if (res.error == 0) {}
-              }).catch(function (res) {
-                console.log('res》》》', res);
-              });
-            } });
 
-        }
-      } });
 
-  },
-  mounted: function mounted() {
-    this.closePageLoading();
-  },
-  methods: {
-    clickButton: function clickButton() {
-      console.log('object');
-    },
-    initPage: function initPage() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _login = __webpack_require__(/*! ./login.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\login\\login.js"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var requesting = false;var canLogin = false; //可否登录 
+var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: LongButton }, data: function data() {return { openEye: false, userId: '', password: '', idError: false //用户信息错误
+    };}, computed: { disableButton: function disableButton() {this.idError = false;return !this.userId || !this.password;} }, onLoad: function onLoad(option) {var _this = this;var that = this;DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
+    this.initPage();if (!DataFrom.from) {_login.wxLogin.call(this).then(function (res) {canLogin = true;if (canLogin) {uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });} else {_this.idError = true; //账号密码不对
+        }}).catch(function (res) {}); //微信登录
+    } else {//从别处跳转过来的 
+      uni.clearStorage(); //清空缓存 
+    }}, mounted: function mounted() {this.closePageLoading();}, methods: { clickButton: function clickButton() {var _this2 = this;_login.wxLogin.call(this).then(function (res) {uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });}).catch(function (res) {res.message && _this2.Toast(res.message);}); //微信登录
+    }, initPage: function initPage() {
       this.openEye = false;
       canLogin = false;
       this.userId = 'yilianxinpin';
@@ -132,48 +136,24 @@ var DataFrom = {};var _default =
     },
     loginWithWx: function loginWithWx() {
       this.closePageLoading();
-      this.Toast('当前微信暂未绑定任何管理员账号');
     },
-    loginNow: function loginNow(e) {var _this = this; //点击登录
+    loginNow: function loginNow(e) {var _this3 = this; //点击登录
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();
-        this.Request('login', {
-          account: this.userId,
-          password: this.password }).
-        then(function (res) {
-          // 验证通过
-          if (res.error == 0) {
-            canLogin = true;
-            if (canLogin) {
-              uni.reLaunch({
-                url: '../../pagesLogin/pages/selectShop?from=login' });
-
-            } else {
-              _this.idError = true; //账号密码不对
-            }
-          } else {
-            _this.Toast(res.message);
-          }
-          _this.closePageLoading();
+        _login.login.call(this).then(function (res) {
           requesting = false;
+          uni.reLaunch({
+            url: '../../pagesLogin/pages/selectShop?from=login' });
+
         }).catch(function (res) {
+          _this3.idError = true; //账号密码不对
           requesting = false;
-          _this.Cacher.setData('login', {
-            from: 'login' });
-
-          if (res.error == -3) {//已登录
-            uni.reLaunch({
-              url: '../../pagesLogin/pages/selectShop?from=login' });
-
-          } else {
-            _this.Toast(res.message);
-          }
-        });
+        }); //微信登录; //账号密码登录
       } else {
         setTimeout(function () {
           requesting = false;
-          _this.Toast('登录时间长，请重试');
+          _this3.Toast('登录时间长，请重试');
         }, 3000);
       }
     },

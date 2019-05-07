@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -11212,7 +11212,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.bindWechat = exports.wechatLogin = exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
+Object.defineProperty(exports, "__esModule", { value: true });exports.getUserJury = exports.bindWechat = exports.wechatLogin = exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
   url: '/api/site/account/login/post',
   data: {
     account: 'yilianxinpin',
@@ -11363,6 +11363,12 @@ var bindWechat = { //小程序管理中心绑定微信登录
 
   headers: {},
   type: 'post' };exports.bindWechat = bindWechat;
+
+var getUserJury = { //获取用户权限
+  url: '/shop/manage/perm/get',
+  data: {},
+  headers: {},
+  type: 'get' };exports.getUserJury = getUserJury;
 
 /***/ }),
 
@@ -13354,7 +13360,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
       children: item.children || [] };
 
   }); //商品分类列表
-
+  var cardSocks = data.virtual_list || []; //卡密库
+  var virtual_card_id = data.goods.virtual_card_id || '';
+  var cardType = {};
+  var cardStocksLen = cardSocks.length;
+  var tmpCard = {};
+  for (var i = 0; i < cardStocksLen; i++) {
+    tmpCard = cardSocks[i];
+    if (tmpCard.id == virtual_card_id) {
+      cardType = tmpCard;
+      break;
+    }
+  }
   var tmparr = data.goods.category_ids;
   var allTypes = []; //商品一二级分类
   data.cate_list.forEach(function (item) {
@@ -13377,8 +13394,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
   var goodTypes = allTypes.filter(function (item) {
     var len = tmparr.length;
     var result = false;
-    for (var i = 0; i < len; i++) {
-      if (item.id == tmparr[i]) {
+    for (var _i = 0; _i < len; _i++) {
+      if (item.id == tmparr[_i]) {
         result = true;
         break;
       }
@@ -13399,7 +13416,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         disabled: true, //可否编辑,false可以，true不可
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
-
       goodName: {
         label: '商品名称',
         id: data.goods.id,
@@ -13500,6 +13516,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
+      cardStock: { //划线价格
+        label: '卡密库',
+        id: virtual_card_id,
+        value: cardType.name,
+        formList: cardSocks,
+        needHide: data.goods.type == 3,
+        disabled: false, //可否编辑
+        editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+      },
       stockNum: { //商品库存
         label: '商品库存',
         id: '',
@@ -13537,22 +13562,38 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
+      autoExt: {
+        label: '定时下架',
+        id: '',
+        value: data.goods.auto_warehouse == 1,
+        disabled: false, //可否编辑
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: data.goods.type != 3 ///3为电子卡密
+      },
+      autoExtTime: {
+        label: '定时下架时间',
+        id: '',
+        value: data.goods.auto_warehouse_time,
+        disabled: false, //可否编辑
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: data.goods.type != 3 //3为电子卡密,
+      },
       autoDeliver: {
         label: '自动发货',
         id: '',
         value: data.goods.auto_delivery == 1,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        needHide: false },
-
+        needHide: data.goods.type != 2 //虚拟商品无快递运费相关选项，多出自动发货相关
+      },
       autoDeliverContent: {
         label: '自动发货内容',
         id: '',
         value: data.goods.auto_delivery_content,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        needHide: false },
-
+        needHide: data.goods.type != 2 //虚拟商品无快递运费相关选项，多出自动发货相关
+      },
       provideCost: {
         label: '快递运费',
         id: '',
@@ -13560,14 +13601,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         dispatch_list: data.dispatch_list,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        needHide: false },
-
+        needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
+      },
       showProCost: {
         label: '显示快递',
         id: '',
         value: data.goods.dispatch_hide == 0,
         disabled: false, //可否编辑
-        editable: 'switch' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
       },
       joinCount: {
         label: '参与会员折扣',
@@ -13776,6 +13818,7 @@ function mapGoods(data, cache) {
     thumbs: data.info1.swiperList.list.map(function (item) {
       return item.img;
     }),
+    virtual_card_id: data.info2.cardStock.id,
     price: data.info2.price.value,
     original_price: data.info2.delPrice.value,
     stock: data.info2.stockNum.value,
@@ -13790,8 +13833,11 @@ function mapGoods(data, cache) {
     is_discount: data.info3.joinCount.value ? 1 : 0,
     form_id: data.info3.goodForm.id || 0,
     status: data.info4.status.id,
-    putaway_time: data.info4.status.putaway_time };
+    putaway_time: data.info4.status.putaway_time,
+    auto_warehouse: data.info3.autoExt.value ? 1 : 0,
+    auto_warehouse_time: data.info3.autoExtTime.value };
 
+  console.log('goods', goods);
   return goods;
 
 
@@ -13938,7 +13984,7 @@ function _default(data, cache) {
     DataGo = 'editCode';
   } else if (val.label == '快递运费') {
     DataGo = 'setFreight';
-  } else if (val.label == '商品表单') {
+  } else if (val.label == '商品表单' || val.label == '卡密库') {
     DataGo = 'editForm';
   } else if (val.label == '状态') {
     DataGo = 'editStatus';
@@ -13955,6 +14001,7 @@ function _default(data, cache) {
     needChange: val });
 
   console.log('to edit ', val);
+
   uni.navigateTo({
     url: '../pages/' + DataGo + '?from=editGood' });
 
@@ -14011,7 +14058,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } else if (val.label == '已出售数') {
     cacheGoodDetail.info2.soldNum.value = val.value;
   } else if (val.label == '显示销量') {
-
     cacheGoodDetail.info2.showSold.value = val.checked;
   } else if (val.label == '显示快递') {
     cacheGoodDetail.info3.showProCost.value = val.checked;
@@ -14042,11 +14088,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     }
   } else if (val.label == '商品编码') {
     cacheGoodDetail.info3.goodCode.value = val.value;
+  } else if (val.label == '定时下架') {
+    cacheGoodDetail.info3.autoExt.value = val.checked;
+  } else if (val.label == '定时下架时间') {
+    console.log('定时下架时间', val);
+    cacheGoodDetail.info3.autoExtTime.value = val.value;
   } else if (val.label == '快递运费') {
     cacheGoodDetail.info3.provideCost.value = val.value;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
     cacheGoodDetail.info3.goodForm.id = val.id;
+  } else if (val.label == '卡密库') {
+    cacheGoodDetail.info2.cardStock.value = val.value;
+    cacheGoodDetail.info2.cardStock.id = val.id;
   } else if (val.label == '状态') {
     cacheGoodDetail.info4.status.value = val.value;
     cacheGoodDetail.info4.status.id = val.other.id;
@@ -14291,6 +14345,7 @@ function _default(commission) {
     isCommission: status, //是否分销商，
     registerTime: commission.apply_time, //注册时间
     registerInfo: commission.from, //申请信息
+
     superDistributor: { //上级分销商
       name: commission.agent_nickname },
 
@@ -14607,6 +14662,127 @@ function _default()
     } });
 
 
+
+}
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\login\\login.js":
+/*!**************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/login/login.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var cacheData = {}; //缓存登录信息
+function wxLogin() {
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    uni.getProvider({
+      service: 'oauth',
+      success: function success(res) {
+        if (~res.provider.indexOf('weixin')) {
+          uni.login({ //微信登录
+            provider: 'weixin',
+            success: function success(loginRes) {
+              that.Request('wechatLogin', { //小程序获取登录session
+                code: loginRes.code }).
+              then(function (res) {
+                if (res.error == 0) {
+                  cacheData = res;
+                  uni.getUserInfo({ // 获取用户信息
+                    provider: 'weixin',
+                    success: function success(infoRes) {
+                      cacheData = Object.assign(cacheData, infoRes);
+                      that.Cacher.setData('login', cacheData);
+                      that.Request('login', {
+                        account: '',
+                        password: '',
+                        open_id: res.openid,
+                        is_authorization: 1 }).
+                      then(function (res) {
+                        // 验证通过
+                        cacheData = Object.assign(cacheData, {
+                          haveBindWx: res.error == 0 && res.open_id });
+
+                        that.Cacher.setData('login', cacheData);
+                        if (res.error == 0) {
+                          resolve(res);
+                        } else {
+
+                          reject(res);
+
+                        }
+                        that.closePageLoading();
+                      }).catch(function (res) {
+                        cacheData = that.Cacher.getData('login') || {};
+                        cacheData = Object.assign(cacheData, {
+                          haveBindWx: false });
+
+                        that.Cacher.setData('login', cacheData);
+                        if (res.error == -3) {//已登录
+                          resolve(res);
+                        } else {
+                          reject(res);
+                        }
+                      });
+
+                    },
+                    fail: function fail(res) {
+                      console.log('get info fails', res);
+                    } });
+
+
+                }
+              }).catch(function (res) {
+                reject(res);
+              });
+            } });
+
+        }
+      } });
+
+  });
+
+}
+
+function login() {var _this = this;
+  var that = this;
+  var cacheData = this.Cacher.getData('login') || {};
+
+  return new Promise(function (resolve, reject) {
+    _this.Request('login', {
+      account: _this.userId,
+      password: _this.password,
+      is_authorization: 0 }).
+    then(function (res) {
+
+      // 验证通过
+      if (res.error == 0) {
+        cacheData = Object.assign(cacheData || {}, {
+          userId: res.uid });
+
+        that.Cacher.setData('login', cacheData);
+        resolve(res);
+      } else {
+        reject(res);
+        _this.Toast(res.message);
+      }
+      _this.closePageLoading();
+    }).catch(function (res) {
+
+      if (res.error == -3) {//已登录
+
+        that.Cacher.setData('login', cacheData);
+        resolve(res);
+      } else {
+        reject(res);
+        _this.Toast(res.message);
+      }
+    });
+  });
 
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

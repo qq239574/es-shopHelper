@@ -27,6 +27,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     inputItem: inputItem,
     roundButton: roundButton },
 
+  props: {
+    info: {
+      type: Object,
+      default: {} } },
+
+
   data: function data() {
     return {
       hadRefused: true };

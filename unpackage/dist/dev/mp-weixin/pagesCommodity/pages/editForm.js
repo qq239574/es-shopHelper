@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var DataFrom = {};
 var cacheVal = '';
 var cacheFrom = '';
+var cacheLabel = '';
 var cache = '修改';var _default =
 {
   components: {
@@ -41,7 +42,7 @@ var cache = '修改';var _default =
       cacheVal = val;
       this.Cacher.setData('editForm', {
         needChange: Object.assign(DataFrom.needChange, {
-          label: '商品表单',
+          label: cacheLabel,
           value: val.label,
           id: val.id }) });
 
@@ -56,15 +57,16 @@ var cache = '修改';var _default =
       }
       return {
         label: item.name,
-        value: ' ',
+        value: item.stock ? item.stock + '库存' : ' ',
         subValue: '',
         id: item.id };
 
     });
+    cacheLabel = DataFrom.needChange.label;
     var val = this.list[this.defaultIndex];
     this.Cacher.setData('editForm', {
       needChange: Object.assign(DataFrom.needChange, {
-        label: '商品表单',
+        label: cacheLabel,
         value: val.label,
         id: val.id }) });
 

@@ -46,7 +46,9 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 
 var DataFrom = {};
 var newNotice = {};
-var searchDay = { value: 'today' };var _default =
+var searchDay = {
+  value: 'today' };var _default =
+
 {
   components: {
     LongButton: LongButton,
@@ -202,6 +204,35 @@ var searchDay = { value: 'today' };var _default =
           name: '维权订单',
           num: res.data.order_refund }];
 
+      });
+      var userInfo = this.Cacher.getData('login');
+      if (!userInfo.haveBindWx && userInfo.encryptedData) {
+        this.closePageLoading();
+        this.Dialog.confirm({
+          title: '没有绑定微信',
+          message: '为方便您的使用，是否与微信账号绑定？',
+          confirmButtonText: '绑定' }).
+        then(function () {
+          _this2.pageLoading();
+          _this2.Request('bindWechat', {
+            encrypted_data: userInfo.encryptedData,
+            session_key: userInfo.session_key,
+            iv: userInfo.iv,
+            user_id: userInfo.userId }).
+          then(function (res) {
+            _this2.closePageLoading();
+            if (res.error == 0) {
+              _this2.Toast('绑定成功');
+            } else {
+              _this2.Toast('绑定失败');
+            }
+          }).catch(function (res) {
+            _this2.closePageLoading();
+            _this2.Toast(res.message);
+          });
+        });
+      }
+      this.Request('getUserJury').then(function (res) {//获取用户权限
       });
     } },
 

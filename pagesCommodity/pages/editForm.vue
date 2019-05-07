@@ -11,6 +11,7 @@
     let DataFrom = {};
     let cacheVal = '';
     let cacheFrom = '';
+    let cacheLabel=''
     let cache = '修改';
     export default {
         components: {
@@ -31,7 +32,7 @@
                 cacheVal = val;
                 this.Cacher.setData('editForm', {
                     needChange: Object.assign(DataFrom.needChange, {
-                        label: '商品表单',
+                        label: cacheLabel,
                         value: val.label,
                         id: val.id
                     })
@@ -46,15 +47,16 @@
                 }
                 return {
                     label: item.name,
-                    value: ' ',
+                    value: item.stock ? (item.stock + '库存') : ' ',
                     subValue: '',
                     id: item.id
                 }
             })
+            cacheLabel=DataFrom.needChange.label
             let val = this.list[this.defaultIndex];
             this.Cacher.setData('editForm', {
                 needChange: Object.assign(DataFrom.needChange, {
-                    label: '商品表单',
+                    label: cacheLabel,
                     value: val.label,
                     id: val.id
                 })

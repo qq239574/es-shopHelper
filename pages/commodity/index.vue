@@ -19,6 +19,10 @@
                 </view>
             </i-page>
         </view>
+        <view class='addGoods' @click='addGoods'>
+            <van-icon color='#fff' class='addIcon' name="plus" />
+            <view class='addWord'>添加</view>
+        </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
@@ -88,6 +92,17 @@
             },
         },
         methods: {
+            addGoods() {
+                DataGo = {
+                    go: 'editGood'
+                }
+                this.Cacher.setData('good', {
+                    from: 'addGoods', 
+                });
+                uni.navigateTo({
+                    url: '../../pagesCommodity/pages/index?from=good'
+                })
+            },
             shareGoodInfo(good) {
                 needShare = good;
                 console.log('shareGoodInfo', good)
@@ -191,7 +206,13 @@
                             this.initPage();
                         })
                     } else if (item.name == '删除') {
-                        this.Request('tempDelGood', {
+                        let delApis = {
+                            '出售中': 'tempDelGood',
+                            '已售罄': 'tempDelGood',
+                            '仓库中': 'tempDelGood',
+                            '回收站': 'realDelGood'
+                        }
+                        this.Request(delApis[this.searchTab.name] || 'tempDelGood', {
                             goods_ids: item.detail.goodId,
                         }).then(res => {
                             this.closePageLoading();
@@ -239,10 +260,40 @@
     .margin180 {
         height: 176upx;
     }
+    .addGoods {
+        width: 94upx;
+        height: 94upx;
+        position: fixed;
+        border-radius: 50%;
+        bottom: 36upx;
+        right: 24upx;
+        background: #fd6b3e;
+        color: #fff;
+        .addWord,
+        .addIcon {
+            color: #fff;
+            position: absolute;
+            width: 100%;
+            ;
+            height: fit-content;
+            left: 0;
+            right: 0;
+            margin: auto;
+            font-size: 22upx;
+            text-align: center;
+        }
+        .addWord {
+            top: 45upx;
+        }
+        .addIcon {
+            top: 5upx;
+            font-size: 40upx;
+        }
+    }
     .pager {
         width: 100%;
         height: 80upx;
-        margin: 30upx auto 100upx;
+        margin: 30upx auto 130upx;
         .button {
             display: flex;
             flex-wrap: nowrap;

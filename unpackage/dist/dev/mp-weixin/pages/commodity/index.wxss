@@ -1,10 +1,41 @@
 .margin180.data-v-3fcc733d {
   height: 176rpx;
 }
+.addGoods.data-v-3fcc733d {
+  width: 94rpx;
+  height: 94rpx;
+  position: fixed;
+  border-radius: 50%;
+  bottom: 36rpx;
+  right: 24rpx;
+  background: #fd6b3e;
+  color: #fff;
+}
+.addGoods .addWord.data-v-3fcc733d,
+  .addGoods .addIcon.data-v-3fcc733d {
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 22rpx;
+    text-align: center;
+}
+.addGoods .addWord.data-v-3fcc733d {
+    top: 45rpx;
+}
+.addGoods .addIcon.data-v-3fcc733d {
+    top: 5rpx;
+    font-size: 40rpx;
+}
 .pager.data-v-3fcc733d {
   width: 100%;
   height: 80rpx;
-  margin: 30rpx auto 100rpx;
+  margin: 30rpx auto 130rpx;
 }
 .pager .button.data-v-3fcc733d {
     display: -webkit-box;

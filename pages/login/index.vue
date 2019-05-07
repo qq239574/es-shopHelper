@@ -5,7 +5,7 @@
 		</view>
 		<view class="tips" v-if='idError'>
 			<image src='/static/img/global/warn.png' class='tips__round'></image>
-			账号不存在！
+			账号密码错误！
 		</view>
 		<view class="grace-form">
 			<van-cell-group>
@@ -24,7 +24,9 @@
 				</van-field>
 			</van-cell-group>
 		</view>
-		<LongButton @click='loginNow' :disable='disableButton'>登录</LongButton>
+		<view class='getUserInfo'>
+			<LongButton @click='loginNow' :disable='disableButton'><button  open-type='getUserInfo' class='appletBtn'></button>登录</LongButton>
+		</view>
 		<view class="forget-pw cell-font-gray">
 			<view @tap="reg">忘记密码?</view>
 		</view>
@@ -34,7 +36,7 @@
 			<view class='surportList'>
 				<view class="supporter" @click='loginWithWx'>
 					<image lazy-load src='/static/img/global/wechat.png'></image>
-					<button @click='clickButton' open-type='getUserInfo' bindgetuserinfo="appletLogin" class='appletBtn'> </button>
+					<button @click='clickButton' open-type='getUserInfo' class='appletBtn'> </button>
 				</view>
 			</view>
 		</view>
@@ -49,6 +51,10 @@
 	let canLogin = false; //可否登录 
 	let sessionId = ''
 	let DataFrom = {}
+	import {
+		wxLogin,
+		login
+	} from './login.js'
 	export default {
 		components: {
 			LongButton
@@ -68,38 +74,36 @@
 			}
 		},
 		onLoad(option) {
-			// uni.clearStorage();//清空缓存
-			let that=this;
+			let that = this;
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
-			if (!DataFrom.from) {} else {}
-			uni.getProvider({
-				service: 'oauth',
-				success: function(res) {
-					if (~res.provider.indexOf('weixin')) {
-						uni.login({
-							provider: 'weixin',
-							success: function(loginRes) {
-								console.log('weixin>>>', loginRes);
-								that.Request('wechatLogin', {
-									code: loginRes.code
-								}).then(res => {
-									if (res.error == 0) {}
-								}).catch(res => {
-									console.log('res》》》', res)
-								})
-							}
-						});
+			if (!DataFrom.from) {
+				wxLogin.call(this).then(res => {
+					canLogin = true;
+					if (canLogin) {
+						uni.reLaunch({
+							url: '../../pagesLogin/pages/selectShop?from=login'
+						})
+					} else {
+						this.idError = true; //账号密码不对
 					}
-				}
-			});
+				}).catch(res => {}); //微信登录
+			} else { //从别处跳转过来的 
+				uni.clearStorage(); //清空缓存 
+			}
 		},
 		mounted() {
 			this.closePageLoading()
 		},
-		methods: {
+		methods: { 
 			clickButton() {
-				console.log('object')
+				wxLogin.call(this).then(res => {
+					uni.reLaunch({
+						url: '../../pagesLogin/pages/selectShop?from=login'
+					})
+				}).catch(res => { 
+					res.message && this.Toast(res.message)
+				}); //微信登录
 			},
 			initPage() {
 				this.openEye = false;
@@ -122,48 +126,24 @@
 			},
 			loginWithWx: function() {
 				this.closePageLoading();
-				this.Toast('当前微信暂未绑定任何管理员账号');
 			},
 			loginNow(e) { //点击登录
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
-					this.Request('login', {
-						account: this.userId,
-						password: this.password
-					}).then((res) => {
-						// 验证通过
-						if (res.error == 0) {
-							canLogin = true;
-							if (canLogin) {
-								uni.reLaunch({
-									url: '../../pagesLogin/pages/selectShop?from=login'
-								})
-							} else {
-								this.idError = true; //账号密码不对
-							}
-						} else {
-							this.Toast(res.message)
-						}
-						this.closePageLoading();
+					login.call(this).then(res => {
 						requesting = false;
-					}).catch(res => {
-						requesting = false;
-						this.Cacher.setData('login', {
-							from: 'login'
+						uni.reLaunch({
+							url: '../../pagesLogin/pages/selectShop?from=login'
 						})
-						if (res.error == -3) { //已登录
-							uni.reLaunch({
-								url: '../../pagesLogin/pages/selectShop?from=login'
-							})
-						} else {
-							this.Toast(res.message)
-						}
-					})
+					}).catch(res => {
+						this.idError = true; //账号密码不对
+						requesting = false;
+					}); //微信登录; //账号密码登录
 				} else {
 					setTimeout(() => {
 						requesting = false;
-						this.Toast('登录时间长，请重试')
+						this.Toast('登录时间长，请重试');
 					}, 3000)
 				}
 			},
@@ -180,6 +160,19 @@
 		background: #fff;
 		position: relative;
 		overflow: hidden;
+		.getUserInfo {
+			position: relative;
+			width: fit-content;
+			margin: auto;
+			button {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				opacity: 0;
+			}
+		}
 		.grace-login-three {
 			width: 670upx;
 			height: 200upx;

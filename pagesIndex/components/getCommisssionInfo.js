@@ -15,6 +15,7 @@ export default function (commission) {
         isCommission: status, //是否分销商，
         registerTime: commission.apply_time, //注册时间
         registerInfo: commission.from, //申请信息
+        
         superDistributor: { //上级分销商
             name: commission.agent_nickname
         },

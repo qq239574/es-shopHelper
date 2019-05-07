@@ -10,7 +10,7 @@ export default function (val, detail) {
         DataGo = 'editCode'
     } else if (val.label == '快递运费') {
         DataGo = 'setFreight'
-    } else if (val.label == '商品表单') {
+    } else if (val.label == '商品表单'||val.label == '卡密库') {
         DataGo = 'editForm'
     } else if (val.label == '状态') {
         DataGo = 'editStatus'
@@ -27,6 +27,7 @@ export default function (val, detail) {
         needChange: val
     })
     console.log('to edit ',val)
+    
     uni.navigateTo({
         url: '../pages/' + DataGo + '?from=editGood'
     })

@@ -8,11 +8,14 @@
         <view class="margin20"></view>
         <selectItem :value='goodDetail.info4.status.value' label='状态' @click='clickCell'></selectItem>
         <view class="padding"></view>
-        <view class="footer">
+        <view class="footer" v-if='!showpicker'>
             <longButton @click='save'>保存</longButton>
         </view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
+        <view class="bg" v-show='showpicker'>
+            <van-datetime-picker class='picker' type="datetime" :value="currentDate" :min-date="minDate" :max-date="maxDate" @input="onInput" @confirm='confirm' @cancel='cancel' />
+        </view>
     </view>
 </template>
 
@@ -28,10 +31,17 @@
     import updateGoodInfo from '../components/updateGoodInfo.js'
     import toEditPage from '../components/toEditPage.js'
     import editGoodModel from '../components/goodEditDataModel.js'
+    import {
+        formatDateTime
+    } from '../../graceUI2.0/jsTools/date.js'
+    import {
+        getDate
+    } from '../../components/my-components/getDateSection.js'
     let cacheGoodDetail = {};
-    let cacheSubmitData={};
+    let cacheSubmitData = {};
     let DataFrom = {};
     let DataGo = {};
+    let currentDate = [];
     export default {
         components: {
             goodInfo,
@@ -42,11 +52,31 @@
         },
         data() {
             return {
+                defaultIndex: 0,
+                showpicker: false,
+                minDate: new Date().getTime() + 5 * 60000, //5分钟后
+                maxDate: new Date(getDate(365)).getTime(), //一年后
+                currentDate: '',
                 moving: false,
                 goodDetail: {}
             }
         },
         methods: {
+            confirm() {
+                this.showpicker = false;
+                this.currentDate = currentDate;
+                cacheGoodDetail = updateGoodInfo.call(this, {
+                    label: '定时下架时间',
+                    value: currentDate
+                }, cacheGoodDetail);
+                this.goodDetail = cacheGoodDetail;
+            },
+            onInput(event) {
+                currentDate = formatDateTime(event.detail / 1000, 'str');
+            },
+            cancel() {
+                this.showpicker = false;
+            },
             startmove() {},
             inputCell(val) {
                 cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
@@ -54,12 +84,16 @@
             getImages(list) {
                 cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail)
             },
-            clickCell(val) { 
-                toEditPage.call(this, val, cacheGoodDetail);
+            clickCell(val) {
+                if (val.label == '定时下架时间') {
+                    this.showpicker = true;
+                } else {
+                    toEditPage.call(this, val, cacheGoodDetail);
+                }
             },
             save() {
                 this.goodDetail = cacheGoodDetail;
-                let data=editGoodModel(cacheGoodDetail,cacheSubmitData);
+                let data = editGoodModel(cacheGoodDetail, cacheSubmitData);
                 this.Request('editGoodDetail', data).then(res => {
                     if (res.error == 0) {
                         uni.navigateBack();
@@ -71,7 +105,7 @@
                 })
             },
             initPage() {
-                DataGo = this.Cacher.getData('editGood'); 
+                DataGo = this.Cacher.getData('editGood');
                 DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
                 if (DataGo.go) {
                     // DataGo = this.Cacher.getData(DataGo.go);
@@ -86,15 +120,24 @@
             DataFrom = this.Cacher.getData(option.from);
             this.Cacher.setData('editGood', {
                 from: option.from || ''
-            })  
+            })
             this.initPage();
-            this.Request('getGoodDetail', {
-                goods_id: DataFrom.item.detail.goodId,
-            }).then(res => {
-                cacheSubmitData=res;//提交的时候要一一对应
-                cacheGoodDetail = goodData.call(this,res); 
-                this.goodDetail = cacheGoodDetail;
-            });
+            if (DataFrom.from == 'addGoods') {
+                this.Request('getGoodDetail', {
+                }).then(res => {
+                    cacheSubmitData = res; //提交的时候要一一对应
+                    cacheGoodDetail = goodData.call(this, res);
+                    this.goodDetail = cacheGoodDetail;
+                });
+            } else {
+                this.Request('getGoodDetail', {
+                    goods_id: DataFrom.item.detail.goodId,
+                }).then(res => {
+                    cacheSubmitData = res; //提交的时候要一一对应
+                    cacheGoodDetail = goodData.call(this, res);
+                    this.goodDetail = cacheGoodDetail;
+                });
+            }
         },
         onShow() {
             this.initPage();
@@ -106,6 +149,20 @@
     .pagesCommodity-pages-index {
         width: 100%;
         height: 100%;
+        .bg {
+            position: fixed;
+            background: rgba(0, 0, 0, .5);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            .picker {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+        }
         .padding {
             height: 160upx;
             background: #f7f7f7;
