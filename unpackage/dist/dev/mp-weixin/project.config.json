@@ -33,15 +33,8 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
-				{
-					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
 				{
 					"id": -1,
 					"name": "good",

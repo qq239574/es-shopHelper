@@ -1,0 +1,30 @@
+.multi-block.data-v-34ca85df {
+  width: 100%;
+  margin: 0 auto 20rpx;
+}
+.multi-block .isSingle.data-v-34ca85df {
+    font-size: 40rpx;
+    font-weight: 700;
+    color: #ccc;
+    text-align: center;
+    line-height: 200rpx;
+}
+.multi-block .addType.data-v-34ca85df {
+    width: 710rpx;
+    height: 100rpx;
+    line-height: 98rpx;
+    font-size: 26rpx;
+    border: 1rpx solid #ec673e;
+    margin: 100rpx auto;
+    color: #ec673e;
+    text-align: center;
+    border-radius: 8rpx;
+}
+.multi-block .block.data-v-34ca85df {
+    width: 710rpx;
+    margin: 20rpx auto 0;
+    background: #fff;
+    border-radius: 10rpx;
+    overflow: hidden;
+}
+

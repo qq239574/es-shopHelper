@@ -21,7 +21,7 @@
 
 <script>
     import {
-        goodData
+        goodData,addGoodsModel
     } from '../components/goodDetail.js' //测试用数据
     import goodInfo from '../components/editGood-Block1.vue';
     import goodInfo2 from '../components/editGood-Block2.vue'
@@ -37,6 +37,7 @@
     import {
         getDate
     } from '../../components/my-components/getDateSection.js'
+    import mockApi from '../components/mockGoodDetailApi.js'
     let cacheGoodDetail = {};
     let cacheSubmitData = {};
     let DataFrom = {};
@@ -94,15 +95,27 @@
             save() {
                 this.goodDetail = cacheGoodDetail;
                 let data = editGoodModel(cacheGoodDetail, cacheSubmitData);
-                this.Request('editGoodDetail', data).then(res => {
-                    if (res.error == 0) {
-                        uni.navigateBack();
-                    } else {
+                if (DataFrom.from == 'addGoods') {
+                    this.Request('addGoods', data).then(res => {
+                        if (res.error == 0) {
+                            uni.navigateBack();
+                        } else {
+                            this.Toast(res.message);
+                        }
+                    }).catch(res => {
                         this.Toast(res.message);
-                    }
-                }).catch(res => {
-                    this.Toast(res.message);
-                })
+                    })
+                } else {
+                    this.Request('editGoodDetail', data).then(res => {
+                        if (res.error == 0) {
+                            uni.navigateBack();
+                        } else {
+                            this.Toast(res.message);
+                        }
+                    }).catch(res => {
+                        this.Toast(res.message);
+                    })
+                }
             },
             initPage() {
                 DataGo = this.Cacher.getData('editGood');
@@ -122,11 +135,13 @@
                 from: option.from || ''
             })
             this.initPage();
-            if (DataFrom.from == 'addGoods') {
-                this.Request('getGoodDetail', {
+            if (DataFrom.from == 'addGoods') { //添加商品，生成模板数据
+                mockApi.call(this, {
+                    type: '实体商品', //'实体商品', '虚拟物品', '电子卡密',
+                    typeId: 1, //1 2 3
                 }).then(res => {
                     cacheSubmitData = res; //提交的时候要一一对应
-                    cacheGoodDetail = goodData.call(this, res);
+                    cacheGoodDetail = addGoodsModel.call(this, res);
                     this.goodDetail = cacheGoodDetail;
                 });
             } else {

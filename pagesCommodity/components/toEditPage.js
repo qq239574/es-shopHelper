@@ -15,7 +15,7 @@ export default function (val, detail) {
     } else if (val.label == '状态') {
         DataGo = 'editStatus'
     } else if (val.label == '规格类型') {
-        DataGo = 'editMultiCode'
+        DataGo =val.other.type=='add'?'addGoodType': 'editMultiCode'
     } else if (val.label == '自动发货内容') {
         DataGo = 'autoDeliverContent'
     }

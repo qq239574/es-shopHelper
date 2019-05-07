@@ -44,7 +44,10 @@ var _goodEditDataModel = _interopRequireDefault(__webpack_require__(/*! ../compo
 var _date = __webpack_require__(/*! ../../graceUI2.0/jsTools/date.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\date.js");
 
 
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");
+
+
+var _mockGoodDetailApi = _interopRequireDefault(__webpack_require__(/*! ../components/mockGoodDetailApi.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\mockGoodDetailApi.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -67,9 +70,7 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 //
 var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var goodInfo2 = function goodInfo2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block2.vue"));};var goodInfo3 = function goodInfo3() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block3 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block3")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var cacheGoodDetail = {};var cacheSubmitData = {};var DataFrom = {};var DataGo = {};var currentDate = [];var _default = { components: { goodInfo: goodInfo, goodInfo2: goodInfo2, goodInfo3: goodInfo3, selectItem: selectItem, longButton: longButton }, data: function data() {return { defaultIndex: 0, showpicker: false, minDate: new Date().getTime() + 5 * 60000, //5分钟后
       maxDate: new Date((0, _getDateSection.getDate)(365)).getTime(), //一年后
-      currentDate: '', moving: false,
-      goodDetail: {} };
-
+      currentDate: '', moving: false, goodDetail: {} };
   },
   methods: {
     confirm: function confirm() {
@@ -104,15 +105,27 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
     save: function save() {var _this = this;
       this.goodDetail = cacheGoodDetail;
       var data = (0, _goodEditDataModel.default)(cacheGoodDetail, cacheSubmitData);
-      this.Request('editGoodDetail', data).then(function (res) {
-        if (res.error == 0) {
-          uni.navigateBack();
-        } else {
+      if (DataFrom.from == 'addGoods') {
+        this.Request('addGoods', data).then(function (res) {
+          if (res.error == 0) {
+            uni.navigateBack();
+          } else {
+            _this.Toast(res.message);
+          }
+        }).catch(function (res) {
           _this.Toast(res.message);
-        }
-      }).catch(function (res) {
-        _this.Toast(res.message);
-      });
+        });
+      } else {
+        this.Request('editGoodDetail', data).then(function (res) {
+          if (res.error == 0) {
+            uni.navigateBack();
+          } else {
+            _this.Toast(res.message);
+          }
+        }).catch(function (res) {
+          _this.Toast(res.message);
+        });
+      }
     },
     initPage: function initPage() {
       DataGo = this.Cacher.getData('editGood');
@@ -132,11 +145,13 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       from: option.from || '' });
 
     this.initPage();
-    if (DataFrom.from == 'addGoods') {
-      this.Request('getGoodDetail', {}).
-      then(function (res) {
+    if (DataFrom.from == 'addGoods') {//添加商品，生成模板数据
+      _mockGoodDetailApi.default.call(this, {
+        type: '实体商品', //'实体商品', '虚拟物品', '电子卡密',
+        typeId: 1 //1 2 3
+      }).then(function (res) {
         cacheSubmitData = res; //提交的时候要一一对应
-        cacheGoodDetail = _goodDetail.goodData.call(_this2, res);
+        cacheGoodDetail = _goodDetail.addGoodsModel.call(_this2, res);
         _this2.goodDetail = cacheGoodDetail;
       });
     } else {

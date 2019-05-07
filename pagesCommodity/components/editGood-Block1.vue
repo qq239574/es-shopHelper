@@ -2,7 +2,8 @@
 <template>
 	<view class="provide-block">
 		<form @submit="formSubmit" class="grace-form">
-			<inputItem label='商品类型' :other='info.goodType' :value='info.goodType.value' :disabled='true'></inputItem>
+			<inputItem label='商品类型' :other='info.goodType' :value='info.goodType.value' :disabled='true' v-if='info.goodType.disabled'></inputItem>
+			<selectItem label='商品类型' :other='info.goodType'  :value='info.goodType.value' @click.stop="clickCell" v-else></selectItem>
 			<multiLine label='商品名称' :other='info.goodName' :value='info.goodName.value' @click.stop="clickCell"></multiLine>
 			<selectItem label='副标题' :other='info.subTitle'  :value='info.subTitle.value' @click.stop="clickCell"></selectItem>
 			<selectItem label='商品分类'  :other='info.classification' :value='info.classification.value' @click.stop="clickCell"></selectItem>

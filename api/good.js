@@ -189,3 +189,21 @@ export const getChannels = { //全网发布(渠道)获取信息
     },
     type: 'get'
 }
+ export const beforeAddGoods={//商品添加前
+    url: '/shop/manage/goods/add',
+    data: {},
+    headers: {
+
+    },
+    type: 'get'
+ }
+export const addGoods={//管理端商品添加
+    url: '/shop/manage/goods/add',
+    data: {  
+       
+    },
+    headers: {
+
+    },
+    type: 'post'
+}

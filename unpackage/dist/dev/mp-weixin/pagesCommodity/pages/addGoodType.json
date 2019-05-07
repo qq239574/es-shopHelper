@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "规格类型",
+  "usingComponents": {
+    "van-toast": "/wxcomponents/vant-weapp/toast/index",
+    "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+    "input-item": "/components/my-components/editBlock-InputItem",
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "multi-line": "/components/my-components/editBlock-MultiLine"
+  }
+}

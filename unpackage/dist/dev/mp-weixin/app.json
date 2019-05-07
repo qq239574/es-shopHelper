@@ -42,7 +42,8 @@
         "pages/setTotalFreight",
         "pages/editForm",
         "pages/editStatus",
-        "pages/editMultiCode"
+        "pages/editMultiCode",
+        "pages/addGoodType"
       ]
     },
     {

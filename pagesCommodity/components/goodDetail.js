@@ -96,9 +96,9 @@
                  label: '主图',
                  id: '',
                  img: data.goods.thumb,
-                 list: [{
+                 list: data.goods.thumb ? [{
                      img: data.goods.thumb.replace(reg, ''),
-                 }],
+                 }] : [],
                  disabled: false, //可否编辑
                  editable: 'image', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },
@@ -151,6 +151,7 @@
                  }),
                  disabled: true, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 type:'edit',//add为添加
              },
              price: { //售卖价格
                  label: '售卖价格',
@@ -234,7 +235,7 @@
                  value: data.goods.auto_delivery == 1,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: data.goods.type != 2,//虚拟商品无快递运费相关选项，多出自动发货相关
+                 needHide: data.goods.type != 2, //虚拟商品无快递运费相关选项，多出自动发货相关
              },
              autoDeliverContent: {
                  label: '自动发货内容',
@@ -242,7 +243,7 @@
                  value: data.goods.auto_delivery_content,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: data.goods.type != 2,//虚拟商品无快递运费相关选项，多出自动发货相关
+                 needHide: data.goods.type != 2, //虚拟商品无快递运费相关选项，多出自动发货相关
              },
              provideCost: {
                  label: '快递运费',
@@ -251,7 +252,7 @@
                  dispatch_list: data.dispatch_list,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: data.goods.type == 2,//虚拟商品无快递运费相关选项，多出自动发货相关
+                 needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关
              },
              showProCost: {
                  label: '显示快递',
@@ -259,7 +260,7 @@
                  value: data.goods.dispatch_hide == 0,
                  disabled: false, //可否编辑
                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide: data.goods.type == 2,//虚拟商品无快递运费相关选项，多出自动发货相关
+                 needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关
              },
              joinCount: {
                  label: '参与会员折扣',
@@ -271,14 +272,7 @@
              goodForm: {
                  label: '商品表单',
                  id: data.goods.form_id,
-                 value: formList.filter(item => {
-                     //  let result = false;
-                     //  for (let i = 0; i < formList.length; i++) {
-                     //      if (item.id == data.goods.form_id) {
-                     //          result = true;
-                     //          break;
-                     //      }
-                     //  }
+                 value: formList.filter(item => { 
                      return item.id == data.goods.form_id
                  }).map(item => {
                      return item.name
@@ -300,118 +294,13 @@
          },
      }
  }
- //  export function multiData() {
- //      return {
- //          info1: {
- //              goodType: {
- //                  label: '规格类型',
- //                  id: '',
- //                  value: '多规格',
- //                  disabled: true, //可否编辑,false可以，true不可
- //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+ export function addGoodsModel(data) {
+     let dataModel = goodData.call(this,data);
+     dataModel.info1.goodType.disabled = false;
+     dataModel.info2.specification.disabled = false;
+     dataModel.info2.specification.type = 'add';
 
- //              },
- //              list: {
- //                  disabled: false, //可否编辑,false可以，true不可
- //                  editable: 'block', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //                  value: [{
- //                      specif: {
- //                          label: '规格',
- //                          id: '',
- //                          value: '2000W-亮黑色',
- //                          disabled: true, //可否编辑
- //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //                      },
- //                      price: {
- //                          label: '价格',
- //                          id: '',
- //                          value: '1999.0',
- //                          disabled: false, //可否编辑
- //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //                      },
- //                      stock: {
- //                          label: '库存',
- //                          id: '',
- //                          value: '23566',
- //                          disabled: false, //可否编辑
- //                          editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //                      },
- //                      code: {
- //                          label: '商品编号',
- //                          id: '',
- //                          value: 'JB12595695656565998',
- //                          disabled: false, //可否编辑
- //                          editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //                      },
- //                  }]
- //              },
- //              delPrice: { //划线价格
- //                  label: '划线价格',
- //                  id: '',
- //                  value: '16565',
- //                  disabled: false, //可否编辑
- //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              showStock: { //显示库存
- //                  label: '显示库存',
- //                  id: '',
- //                  value: false,
- //                  disabled: false, //可否编辑
- //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              soldNum: { //已出售数
- //                  label: '已出售数',
- //                  id: '',
- //                  value: 10,
- //                  disabled: false, //可否编辑
- //                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              showSold: { //显示销量
- //                  label: '显示销量',
- //                  id: '',
- //                  value: true,
- //                  disabled: false, //可否编辑
- //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              }
- //          },
- //          info2: {
- //              provideCost: {
- //                  label: '快递运费',
- //                  id: '',
- //                  value: 10,
- //                  disabled: false, //可否编辑
- //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              showProCost: {
- //                  label: '显示快递',
- //                  id: '',
- //                  value: true,
- //                  disabled: false, //可否编辑
- //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              joinCount: {
- //                  label: '参与会员折扣',
- //                  id: '',
- //                  value: true,
- //                  disabled: false, //可否编辑
- //                  editable: 'switch', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              },
- //              goodForm: {
- //                  label: '商品表单',
- //                  id: '',
- //                  value: '',
- //                  disabled: false, //可否编辑
- //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              }
- //          },
- //          info3: {
- //              status: {
- //                  label: '状态',
- //                  id: '',
- //                  value: '下架',
- //                  disabled: false, //可否编辑
- //                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
- //              }
- //          },
- //      }
- //  }
+     return dataModel;
+
+
+ }
