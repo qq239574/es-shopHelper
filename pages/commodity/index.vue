@@ -268,6 +268,7 @@
         bottom: 36upx;
         right: 24upx;
         background: #fd6b3e;
+        box-shadow: 0 0 20upx 0 rgba(0,0,0,.35);
         color: #fff;
         .addWord,
         .addIcon {

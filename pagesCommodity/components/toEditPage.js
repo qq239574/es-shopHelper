@@ -1,4 +1,4 @@
-export default function (val, detail) {
+export default function (val, detail) { 
     let DataGo = ''
     if (val.label == '商品名称') {
         DataGo = 'editName'
@@ -10,12 +10,14 @@ export default function (val, detail) {
         DataGo = 'editCode'
     } else if (val.label == '快递运费') {
         DataGo = 'setFreight'
-    } else if (val.label == '商品表单'||val.label == '卡密库') {
+    } else if (val.label == '商品表单' || val.label == '卡密库') {
         DataGo = 'editForm'
     } else if (val.label == '状态') {
         DataGo = 'editStatus'
     } else if (val.label == '规格类型') {
-        DataGo =val.other.type=='add'?'addGoodType': 'editMultiCode'
+        DataGo = 'addGoodType'; 
+    } else if (val.label == '子规格详情') { 
+        DataGo = 'editMultiCode'; 
     } else if (val.label == '自动发货内容') {
         DataGo = 'autoDeliverContent'
     }
@@ -26,8 +28,7 @@ export default function (val, detail) {
         detail,
         needChange: val
     })
-    console.log('to edit ',val)
-    
+
     uni.navigateTo({
         url: '../pages/' + DataGo + '?from=editGood'
     })

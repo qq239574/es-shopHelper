@@ -14,17 +14,43 @@
     height: 100rpx;
     line-height: 98rpx;
     font-size: 26rpx;
-    border: 1rpx solid #ec673e;
-    margin: 100rpx auto;
-    color: #ec673e;
+    margin: 20rpx auto 300rpx;
+    background: #fff;
+    color: #fb6638;
     text-align: center;
-    border-radius: 8rpx;
+    border-radius: 4rpx;
 }
 .multi-block .block.data-v-34ca85df {
     width: 710rpx;
     margin: 20rpx auto 0;
     background: #fff;
-    border-radius: 10rpx;
+    border-radius: 4rpx;
     overflow: hidden;
+}
+.multi-block .maxLength.data-v-34ca85df {
+    font-size: 26rpx;
+    line-height: 120rpx;
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 200rpx;
+}
+.multi-block .footer.data-v-34ca85df {
+    position: fixed;
+    height: 124rpx;
+    width: 100%;
+    border-top: 1rpx solid #eee;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    -webkit-box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+    padding-top: 18rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.multi-block .footer long-button.data-v-34ca85df {
+      margin: 10rpx auto 0;
 }
 

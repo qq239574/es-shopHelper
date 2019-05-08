@@ -2,9 +2,9 @@
 <template>
     <view class="provide-block">
         <form @submit="formSubmit" class="grace-form">
-            <selectItem label='规格类型' :other='info.specification' :value='info.specification.value' @click.stop="clickCell" v-if='info.specification.type=="add"'></selectItem>
-            <selectItem label='规格类型' :other='info.specification' :value='info.specification.value' @click.stop="clickCell" v-else-if='info.specification.value=="多规格"'></selectItem>
-            <inputItem label='规格类型' :other='info.specification' :value='info.specification.value' :disabled='true' v-else></inputItem>
+           
+            <selectItem label='规格类型' :other='info.specification' :value='info.specification.value' @click.stop="clickCell"></selectItem>
+            <selectItem label='子规格详情' :other='info.childrenSpecs' :value='info.childrenSpecs.value' @click.stop="clickCell" v-if='info.specification.value=="多规格"'></selectItem>
             <inputItem label='售卖价格' :other='info.price' :value='info.price.value' @input="inputCell"></inputItem>
             <inputItem label='划线价格' :other='info.delPrice' :value='info.delPrice.value' @input="inputCell"></inputItem>
             <selectItem label='卡密库' :other='info.cardStock' :value='info.cardStock.value' @click.stop="clickCell" v-if='info.cardStock.needHide'></selectItem>

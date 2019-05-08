@@ -1,0 +1,103 @@
+.good-modal.data-v-3a2443fa {
+  width: 710rpx;
+  background: #fff;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.good-modal .row.data-v-3a2443fa {
+    width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    min-height: 96rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+        -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    line-height: 96rpx;
+}
+.good-modal .row textarea.data-v-3a2443fa {
+      text-align: right;
+      min-height: 96rpx;
+      line-height: 36rpx;
+      font-size: 28rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      padding: 30rpx 20rpx 30rpx 0;
+      white-space: nowrap;
+      color: #3d404d;
+}
+.good-modal .row .label.data-v-3a2443fa {
+      padding: 0 36rpx 0 60rpx;
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      white-space: nowrap;
+      line-height: 96rpx;
+      height: 96rpx;
+      font-size: 28rpx;
+      color: #6f7685;
+}
+.good-modal .row .label image.data-v-3a2443fa {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 20rpx;
+}
+.good-modal .row .del.data-v-3a2443fa {
+      width: 28rpx;
+      height: 28rpx;
+}
+.good-modal .parentType.data-v-3a2443fa {
+    border-bottom: 1rpx solid #eee;
+}
+.good-modal .childrenType.data-v-3a2443fa {
+    padding: 0 0 0 46rpx;
+    position: relative;
+}
+.good-modal .childrenType.data-v-3a2443fa:after {
+      content: '';
+      position: absolute;
+      width: 664rpx;
+      bottom: 0;
+      right: 0;
+      height: 0;
+      border-bottom: 1rpx solid #eee;
+}
+.good-modal .childrenType .label.data-v-3a2443fa {
+      padding: 0 36rpx 0 46rpx;
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      white-space: nowrap;
+      line-height: 96rpx;
+      height: 96rpx;
+      font-size: 28rpx;
+      color: #6f7685;
+}
+.good-modal .childrenType .label image.data-v-3a2443fa {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 0;
+}
+.good-modal .add.data-v-3a2443fa {
+    padding: 0 46rpx;
+    font-size: 28rpx;
+    color: #fb6638;
+    font-weight: 500;
+}
+

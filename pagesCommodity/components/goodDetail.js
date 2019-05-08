@@ -116,6 +116,15 @@
                  label: '规格类型',
                  id: data.goods.has_option == 0 ? 'single' : 'multi', //是否有多规格
                  value: data.goods.has_option == 0 ? "单规格" : "多规格",
+                 list: (data.specs || []),
+                 disabled: true, //可否编辑
+                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转 
+                 type:'edit'
+             },
+             childrenSpecs: { //只在添加商品规格时有效
+                 label: '子规格详情',
+                 id: '',
+                 value: '价格、库存',
                  list: (data.options || []).map(item => {
                      return {
                          specif: {
@@ -146,12 +155,12 @@
                              value: item.goods_code,
                              disabled: false, //可否编辑
                              editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                         }
+                         },
+                         specsId:item.specs
                      }
                  }),
-                 disabled: true, //可否编辑
+                 disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 type:'edit',//add为添加
              },
              price: { //售卖价格
                  label: '售卖价格',
@@ -272,7 +281,7 @@
              goodForm: {
                  label: '商品表单',
                  id: data.goods.form_id,
-                 value: formList.filter(item => { 
+                 value: formList.filter(item => {
                      return item.id == data.goods.form_id
                  }).map(item => {
                      return item.name
@@ -295,11 +304,10 @@
      }
  }
  export function addGoodsModel(data) {
-     let dataModel = goodData.call(this,data);
+     let dataModel = goodData.call(this, data);
      dataModel.info1.goodType.disabled = false;
      dataModel.info2.specification.disabled = false;
      dataModel.info2.specification.type = 'add';
-
      return dataModel;
 
 

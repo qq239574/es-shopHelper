@@ -21,7 +21,8 @@
 
 <script>
     import {
-        goodData,addGoodsModel
+        goodData,
+        addGoodsModel
     } from '../components/goodDetail.js' //测试用数据
     import goodInfo from '../components/editGood-Block1.vue';
     import goodInfo2 from '../components/editGood-Block2.vue'
@@ -123,7 +124,7 @@
                 if (DataGo.go) {
                     // DataGo = this.Cacher.getData(DataGo.go);
                 }
-                if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent') {
+                if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
                     this.goodDetail = cacheGoodDetail;
                 }
@@ -194,6 +195,7 @@
             background: #fff;
             bottom: 0;
             left: 0;
+            box-shadow: 0 0 10upx 0 rgba(0, 0, 0, .1);
             z-index: 1000;
             overflow: hidden;
             padding-top: 18upx;

@@ -1,3 +1,118 @@
+function combination(arr) { //排列组合商品规格
+    let box = [];
+    let tmp = '';
+    if (arr.length == 1) {
+        for (let i = 0; i < arr[0].length; i++) {
+            tmp = [arr[0][i]];
+            tmp.id = arr[0][i].id || '';
+            box.push(tmp)
+        }
+    } else if (arr.length == 2) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr[1].length; j++) {
+                tmp = [arr[0][i], arr[1][j]];
+                tmp.id = arr[0][i].id + ',' + arr[1][j].id
+                box.push(tmp)
+            }
+        }
+    } else if (arr.length == 3) {
+        for (let i = 0; i < arr[0].length; i++) {
+            for (let j = 0; j < arr[1].length; j++) {
+                for (let k = 0; k < arr[2].length; k++) {
+                    tmp = [arr[0][i], arr[1][j], arr[2][k]];
+                    tmp.id = arr[0][i].id + ',' + arr[1][j].id + ',' + arr[2][k].id
+                    box.push(tmp)
+                }
+            }
+        }
+    }
+    return box;
+}
+
+function addGoodType(old, list) { //添加修改子规格
+
+    let children = [];
+    list.forEach(item => {
+        children.push(item.items)
+    });
+    let allTypeCombination = combination(children); //排列组合
+
+    let len = old.length;
+    let types = allTypeCombination.map((item) => { //生成新的childrenSpecs.list
+        let tmp = {
+            specsId: '',
+            specif: {
+                label: '规格',
+                id: '',
+                value: '',
+                goodsId: '',
+                disabled: true, //不可编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            price: {
+                label: '价格',
+                id: '',
+                value: 0,
+                disabled: false, //可否编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            stock: {
+                label: '库存',
+                id: '',
+                value: 0,
+                disabled: false, //可否编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            code: {
+                label: '商品编号',
+                id: '',
+                value: '',
+                disabled: false, //可否编辑
+                editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            }
+        };
+        for (let i = 0; i < old.length; i++) {
+            console.log(old[i].specsId, item.id)
+            if (old[i].specsId == item.id) {
+                tmp = old[i];
+
+            }
+        }
+        return {
+            specsId: item.id,
+            specif: {
+                label: '规格',
+                id: tmp.specif.id,
+                value: item.map(item => item.title || '').join('+').replace(/\+$/, ''),
+                goodsId: tmp.specif.goods_id || '',
+                disabled: true, //不可编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            price: {
+                label: '价格',
+                id: '',
+                value: tmp.price.value || 0,
+                disabled: false, //可否编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            stock: {
+                label: '库存',
+                id: '',
+                value: tmp.stock.value || 0,
+                disabled: false, //可否编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            },
+            code: {
+                label: '商品编号',
+                id: '',
+                value: tmp.code.value || '',
+                disabled: false, //可否编辑
+                editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+            }
+        }
+    })
+    return types
+}
 export default function (val, cacheGoodDetail) {
     let static_resources_domain = this.Cacher.getData('static_resources_domain');
     let reg = new RegExp(static_resources_domain, 'g');
@@ -46,7 +161,6 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '定时下架') {
         cacheGoodDetail.info3.autoExt.value = val.checked;
     } else if (val.label == '定时下架时间') {
-        console.log('定时下架时间', val)
         cacheGoodDetail.info3.autoExtTime.value = val.value;
     } else if (val.label == '快递运费') {
         cacheGoodDetail.info3.provideCost.value = val.value;
@@ -62,6 +176,17 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info4.status.putaway_time = val.other.subValue;
     } else if (val.label == '规格类型') {
         cacheGoodDetail.info2.specification.list = val.other.list;
+        cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
+        cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
+
+        let oldList = cacheGoodDetail.info2.childrenSpecs.list;
+        cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
+        console.log('hahahahahah-------', cacheGoodDetail.info2.childrenSpecs.list)
+    } else if (val.label == '子规格详情') {
+        cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
+        console.log('hahahahahah++++++++++', val.other.list)
+
+
     } else if (val.label == '自动发货') {
         cacheGoodDetail.info3.autoDeliver.value = val.checked;
     } else if (val.label == '自动发货内容') {

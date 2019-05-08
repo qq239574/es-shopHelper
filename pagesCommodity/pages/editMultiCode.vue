@@ -54,8 +54,7 @@
             }
         },
         methods: {
-            inputCell(val) {
-                console.log(val);
+            inputCell(val) { 
                 let index = val.other.index;
                 if (val.label == '价格') {
                     cacheList[index].price.value = val.value;
@@ -64,12 +63,10 @@
                 } else if (val.label == '商品编码') {
                     cacheList[index].code.value = val.value;
                 }
-                DataFrom.needChange.other.list=cacheList; 
-                console.log(val.value,cacheList)
+                DataFrom.needChange.other.list=cacheList;  
                 this.Cacher.setData('editMultiCode',DataFrom)
             },
-            clickCell(val) {
-                console.log(val)
+            clickCell(val) { 
             }
         },
         onLoad(option) {
@@ -78,8 +75,8 @@
                 item.index = index;
                 return item;
             });
-            this.list = cacheList;
-            console.log(DataFrom)
+            this.list = cacheList; 
+             this.Cacher.setData('editMultiCode',DataFrom)
         }
     }
 </script>

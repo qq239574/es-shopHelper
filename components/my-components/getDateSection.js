@@ -11,7 +11,10 @@ export function getDate(before) {
     d = d > 9 ? d : '0' + d;
     return y + "-" + m + "-" + d;
 }
-
+/***
+ * 获取两段时间间隔
+ * 
+ */
 export function GetDateDiff(startDate, endDate) {
     var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
     var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();

@@ -38,6 +38,7 @@ var _goodDetail = __webpack_require__(/*! ../components/goodDetail.js */ "I:\\Cu
 
 
 
+
 var _updateGoodInfo = _interopRequireDefault(__webpack_require__(/*! ../components/updateGoodInfo.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo.js"));
 var _toEditPage = _interopRequireDefault(__webpack_require__(/*! ../components/toEditPage.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage.js"));
 var _goodEditDataModel = _interopRequireDefault(__webpack_require__(/*! ../components/goodEditDataModel.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodEditDataModel.js"));
@@ -133,7 +134,7 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       if (DataGo.go) {
         // DataGo = this.Cacher.getData(DataGo.go);
       }
-      if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent') {
+      if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType') {
         cacheGoodDetail = _updateGoodInfo.default.call(this, DataGo.needChange, cacheGoodDetail);
         this.goodDetail = cacheGoodDetail;
       }

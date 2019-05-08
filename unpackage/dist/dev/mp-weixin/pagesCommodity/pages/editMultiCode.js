@@ -65,7 +65,6 @@ var cacheList = [];var _default =
   },
   methods: {
     inputCell: function inputCell(val) {
-      console.log(val);
       var index = val.other.index;
       if (val.label == '价格') {
         cacheList[index].price.value = val.value;
@@ -75,11 +74,9 @@ var cacheList = [];var _default =
         cacheList[index].code.value = val.value;
       }
       DataFrom.needChange.other.list = cacheList;
-      console.log(val.value, cacheList);
       this.Cacher.setData('editMultiCode', DataFrom);
     },
     clickCell: function clickCell(val) {
-      console.log(val);
     } },
 
   onLoad: function onLoad(option) {
@@ -89,7 +86,7 @@ var cacheList = [];var _default =
       return item;
     });
     this.list = cacheList;
-    console.log(DataFrom);
+    this.Cacher.setData('editMultiCode', DataFrom);
   } };exports.default = _default;
 
 /***/ }),

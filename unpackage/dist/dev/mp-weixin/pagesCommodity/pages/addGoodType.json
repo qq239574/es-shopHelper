@@ -1,10 +1,13 @@
 {
   "navigationBarTitleText": "规格类型",
+  "enablePullDownRefresh": false,
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "input-item": "/components/my-components/editBlock-InputItem",
     "select-item": "/components/my-components/editBlock-SelectItem",
-    "multi-line": "/components/my-components/editBlock-MultiLine"
+    "multi-line": "/components/my-components/editBlock-MultiLine",
+    "good-modal": "/pagesCommodity/components/addGoodModal",
+    "long-button": "/components/my-components/LongButton"
   }
 }

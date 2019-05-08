@@ -36,7 +36,6 @@
         "pages/editName",
         "pages/editCode",
         "pages/editSubTitle",
-        "pages/multiSpecifications",
         "pages/selectType",
         "pages/setFreight",
         "pages/setTotalFreight",

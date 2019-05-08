@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var multiLine = function multiLine() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-MultiLine */ "components/my-components/editBlock-MultiLine").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-MultiLine.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-MultiLine.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -25,79 +25,71 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+var _checkAddSpecs = _interopRequireDefault(__webpack_require__(/*! ../components/checkAddSpecs.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\checkAddSpecs.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var multiLine = function multiLine() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-MultiLine */ "components/my-components/editBlock-MultiLine").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-MultiLine.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-MultiLine.vue"));};var goodModal = function goodModal() {return __webpack_require__.e(/*! import() | pagesCommodity/components/addGoodModal */ "pagesCommodity/components/addGoodModal").then(__webpack_require__.bind(null, /*! ../components/addGoodModal.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\addGoodModal.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 var DataFrom = {};
-var cacheList = [];var _default =
+var cacheList = [];
+var specIndex = 0;var _default =
 {
   components: {
     inputItem: inputItem,
     selectItem: selectItem,
-    multiLine: multiLine },
+    multiLine: multiLine,
+    goodModal: goodModal,
+    longButton: longButton },
 
   data: function data() {
     return {
-      list: [{
-        id: '',
-        title: '',
-        items: [{
-          id: '',
-          title: '' }] }] };
-
-
+      list: [] };
 
   },
   methods: {
+    sure: function sure() {
+      var canSub = _checkAddSpecs.default.call(this, this.list);
+      if (canSub) {
+        DataFrom.needChange.other.list = this.list;
+        this.Cacher.setData('addGoodType', DataFrom);
+        uni.navigateBack();
+      }
+    },
+    delSpec: function delSpec(val) {
+      this.list = this.list.filter(function (item) {
+        return val.id != item.id;
+      });
+    },
+    getSpec: function getSpec(val) {
+      this.list = this.list.map(function (item) {
+        if (item.id == val.id) {
+          return val;
+        } else {
+          return item;
+        }
+      });
+    },
     addType: function addType() {
-      var index = this.list.length;
+      specIndex++;
       this.list.push({
-        index: index,
-        specif: {
-          label: '规格',
-          id: '',
-          value: '',
-          disabled: false, //可否编辑
-          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        },
-        price: {
-          label: '价格',
-          id: '',
-          value: '0',
-          disabled: false, //可否编辑
-          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        },
-        stock: {
-          label: '库存',
-          id: '',
-          value: '0',
-          disabled: false, //可否编辑
-          editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        },
-        code: {
-          label: '商品编号',
-          id: '',
-          value: '',
-          disabled: false, //可否编辑
-          editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-        } });
+        id: 'spec' + specIndex,
+        title: '',
+        items: [] });
 
     },
-    inputCell: function inputCell(val) {
-      var index = val.other.index;
-      if (val.label == '规格') {
-        cacheList[index].specif.value = val.value;
-      } else if (val.label == '价格') {
-        cacheList[index].price.value = val.value;
-      } else if (val.label == '库存') {
-        cacheList[index].stock.value = val.value;
-      } else if (val.label == '商品编码') {
-        cacheList[index].code.value = val.value;
-      }
-      DataFrom.needChange.other.list = cacheList;
-      this.Cacher.setData('editMultiCode', DataFrom);
-    } },
+    inputCell: function inputCell(val) {} },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    if (DataFrom) {
+      this.list = DataFrom.needChange.other.list;
+      this.Cacher.setData('addGoodType', DataFrom);
+    }
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
