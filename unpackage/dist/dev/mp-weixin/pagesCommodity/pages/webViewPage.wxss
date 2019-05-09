@@ -3,10 +3,38 @@
 }
 .qrcode-share canvas.data-v-8b6c5262 {
     position: absolute;
-    top: 0;
+    top: 300rpx;
     right: 0;
     left: 0;
     bottom: 0;
-    margin: auto;
+    margin: 0 auto;
+}
+.qrcode-share .tip.data-v-8b6c5262 {
+    font-size: 24rpx;
+    width: 100%;
+    position: absolute;
+    top: 200rpx;
+    left: 0;
+    text-align: center;
+    color: #aaa;
+}
+.qrcode-share .footer.data-v-8b6c5262 {
+    position: fixed;
+    height: 124rpx;
+    width: 100%;
+    border-top: 1rpx solid #eee;
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    -webkit-box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10rpx 0 rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+    padding-top: 18rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.qrcode-share .footer long-button.data-v-8b6c5262 {
+      margin: 10rpx auto 0;
 }
 

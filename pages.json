@@ -169,7 +169,7 @@
 			}, {
 				"path": "pages/webViewPage",
 				"style": {
-					"navigationBarTitleText": "商品详情",
+					"navigationBarTitleText": "下载二维码",
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
@@ -284,7 +284,9 @@
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",
 						"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-						"van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index"
+						"van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index",
+						"i-page": "/wxcomponents/iview-weapp/page/index",
+						"i-icon": "/wxcomponents/iview-weapp/icon/index"
 					}
 				}
 			},
@@ -392,7 +394,8 @@
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
 					"i-modal": "/wxcomponents/iview-weapp/modal/index",
-					"i-page": "/wxcomponents/iview-weapp/page/index"
+					"i-page": "/wxcomponents/iview-weapp/page/index",
+					"i-icon": "/wxcomponents/iview-weapp/icon/index"
 				}
 			}
 		}, {

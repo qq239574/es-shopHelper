@@ -8,6 +8,7 @@
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "i-modal": "/wxcomponents/iview-weapp/modal/index",
     "i-page": "/wxcomponents/iview-weapp/page/index",
+    "i-icon": "/wxcomponents/iview-weapp/icon/index",
     "tab-card": "/components/my-components/Tabs",
     "card": "/pages/bill/index/Card",
     "search-input": "/components/my-components/SearchInput",

@@ -17,6 +17,10 @@
 
 
 
+
+
+
+
 var _weappQrcodeEsm = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/weapp.qrcode.esm.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\weapp.qrcode.esm.js"));
 var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ../../pages/commodity/index/savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -26,12 +30,21 @@ var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ../../pages
 //
 //
 //
-var _default = { data: function data() {return { webviewStyles: { progress: { color: '#FF3333' } },
+//
+//
+//
+//
+var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var _default = { components: { longButton: longButton }, data: function data() {return { webviewStyles: { progress: { color: '#FF3333' } },
       from: '',
       show: true };
 
   },
   methods: {
+    sure: function sure() {
+      uni.reLaunch({
+        url: '/pages/index/index' });
+
+    },
     longtap: function longtap() {var _this = this;
       var that = this;
       this.closePageLoading();

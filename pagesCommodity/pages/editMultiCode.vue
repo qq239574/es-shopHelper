@@ -6,7 +6,19 @@
             <inputItem :other='item' label='库存' :disabled='item.disabled' :value='item.stock.value' @input='inputCell'></inputItem>
             <inputItem :other='item' label='商品编码' :disabled='item.disabled' :value='item.code.value' @input='inputCell'></inputItem>
         </view>
-         <van-toast id="van-toast" />
+        <view class="pager" >
+            <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
+                <view class='prev button' slot="prev">
+                    <i-icon type="return"></i-icon>
+                    上一步
+                </view>
+                <view class='next button' slot="next">
+                    下一步
+                    <i-icon type="enter"></i-icon>
+                </view>
+            </i-page>
+        </view>
+        <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
 </template>

@@ -4,6 +4,8 @@
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "van-datetime-picker": "/wxcomponents/vant-weapp/datetime-picker/index",
+    "i-page": "/wxcomponents/iview-weapp/page/index",
+    "i-icon": "/wxcomponents/iview-weapp/icon/index",
     "input-item": "/components/my-components/editBlock-InputItem",
     "select-item": "/components/my-components/editBlock-SelectItem"
   }
