@@ -40,6 +40,7 @@ function addGoodType(old, list) { //添加修改子规格
     let len = old.length;
     let types = allTypeCombination.map((item) => { //生成新的childrenSpecs.list
         let tmp = {
+            other:{},
             specsId: '',
             specif: {
                 label: '规格',
@@ -74,10 +75,10 @@ function addGoodType(old, list) { //添加修改子规格
         for (let i = 0; i < old.length; i++) {
             if (old[i].specsId == item.id) {
                 tmp = old[i];
-
             }
         }
         return {
+            other:tmp.other||{},
             specsId: item.id,
             specif: {
                 label: '规格',
@@ -163,9 +164,9 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '定时下架时间') {
         cacheGoodDetail.info3.autoExtTime.value = val.value;
     } else if (val.label == '快递运费') {
-        cacheGoodDetail.info3.provideCost.value = val.info.label;
+        cacheGoodDetail.info3.provideCost.value = val.info.subValue*1;
         cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
-        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label;
+        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label; 
     } else if (val.label == '商品表单') {
         cacheGoodDetail.info3.goodForm.value = val.value;
         cacheGoodDetail.info3.goodForm.id = val.id;
@@ -198,7 +199,7 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info3.autoDeliver.needHide = val.id != 2;
         cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
         cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
-        cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
+        cacheGoodDetail.info3.showProCost.needHide = val.id == 2; 
     }
     return cacheGoodDetail;
 

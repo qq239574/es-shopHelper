@@ -24,9 +24,9 @@
                         <view class='share-title'>微信好友</view>
                         <button open-type='share' id='shareByH5' class='open-share'></button>
                     </view>
-                    <view class="share-item" @click='clickModel("h5","二维码海报")'>
+                    <view class="share-item" @click='clickModel("h5","二维码")'>
                         <image class='share-img' src='/static/img/global/product_share_download.png'></image>
-                        <view class='share-title'>二维码海报</view>
+                        <view class='share-title'>二维码</view>
                     </view>
                     <view class="share-item" @click='clickModel("h5","复制链接")'>
                         <image class='share-img' src='/static/img/global/product_share_link.png'></image>
@@ -36,7 +36,9 @@
                 <view class="cancel" @click='clickModel("cancel")'>取消</view>
             </scroll-view>
         </PopUp>
-        <poster :toggle='showPoster' :info='posteInfo' @click='sharePoster'></poster>
+        <poster :toggle='showPoster' :info='posteInfo' @click='sharePoster'>
+            <slot></slot>
+        </poster>
     </view>
 </template>
 
@@ -45,6 +47,7 @@
     import PopUp from '../../../components/my-components/PopUp.vue';
     import poster from './posterShare.vue'
     import savePic from './savePicToAlbum.js'
+    import drawQrcode from '../../../components/my-components/weapp.qrcode.esm.js'
     let cacheGood = {};
     let shareInfo = {}; //分享商品信息
     let shareData = {}; //
@@ -106,8 +109,19 @@
                     // uni.showShareMenu({
                     //     title: 'ES业务系统小程序'
                     // })
-                } else if (val.type == 'save') {
-                    savePic(this, val.info.img); //保存图片至相册
+                } else if (val.type == 'save') {//保存二维码到相册
+                    uni.canvasToTempFilePath({
+                        x: 0,
+                        y: 0,
+                        width: 200,
+                        height: 200,
+                        destWidth: 200,
+                        destHeight: 200,
+                        canvasId: 'myQrcode',
+                        success: function(res) {
+                            savePic(that, res.tempFilePath); //保存图片至相册 
+                        }
+                    })
                 }
             },
             closeAll() {
@@ -153,31 +167,25 @@
             clickModel(val1, val2) {
                 let that = this;
                 this.pageLoading();
-                if (val1 == '小程序') {
-                    if (val2 == '微信好友') { //分享事件onShareAppMessage
-                    } else if (val2 == '二维码海报') {
-                        this.posteInfo = {
-                            img: '/static/img/temp/poster.jpg',
-                            type: 'mini', //mini:小程序，h5: H5
-                        };
+                if (val1 == '小程序') {} else if (val1 == 'h5') {
+                    if (val2 == '微信好友') {} else if (val2 == '二维码') {
                         this.showPoster = !this.showPoster;
-                    }
-                } else if (val1 == 'h5') {
-                    if (val2 == '微信好友') {
-                        console.log('share by ', val1, val2)
-                    } else if (val2 == '二维码海报') {
-                        this.Request('goodPoster', {
-                            goods_id: cacheGood.detail.goodId
-                        }).then(res => {
-                            if (res.error == 0) {
-                                this.showPoster = !this.showPoster;
-                                this.posteInfo = {
-                                    img: res.qrcode_url,
-                                    type: 'h5', //mini:小程序，h5: H5
-                                }
-                            }
-                        }).catch(res => {
-                            this.Toast(res.message)
+                        let ctx = uni.createCanvasContext('myQrcode')
+                        drawQrcode({ //二维码生成
+                            width: 200,
+                            height: 200,
+                            canvasId: 'myQrcode',
+                            ctx: ctx,
+                            text: shareInfo.goods_url,
+                            // v1.0.0+版本支持在二维码上绘制图片
+                            image: {
+                                imageResource: '',
+                                dx: 70,
+                                dy: 70,
+                                dWidth: 60,
+                                dHeight: 60
+                            },
+                            callback() {}
                         })
                     } else if (val2 == '复制链接') {
                         if (shareInfo.goods_url) {
@@ -226,7 +234,7 @@
         .scroll {
             width: 100%;
             height: 500upx;
-            position: relative; 
+            position: relative;
             overflow: auto;
             box-sizing: border-box;
             .cancel {

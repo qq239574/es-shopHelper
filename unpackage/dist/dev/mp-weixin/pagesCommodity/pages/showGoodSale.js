@@ -41,7 +41,7 @@ var DataFrom = {};var _default =
       goods_id: DataFrom.detail.info4.sale.goodsId }).
     then(function (res) {
       if (res.error == 0) {
-        _this.list = res.option;
+        _this.list = res.option.sort(function (a, b) {return b.sales - a.sales;});
       }
     });
   } };exports.default = _default;

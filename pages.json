@@ -170,7 +170,10 @@
 				"path": "pages/webViewPage",
 				"style": {
 					"navigationBarTitleText": "商品详情",
-					"usingComponents": {}
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
 				}
 			}, {
 				"path": "pages/autoDeliverContent",
@@ -313,7 +316,7 @@
 		"pages": [{
 			"path": "pages/index",
 			"style": {
-				"navigationBarTitleText": "首页分包",
+				"navigationBarTitleText": "数据统计",
 				"usingComponents": {
 					"van-toast": "/wxcomponents/vant-weapp/toast/index",
 					"van-dialog": "/wxcomponents/vant-weapp/dialog/index"

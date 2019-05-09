@@ -8,7 +8,8 @@
         <view class="margin20"></view>
         <selectItem :value='goodDetail.info4.status.value' label='状态' @click='clickCell'></selectItem>
         <view class="margin20"></view>
-        <selectItem :value='goodDetail.info4.sale.value' label='销量' @click='clickCell' v-if='!goodDetail.info4.sale.needHide'></selectItem>
+        <selectItem :value='goodDetail.info4.sale.value' label='销量' @click='clickCell' v-if='!goodDetail.info4.sale.needHide&&goodDetail.info2.specification.value=="多规格"'></selectItem>
+        <inputItem :value='goodDetail.info4.sale.value' :disabled='true' label='销量' v-if='!goodDetail.info4.sale.needHide&&goodDetail.info2.specification.value=="单规格"'></inputItem>
         <view class="padding"></view>
         <view class="footer" v-if='!showpicker'>
             <longButton @click='save'>保存</longButton>
@@ -34,6 +35,7 @@
     import updateGoodInfo from '../components/updateGoodInfo.js'
     import toEditPage from '../components/toEditPage.js'
     import editGoodModel from '../components/goodEditDataModel.js'
+    import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import {
         formatDateTime
     } from '../../graceUI2.0/jsTools/date.js'
@@ -41,6 +43,7 @@
         getDate
     } from '../../components/my-components/getDateSection.js'
     import mockApi from '../components/mockGoodDetailApi.js'
+    import deleteNull from '../components/deleteNullData.js'
     let cacheGoodDetail = {};
     let cacheSubmitData = {};
     let DataFrom = {};
@@ -52,7 +55,8 @@
             goodInfo2,
             goodInfo3,
             selectItem,
-            longButton
+            longButton,
+            inputItem
         },
         data() {
             return {
@@ -99,8 +103,10 @@
                 this.goodDetail = cacheGoodDetail;
                 let data = editGoodModel(cacheGoodDetail, cacheSubmitData);
                 if (DataFrom.from == 'addGoods') {
-                    this.Request('addGoods', data).then(res => {
+                    data = deleteNull.call(this, data);//删除不必要字段，兼检查数据格式
+                    data && this.Request('addGoods', data).then(res => {
                         if (res.error == 0) {
+                            this.Cacher.clearData('editGood')
                             uni.navigateBack();
                         } else {
                             this.Toast(res.message);
@@ -129,7 +135,7 @@
                 if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
                     this.goodDetail = cacheGoodDetail;
-                    this.Cacher.clearData(DataGo.go )
+                    this.Cacher.clearData(DataGo.go)
                 }
             }
         },

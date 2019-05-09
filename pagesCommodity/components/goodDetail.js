@@ -105,7 +105,7 @@
                  editable: 'image', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },
              swiperList: {
-                 label: '',
+                 label: '轮播图',
                  list: data.goods.thumbs.map(item => ({
                      img: item.replace(reg, '')
                  })),
@@ -118,8 +118,8 @@
                  label: '规格类型',
                  id: data.goods.has_option == 0 ? 'single' : 'multi', //是否有多规格
                  value: data.goods.has_option == 0 ? "单规格" : "多规格",
-                 list: (data.specs || []).map(item=>{
-                     item.disabled=!!data.goods.activity_goods
+                 list: (data.specs || []).map(item => {
+                     item.disabled = !!data.goods.activity_goods
                      return item
                  }),
                  disabled: true, //可否编辑
@@ -131,6 +131,16 @@
                  id: '',
                  value: '价格、库存',
                  list: (data.options || []).map(item => {
+                     let other = {
+                         display_order: item.display_order,
+                         goods_id:item.goods_id,
+                         sales:item.sales,
+                         shop_id: item.shop_id,
+                         stock_warning: item.stock_warning,
+                         thumb: item.thumb,
+                         virtual_card_id: item.virtual_card_id,
+                         weight:item.weight,
+                     }
                      return {
                          specif: {
                              label: '规格',
@@ -161,8 +171,9 @@
                              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                          },
+                         other,
                          specsId: item.specs,
-                         disabled:!!data.goods.activity_goods,//活动期间
+                         disabled: !!data.goods.activity_goods, //活动期间
                      }
                  }),
                  disabled: false, //可否编辑
@@ -266,7 +277,7 @@
                  value: data.goods.dispatch_price,
                  dispatch_list: data.dispatch_list,
                  dispatch_id: data.goods.dispatch_id || 0,
-                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0],
+                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0]||'统一运费（元）',
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                  needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -311,7 +322,7 @@
              sale: {
                  label: '销量',
                  id: '',
-                 value: 0,
+                 value: data.goods.sales_count,
                  goodsId: data.goods.id,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -322,8 +333,7 @@
      return info;
  }
  export function addGoodsModel(data) {
-     let dataModel = goodData.call(this, data);
-     console.log(data)
+     let dataModel = goodData.call(this, data); 
      dataModel.info1.goodType.disabled = false;
      dataModel.info2.specification.disabled = false;
      dataModel.info2.specification.type = 'add';

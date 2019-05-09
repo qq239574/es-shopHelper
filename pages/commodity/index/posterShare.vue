@@ -3,13 +3,15 @@
         <view class="grace-shade grace-shade-black" v-if="show2">
             <view class="box">
                 <view class="close-btn grace-icons icon-close3" @tap.stop="closeShade2"></view>
-                <image class='poster body' :src='info.img'></image>
+                <view style='width:200px;height:200px;' class='img-code'>
+                    <slot></slot>
+                </view>
             </view>
             <view class='button'>
                 <button open-type='share' class="img" @click.stop='share("share")' v-if='info.type=="mini"'>
-                    <image src='/static/img/global/wechat.png'></image>
-                    <view>分享好友</view>
-                </button>
+                                <image src='/static/img/global/wechat.png'></image>
+                                <view>分享好友</view>
+                            </button>
                 <view open-type='share' class="img" @click.stop='share("share")' v-else>
                     <image src='/static/img/global/wechat.png'></image>
                     <view>分享好友</view>
@@ -39,7 +41,7 @@
                 type: Object,
                 default: {
                     img: '/static/img/temp/poster.jpg',
-                    type: 'mini',//mini:小程序，h5: H5
+                    type: 'mini', //mini:小程序，h5: H5
                 }
             }
         },
@@ -113,12 +115,23 @@
         .box {
             overflow: hidden;
             width: 524upx;
-            height: 838upx;
+            height: 524upx;
             position: absolute;
-            top: 20upx;
+            top: 0;
             left: 0;
             right: 0;
+            bottom: 0;
             margin: auto;
+            background: #fff;
+            .img-code {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                background: #fff;
+            }
         }
         .poster {
             width: 524upx;

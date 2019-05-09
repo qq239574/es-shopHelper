@@ -28,9 +28,6 @@ export default function (list) {
                 return false;
             }
         }
-    } else {
-        this.Toast('请添加规格');
-        return false;
     }
 
     return true;

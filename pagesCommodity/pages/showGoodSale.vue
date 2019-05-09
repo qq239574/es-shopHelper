@@ -31,7 +31,7 @@
                 goods_id: DataFrom.detail.info4.sale.goodsId,
             }).then(res => {
                 if (res.error == 0) {
-                    this.list = res.option; 
+                    this.list = res.option.sort((a,b)=>b.sales-a.sales); 
                 }
             })
         }

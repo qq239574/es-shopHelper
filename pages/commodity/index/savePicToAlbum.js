@@ -1,28 +1,41 @@
-export default function (that, downloadUrl) {
+export default function (that, downloadUrl) { 
+
     function downloadFile() {
-        that.Toast("开始下载图片");
-        uni.downloadFile({
-            url: downloadUrl,
-            success: function (res) {
-                // 保存图片到系统相册  
-                uni.saveImageToPhotosAlbum({
-                    filePath: res.tempFilePath,
-                    success(res) {
-                        that.Toast({
-                            title: '保存成功',
-                        });
-                    },
-                    fail(res) {
-                        that.Toast({
-                            title: '保存失败',
-                        });
-                    }
-                })
-            },
-            fail: function (res) {
-                that.Toast("下载图片失败");
-            }
-        })
+
+        if (/^http.+/.test(downloadUrl)) {//网络图片
+            uni.downloadFile({
+                url: downloadUrl,
+                success: function (res) {
+                    // 保存图片到系统相册  
+                    uni.saveImageToPhotosAlbum({
+                        filePath: res.tempFilePath,
+                        success(res) {
+                            that.Toast('保存成功');
+                        },
+                        fail(res) {
+                            that.Toast('保存失败');
+                        }
+                    })
+                },
+                fail: function (res) {
+                    that.Toast("下载图片失败");
+                }
+            })
+        } else {//本地图片
+            // 保存图片到系统相册   
+            uni.saveImageToPhotosAlbum({
+                filePath: downloadUrl,
+                success(res) {
+                    that.Toast('保存成功');
+                },
+                fail(res) {
+                    that.Toast('保存失败');
+                }
+            })
+        }
+
+
+
     }
 
     if (!uni.saveImageToPhotosAlbum) {
@@ -49,10 +62,8 @@ export default function (that, downloadUrl) {
                         // 用户拒绝了授权  
                         // 打开设置页面  
                         uni.openSetting({
-                            success: function (data) {
-                            },
-                            fail: function (data) {
-                            }
+                            success: function (data) {},
+                            fail: function (data) {}
                         });
                     }
                 })

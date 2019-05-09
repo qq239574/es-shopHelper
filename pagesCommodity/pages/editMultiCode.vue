@@ -81,7 +81,6 @@
                 return item;
             });
             this.list = cacheList;
-            console.log('list', this.list)
             this.Cacher.setData('editMultiCode', DataFrom)
         }
     }

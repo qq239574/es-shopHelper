@@ -41,7 +41,7 @@
             cacheVal = DataFrom.needChange.value;
             this.val = cacheVal;
             this.disable = !this.val;
-             this.Cacher.setData('editCode', DataFrom)
+            this.Cacher.setData('editCode', DataFrom)
         }
     }
 </script>

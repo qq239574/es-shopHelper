@@ -43,6 +43,9 @@
 
 
 
+
+
+
 var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
 var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
 
@@ -115,7 +118,6 @@ var curTab = {
     },
     shareGoodInfo: function shareGoodInfo(good) {
       needShare = good;
-      console.log('shareGoodInfo', good);
     },
     handleChange: function handleChange(obj) {var
 
@@ -255,7 +257,7 @@ var curTab = {
   },
   onShareAppMessage: function onShareAppMessage(res) {//分享事件
     if (res.from === 'button') {// 来自页面内分享按钮  
-      var encode = encodeURIComponent(needShare[res.target.id]);
+      var encode = encodeURIComponent(needShare['shareByH5']);
       return {
         title: needShare.detail.goodName,
         path: '/pagesCommodity/pages/webViewPage?url=' + encode || false,

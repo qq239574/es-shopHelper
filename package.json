@@ -13,6 +13,7 @@
     "@dcloudio/uni-ui": "^0.0.7",
     "lodash": "^4.17.11",
     "vant": "^1.6.13",
-    "vant-weapp": "^0.5.9"
+    "vant-weapp": "^0.5.9",
+    "weapp-qrcode": "^1.0.0"
   }
 }

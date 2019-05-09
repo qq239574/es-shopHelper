@@ -91,7 +91,6 @@ var cacheList = [];var _default =
       return item;
     });
     this.list = cacheList;
-    console.log('list', this.list);
     this.Cacher.setData('editMultiCode', DataFrom);
   } };exports.default = _default;
 

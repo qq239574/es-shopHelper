@@ -8,6 +8,7 @@
     "good-info2": "/pagesCommodity/components/editGood-Block2",
     "good-info3": "/pagesCommodity/components/editGood-Block3",
     "select-item": "/components/my-components/editBlock-SelectItem",
-    "long-button": "/components/my-components/LongButton"
+    "long-button": "/components/my-components/LongButton",
+    "input-item": "/components/my-components/editBlock-InputItem"
   }
 }

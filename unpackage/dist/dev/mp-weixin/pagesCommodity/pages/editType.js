@@ -54,10 +54,11 @@ var cache = ' ';var _default =
           _this.defaultIndex = index;
           DataFrom.needChange = {
             label: '商品类型',
-            value: item.label,
+            value: item.id,
             from: 'editType',
+            id: _this.list[index].id,
             other: {
-              label: '状态',
+              label: '商品类型',
               value: item.label,
               id: item.id } };
 

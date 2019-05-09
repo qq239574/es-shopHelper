@@ -11807,6 +11807,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\weapp.qrcode.esm.js":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/weapp.qrcode.esm.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /**
+                                                                                                      * weapp.qrcode.js v1.0.0 (https://github.com/yingye/weapp-qrcode#readme)
+                                                                                                      */
+
+var hasOwn = Object.prototype.hasOwnProperty,toStr = Object.prototype.toString,defineProperty = Object.defineProperty,gOPD = Object.getOwnPropertyDescriptor,isArray = function isArray(t) {return "function" == typeof Array.isArray ? Array.isArray(t) : "[object Array]" === toStr.call(t);},isPlainObject = function isPlainObject(t) {if (!t || "[object Object]" !== toStr.call(t)) return !1;var e,r = hasOwn.call(t, "constructor"),o = t.constructor && t.constructor.prototype && hasOwn.call(t.constructor.prototype, "isPrototypeOf");if (t.constructor && !r && !o) return !1;for (e in t) {;}return void 0 === e || hasOwn.call(t, e);},setProperty = function setProperty(t, e) {defineProperty && "__proto__" === e.name ? defineProperty(t, e.name, { enumerable: !0, configurable: !0, value: e.newValue, writable: !0 }) : t[e.name] = e.newValue;},getProperty = function getProperty(t, e) {if ("__proto__" === e) {if (!hasOwn.call(t, e)) return;if (gOPD) return gOPD(t, e).value;}return t[e];},extend = function t() {var e,r,o,n,i,a,s = arguments[0],u = 1,l = arguments.length,h = !1;for ("boolean" == typeof s && (h = s, s = arguments[1] || {}, u = 2), (null == s || "object" != typeof s && "function" != typeof s) && (s = {}); u < l; ++u) {if (null != (e = arguments[u])) for (r in e) {o = getProperty(s, r), s !== (n = getProperty(e, r)) && (h && n && (isPlainObject(n) || (i = isArray(n))) ? (i ? (i = !1, a = o && isArray(o) ? o : []) : a = o && isPlainObject(o) ? o : {}, setProperty(s, { name: r, newValue: t(h, a, n) })) : void 0 !== n && setProperty(s, { name: r, newValue: n }));}}return s;};function QR8bitByte(t) {this.mode = QRMode.MODE_8BIT_BYTE, this.data = t;}function QRCode(t, e) {this.typeNumber = t, this.errorCorrectLevel = e, this.modules = null, this.moduleCount = 0, this.dataCache = null, this.dataList = new Array();}QR8bitByte.prototype = { getLength: function getLength(t) {return this.data.length;}, write: function write(t) {for (var e = 0; e < this.data.length; e++) {t.put(this.data.charCodeAt(e), 8);}} }, QRCode.prototype = { addData: function addData(t) {var e = new QR8bitByte(t);this.dataList.push(e), this.dataCache = null;}, isDark: function isDark(t, e) {if (t < 0 || this.moduleCount <= t || e < 0 || this.moduleCount <= e) throw new Error(t + "," + e);return this.modules[t][e];}, getModuleCount: function getModuleCount() {return this.moduleCount;}, make: function make() {if (this.typeNumber < 1) {var t = 1;for (t = 1; t < 40; t++) {for (var e = QRRSBlock.getRSBlocks(t, this.errorCorrectLevel), r = new QRBitBuffer(), o = 0, n = 0; n < e.length; n++) {o += e[n].dataCount;}for (n = 0; n < this.dataList.length; n++) {var i = this.dataList[n];r.put(i.mode, 4), r.put(i.getLength(), QRUtil.getLengthInBits(i.mode, t)), i.write(r);}if (r.getLengthInBits() <= 8 * o) break;}this.typeNumber = t;}this.makeImpl(!1, this.getBestMaskPattern());}, makeImpl: function makeImpl(t, e) {this.moduleCount = 4 * this.typeNumber + 17, this.modules = new Array(this.moduleCount);for (var r = 0; r < this.moduleCount; r++) {this.modules[r] = new Array(this.moduleCount);for (var o = 0; o < this.moduleCount; o++) {this.modules[r][o] = null;}}this.setupPositionProbePattern(0, 0), this.setupPositionProbePattern(this.moduleCount - 7, 0), this.setupPositionProbePattern(0, this.moduleCount - 7), this.setupPositionAdjustPattern(), this.setupTimingPattern(), this.setupTypeInfo(t, e), this.typeNumber >= 7 && this.setupTypeNumber(t), null == this.dataCache && (this.dataCache = QRCode.createData(this.typeNumber, this.errorCorrectLevel, this.dataList)), this.mapData(this.dataCache, e);}, setupPositionProbePattern: function setupPositionProbePattern(t, e) {for (var r = -1; r <= 7; r++) {if (!(t + r <= -1 || this.moduleCount <= t + r)) for (var o = -1; o <= 7; o++) {e + o <= -1 || this.moduleCount <= e + o || (this.modules[t + r][e + o] = 0 <= r && r <= 6 && (0 == o || 6 == o) || 0 <= o && o <= 6 && (0 == r || 6 == r) || 2 <= r && r <= 4 && 2 <= o && o <= 4);}}}, getBestMaskPattern: function getBestMaskPattern() {for (var t = 0, e = 0, r = 0; r < 8; r++) {this.makeImpl(!0, r);var o = QRUtil.getLostPoint(this);(0 == r || t > o) && (t = o, e = r);}return e;}, createMovieClip: function createMovieClip(t, e, r) {var o = t.createEmptyMovieClip(e, r);this.make();for (var n = 0; n < this.modules.length; n++) {for (var i = 1 * n, a = 0; a < this.modules[n].length; a++) {var s = 1 * a;this.modules[n][a] && (o.beginFill(0, 100), o.moveTo(s, i), o.lineTo(s + 1, i), o.lineTo(s + 1, i + 1), o.lineTo(s, i + 1), o.endFill());}}return o;}, setupTimingPattern: function setupTimingPattern() {for (var t = 8; t < this.moduleCount - 8; t++) {null == this.modules[t][6] && (this.modules[t][6] = t % 2 == 0);}for (var e = 8; e < this.moduleCount - 8; e++) {null == this.modules[6][e] && (this.modules[6][e] = e % 2 == 0);}}, setupPositionAdjustPattern: function setupPositionAdjustPattern() {for (var t = QRUtil.getPatternPosition(this.typeNumber), e = 0; e < t.length; e++) {for (var r = 0; r < t.length; r++) {var o = t[e],n = t[r];if (null == this.modules[o][n]) for (var i = -2; i <= 2; i++) {for (var a = -2; a <= 2; a++) {this.modules[o + i][n + a] = -2 == i || 2 == i || -2 == a || 2 == a || 0 == i && 0 == a;}}}}}, setupTypeNumber: function setupTypeNumber(t) {for (var e = QRUtil.getBCHTypeNumber(this.typeNumber), r = 0; r < 18; r++) {var o = !t && 1 == (e >> r & 1);this.modules[Math.floor(r / 3)][r % 3 + this.moduleCount - 8 - 3] = o;}for (r = 0; r < 18; r++) {o = !t && 1 == (e >> r & 1);this.modules[r % 3 + this.moduleCount - 8 - 3][Math.floor(r / 3)] = o;}}, setupTypeInfo: function setupTypeInfo(t, e) {for (var r = this.errorCorrectLevel << 3 | e, o = QRUtil.getBCHTypeInfo(r), n = 0; n < 15; n++) {var i = !t && 1 == (o >> n & 1);n < 6 ? this.modules[n][8] = i : n < 8 ? this.modules[n + 1][8] = i : this.modules[this.moduleCount - 15 + n][8] = i;}for (n = 0; n < 15; n++) {i = !t && 1 == (o >> n & 1);n < 8 ? this.modules[8][this.moduleCount - n - 1] = i : n < 9 ? this.modules[8][15 - n - 1 + 1] = i : this.modules[8][15 - n - 1] = i;}this.modules[this.moduleCount - 8][8] = !t;}, mapData: function mapData(t, e) {for (var r = -1, o = this.moduleCount - 1, n = 7, i = 0, a = this.moduleCount - 1; a > 0; a -= 2) {for (6 == a && a--;;) {for (var s = 0; s < 2; s++) {if (null == this.modules[o][a - s]) {var u = !1;i < t.length && (u = 1 == (t[i] >>> n & 1)), QRUtil.getMask(e, o, a - s) && (u = !u), this.modules[o][a - s] = u, -1 == --n && (i++, n = 7);}}if ((o += r) < 0 || this.moduleCount <= o) {o -= r, r = -r;break;}}}} }, QRCode.PAD0 = 236, QRCode.PAD1 = 17, QRCode.createData = function (t, e, r) {for (var o = QRRSBlock.getRSBlocks(t, e), n = new QRBitBuffer(), i = 0; i < r.length; i++) {var a = r[i];n.put(a.mode, 4), n.put(a.getLength(), QRUtil.getLengthInBits(a.mode, t)), a.write(n);}var s = 0;for (i = 0; i < o.length; i++) {s += o[i].dataCount;}if (n.getLengthInBits() > 8 * s) throw new Error("code length overflow. (" + n.getLengthInBits() + ">" + 8 * s + ")");for (n.getLengthInBits() + 4 <= 8 * s && n.put(0, 4); n.getLengthInBits() % 8 != 0;) {n.putBit(!1);}for (; !(n.getLengthInBits() >= 8 * s || (n.put(QRCode.PAD0, 8), n.getLengthInBits() >= 8 * s));) {n.put(QRCode.PAD1, 8);}return QRCode.createBytes(n, o);}, QRCode.createBytes = function (t, e) {for (var r = 0, o = 0, n = 0, i = new Array(e.length), a = new Array(e.length), s = 0; s < e.length; s++) {var u = e[s].dataCount,l = e[s].totalCount - u;o = Math.max(o, u), n = Math.max(n, l), i[s] = new Array(u);for (var h = 0; h < i[s].length; h++) {i[s][h] = 255 & t.buffer[h + r];}r += u;var f = QRUtil.getErrorCorrectPolynomial(l),g = new QRPolynomial(i[s], f.getLength() - 1).mod(f);a[s] = new Array(f.getLength() - 1);for (h = 0; h < a[s].length; h++) {var c = h + g.getLength() - a[s].length;a[s][h] = c >= 0 ? g.get(c) : 0;}}var d = 0;for (h = 0; h < e.length; h++) {d += e[h].totalCount;}var R = new Array(d),m = 0;for (h = 0; h < o; h++) {for (s = 0; s < e.length; s++) {h < i[s].length && (R[m++] = i[s][h]);}}for (h = 0; h < n; h++) {for (s = 0; s < e.length; s++) {h < a[s].length && (R[m++] = a[s][h]);}}return R;};for (var QRMode = { MODE_NUMBER: 1, MODE_ALPHA_NUM: 2, MODE_8BIT_BYTE: 4, MODE_KANJI: 8 }, QRErrorCorrectLevel = { L: 1, M: 0, Q: 3, H: 2 }, QRMaskPattern = { PATTERN000: 0, PATTERN001: 1, PATTERN010: 2, PATTERN011: 3, PATTERN100: 4, PATTERN101: 5, PATTERN110: 6, PATTERN111: 7 }, QRUtil = { PATTERN_POSITION_TABLE: [[], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34], [6, 22, 38], [6, 24, 42], [6, 26, 46], [6, 28, 50], [6, 30, 54], [6, 32, 58], [6, 34, 62], [6, 26, 46, 66], [6, 26, 48, 70], [6, 26, 50, 74], [6, 30, 54, 78], [6, 30, 56, 82], [6, 30, 58, 86], [6, 34, 62, 90], [6, 28, 50, 72, 94], [6, 26, 50, 74, 98], [6, 30, 54, 78, 102], [6, 28, 54, 80, 106], [6, 32, 58, 84, 110], [6, 30, 58, 86, 114], [6, 34, 62, 90, 118], [6, 26, 50, 74, 98, 122], [6, 30, 54, 78, 102, 126], [6, 26, 52, 78, 104, 130], [6, 30, 56, 82, 108, 134], [6, 34, 60, 86, 112, 138], [6, 30, 58, 86, 114, 142], [6, 34, 62, 90, 118, 146], [6, 30, 54, 78, 102, 126, 150], [6, 24, 50, 76, 102, 128, 154], [6, 28, 54, 80, 106, 132, 158], [6, 32, 58, 84, 110, 136, 162], [6, 26, 54, 82, 110, 138, 166], [6, 30, 58, 86, 114, 142, 170]], G15: 1335, G18: 7973, G15_MASK: 21522, getBCHTypeInfo: function getBCHTypeInfo(t) {for (var e = t << 10; QRUtil.getBCHDigit(e) - QRUtil.getBCHDigit(QRUtil.G15) >= 0;) {e ^= QRUtil.G15 << QRUtil.getBCHDigit(e) - QRUtil.getBCHDigit(QRUtil.G15);}return (t << 10 | e) ^ QRUtil.G15_MASK;}, getBCHTypeNumber: function getBCHTypeNumber(t) {for (var e = t << 12; QRUtil.getBCHDigit(e) - QRUtil.getBCHDigit(QRUtil.G18) >= 0;) {e ^= QRUtil.G18 << QRUtil.getBCHDigit(e) - QRUtil.getBCHDigit(QRUtil.G18);}return t << 12 | e;}, getBCHDigit: function getBCHDigit(t) {for (var e = 0; 0 != t;) {e++, t >>>= 1;}return e;}, getPatternPosition: function getPatternPosition(t) {return QRUtil.PATTERN_POSITION_TABLE[t - 1];}, getMask: function getMask(t, e, r) {switch (t) {case QRMaskPattern.PATTERN000:return (e + r) % 2 == 0;case QRMaskPattern.PATTERN001:return e % 2 == 0;case QRMaskPattern.PATTERN010:return r % 3 == 0;case QRMaskPattern.PATTERN011:return (e + r) % 3 == 0;case QRMaskPattern.PATTERN100:return (Math.floor(e / 2) + Math.floor(r / 3)) % 2 == 0;case QRMaskPattern.PATTERN101:return e * r % 2 + e * r % 3 == 0;case QRMaskPattern.PATTERN110:return (e * r % 2 + e * r % 3) % 2 == 0;case QRMaskPattern.PATTERN111:return (e * r % 3 + (e + r) % 2) % 2 == 0;default:throw new Error("bad maskPattern:" + t);}}, getErrorCorrectPolynomial: function getErrorCorrectPolynomial(t) {for (var e = new QRPolynomial([1], 0), r = 0; r < t; r++) {e = e.multiply(new QRPolynomial([1, QRMath.gexp(r)], 0));}return e;}, getLengthInBits: function getLengthInBits(t, e) {if (1 <= e && e < 10) switch (t) {case QRMode.MODE_NUMBER:return 10;case QRMode.MODE_ALPHA_NUM:return 9;case QRMode.MODE_8BIT_BYTE:case QRMode.MODE_KANJI:return 8;default:throw new Error("mode:" + t);} else if (e < 27) switch (t) {case QRMode.MODE_NUMBER:return 12;case QRMode.MODE_ALPHA_NUM:return 11;case QRMode.MODE_8BIT_BYTE:return 16;case QRMode.MODE_KANJI:return 10;default:throw new Error("mode:" + t);} else {if (!(e < 41)) throw new Error("type:" + e);switch (t) {case QRMode.MODE_NUMBER:return 14;case QRMode.MODE_ALPHA_NUM:return 13;case QRMode.MODE_8BIT_BYTE:return 16;case QRMode.MODE_KANJI:return 12;default:throw new Error("mode:" + t);}}}, getLostPoint: function getLostPoint(t) {for (var e = t.getModuleCount(), r = 0, o = 0; o < e; o++) {for (var n = 0; n < e; n++) {for (var i = 0, a = t.isDark(o, n), s = -1; s <= 1; s++) {if (!(o + s < 0 || e <= o + s)) for (var u = -1; u <= 1; u++) {n + u < 0 || e <= n + u || 0 == s && 0 == u || a == t.isDark(o + s, n + u) && i++;}}i > 5 && (r += 3 + i - 5);}}for (o = 0; o < e - 1; o++) {for (n = 0; n < e - 1; n++) {var l = 0;t.isDark(o, n) && l++, t.isDark(o + 1, n) && l++, t.isDark(o, n + 1) && l++, t.isDark(o + 1, n + 1) && l++, 0 != l && 4 != l || (r += 3);}}for (o = 0; o < e; o++) {for (n = 0; n < e - 6; n++) {t.isDark(o, n) && !t.isDark(o, n + 1) && t.isDark(o, n + 2) && t.isDark(o, n + 3) && t.isDark(o, n + 4) && !t.isDark(o, n + 5) && t.isDark(o, n + 6) && (r += 40);}}for (n = 0; n < e; n++) {for (o = 0; o < e - 6; o++) {t.isDark(o, n) && !t.isDark(o + 1, n) && t.isDark(o + 2, n) && t.isDark(o + 3, n) && t.isDark(o + 4, n) && !t.isDark(o + 5, n) && t.isDark(o + 6, n) && (r += 40);}}var h = 0;for (n = 0; n < e; n++) {for (o = 0; o < e; o++) {t.isDark(o, n) && h++;}}return r += 10 * (Math.abs(100 * h / e / e - 50) / 5);} }, QRMath = { glog: function glog(t) {if (t < 1) throw new Error("glog(" + t + ")");return QRMath.LOG_TABLE[t];}, gexp: function gexp(t) {for (; t < 0;) {t += 255;}for (; t >= 256;) {t -= 255;}return QRMath.EXP_TABLE[t];}, EXP_TABLE: new Array(256), LOG_TABLE: new Array(256) }, i = 0; i < 8; i++) {QRMath.EXP_TABLE[i] = 1 << i;}for (i = 8; i < 256; i++) {QRMath.EXP_TABLE[i] = QRMath.EXP_TABLE[i - 4] ^ QRMath.EXP_TABLE[i - 5] ^ QRMath.EXP_TABLE[i - 6] ^ QRMath.EXP_TABLE[i - 8];}for (i = 0; i < 255; i++) {QRMath.LOG_TABLE[QRMath.EXP_TABLE[i]] = i;}function QRPolynomial(t, e) {if (void 0 == t.length) throw new Error(t.length + "/" + e);for (var r = 0; r < t.length && 0 == t[r];) {r++;}this.num = new Array(t.length - r + e);for (var o = 0; o < t.length - r; o++) {this.num[o] = t[o + r];}}function QRRSBlock(t, e) {this.totalCount = t, this.dataCount = e;}function QRBitBuffer() {this.buffer = new Array(), this.length = 0;}function utf16to8(t) {var e, r, o, n;for (e = "", o = t.length, r = 0; r < o; r++) {(n = t.charCodeAt(r)) >= 1 && n <= 127 ? e += t.charAt(r) : n > 2047 ? (e += String.fromCharCode(224 | n >> 12 & 15), e += String.fromCharCode(128 | n >> 6 & 63), e += String.fromCharCode(128 | n >> 0 & 63)) : (e += String.fromCharCode(192 | n >> 6 & 31), e += String.fromCharCode(128 | n >> 0 & 63));}return e;}function drawQrcode(t) {t = t || {}, (t = extend(!0, { width: 256, height: 256, x: 0, y: 0, typeNumber: -1, correctLevel: QRErrorCorrectLevel.H, background: "#ffffff", foreground: "#000000", image: { imageResource: "", dx: 0, dy: 0, dWidth: 100, dHeight: 100 } }, t)).canvasId || t.ctx ? function () {var e,r = new QRCode(t.typeNumber, t.correctLevel);r.addData(utf16to8(t.text)), r.make(), e = t.ctx ? t.ctx : t._this ? wx.createCanvasContext && wx.createCanvasContext(t.canvasId, t._this) : wx.createCanvasContext && wx.createCanvasContext(t.canvasId);for (var o = t.width / r.getModuleCount(), n = t.height / r.getModuleCount(), i = 0; i < r.getModuleCount(); i++) {for (var a = 0; a < r.getModuleCount(); a++) {var s = r.isDark(i, a) ? t.foreground : t.background;e.setFillStyle(s);var u = Math.ceil((a + 1) * o) - Math.floor(a * o),l = Math.ceil((i + 1) * o) - Math.floor(i * o);e.fillRect(Math.round(a * o) + t.x, Math.round(i * n) + t.y, u, l);}}t.image.imageResource && e.drawImage(t.image.imageResource, t.image.dx, t.image.dy, t.image.dWidth, t.image.dHeight);e.draw(!1, function (e) {t.callback && t.callback(e);});}() : console.warn("please set canvasId or ctx!");}QRPolynomial.prototype = { get: function get(t) {return this.num[t];}, getLength: function getLength() {return this.num.length;}, multiply: function multiply(t) {for (var e = new Array(this.getLength() + t.getLength() - 1), r = 0; r < this.getLength(); r++) {for (var o = 0; o < t.getLength(); o++) {e[r + o] ^= QRMath.gexp(QRMath.glog(this.get(r)) + QRMath.glog(t.get(o)));}}return new QRPolynomial(e, 0);}, mod: function mod(t) {if (this.getLength() - t.getLength() < 0) return this;for (var e = QRMath.glog(this.get(0)) - QRMath.glog(t.get(0)), r = new Array(this.getLength()), o = 0; o < this.getLength(); o++) {r[o] = this.get(o);}for (o = 0; o < t.getLength(); o++) {r[o] ^= QRMath.gexp(QRMath.glog(t.get(o)) + e);}return new QRPolynomial(r, 0).mod(t);} }, QRRSBlock.RS_BLOCK_TABLE = [[1, 26, 19], [1, 26, 16], [1, 26, 13], [1, 26, 9], [1, 44, 34], [1, 44, 28], [1, 44, 22], [1, 44, 16], [1, 70, 55], [1, 70, 44], [2, 35, 17], [2, 35, 13], [1, 100, 80], [2, 50, 32], [2, 50, 24], [4, 25, 9], [1, 134, 108], [2, 67, 43], [2, 33, 15, 2, 34, 16], [2, 33, 11, 2, 34, 12], [2, 86, 68], [4, 43, 27], [4, 43, 19], [4, 43, 15], [2, 98, 78], [4, 49, 31], [2, 32, 14, 4, 33, 15], [4, 39, 13, 1, 40, 14], [2, 121, 97], [2, 60, 38, 2, 61, 39], [4, 40, 18, 2, 41, 19], [4, 40, 14, 2, 41, 15], [2, 146, 116], [3, 58, 36, 2, 59, 37], [4, 36, 16, 4, 37, 17], [4, 36, 12, 4, 37, 13], [2, 86, 68, 2, 87, 69], [4, 69, 43, 1, 70, 44], [6, 43, 19, 2, 44, 20], [6, 43, 15, 2, 44, 16], [4, 101, 81], [1, 80, 50, 4, 81, 51], [4, 50, 22, 4, 51, 23], [3, 36, 12, 8, 37, 13], [2, 116, 92, 2, 117, 93], [6, 58, 36, 2, 59, 37], [4, 46, 20, 6, 47, 21], [7, 42, 14, 4, 43, 15], [4, 133, 107], [8, 59, 37, 1, 60, 38], [8, 44, 20, 4, 45, 21], [12, 33, 11, 4, 34, 12], [3, 145, 115, 1, 146, 116], [4, 64, 40, 5, 65, 41], [11, 36, 16, 5, 37, 17], [11, 36, 12, 5, 37, 13], [5, 109, 87, 1, 110, 88], [5, 65, 41, 5, 66, 42], [5, 54, 24, 7, 55, 25], [11, 36, 12], [5, 122, 98, 1, 123, 99], [7, 73, 45, 3, 74, 46], [15, 43, 19, 2, 44, 20], [3, 45, 15, 13, 46, 16], [1, 135, 107, 5, 136, 108], [10, 74, 46, 1, 75, 47], [1, 50, 22, 15, 51, 23], [2, 42, 14, 17, 43, 15], [5, 150, 120, 1, 151, 121], [9, 69, 43, 4, 70, 44], [17, 50, 22, 1, 51, 23], [2, 42, 14, 19, 43, 15], [3, 141, 113, 4, 142, 114], [3, 70, 44, 11, 71, 45], [17, 47, 21, 4, 48, 22], [9, 39, 13, 16, 40, 14], [3, 135, 107, 5, 136, 108], [3, 67, 41, 13, 68, 42], [15, 54, 24, 5, 55, 25], [15, 43, 15, 10, 44, 16], [4, 144, 116, 4, 145, 117], [17, 68, 42], [17, 50, 22, 6, 51, 23], [19, 46, 16, 6, 47, 17], [2, 139, 111, 7, 140, 112], [17, 74, 46], [7, 54, 24, 16, 55, 25], [34, 37, 13], [4, 151, 121, 5, 152, 122], [4, 75, 47, 14, 76, 48], [11, 54, 24, 14, 55, 25], [16, 45, 15, 14, 46, 16], [6, 147, 117, 4, 148, 118], [6, 73, 45, 14, 74, 46], [11, 54, 24, 16, 55, 25], [30, 46, 16, 2, 47, 17], [8, 132, 106, 4, 133, 107], [8, 75, 47, 13, 76, 48], [7, 54, 24, 22, 55, 25], [22, 45, 15, 13, 46, 16], [10, 142, 114, 2, 143, 115], [19, 74, 46, 4, 75, 47], [28, 50, 22, 6, 51, 23], [33, 46, 16, 4, 47, 17], [8, 152, 122, 4, 153, 123], [22, 73, 45, 3, 74, 46], [8, 53, 23, 26, 54, 24], [12, 45, 15, 28, 46, 16], [3, 147, 117, 10, 148, 118], [3, 73, 45, 23, 74, 46], [4, 54, 24, 31, 55, 25], [11, 45, 15, 31, 46, 16], [7, 146, 116, 7, 147, 117], [21, 73, 45, 7, 74, 46], [1, 53, 23, 37, 54, 24], [19, 45, 15, 26, 46, 16], [5, 145, 115, 10, 146, 116], [19, 75, 47, 10, 76, 48], [15, 54, 24, 25, 55, 25], [23, 45, 15, 25, 46, 16], [13, 145, 115, 3, 146, 116], [2, 74, 46, 29, 75, 47], [42, 54, 24, 1, 55, 25], [23, 45, 15, 28, 46, 16], [17, 145, 115], [10, 74, 46, 23, 75, 47], [10, 54, 24, 35, 55, 25], [19, 45, 15, 35, 46, 16], [17, 145, 115, 1, 146, 116], [14, 74, 46, 21, 75, 47], [29, 54, 24, 19, 55, 25], [11, 45, 15, 46, 46, 16], [13, 145, 115, 6, 146, 116], [14, 74, 46, 23, 75, 47], [44, 54, 24, 7, 55, 25], [59, 46, 16, 1, 47, 17], [12, 151, 121, 7, 152, 122], [12, 75, 47, 26, 76, 48], [39, 54, 24, 14, 55, 25], [22, 45, 15, 41, 46, 16], [6, 151, 121, 14, 152, 122], [6, 75, 47, 34, 76, 48], [46, 54, 24, 10, 55, 25], [2, 45, 15, 64, 46, 16], [17, 152, 122, 4, 153, 123], [29, 74, 46, 14, 75, 47], [49, 54, 24, 10, 55, 25], [24, 45, 15, 46, 46, 16], [4, 152, 122, 18, 153, 123], [13, 74, 46, 32, 75, 47], [48, 54, 24, 14, 55, 25], [42, 45, 15, 32, 46, 16], [20, 147, 117, 4, 148, 118], [40, 75, 47, 7, 76, 48], [43, 54, 24, 22, 55, 25], [10, 45, 15, 67, 46, 16], [19, 148, 118, 6, 149, 119], [18, 75, 47, 31, 76, 48], [34, 54, 24, 34, 55, 25], [20, 45, 15, 61, 46, 16]], QRRSBlock.getRSBlocks = function (t, e) {var r = QRRSBlock.getRsBlockTable(t, e);if (void 0 == r) throw new Error("bad rs block @ typeNumber:" + t + "/errorCorrectLevel:" + e);for (var o = r.length / 3, n = new Array(), i = 0; i < o; i++) {for (var a = r[3 * i + 0], s = r[3 * i + 1], u = r[3 * i + 2], l = 0; l < a; l++) {n.push(new QRRSBlock(s, u));}}return n;}, QRRSBlock.getRsBlockTable = function (t, e) {switch (e) {case QRErrorCorrectLevel.L:return QRRSBlock.RS_BLOCK_TABLE[4 * (t - 1) + 0];case QRErrorCorrectLevel.M:return QRRSBlock.RS_BLOCK_TABLE[4 * (t - 1) + 1];case QRErrorCorrectLevel.Q:return QRRSBlock.RS_BLOCK_TABLE[4 * (t - 1) + 2];case QRErrorCorrectLevel.H:return QRRSBlock.RS_BLOCK_TABLE[4 * (t - 1) + 3];default:return;}}, QRBitBuffer.prototype = { get: function get(t) {var e = Math.floor(t / 8);return 1 == (this.buffer[e] >>> 7 - t % 8 & 1);}, put: function put(t, e) {for (var r = 0; r < e; r++) {this.putBit(1 == (t >>> e - r - 1 & 1));}}, getLengthInBits: function getLengthInBits() {return this.length;}, putBit: function putBit(t) {var e = Math.floor(this.length / 8);this.buffer.length <= e && this.buffer.push(0), t && (this.buffer[e] |= 128 >>> this.length % 8), this.length++;} };var _default = drawQrcode;exports.default = _default;
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\date.js":
 /*!********************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI2.0/jsTools/date.js ***!
@@ -13443,12 +13459,45 @@ function _default(list) {
         return false;
       }
     }
-  } else {
-    this.Toast('请添加规格');
-    return false;
   }
 
   return true;
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\deleteNullData.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/deleteNullData.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(data) {
+  this.closePageLoading();
+  delete data.goods_id;
+  delete data['data[goods][virtual_card_id]'];
+  delete data['data[goods][auto_warehouse_time]'];
+  delete data['data[goods][putaway_time]'];
+  var res = true;
+  if (!data['data[goods][title]']) {
+    this.Toast('请填写商品名称');
+    res = false;
+  } else if (!data['data[goods][thumb]']) {
+    this.Toast('请填写主图');
+    res = false;
+  } else if (!data['data[goods][thumbs][0]']) {
+    this.Toast('请填写轮播图');
+    res = false;
+  } else if (!data['data[goods][price]'] * 1) {
+    this.Toast('请填写售卖价格');
+    res = false;
+  } else if (data['data[goods][stock]'] === '') {
+    this.Toast('请填写商品库存');
+    res = false;
+  }
+  return res && data;
 }
 
 /***/ }),
@@ -13568,7 +13617,7 @@ function goodData(data) {//单规格商品
         editable: 'image' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
       swiperList: {
-        label: '',
+        label: '轮播图',
         list: data.goods.thumbs.map(function (item) {return {
             img: item.replace(reg, '') };}),
 
@@ -13594,6 +13643,16 @@ function goodData(data) {//单规格商品
         id: '',
         value: '价格、库存',
         list: (data.options || []).map(function (item) {
+          var other = {
+            display_order: item.display_order,
+            goods_id: item.goods_id,
+            sales: item.sales,
+            shop_id: item.shop_id,
+            stock_warning: item.stock_warning,
+            thumb: item.thumb,
+            virtual_card_id: item.virtual_card_id,
+            weight: item.weight };
+
           return {
             specif: {
               label: '规格',
@@ -13624,6 +13683,7 @@ function goodData(data) {//单规格商品
               disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
               editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
+            other: other,
             specsId: item.specs,
             disabled: !!data.goods.activity_goods //活动期间
           };
@@ -13729,7 +13789,7 @@ function goodData(data) {//单规格商品
         value: data.goods.dispatch_price,
         dispatch_list: data.dispatch_list,
         dispatch_id: data.goods.dispatch_id || 0,
-        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0],
+        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0] || '统一运费（元）',
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -13774,7 +13834,7 @@ function goodData(data) {//单规格商品
       sale: {
         label: '销量',
         id: '',
-        value: 0,
+        value: data.goods.sales_count,
         goodsId: data.goods.id,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13786,7 +13846,6 @@ function goodData(data) {//单规格商品
 }
 function addGoodsModel(data) {
   var dataModel = goodData.call(this, data);
-  console.log(data);
   dataModel.info1.goodType.disabled = false;
   dataModel.info2.specification.disabled = false;
   dataModel.info2.specification.type = 'add';
@@ -13806,153 +13865,131 @@ function addGoodsModel(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 
-var goodModel = {//商品编辑模板数据
-};
-
+var goodModel = {}; //商品编辑模板数据
 
 function mapOptions(data, cache) {
-  var options = (cache.options || []).map(function (item, index) {
-    var tmp = data.info2.specification.list;
-    var obj = {};
-    if (tmp[index].specif.goodsId == item.goods_id) {
-      obj = tmp[index];
-    } else {
-      for (var i = 0; i < tmp.length; i++) {
-        if (tmp[i].specif.goodsId == item.goods_id) {
-          obj = tmp[i];
-          break;
-        }
-      }
-    };
-    return Object.assign({}, item, {
-      goods_code: obj.code.value, //
-      price: obj.price.value, //
-      stock: obj.stock.value //
-    });
+  var options = data.info2.childrenSpecs.list.map(function (item, index) {
+    return _objectSpread({
+      goods_code: item.code.value, //
+      price: item.price.value, //
+      stock: item.stock.value, //
+      id: item.specif.id,
+      title: item.specif.value,
+      specs: item.specsId,
+      stock_warning: 0,
+      weight: 0 },
+    item.other);
+
   });
   return options;
+}
+
+function mapSpecs(data, cache) {
+  var newSpecs = data.info2.specification.list;
+  return newSpecs;
 }
 
 function mapGoods(data, cache) {
 
   var goods = {
-    title: data.info1.goodName.value,
-    sub_title: data.info1.subTitle.value,
-    category_ids: data.info1.classification.goodTypes.map(function (item) {
+    id: '',
+    type: data.info1.goodType.type, //商品类型
+    title: data.info1.goodName.value, //商品名称
+    sub_title: data.info1.subTitle.value, //商品副标题
+    category_ids: data.info1.classification.goodTypes.map(function (item) {//商品分类
       return item.id;
     }).join(','),
-    thumb: data.info1.mainImage.list[0].img,
-    thumbs: data.info1.swiperList.list.map(function (item) {
+    thumb: data.info1.mainImage.list[0] && data.info1.mainImage.list[0].img || '', //主图
+    thumbs: data.info1.swiperList.list.map(function (item) {//轮播图
       return item.img;
     }),
     virtual_card_id: data.info2.cardStock.id,
-    price: data.info2.price.value,
-    original_price: data.info2.delPrice.value,
-    stock: data.info2.stockNum.value,
-    stock_hide: data.info2.showStock.value ? 0 : 1,
-    sales_count: data.info2.soldNum.value,
-    sales_hide: data.info2.showSold.value ? 0 : 1,
-    goods_code: data.info3.goodCode.value,
-    auto_delivery: data.info3.autoDeliver.value ? 1 : 0,
-    auto_delivery_content: data.info3.autoDeliverContent.value,
-    dispatch_price: data.info3.provideCost.value,
-    dispatch_hide: data.info3.showProCost.value ? 0 : 1,
-    is_discount: data.info3.joinCount.value ? 1 : 0,
-    form_id: data.info3.goodForm.id || 0,
-    status: data.info4.status.id,
-    putaway_time: data.info4.status.putaway_time,
-    auto_warehouse: data.info3.autoExt.value ? 1 : 0,
-    auto_warehouse_time: data.info3.autoExtTime.value };
+    has_option: data.info2.specification.value == '多规格' ? 1 : 0, //商品规格
+    activity_goods: 0, //活动商品 0不是 1是
+    price: data.info2.price.value, //售卖价格
+    original_price: data.info2.delPrice.value || 0, //划线价格
+    stock: data.info2.stockNum.value, //商品库存
+    stock_hide: data.info2.showStock.value ? 0 : 1, //显示库存
+    sales_count: data.info2.soldNum.value || 0, //已出售数
+    sales_hide: data.info2.showSold.value ? 0 : 1, //显示销量
+    goods_code: data.info3.goodCode.value, //商品编码
+    auto_warehouse: data.info3.autoExt.value ? 1 : 0, //定时下架
+    auto_warehouse_time: data.info3.autoExtTime.value, //定时下架时间
+    auto_delivery: data.info3.autoDeliver.value ? 1 : 0, //自动发货
+    auto_delivery_content: data.info3.autoDeliverContent.value, //自动发货内容
+    dispatch_price: data.info3.provideCost.value || 0, //快递运费
+    dispatch_id: data.info3.provideCost.dispatch_id, ////运费模板id
+    dispatch_type: data.info3.provideCost.dispatch_id == -1 ? 1 : 0, //// 运费方式 0 运费模板 1 统一运费
+    dispatch_hide: data.info3.showProCost.value ? 0 : 1, //显示快递
+    is_discount: data.info3.joinCount.value ? 1 : 0, //参与会员折扣
+    form_id: data.info3.goodForm.id || 0, //商品表单
+    status: data.info4.status.id, //状态
+    putaway_time: data.info4.status.putaway_time, //销量
+    content: '<p>暂无</p>',
+    stock_warning: 0 };
 
-  console.log('goods', goods);
+
   return goods;
 
 
 }
 function _default(data, cache) {
 
-  var specs = cache.specs || '';
+  var specs = mapSpecs(data, cache);
   var goods = cache.goods;
   goodModel = { //商品编辑模板数据
     'goods_id': cache.goods.id,
     data: {
-      specs: specs,
+      // specs: specs,
+      specs_json: JSON.stringify(specs),
       goods: Object.assign({
-        auto_complete: '',
+        auto_complete: '0',
         auto_complete_content: "",
-        auto_delivery: '',
+        auto_delivery: '1',
         auto_delivery_content: "",
         auto_warehouse: '',
         category_ids: '',
         content: '',
         create_time: '',
-        delete_time: '',
         dispatch_hide: '',
         dispatch_id: '',
         dispatch_price: '',
         dispatch_type: '',
-        display_order: '',
         form_id: '',
         goods_code: "",
         has_option: '',
         id: '',
-        is_buy_num_limit: '',
-        is_delivery_pay: '',
-        is_discount: '',
-        is_free_dispatch: '',
-        is_invoice_support: '',
-        is_join_commission: '',
-        is_join_member_price: '',
-        is_refund_support: '',
-        max_buy_once: '',
-        max_buy_total: '',
-        max_price: '',
-        min_buy: '',
-        min_price: '',
-        original_price: '',
-        params_id: '',
-        params_img: "",
-        params_type: '',
-        price: '',
-        product_sn: "",
+        is_buy_num_limit: 0,
+        is_delivery_pay: 0,
+        is_discount: 1,
+        is_free_dispatch: 0,
+        is_invoice_support: 0,
+        max_buy_once: 0,
+        max_buy_total: 0,
+        min_buy: 0,
+        original_price: 0,
+        params_id: 0,
         sales_count: '',
         sales_hide: '',
-        school_ids: "",
-        selling_object: '',
-        sellout_time: '',
-        shop_id: '',
         short_title: "",
         single_row_thumb: "",
         status: '',
         stock: '',
-        stock_cnf: '',
-        stock_hide: '',
-        stock_warning: '',
         sub_title: "",
-        template_id: '',
         thumb: '',
         thumbs: [],
-        thumbs_ratio: "",
         title: '',
         type: '',
-        unit: "",
-        video: "",
-        video_thumb: "",
-        view_count: '',
-        virtual_card_id: '',
-        virtual_sales: '',
-        volume: '',
-        weight: '' },
+        virtual_sales: 0,
+        weight: 0 },
       goods, mapGoods(data, cache)),
-      options: mapOptions(data, cache) } };
+      // options: mapOptions(data, cache),
+      options_json: JSON.stringify(mapOptions(data, cache)) } };
 
 
-
-
-  console.log(goodModel);
   return (0, _ajaxDataFormater.flatten)(goodModel);
 }
 
@@ -13966,54 +14003,48 @@ function _default(data, cache) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var cacheResult = '';
-function _default(data) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(data) {
   var that = this;
+  return new Promise(function (resolve, reject) {
+    that.Request('beforeAddGoods', {}).then(function (res) {
 
-  if (cacheResult) {
-    return cacheResult;
-  } else {
-    return new Promise(function (resolve, reject) {
-      that.Request('beforeAddGoods', {}).then(function (res) {
+      if (res.error == 0) {
+        res.goods.type = data.typeId || 1; //1'实体商品', 2'虚拟物品', 3'电子卡密',
+        res.goods.id = 1;
+        res.goods.virtual_card_id = '';
+        res.goods.title = '';
+        res.goods.sub_title = '';
+        res.goods.thumb = '';
+        res.goods.thumbs = [];
+        res.goods.has_option = 0;
+        res.goods.price = '';
+        res.goods.original_price = '';
+        res.goods.stock = '';
+        res.goods.stock_hide = '';
+        res.goods.sales_count = '';
+        res.goods.sales_hide = 0;
+        res.goods.goods_code = '';
+        res.goods.auto_warehouse = 1;
+        res.goods.auto_warehouse_time = '';
+        res.goods.auto_delivery = 1;
+        res.goods.auto_delivery_content = '';
+        res.goods.dispatch_price = '';
+        res.goods.dispatch_hide = 0;
+        res.goods.is_discount = 1;
+        res.goods.form_id = 0;
+        res.goods.status = 1;
+        res.goods.putaway_time = '';
+        console.log('mock', res, data);
+        resolve(res);
 
-        if (res.error == 0) {
-          res.goods.type = data.typeId || 1; //1'实体商品', 2'虚拟物品', 3'电子卡密',
-          res.goods.id = '';
-          res.goods.virtual_card_id = '';
-          res.goods.title = '';
-          res.goods.sub_title = '';
-          res.goods.thumb = '';
-          res.goods.thumbs = [];
-          res.goods.has_option = 0;
-          res.goods.price = '';
-          res.goods.original_price = '';
-          res.goods.stock = '';
-          res.goods.stock_hide = '';
-          res.goods.sales_count = '';
-          res.goods.sales_hide = 0;
-          res.goods.goods_code = '';
-          res.goods.auto_warehouse = 1;
-          res.goods.auto_warehouse_time = '';
-          res.goods.auto_delivery = 1;
-          res.goods.auto_delivery_content = '';
-          res.goods.dispatch_price = '';
-          res.goods.dispatch_hide = 0;
-          res.goods.is_discount = 1;
-          res.goods.form_id = 0;
-          res.goods.status = 1;
-          res.goods.putaway_time = '';
-          cacheResult = res;
-          console.log('mock', res, data);
-          resolve(res);
-
-        } else {
-          reject(res);
-        }
-      }).catch(function (res) {
+      } else {
         reject(res);
-      });
+      }
+    }).catch(function (res) {
+      reject(res);
     });
-  }
+  });
+
 
 }
 
@@ -14150,6 +14181,7 @@ function addGoodType(old, list) {//添加修改子规格
   var len = old.length;
   var types = allTypeCombination.map(function (item) {//生成新的childrenSpecs.list
     var tmp = {
+      other: {},
       specsId: '',
       specif: {
         label: '规格',
@@ -14184,10 +14216,10 @@ function addGoodType(old, list) {//添加修改子规格
     for (var i = 0; i < old.length; i++) {
       if (old[i].specsId == item.id) {
         tmp = old[i];
-
       }
     }
     return {
+      other: tmp.other || {},
       specsId: item.id,
       specif: {
         label: '规格',
@@ -14273,7 +14305,7 @@ function _default(val, cacheGoodDetail) {
   } else if (val.label == '定时下架时间') {
     cacheGoodDetail.info3.autoExtTime.value = val.value;
   } else if (val.label == '快递运费') {
-    cacheGoodDetail.info3.provideCost.value = val.info.label;
+    cacheGoodDetail.info3.provideCost.value = val.info.subValue * 1;
     cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
     cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label;
   } else if (val.label == '商品表单') {
@@ -14793,29 +14825,42 @@ function _default()
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(that, downloadUrl) {
+
   function downloadFile() {
-    that.Toast("开始下载图片");
-    uni.downloadFile({
-      url: downloadUrl,
-      success: function success(res) {
-        // 保存图片到系统相册  
-        uni.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,
-          success: function success(res) {
-            that.Toast({
-              title: '保存成功' });
 
-          },
-          fail: function fail(res) {
-            that.Toast({
-              title: '保存失败' });
+    if (/^http.+/.test(downloadUrl)) {//网络图片
+      uni.downloadFile({
+        url: downloadUrl,
+        success: function success(res) {
+          // 保存图片到系统相册  
+          uni.saveImageToPhotosAlbum({
+            filePath: res.tempFilePath,
+            success: function success(res) {
+              that.Toast('保存成功');
+            },
+            fail: function fail(res) {
+              that.Toast('保存失败');
+            } });
 
-          } });
+        },
+        fail: function fail(res) {
+          that.Toast("下载图片失败");
+        } });
 
-      },
-      fail: function fail(res) {
-        that.Toast("下载图片失败");
-      } });
+    } else {//本地图片
+      // 保存图片到系统相册   
+      uni.saveImageToPhotosAlbum({
+        filePath: downloadUrl,
+        success: function success(res) {
+          that.Toast('保存成功');
+        },
+        fail: function fail(res) {
+          that.Toast('保存失败');
+        } });
+
+    }
+
+
 
   }
 
@@ -14843,10 +14888,8 @@ function _default()
             // 用户拒绝了授权  
             // 打开设置页面  
             uni.openSetting({
-              success: function success(data) {
-              },
-              fail: function fail(data) {
-              } });
+              success: function success(data) {},
+              fail: function fail(data) {} });
 
           } });
 

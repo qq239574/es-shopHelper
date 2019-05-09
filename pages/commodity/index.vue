@@ -5,7 +5,10 @@
             <TabCard :categories='categories' @tabChange='tabChange'></TabCard>
         </view>
         <view class='margin180'></view>
-        <Card @click='clickGood' @shareGoodInfo='shareGoodInfo' :userChannels='userChannels' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'></Card>
+        <Card @click='clickGood' @shareGoodInfo='shareGoodInfo' :userChannels='userChannels' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'>
+            <!-- 生成二维码的方法再Card组件内部，因为canvas在组件内无效 -->
+            <canvas style="width: 200px; height: 200px;background:#fff;" id='myQrcode' canvas-id="myQrcode"></canvas>
+        </Card>
         <nodata type='noresult' tip='没有搜索到相关商品' v-if='!searching&&!goodsList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -29,7 +32,7 @@
     </div>
 </template>
 
-<script>
+<script> 
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import Card from './index/goodsList.vue';
@@ -97,15 +100,14 @@
                     go: 'editGood'
                 }
                 this.Cacher.setData('good', {
-                    from: 'addGoods', 
+                    from: 'addGoods',
                 });
                 uni.navigateTo({
                     url: '../../pagesCommodity/pages/index?from=good'
                 })
             },
             shareGoodInfo(good) {
-                needShare = good;
-                console.log('shareGoodInfo', good)
+                needShare = good; 
             },
             handleChange(obj) {
                 let {
@@ -245,7 +247,7 @@
         },
         onShareAppMessage(res) { //分享事件
             if (res.from === 'button') { // 来自页面内分享按钮  
-                let encode = encodeURIComponent(needShare[res.target.id]);
+                let encode = encodeURIComponent(needShare['shareByH5']);
                 return {
                     title: needShare.detail.goodName,
                     path: '/pagesCommodity/pages/webViewPage?url=' + encode || '',
@@ -268,7 +270,7 @@
         bottom: 36upx;
         right: 24upx;
         background: #fd6b3e;
-        box-shadow: 0 0 20upx 0 rgba(0,0,0,.35);
+        box-shadow: 0 0 20upx 0 rgba(0, 0, 0, .35);
         color: #fff;
         .addWord,
         .addIcon {

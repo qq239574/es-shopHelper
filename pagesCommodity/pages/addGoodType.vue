@@ -8,7 +8,7 @@
             +添加规格
         </view>
         <view class='maxLength' v-else>*最多添加3个规格</view>
-        <view class="footer" v-if='(list[0]&&!list[0].disabled)'>
+        <view class="footer" v-if='!list[0]||(list[0]&&!list[0].disabled)'>
             <longButton @click='sure'>确认</longButton>
         </view>
         <van-toast id="van-toast" />

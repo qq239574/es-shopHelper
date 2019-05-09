@@ -54,7 +54,10 @@
 
 
 
-var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};
+
+
+var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));
+var _weappQrcodeEsm = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/weapp.qrcode.esm.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\weapp.qrcode.esm.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};
 var cacheGood = {};
 var shareInfo = {}; //分享商品信息
 var shareData = {}; //
@@ -116,8 +119,19 @@ var _default2 = {
         // uni.showShareMenu({
         //     title: 'ES业务系统小程序'
         // })
-      } else if (val.type == 'save') {
-        (0, _savePicToAlbum.default)(this, val.info.img); //保存图片至相册
+      } else if (val.type == 'save') {//保存二维码到相册
+        uni.canvasToTempFilePath({
+          x: 0,
+          y: 0,
+          width: 200,
+          height: 200,
+          destWidth: 200,
+          destHeight: 200,
+          canvasId: 'myQrcode',
+          success: function success(res) {
+            (0, _savePicToAlbum.default)(that, res.tempFilePath); //保存图片至相册 
+          } });
+
       }
     },
     closeAll: function closeAll() {
@@ -160,35 +174,29 @@ var _default2 = {
         this.$emit('click', val);
       }
     },
-    clickModel: function clickModel(val1, val2) {var _this2 = this;
+    clickModel: function clickModel(val1, val2) {
       var that = this;
       this.pageLoading();
-      if (val1 == '小程序') {
-        if (val2 == '微信好友') {//分享事件onShareAppMessage
-        } else if (val2 == '二维码海报') {
-          this.posteInfo = {
-            img: '/static/img/temp/poster.jpg',
-            type: 'mini' //mini:小程序，h5: H5
-          };
+      if (val1 == '小程序') {} else if (val1 == 'h5') {
+        if (val2 == '微信好友') {} else if (val2 == '二维码') {
           this.showPoster = !this.showPoster;
-        }
-      } else if (val1 == 'h5') {
-        if (val2 == '微信好友') {
-          console.log('share by ', val1, val2);
-        } else if (val2 == '二维码海报') {
-          this.Request('goodPoster', {
-            goods_id: cacheGood.detail.goodId }).
-          then(function (res) {
-            if (res.error == 0) {
-              _this2.showPoster = !_this2.showPoster;
-              _this2.posteInfo = {
-                img: res.qrcode_url,
-                type: 'h5' //mini:小程序，h5: H5
-              };
-            }
-          }).catch(function (res) {
-            _this2.Toast(res.message);
-          });
+          var ctx = uni.createCanvasContext('myQrcode');
+          (0, _weappQrcodeEsm.default)({ //二维码生成
+            width: 200,
+            height: 200,
+            canvasId: 'myQrcode',
+            ctx: ctx,
+            text: shareInfo.goods_url,
+            // v1.0.0+版本支持在二维码上绘制图片
+            image: {
+              imageResource: '',
+              dx: 70,
+              dy: 70,
+              dWidth: 60,
+              dHeight: 60 },
+
+            callback: function callback() {} });
+
         } else if (val2 == '复制链接') {
           if (shareInfo.goods_url) {
             uni.setClipboardData({

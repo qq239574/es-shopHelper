@@ -38,16 +38,17 @@
             }
         },
         methods: {
-            initPage() { 
+            initPage() {
                 this.list.forEach((item, index) => {
                     if (item.label == DataFrom.needChange.value) {
                         this.defaultIndex = index;
                         DataFrom.needChange = {
                             label: '商品类型',
-                            value: item.label,
+                            value: item.id,
                             from: 'editType',
+                            id: this.list[index].id,
                             other: {
-                                label: '状态',
+                                label: '商品类型',
                                 value: item.label,
                                 id: item.id
                             }
@@ -64,14 +65,14 @@
                         label: '商品类型',
                         value: val.label,
                         other: val,
-                        id:val.id
+                        id: val.id
                     }
                 })
                 cache = val.value;
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from) || {}; 
+            DataFrom = this.Cacher.getData(option.from) || {};
         },
         onShow() {
             this.initPage()

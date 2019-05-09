@@ -55,12 +55,23 @@
 .poster-share .box.data-v-41d87140 {
   overflow: hidden;
   width: 524rpx;
-  height: 838rpx;
+  height: 524rpx;
   position: absolute;
-  top: 20rpx;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   margin: auto;
+  background: #fff;
+}
+.poster-share .box .img-code.data-v-41d87140 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: #fff;
 }
 .poster-share .poster.data-v-41d87140 {
   width: 524rpx;
