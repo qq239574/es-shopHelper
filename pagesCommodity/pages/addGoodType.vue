@@ -8,7 +8,7 @@
             +添加规格
         </view>
         <view class='maxLength' v-else>*最多添加3个规格</view>
-        <view class="footer">
+        <view class="footer" v-if='(list[0]&&!list[0].disabled)'>
             <longButton @click='sure'>确认</longButton>
         </view>
         <van-toast id="van-toast" />
@@ -43,15 +43,20 @@
             sure() {
                 let canSub = checkTypes.call(this, this.list);
                 if (canSub) {
-                    DataFrom.needChange.other.list=this.list;
+                    DataFrom.needChange.other.list = this.list;
                     this.Cacher.setData('addGoodType', DataFrom);
                     uni.navigateBack();
                 }
             },
             delSpec(val) {
-                this.list = this.list.filter(item => {
-                    return val.id != item.id
-                })
+                this.Dialog.confirm({
+                    title: '',
+                    message: '您确认删除此规格吗？'
+                }).then(() => {
+                    this.list = this.list.filter(item => {
+                        return val.id != item.id
+                    })
+                });
             },
             getSpec(val) {
                 this.list = this.list.map(item => {
@@ -76,7 +81,7 @@
             DataFrom = this.Cacher.getData(option.from);
             if (DataFrom) {
                 this.list = DataFrom.needChange.other.list;
-                this.Cacher.setData('addGoodType', DataFrom); 
+                this.Cacher.setData('addGoodType', DataFrom);
             }
         }
     }

@@ -22,6 +22,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
 var DataFrom = {};
 var cacheList = [];var _default =
 {
@@ -64,6 +66,10 @@ var cacheList = [];var _default =
 
   },
   methods: {
+    clickModel: function clickModel() {
+      this.closePageLoading();
+      this.list[0] && this.list[0].disabled && this.Toast('活动商品不可编辑');
+    },
     inputCell: function inputCell(val) {
       var index = val.other.index;
       if (val.label == '价格') {
@@ -76,8 +82,7 @@ var cacheList = [];var _default =
       DataFrom.needChange.other.list = cacheList;
       this.Cacher.setData('editMultiCode', DataFrom);
     },
-    clickCell: function clickCell(val) {
-    } },
+    clickCell: function clickCell(val) {} },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
@@ -86,6 +91,7 @@ var cacheList = [];var _default =
       return item;
     });
     this.list = cacheList;
+    console.log('list', this.list);
     this.Cacher.setData('editMultiCode', DataFrom);
   } };exports.default = _default;
 

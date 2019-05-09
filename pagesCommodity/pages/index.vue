@@ -7,6 +7,8 @@
         <goodInfo3 :info='goodDetail.info3' @click='clickCell' @input='inputCell'></goodInfo3>
         <view class="margin20"></view>
         <selectItem :value='goodDetail.info4.status.value' label='状态' @click='clickCell'></selectItem>
+        <view class="margin20"></view>
+        <selectItem :value='goodDetail.info4.sale.value' label='销量' @click='clickCell' v-if='!goodDetail.info4.sale.needHide'></selectItem>
         <view class="padding"></view>
         <view class="footer" v-if='!showpicker'>
             <longButton @click='save'>保存</longButton>
@@ -124,9 +126,10 @@
                 if (DataGo.go) {
                     // DataGo = this.Cacher.getData(DataGo.go);
                 }
-                if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType') {
+                if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
                     this.goodDetail = cacheGoodDetail;
+                    this.Cacher.clearData(DataGo.go )
                 }
             }
         },

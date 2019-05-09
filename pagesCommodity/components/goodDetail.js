@@ -1,8 +1,10 @@
+ import {
+     activeGood
+ } from './updateGoodInfo-items'
  export function goodData(data) { //单规格商品
      let static_resources_domain = this.Cacher.getData('static_resources_domain');
      let reg = new RegExp(static_resources_domain, 'g');
-
-     let typeList = ['实体商品', '虚拟物品', '电子卡密', '预约', '核销']; //商品类型
+     let typeList = ['实体商品', '虚拟商品', '电子卡密', '预约', '核销']; //商品类型
      let goodCateList = data.cate_list.map(item => { //商品一级分类
          return {
              name: item.title,
@@ -56,7 +58,7 @@
      let formList = data.form_list;
      let statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
 
-     return {
+     let info = {
          info1: {
              goodType: {
                  label: '商品类型',
@@ -116,10 +118,13 @@
                  label: '规格类型',
                  id: data.goods.has_option == 0 ? 'single' : 'multi', //是否有多规格
                  value: data.goods.has_option == 0 ? "单规格" : "多规格",
-                 list: (data.specs || []),
+                 list: (data.specs || []).map(item=>{
+                     item.disabled=!!data.goods.activity_goods
+                     return item
+                 }),
                  disabled: true, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转 
-                 type:'edit'
+                 type: 'edit'
              },
              childrenSpecs: { //只在添加商品规格时有效
                  label: '子规格详情',
@@ -139,24 +144,25 @@
                              label: '价格',
                              id: '',
                              value: item.price,
-                             disabled: false, //可否编辑
+                             disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                          },
                          stock: {
                              label: '库存',
                              id: '',
                              value: item.stock,
-                             disabled: false, //可否编辑
+                             disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                          },
                          code: {
                              label: '商品编号',
                              id: '',
                              value: item.goods_code,
-                             disabled: false, //可否编辑
+                             disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                          },
-                         specsId:item.specs
+                         specsId: item.specs,
+                         disabled:!!data.goods.activity_goods,//活动期间
                      }
                  }),
                  disabled: false, //可否编辑
@@ -259,6 +265,8 @@
                  id: '',
                  value: data.goods.dispatch_price,
                  dispatch_list: data.dispatch_list,
+                 dispatch_id: data.goods.dispatch_id || 0,
+                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0],
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                  needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -299,15 +307,27 @@
                  putaway_time: data.goods.putaway_time,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+             },
+             sale: {
+                 label: '销量',
+                 id: '',
+                 value: 0,
+                 goodsId: data.goods.id,
+                 disabled: false, //可否编辑
+                 editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide: false
              }
          },
      }
+     return info;
  }
  export function addGoodsModel(data) {
      let dataModel = goodData.call(this, data);
+     console.log(data)
      dataModel.info1.goodType.disabled = false;
      dataModel.info2.specification.disabled = false;
      dataModel.info2.specification.type = 'add';
+     dataModel.info4.sale.needHide = true;
      return dataModel;
 
 

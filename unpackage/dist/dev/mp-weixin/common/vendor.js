@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10619,7 +10619,7 @@ var postSelfVerifyInfo = { //订单自提
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.addGoods = exports.beforeAddGoods = exports.getChannels = exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
+Object.defineProperty(exports, "__esModule", { value: true });exports.getMultiGoodSale = exports.addGoods = exports.beforeAddGoods = exports.getChannels = exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
   url: '/shop/manage/goods/list',
   data: {
     status: 1,
@@ -10827,6 +10827,16 @@ var addGoods = { //管理端商品添加
 
 
   type: 'post' };exports.addGoods = addGoods;
+
+var getMultiGoodSale = { //获取多规格商品
+  url: '/shop/manage/goods/get-option',
+  data: {
+    goods_id: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.getMultiGoodSale = getMultiGoodSale;
 
 /***/ }),
 
@@ -12652,6 +12662,23 @@ createPage(_editSubTitle.default);
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditType\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditType"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _editType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editType.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_editType.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2Findex\"}":
 /*!*******************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2Findex"} ***!
@@ -12716,6 +12743,23 @@ createPage(_setFreight.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _setTotalFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setTotalFreight.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\setTotalFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_setTotalFreight.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FshowGoodSale\"}":
+/*!**************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FshowGoodSale"} ***!
+  \**************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _showGoodSale = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/showGoodSale.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\showGoodSale.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_showGoodSale.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
@@ -13417,11 +13461,13 @@ function _default(list) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;function goodData(data) {//单规格商品
+Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;var _updateGoodInfoItems = __webpack_require__(/*! ./updateGoodInfo-items */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js");
+
+
+function goodData(data) {//单规格商品
   var static_resources_domain = this.Cacher.getData('static_resources_domain');
   var reg = new RegExp(static_resources_domain, 'g');
-
-  var typeList = ['实体商品', '虚拟物品', '电子卡密', '预约', '核销']; //商品类型
+  var typeList = ['实体商品', '虚拟商品', '电子卡密', '预约', '核销']; //商品类型
   var goodCateList = data.cate_list.map(function (item) {//商品一级分类
     return {
       name: item.title,
@@ -13475,7 +13521,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
   var formList = data.form_list;
   var statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
 
-  return {
+  var info = {
     info1: {
       goodType: {
         label: '商品类型',
@@ -13535,7 +13581,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         label: '规格类型',
         id: data.goods.has_option == 0 ? 'single' : 'multi', //是否有多规格
         value: data.goods.has_option == 0 ? "单规格" : "多规格",
-        list: data.specs || [],
+        list: (data.specs || []).map(function (item) {
+          item.disabled = !!data.goods.activity_goods;
+          return item;
+        }),
         disabled: true, //可否编辑
         editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转 
         type: 'edit' },
@@ -13558,25 +13607,26 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
               label: '价格',
               id: '',
               value: item.price,
-              disabled: false, //可否编辑
+              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
               editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
             stock: {
               label: '库存',
               id: '',
               value: item.stock,
-              disabled: false, //可否编辑
+              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
               editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
             code: {
               label: '商品编号',
               id: '',
               value: item.goods_code,
-              disabled: false, //可否编辑
+              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
               editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
-            specsId: item.specs };
-
+            specsId: item.specs,
+            disabled: !!data.goods.activity_goods //活动期间
+          };
         }),
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13678,6 +13728,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         id: '',
         value: data.goods.dispatch_price,
         dispatch_list: data.dispatch_list,
+        dispatch_id: data.goods.dispatch_id || 0,
+        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0],
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -13718,15 +13770,27 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.goodData =
         putaway_time: data.goods.putaway_time,
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      } } };
+      },
+      sale: {
+        label: '销量',
+        id: '',
+        value: 0,
+        goodsId: data.goods.id,
+        disabled: false, //可否编辑
+        editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: false } } };
 
 
+
+  return info;
 }
 function addGoodsModel(data) {
   var dataModel = goodData.call(this, data);
+  console.log(data);
   dataModel.info1.goodType.disabled = false;
   dataModel.info2.specification.disabled = false;
   dataModel.info2.specification.type = 'add';
+  dataModel.info4.sale.needHide = true;
   return dataModel;
 
 
@@ -13913,7 +13977,7 @@ function _default(data) {
       that.Request('beforeAddGoods', {}).then(function (res) {
 
         if (res.error == 0) {
-          res.goods.type == data.typeId; //1'实体商品', 2'虚拟物品', 3'电子卡密',
+          res.goods.type = data.typeId || 1; //1'实体商品', 2'虚拟物品', 3'电子卡密',
           res.goods.id = '';
           res.goods.virtual_card_id = '';
           res.goods.title = '';
@@ -13939,6 +14003,7 @@ function _default(data) {
           res.goods.status = 1;
           res.goods.putaway_time = '';
           cacheResult = res;
+          console.log('mock', res, data);
           resolve(res);
 
         } else {
@@ -13984,6 +14049,10 @@ function _default(data) {
     DataGo = 'editMultiCode';
   } else if (val.label == '自动发货内容') {
     DataGo = 'autoDeliverContent';
+  } else if (val.label == '销量') {
+    DataGo = 'showGoodSale';
+  } else if (val.label == '商品类型') {
+    DataGo = 'editType';
   }
 
   this.Cacher.setData('editGood', {
@@ -13998,6 +14067,36 @@ function _default(data) {
 
 }
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo-items.js ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.activeGood = activeGood;function activeGood(data, state) {// 处于活动状态的商品，无法修改规格，此处按钮样式不变，子页面移除所有操作按钮，变为只读状态
+  function searchInput(obj) {
+    if (typeof obj == 'object') {
+      for (var k in obj) {
+        if (obj[k].editable) {
+          obj[k].disabled = true;
+        } else {
+          searchInput(obj[k]);
+        }
+      }
+    }
+
+  }
+  if (state) {
+    searchInput(data);
+  }
+
+  return data;
+}
 
 /***/ }),
 
@@ -14083,7 +14182,6 @@ function addGoodType(old, list) {//添加修改子规格
       } };
 
     for (var i = 0; i < old.length; i++) {
-      console.log(old[i].specsId, item.id);
       if (old[i].specsId == item.id) {
         tmp = old[i];
 
@@ -14166,6 +14264,7 @@ function _default(val, cacheGoodDetail) {
     if (typeof val.value == 'object' && typeof val.value.map == 'function') {
       cacheGoodDetail.info1.classification.value = val.value.map(function (item) {return item.name;}).join(';').replace(/;+/g, ';');
       cacheGoodDetail.info1.classification.goodTypes = val.value;
+      cacheGoodDetail.info1.classification.category_ids = val.value.map(function (item) {return item.id;});
     }
   } else if (val.label == '商品编码') {
     cacheGoodDetail.info3.goodCode.value = val.value;
@@ -14174,7 +14273,9 @@ function _default(val, cacheGoodDetail) {
   } else if (val.label == '定时下架时间') {
     cacheGoodDetail.info3.autoExtTime.value = val.value;
   } else if (val.label == '快递运费') {
-    cacheGoodDetail.info3.provideCost.value = val.value;
+    cacheGoodDetail.info3.provideCost.value = val.info.label;
+    cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
+    cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
     cacheGoodDetail.info3.goodForm.id = val.id;
@@ -14192,16 +14293,22 @@ function _default(val, cacheGoodDetail) {
 
     var oldList = cacheGoodDetail.info2.childrenSpecs.list;
     cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
-    console.log('hahahahahah-------', cacheGoodDetail.info2.childrenSpecs.list);
   } else if (val.label == '子规格详情') {
     cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
-    console.log('hahahahahah++++++++++', val.other.list);
-
-
   } else if (val.label == '自动发货') {
     cacheGoodDetail.info3.autoDeliver.value = val.checked;
   } else if (val.label == '自动发货内容') {
     cacheGoodDetail.info3.autoDeliverContent.value = val.value;
+  } else if (val.label == '商品类型') {
+    cacheGoodDetail.info1.goodType.value = val.value;
+    cacheGoodDetail.info1.goodType.type = val.id; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
+    cacheGoodDetail.info2.cardStock.needHide = val.id == 3;
+    cacheGoodDetail.info3.autoExt.needHide = val.id != 3;
+    cacheGoodDetail.info3.autoExtTime.needHide = val.id != 3;
+    cacheGoodDetail.info3.autoDeliver.needHide = val.id != 2;
+    cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
+    cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
+    cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
   }
   return cacheGoodDetail;
 

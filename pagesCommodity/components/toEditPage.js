@@ -1,4 +1,4 @@
-export default function (val, detail) { 
+export default function (val, detail) {
     let DataGo = ''
     if (val.label == '商品名称') {
         DataGo = 'editName'
@@ -15,11 +15,15 @@ export default function (val, detail) {
     } else if (val.label == '状态') {
         DataGo = 'editStatus'
     } else if (val.label == '规格类型') {
-        DataGo = 'addGoodType'; 
-    } else if (val.label == '子规格详情') { 
-        DataGo = 'editMultiCode'; 
+        DataGo = 'addGoodType';
+    } else if (val.label == '子规格详情') {
+        DataGo = 'editMultiCode';
     } else if (val.label == '自动发货内容') {
         DataGo = 'autoDeliverContent'
+    } else if (val.label == '销量') {
+        DataGo = 'showGoodSale'
+    } else if (val.label == '商品类型') {
+        DataGo = 'editType'
     }
 
     this.Cacher.setData('editGood', {

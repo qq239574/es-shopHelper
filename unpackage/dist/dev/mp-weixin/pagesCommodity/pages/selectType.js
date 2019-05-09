@@ -75,7 +75,7 @@ var selectedList = [];var _default =
       }
       return item;
     });
-    console.log('>>>>>', this.list);
+    console.log('>>>>>', DataFrom);
   } };exports.default = _default;
 
 /***/ }),

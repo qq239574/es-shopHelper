@@ -9,7 +9,7 @@
               that.Request('beforeAddGoods', {}).then(res => {
 
                   if (res.error == 0) {
-                      res.goods.type == data.typeId //1'实体商品', 2'虚拟物品', 3'电子卡密',
+                      res.goods.type = data.typeId||1 //1'实体商品', 2'虚拟物品', 3'电子卡密',
                       res.goods.id = '';
                       res.goods.virtual_card_id = '';
                       res.goods.title = '';
@@ -35,6 +35,7 @@
                       res.goods.status = 1;
                       res.goods.putaway_time = '';
                       cacheResult = res;
+                      console.log('mock',res,data)
                       resolve(res);
 
                   } else {

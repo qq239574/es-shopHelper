@@ -35,6 +35,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
+//
+//
 
 var itemIndex = 0;var _default =
 {
@@ -42,6 +44,7 @@ var itemIndex = 0;var _default =
     info: {
       type: Object,
       default: {
+        disabled: false, //活动期间不可编辑
         id: 0,
         title: '',
         items: [] //[{index,title,id}]
@@ -54,6 +57,9 @@ var itemIndex = 0;var _default =
 
   },
   methods: {
+    clickModel: function clickModel() {
+      this.info.disabled && this.$parent.Toast('活动商品不可编辑');
+    },
     inputSpecName: function inputSpecName(val) {
       this.cache.title = val.detail.value;
       this.$emit('input', this.cache);
@@ -78,14 +84,19 @@ var itemIndex = 0;var _default =
         this.Toast('每个规格的子规格不能超过10个');
       }
     },
-    clickMinus: function clickMinus(type, item) {
+    clickMinus: function clickMinus(type, item) {var _this = this;
       if (type == 'spec') {
         this.$emit('delete', item);
       } else {
-        this.cache.items = this.cache.items.filter(function (val) {
-          return val.id != item.id;
+        this.$parent.Dialog.confirm({
+          title: '',
+          message: '您确认删除此规格吗？' }).
+        then(function () {
+          _this.cache.items = _this.cache.items.filter(function (val) {
+            return val.id != item.id;
+          });
+          _this.$emit('input', _this.cache);
         });
-        this.$emit('input', this.cache);
       }
     } },
 

@@ -207,3 +207,13 @@ export const addGoods={//管理端商品添加
     },
     type: 'post'
 }
+export const getMultiGoodSale={//获取多规格商品
+    url: '/shop/manage/goods/get-option',
+    data: {  
+        goods_id:''
+    },
+    headers: {
+
+    },
+    type: 'get'
+}

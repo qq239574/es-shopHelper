@@ -34,6 +34,7 @@
         "pages/autoDeliverContent",
         "pages/editGood",
         "pages/editName",
+        "pages/editType",
         "pages/editCode",
         "pages/editSubTitle",
         "pages/selectType",
@@ -42,7 +43,8 @@
         "pages/editForm",
         "pages/editStatus",
         "pages/editMultiCode",
-        "pages/addGoodType"
+        "pages/addGoodType",
+        "pages/showGoodSale"
       ]
     },
     {

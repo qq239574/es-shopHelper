@@ -24,7 +24,8 @@
                 list: [{
                     label: '统一运费（元）',
                     value: '修改',
-                    subValue: 0
+                    subValue: 0,
+                    id: -1,
                 }, ]
             }
         },
@@ -32,12 +33,15 @@
             initPage() {
                 DataGo = this.Cacher.getData('setTotalFreight');
                 if (DataGo.needChange) {
-                    this.list[0].subValue = DataGo.needChange.value; 
+                    this.list[0].subValue = DataGo.needChange.value;
                 }
                 this.Cacher.setData(pageId, {
                     needChange: {
                         label: '快递运费',
-                        value: this.list[0].subValue
+                        value: this.list[0].subValue,
+                        info: {
+                            ...this.list[this.defaultIndex]
+                        }
                     }
                 })
             },
@@ -46,9 +50,12 @@
                 this.Cacher.setData(pageId, {
                     needChange: {
                         label: '快递运费',
-                        value: val.subValue
+                        value: val.subValue,
+                        info: { ...val
+                        }
                     }
                 })
+                this.defaultIndex = val.index;
                 if (val.value == '修改' && cache != '修改') {} else if (val.value == '修改' && cache == '修改') {
                     uni.navigateTo({
                         url: './setTotalFreight?from=setFreight'
@@ -59,25 +66,29 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from) || {};
-            this.Cacher.setData(pageId, {
+            this.Cacher.setData(pageId, { //清空统一运费的设置页的记录
                 from: option.from || '',
                 go: 'setTotalFreight'
             })
+            let dispatch_id=DataFrom.needChange.other.dispatch_id;
             this.list = [{
                 label: '统一运费（元）',
                 value: '修改',
-                subValue: 0
+                subValue: 0,
+                id: -1,
+                index: 0
             }].concat(DataFrom.needChange.other.dispatch_list.map((item, index) => {
-                if (item.is_default * 1) {
+                if (item.id==dispatch_id) { //计算默认的模板
                     this.defaultIndex = index + 1;
                 }
                 return {
                     label: item.name,
                     id: item.id,
-                    value:' ',
-                    subValue: ' '
+                    value: ' ',
+                    subValue: ' ',
+                    index: index + 1
                 }
-            }))
+            })); 
         },
         onShow() {
             this.initPage();

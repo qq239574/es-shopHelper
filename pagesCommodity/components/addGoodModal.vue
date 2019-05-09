@@ -1,12 +1,12 @@
 <template>
-    <div class='good-modal'>
+    <div class='good-modal' @click='clickModel'>
         <!-- 规格 -->
         <view class="row parentType">
             <view class="label">
                 <image class='del' @click='clickMinus("spec",info)' src='/static/img/global/del.svg'></image>
                 规格名称
             </view>
-            <textarea class="name" placeholder-style='color:#9ea3ae' maxlength='20' auto-height :value='cache.title' @input='inputSpecName' placeholder='输入规格名称'></textarea>
+            <textarea class="name" :disabled='info.disabled' placeholder-style='color:#9ea3ae' maxlength='20' auto-height :value='cache.title' @input='inputSpecName' placeholder='输入规格名称'></textarea>
         </view>
         <!-- 子规格 -->
         <view class="row childrenType" v-for='(item,index) in cache.items' :key='index'>
@@ -14,14 +14,16 @@
                 <image class='del' @click='clickMinus("item",item)' src='/static/img/global/del.svg'></image>
                 规格名称
             </view>
-            <textarea class="name" maxlength='20' placeholder-style='color:#9ea3ae' auto-height :data-set='item.id' :value='item.title' @input='inputItemName' placeholder='输入规格名称'></textarea>
+            <textarea class="name" maxlength='20' :disabled='info.disabled' placeholder-style='color:#9ea3ae' auto-height :data-set='item.id' :value='item.title' @input='inputItemName' placeholder='输入规格名称'></textarea>
         </view>
-        <view class='row add' @click='clickAdd' v-if='cache.items.length<10'>
-            +添加子规格
-        </view>
-        <view class='row add' style='color:#3d404d' @click='clickAdd' v-else>
-            +添加子规格
-        </view>
+        <block v-if='!info.disabled'>
+            <view class='row add' @click='clickAdd' v-if='cache.items.length<10'>
+                +添加子规格
+            </view>
+            <view class='row add' style='color:#3d404d' @click='clickAdd' v-else>
+                +添加子规格
+            </view>
+        </block>
     </div>
 </template>
 
@@ -32,11 +34,12 @@
             info: {
                 type: Object,
                 default: {
+                    disabled: false,//活动期间不可编辑
                     id: 0,
                     title: '',
                     items: [] //[{index,title,id}]
                 }
-            }
+            },
         },
         data() {
             return {
@@ -44,6 +47,9 @@
             }
         },
         methods: {
+            clickModel(){
+                this.info.disabled&&this.$parent.Toast('活动商品不可编辑')
+            },
             inputSpecName(val) {
                 this.cache.title = val.detail.value;
                 this.$emit('input', this.cache)
@@ -72,10 +78,15 @@
                 if (type == 'spec') {
                     this.$emit('delete', item)
                 } else {
-                    this.cache.items = this.cache.items.filter(val => {
-                        return val.id != item.id
-                    })
-                    this.$emit('input', this.cache)
+                    this.$parent.Dialog.confirm({
+                        title: '',
+                        message: '您确认删除此规格吗？'
+                    }).then(() => {
+                        this.cache.items = this.cache.items.filter(val => {
+                            return val.id != item.id
+                        })
+                        this.$emit('input', this.cache)
+                    });
                 }
             }
         },

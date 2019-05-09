@@ -1,0 +1,15 @@
+.edit-status .bg.data-v-78dee56d {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.edit-status .bg .picker.data-v-78dee56d {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+

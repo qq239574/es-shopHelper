@@ -58,9 +58,14 @@ var specIndex = 0;var _default =
         uni.navigateBack();
       }
     },
-    delSpec: function delSpec(val) {
-      this.list = this.list.filter(function (item) {
-        return val.id != item.id;
+    delSpec: function delSpec(val) {var _this = this;
+      this.Dialog.confirm({
+        title: '',
+        message: '您确认删除此规格吗？' }).
+      then(function () {
+        _this.list = _this.list.filter(function (item) {
+          return val.id != item.id;
+        });
       });
     },
     getSpec: function getSpec(val) {

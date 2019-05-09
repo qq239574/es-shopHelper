@@ -1,11 +1,13 @@
 <template>
-    <view class='multi-block  page'>
+    <view class='multi-block  page' @click='clickModel'>
         <view class="block" v-for='(item,index) in list' :key='index'>
             <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem>
-            <inputItem :other='item' label='价格' :value='item.price.value' @input='inputCell'></inputItem>
-            <inputItem :other='item' label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
-            <inputItem :other='item' label='商品编码' :value='item.code.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' label='价格' :disabled='item.disabled' :value='item.price.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' label='库存' :disabled='item.disabled' :value='item.stock.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' label='商品编码' :disabled='item.disabled' :value='item.code.value' @input='inputCell'></inputItem>
         </view>
+         <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </view>
 </template>
 
@@ -54,7 +56,11 @@
             }
         },
         methods: {
-            inputCell(val) { 
+            clickModel() {
+                this.closePageLoading();
+                this.list[0] && this.list[0].disabled && this.Toast('活动商品不可编辑')
+            },
+            inputCell(val) {
                 let index = val.other.index;
                 if (val.label == '价格') {
                     cacheList[index].price.value = val.value;
@@ -63,11 +69,10 @@
                 } else if (val.label == '商品编码') {
                     cacheList[index].code.value = val.value;
                 }
-                DataFrom.needChange.other.list=cacheList;  
-                this.Cacher.setData('editMultiCode',DataFrom)
+                DataFrom.needChange.other.list = cacheList;
+                this.Cacher.setData('editMultiCode', DataFrom)
             },
-            clickCell(val) { 
-            }
+            clickCell(val) {}
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
@@ -75,8 +80,9 @@
                 item.index = index;
                 return item;
             });
-            this.list = cacheList; 
-             this.Cacher.setData('editMultiCode',DataFrom)
+            this.list = cacheList;
+            console.log('list', this.list)
+            this.Cacher.setData('editMultiCode', DataFrom)
         }
     }
 </script>

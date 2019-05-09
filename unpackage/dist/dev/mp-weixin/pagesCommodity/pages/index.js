@@ -30,6 +30,8 @@
 
 
 
+
+
 var _goodDetail = __webpack_require__(/*! ../components/goodDetail.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodDetail.js");
 
 
@@ -69,11 +71,11 @@ var _mockGoodDetailApi = _interopRequireDefault(__webpack_require__(/*! ../compo
 //
 //
 //
+//
+//
 var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block1")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block1.vue"));};var goodInfo2 = function goodInfo2() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block2 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block2")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block2.vue"));};var goodInfo3 = function goodInfo3() {return Promise.all(/*! import() | pagesCommodity/components/editGood-Block3 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesCommodity/components/editGood-Block3")]).then(__webpack_require__.bind(null, /*! ../components/editGood-Block3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\editGood-Block3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var cacheGoodDetail = {};var cacheSubmitData = {};var DataFrom = {};var DataGo = {};var currentDate = [];var _default = { components: { goodInfo: goodInfo, goodInfo2: goodInfo2, goodInfo3: goodInfo3, selectItem: selectItem, longButton: longButton }, data: function data() {return { defaultIndex: 0, showpicker: false, minDate: new Date().getTime() + 5 * 60000, //5分钟后
       maxDate: new Date((0, _getDateSection.getDate)(365)).getTime(), //一年后
-      currentDate: '', moving: false, goodDetail: {} };
-  },
-  methods: {
+      currentDate: '', moving: false, goodDetail: {} };}, methods: {
     confirm: function confirm() {
       this.showpicker = false;
       this.currentDate = currentDate;
@@ -134,9 +136,10 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       if (DataGo.go) {
         // DataGo = this.Cacher.getData(DataGo.go);
       }
-      if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType') {
+      if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
         cacheGoodDetail = _updateGoodInfo.default.call(this, DataGo.needChange, cacheGoodDetail);
         this.goodDetail = cacheGoodDetail;
+        this.Cacher.clearData(DataGo.go);
       }
     } },
 

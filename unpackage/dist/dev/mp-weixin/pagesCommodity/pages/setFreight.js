@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
 
 
 
@@ -34,7 +34,8 @@ var pageId = 'setFreight';var _default =
       list: [{
         label: '统一运费（元）',
         value: '修改',
-        subValue: 0 }] };
+        subValue: 0,
+        id: -1 }] };
 
 
   },
@@ -47,7 +48,10 @@ var pageId = 'setFreight';var _default =
       this.Cacher.setData(pageId, {
         needChange: {
           label: '快递运费',
-          value: this.list[0].subValue } });
+          value: this.list[0].subValue,
+          info: _objectSpread({},
+          this.list[this.defaultIndex]) } });
+
 
 
     },
@@ -56,9 +60,12 @@ var pageId = 'setFreight';var _default =
       this.Cacher.setData(pageId, {
         needChange: {
           label: '快递运费',
-          value: val.subValue } });
+          value: val.subValue,
+          info: _objectSpread({}, val) } });
 
 
+
+      this.defaultIndex = val.index;
       if (val.value == '修改' && cache != '修改') {} else if (val.value == '修改' && cache == '修改') {
         uni.navigateTo({
           url: './setTotalFreight?from=setFreight' });
@@ -69,23 +76,27 @@ var pageId = 'setFreight';var _default =
 
   onLoad: function onLoad(option) {var _this = this;
     DataFrom = this.Cacher.getData(option.from) || {};
-    this.Cacher.setData(pageId, {
+    this.Cacher.setData(pageId, { //清空统一运费的设置页的记录
       from: option.from || '',
       go: 'setTotalFreight' });
 
+    var dispatch_id = DataFrom.needChange.other.dispatch_id;
     this.list = [{
       label: '统一运费（元）',
       value: '修改',
-      subValue: 0 }].
+      subValue: 0,
+      id: -1,
+      index: 0 }].
     concat(DataFrom.needChange.other.dispatch_list.map(function (item, index) {
-      if (item.is_default * 1) {
+      if (item.id == dispatch_id) {//计算默认的模板
         _this.defaultIndex = index + 1;
       }
       return {
         label: item.name,
         id: item.id,
         value: ' ',
-        subValue: ' ' };
+        subValue: ' ',
+        index: index + 1 };
 
     }));
   },

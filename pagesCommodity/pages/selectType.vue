@@ -65,7 +65,7 @@
                 }
                 return item;
             }); 
-            console.log('>>>>>',this.list)
+            console.log('>>>>>',DataFrom)
         }
     }
 </script>

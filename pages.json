@@ -202,6 +202,15 @@
 					}
 				}
 			}, {
+				"path": "pages/editType",
+				"style": {
+					"navigationBarTitleText": "编辑类型",
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			}, {
 				"path": "pages/editCode",
 				"style": {
 					"navigationBarTitleText": "商品编码",
@@ -280,6 +289,17 @@
 				"path": "pages/addGoodType",
 				"style": {
 					"navigationBarTitleText": "规格类型",
+					"enablePullDownRefresh": false,
+					"usingComponents": {
+						"van-toast": "/wxcomponents/vant-weapp/toast/index",
+						"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+					}
+				}
+			},
+			{
+				"path": "pages/showGoodSale",
+				"style": {
+					"navigationBarTitleText": "查看销量",
 					"enablePullDownRefresh": false,
 					"usingComponents": {
 						"van-toast": "/wxcomponents/vant-weapp/toast/index",

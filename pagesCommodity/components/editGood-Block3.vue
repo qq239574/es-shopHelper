@@ -12,7 +12,7 @@
             <block v-else>
                 <switchItem label='自动发货' :other='info.autoDeliver' :checked='info.autoDeliver.value' @change="inputCell" v-if='!info.autoDeliver.needHide'></switchItem>
                 <selectItem label='自动发货内容' :other='info.autoDeliverContent' :value='info.autoDeliverContent.value' @click="clickCell" v-if='!info.autoDeliverContent.needHide'></selectItem>
-                <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.value' @click="clickCell" v-if='!info.provideCost.needHide'></selectItem>
+                <selectItem label='快递运费' :other='info.provideCost' :value='info.provideCost.dispatch_name' @click="clickCell" v-if='!info.provideCost.needHide'></selectItem>
                 <switchItem label='显示快递' :other='info.showProCost' :checked='info.showProCost.value' @change="inputCell" v-if='!info.showProCost.needHide'></switchItem>
             </block>
             <switchItem label='参与会员折扣' :other='info.joinCount' :checked='info.joinCount.value' @change="inputCell"></switchItem>

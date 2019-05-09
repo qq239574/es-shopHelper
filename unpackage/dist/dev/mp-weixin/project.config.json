@@ -33,34 +33,27 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 2,
 			"list": [
 				{
 					"id": -1,
-					"name": "addgood",
-					"pathName": "pagesCommodity/pages/addGoodType",
+					"name": "index",
+					"pathName": "pages/index/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "goolist",
-					"pathName": "pages/commodity/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 2,
-					"name": "add",
+					"name": "addGood",
 					"pathName": "pagesCommodity/pages/index",
 					"query": "from=good",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "add",
-					"pathName": "pagesCommodity/pages/index",
-					"query": "from=addGoods",
+					"name": "goods",
+					"pathName": "pages/commodity/index",
+					"query": " ",
 					"scene": null
 				}
 			]

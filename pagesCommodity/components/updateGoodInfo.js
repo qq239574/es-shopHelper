@@ -72,7 +72,6 @@ function addGoodType(old, list) { //添加修改子规格
             }
         };
         for (let i = 0; i < old.length; i++) {
-            console.log(old[i].specsId, item.id)
             if (old[i].specsId == item.id) {
                 tmp = old[i];
 
@@ -155,6 +154,7 @@ export default function (val, cacheGoodDetail) {
         if (typeof val.value == 'object' && typeof val.value.map == 'function') {
             cacheGoodDetail.info1.classification.value = val.value.map(item => item.name).join(';').replace(/;+/g, ';');
             cacheGoodDetail.info1.classification.goodTypes = val.value;
+            cacheGoodDetail.info1.classification.category_ids = val.value.map(item => item.id);
         }
     } else if (val.label == '商品编码') {
         cacheGoodDetail.info3.goodCode.value = val.value;
@@ -163,7 +163,9 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '定时下架时间') {
         cacheGoodDetail.info3.autoExtTime.value = val.value;
     } else if (val.label == '快递运费') {
-        cacheGoodDetail.info3.provideCost.value = val.value;
+        cacheGoodDetail.info3.provideCost.value = val.info.label;
+        cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
+        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label;
     } else if (val.label == '商品表单') {
         cacheGoodDetail.info3.goodForm.value = val.value;
         cacheGoodDetail.info3.goodForm.id = val.id;
@@ -181,16 +183,22 @@ export default function (val, cacheGoodDetail) {
 
         let oldList = cacheGoodDetail.info2.childrenSpecs.list;
         cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
-        console.log('hahahahahah-------', cacheGoodDetail.info2.childrenSpecs.list)
     } else if (val.label == '子规格详情') {
         cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
-        console.log('hahahahahah++++++++++', val.other.list)
-
-
     } else if (val.label == '自动发货') {
         cacheGoodDetail.info3.autoDeliver.value = val.checked;
     } else if (val.label == '自动发货内容') {
         cacheGoodDetail.info3.autoDeliverContent.value = val.value;
+    } else if (val.label == '商品类型') {
+        cacheGoodDetail.info1.goodType.value = val.value;
+        cacheGoodDetail.info1.goodType.type = val.id; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
+        cacheGoodDetail.info2.cardStock.needHide = val.id == 3;
+        cacheGoodDetail.info3.autoExt.needHide = val.id != 3;
+        cacheGoodDetail.info3.autoExtTime.needHide = val.id != 3;
+        cacheGoodDetail.info3.autoDeliver.needHide = val.id != 2;
+        cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
+        cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
+        cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
     }
     return cacheGoodDetail;
 
