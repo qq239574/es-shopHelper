@@ -26,7 +26,6 @@
 
 
 
-var requesting = false;
 var ajaxIndex = 1;var _default =
 {
   components: {
@@ -34,7 +33,7 @@ var ajaxIndex = 1;var _default =
 
   data: function data() {
     return {
-      noticeNum: 0, //公告条数
+      noticeNum: 0, //公告当前条数
       totalNum: -1, //公告总条数
       requesting: false, //是否正在请求
       list: [{
@@ -56,17 +55,17 @@ var ajaxIndex = 1;var _default =
 
     },
     initPage: function initPage() {var _this = this;
-      if (!requesting) {
-        requesting = true;
+      if (!this.requesting) {
+        this.requesting = true;
         this.pageLoading();
         this.Request('noticeList', {
           page: ajaxIndex,
           pageSize: 10 }).
         then(function (res) {
+          _this.requesting = false;
           if (res.error == 0) {
-            requesting = false;
             ajaxIndex++;
-            _this.noticeNum = res.count;
+            _this.totalNum = res.count;
             _this.list = _this.list.concat(res.list.map(function (item) {
               return {
                 title: item.title,
@@ -76,33 +75,41 @@ var ajaxIndex = 1;var _default =
                 content: item.content };
 
             }));
+            _this.ShowLoadMore = _this.list.length == _this.noticeNum;
+            _this.noticeNum = _this.list.length;
           } else {
             _this.Toast(res.message);
           }
           _this.closePageLoading();
         }).catch(function (res) {
+          _this.requesting = false;
           _this.Toast(res.message);
         });
-      } else {}
+      } else {
+        setTimeout(function () {
+          _this.requesting = false;
+        }, 2000);
+      }
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
-    requesting = false;
-    this.requesting = requesting;
+    this.requesting = false;
     ajaxIndex = 1; //请求页码初始化
     this.list = [];
     this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
     this.initPage();
   },
   onReachBottom: function onReachBottom() {
-    if (this.list.length < this.noticeNum) {
+    if (this.list.length < this.totalNum) {
       this.initPage();
       this.LoadingType = 0;
     } else {
       this.LoadingType = 1;
+      this.ShowLoadMore = this.list.length == this.totalNum;
     }
   },
   onLoad: function onLoad() {
+    ajaxIndex = 1;
     this.list = [];
     this.initPage();
   } };exports.default = _default;

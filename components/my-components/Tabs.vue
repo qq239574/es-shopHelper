@@ -12,7 +12,7 @@
                 type: Array,
                 default: [{
                         cateid: 0,
-                        name: "代付款", 
+                        name: "待付款", 
                     },
                     {
                         cateid: 1,
@@ -85,17 +85,21 @@
     .my-tabs {
         width: 100%;
         margin: 0 0 20upx;
+        height:fit-content;
+        overflow: hidden;
         .grace-tab-title {
             width: 100%;
             border-bottom: 1upx solid #eee;
             padding: 0 20upx;
             box-sizing: border-box;
+            height:84upx;
         }
         .grace-tab-title__item {
             color: #ccc;
             border: none;
             font-size: 24upx;
             margin: 0;
+            height:84upx;
         }
     }
     .grace-tab-current {

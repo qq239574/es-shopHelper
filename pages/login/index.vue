@@ -5,7 +5,7 @@
 		</view>
 		<view class="tips" v-if='idError'>
 			<image src='/static/img/global/warn.png' class='tips__round'></image>
-			账号密码错误！
+			账号或密码错误！
 		</view>
 		<view class="grace-form">
 			<van-cell-group>
@@ -25,7 +25,7 @@
 			</van-cell-group>
 		</view>
 		<view class='getUserInfo'>
-			<LongButton @click='loginNow' :disable='disableButton'><button  open-type='getUserInfo' class='appletBtn'></button>登录</LongButton>
+			<LongButton @click='loginNow' :disable='disableButton'><button open-type='getUserInfo' class='appletBtn'></button>登录</LongButton>
 		</view>
 		<view class="forget-pw cell-font-gray">
 			<view @tap="reg">忘记密码?</view>
@@ -75,6 +75,7 @@
 		},
 		onLoad(option) {
 			let that = this;
+			this.Cacher.clearData('sessionId');
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
 			if (!DataFrom.from) {
@@ -95,22 +96,22 @@
 		mounted() {
 			this.closePageLoading()
 		},
-		methods: { 
+		methods: {
 			clickButton() {
 				wxLogin.call(this).then(res => {
 					uni.reLaunch({
 						url: '../../pagesLogin/pages/selectShop?from=login'
 					})
-				}).catch(res => { 
+				}).catch(res => {
 					res.message && this.Toast(res.message)
 				}); //微信登录
 			},
 			initPage() {
 				this.openEye = false;
 				canLogin = false;
-				let cache=this.Cacher.getData('cache-user-login');
-				this.userId = cache&&cache.userId||'yilianxinpin';
-				this.password = cache&&cache.password||'Qm8xn4KVBMc0Wd70';
+				let cache = this.Cacher.getData('cache-user-login');
+				this.userId = cache && cache.userId || 'yilianxinpin';
+				this.password = cache && cache.password || 'Qm8xn4KVBMc0Wd70';
 				this.idError = false;
 			},
 			getUserId(val) {
@@ -134,14 +135,15 @@
 					this.pageLoading();
 					login.call(this).then(res => {
 						requesting = false;
-						this.Cacher.setData('cache-user-login',{
-							userId:this.userId,
-							password:this.password
+						this.Cacher.setData('cache-user-login', {
+							userId: this.userId,
+							password: this.password
 						})
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})
 					}).catch(res => {
+						this.closePageLoading();
 						this.idError = true; //账号密码不对
 						requesting = false;
 					}); //微信登录; //账号密码登录

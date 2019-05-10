@@ -37,12 +37,11 @@
 </template>
 
 <script>
-    import TabCard from '../../components/my-components/Tabs';
+    import TabCard from '../../components/my-components/Tabs.vue';
     import Card from './index/Card.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from './index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
-    import pageMixin from '../../components/my-components/PageMixins.vue'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
@@ -52,11 +51,10 @@
         index: 0,
         name: "代付款"
     } //{cateid: 0, index: 0, name: "代付款"}
+    let requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
+    let searching = false;
     let cacheBill = {}; //缓存将要操作的订单 
     export default {
-        mixins:{
-			pageMixin
-		},
         components: {
             TabCard,
             Card,
@@ -208,23 +206,36 @@
                 });
             },
             tabChange(tab) {
-                this.pageLoading();
-                curTab = tab;
-                this.current = 1;
-                this.billList = [];
-                this.tabIndex = tab.cateid;
-                this.searching = true;
-                this.totalPage = 1;
-                getBillList.call(this, tab.cateid, {
-                    keywords: searchData.value || '',
-                    member_id: member_id,
-                    page: 1,
-                    pageSize: 20
-                }).then(res => {
-                    this.billList = res;
-                    this.closePageLoading();
-                    this.searching = false;
-                });
+                if (!searching) {
+                    searching=true;
+                    this.pageLoading();
+                    curTab = tab;
+                    this.current = 1;
+                    this.billList = [];
+                    this.tabIndex = tab.cateid;
+                    this.searching = true;
+                    this.totalPage = 1;
+                    getBillList.call(this, tab.cateid, {
+                        keywords: searchData.value || '',
+                        member_id: member_id,
+                        page: 1,
+                        pageSize: 20
+                    }).then(res => {
+                        this.billList = res;
+                        this.closePageLoading();
+                        this.searching = false;
+                        searching=false;
+                        requestQueue && this.tabChange(requestQueue);
+                        requestQueue = '';
+                    }).catch(res => {
+                        this.searching = false;
+                        searching=false;
+                        requestQueue && this.tabChange(requestQueue);
+                        requestQueue = '';
+                    });
+                } else {
+                    requestQueue = tab;
+                }
             },
             search(val) {
                 DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
@@ -236,7 +247,8 @@
                     from: 'searchShop',
                     title: '订单搜索',
                     placeholder: '请输入订单号',
-                    cateId: this.tabIndex
+                    cateId: this.tabIndex,
+                    default: this.searchValue
                 })
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/searchShop?from=bill'

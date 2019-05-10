@@ -86,7 +86,6 @@
                 font-weight: 600;
             }
             .other {
-                
                 white-space: nowrap;
                 overflow: hidden;
                 width: fit-content;

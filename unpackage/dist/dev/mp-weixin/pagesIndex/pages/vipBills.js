@@ -60,7 +60,7 @@ var member_id = '';
 var curTab = { //当前标签
   cateid: 0,
   index: 0,
-  name: "代付款"
+  name: "待付款"
   //{cateid: 0, index: 0, name: "代付款"}
 };var cacheBill = {}; //缓存将要操作的订单 
 var _default = {

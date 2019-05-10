@@ -22,7 +22,7 @@ var _default =
       type: Array,
       default: [{
         cateid: 0,
-        name: "代付款" },
+        name: "待付款" },
 
       {
         cateid: 1,

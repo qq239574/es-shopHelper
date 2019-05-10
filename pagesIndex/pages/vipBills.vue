@@ -50,7 +50,7 @@
     let curTab = { //当前标签
         cateid: 0,
         index: 0,
-        name: "代付款"
+        name: "待付款"
     } //{cateid: 0, index: 0, name: "代付款"}
     let cacheBill = {}; //缓存将要操作的订单 
     export default {

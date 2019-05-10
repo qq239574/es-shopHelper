@@ -36,9 +36,21 @@ var _default =
 
     disabled: {
       type: Boolean,
-      default: false } },
+      default: false },
+
+    value: {
+      type: String,
+      default: '' } },
 
 
+  watch: {
+    value: function value() {
+      this.val = this.value;
+    } },
+
+  mounted: function mounted() {
+    this.val = this.value;
+  },
   data: function data() {
     return {
       val: '' };

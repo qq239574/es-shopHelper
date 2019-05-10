@@ -80,7 +80,6 @@
               password: this.password,
               is_authorization: 0
           }).then((res) => {
-
               // 验证通过
               if (res.error == 0) {
                   cacheData = Object.assign(cacheData || {}, {
@@ -96,7 +95,6 @@
           }).catch(res => {
 
               if (res.error == -3) { //已登录
-
                   that.Cacher.setData('login', cacheData)
                   resolve(res)
               } else {

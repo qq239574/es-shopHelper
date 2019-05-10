@@ -27,7 +27,19 @@
             disabled: {
                 type: Boolean,
                 default: false
+            },
+            value:{
+                type:String,
+                default:''
             }
+        },
+        watch:{
+            value(){
+                this.val=this.value;
+            }
+        },
+        mounted(){
+             this.val=this.value;
         },
         data() {
             return {

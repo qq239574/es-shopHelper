@@ -55,7 +55,7 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
           addtion: 0,
           payType: 'wx',
           subStatus: 0, //订单状态，1：维权
-          status: 0 ////0代付款,1代发货，2待收货，3已完成，4已关闭
+          status: 0 ////0待付款,1代发货，2待收货，3已完成，4已关闭
         };} } },
 
 

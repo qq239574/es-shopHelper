@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10620,7 +10620,7 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
+  base_url: "http://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
   attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
 global_settings;exports.default = _default;
@@ -11165,11 +11165,10 @@ goodApi,
 myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
 
 
-  function _callee(name, data) {var header;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:if (
+  function _callee(name, data) {var header;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
 
-            sessionId) {_context.next = 5;break;} //是否获取了sessionId
             sessionId = cacher.getData('sessionId');if (
-            sessionId) {_context.next = 5;break;}_context.next = 5;return (
+            sessionId) {_context.next = 4;break;}_context.next = 4;return (
               new Promise(function (resolve, reject) {
                 _request.default.get(
                 _domain.default.base_url + indexApi.sessionid.url, {}, {
@@ -11179,13 +11178,12 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 function (res) {
                   if (res.error == 0) {
                     sessionId = res.session_id;
-
                     cacher.setData('sessionId', sessionId);
                     resolve(res);
                   }
                 });
 
-              }));case 5:
+              }));case 4:
 
 
 
@@ -11208,7 +11206,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 'client-type': 'assistant' };
 
             }if (!(
-            indexApi[name].type == 'download')) {_context.next = 12;break;}return _context.abrupt("return",
+            indexApi[name].type == 'download')) {_context.next = 11;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
 
               var param = [];
@@ -11225,9 +11223,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 12:if (!(
+            }));case 11:if (!(
 
-            indexApi[name].type == 'image')) {_context.next = 16;break;}return _context.abrupt("return",
+            indexApi[name].type == 'image')) {_context.next = 15;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               uni.uploadFile({
                 url: _domain.default.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
@@ -11246,9 +11244,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 16:if (!(
+            }));case 15:if (!(
 
-            indexApi[name].type == 'get')) {_context.next = 20;break;}return _context.abrupt("return",
+            indexApi[name].type == 'get')) {_context.next = 19;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               _request.default.get(
               _domain.default.base_url + indexApi[name].url,
@@ -11271,7 +11269,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
               });
 
-            }));case 20:return _context.abrupt("return",
+            }));case 19:return _context.abrupt("return",
 
             new Promise(function (resolve, reject) {
               _request.default.post(
@@ -11288,7 +11286,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 }
               });
 
-            }));case 21:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+            }));case 20:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -15119,7 +15117,6 @@ function login() {var _this = this;
       password: _this.password,
       is_authorization: 0 }).
     then(function (res) {
-
       // 验证通过
       if (res.error == 0) {
         cacheData = Object.assign(cacheData || {}, {
@@ -15135,7 +15132,6 @@ function login() {var _this = this;
     }).catch(function (res) {
 
       if (res.error == -3) {//已登录
-
         that.Cacher.setData('login', cacheData);
         resolve(res);
       } else {

@@ -18,27 +18,25 @@ const indexApi = {
 
 export default async function (name, data) {
 
-    if (!sessionId) { //是否获取了sessionId
-        sessionId = cacher.getData('sessionId');
-        if (!sessionId) {
-            await new Promise((resolve, reject) => {
-                graceRequest.get(
-                    global_settings.base_url + indexApi.sessionid.url, {}, {
-                        'session-id': ''
+    sessionId = cacher.getData('sessionId');
+    if (!sessionId) {
+        await new Promise((resolve, reject) => {
+            graceRequest.get(
+                global_settings.base_url + indexApi.sessionid.url, {}, {
+                    'session-id': ''
 
-                    },
-                    function (res) {
-                        if (res.error == 0) {
-                            sessionId = res.session_id;
-
-                            cacher.setData('sessionId', sessionId);
-                            resolve(res)
-                        }
+                },
+                function (res) {
+                    if (res.error == 0) {
+                        sessionId = res.session_id;
+                        cacher.setData('sessionId', sessionId);
+                        resolve(res)
                     }
-                );
-            })
-        }
+                }
+            );
+        })
     }
+
 
     if (!shopInfo) {
         shopInfo = cacher.getData('selectShop');
@@ -59,15 +57,15 @@ export default async function (name, data) {
             'client-type': 'assistant'
         }
     }
-    if (indexApi[name].type == 'download') {//主要用于下载图片
-        return new Promise((resolve, reject) => { 
+    if (indexApi[name].type == 'download') { //主要用于下载图片
+        return new Promise((resolve, reject) => {
 
             let param = [];
             for (let k in data) {
                 param.push(k + '=' + data[k])
             }
             uni.downloadFile({
-                url: global_settings.base_url + indexApi[name].url+'?'+param.join('&'), //仅为示例，非真实的接口地址
+                url: global_settings.base_url + indexApi[name].url + '?' + param.join('&'), //仅为示例，非真实的接口地址
                 header: Object.assign(indexApi[name].headers || {}, header),
                 success: (uploadFileRes) => {
                     resolve(uploadFileRes)
@@ -78,8 +76,8 @@ export default async function (name, data) {
             });
         })
 
-    } else if (indexApi[name].type == 'image') {//主要用于上传图片 
-        return new Promise((resolve, reject) => { 
+    } else if (indexApi[name].type == 'image') { //主要用于上传图片 
+        return new Promise((resolve, reject) => {
             uni.uploadFile({
                 url: global_settings.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
                 filePath: data.filePath,
@@ -99,7 +97,7 @@ export default async function (name, data) {
             });
         })
 
-    } else if (indexApi[name].type == 'get') {//get请求
+    } else if (indexApi[name].type == 'get') { //get请求
         return new Promise((resolve, reject) => {
             graceRequest.get(
                 global_settings.base_url + indexApi[name].url,
@@ -123,7 +121,7 @@ export default async function (name, data) {
                 }
             );
         })
-    } else {//post请求
+    } else { //post请求
         return new Promise((resolve, reject) => {
             graceRequest.post(
                 global_settings.base_url + indexApi[name].url,

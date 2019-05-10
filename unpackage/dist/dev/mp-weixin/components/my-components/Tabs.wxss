@@ -1,6 +1,10 @@
 .my-tabs {
   width: 100%;
   margin: 0 0 20rpx;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
 }
 .my-tabs .grace-tab-title {
     width: 100%;
@@ -8,12 +12,14 @@
     padding: 0 20rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    height: 84rpx;
 }
 .my-tabs .grace-tab-title__item {
     color: #ccc;
     border: none;
     font-size: 24rpx;
     margin: 0;
+    height: 84rpx;
 }
 .grace-tab-current {
   color: #000 !important;

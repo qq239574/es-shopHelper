@@ -28,8 +28,7 @@
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import switchItem from '../../components/my-components/editBlock-SwitchItem.vue'
     import dataShower from './components/IndexDataShower.vue'
-    import goodsBlock from './components/IndexGoods.vue'
-    import pageMixin from '../../components/my-components/PageMixins.vue'
+    import goodsBlock from './components/IndexGoods.vue' 
     import apps from './components/IndexApps.vue'
     import {
         getDate,
@@ -40,10 +39,7 @@
     let searchDay = {
         value: 'today'
     };
-    export default {
-        mixin:{
-			pageMixin
-		},
+    export default { 
         components: {
             LongButton,
             selectItem,
@@ -167,16 +163,10 @@
             initPage() {
                 this.searchData(searchDay); //初始化数据框
                 this.Request('homeInfo', {}).then(res => {
+                    this.searchData(searchDay);
                     this.shopName = res.shop.name;
-                    this.showData = {
-                        money: res.data.today_payment_amount,
-                        payedBill: res.data.today_order_paid,
-                        payedGood: 0,
-                        payedVip: 0
-                    }
-                    newNotice = res.notice.sort((a, b) => {
-                        return new Date('2019-' + a.date) - new Date('2019-' + b.date)
-                    });
+                  
+                    newNotice = res.notice;
                     this.newNotice = {
                         label: newNotice[0].title || '',
                         date: newNotice[0].date || ''
@@ -261,7 +251,7 @@
             padding: 0 24upx;
             .button {
                 margin: auto 0;
-                font-size: 24upx;
+                font-size: 26upx;
                 border: 1upx solid #bdc8df;
                 line-height: 40upx;
                 text-align: center;
@@ -282,7 +272,7 @@
             .title {
                 height: 100%;
                 line-height: 86upx;
-                font-size: 24upx;
+                font-size: 26upx;
                 color: #6e7685; // max-width: 510upx;
                 position: relative;
                 padding-left: 30upx;

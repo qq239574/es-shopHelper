@@ -1,1 +1,9 @@
+.notice .nomore.data-v-070c7e4c {
+  text-align: center;
+  color: #bbb;
+  font-size: 24rpx;
+}
+.notice .load-more.data-v-070c7e4c {
+  margin-bottom: 100rpx;
+}
 

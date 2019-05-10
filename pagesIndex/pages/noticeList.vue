@@ -9,14 +9,13 @@
             <view class='nomore' v-else-if='totalNum>-1&&!requesting'>-没有更多了-</view>
             <view class='nomore' v-else>正在搜索</view>
         </view>
-         <van-toast id="van-toast" />
+        <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>
 </template>
 
 <script>
     import item from '../components/Notice-Block'
-    let requesting = false;
     let ajaxIndex = 1;
     export default {
         components: {
@@ -24,7 +23,7 @@
         },
         data() {
             return {
-                noticeNum: 0, //公告条数
+                noticeNum: 0, //公告当前条数
                 totalNum: -1, //公告总条数
                 requesting: false, //是否正在请求
                 list: [{
@@ -46,17 +45,17 @@
                 })
             },
             initPage() {
-                if (!requesting) {
-                    requesting = true;
+                if (!this.requesting) { 
+                    this.requesting = true;
                     this.pageLoading();
                     this.Request('noticeList', {
                         page: ajaxIndex,
                         pageSize: 10
                     }).then(res => {
+                        this.requesting = false;
                         if (res.error == 0) {
-                            requesting = false;
                             ajaxIndex++;
-                            this.noticeNum=res.count;
+                            this.totalNum=res.count;
                             this.list = this.list.concat(res.list.map(item => {
                                 return {
                                     title: item.title,
@@ -66,33 +65,41 @@
                                     content: item.content,
                                 }
                             }));
+                            this.ShowLoadMore = this.list.length == this.noticeNum;
+                            this.noticeNum = this.list.length ;
                         } else {
                             this.Toast(res.message)
                         }
                         this.closePageLoading();
                     }).catch(res => {
+                        this.requesting = false;
                         this.Toast(res.message)
                     })
-                } else {}
+                } else {
+                    setTimeout(() => {
+                        this.requesting = false;
+                    }, 2000)
+                }
             }
         },
         onPullDownRefresh() {
-            requesting = false;
-            this.requesting = requesting;
+            this.requesting = false;
             ajaxIndex = 1; //请求页码初始化
             this.list = [];
             this.LoadingType = 0; //加载更多提示，0加载更多 1已经全部
             this.initPage();
         },
         onReachBottom() {
-            if (this.list.length < this.noticeNum) {
+            if (this.list.length < this.totalNum) {
                 this.initPage();
                 this.LoadingType = 0;
             } else {
                 this.LoadingType = 1;
+                this.ShowLoadMore = this.list.length == this.totalNum;  
             }
         },
         onLoad() {
+            ajaxIndex = 1;
             this.list = [];
             this.initPage();
         }
@@ -100,5 +107,14 @@
 </script>
 
 <style lang="scss" scoped>
-    .notice {}
+    .notice {
+        .nomore {
+            text-align: center;
+            color: #bbb;
+            font-size: 24upx;
+        }
+        .load-more{
+            margin-bottom:100upx;
+        }
+    }
 </style>

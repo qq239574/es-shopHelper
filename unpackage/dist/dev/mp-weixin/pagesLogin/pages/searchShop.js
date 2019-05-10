@@ -16,7 +16,7 @@
 //
 //
 
-var DataFrom = {};var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInputWithButton */ "components/my-components/SearchInputWithButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInputWithButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInputWithButton.vue"));};var _default =
+var DataFrom = {};var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInputWithButton */ "components/my-components/SearchInputWithButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInputWithButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInputWithButton.vue"));};var _default =
 
 {
   components: {
@@ -24,11 +24,18 @@ var DataFrom = {};var search = function search() {return __webpack_require__.e(/
 
   data: function data() {
     return {
-      placeholder: '搜索店铺' };
-
+      placeholder: '搜索店铺',
+      value: '' };
 
   },
   methods: {
+    clear: function clear() {
+      this.Cacher.setData('searchShop', _objectSpread({
+        from: 'searchShop',
+        value: '' },
+      DataFrom));
+
+    },
     search: function search(val) {
       this.Cacher.setData('searchShop', _objectSpread({
         from: 'searchShop',
@@ -42,6 +49,7 @@ var DataFrom = {};var search = function search() {return __webpack_require__.e(/
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
       this.placeholder = DataFrom.placeholder;
+      this.value = DataFrom.default;
       uni.setNavigationBarTitle({
         title: DataFrom.title });
 

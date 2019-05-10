@@ -22,12 +22,9 @@
 <script>
 	import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
 	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
-	import pageMixin from '../../components/my-components/PageMixins.vue'
 	let DataFrom = {};
 	export default {
-		mixins:{
-			pageMixin
-		},
+		
 		components: {
 			selectItem,
 			inputItem

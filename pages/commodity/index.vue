@@ -32,14 +32,15 @@
     </div>
 </template>
 
-<script> 
+<script>
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import Card from './index/goodsList.vue';
     import categories from './index/categories.js'
     import getGoodsList from './index/getGoodsList.js'
     import nodata from '../../components/my-components/nodata.vue'
-    import pageMixin from '../../components/my-components/PageMixins.vue'
+    let requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
+    let searching = false;
     let needShare = {}
     let DataFrom = {};
     let DataGo = {};
@@ -50,9 +51,6 @@
         name: "出售中"
     }
     export default {
-        mixins:{
-			pageMixin
-		},
         components: {
             TabCard,
             SearchInput,
@@ -111,7 +109,7 @@
                 })
             },
             shareGoodInfo(good) {
-                needShare = good; 
+                needShare = good;
             },
             handleChange(obj) {
                 let {
@@ -153,6 +151,13 @@
                     this.goodsList = res;
                     this.closePageLoading();
                     this.searching = false;
+                    searching = false;
+                    requestQueue && this.tabChange(requestQueue);
+                    requestQueue = '';
+                }).catch(res => {
+                    searching = false;
+                    requestQueue && this.tabChange(requestQueue);
+                    requestQueue = '';
                 })
                 this.Request('getChannels', {}).then(res => { //获取用户开通渠道
                     if (!res.error) {
@@ -164,13 +169,18 @@
                 })
             },
             tabChange(tab) { //切换标签事件
-                this.searchTab = tab;
-                this.toggle = !this.toggle;
-                this.goodsList = [];
-                this.current = 1;
-                this.totalPage = 1;
-                this.pageLoading();
-                this.initPage();
+                if (!searching) {
+                    searching = true;
+                    this.searchTab = tab;
+                    this.toggle = !this.toggle;
+                    this.goodsList = [];
+                    this.current = 1;
+                    this.totalPage = 1;
+                    this.pageLoading();
+                    this.initPage();
+                } else {
+                    requestQueue = tab;//函数节流
+                }
             },
             search(val) { //跳转搜索页面
                 this.toggle = !this.toggle;
