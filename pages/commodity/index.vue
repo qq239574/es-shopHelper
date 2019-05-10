@@ -39,6 +39,7 @@
     import categories from './index/categories.js'
     import getGoodsList from './index/getGoodsList.js'
     import nodata from '../../components/my-components/nodata.vue'
+    import pageMixin from '../../components/my-components/PageMixins.vue'
     let needShare = {}
     let DataFrom = {};
     let DataGo = {};
@@ -49,6 +50,9 @@
         name: "出售中"
     }
     export default {
+        mixins:{
+			pageMixin
+		},
         components: {
             TabCard,
             SearchInput,

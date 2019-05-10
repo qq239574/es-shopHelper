@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};
+
+
 
 
 
@@ -39,10 +41,11 @@ var cacheSearchKey = '';var _default =
   components: {
     TabCard: TabCard,
     SearchInput: SearchInput,
-    Card: Card },
+    Card: Card,
+    nodata: nodata },
 
   data: function data() {
-    return {
+    return _defineProperty({
       searching: false,
       viplist: [{
         img: '/static/img/global/home_order_tobepay.png',
@@ -53,7 +56,8 @@ var cacheSearchKey = '';var _default =
         score: '' }],
 
       current: 1,
-      totalPage: 1 };
+      totalPage: 1 }, "searching",
+    true);
 
   },
   watch: {
@@ -62,6 +66,11 @@ var cacheSearchKey = '';var _default =
     } },
 
   methods: {
+    clearSearch: function clearSearch() {
+      this.search({
+        value: '' });
+
+    },
     handleChange: function handleChange(obj) {var
 
 
@@ -94,6 +103,7 @@ var cacheSearchKey = '';var _default =
       }
     },
     initPage: function initPage() {var _this2 = this;
+      this.searching = true;
       this.pageLoading();
       this.Request('vipList', {
         keywords: cacheSearchKey,
@@ -120,6 +130,10 @@ var cacheSearchKey = '';var _default =
             info: item };
 
         });
+        _this2.searching = false;
+      }).catch(function (res) {
+        _this2.searching = false;
+        _this2.Toast(res.message || '出错啦');
       });
     } },
 

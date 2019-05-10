@@ -5,6 +5,8 @@
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "i-modal": "/wxcomponents/iview-weapp/modal/index",
     "i-page": "/wxcomponents/iview-weapp/page/index",
+    "van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+    "van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index",
     "tab-card": "/components/my-components/Tabs",
     "card": "/pages/bill/index/Card",
     "search-input": "/components/my-components/SearchInput",

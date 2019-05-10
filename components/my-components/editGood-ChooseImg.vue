@@ -41,6 +41,7 @@
                 elements: [],
                 maxRowNum: 0,
                 maxColNum: 0,
+                imgName: ''
             }
         },
         props: {
@@ -93,11 +94,11 @@
             getImgUrl(url) {
                 let newUrl = '';
                 if (static_resources_domain) {
-                    newUrl = /^http.+/.test(url) ? url : (static_resources_domain + url)
+                    newUrl = /^http|wxfile.+/.test(url) ? url : (static_resources_domain + url)
                 } else {
                     static_resources_domain = this.Cacher.getData('static_resources_domain');
-                    newUrl = /^http.+/.test(url) ? url : (static_resources_domain + url); 
-                } 
+                    newUrl = /^http|wxfile.+/.test(url) ? url : (static_resources_domain + url);
+                }
                 return newUrl
             },
             //长按
@@ -189,6 +190,7 @@
             showImgs: function(e) {
                 var currentImg = e.currentTarget.dataset.imgurl;
                 let that = this;
+                currentImg = /^http|wxfile.+/.test(currentImg) ? currentImg : (static_resources_domain + currentImg);
                 uni.previewImage({
                     urls: that.imgLists,
                     current: currentImg

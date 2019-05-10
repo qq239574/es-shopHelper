@@ -108,8 +108,9 @@
 			initPage() {
 				this.openEye = false;
 				canLogin = false;
-				this.userId = 'yilianxinpin';
-				this.password = 'Qm8xn4KVBMc0Wd70';
+				let cache=this.Cacher.getData('cache-user-login');
+				this.userId = cache&&cache.userId||'yilianxinpin';
+				this.password = cache&&cache.password||'Qm8xn4KVBMc0Wd70';
 				this.idError = false;
 			},
 			getUserId(val) {
@@ -133,6 +134,10 @@
 					this.pageLoading();
 					login.call(this).then(res => {
 						requesting = false;
+						this.Cacher.setData('cache-user-login',{
+							userId:this.userId,
+							password:this.password
+						})
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})

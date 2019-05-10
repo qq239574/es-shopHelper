@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var imgCodeButton = function imgCodeButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton-image */ "components/my-components/GetVCodeButton-image").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton-image.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton-image.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};var imgCodeButton = function imgCodeButton() {return Promise.all(/*! import() | components/my-components/GetVCodeButton-image */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/my-components/GetVCodeButton-image")]).then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton-image.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton-image.vue"));};
 
 
 
@@ -36,7 +36,9 @@ var type = '';
 var session_id = ''; //
 var questions = []; //	安全问题
 var registerType = ''; //	注册类型(username,mobile,email)
-var _default = {
+var sending = false;
+var bar = '';var _default =
+{
   components: {
     LongButton: LongButton,
     RoundButton: RoundButton,
@@ -64,6 +66,7 @@ var _default = {
       placeholder2: '请输入短信验证码',
       imageCode: '',
       sendVfCode: false,
+      refreshAgain: false,
       refreshButton: false };
 
   },
@@ -115,7 +118,8 @@ var _default = {
               account: _this.userId,
               registerType: registerType, //注册类型
               question: '',
-              answer: '' } });
+              answer: '',
+              verify_code: _this.password } });
 
 
           uni.navigateTo({
@@ -148,23 +152,30 @@ var _default = {
       }
     },
     requestCode: function requestCode() {var _this3 = this;
-      this.Request('sendVfCode', {
-        account: this.userId,
-        session_id: session_id,
-        captcha_code: this.imageCode,
-        action: 'forget',
-        type: type }).
-      then(function (res) {
-        if (error != 0) {
-          _this3.Toast(res.message);
-        }
-        _this3.closePageLoading();
-        _this3.refreshButton();
-      }).catch(function (res) {
-        _this3.Toast(res.message);
-        _this3.closePageLoading();
-        _this3.refreshButton();
-      });
+      if (!sending) {
+        sending = true;
+        this.Request('sendVfCode', {
+          account: this.userId,
+          session_id: session_id,
+          captcha_code: this.imageCode,
+          action: 'forget',
+          type: type }).
+        then(function (res) {
+          if (res.error != 0) {
+            _this3.Toast(res.message);
+          }
+          _this3.closePageLoading();
+          setTimeout(function () {
+            sending = false;
+          }, 5000);
+        }).catch(function (res) {
+          _this3.Toast(res.message || '图形验证码错误');
+          _this3.closePageLoading();
+          _this3.refreshAgain = !_this3.refreshAgain;
+          _this3.refreshButton = !_this3.refreshButton;
+          sending = false;
+        });
+      }
     },
     getUserId: function getUserId(val) {
       if (val.type == 'input') {

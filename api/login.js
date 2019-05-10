@@ -139,20 +139,31 @@ export const wechatLogin = { //小程序获取登录session
     headers: {},
     type: 'post'
 }
-export const bindWechat = {//小程序管理中心绑定微信登录
+export const bindWechat = { //小程序管理中心绑定微信登录
     url: '/shop/manage/wx-app/bind',
     data: {
         encrypted_data: '',
-        session_key:'',
-        iv:'',
-        user_id:''
+        session_key: '',
+        iv: '',
+        user_id: ''
     },
     headers: {},
     type: 'post'
 }
-export const getUserJury ={//获取用户权限
+export const getUserJury = { //获取用户权限
     url: '/shop/manage/perm/get',
     data: {},
     headers: {},
     type: 'get'
+}
+export const getVRCodeImg = { //获取图形验证码
+    url: '/utility/captcha/get',
+    data: {
+        type: '',
+        width: '',
+        height: '',
+        timestamp: ''
+    },
+    headers: {},
+    type: 'download'
 }

@@ -5,7 +5,6 @@
                 <van-field placeholder="请输入6-20位新密码" use-icon-slot @input='getUserId' clearable>
                 </van-field>
                 <van-field :type="openEye?'text':'password'" placeholder="请再次输入密码" use-icon-slot @input='getPassWord' clearable>
-                    <RoundButton slot="icon" @click='getVCode'></RoundButton>
                 </van-field>
             </van-cell-group>
         </view>
@@ -53,16 +52,19 @@
                             account: DataFrom.info.account,
                             verify_code: DataFrom.info.verify_code,
                             question: DataFrom.info.question,
-                            answer: DataFrom.info.answer
+                            answer: DataFrom.info.answer,
+                            password: this.password1
                         }).then(res => {
-
                             if (res.error == 0) {
-                                this.Cacher.setData('setNewPassword',{
-                                    from:'setNewPassword'
+                                this.Cacher.setData('setNewPassword', {
+                                    from: 'setNewPassword'
                                 });
-                                uni.reLaunch({
-                                    url: '../../pages/index/index?from=setNewPassword'
-                                })
+                                this.Toast('重置密码成功');
+                                setTimeout(() => {
+                                    uni.reLaunch({
+                                        url: '../../pages/index/index?from=setNewPassword'
+                                    })
+                                }, 1500)
                             } else {
                                 this.Toast(res.message)
                             }

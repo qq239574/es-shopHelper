@@ -7,6 +7,7 @@
     "i-icon": "/wxcomponents/iview-weapp/icon/index",
     "tab-card": "/components/my-components/Tabs",
     "search-input": "/components/my-components/SearchInput",
-    "card": "/pagesIndex/components/VipList"
+    "card": "/pagesIndex/components/VipList",
+    "nodata": "/components/my-components/nodata"
   }
 }

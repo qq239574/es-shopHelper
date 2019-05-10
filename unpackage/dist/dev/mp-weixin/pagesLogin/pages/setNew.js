@@ -27,7 +27,6 @@
 
 
 
-
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var RoundButton = function RoundButton() {return __webpack_require__.e(/*! import() | components/my-components/GetVCodeButton */ "components/my-components/GetVCodeButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/GetVCodeButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\GetVCodeButton.vue"));};
 var DataFrom = {};var _default =
 {
@@ -63,16 +62,19 @@ var DataFrom = {};var _default =
             account: DataFrom.info.account,
             verify_code: DataFrom.info.verify_code,
             question: DataFrom.info.question,
-            answer: DataFrom.info.answer }).
+            answer: DataFrom.info.answer,
+            password: this.password1 }).
           then(function (res) {
-
             if (res.error == 0) {
               _this.Cacher.setData('setNewPassword', {
                 from: 'setNewPassword' });
 
-              uni.reLaunch({
-                url: '../../pages/index/index?from=setNewPassword' });
+              _this.Toast('重置密码成功');
+              setTimeout(function () {
+                uni.reLaunch({
+                  url: '../../pages/index/index?from=setNewPassword' });
 
+              }, 1500);
             } else {
               _this.Toast(res.message);
             }

@@ -5,21 +5,38 @@
 </template>
 
 <script>
+    import domain from '../../api/domain.js'
     export default {
-        props:{
-            imageCode:{
-                type:String,
-                default:''
+        props: {
+            imageCode: {
+                type: String,
+                default: ''
+            },
+            refreshAgain: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
             return {
-                imgSrc: 'http://user.qdev.eldev.cn/utility/captcha/get?type=forget&width=135&height=32&timestamp=' + new Date().getTime()
+                imgSrc: ''
+            }
+        },
+        watch: {
+            refreshAgain() {
+                this.refresh();
             }
         },
         methods: {
             refresh() {
-                this.imgSrc = 'http://user.qdev.eldev.cn/utility/captcha/get?type=forget&width=135&height=32&timestamp=' + new Date().getTime()
+                this.Request('getVRCodeImg', {
+                    type: 'forget',
+                    width: 135,
+                    height: 32,
+                    timestamp: new Date().getTime()
+                }).then(res => {
+                    this.imgSrc = res.tempFilePath
+                })
             }
         },
         beforeMount() {
@@ -29,10 +46,10 @@
 </script>
 
 <style lang="scss" scoped>
-.img-code{
-    display: flex;
-    flex-wrap: nowrap;
-}
+    .img-code {
+        display: flex;
+        flex-wrap: nowrap;
+    }
     .my-round-button {
         width: 150upx;
         box-sizing: border-box;

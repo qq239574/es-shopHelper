@@ -4,14 +4,10 @@ import * as cacher from '../store/cache'
 import * as billApi from './bill'
 import * as goodApi from './good'
 import * as myApi from './myself'
-import graceRequest from '../graceUI/jsTools/request.js' 
-
+import graceRequest from '../graceUI/jsTools/request.js'
+import global_settings from './domain.js'
 let sessionId = '';
 let shopInfo = '';
-const global_settings = { 
-    base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-    attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
-};
 const indexApi = {
     ...loginApi,
     ...homeApi,
@@ -23,7 +19,7 @@ const indexApi = {
 export default async function (name, data) {
 
     if (!sessionId) { //是否获取了sessionId
-        sessionId = cacher.getData('sessionId'); 
+        sessionId = cacher.getData('sessionId');
         if (!sessionId) {
             await new Promise((resolve, reject) => {
                 graceRequest.get(
@@ -63,7 +59,47 @@ export default async function (name, data) {
             'client-type': 'assistant'
         }
     }
-    if (indexApi[name].type == 'get') {
+    if (indexApi[name].type == 'download') {//主要用于下载图片
+        return new Promise((resolve, reject) => { 
+
+            let param = [];
+            for (let k in data) {
+                param.push(k + '=' + data[k])
+            }
+            uni.downloadFile({
+                url: global_settings.base_url + indexApi[name].url+'?'+param.join('&'), //仅为示例，非真实的接口地址
+                header: Object.assign(indexApi[name].headers || {}, header),
+                success: (uploadFileRes) => {
+                    resolve(uploadFileRes)
+                },
+                fail(res) {
+                    resolve(res)
+                }
+            });
+        })
+
+    } else if (indexApi[name].type == 'image') {//主要用于上传图片 
+        return new Promise((resolve, reject) => { 
+            uni.uploadFile({
+                url: global_settings.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
+                filePath: data.filePath,
+                fileType: 'image',
+                name: 'file',
+                formData: {
+                    'category_id': '',
+                    type: 'image'
+                },
+                header: Object.assign(indexApi[name].headers || {}, header),
+                success: (uploadFileRes) => {
+                    resolve(uploadFileRes)
+                },
+                fail(res) {
+                    resolve(res)
+                }
+            });
+        })
+
+    } else if (indexApi[name].type == 'get') {//get请求
         return new Promise((resolve, reject) => {
             graceRequest.get(
                 global_settings.base_url + indexApi[name].url,
@@ -87,10 +123,8 @@ export default async function (name, data) {
                 }
             );
         })
-    } else {
-
+    } else {//post请求
         return new Promise((resolve, reject) => {
-
             graceRequest.post(
                 global_settings.base_url + indexApi[name].url,
                 Object.assign(indexApi[name].data, data),

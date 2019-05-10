@@ -1,8 +1,9 @@
 <template>
     <view class='vip-manage page'>
-        <SearchInput @input='search' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
+        <SearchInput @input='search' @clear='clearSearch' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
         <Card :list='viplist' @click='clickGood'></Card>
-        <view class="pager">
+        <nodata type='noresult' tip='没有搜索到相关会员' v-if='!searching&&!viplist.length'></nodata>
+        <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
                     <i-icon type="return"></i-icon>
@@ -22,6 +23,7 @@
 <script>
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
+    import nodata from '../../components/my-components/nodata.vue'
     import Card from '../components/VipList.vue';
     let bar = '';
     let cacheSearchKey = '';
@@ -29,7 +31,8 @@
         components: {
             TabCard,
             SearchInput,
-            Card
+            Card,
+            nodata
         },
         data() {
             return {
@@ -43,7 +46,8 @@
                     score: ''
                 }],
                 current: 1,
-                totalPage: 1
+                totalPage: 1,
+                searching: true
             }
         },
         watch: {
@@ -52,6 +56,11 @@
             }
         },
         methods: {
+            clearSearch() {
+                this.search({
+                    value: ''
+                })
+            },
             handleChange(obj) {
                 let {
                     detail: {
@@ -84,6 +93,7 @@
                 }
             },
             initPage() {
+                this.searching = true;
                 this.pageLoading();
                 this.Request('vipList', {
                     keywords: cacheSearchKey,
@@ -110,10 +120,14 @@
                             info: item
                         }
                     })
+                    this.searching = false;
+                }).catch(res=>{
+                    this.searching = false;
+                    this.Toast(res.message||'出错啦')
                 })
             }
         },
-        onPullDownRefresh() { 
+        onPullDownRefresh() {
             this.current = 1;
             this.initPage();
         },

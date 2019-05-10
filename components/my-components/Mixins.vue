@@ -19,9 +19,10 @@
                 Dialog,
                 ShowLoadMore: false,
                 LoadingType: 0, //0'加载更多',   1'已加载全部' 
-                static_resources_domain: ''
+                static_resources_domain: '',
             };
         },
+      
         methods: {
             Request(name, data) {
                 return request(name, data);
@@ -50,7 +51,7 @@
                 this.showReachBottom = true;
                 loadMore = setTimeout(() => {
                     this.showReachBottom = false;
-                }, 2000)
+                }, 5000)
             },
             closeLoadMore() {
                 clearTimeout(loadMore);
@@ -65,9 +66,6 @@
         },
         onReachBottom() {
             this.showReachBottom = true;
-        },
-        created() {
-            this.pageLoading();
         },
         onLoad() {
             this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名

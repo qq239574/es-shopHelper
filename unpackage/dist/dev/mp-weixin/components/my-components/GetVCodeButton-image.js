@@ -8,28 +8,45 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+
+
+
+
+
+
+var _domain = _interopRequireDefault(__webpack_require__(/*! ../../api/domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
 //
 //
-var _default =
-{
-  props: {
-    imageCode: {
-      type: String,
-      default: '' } },
+var _default = { props: { imageCode: { type: String, default: '' },
+    refreshAgain: {
+      type: Boolean,
+      default: false } },
 
 
   data: function data() {
     return {
-      imgSrc: 'http://user.qdev.eldev.cn/utility/captcha/get?type=forget&width=135&height=32&timestamp=' + new Date().getTime() };
+      imgSrc: '' };
 
   },
+  watch: {
+    refreshAgain: function refreshAgain() {
+      this.refresh();
+    } },
+
   methods: {
-    refresh: function refresh() {
-      this.imgSrc = 'http://user.qdev.eldev.cn/utility/captcha/get?type=forget&width=135&height=32&timestamp=' + new Date().getTime();
+    refresh: function refresh() {var _this = this;
+      this.Request('getVRCodeImg', {
+        type: 'forget',
+        width: 135,
+        height: 32,
+        timestamp: new Date().getTime() }).
+      then(function (res) {
+        _this.imgSrc = res.tempFilePath;
+      });
     } },
 
   beforeMount: function beforeMount() {

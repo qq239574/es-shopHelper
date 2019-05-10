@@ -44,6 +44,7 @@
     } from '../../components/my-components/getDateSection.js'
     import mockApi from '../components/mockGoodDetailApi.js'
     import deleteNull from '../components/deleteNullData.js'
+    import uploadImg from '../components/upLoadImage.js'
     let cacheGoodDetail = {};
     let cacheSubmitData = {};
     let DataFrom = {};
@@ -103,26 +104,30 @@
                 this.goodDetail = cacheGoodDetail;
                 let data = editGoodModel(cacheGoodDetail, cacheSubmitData);
                 if (DataFrom.from == 'addGoods') {
-                    data = deleteNull.call(this, data);//删除不必要字段，兼检查数据格式
-                    data && this.Request('addGoods', data).then(res => {
-                        if (res.error == 0) {
-                            this.Cacher.clearData('editGood')
-                            uni.navigateBack();
-                        } else {
+                    data = deleteNull.call(this, data); //删除不必要字段，兼检查数据格式
+                    uploadImg.call(this, data).then(res => {
+                        data && this.Request('addGoods', res).then(res => {
+                            if (res.error == 0) {
+                                this.Cacher.clearData('editGood')
+                                uni.navigateBack();
+                            } else {
+                                this.Toast(res.message);
+                            }
+                        }).catch(res => {
                             this.Toast(res.message);
-                        }
-                    }).catch(res => {
-                        this.Toast(res.message);
+                        })
                     })
                 } else {
-                    this.Request('editGoodDetail', data).then(res => {
-                        if (res.error == 0) {
-                            uni.navigateBack();
-                        } else {
+                    uploadImg.call(this, data).then(res => {
+                        this.Request('editGoodDetail', res).then(res => {
+                            if (res.error == 0) {
+                                uni.navigateBack();
+                            } else {
+                                this.Toast(res.message);
+                            }
+                        }).catch(res => {
                             this.Toast(res.message);
-                        }
-                    }).catch(res => {
-                        this.Toast(res.message);
+                        })
                     })
                 }
             },

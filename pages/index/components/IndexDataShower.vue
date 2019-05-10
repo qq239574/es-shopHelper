@@ -87,8 +87,9 @@
             overflow: hidden;
             position: relative;
             image {
-                width: 100%;
-                height: 100%；
+                width: 750upx;
+                height: 330upx;
+                margin-left:-20upx;
             }
             .childbox {
                 position: absolute;

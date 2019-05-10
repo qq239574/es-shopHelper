@@ -217,3 +217,14 @@ export const getMultiGoodSale={//获取多规格商品
     },
     type: 'get'
 }
+export const uploadImg={//上传图片
+    url: '/utility/attachment/upload',
+    data: {  
+        filePath:'',
+    },
+    
+    headers: {
+
+    },
+    type: 'image'
+}

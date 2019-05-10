@@ -1,5 +1,42 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/commodity/index"],{
 
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader/index.js?!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib/index.js?!I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/PageMixins.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+//
+var _default =
+{
+  data: function data() {
+    return {
+      showTabbar: true //是否显示tabbar
+    };
+  },
+  watch: {
+    showTabbar: function showTabbar() {
+      if (this.showTabbar) {
+        uni.showTabBar({
+          animation: true });
+
+      } else {
+        uni.hideTabBar({
+          animation: true });
+
+      }
+    } },
+
+  onLoad: function onLoad() {
+    console.log(' pafssss');
+  } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader/index.js?!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib/index.js?!I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index.vue?vue&type=script&lang=js& ***!
@@ -47,8 +84,9 @@
 
 
 var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
-var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));
 
+var _PageMixins = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/PageMixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
 var needShare = {};
 var DataFrom = {};
 var DataGo = {};
@@ -59,6 +97,9 @@ var curTab = {
   name: "出售中" };var _default =
 
 {
+  mixins: {
+    pageMixin: _PageMixins.default },
+
   components: {
     TabCard: TabCard,
     SearchInput: SearchInput,
@@ -300,6 +341,59 @@ var staticRenderFns = []
 render._withStripped = true
 
 
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/PageMixins.vue ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PageMixins.vue?vue&type=script&lang=js& */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "32c2354a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/PageMixins.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/PageMixins.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib??vue-loader-options!./PageMixins.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader/index.js?!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/vue-loader/lib/index.js?!I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PageMixins.vue?vue&type=script&lang=js&");
+/* harmony import */ var _G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_G_HBuilderX_plugins_uniapp_cli_node_modules_babel_loader_lib_index_js_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_12_1_G_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_script_js_G_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_PageMixins_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

@@ -1,4 +1,3 @@
-@charset "UTF-8";
 .index-data-shower.data-v-3ee2ce6d {
   width: 100%;
   height: 330rpx;
@@ -12,8 +11,9 @@
     position: relative;
 }
 .index-data-shower .box image.data-v-3ee2ce6d {
-      width: 100%;
-      height: 100%；;
+      width: 750rpx;
+      height: 330rpx;
+      margin-left: -20rpx;
 }
 .index-data-shower .box .childbox.data-v-3ee2ce6d {
       position: absolute;

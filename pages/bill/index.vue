@@ -42,6 +42,7 @@
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from './index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
+    import pageMixin from '../../components/my-components/PageMixins.vue'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
@@ -53,6 +54,9 @@
     } //{cateid: 0, index: 0, name: "代付款"}
     let cacheBill = {}; //缓存将要操作的订单 
     export default {
+        mixins:{
+			pageMixin
+		},
         components: {
             TabCard,
             Card,
@@ -105,7 +109,7 @@
                     }
                 }],
                 tabIndex: 0, //默认tabs的index
-                searching: false
+                searching: true
             }
         },
         onLoad(option) {
@@ -198,6 +202,9 @@
                     this.closePageLoading();
                     this.billList = res;
                     this.searching = false;
+                }).catch(res => {
+                    this.searching = false;
+                    this.Toast(res.message || '出错啦')
                 });
             },
             tabChange(tab) {
@@ -205,7 +212,7 @@
                 curTab = tab;
                 this.current = 1;
                 this.billList = [];
-                this.tabIndex=tab.cateid;
+                this.tabIndex = tab.cateid;
                 this.searching = true;
                 this.totalPage = 1;
                 getBillList.call(this, tab.cateid, {
@@ -229,7 +236,7 @@
                     from: 'searchShop',
                     title: '订单搜索',
                     placeholder: '请输入订单号',
-                    cateId:this.tabIndex
+                    cateId: this.tabIndex
                 })
                 uni.navigateTo({
                     url: '../../pagesLogin/pages/searchShop?from=bill'

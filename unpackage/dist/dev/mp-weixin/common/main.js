@@ -61,6 +61,7 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
       static_resources_domain: '' };
 
   },
+
   methods: {
     Request: function Request(name, data) {
       return (0, _index.default)(name, data);
@@ -89,7 +90,7 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
       this.showReachBottom = true;
       _loadMore = setTimeout(function () {
         _this2.showReachBottom = false;
-      }, 2000);
+      }, 5000);
     },
     closeLoadMore: function closeLoadMore() {
       clearTimeout(_loadMore);
@@ -104,9 +105,6 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
   },
   onReachBottom: function onReachBottom() {
     this.showReachBottom = true;
-  },
-  created: function created() {
-    this.pageLoading();
   },
   onLoad: function onLoad() {var _this3 = this;
     this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名

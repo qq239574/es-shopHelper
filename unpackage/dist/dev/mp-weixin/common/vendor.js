@@ -10611,6 +10611,22 @@ var postSelfVerifyInfo = { //订单自提
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js":
+/*!*******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/domain.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
+  base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
+  attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
+};var _default =
+global_settings;exports.default = _default;
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js":
 /*!*****************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/good.js ***!
@@ -10619,7 +10635,7 @@ var postSelfVerifyInfo = { //订单自提
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getMultiGoodSale = exports.addGoods = exports.beforeAddGoods = exports.getChannels = exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
+Object.defineProperty(exports, "__esModule", { value: true });exports.uploadImg = exports.getMultiGoodSale = exports.addGoods = exports.beforeAddGoods = exports.getChannels = exports.editGoodDetail = exports.getGoodDetail = exports.introGoodInfo = exports.goodPoster = exports.editGood = exports.recycleDelGood = exports.realDelGood = exports.tempDelGood = exports.onOrOffGoods = exports.goodsList = void 0;var goodsList = { //发送优惠券
   url: '/shop/manage/goods/list',
   data: {
     status: 1,
@@ -10837,6 +10853,17 @@ var getMultiGoodSale = { //获取多规格商品
 
 
   type: 'get' };exports.getMultiGoodSale = getMultiGoodSale;
+
+var uploadImg = { //上传图片
+  url: '/utility/attachment/upload',
+  data: {
+    filePath: '' },
+
+
+  headers: {},
+
+
+  type: 'image' };exports.uploadImg = uploadImg;
 
 /***/ }),
 
@@ -11126,14 +11153,10 @@ var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "
 var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js"));
 var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js"));
 var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
-var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
-
+var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));
+var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var sessionId = '';
 var shopInfo = '';
-var global_settings = {
-  base_url: "http://user.jiangyk.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-  attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
-};
 var indexApi = _objectSpread({},
 loginApi,
 homeApi,
@@ -11149,7 +11172,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
             sessionId) {_context.next = 5;break;}_context.next = 5;return (
               new Promise(function (resolve, reject) {
                 _request.default.get(
-                global_settings.base_url + indexApi.sessionid.url, {}, {
+                _domain.default.base_url + indexApi.sessionid.url, {}, {
                   'session-id': '' },
 
 
@@ -11185,10 +11208,50 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 'client-type': 'assistant' };
 
             }if (!(
-            indexApi[name].type == 'get')) {_context.next = 12;break;}return _context.abrupt("return",
+            indexApi[name].type == 'download')) {_context.next = 12;break;}return _context.abrupt("return",
+            new Promise(function (resolve, reject) {
+
+              var param = [];
+              for (var k in data) {
+                param.push(k + '=' + data[k]);
+              }
+              uni.downloadFile({
+                url: _domain.default.base_url + indexApi[name].url + '?' + param.join('&'), //仅为示例，非真实的接口地址
+                header: Object.assign(indexApi[name].headers || {}, header),
+                success: function success(uploadFileRes) {
+                  resolve(uploadFileRes);
+                },
+                fail: function fail(res) {
+                  resolve(res);
+                } });
+
+            }));case 12:if (!(
+
+            indexApi[name].type == 'image')) {_context.next = 16;break;}return _context.abrupt("return",
+            new Promise(function (resolve, reject) {
+              uni.uploadFile({
+                url: _domain.default.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
+                filePath: data.filePath,
+                fileType: 'image',
+                name: 'file',
+                formData: {
+                  'category_id': '',
+                  type: 'image' },
+
+                header: Object.assign(indexApi[name].headers || {}, header),
+                success: function success(uploadFileRes) {
+                  resolve(uploadFileRes);
+                },
+                fail: function fail(res) {
+                  resolve(res);
+                } });
+
+            }));case 16:if (!(
+
+            indexApi[name].type == 'get')) {_context.next = 20;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               _request.default.get(
-              global_settings.base_url + indexApi[name].url,
+              _domain.default.base_url + indexApi[name].url,
               Object.assign(indexApi[name].data, data),
               Object.assign(indexApi[name].headers || {}, header),
               function (res) {
@@ -11208,13 +11271,11 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
               });
 
-            }));case 12:return _context.abrupt("return",
-
+            }));case 20:return _context.abrupt("return",
 
             new Promise(function (resolve, reject) {
-
               _request.default.post(
-              global_settings.base_url + indexApi[name].url,
+              _domain.default.base_url + indexApi[name].url,
               Object.assign(indexApi[name].data, data),
               'form',
               Object.assign(indexApi[name].headers || {}, header),
@@ -11227,7 +11288,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 }
               });
 
-            }));case 13:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+            }));case 21:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -11240,7 +11301,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getUserJury = exports.bindWechat = exports.wechatLogin = exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
+Object.defineProperty(exports, "__esModule", { value: true });exports.getVRCodeImg = exports.getUserJury = exports.bindWechat = exports.wechatLogin = exports.getSettings = exports.getSessionid = exports.verifyCode = exports.setForgetPassword = exports.sendVfCode = exports.initPassword = exports.beforeSendVfCode = exports.switchShop = exports.changePassword = exports.loginCheck = exports.sessionid = exports.login = void 0;var login = { //用户登录
   url: '/api/site/account/login/post',
   data: {
     account: 'yilianxinpin',
@@ -11397,6 +11458,17 @@ var getUserJury = { //获取用户权限
   data: {},
   headers: {},
   type: 'get' };exports.getUserJury = getUserJury;
+
+var getVRCodeImg = { //获取图形验证码
+  url: '/utility/captcha/get',
+  data: {
+    type: '',
+    width: '',
+    height: '',
+    timestamp: '' },
+
+  headers: {},
+  type: 'download' };exports.getVRCodeImg = getVRCodeImg;
 
 /***/ }),
 
@@ -14101,6 +14173,52 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\upLoadImage.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/upLoadImage.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _domain = _interopRequireDefault(__webpack_require__(/*! ../../api/domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _default(data) {var _this = this;
+  var tmp = '';
+  var list = [];var _loop = function _loop(
+  k) {
+    if (k.indexOf('data[goods][thumbs]') > -1 || k.indexOf('data[goods][thumb]') > -1) {
+      tmp = data[k];
+      if (/^http|wxfile.+/.test(tmp)) {
+        list.push(new Promise(function (resolve, reject) {
+          _this.Request('uploadImg', {
+            filePath: tmp }).
+          then(function (res) {
+            if (res.statusCode == 200) {
+              var _tmp = res.data && JSON.parse(res.data) || '';
+              if (_tmp.error === 0) {
+                data[k] = _tmp.data.path;
+              }
+            }
+            resolve();
+          }).catch(function (res) {
+            resolve();
+          });
+
+        }));
+      }
+    }};for (var k in data) {_loop(k);
+  }
+
+
+  return new Promise(function (resolve, reject) {
+    Promise.all(list).then(function (res) {
+      resolve(data);
+    });
+  });
+}
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js":
 /*!*******************************************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo-items.js ***!
@@ -14281,13 +14399,15 @@ function _default(val, cacheGoodDetail) {
         img: item.replace(reg, '') };
 
     });
-
+    console.log(val);
   } else if (val.label == '轮播图') {
     cacheGoodDetail.info1.swiperList.list = val.images.map(function (item) {
       return {
         img: item.replace(reg, '') };
 
-    });;
+    });
+    console.log(val);
+
   } else if (val.label == '商品名称') {
     cacheGoodDetail.info1.goodName.value = val.value;
   } else if (val.label == '副标题') {

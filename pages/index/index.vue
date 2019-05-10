@@ -29,6 +29,7 @@
     import switchItem from '../../components/my-components/editBlock-SwitchItem.vue'
     import dataShower from './components/IndexDataShower.vue'
     import goodsBlock from './components/IndexGoods.vue'
+    import pageMixin from '../../components/my-components/PageMixins.vue'
     import apps from './components/IndexApps.vue'
     import {
         getDate,
@@ -40,6 +41,9 @@
         value: 'today'
     };
     export default {
+        mixin:{
+			pageMixin
+		},
         components: {
             LongButton,
             selectItem,

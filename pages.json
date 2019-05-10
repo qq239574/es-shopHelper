@@ -21,7 +21,9 @@
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
-				"van-icon": "/wxcomponents/vant-weapp/icon/index"
+				"van-icon": "/wxcomponents/vant-weapp/icon/index",
+				"van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+				"van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index"
 			},
 			"enablePullDownRefresh": true,
 			"backgroundColor": "#f3f5f9"
@@ -34,7 +36,9 @@
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
 				"i-modal": "/wxcomponents/iview-weapp/modal/index",
-				"i-page": "/wxcomponents/iview-weapp/page/index"
+				"i-page": "/wxcomponents/iview-weapp/page/index",
+				"van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+				"van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index"
 			}
 		}
 	}, {
@@ -43,7 +47,9 @@
 			"navigationBarTitleText": "我的资料",
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
-				"van-dialog": "/wxcomponents/vant-weapp/dialog/index"
+				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
+				"van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+				"van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index"
 			}
 		}
 	}, {
@@ -55,8 +61,9 @@
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",
 				"i-modal": "/wxcomponents/iview-weapp/modal/index",
 				"i-page": "/wxcomponents/iview-weapp/page/index",
-				"van-icon": "/wxcomponents/vant-weapp/icon/index"
-
+				"van-icon": "/wxcomponents/vant-weapp/icon/index",
+				"van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+				"van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index"
 			}
 		}
 	}],

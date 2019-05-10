@@ -5,10 +5,10 @@
                 <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
                 <van-field :type="openEye?'text':'password'" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
-                    <imgCodeButton :refreshButton='refreshButton' slot='icon' :imageCode='imageCode'></imgCodeButton>
+                    <imgCodeButton :refreshAgain='refreshAgain' slot='icon' :imageCode='imageCode'></imgCodeButton>
                 </van-field>
                 <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
-                    <RoundButton slot='icon' :canSend='canSendVfCode' @click='getVCode'></RoundButton>
+                    <RoundButton slot='icon' :refreshButton='refreshButton' :canSend='canSendVfCode' @click='getVCode'></RoundButton>
                 </van-field>
             </van-cell-group>
         </view>
@@ -20,12 +20,14 @@
 
 <script>
     import LongButton from '../../components/my-components/LongButton';
-    import RoundButton from '../../components/my-components/GetVCodeButton'
+    import RoundButton from '../../components/my-components/GetVCodeButton.vue'
     import imgCodeButton from '../../components/my-components/GetVCodeButton-image.vue'
     let type = '';
     let session_id = ''; //
     let questions = []; //	安全问题
     let registerType = ''; //	注册类型(username,mobile,email)
+    let sending = false;
+    let bar = '';
     export default {
         components: {
             LongButton,
@@ -54,6 +56,7 @@
                 placeholder2: '请输入短信验证码',
                 imageCode: '',
                 sendVfCode: false,
+                refreshAgain: false,
                 refreshButton: false
             }
         },
@@ -105,7 +108,8 @@
                                 account: this.userId,
                                 registerType, //注册类型
                                 question: '',
-                                answer: ''
+                                answer: '',
+                                verify_code: this.password,
                             }
                         })
                         uni.navigateTo({
@@ -138,23 +142,30 @@
                 }
             },
             requestCode() {
-                this.Request('sendVfCode', {
-                    account: this.userId,
-                    session_id: session_id,
-                    captcha_code: this.imageCode,
-                    action: 'forget',
-                    type: type
-                }).then(res => {
-                    if (error != 0) {
-                        this.Toast(res.message)
-                    }
-                    this.closePageLoading();
-                    this.refreshButton();
-                }).catch(res => {
-                    this.Toast(res.message);
-                    this.closePageLoading();
-                    this.refreshButton();
-                })
+                if (!sending) {
+                    sending = true;
+                    this.Request('sendVfCode', {
+                        account: this.userId,
+                        session_id: session_id,
+                        captcha_code: this.imageCode,
+                        action: 'forget',
+                        type: type
+                    }).then(res => {
+                        if (res.error != 0) {
+                            this.Toast(res.message)
+                        }
+                        this.closePageLoading();
+                        setTimeout(() => {
+                            sending = false;
+                        }, 5000)
+                    }).catch(res => {
+                        this.Toast(res.message||'图形验证码错误');
+                        this.closePageLoading();
+                        this.refreshAgain = !this.refreshAgain;
+                        this.refreshButton = !this.refreshButton;
+                        sending = false;
+                    })
+                }
             },
             getUserId(val) {
                 if (val.type == 'input') {

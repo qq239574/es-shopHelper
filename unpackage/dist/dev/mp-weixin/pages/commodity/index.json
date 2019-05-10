@@ -6,6 +6,8 @@
     "i-modal": "/wxcomponents/iview-weapp/modal/index",
     "i-page": "/wxcomponents/iview-weapp/page/index",
     "van-icon": "/wxcomponents/vant-weapp/icon/index",
+    "van-tabbar": "/wxcomponents/vant-weapp/tabbar/index",
+    "van-tabbar-item": "/wxcomponents/vant-weapp/tabbar-item/index",
     "tab-card": "/components/my-components/Tabs",
     "search-input": "/components/my-components/SearchInput",
     "card": "/pages/commodity/index/goodsList",

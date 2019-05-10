@@ -118,8 +118,9 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
     }, initPage: function initPage() {
       this.openEye = false;
       canLogin = false;
-      this.userId = 'yilianxinpin';
-      this.password = 'Qm8xn4KVBMc0Wd70';
+      var cache = this.Cacher.getData('cache-user-login');
+      this.userId = cache && cache.userId || 'yilianxinpin';
+      this.password = cache && cache.password || 'Qm8xn4KVBMc0Wd70';
       this.idError = false;
     },
     getUserId: function getUserId(val) {
@@ -143,6 +144,10 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
         this.pageLoading();
         _login.login.call(this).then(function (res) {
           requesting = false;
+          _this3.Cacher.setData('cache-user-login', {
+            userId: _this3.userId,
+            password: _this3.password });
+
           uni.reLaunch({
             url: '../../pagesLogin/pages/selectShop?from=login' });
 

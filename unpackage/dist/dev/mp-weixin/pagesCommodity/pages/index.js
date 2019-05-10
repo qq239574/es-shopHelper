@@ -53,7 +53,8 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 
 
 var _mockGoodDetailApi = _interopRequireDefault(__webpack_require__(/*! ../components/mockGoodDetailApi.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\mockGoodDetailApi.js"));
-var _deleteNullData = _interopRequireDefault(__webpack_require__(/*! ../components/deleteNullData.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\deleteNullData.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _deleteNullData = _interopRequireDefault(__webpack_require__(/*! ../components/deleteNullData.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\deleteNullData.js"));
+var _upLoadImage = _interopRequireDefault(__webpack_require__(/*! ../components/upLoadImage.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\upLoadImage.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -114,25 +115,29 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       var data = (0, _goodEditDataModel.default)(cacheGoodDetail, cacheSubmitData);
       if (DataFrom.from == 'addGoods') {
         data = _deleteNullData.default.call(this, data); //删除不必要字段，兼检查数据格式
-        data && this.Request('addGoods', data).then(function (res) {
-          if (res.error == 0) {
-            _this.Cacher.clearData('editGood');
-            uni.navigateBack();
-          } else {
+        _upLoadImage.default.call(this, data).then(function (res) {
+          data && _this.Request('addGoods', res).then(function (res) {
+            if (res.error == 0) {
+              _this.Cacher.clearData('editGood');
+              uni.navigateBack();
+            } else {
+              _this.Toast(res.message);
+            }
+          }).catch(function (res) {
             _this.Toast(res.message);
-          }
-        }).catch(function (res) {
-          _this.Toast(res.message);
+          });
         });
       } else {
-        this.Request('editGoodDetail', data).then(function (res) {
-          if (res.error == 0) {
-            uni.navigateBack();
-          } else {
+        _upLoadImage.default.call(this, data).then(function (res) {
+          _this.Request('editGoodDetail', res).then(function (res) {
+            if (res.error == 0) {
+              uni.navigateBack();
+            } else {
+              _this.Toast(res.message);
+            }
+          }).catch(function (res) {
             _this.Toast(res.message);
-          }
-        }).catch(function (res) {
-          _this.Toast(res.message);
+          });
         });
       }
     },

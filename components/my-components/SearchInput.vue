@@ -54,7 +54,7 @@
             getInput(val) {
                 if (val == 'clear') {
                     this.val = '';
-                    this.$emit('clear')
+                    this.$emit('clear') 
                 } else {
                     this.val = val.detail.value;
                     this.$emit(val.type, val.detail)
