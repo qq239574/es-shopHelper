@@ -78,8 +78,13 @@
                 this.getTotalPrice();
             },
             sure() {
+                let canSub = true;
                 this.pageLoading();
                 let goods = cacheList.map((item, index) => {
+                    if (!/^\d+(\.\d+)?$/.test(item.goodInfo.total)) {
+                        canSub=false;
+
+                    }
                     let result = {
                         "id": item.goodInfo.id, //订单商品id
                         "price_change": Math.round((item.goodInfo.total - cacheOldPrice[index].goodInfo.total) * 100) / 100 //改价变动金额
@@ -92,22 +97,27 @@
                     total_price: this.totalPrice, //订单总价 
                 }
                 goods.forEach((item, index) => {
-                    data['change_items[' + index + ']'] = item
+                    data['change_items[' + index + ']'] = item;
                 })
-                this.Request('changeBillPrice', flatten(data)).then(res => {
-                    this.Cacher.setData('changePrice', {
-                        from: 'changePrice'
-                    })
-                    if (res.error == 0) {
-                        this.closePageLoading();
-                        uni.navigateBack();
-                        this.Toast('改价成功');
-                    } else {
+                if (canSub) {
+                    this.Request('changeBillPrice', flatten(data)).then(res => {
+                        this.Cacher.setData('changePrice', {
+                            from: 'changePrice'
+                        })
+                        if (res.error == 0) {
+                            this.closePageLoading();
+                            uni.navigateBack();
+                            this.Toast('改价成功');
+                        } else {
+                            this.Toast(res.message);
+                        }
+                    }).catch(res => {
                         this.Toast(res.message);
-                    }
-                }).catch(res => {
-                    this.Toast(res.message);
-                })
+                    })
+                }else{
+                    this.closePageLoading();
+                    this.Toast('请输入正确的的数字')
+                }
             }
         },
         onLoad(option) {

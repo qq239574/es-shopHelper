@@ -20,6 +20,10 @@
             <view class="label bill__item" slot='pre'>收货地址：</view>
             <view class="body bill__item" slot='mid'>{{info.address}}</view>
         </cellBlock>
+         <cellBlock>
+            <view class="label bill__item" slot='pre'>手机号码：</view>
+            <view class="body bill__item" slot='mid'>{{info.tel}}</view>
+        </cellBlock>
     </view>
 </template>
 

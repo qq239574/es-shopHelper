@@ -51,6 +51,9 @@
       .notice-block .bottom .left .title.data-v-390f2aa8,
       .notice-block .bottom .left .brief.data-v-390f2aa8 {
         width: 100%;
+        max-height: 124rpx;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
 }
 .notice-block .top .left .title.data-v-390f2aa8,
       .notice-block .bottom .left .title.data-v-390f2aa8 {

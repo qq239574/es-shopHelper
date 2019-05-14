@@ -104,12 +104,16 @@ var searchDay = {
         type: val.value }).
       then(function (res) {
         _this.closePageLoading();
-        _this.showData = {
-          money: res.sell_data.yesterday_turnover,
-          payedBill: res.sell_data.yesterday_order_num,
-          payedGood: res.sell_data.yesterday_goods_num,
-          payedVip: res.sell_data.yesterday_pay_member_num };
+        if (res.error == 0) {
+          _this.showData = {
+            money: res.sell_data.yesterday_turnover,
+            payedBill: res.sell_data.yesterday_order_num,
+            payedGood: res.sell_data.yesterday_goods_num,
+            payedVip: res.sell_data.yesterday_pay_member_num };
 
+        }
+      }).catch(function (res) {
+        _this.Toast(res.message);
       });
     },
     changeShop: function changeShop() {
@@ -175,7 +179,6 @@ var searchDay = {
       this.Request('homeInfo', {}).then(function (res) {
         _this2.searchData(searchDay);
         _this2.shopName = res.shop.name;
-
         newNotice = res.notice;
         _this2.newNotice = {
           label: newNotice[0].title || '',
@@ -237,8 +240,10 @@ var searchDay = {
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData(option.from);
     this.shopName = DataFrom.title;
-    this.initPage();
     // }
+  },
+  onShow: function onShow() {
+    this.initPage();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

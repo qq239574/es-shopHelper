@@ -28,7 +28,7 @@
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import switchItem from '../../components/my-components/editBlock-SwitchItem.vue'
     import dataShower from './components/IndexDataShower.vue'
-    import goodsBlock from './components/IndexGoods.vue' 
+    import goodsBlock from './components/IndexGoods.vue'
     import apps from './components/IndexApps.vue'
     import {
         getDate,
@@ -39,7 +39,7 @@
     let searchDay = {
         value: 'today'
     };
-    export default { 
+    export default {
         components: {
             LongButton,
             selectItem,
@@ -94,12 +94,16 @@
                     type: val.value
                 }).then(res => {
                     this.closePageLoading();
-                    this.showData = {
-                        money: res.sell_data.yesterday_turnover,
-                        payedBill: res.sell_data.yesterday_order_num,
-                        payedGood: res.sell_data.yesterday_goods_num,
-                        payedVip: res.sell_data.yesterday_pay_member_num
+                    if (res.error == 0) {
+                        this.showData = {
+                            money: res.sell_data.yesterday_turnover,
+                            payedBill: res.sell_data.yesterday_order_num,
+                            payedGood: res.sell_data.yesterday_goods_num,
+                            payedVip: res.sell_data.yesterday_pay_member_num
+                        }
                     }
+                }).catch(res => {
+                    this.Toast(res.message)
                 });
             },
             changeShop() {
@@ -165,7 +169,6 @@
                 this.Request('homeInfo', {}).then(res => {
                     this.searchData(searchDay);
                     this.shopName = res.shop.name;
-                  
                     newNotice = res.notice;
                     this.newNotice = {
                         label: newNotice[0].title || '',
@@ -227,8 +230,10 @@
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
             this.shopName = DataFrom.title;
-            this.initPage();
             // }
+        },
+        onShow() {
+            this.initPage();
         }
     }
 </script>

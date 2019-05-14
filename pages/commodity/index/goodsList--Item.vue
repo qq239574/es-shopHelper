@@ -1,10 +1,10 @@
 <template>
     <view class='card--good'>
-        <view class="card--good-item" v-for='(item,index) in goodsList' :key='index' @click='clickGood(item)'>
-            <view class="imgbox">
+        <view class="card--good-item" v-for='(item,index) in goodsList' :key='index'>
+            <view class="imgbox"  @click='clickGood(item)'>
                 <image :src='item.img'></image>
             </view>
-            <view class="good-info">
+            <view class="good-info"  @click='clickGood(item)'>
                 <view class="good-name van-multi-ellipsis--l2">
                     {{item.goodName}}
                 </view>
@@ -124,7 +124,7 @@
         .card--good-item {
             position: relative;
             width: 100%;
-            min-height: 160upx;
+            min-height: 202upx;
             height: fit-content;
             display: flex;
             flex-wrap: nowrap;
@@ -137,7 +137,7 @@
             overflow: hidden;
             .imgbox {
                 width: 160upx;
-                height: 100%;
+                height: 160upx;
                 overflow: hidden;
                 display: flex;
                 margin-top: 5upx;

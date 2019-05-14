@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -13376,6 +13376,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     member_price: 0 //会员价
   };
   var refunding = 0; //是否维权状态//维权状态 0 无维权 1 正在维权 2 维权处理完成
+  var discount_total = 0; //会员折扣  商品 price_discount 的 之和
+  result.order.order_goods.forEach(function (item) {
+    discount_total += item.price_discount * 1;
+  });
   return {
     billInfo1: {
       billStatusText: result.order.status_text, //订单状态
@@ -13407,7 +13411,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       provideTypeText: result.order.dispatch_type_text, //配送方式
       provideType: result.order.dispatch_type_text, //配送方式 0 无需发货 1快递 2自提 3同城
       receiver: result.order.buyer_name, //收货人
-      address: result.order.address_full //收货地址
+      address: result.order.address_full, //收货地址
+      tel: result.order.buyer_mobile //联系方式
     },
     billInfo5: {
       moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
@@ -13481,7 +13486,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     }))),
     billInfo7: {
       goodTotal: result.order.goods_price, //商品总计
-      vipCount: extra_price_package.member_price || 0, //会员折扣
+      vipCount: (discount_total || 0).toFixed(2), //会员折扣
       sendCost: result.order.dispatch_price, //运费
       total: result.order.pay_price, //合计
       rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成
@@ -13563,7 +13568,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } else if (!data['data[goods][price]'] * 1) {
     this.Toast('请填写售卖价格');
     res = false;
-  } else if (data['data[goods][stock]'] === '') {
+  } else if (data['data[goods][type]'] != 3 && data['data[goods][stock]'] === '') {
     this.Toast('请填写商品库存');
     res = false;
   }
@@ -13583,6 +13588,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;var _updateGoodInfoItems = __webpack_require__(/*! ./updateGoodInfo-items */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js");
 
 
+
+function mapVartualCard(list, id) {
+  var len = list.length;
+  var tmp = '';
+  for (var i = 0; i < len; i++) {
+    tmp = list[i];
+    if (tmp.id == id) {
+      return tmp;
+    }
+  }
+  return {};
+}
 function goodData(data) {//单规格商品
   var static_resources_domain = this.Cacher.getData('static_resources_domain');
   var reg = new RegExp(static_resources_domain, 'g');
@@ -13638,6 +13655,10 @@ function goodData(data) {//单规格商品
     return result;
   }); //商品所属分类
   var formList = data.form_list;
+  formList.unshift({
+    id: 0,
+    name: '不使用表单' });
+
   var statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
 
   var info = {
@@ -13712,6 +13733,7 @@ function goodData(data) {//单规格商品
         label: '子规格详情',
         id: '',
         value: '价格、库存',
+        formList: data.virtual_list,
         list: (data.options || []).map(function (item) {
           var other = {
             display_order: item.display_order,
@@ -13722,6 +13744,7 @@ function goodData(data) {//单规格商品
             thumb: item.thumb,
             virtual_card_id: item.virtual_card_id,
             weight: item.weight };
+
 
           return {
             specif: {
@@ -13744,8 +13767,17 @@ function goodData(data) {//单规格商品
               id: '',
               value: item.stock,
               disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
-              editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+              needHide: data.goods.type == 3 //卡密商品不显示
             },
+            cardStock: {
+              label: '卡密库',
+              id: item.virtual_card_id,
+              value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name,
+              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
+              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+              needHide: data.goods.type != 3 },
+
             code: {
               label: '商品编号',
               id: '',
@@ -13757,6 +13789,7 @@ function goodData(data) {//单规格商品
             specsId: item.specs,
             disabled: !!data.goods.activity_goods //活动期间
           };
+
         }),
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
@@ -13780,7 +13813,7 @@ function goodData(data) {//单规格商品
         id: virtual_card_id,
         value: cardType.name,
         formList: cardSocks,
-        needHide: data.goods.type == 3,
+        needHide: data.goods.type != 3 || data.goods.has_option != 0, //单规格卡密商品才显示
         disabled: false, //可否编辑
         editable: 'select' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
@@ -13942,7 +13975,7 @@ var goodModel = {}; //商品编辑模板数据
 
 function mapOptions(data, cache) {
   var options = data.info2.childrenSpecs.list.map(function (item, index) {
-    return _objectSpread({
+    var tmp = _objectSpread({
       goods_code: item.code.value, //
       price: item.price.value, //
       stock: item.stock.value, //
@@ -13953,7 +13986,12 @@ function mapOptions(data, cache) {
       weight: 0 },
     item.other);
 
+    if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') {//多规格电子卡密
+      tmp.virtual_card_id = item.cardStock.id;
+    }
+    return tmp;
   });
+
   return options;
 }
 
@@ -14001,6 +14039,10 @@ function mapGoods(data, cache) {
     content: '<p>暂无</p>',
     stock_warning: 0 };
 
+
+  if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') {//多规格电子卡密
+    delete goods.virtual_card_id;
+  }
 
   return goods;
 
@@ -14104,7 +14146,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         res.goods.form_id = 0;
         res.goods.status = 1;
         res.goods.putaway_time = '';
-        console.log('mock', res, data);
         resolve(res);
 
       } else {
@@ -14314,13 +14355,22 @@ function addGoodType(old, list) {//添加修改子规格
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
+      cardStock: {
+        label: '卡密库',
+        id: '',
+        value: 0,
+        disabled: false, //可否编辑,活动期间不可编辑
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: true },
+
       stock: {
         label: '库存',
         id: '',
         value: 0,
         disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: false },
+
       code: {
         label: '商品编号',
         id: '',
@@ -14352,13 +14402,22 @@ function addGoodType(old, list) {//添加修改子规格
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
+      cardStock: {
+        label: '卡密库',
+        id: tmp.cardStock.id,
+        value: tmp.cardStock.value,
+        disabled: false, //可否编辑,活动期间不可编辑
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: tmp.cardStock.needHide },
+
       stock: {
         label: '库存',
         id: '',
         value: tmp.stock.value || 0,
         disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: tmp.stock.needHide },
+
       code: {
         label: '商品编号',
         id: '',
@@ -14397,15 +14456,12 @@ function _default(val, cacheGoodDetail) {
         img: item.replace(reg, '') };
 
     });
-    console.log(val);
   } else if (val.label == '轮播图') {
     cacheGoodDetail.info1.swiperList.list = val.images.map(function (item) {
       return {
         img: item.replace(reg, '') };
 
     });
-    console.log(val);
-
   } else if (val.label == '商品名称') {
     cacheGoodDetail.info1.goodName.value = val.value;
   } else if (val.label == '副标题') {
@@ -14440,9 +14496,10 @@ function _default(val, cacheGoodDetail) {
     cacheGoodDetail.info2.specification.list = val.other.list;
     cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
     cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
-
     var oldList = cacheGoodDetail.info2.childrenSpecs.list;
     cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
+    cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
+
   } else if (val.label == '子规格详情') {
     cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
   } else if (val.label == '自动发货') {
@@ -14459,6 +14516,7 @@ function _default(val, cacheGoodDetail) {
     cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
     cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
     cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
+    cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || val.id != 3; //电子卡密
   }
   return cacheGoodDetail;
 

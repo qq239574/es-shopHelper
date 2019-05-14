@@ -6,7 +6,7 @@
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>会员折扣</view>
-            <view class='card--info__row__status'>￥-{{rights.vipCount}}</view>
+            <view class='card--info__row__status'>-￥{{rights.vipCount}}</view>
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>运费</view>

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import item from '../components/Notice-Block'
+    import item from '../components/Notice-Block.vue'
     let ajaxIndex = 1;
     export default {
         components: {

@@ -47,14 +47,14 @@
             }
         },
         watch: {
-            info() {
+            info() { 
                 let adder1 = new numAdder();
                 let adder2 = new numAdder();
                 let that = this;
-                adder1.start(this.info.today, function(num) {
+                adder1.start(this.info.today, function(num) { 
                     that.today = num;
                 });
-                adder2.start(this.info.yesterday, function(num) {
+                adder2.start(this.info.yesterday, function(num) { 
                     that.yesterday = num;
                 })
             }

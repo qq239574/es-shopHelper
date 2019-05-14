@@ -44,6 +44,7 @@
                     title: DataFrom.title
                 });
             }
+            console.log(DataFrom)
         }
     }
 </script>

@@ -11,7 +11,7 @@
 .card--good .card--good-item.data-v-af537fd6 {
     position: relative;
     width: 100%;
-    min-height: 160rpx;
+    min-height: 202rpx;
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
@@ -36,7 +36,7 @@
 }
 .card--good .card--good-item .imgbox.data-v-af537fd6 {
       width: 160rpx;
-      height: 100%;
+      height: 160rpx;
       overflow: hidden;
       display: -webkit-box;
       display: -webkit-flex;

@@ -269,8 +269,7 @@
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
-            cacheBill = DataFrom;
-            this.initPage();
+            cacheBill = DataFrom; 
         },
     }
 </script>

@@ -122,7 +122,6 @@ var _default = {
   onLoad: function onLoad(option) {
     this.billList = [];
     DataFrom = this.Cacher.getData(option.from) || {};
-    console.log(DataFrom);
   },
   onShow: function onShow() {
     this.current = 1;
@@ -198,12 +197,15 @@ var _default = {
         this.tabIndex = DataFrom.cateid || 0;
       } else if (DataFrom.from == 'vipDetail') {
         member_id = DataFrom.member_id;
+      } else if (DataFrom.from == 'vipManage') {
+        member_id = DataFrom.info.id;
       } else {
         this.tabIndex = curTab.cateid;
       }
       _getBillList.default.call(this, this.tabIndex, {
         keywords: searchData.value || '',
         page: this.current,
+        member_id: member_id,
         pageSize: 20 }).
       then(function (res) {
         _this2.closePageLoading();

@@ -113,7 +113,6 @@ var DataFrom = {};var _default =
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
-    console.log('DataFrom', DataFrom);
     this.info = {
       name: DataFrom.info.nickname,
       img: DataFrom.info.avatar };

@@ -99,6 +99,26 @@ var cacheSearchKey = '';var _default =
           uni.navigateTo({
             url: '../../pagesCommodity/pages/multiSpecifications' });
 
+        } else if (item.name == '充值') {
+          this.Cacher.setData('vipManage', {
+            from: 'vipManage',
+            value: {
+              type: 'add',
+              label: '余额' },
+
+            info: item.detail.info });
+
+          uni.navigateTo({
+            url: './addSurplus?from=vipManage' });
+
+        } else if (item.name == '订单') {
+          this.Cacher.setData('vipManage', {
+            from: 'vipManage',
+            info: item.detail.info });
+
+          uni.navigateTo({
+            url: './vipBills?from=vipManage' });
+
         }
       }
     },
@@ -143,6 +163,7 @@ var cacheSearchKey = '';var _default =
   },
   onLoad: function onLoad() {
     this.viplist = [];
+    cacheSearchKey = '';
     this.initPage();
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

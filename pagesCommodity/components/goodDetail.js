@@ -1,6 +1,18 @@
  import {
      activeGood
  } from './updateGoodInfo-items'
+
+ function mapVartualCard(list, id) {
+     let len = list.length;
+     let tmp = '';
+     for (let i = 0; i < len; i++) {
+         tmp = list[i];
+         if (tmp.id == id) {
+             return tmp;
+         }
+     }
+     return {}
+ }
  export function goodData(data) { //单规格商品
      let static_resources_domain = this.Cacher.getData('static_resources_domain');
      let reg = new RegExp(static_resources_domain, 'g');
@@ -56,6 +68,10 @@
          return result;
      }); //商品所属分类
      let formList = data.form_list;
+     formList.unshift({
+         id: 0,
+         name: '不使用表单'
+     })
      let statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
 
      let info = {
@@ -130,16 +146,18 @@
                  label: '子规格详情',
                  id: '',
                  value: '价格、库存',
+                 formList: data.virtual_list,
                  list: (data.options || []).map(item => {
                      let other = {
                          display_order: item.display_order,
-                         goods_id:item.goods_id,
-                         sales:item.sales,
+                         goods_id: item.goods_id,
+                         sales: item.sales,
                          shop_id: item.shop_id,
                          stock_warning: item.stock_warning,
                          thumb: item.thumb,
                          virtual_card_id: item.virtual_card_id,
-                         weight:item.weight,
+                         weight: item.weight,
+
                      }
                      return {
                          specif: {
@@ -163,6 +181,15 @@
                              value: item.stock,
                              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                             needHide: data.goods.type == 3 //卡密商品不显示
+                         },
+                         cardStock: {
+                             label: '卡密库',
+                             id: item.virtual_card_id,
+                             value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name,
+                             disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
+                             editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                             needHide: data.goods.type != 3
                          },
                          code: {
                              label: '商品编号',
@@ -174,6 +201,7 @@
                          other,
                          specsId: item.specs,
                          disabled: !!data.goods.activity_goods, //活动期间
+
                      }
                  }),
                  disabled: false, //可否编辑
@@ -198,7 +226,7 @@
                  id: virtual_card_id,
                  value: cardType.name,
                  formList: cardSocks,
-                 needHide: data.goods.type == 3,
+                 needHide: data.goods.type != 3 || data.goods.has_option != 0, //单规格卡密商品才显示
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },
@@ -277,7 +305,7 @@
                  value: data.goods.dispatch_price,
                  dispatch_list: data.dispatch_list,
                  dispatch_id: data.goods.dispatch_id || 0,
-                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0]||'统一运费（元）',
+                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0] || '统一运费（元）',
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                  needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -333,7 +361,7 @@
      return info;
  }
  export function addGoodsModel(data) {
-     let dataModel = goodData.call(this, data); 
+     let dataModel = goodData.call(this, data);
      dataModel.info1.goodType.disabled = false;
      dataModel.info2.specification.disabled = false;
      dataModel.info2.specification.type = 'add';

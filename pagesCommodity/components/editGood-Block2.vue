@@ -7,7 +7,7 @@
             <selectItem label='子规格详情' :other='info.childrenSpecs' :value='info.childrenSpecs.value' @click.stop="clickCell" v-if='info.specification.value=="多规格"'></selectItem>
             <inputItem label='售卖价格' :other='info.price' :value='info.price.value' @input="inputCell"></inputItem>
             <inputItem label='划线价格' :other='info.delPrice' :value='info.delPrice.value' @input="inputCell"></inputItem>
-            <selectItem label='卡密库' :other='info.cardStock' :value='info.cardStock.value' @click.stop="clickCell" v-if='info.cardStock.needHide'></selectItem>
+            <selectItem label='卡密库' :other='info.cardStock' :value='info.cardStock.value' @click.stop="clickCell" v-if='!info.cardStock.needHide'></selectItem>
             <inputItem label='商品库存' :other='info.stockNum' :value='info.stockNum.value' @input="inputCell" v-else></inputItem>
             <switchItem label='显示库存' :other='info.showStock' :checked='info.showStock.value' @change="inputCell"></switchItem>
             <inputItem label='已出售数' :other='info.soldNum' :value='info.soldNum.value' @input="inputCell"></inputItem>

@@ -141,7 +141,7 @@ var requesting = false;var _default =
             if (_this2.shops.length == 1 && DataFrom.from != 'home') {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
               var shop = _this2.shops[0];
               _this2.Cacher.setData(pageId, {
-                from: poageId,
+                from: pageId,
                 shop: shop });
 
               _this2.Request('switchShop', {
@@ -195,6 +195,7 @@ var requesting = false;var _default =
     DataGo = {
       go: '' };
 
+    console.log(DataFrom);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

@@ -39,7 +39,7 @@ var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOpt
 
 
 
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};
 
 
 var initing = false; //是否正在刷新
@@ -117,10 +117,6 @@ var initdata = [{
       if (!initing) {
         initing = true;
         this.pageLoading();
-        // this.initLine1([0, 0, 0, 0, 0, 0, 0]);
-        // this.initLine2([0, 0, 0, 0, 0, 0, 0]);
-        // this.initLine3([0, 0, 0, 0, 0, 0, 0]);
-        // this.initLine4([0, 0, 0, 0, 0, 0, 0]);
         this.Request('getStatisticsData', { //今天的数据
           is_yesterday: 0 }).
         then(function (res) {
@@ -163,8 +159,15 @@ var initdata = [{
         this.Request('getGoodNumberByDate', { //昨天的商品数
           date: (0, _getDateSection.getDate)(-1) }).
         then(function (res) {
-          _this.dataList[2].yesterday = res.data.goods_paid_count;
-          _this.dataList = _toConsumableArray(_this.dataList);
+          _this.dataList[2].yesterday = res.data && res.data.goods_paid_count || {
+            goods_added_cart_count: 0,
+            goods_onsale_count: 0,
+            goods_paid_count: 0,
+            goods_visited_count: 0 };
+
+          _this.dataList = _toConsumableArray(_this.dataList.map(function (item) {
+            return _objectSpread({}, item);
+          }));
         });
       } else {
         setTimeout(function () {

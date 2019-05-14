@@ -40,7 +40,7 @@
 <script>
     import TabCard from '../../components/my-components/Tabs';
     import Card from '../../pages/bill/index/Card';
-    import SearchInput from '../../components/my-components/SearchInput.vue'; 
+    import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from '../../pages/bill/index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
     let DataFrom = {};
@@ -112,7 +112,6 @@
         onLoad(option) {
             this.billList = [];
             DataFrom = this.Cacher.getData(option.from) || {};
-            console.log(DataFrom)
         },
         onShow() {
             this.current = 1;
@@ -188,12 +187,15 @@
                     this.tabIndex = DataFrom.cateid || 0;
                 } else if (DataFrom.from == 'vipDetail') {
                     member_id = DataFrom.member_id;
-                } else {
+                }else if (DataFrom.from == 'vipManage') {
+                    member_id = DataFrom.info.id;
+                }  else {
                     this.tabIndex = curTab.cateid;
                 }
                 getBillList.call(this, this.tabIndex, {
                     keywords: searchData.value || '',
                     page: this.current,
+                    member_id: member_id,
                     pageSize: 20
                 }).then(res => {
                     this.closePageLoading();

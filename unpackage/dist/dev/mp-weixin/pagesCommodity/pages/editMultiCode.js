@@ -8,7 +8,9 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};
+
+
 
 
 
@@ -37,7 +39,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 var DataFrom = {};
-var cacheList = [];var _default =
+var cacheList = [];
+var DataGo = {
+  go: '' };
+
+var cacheIndex = 0;var _default =
 {
   components: {
     inputItem: inputItem,
@@ -94,17 +100,46 @@ var cacheList = [];var _default =
       DataFrom.needChange.other.list = cacheList;
       this.Cacher.setData('editMultiCode', DataFrom);
     },
-    clickCell: function clickCell(val) {} },
+    clickCell: function clickCell(val) {
+      val.other.formList = DataFrom.needChange.other.formList;
+      DataGo.go = 'editForm';
+      cacheIndex = val.other.index;
+      this.Cacher.setData('editMultiCode', {
+        from: 'editMultiCode',
+        go: 'editForm',
+        needChange: val });
+
+      uni.navigateTo({
+        url: '../pages/editForm?from=editMultiCode' });
+
+    },
+    initPage: function initPage() {
+      if (DataGo.go == 'editForm') {
+        DataGo = this.Cacher.getData(DataGo.go);
+        cacheList[cacheIndex].cardStock.value = DataGo.needChange.value;
+        cacheList[cacheIndex].cardStock.id = DataGo.needChange.id;
+        DataFrom.needChange.other.list = cacheList;
+        this.Cacher.setData('editMultiCode', DataFrom);
+      }
+    } },
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
     cacheList = DataFrom.needChange.other.list.map(function (item, index) {
       item.index = index;
+      item.cardStock.needHide = false;
+      item.stock.needHide = true;
       return item;
     });
+    this.initPage();
     this.list = cacheList;
+    DataFrom.needChange.other.list = cacheList;
     this.Cacher.setData('editMultiCode', DataFrom);
+  },
+  onShow: function onShow() {
+    this.initPage();
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

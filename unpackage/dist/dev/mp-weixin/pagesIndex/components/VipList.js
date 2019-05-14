@@ -106,11 +106,9 @@
             url: '../pages/vipDetail?from=vipManage' });
 
         } else if (val.name == '充值') {
-          this.Toast('暂未开放');
+          this.$emit('click', val);
         } else if (val.name == '订单') {
-          uni.reLaunch({
-            url: '../../pages/bill/index?from=vipManage' });
-
+          this.$emit('click', val);
         }
       } else if (val.type == 'item') {
         uni.navigateTo({

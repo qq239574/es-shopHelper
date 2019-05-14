@@ -112,7 +112,7 @@
                     requesting = true; //函数节流
                     this.requesting = requesting;
                     this.pageLoading();
-                    DataFrom = this.Cacher.getData(pageId)
+                    DataFrom = this.Cacher.getData(pageId);
                     this.Request('shoplist', {
                         pageSize: 20,
                         page: ajaxIndex,
@@ -131,7 +131,7 @@
                             if (this.shops.length == 1 && DataFrom.from != 'home') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
                                 let shop = this.shops[0];
                                 this.Cacher.setData(pageId, {
-                                    from: poageId,
+                                    from: pageId,
                                     shop
                                 });
                                 this.Request('switchShop', {
@@ -185,6 +185,7 @@
             DataGo = {
                 go: ''
             };
+            console.log(DataFrom)
         }
     }
 </script>

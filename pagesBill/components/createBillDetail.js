@@ -45,6 +45,10 @@ export default function (result) {
         member_price: 0 //会员价
     };
     let refunding = 0; //是否维权状态//维权状态 0 无维权 1 正在维权 2 维权处理完成
+    let discount_total = 0; //会员折扣  商品 price_discount 的 之和
+    result.order.order_goods.forEach(item => {
+        discount_total += item.price_discount * 1;
+    }) 
     return {
         billInfo1: {
             billStatusText: result.order.status_text, //订单状态
@@ -76,7 +80,8 @@ export default function (result) {
             provideTypeText: result.order.dispatch_type_text, //配送方式
             provideType: result.order.dispatch_type_text, //配送方式 0 无需发货 1快递 2自提 3同城
             receiver: result.order.buyer_name, //收货人
-            address: result.order.address_full //收货地址
+            address: result.order.address_full, //收货地址
+            tel: result.order.buyer_mobile,//联系方式
         },
         billInfo5: {
             moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
@@ -150,7 +155,7 @@ export default function (result) {
         })],
         billInfo7: {
             goodTotal: result.order.goods_price, //商品总计
-            vipCount: extra_price_package.member_price || 0, //会员折扣
+            vipCount: (discount_total || 0).toFixed(2), //会员折扣
             sendCost: result.order.dispatch_price, //运费
             total: result.order.pay_price, //合计
             rightStatus: refunding //维权信息 //维权状态 0 无维权 1 正在维权 2 维权处理完成

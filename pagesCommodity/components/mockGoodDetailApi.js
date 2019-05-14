@@ -28,8 +28,7 @@ export default function (data) {
                 res.goods.is_discount = 1;
                 res.goods.form_id = 0;
                 res.goods.status = 1;
-                res.goods.putaway_time = ''; 
-                console.log('mock', res, data)
+                res.goods.putaway_time = '';  
                 resolve(res);
 
             } else {

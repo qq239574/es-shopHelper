@@ -5,7 +5,7 @@ let goodModel = {} //商品编辑模板数据
 
 function mapOptions(data, cache) {
     let options = data.info2.childrenSpecs.list.map((item, index) => {
-        return {
+        let tmp = {
             goods_code: item.code.value, //
             price: item.price.value, //
             stock: item.stock.value, //
@@ -16,7 +16,12 @@ function mapOptions(data, cache) {
             weight: 0,
             ...item.other
         }
+        if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') { //多规格电子卡密
+            tmp.virtual_card_id = item.cardStock.id
+        }
+        return tmp;
     });
+
     return options;
 }
 
@@ -35,7 +40,7 @@ function mapGoods(data, cache) {
         category_ids: data.info1.classification.goodTypes.map(item => { //商品分类
             return item.id;
         }).join(','),
-        thumb: data.info1.mainImage.list[0]&&data.info1.mainImage.list[0].img||'', //主图
+        thumb: data.info1.mainImage.list[0] && data.info1.mainImage.list[0].img || '', //主图
         thumbs: data.info1.swiperList.list.map(item => { //轮播图
             return item.img
         }),
@@ -43,17 +48,17 @@ function mapGoods(data, cache) {
         has_option: data.info2.specification.value == '多规格' ? 1 : 0, //商品规格
         activity_goods: 0, //活动商品 0不是 1是
         price: data.info2.price.value, //售卖价格
-        original_price: data.info2.delPrice.value||0, //划线价格
+        original_price: data.info2.delPrice.value || 0, //划线价格
         stock: data.info2.stockNum.value, //商品库存
         stock_hide: data.info2.showStock.value ? 0 : 1, //显示库存
-        sales_count: data.info2.soldNum.value||0, //已出售数
+        sales_count: data.info2.soldNum.value || 0, //已出售数
         sales_hide: data.info2.showSold.value ? 0 : 1, //显示销量
         goods_code: data.info3.goodCode.value, //商品编码
         auto_warehouse: data.info3.autoExt.value ? 1 : 0, //定时下架
         auto_warehouse_time: data.info3.autoExtTime.value, //定时下架时间
         auto_delivery: data.info3.autoDeliver.value ? 1 : 0, //自动发货
         auto_delivery_content: data.info3.autoDeliverContent.value, //自动发货内容
-        dispatch_price: data.info3.provideCost.value||0, //快递运费
+        dispatch_price: data.info3.provideCost.value || 0, //快递运费
         dispatch_id: data.info3.provideCost.dispatch_id, ////运费模板id
         dispatch_type: data.info3.provideCost.dispatch_id == -1 ? 1 : 0, //// 运费方式 0 运费模板 1 统一运费
         dispatch_hide: data.info3.showProCost.value ? 0 : 1, //显示快递
@@ -64,7 +69,11 @@ function mapGoods(data, cache) {
         content: '<p>暂无</p>',
         stock_warning: 0
 
-    }  
+    }
+    if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') { //多规格电子卡密
+        delete goods.virtual_card_id
+    }
+  
     return goods;
 
 

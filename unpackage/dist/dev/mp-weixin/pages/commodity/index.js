@@ -201,7 +201,8 @@ var curTab = {
       this.Cacher.setData('good', {
         from: 'good',
         title: '搜索商品',
-        placeholder: '请输入商品名称' });
+        placeholder: '请输入商品名称',
+        default: this.searchValue });
 
       uni.navigateTo({
         url: '../../pagesLogin/pages/searchShop?from=good' });
@@ -263,6 +264,19 @@ var curTab = {
             _this2.initPage();
           });
         }
+      } else if (item.type == 'good') {//直接点击商品，同样进入编辑页面
+        DataGo = {
+          go: 'editGood' };
+
+        this.Cacher.setData('good', {
+          from: 'good',
+          item: {
+            detail: item.detail.val } });
+
+
+        uni.navigateTo({
+          url: '../../pagesCommodity/pages/index?from=good' });
+
       }
     } },
 

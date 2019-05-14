@@ -3,10 +3,10 @@
         <view class="top">
             <view class="left">
                 <view class="title">{{info.title}}</view>
-                <view class="brief">{{info.brief}}</view>
+                <view class="brief " :class='info.img?"van-multi-ellipsis--l2":"van-multi-ellipsis--l3"'>{{info.brief}}</view>
             </view>
             <view class="right" v-if='info.img'>
-                <image lazy-load :src='info.img'></image>
+                <image lazy-load :src='domain+info.img'></image>
             </view>
         </view>
         <view class="bottom" >
@@ -23,14 +23,22 @@
                 title:'标题',
                 brief:'简介',
                 date:'2019-01-01 12:12:12',
-                img:''
+                img:'',
             }
         },
+        data() {
+            return {
+                domain:''
+            }
+        }, 
         methods: {
             click(){
                 this.$emit('click',this.info)
             }
         },
+        mounted(){
+            this.domain=this.Cacher.getData('static_resources_domain'); 
+        }
     }
 </script>
 
@@ -66,6 +74,8 @@
                 .title,
                 .brief {
                     width: 100%;
+                    max-height: 124upx; 
+                    box-sizing: border-box;  
                 }
                 .title {
                     line-height: 48upx;

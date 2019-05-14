@@ -89,6 +89,26 @@
                         uni.navigateTo({
                             url: '../../pagesCommodity/pages/multiSpecifications'
                         })
+                    } else if (item.name == '充值') {
+                        this.Cacher.setData('vipManage', {
+                            from: 'vipManage',
+                            value: {
+                                type: 'add',
+                                label: '余额'
+                            },
+                            info: item.detail.info
+                        })
+                        uni.navigateTo({
+                            url: './addSurplus?from=vipManage'
+                        })
+                    } else if (item.name == '订单') {
+                        this.Cacher.setData('vipManage', {
+                            from: 'vipManage',
+                            info: item.detail.info
+                        })
+                        uni.navigateTo({
+                            url: './vipBills?from=vipManage'
+                        })
                     }
                 }
             },
@@ -121,9 +141,9 @@
                         }
                     })
                     this.searching = false;
-                }).catch(res=>{
+                }).catch(res => {
                     this.searching = false;
-                    this.Toast(res.message||'出错啦')
+                    this.Toast(res.message || '出错啦')
                 })
             }
         },
@@ -133,6 +153,7 @@
         },
         onLoad() {
             this.viplist = [];
+            cacheSearchKey='';
             this.initPage()
         }
     }

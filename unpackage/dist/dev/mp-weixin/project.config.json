@@ -33,12 +33,40 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 4,
 			"list": [
 				{
 					"id": -1,
-					"name": "index",
+					"name": "vips",
+					"pathName": "pagesIndex/pages/vipManage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "in dex",
 					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bills",
+					"pathName": "pages/bill/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "goods",
+					"pathName": "pages/commodity/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bills",
+					"pathName": "pages/bill/index",
 					"scene": null
 				}
 			]

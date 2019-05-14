@@ -70,7 +70,7 @@
             return {
                 dataList: initdata,
             }
-        }, 
+        },
         onShow() {
             this.initPage()
         },
@@ -107,13 +107,9 @@
                 if (!initing) {
                     initing = true;
                     this.pageLoading();
-                    // this.initLine1([0, 0, 0, 0, 0, 0, 0]);
-                    // this.initLine2([0, 0, 0, 0, 0, 0, 0]);
-                    // this.initLine3([0, 0, 0, 0, 0, 0, 0]);
-                    // this.initLine4([0, 0, 0, 0, 0, 0, 0]);
                     this.Request('getStatisticsData', { //今天的数据
                         is_yesterday: 0
-                    }).then(res => { 
+                    }).then(res => {
                         this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
                         this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
                         this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
@@ -153,8 +149,15 @@
                     this.Request('getGoodNumberByDate', { //昨天的商品数
                         date: getDate(-1)
                     }).then(res => {
-                        this.dataList[2].yesterday = res.data.goods_paid_count;
-                        this.dataList = [...this.dataList];
+                        this.dataList[2].yesterday = res.data && res.data.goods_paid_count || {
+                            goods_added_cart_count: 0,
+                            goods_onsale_count: 0,
+                            goods_paid_count: 0,
+                            goods_visited_count: 0,
+                        };
+                        this.dataList = [...this.dataList.map(item=>{
+                            return {...item}
+                        })]; 
                     })
                 } else {
                     setTimeout(() => {

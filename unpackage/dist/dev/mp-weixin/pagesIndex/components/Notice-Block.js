@@ -36,10 +36,19 @@ var _default =
       img: '' } },
 
 
+  data: function data() {
+    return {
+      domain: '' };
+
+  },
   methods: {
     click: function click() {
       this.$emit('click', this.info);
-    } } };exports.default = _default;
+    } },
+
+  mounted: function mounted() {
+    this.domain = this.Cacher.getData('static_resources_domain');
+  } };exports.default = _default;
 
 /***/ }),
 

@@ -88,8 +88,13 @@ var _default = {
       this.getTotalPrice();
     },
     sure: function sure() {var _this = this;
+      var canSub = true;
       this.pageLoading();
       var goods = cacheList.map(function (item, index) {
+        if (!/^\d+(\.\d+)?$/.test(item.goodInfo.total)) {
+          canSub = false;
+
+        }
         var result = {
           "id": item.goodInfo.id, //订单商品id
           "price_change": Math.round((item.goodInfo.total - cacheOldPrice[index].goodInfo.total) * 100) / 100 //改价变动金额
@@ -104,20 +109,25 @@ var _default = {
       goods.forEach(function (item, index) {
         data['change_items[' + index + ']'] = item;
       });
-      this.Request('changeBillPrice', (0, _ajaxDataFormater.flatten)(data)).then(function (res) {
-        _this.Cacher.setData('changePrice', {
-          from: 'changePrice' });
+      if (canSub) {
+        this.Request('changeBillPrice', (0, _ajaxDataFormater.flatten)(data)).then(function (res) {
+          _this.Cacher.setData('changePrice', {
+            from: 'changePrice' });
 
-        if (res.error == 0) {
-          _this.closePageLoading();
-          uni.navigateBack();
-          _this.Toast('改价成功');
-        } else {
+          if (res.error == 0) {
+            _this.closePageLoading();
+            uni.navigateBack();
+            _this.Toast('改价成功');
+          } else {
+            _this.Toast(res.message);
+          }
+        }).catch(function (res) {
           _this.Toast(res.message);
-        }
-      }).catch(function (res) {
-        _this.Toast(res.message);
-      });
+        });
+      } else {
+        this.closePageLoading();
+        this.Toast('请输入正确的的数字');
+      }
     } },
 
   onLoad: function onLoad(option) {var _this2 = this;

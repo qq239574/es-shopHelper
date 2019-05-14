@@ -57,12 +57,21 @@ function addGoodType(old, list) { //添加修改子规格
                 disabled: false, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
+            cardStock: {
+                label: '卡密库',
+                id: '', 
+                value:0,
+                disabled: false, //可否编辑,活动期间不可编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide: true
+            },
             stock: {
                 label: '库存',
                 id: '',
                 value: 0,
                 disabled: false, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide: false
             },
             code: {
                 label: '商品编号',
@@ -95,12 +104,21 @@ function addGoodType(old, list) { //添加修改子规格
                 disabled: false, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
+            cardStock:{
+                label: '卡密库',
+                id: tmp.cardStock.id, 
+                value:tmp.cardStock.value,
+                disabled: false, //可否编辑,活动期间不可编辑
+                editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide: tmp.cardStock.needHide
+            },
             stock: {
                 label: '库存',
                 id: '',
                 value: tmp.stock.value || 0,
                 disabled: false, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                needHide: tmp.stock.needHide
             },
             code: {
                 label: '商品编号',
@@ -140,15 +158,12 @@ export default function (val, cacheGoodDetail) {
                 img: item.replace(reg, '')
             }
         });
-        console.log(val)
     } else if (val.label == '轮播图') {
         cacheGoodDetail.info1.swiperList.list = val.images.map(item => {
             return {
                 img: item.replace(reg, '')
             }
         });
-        console.log(val)
-
     } else if (val.label == '商品名称') {
         cacheGoodDetail.info1.goodName.value = val.value;
     } else if (val.label == '副标题') {
@@ -183,9 +198,10 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info2.specification.list = val.other.list;
         cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
         cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
-
         let oldList = cacheGoodDetail.info2.childrenSpecs.list;
         cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
+        cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3;//电子卡密
+        
     } else if (val.label == '子规格详情') {
         cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
     } else if (val.label == '自动发货') {
@@ -202,6 +218,7 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
         cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
         cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
+        cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || val.id != 3;//电子卡密
     }
     return cacheGoodDetail;
 
