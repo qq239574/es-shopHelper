@@ -1,10 +1,10 @@
 <template>
     <view class='card--vip'>
-        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index'>
-            <view class="imgbox" @click='clickItem(index,item)'>
+        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index' >
+            <view class="imgbox" @click.stop='clickItem(index,item)'>
                 <image :src='item.img'></image>
             </view>
-            <view class="vip-info" @click='clickItem(index,item)'>
+            <view class="vip-info" @click.stop='clickItem(index,item)'>
                 <view class="vip-name van-multi-ellipsis--l2">
                     {{item.title}}
                 </view>
@@ -45,10 +45,14 @@
     export default {
         data() {
             return {
-                menuIndex: ''
+                menuIndex: '',
             }
         },
         props: {
+            toggle: {
+                type: Boolean,
+                default: true
+            },
             vipsList: {
                 type: Array,
                 default: [{
@@ -59,6 +63,11 @@
                     money: 0,
                     score: 0
                 }]
+            }
+        },
+        watch: {
+            toggle() {
+                this.menuIndex = ''
             }
         },
         methods: {

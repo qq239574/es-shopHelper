@@ -59,6 +59,10 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
 
   },
   props: {
+    toggle: {
+      type: Boolean,
+      default: true },
+
     vipsList: {
       type: Array,
       default: [{
@@ -70,6 +74,11 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
         score: 0 }] } },
 
 
+
+  watch: {
+    toggle: function toggle() {
+      this.menuIndex = '';
+    } },
 
   methods: {
     showMenu: function showMenu(vipindex) {

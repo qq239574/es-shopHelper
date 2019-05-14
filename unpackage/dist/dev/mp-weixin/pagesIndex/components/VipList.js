@@ -85,9 +85,20 @@
         vipClass: '',
         tel: '',
         money: '',
-        score: '' }] } },
+        score: '' }] },
 
 
+    toggle: {
+      type: Boolean,
+      default: true } },
+
+
+  watch: {
+    toggle: function toggle() {
+      console.log('tooggle');
+      this.show2 = false;
+      this.show = false;
+    } },
 
   methods: {
     closeAll: function closeAll() {
@@ -114,6 +125,8 @@
         uni.navigateTo({
           url: '../pages/vipDetail?from=vipManage' });
 
+      } else {
+        this.$emit('click', val);
       }
     },
     showBanner: function showBanner() {

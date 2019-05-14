@@ -44,8 +44,8 @@ var cacheSearchKey = '';var _default =
     Card: Card,
     nodata: nodata },
 
-  data: function data() {
-    return _defineProperty({
+  data: function data() {var _ref;
+    return _ref = {
       searching: false,
       viplist: [{
         img: '/static/img/global/home_order_tobepay.png',
@@ -56,8 +56,9 @@ var cacheSearchKey = '';var _default =
         score: '' }],
 
       current: 1,
-      totalPage: 1 }, "searching",
-    true);
+      totalPage: 1 }, _defineProperty(_ref, "searching",
+    true), _defineProperty(_ref, "toggle",
+    true), _ref;
 
   },
   watch: {
@@ -66,6 +67,9 @@ var cacheSearchKey = '';var _default =
     } },
 
   methods: {
+    clickSearch: function clickSearch() {
+      this.toggle = !this.toggle;
+    },
     clearSearch: function clearSearch() {
       this.search({
         value: '' });
@@ -120,7 +124,10 @@ var cacheSearchKey = '';var _default =
             url: './vipBills?from=vipManage' });
 
         }
+      } else {
+
       }
+      this.toggle = !this.toggle;
     },
     initPage: function initPage() {var _this2 = this;
       this.searching = true;
@@ -165,6 +172,9 @@ var cacheSearchKey = '';var _default =
     this.viplist = [];
     cacheSearchKey = '';
     this.initPage();
+  },
+  onShow: function onShow() {
+    this.toggle = !this.toggle;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

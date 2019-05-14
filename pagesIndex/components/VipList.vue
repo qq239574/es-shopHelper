@@ -1,6 +1,6 @@
 <template>
     <view class='vip-list'>
-        <itemList @click='clickItem' :vipsList='list'></itemList>
+        <itemList :toggle='toggle' @click='clickItem' :vipsList='list'></itemList>
         <view class="grace-shade grace-shade-black" v-if="show" @click='closeAll'>
             <view class="  grace-animate fadeIn">
                 <view class="body">
@@ -77,6 +77,17 @@
                     money: '',
                     score: ''
                 }]
+            },
+            toggle:{
+                type:Boolean,
+                default:true
+            }
+        },
+        watch: {
+            toggle(){
+                console.log('tooggle')
+                this.show2=false;
+                this.show=false;
             }
         },
         methods: {
@@ -104,6 +115,8 @@
                     uni.navigateTo({
                         url: '../pages/vipDetail?from=vipManage'
                     })
+                }else{
+                    this.$emit('click',val)
                 }
             },
             showBanner: function() {

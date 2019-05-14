@@ -260,10 +260,20 @@ var _default = {
           //维权备注
         } };
 
+      var mapStatus = {
+        '-2': 4, //-2退款完成
+        '-1': 4, //-1取消状态
+        0: 0, //0普通状态
+        1: 1, //1为已付款
+        2: 2, //2为已发货
+        3: 3 //3为已完成。
+      };
       this.Request('billDetail', {
         id: DataFrom.bill.bill.id }).
       then(function (res) {
         _this2.billDetail = (0, _createBillDetail.default)(res); //订单详情生成
+        _this2.bill.info.status = mapStatus[res.order.status]; //0代付款,1代发货，2待收货，3已完成，4已关闭
+        _this2.bill.info.send_able = res.order.send_able;
       });
       this.Request('billAddition', {
         id: DataFrom.bill.bill.id }).
