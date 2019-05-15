@@ -12,10 +12,30 @@
 }
 .subTit.data-v-9f0903e6 {
   width: 680rpx;
-  line-height: 24rpx;
-  font-size: 24rpx;
-  color: #9da3ae;
   margin: 0 auto 48rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+}
+.subTit view.data-v-9f0903e6 {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    line-height: 24rpx;
+    font-size: 24rpx;
+    color: #9da3ae;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
 }
 .brief.data-v-9f0903e6 {
   width: 680rpx;

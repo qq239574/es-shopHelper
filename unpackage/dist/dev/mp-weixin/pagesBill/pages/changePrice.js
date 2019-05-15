@@ -93,7 +93,6 @@ var _default = {
       var goods = cacheList.map(function (item, index) {
         if (!/^\d+(\.\d+)?$/.test(item.goodInfo.total)) {
           canSub = false;
-
         }
         var result = {
           "id": item.goodInfo.id, //订单商品id
@@ -101,6 +100,9 @@ var _default = {
         };
         return result;
       });
+      if (!/^\d+(\.\d+)?$/.test(this.totalFreight)) {
+        canSub = false;
+      }
       var data = {
         id: DataFrom.bill.bill.id, //订单id
         dispatch_price: this.totalFreight, //运费

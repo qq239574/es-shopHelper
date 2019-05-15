@@ -34,6 +34,9 @@
 
 
 
+
+
+
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
 var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var dateBlock = function dateBlock() {return __webpack_require__.e(/*! import() | pagesIndex/components/FilteDate--radioGroup */ "pagesIndex/components/FilteDate--radioGroup").then(__webpack_require__.bind(null, /*! ../components/FilteDate--radioGroup */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\FilteDate--radioGroup.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var langButton = function langButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var DatePicker = function DatePicker() {return __webpack_require__.e(/*! import() | components/my-components/DatePicker */ "components/my-components/DatePicker").then(__webpack_require__.bind(null, /*! ../../components/my-components/DatePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\DatePicker.vue"));};
 
@@ -67,11 +70,17 @@ var selectNearDays = 0;var _default =
       nearDay: 7,
       startDate: '',
       endDate: '',
-      selectNearDays: 0 };
+      selectNearDays: 0,
+      showLimit: true };
 
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    if (DataFrom.from == 'toper') {
+      this.showLimit = false;
+    } else {
+      this.showLimit = true;
+    }
     this.initPage();
   },
   onShow: function onShow() {

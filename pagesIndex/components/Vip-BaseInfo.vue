@@ -68,7 +68,7 @@
                 } else if (type == 'clear') { //清空需要二次确认
                     this.Dialog.confirm({
                         title: '清空' + cache.label,
-                        message: '您确认将该用户的余额/积分清零吗？'
+                        message: '您确认将该用户的' + cache.label + '清零吗？'
                     }).then(() => {
                         this.$emit('click', {
                             type,

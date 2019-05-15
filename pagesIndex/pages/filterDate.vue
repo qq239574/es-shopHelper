@@ -11,7 +11,10 @@
         <DatePicker @change='getEnd'>
             <selectItem label='截止日期' :value='endDate'></selectItem>
         </DatePicker>
-        <view class="tip">*最大筛选日期长度为90天</view>
+        <view class="tip">
+            <view v-if='showLimit'>*最大筛选日期长度为90天
+            </view>
+        </view>
         <langButton @click='goBack'>确定</langButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -57,11 +60,17 @@
                 nearDay: 7,
                 startDate: '',
                 endDate: '',
-                selectNearDays: 0
+                selectNearDays: 0,
+                showLimit: true
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
+            if (DataFrom.from == 'toper') {
+                this.showLimit = false;
+            } else {
+                this.showLimit = true;
+            }
             this.initPage();
         },
         onShow() {
@@ -123,10 +132,14 @@
         .tip {
             width: 100%;
             height: 80upx;
-            line-height: 70 upx;
-            color: #6f7685;
-            font-size: 26upx;
-            padding: 0 20upx;
+            view {
+                width: 100%;
+                height: 80upx;
+                line-height: 70 upx;
+                color: #6f7685;
+                font-size: 26upx;
+                padding: 0 20upx;
+            }
         }
         .radio {
             position: relative;

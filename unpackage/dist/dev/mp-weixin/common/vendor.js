@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10741,76 +10741,8 @@ var getGoodDetail = { //商品修改前
 
 var editGoodDetail = { //管理端商品修改
   url: '/shop/manage/goods/edit',
-  data: {
-    'goods_id': '',
-    'data[goods][id]': '',
-    'data[goods][shop_id]': '',
-    'data[goods][display_order]': '',
-    'data[goods][type]': '',
-    'data[goods][title]': '',
-    'data[goods][sub_title]': '',
-    'data[goods][status]': 1,
-    'data[goods][video]': '',
-    'data[goods][video_thumb]': '',
-    'data[goods][thumb]': '',
-    'data[goods][thumbs][0]': '',
-    'data[goods][price]': 50,
-    'data[goods][original_price]': 0,
-    'data[goods][min_price]': 0.00,
-    'data[goods][max_price]': 0.00,
-    'data[goods][unit]': '',
-    'data[goods][has_option]': 0,
-    'data[goods][goods_code]': '',
-    'data[goods][product_sn]': '',
-    'data[goods][stock]': '',
-    'data[goods][stock_warning]': 0,
-    'data[goods][stock_hide]': 0,
-    'data[goods][stock_cnf]': 0,
-    'data[goods][weight]': 0.00,
-    'data[goods][volume]': 0.00,
-    'data[goods][sales_count]': '',
-    'data[goods][sales_hide]': 0,
-    'data[goods][virtual_sales]': 0,
-    'data[goods][auto_complete]': 0,
-    'data[goods][auto_complete_content]': '',
-    'data[goods][dispatch_type]': 0,
-    'data[goods][dispatch_price]': 0,
-    'data[goods][dispatch_id]': '',
-    'data[goods][dispatch_hide]': 0,
-    'data[goods][is_buy_num_limit]': 0,
-    'data[goods][max_buy_total]': 0,
-    'data[goods][max_buy_once]': 0,
-    'data[goods][min_buy]': 0,
-    'data[goods][content]': '',
-    'data[goods][create_time]': '',
-    'data[goods][sellout_time]': '',
-    'data[goods][delete_time]': '',
-    'data[goods][view_count]': '',
-    'data[goods][is_discount]': '',
-    'data[goods][params_type]': 0,
-    'data[goods][params_id]': 0,
-    'data[goods][params_img]': '',
-    'data[goods][template_id]': 0,
-    'data[goods][is_invoice_support]': 0,
-    'data[goods][is_free_dispatch]': 0,
-    'data[goods][form_id]': 0,
-    'data[goods][is_refund_support]': 1,
-    'data[goods][is_join_commission]': 1,
-    'data[goods][is_join_member_price]': 0,
-    'data[goods][auto_delivery]': 1,
-    'data[goods][auto_delivery_content]': '',
-    'data[goods][short_title]': '',
-    'data[goods][single_row_thumb]': '',
-    'data[goods][thumbs_ratio]': '',
-    'data[goods][virtual_card_id]': 0,
-    'data[goods][auto_warehouse]': 0,
-    'data[goods][is_delivery_pay]': '',
-    'data[goods][school_ids]': '',
-    'data[goods][selling_object]': 0,
-    'data[goods][category_ids]': '',
-    'data[specs][0][id]': '',
-    'data[specs][0][title]': '',
-    'data[specs][0][items][0][id]': '' },
+  data: {},
+
 
   headers: {},
 
@@ -11165,7 +11097,7 @@ goodApi,
 myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
 
 
-  function _callee(name, data) {var header;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+  function _callee(name, data) {var header, newData;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
 
             sessionId = cacher.getData('sessionId');if (
             sessionId) {_context.next = 4;break;}_context.next = 4;return (
@@ -11215,7 +11147,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               }
               uni.downloadFile({
                 url: _domain.default.base_url + indexApi[name].url + '?' + param.join('&'), //仅为示例，非真实的接口地址
-                header: Object.assign(indexApi[name].headers || {}, header),
+                header: Object.assign({}, indexApi[name].headers || {}, header),
                 success: function success(uploadFileRes) {
                   resolve(uploadFileRes);
                 },
@@ -11236,7 +11168,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   'category_id': '',
                   type: 'image' },
 
-                header: Object.assign(indexApi[name].headers || {}, header),
+                header: Object.assign({}, indexApi[name].headers || {}, header),
                 success: function success(uploadFileRes) {
                   resolve(uploadFileRes);
                 },
@@ -11250,8 +11182,8 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
             new Promise(function (resolve, reject) {
               _request.default.get(
               _domain.default.base_url + indexApi[name].url,
-              Object.assign(indexApi[name].data, data),
-              Object.assign(indexApi[name].headers || {}, header),
+              Object.assign({}, indexApi[name].data, data),
+              Object.assign({}, indexApi[name].headers || {}, header),
               function (res) {
                 if (!res.error) {
 
@@ -11269,14 +11201,15 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
               });
 
-            }));case 19:return _context.abrupt("return",
-
+            }));case 19:
+            //post请求
+            newData = Object.assign({}, indexApi[name].data, data);return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               _request.default.post(
               _domain.default.base_url + indexApi[name].url,
-              Object.assign(indexApi[name].data, data),
+              newData,
               'form',
-              Object.assign(indexApi[name].headers || {}, header),
+              Object.assign({}, indexApi[name].headers || {}, header),
               function (res) {
                 if (!res.error) {
                   resolve(res);
@@ -11286,7 +11219,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 }
               });
 
-            }));case 20:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+            }));case 21:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -14669,7 +14602,7 @@ function getLineOption1(datalist) {
     series: [{
       name: '',
       type: 'line',
-      smooth: true,
+      // smooth: true,
       symbol: "none",
       data: datalist }] });
 
@@ -14685,7 +14618,7 @@ function getLineOption2(datalist) {
     series: [{
       name: '',
       type: 'line',
-      smooth: true,
+      // smooth: true,
       symbol: "none",
       data: datalist }] });
 
@@ -14701,7 +14634,7 @@ function getLineOption3(datalist) {
     series: [{
       name: '',
       type: 'line',
-      smooth: true,
+      // smooth: true,
       symbol: "none",
       data: datalist }] });
 
@@ -14717,7 +14650,7 @@ function getLineOption4(datalist) {
     series: [{
       name: '',
       type: 'line',
-      smooth: true,
+      // smooth: true,
       symbol: "none",
       data: datalist }] });
 

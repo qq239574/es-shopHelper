@@ -16,6 +16,7 @@
     let searchSection = [];
     let DataFrom = {}; //上级页面的数据
     let DataGo = {}; //缓存下级页面的数据
+    let domain = '';
     export default {
         components: {
             selectItem,
@@ -37,6 +38,7 @@
             DataFrom = this.Cacher.getData(option.from);
         },
         onShow() {
+            domain = this.Cacher.getData('static_resources_domain')
             this.initPage();
         },
         onPullDownRefresh() {
@@ -46,7 +48,8 @@
             initPage() { //初始化页面 
                 let api = '';
                 this.pageId = DataFrom.show;
-                DataGo = this.Cacher.getData(DataGo.go) || {
+                DataGo = this.Cacher.getData(DataGo.go);
+                DataGo = DataGo.date ? DataGo : {
                     from: 'filterDate',
                     date: [getDate(-1), getDate(0), '今天']
                 };
@@ -71,14 +74,14 @@
                     }
                     if (DataFrom.show == 'vip') {
                         this.list = arr.map(item => ({
-                            img: '/static/img/global/product_share_download.png',
+                            img: item.avatar || 'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
                             label: item.nickname,
                             value: item.pay_price,
                             index: item.mobile
                         }))
                     } else {
                         this.list = arr.map(item => ({
-                            img: '/static/img/global/product_share_download.png',
+                            img: domain + item.thumb,
                             label: item.title,
                             value: item.pay_number_count,
                             index: item.goods_id
@@ -91,6 +94,9 @@
             },
             filteDate() {
                 DataGo.go = 'filterDate';
+                this.Cacher.setData('toper', {
+                    from: 'toper'
+                })
                 uni.navigateTo({
                     url: './filterDate?from=toper'
                 })

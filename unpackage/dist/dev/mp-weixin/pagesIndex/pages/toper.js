@@ -26,7 +26,8 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 var searchSection = [];
 var DataFrom = {}; //上级页面的数据
 var DataGo = {}; //缓存下级页面的数据
-var _default = {
+var domain = '';var _default =
+{
   components: {
     selectItem: selectItem,
     items: items },
@@ -47,6 +48,7 @@ var _default = {
     DataFrom = this.Cacher.getData(option.from);
   },
   onShow: function onShow() {
+    domain = this.Cacher.getData('static_resources_domain');
     this.initPage();
   },
   onPullDownRefresh: function onPullDownRefresh() {
@@ -56,7 +58,8 @@ var _default = {
     initPage: function initPage() {var _this = this; //初始化页面 
       var api = '';
       this.pageId = DataFrom.show;
-      DataGo = this.Cacher.getData(DataGo.go) || {
+      DataGo = this.Cacher.getData(DataGo.go);
+      DataGo = DataGo.date ? DataGo : {
         from: 'filterDate',
         date: [(0, _getDateSection.getDate)(-1), (0, _getDateSection.getDate)(0), '今天'] };
 
@@ -81,14 +84,14 @@ var _default = {
         }
         if (DataFrom.show == 'vip') {
           _this.list = arr.map(function (item) {return {
-              img: '/static/img/global/product_share_download.png',
+              img: item.avatar || 'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
               label: item.nickname,
               value: item.pay_price,
               index: item.mobile };});
 
         } else {
           _this.list = arr.map(function (item) {return {
-              img: '/static/img/global/product_share_download.png',
+              img: domain + item.thumb,
               label: item.title,
               value: item.pay_number_count,
               index: item.goods_id };});
@@ -101,6 +104,9 @@ var _default = {
     },
     filteDate: function filteDate() {
       DataGo.go = 'filterDate';
+      this.Cacher.setData('toper', {
+        from: 'toper' });
+
       uni.navigateTo({
         url: './filterDate?from=toper' });
 

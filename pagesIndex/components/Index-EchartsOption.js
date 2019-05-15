@@ -36,7 +36,7 @@ export function getLineOption1(datalist) {
         series: [{
             name: '',
             type: 'line',
-            smooth: true,
+            // smooth: true,
             symbol: "none",
             data: datalist
         }]
@@ -52,7 +52,7 @@ export function getLineOption2(datalist) {
         series: [{
             name: '',
             type: 'line',
-            smooth: true,
+            // smooth: true,
             symbol: "none",
             data: datalist
         }]
@@ -68,7 +68,7 @@ export function getLineOption3(datalist) {
         series: [{
             name: '',
             type: 'line',
-            smooth: true,
+            // smooth: true,
             symbol: "none",
             data: datalist
         }]
@@ -84,7 +84,7 @@ export function getLineOption4(datalist) {
         series: [{
             name: '',
             type: 'line',
-            smooth: true,
+            // smooth: true,
             symbol: "none",
             data: datalist
         }]

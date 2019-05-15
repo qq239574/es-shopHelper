@@ -51,6 +51,8 @@ var cacheVal = '';var _default =
     this.val = cacheVal;
     this.disable = !this.val;
     this.Cacher.setData('editSubTitle', DataFrom);
+    this.length = cacheVal.length;
+
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

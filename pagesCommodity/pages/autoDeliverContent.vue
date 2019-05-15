@@ -1,7 +1,7 @@
 <template>
     <view class='bill-addition page'>
-        <textarea class='textarea' :value='val' placeholder-style="color:#d2d5db" :maxlength='50' placeholder="请填写自动发货内容" @input='getAddition' />
-        <view class='counter'>{{length}}/50</view>
+        <textarea class='textarea' :value='val' placeholder-style="color:#d2d5db" :maxlength='0' placeholder="请填写自动发货内容" @input='getAddition' />
+        <!-- <view class='counter'>{{length}}/50</view> -->
         <longButton :disable='disable' @click='sure'>确定</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -44,6 +44,7 @@
             this.val = cacheVal;
             this.disable = !this.val;
             this.Cacher.setData(cacheFrom, DataFrom);
+            this.length=cacheVal.length;
         }
     }
 </script>

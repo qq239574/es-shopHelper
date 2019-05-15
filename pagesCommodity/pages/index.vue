@@ -118,8 +118,8 @@
                         })
                     })
                 } else {
-                    uploadImg.call(this, data).then(res => {
-                        this.Request('editGoodDetail', res).then(res => {
+                    uploadImg.call(this, data).then(newData => { 
+                        this.Request('editGoodDetail', newData).then(res => { 
                             if (res.error == 0) {
                                 uni.navigateBack();
                             } else {
@@ -150,6 +150,8 @@
                 from: option.from || ''
             })
             this.initPage();
+            cacheSubmitData={};
+            cacheGoodDetail={};
             if (DataFrom.from == 'addGoods') { //添加商品，生成模板数据
                 mockApi.call(this, {
                     type: '实体商品', //'实体商品', '虚拟物品', '电子卡密',

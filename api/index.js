@@ -66,7 +66,7 @@ export default async function (name, data) {
             }
             uni.downloadFile({
                 url: global_settings.base_url + indexApi[name].url + '?' + param.join('&'), //仅为示例，非真实的接口地址
-                header: Object.assign(indexApi[name].headers || {}, header),
+                header: Object.assign({},indexApi[name].headers || {}, header),
                 success: (uploadFileRes) => {
                     resolve(uploadFileRes)
                 },
@@ -87,7 +87,7 @@ export default async function (name, data) {
                     'category_id': '',
                     type: 'image'
                 },
-                header: Object.assign(indexApi[name].headers || {}, header),
+                header: Object.assign({},indexApi[name].headers || {}, header),
                 success: (uploadFileRes) => {
                     resolve(uploadFileRes)
                 },
@@ -101,8 +101,8 @@ export default async function (name, data) {
         return new Promise((resolve, reject) => {
             graceRequest.get(
                 global_settings.base_url + indexApi[name].url,
-                Object.assign(indexApi[name].data, data),
-                Object.assign(indexApi[name].headers || {}, header),
+                Object.assign({}, indexApi[name].data, data),
+                Object.assign({}, indexApi[name].headers || {}, header),
                 function (res) {
                     if (!res.error) {
 
@@ -122,12 +122,13 @@ export default async function (name, data) {
             );
         })
     } else { //post请求
+        let newData = Object.assign({},indexApi[name].data, data); 
         return new Promise((resolve, reject) => {
             graceRequest.post(
                 global_settings.base_url + indexApi[name].url,
-                Object.assign(indexApi[name].data, data),
+                newData,
                 'form',
-                Object.assign(indexApi[name].headers || {}, header),
+                Object.assign({}, indexApi[name].headers || {}, header),
                 function (res) {
                     if (!res.error) {
                         resolve(res)

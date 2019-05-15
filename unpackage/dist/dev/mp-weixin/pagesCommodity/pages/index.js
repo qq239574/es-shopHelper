@@ -128,8 +128,8 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
           });
         });
       } else {
-        _upLoadImage.default.call(this, data).then(function (res) {
-          _this.Request('editGoodDetail', res).then(function (res) {
+        _upLoadImage.default.call(this, data).then(function (newData) {
+          _this.Request('editGoodDetail', newData).then(function (res) {
             if (res.error == 0) {
               uni.navigateBack();
             } else {
@@ -160,6 +160,8 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
       from: option.from || '' });
 
     this.initPage();
+    cacheSubmitData = {};
+    cacheGoodDetail = {};
     if (DataFrom.from == 'addGoods') {//添加商品，生成模板数据
       _mockGoodDetailApi.default.call(this, {
         type: '实体商品', //'实体商品', '虚拟物品', '电子卡密',

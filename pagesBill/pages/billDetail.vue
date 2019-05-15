@@ -263,7 +263,7 @@
                 }).then(res => {
                     this.billDetail = createBillDetail(res); //订单详情生成
                     this.bill.info.status = mapStatus[res.order.status]; //0代付款,1代发货，2待收货，3已完成，4已关闭
-                    this.bill.info.send_able =res.order.send_able
+                    this.bill.info.send_able =res.order.send_able;
                 })
                 this.Request('billAddition', {
                     id: DataFrom.bill.bill.id

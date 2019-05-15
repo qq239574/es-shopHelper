@@ -40,7 +40,9 @@ var ajaxIndex = 1;var _default =
         title: '标题',
         brief: '简介',
         date: '',
-        img: '' }] };
+        img: '',
+        content: '',
+        author: '' }] };
 
 
   },
@@ -72,7 +74,8 @@ var ajaxIndex = 1;var _default =
                 brief: item.content_text,
                 date: item.create_time,
                 img: item.thumb,
-                content: item.content };
+                content: item.content,
+                author: item.author };
 
             }));
             _this.ShowLoadMore = _this.list.length == _this.noticeNum;

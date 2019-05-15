@@ -30,7 +30,9 @@
                     title: '标题',
                     brief: '简介',
                     date: '',
-                    img: ''
+                    img: '',
+                    content:'',
+                    author: ''
                 }]
             }
         },
@@ -45,7 +47,7 @@
                 })
             },
             initPage() {
-                if (!this.requesting) { 
+                if (!this.requesting) {
                     this.requesting = true;
                     this.pageLoading();
                     this.Request('noticeList', {
@@ -55,7 +57,7 @@
                         this.requesting = false;
                         if (res.error == 0) {
                             ajaxIndex++;
-                            this.totalNum=res.count;
+                            this.totalNum = res.count;
                             this.list = this.list.concat(res.list.map(item => {
                                 return {
                                     title: item.title,
@@ -63,10 +65,11 @@
                                     date: item.create_time,
                                     img: item.thumb,
                                     content: item.content,
+                                    author:item.author
                                 }
                             }));
                             this.ShowLoadMore = this.list.length == this.noticeNum;
-                            this.noticeNum = this.list.length ;
+                            this.noticeNum = this.list.length;
                         } else {
                             this.Toast(res.message)
                         }
@@ -95,7 +98,7 @@
                 this.LoadingType = 0;
             } else {
                 this.LoadingType = 1;
-                this.ShowLoadMore = this.list.length == this.totalNum;  
+                this.ShowLoadMore = this.list.length == this.totalNum;
             }
         },
         onLoad() {
@@ -113,8 +116,8 @@
             color: #bbb;
             font-size: 24upx;
         }
-        .load-more{
-            margin-bottom:100upx;
+        .load-more {
+            margin-bottom: 100upx;
         }
     }
 </style>

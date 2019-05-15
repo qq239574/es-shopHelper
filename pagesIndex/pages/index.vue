@@ -42,7 +42,7 @@
         dataList4 = [0, 0, 0, 0, 0, 0, 0];
     let initdata = [{
         title: '成交额（元）',
-        subTitle: '累计总成成交额：0',
+        subTitle: '累计总成成交额：' + 0,
         today: 0,
         yesterday: 0,
         id: 'trade'
@@ -77,7 +77,7 @@
         onPullDownRefresh() {
             this.dataList = [{
                 title: '成交额（元）',
-                subTitle: '累计总成成交额：0',
+                subTitle: '累计总成交额：' + 0,
                 today: 0,
                 yesterday: 0,
                 id: 'trade'
@@ -155,9 +155,13 @@
                             goods_paid_count: 0,
                             goods_visited_count: 0,
                         };
-                        this.dataList = [...this.dataList.map(item=>{
-                            return {...item}
-                        })]; 
+                        this.dataList = [...this.dataList.map(item => {
+                            return { ...item
+                            }
+                        })];
+                    })
+                    this.Request('getHistoryData', {}).then(res => { //获取历史总成交额
+                        this.dataList[0].subTitle = '累计总成交额：' + res.all_order_price;
                     })
                 } else {
                     setTimeout(() => {
@@ -170,7 +174,7 @@
                 this.$refs.lineChart1.init();
             },
             initLine2(datalist) { //初始化第2个echarts,入参为数据数组
-                dataList2 = datalist;
+                dataList2 = datalist; 
                 this.$refs.lineChart2.init();
             },
             initLine3(datalist) { //初始化第3个echarts,入参为数据数组

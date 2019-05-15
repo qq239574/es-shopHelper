@@ -92,16 +92,24 @@ var _DetailEchartsOption = _interopRequireDefault(__webpack_require__(/*! ../com
 //
 var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var uniPagination = function uniPagination() {return __webpack_require__.e(/*! import() | components/uni-pagination/uni-pagination */ "components/uni-pagination/uni-pagination").then(__webpack_require__.bind(null, /*! ../../components/uni-pagination/uni-pagination.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\uni-pagination\\uni-pagination.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var searchSection = []; //搜索日期区间
 var datalist = [0, 0, 0, 0, 0, 0, 0]; //接口获得的数据，用于echarts
-var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var requesting = false;var _default = { data: function data() {return { pageLabel: '近7日', updateStatus: false, historyTotal: 0, //历史累计总成交额
+var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var requesting = false;var _default = { data: function data() {return { showTotal: true, pageLabel: '近7日', updateStatus: false, historyTotal: 0, //历史累计总成交额
       selectTotal: 0, //所选日期总成交额
       tableList: [], //表格数据
       totalPage: 5, //总分页数
-      curTableIndex: 0 //当前表格的页码
-    };}, onLoad: function onLoad(option) {DataFrom = this.Cacher.getData(option.from);this.initPage();}, onShow: function onShow() {this.initPage();}, onUnload: function onUnload() {this.Cacher.setData(DataGo.go, {}); //清理记录
-  }, onPullDownRefresh: function onPullDownRefresh() {this.initPage();}, methods: { formater: function formater(val) {return (0, _formater.number_format)(val);}, initPage: function initPage() {var _this = this; //初始化页面  
-      DataGo = this.Cacher.getData('filterDate') || { go: 'filterDate', date: [(0, _getDateSection.getDate)(-6), (0, _getDateSection.getDate)(0), '7日'] };if (!requesting) {
+      curTableIndex: 0, //当前表格的页码
+      title: '' };}, onLoad: function onLoad(option) {DataFrom = this.Cacher.getData(option.from);if (DataFrom.id != 'trade') {this.showTotal = false;}this.title = DataFrom.title.replace(/[(（].+[)）]$/, '');uni.setNavigationBarTitle({ title: this.title });}, onShow: function onShow() {this.initPage();}, onUnload: function onUnload() {this.Cacher.setData('filterDate', {}); //清理记录
+  }, onPullDownRefresh: function onPullDownRefresh() {this.initPage();}, methods: {
+    formater: function formater(val) {
+      return (0, _formater.number_format)(val);
+    },
+    initPage: function initPage() {var _this = this; //初始化页面  
+      DataGo = this.Cacher.getData('filterDate');
+      DataGo = DataGo.date ? DataGo : {
+        go: 'filterDate',
+        date: [(0, _getDateSection.getDate)(-6), (0, _getDateSection.getDate)(0), '7日'] };
+
+      if (!requesting) {
         requesting = true;
-        this.$refs.lineChart.init();
         this.pageLabel = DataGo.date[2];
         var dateGap = (0, _getDateSection.GetDateDiff)(DataGo.date[0], DataGo.date[1]);
         if (dateGap > 90) {//查询间隔最大90天

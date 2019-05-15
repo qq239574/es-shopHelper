@@ -1,7 +1,10 @@
 <template>
     <view class='notice-detail page'>
         <view class="title">{{notice.title}}</view>
-        <view class="subTit">{{notice.date}}</view>
+        <view class="subTit">
+            <view class="date">{{notice.date}}</view>
+            <view class="editor">{{notice.author}}</view>
+        </view>
         <view class="brief">简介：{{notice.brief}}</view>
         <rich-text type="text" :nodes="demoHtml"></rich-text>
     </view>
@@ -15,7 +18,7 @@
         data() {
             return {
                 notice: {},
-                demoHtml: ''
+                demoHtml: '',
             }
         },
         onLoad(option) {
@@ -41,10 +44,19 @@
     }
     .subTit {
         width: 680upx;
-        line-height: 24upx;
-        font-size: 24upx;
-        color: #9da3ae;
         margin: 0 auto 48upx;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        view {
+            width: fit-content;
+            line-height: 24upx;
+            font-size: 24upx;
+            color: #9da3ae;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
     .brief {
         width: 680upx;

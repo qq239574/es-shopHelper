@@ -17,6 +17,13 @@
   display: -ms-flexbox;
   display: flex;
   margin-bottom: 20rpx;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
 }
 .echarts .block .item {
     width: 50%;

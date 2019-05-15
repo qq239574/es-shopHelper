@@ -1,9 +1,9 @@
 import domain from '../../api/domain.js'
 export default function (data) {
     let tmp = '';
-    let list = [];
+    let list = []; 
     for (let k in data) {
-        if (k.indexOf('data[goods][thumbs]') > -1 || k.indexOf('data[goods][thumb]') > -1) {
+        if (k.indexOf('data[goods][thumbs]') > -1 || k.indexOf('data[goods][thumb]') > -1) { 
             tmp = data[k];
             if (/^http|wxfile.+/.test(tmp)) {
                 list.push(new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ export default function (data) {
                         if (res.statusCode == 200) {
                             let tmp = res.data && JSON.parse(res.data) || ''
                             if (tmp.error === 0) {
-                                data[k] = tmp.data.path; 
+                                data[k] = tmp.data.path;
                             }
                         }
                         resolve()

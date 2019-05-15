@@ -82,8 +82,7 @@
                 this.pageLoading();
                 let goods = cacheList.map((item, index) => {
                     if (!/^\d+(\.\d+)?$/.test(item.goodInfo.total)) {
-                        canSub=false;
-
+                        canSub = false;
                     }
                     let result = {
                         "id": item.goodInfo.id, //订单商品id
@@ -91,6 +90,9 @@
                     }
                     return result;
                 })
+                if (!/^\d+(\.\d+)?$/.test(this.totalFreight)) {
+                    canSub = false; 
+                }
                 let data = {
                     id: DataFrom.bill.bill.id, //订单id
                     dispatch_price: this.totalFreight, //运费
@@ -114,7 +116,7 @@
                     }).catch(res => {
                         this.Toast(res.message);
                     })
-                }else{
+                } else {
                     this.closePageLoading();
                     this.Toast('请输入正确的的数字')
                 }

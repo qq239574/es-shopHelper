@@ -5,13 +5,13 @@
             <mpvue-echarts class="ec-canvas" lazy-load :onInit="lineInit" canvasId="line" ref="lineChart" />
         </view>
         <view class="block">
-            <view class="item">
+            <view class="item" v-if='showTotal'>
                 <view class="num">{{formater(historyTotal)}}</view>
                 <view class="title">历史累计总成交额</view>
             </view>
             <view class="item">
                 <view class="num">{{formater(selectTotal)}}</view>
-                <view class="title">所选日期总成交额</view>
+                <view class="title">所选日期总{{title}}</view>
             </view>
         </view>
         <!-- <inputItem :disabled='true' label='所选日期总成交额' value='256565' valueStyle='font-weight:700;'></inputItem> -->
@@ -58,6 +58,7 @@
     export default {
         data() {
             return {
+                showTotal: true,
                 pageLabel: '近7日',
                 updateStatus: false,
                 historyTotal: 0, //历史累计总成交额
@@ -65,17 +66,24 @@
                 tableList: [], //表格数据
                 totalPage: 5, //总分页数
                 curTableIndex: 0, //当前表格的页码
+                title: ''
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
-            this.initPage();
+            if (DataFrom.id != 'trade') {
+                this.showTotal = false;
+            }
+            this.title = DataFrom.title.replace(/[(（].+[)）]$/, '');
+            uni.setNavigationBarTitle({
+                title:this.title 
+            })
         },
         onShow() {
             this.initPage();
         },
         onUnload() {
-            this.Cacher.setData(DataGo.go, {}); //清理记录
+            this.Cacher.setData('filterDate', {}); //清理记录
         },
         onPullDownRefresh() {
             this.initPage();
@@ -85,13 +93,13 @@
                 return number_format(val);
             },
             initPage() { //初始化页面  
-                DataGo = this.Cacher.getData('filterDate') || {
+                DataGo = this.Cacher.getData('filterDate');
+                DataGo = DataGo.date ? DataGo : {
                     go: 'filterDate',
                     date: [getDate(-6), getDate(0), '7日']
                 };
                 if (!requesting) {
                     requesting = true;
-                    this.$refs.lineChart.init();
                     this.pageLabel = DataGo.date[2];
                     let dateGap = GetDateDiff(DataGo.date[0], DataGo.date[1]);
                     if (dateGap > 90) { //查询间隔最大90天
@@ -211,6 +219,8 @@
             background: #fff;
             display: flex;
             margin-bottom: 20upx;
+            justify-content: space-between;
+            flex-wrap: nowrap;
             .item {
                 width: 50%;
                 height: 100%;

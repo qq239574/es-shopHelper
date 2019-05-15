@@ -52,7 +52,7 @@ dataList3 = [0, 0, 0, 0, 0, 0, 0],
 dataList4 = [0, 0, 0, 0, 0, 0, 0];
 var initdata = [{
   title: '成交额（元）',
-  subTitle: '累计总成成交额：0',
+  subTitle: '累计总成成交额：' + 0,
   today: 0,
   yesterday: 0,
   id: 'trade' },
@@ -87,7 +87,7 @@ var initdata = [{
   onPullDownRefresh: function onPullDownRefresh() {
     this.dataList = [{
       title: '成交额（元）',
-      subTitle: '累计总成成交额：0',
+      subTitle: '累计总成交额：' + 0,
       today: 0,
       yesterday: 0,
       id: 'trade' },
@@ -167,7 +167,11 @@ var initdata = [{
 
           _this.dataList = _toConsumableArray(_this.dataList.map(function (item) {
             return _objectSpread({}, item);
+
           }));
+        });
+        this.Request('getHistoryData', {}).then(function (res) {//获取历史总成交额
+          _this.dataList[0].subTitle = '累计总成交额：' + res.all_order_price;
         });
       } else {
         setTimeout(function () {
