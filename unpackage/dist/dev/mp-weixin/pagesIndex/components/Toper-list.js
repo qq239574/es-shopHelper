@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var item = function item() {return Promise.all(/*! import() | pagesIndex/components/Toper-Block */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Toper-Block")]).then(__webpack_require__.bind(null, /*! ./Toper-Block */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-Block.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var item = function item() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-Block */ "pagesIndex/components/Toper-Block").then(__webpack_require__.bind(null, /*! ./Toper-Block.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-Block.vue"));};var _default =
 
 
 

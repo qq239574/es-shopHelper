@@ -9,13 +9,13 @@
             <view class="th">付款金额(元)</view>
         </view>
         <block v-for='(item,index) in list' :key='index'>
-            <item :info='item' :index='index' :pageid='pageid'></item>
+            <item :info='item' :index='index' :pageid='pageid' ></item>
         </block>
     </view>
 </template>
 
 <script>
-    import item from './Toper-Block'
+    import item from './Toper-Block.vue'
     export default {
         components: {
             item

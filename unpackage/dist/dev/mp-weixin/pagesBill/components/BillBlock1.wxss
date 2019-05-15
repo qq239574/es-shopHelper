@@ -38,6 +38,19 @@
 .bill__item.data-v-fbc5e350 {
   height: 100%;
   line-height: 38rpx;
+  position: relative;
+}
+.bill__item .copy-icon.data-v-fbc5e350 {
+    position: absolute;
+    width: 24rpx;
+    height: 24rpx;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.bill__item.copy-item.data-v-fbc5e350 {
+    padding-right: 40rpx;
 }
 .origin.data-v-fbc5e350 {
   display: -webkit-box;

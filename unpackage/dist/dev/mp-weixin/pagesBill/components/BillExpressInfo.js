@@ -33,6 +33,8 @@
 
 
 
+
+
 {
   props: {
     rights: {
@@ -52,9 +54,7 @@
     copy: function copy(val) {
       uni.setClipboardData({
         data: val,
-        success: function success() {
-          this.Toast('复制成功');
-        } });
+        success: function success() {} });
 
     },
     clickBill: function clickBill() {

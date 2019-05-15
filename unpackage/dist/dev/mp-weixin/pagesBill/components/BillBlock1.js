@@ -47,7 +47,6 @@
 
 var _dataOrigin = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/dataOrigin.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\dataOrigin.js"));
 var _payType = _interopRequireDefault(__webpack_require__(/*! ../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
-
 {
   props: {
     info: {
@@ -79,7 +78,7 @@ var _payType = _interopRequireDefault(__webpack_require__(/*! ../../components/m
       uni.setClipboardData({
         data: val,
         success: function success() {
-          that.Toast('复制成功');
+          // that.Toast('复制成功')
         } });
 
     } } };exports.default = _default;

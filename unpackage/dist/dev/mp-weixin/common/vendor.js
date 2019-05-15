@@ -14788,10 +14788,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       var goodlist = [];
       var countGood = 0;
       _this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
+
       list = res.list.map(function (item) {
+        countGood = 0;
         goodlist = item.order_goods || [];
         goodlist.forEach(function (item) {
-          countGood += item.total;
+          countGood += item.total * 1;
         });
         return {
           info: { //订单及用户信息

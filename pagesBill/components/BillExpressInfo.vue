@@ -11,7 +11,9 @@
             </view>
             <view class='card--info__row'>
                 <view class='card--info__row__tile'>快递单号</view>
-                <view class='card--info__row__status'>{{rights.sendId}} <view class='grace-boxes-img grace-iconfont icon-share' @click='copy(rights.sendId)'></view></view>
+                <view class='card--info__row__status copy-item'>{{rights.sendId}}
+                    <image lazy-load src='/static/img/global/copy.png' class='copy-icon' @click='copy(rights.sendId)'></image>
+                </view>
             </view>
         </block>
         <view class='card--info__row' v-else>
@@ -39,12 +41,10 @@
             myButton
         },
         methods: {
-             copy(val) {
+            copy(val) {
                 uni.setClipboardData({
                     data: val,
-                    success: function() {
-                        this.Toast('复制成功')
-                    }
+                    success: function() {}
                 });
             },
             clickBill() {
@@ -84,6 +84,19 @@
                 color: #33373a;
                 width: fit-content;
             }
+            .copy-item {
+                padding-right: 40upx;
+                position: relative;
+                .copy-icon {
+                    position: absolute;
+                    width: 24upx;
+                    height: 24upx;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    margin: auto;
+                }
+            }
             .card--info__row__tile {
                 color: #6e7685;
             }
@@ -91,9 +104,9 @@
                 color: #6e7685;
                 display: flex;
                 flex-wrap: nowrap;
-                .icon-share{
-                    display: inline-block; 
-                    margin:0 10upx;
+                .icon-share {
+                    display: inline-block;
+                    margin: 0 10upx;
                 }
             }
             .primary {

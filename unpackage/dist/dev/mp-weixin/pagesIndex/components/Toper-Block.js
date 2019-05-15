@@ -55,7 +55,10 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
 //
 //
 //
-var _default = { props: { info: { type: Object, default: { img: '', label: '', value: 0, index: 0 } }, index: { type: Number, default: 0 }, pageid: { type: String, default: 'goods' } }, methods: { formater: function formater(val) {return (0, _formater.number_format)(val);
+var _default = { props: { info: { type: Object, default: { img: '', label: '', value: 0, index: 0 } }, index: { type: Number, default: 0 }, pageid: { type: String, default: 'goods' } }, methods: { formater: function formater(val) {return (0, _formater.number_format)(val, 2, ',', '.');
+    },
+    clickItem: function clickItem() {
+      this.$emit('click', this.info);
     } } };exports.default = _default;
 
 /***/ }),

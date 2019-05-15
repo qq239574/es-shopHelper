@@ -113,13 +113,14 @@
                 }
                 if (canSend) {
                     this.pageLoading();
-                    this.Request('sendGoods', sendBillInfo).then(res => {
-                        this.closePageLoading();
-                        uni.navigateBack();
-                    }).catch(res=>{
-                        this.closePageLoading();
-                        this.Toast(res.message)
-                    });
+                    console.log(sendBillInfo)
+                    // this.Request('sendGoods', sendBillInfo).then(res => {
+                    //     this.closePageLoading();
+                    //     uni.navigateBack();
+                    // }).catch(res=>{
+                    //     this.closePageLoading();
+                    //     this.Toast(res.message)
+                    // });
                 }
             },
             initPage() {

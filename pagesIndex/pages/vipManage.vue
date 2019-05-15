@@ -1,7 +1,7 @@
 <template>
     <view class='vip-manage page'>
         <SearchInput @input='search' @clear='clearSearch' @click='clickSearch' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
-        <Card  :toggle='toggle' :list='viplist' @click='clickGood'></Card>
+        <Card :toggle='toggle' :list='viplist' @click='clickGood'></Card>
         <nodata type='noresult' tip='没有搜索到相关会员' v-if='!searching&&!viplist.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -48,7 +48,7 @@
                 current: 1,
                 totalPage: 1,
                 searching: true,
-                toggle:true
+                toggle: true
             }
         },
         watch: {
@@ -57,8 +57,8 @@
             }
         },
         methods: {
-            clickSearch(){
-                this.toggle=!this.toggle;
+            clickSearch() {
+                this.toggle = !this.toggle;
             },
             clearSearch() {
                 this.search({
@@ -114,10 +114,9 @@
                             url: './vipBills?from=vipManage'
                         })
                     }
-                }else{
-
+                } else {
                 }
-                this.toggle=!this.toggle;
+                this.toggle = !this.toggle;
             },
             initPage() {
                 this.searching = true;
@@ -160,11 +159,11 @@
         },
         onLoad() {
             this.viplist = [];
-            cacheSearchKey='';
-            this.initPage()
+            cacheSearchKey = '';
         },
-        onShow(){
-            this.toggle=!this.toggle;
+        onShow() {
+            this.initPage()
+            this.toggle = !this.toggle;
         }
     }
 </script>

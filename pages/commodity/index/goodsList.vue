@@ -192,7 +192,7 @@
                             uni.setClipboardData({
                                 data: shareInfo.goods_url,
                                 success: function() {
-                                    that.Toast('链接已复制')
+                                   
                                 }
                             });
                         } else {

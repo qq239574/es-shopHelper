@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -33,6 +33,7 @@
 
 
 
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 var DataFrom = {};var _default =
 {
   components: {
@@ -72,7 +73,11 @@ var DataFrom = {};var _default =
         title = '扣除' + DataFrom.value.label;
         this.type = '扣除';
       }
-      this.curnum = DataFrom.value.value;
+      if (DataFrom.from == 'vipManage') {
+        this.curnum = DataFrom.info.balance;
+      } else {
+        this.curnum = DataFrom.value.value;
+      }
       this.label = DataFrom.value.label;
       this.placeholder = '输入' + this.type + this.label + '数';
       uni.setNavigationBarTitle({
@@ -117,7 +122,6 @@ var DataFrom = {};var _default =
       name: DataFrom.info.nickname,
       img: DataFrom.info.avatar };
 
-    this.initPage();
   },
   onShow: function onShow() {
     this.initPage();

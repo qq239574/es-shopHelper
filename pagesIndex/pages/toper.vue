@@ -13,6 +13,7 @@
     import {
         getDate
     } from '../../components/my-components/getDateSection.js'
+    import {number_format} from '../../components/my-components/formater.js'
     let searchSection = [];
     let DataFrom = {}; //上级页面的数据
     let DataGo = {}; //缓存下级页面的数据

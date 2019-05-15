@@ -103,7 +103,7 @@ var _default = {
         return item.goods_id;
       });
     },
-    sure: function sure() {var _this = this;
+    sure: function sure() {
       // sendBillInfo.order_goods_id = cacheSelected;
       cacheSelected.forEach(function (item, index) {
         sendBillInfo['order_goods_id[' + index + ']'] = item;
@@ -123,16 +123,17 @@ var _default = {
       }
       if (canSend) {
         this.pageLoading();
-        this.Request('sendGoods', sendBillInfo).then(function (res) {
-          _this.closePageLoading();
-          uni.navigateBack();
-        }).catch(function (res) {
-          _this.closePageLoading();
-          _this.Toast(res.message);
-        });
+        console.log(sendBillInfo);
+        // this.Request('sendGoods', sendBillInfo).then(res => {
+        //     this.closePageLoading();
+        //     uni.navigateBack();
+        // }).catch(res=>{
+        //     this.closePageLoading();
+        //     this.Toast(res.message)
+        // });
       }
     },
-    initPage: function initPage() {var _this2 = this;
+    initPage: function initPage() {var _this = this;
       if (DataFrom.from) {
         sendBillInfo.id = DataFrom.bill.bill.id; //订单id
         DataGo.data = this.Cacher.getData(DataGo.go) || {};
@@ -150,7 +151,7 @@ var _default = {
           id: DataFrom.bill.bill.id }).
         then(function (res) {
           cacheBillInfo = res;
-          _this2.goodsList = res.order_goods.map(function (item) {
+          _this.goodsList = res.order_goods.map(function (item) {
             return {
               img: item.thumb,
               goodName: item.title,
@@ -163,14 +164,14 @@ var _default = {
               refund_type: item.refund_type * 1 //0 无效 1 仅退款 2 退款退货 3 换货
             };
           });
-          cacheSelected = _this2.goodsList.filter(function (item) {
+          cacheSelected = _this.goodsList.filter(function (item) {
             return !item.status;
           }).map(function (item) {
             return item.goods_id;
           });
-          _this2.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
-          _this2.provideInfo.address = res.address;
-          _this2.provideInfo.express = res.express;
+          _this.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
+          _this.provideInfo.address = res.address;
+          _this.provideInfo.express = res.express;
         });
       }
     } },

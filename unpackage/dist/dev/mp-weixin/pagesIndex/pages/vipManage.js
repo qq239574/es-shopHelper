@@ -125,7 +125,6 @@ var cacheSearchKey = '';var _default =
 
         }
       } else {
-
       }
       this.toggle = !this.toggle;
     },
@@ -171,9 +170,9 @@ var cacheSearchKey = '';var _default =
   onLoad: function onLoad() {
     this.viplist = [];
     cacheSearchKey = '';
-    this.initPage();
   },
   onShow: function onShow() {
+    this.initPage();
     this.toggle = !this.toggle;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

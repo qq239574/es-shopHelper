@@ -26,6 +26,19 @@
       width: -moz-fit-content;
       width: fit-content;
 }
+.card--temp .card--info__row .copy-item.data-v-e2149e4c {
+      padding-right: 40rpx;
+      position: relative;
+}
+.card--temp .card--info__row .copy-item .copy-icon.data-v-e2149e4c {
+        position: absolute;
+        width: 24rpx;
+        height: 24rpx;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+}
 .card--temp .card--info__row .card--info__row__tile.data-v-e2149e4c {
       color: #6e7685;
 }

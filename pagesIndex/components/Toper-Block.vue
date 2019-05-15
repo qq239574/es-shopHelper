@@ -1,5 +1,5 @@
 <template>
-    <view class='toper-block'>
+    <view class='toper-block' @click='clickItem'>
         <view class="icon">
             <image class='img' lazy-load :src='"/static/img/global/top"+(index+1)+".png"' v-if='index<3'></image>
             <view class="no img" v-else>{{index+1}}</view>
@@ -45,7 +45,10 @@ import {number_format} from '../../components/my-components/formater.js'
         },
         methods: {
             formater(val){
-                return number_format(val)
+                return number_format(val,2,',','.')
+            },
+            clickItem(){
+                this.$emit('click',this.info)
             }
         },
     }

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioBlock = function radioBlock() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
 
 
 
@@ -50,7 +50,11 @@ var cache = '修改';var _default =
     } },
 
   onLoad: function onLoad(option) {var _this = this;
+
     DataFrom = this.Cacher.getData(option.from) || {};
+    DataFrom.needChange.label && uni.setNavigationBarTitle({
+      title: DataFrom.needChange.label });
+
     this.list = DataFrom.needChange.other.formList.map(function (item, index) {
       if (item.name == DataFrom.needChange.value) {
         _this.defaultIndex = index;
@@ -72,6 +76,7 @@ var cache = '修改';var _default =
 
 
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

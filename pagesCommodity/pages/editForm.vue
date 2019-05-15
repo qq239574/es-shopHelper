@@ -40,7 +40,11 @@
             }
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from) || {};
+           
+            DataFrom = this.Cacher.getData(option.from) || {};  
+            DataFrom.needChange.label&&uni.setNavigationBarTitle({
+                title:DataFrom.needChange.label
+            })
             this.list = DataFrom.needChange.other.formList.map((item, index) => {
                 if (item.name == DataFrom.needChange.value) {
                     this.defaultIndex = index;

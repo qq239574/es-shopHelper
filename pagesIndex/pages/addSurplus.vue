@@ -23,6 +23,7 @@
 <script>
     import surplusWin from '../components/Vip-Surplus-Window'
     import longButton from '../../components/my-components/LongButton.vue'
+    import {number_format} from '../../components/my-components/formater.js'
     let DataFrom = {}
     export default {
         components: {
@@ -62,7 +63,11 @@
                     title = '扣除' + DataFrom.value.label;
                     this.type = '扣除';
                 }
-                this.curnum = DataFrom.value.value;
+                if (DataFrom.from == 'vipManage') {
+                    this.curnum = DataFrom.info.balance;
+                } else {
+                    this.curnum = DataFrom.value.value;
+                }
                 this.label = DataFrom.value.label;
                 this.placeholder = '输入' + this.type + this.label + '数';
                 uni.setNavigationBarTitle({
@@ -107,7 +112,6 @@
                 name: DataFrom.info.nickname,
                 img: DataFrom.info.avatar
             }
-            this.initPage();
         },
         onShow() {
             this.initPage();
