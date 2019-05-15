@@ -69,7 +69,7 @@ var cacheIndex = 0;var _default =
         stock: {
           label: '库存',
           id: '',
-          value: '0',
+          value: '',
           disabled: false, //可否编辑
           editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         },
@@ -127,11 +127,8 @@ var cacheIndex = 0;var _default =
     DataFrom = this.Cacher.getData(option.from);
     cacheList = DataFrom.needChange.other.list.map(function (item, index) {
       item.index = index;
-      item.cardStock.needHide = false;
-      item.stock.needHide = true;
       return item;
     });
-    this.initPage();
     this.list = cacheList;
     DataFrom.needChange.other.list = cacheList;
     this.Cacher.setData('editMultiCode', DataFrom);

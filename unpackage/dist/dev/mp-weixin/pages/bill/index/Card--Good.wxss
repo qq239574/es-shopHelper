@@ -47,7 +47,7 @@
 .card--good .card--good-items .card--good-item .good-info.data-v-8ba389c2 {
         height: 100%;
         width: 500rpx;
-        padding: 23rpx 0 0;
+        padding: 23rpx 0 10rpx;
 }
 .card--good .card--good-items .card--good-item .good-info .good-name.data-v-8ba389c2 {
           width: 100%;
@@ -90,16 +90,23 @@
             width: -webkit-fit-content;
             width: -moz-fit-content;
             width: fit-content;
+            max-width: 360rpx;
 }
 .card--good .card--good-items .card--good-item .good-info .good-others .color view.data-v-8ba389c2 {
               margin: 0 8rpx 0 0;
               line-height: 32rpx;
+              white-space: pre-wrap;
+              word-break: break-all;
+              min-width: 60rpx;
 }
 .card--good .card--good-items .card--good-item .good-info .good-others .price.data-v-8ba389c2 {
             color: #000;
             font-weight: 600;
             font-size: 28rpx;
             padding: 0 0;
+            max-width: 200rpx;
+            white-space: pre-wrap;
+            word-break: break-all;
 }
 .card--good .card--info__row.data-v-8ba389c2 {
     width: 100%;

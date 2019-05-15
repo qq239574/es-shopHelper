@@ -33,6 +33,7 @@ var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/e
 
 
 
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
 var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOption.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js");
 
 
@@ -171,7 +172,7 @@ var initdata = [{
           }));
         });
         this.Request('getHistoryData', {}).then(function (res) {//获取历史总成交额
-          _this.dataList[0].subTitle = '累计总成交额：' + res.all_order_price;
+          _this.dataList[0].subTitle = '累计总成交额：' + (0, _formater.number_format)(res.all_order_price, 2, '.', ',');
         });
       } else {
         setTimeout(function () {

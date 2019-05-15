@@ -186,7 +186,7 @@
                          cardStock: {
                              label: '卡密库',
                              id: item.virtual_card_id,
-                             value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name,
+                             value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name||'',
                              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                              needHide: data.goods.type != 3

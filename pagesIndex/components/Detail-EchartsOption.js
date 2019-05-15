@@ -36,7 +36,7 @@ export default function getLineOption1(datalist, keylist) {
         series: [{
             name: '',
             type: 'line',
-            smooth: true,
+            // smooth: true,
             symbol: "none",
             data: datalist
         }]

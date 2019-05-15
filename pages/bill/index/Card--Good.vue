@@ -98,7 +98,7 @@
                 .good-info {
                     height: 100%;
                     width: 500upx;
-                    padding: 23upx 0 0;
+                    padding: 23upx 0 10upx;
                     .good-name {
                         width: 100%;
                         font-size: 28upx;
@@ -122,9 +122,13 @@
                             display: flex;
                             flex-wrap: nowrap;
                             width: fit-content;
+                            max-width: 360upx;
                             view {
                                 margin: 0 8upx 0 0;
                                 line-height: 32upx;
+                                 white-space:pre-wrap;
+                                 word-break: break-all;
+                                 min-width: 60upx;
                             }
                         }
                         .price {
@@ -132,6 +136,9 @@
                             font-weight: 600;
                             font-size: 28upx;
                             padding: 0 0;
+                            max-width: 200upx;
+                            white-space:pre-wrap;
+                            word-break: break-all;
                         }
                     }
                 }
@@ -151,7 +158,7 @@
             view {
                 font-size: 24upx;
                 color: #33373a;
-                width: fit-content;
+                width: fit-content; 
             }
             .card--info__row__tile {
                 color: #6e7685;

@@ -100,7 +100,7 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
       title: '' };}, onLoad: function onLoad(option) {DataFrom = this.Cacher.getData(option.from);if (DataFrom.id != 'trade') {this.showTotal = false;}this.title = DataFrom.title.replace(/[(（].+[)）]$/, '');uni.setNavigationBarTitle({ title: this.title });}, onShow: function onShow() {this.initPage();}, onUnload: function onUnload() {this.Cacher.setData('filterDate', {}); //清理记录
   }, onPullDownRefresh: function onPullDownRefresh() {this.initPage();}, methods: {
     formater: function formater(val) {
-      return (0, _formater.number_format)(val);
+      return (0, _formater.number_format)(val, 2, '.', ',');
     },
     initPage: function initPage() {var _this = this; //初始化页面  
       DataGo = this.Cacher.getData('filterDate');

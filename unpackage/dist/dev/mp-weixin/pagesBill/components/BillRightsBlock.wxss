@@ -17,7 +17,7 @@
     -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
             justify-content: space-between;
-    margin: 30rpx auto 24rpx;
+    margin: 10rpx auto 0;
 }
 .card--temp .card--info__row view.data-v-219574dc {
       font-size: 26rpx;

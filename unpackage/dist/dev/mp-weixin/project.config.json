@@ -4,10 +4,14 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
-		"minified": true
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
@@ -33,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -46,6 +50,20 @@
 					"id": -1,
 					"name": "my",
 					"pathName": "pages/self/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "goods",
+					"pathName": "pages/commodity/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bills",
+					"pathName": "pages/bill/index",
 					"scene": null
 				}
 			]

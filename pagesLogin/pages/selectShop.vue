@@ -132,7 +132,8 @@
                                 let shop = this.shops[0];
                                 this.Cacher.setData(pageId, {
                                     from: pageId,
-                                    shop
+                                    shopInfo: shop.shopInfo
+                                    
                                 });
                                 this.Request('switchShop', {
                                     id: shop.shopInfo.id

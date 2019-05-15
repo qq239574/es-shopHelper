@@ -1,6 +1,6 @@
 <template>
     <view class='page pages-index-index'>
-        <view class="tunshop">
+        <view class="tunshop" v-if='showTurnShop'>
             <view class='title van-ellipsis '>
                 <van-icon name="shop-o" class='shop-icon' />{{shopName}}
             </view>
@@ -51,6 +51,7 @@
         },
         data() {
             return {
+                showTurnShop: true,
                 billList: [{
                     name: '待发货',
                     num: 0,
@@ -230,6 +231,9 @@
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
             this.shopName = DataFrom.title;
+            if (option && option.status == 'onlyOne') {
+                this.showTurnShop = false;
+            }
             // }
         },
         onShow() {

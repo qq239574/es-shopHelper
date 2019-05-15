@@ -66,7 +66,7 @@
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-between;
-            margin: 30upx auto 24upx;
+            margin: 10upx auto 0;
             view {
                 font-size: 26upx;
                 color: #33373a;

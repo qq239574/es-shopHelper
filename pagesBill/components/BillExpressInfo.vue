@@ -78,7 +78,7 @@
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-between;
-            margin: 30upx auto 24upx;
+            margin: 10upx auto 0;
             view {
                 font-size: 24upx;
                 color: #33373a;
@@ -88,7 +88,7 @@
                 color: #6e7685;
             }
             .card--info__row__status {
-                color: #fd6b3e;
+                color: #6e7685;
                 display: flex;
                 flex-wrap: nowrap;
                 .icon-share{

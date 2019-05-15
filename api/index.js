@@ -17,14 +17,12 @@ const indexApi = {
 };
 
 export default async function (name, data) {
-
     sessionId = cacher.getData('sessionId');
     if (!sessionId) {
         await new Promise((resolve, reject) => {
             graceRequest.get(
                 global_settings.base_url + indexApi.sessionid.url, {}, {
                     'session-id': ''
-
                 },
                 function (res) {
                     if (res.error == 0) {
@@ -42,7 +40,7 @@ export default async function (name, data) {
         shopInfo = cacher.getData('selectShop');
     }
 
-
+    console.log('selectShop',shopInfo)
     let header = {};
     if (shopInfo && shopInfo.shopInfo) {
         header = {

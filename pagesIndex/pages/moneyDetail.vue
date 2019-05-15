@@ -18,7 +18,7 @@
         <view class="dataTable">
             <view class="tablerow">
                 <view class="td">日期</view>
-                <view class="td">销售额</view>
+                <view class="td">{{title}}</view>
             </view>
             <view class="tablerow" v-for='(item,index) in tableList' :key='index'>
                 <view class="td">{{item.col1}}</view>
@@ -90,7 +90,7 @@
         },
         methods: {
             formater(val) {
-                return number_format(val);
+                return number_format(val,2,'.',',');
             },
             initPage() { //初始化页面  
                 DataGo = this.Cacher.getData('filterDate');

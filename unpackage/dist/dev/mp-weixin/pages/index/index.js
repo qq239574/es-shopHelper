@@ -61,6 +61,7 @@ var searchDay = {
 
   data: function data() {
     return {
+      showTurnShop: true,
       billList: [{
         name: '待发货',
         num: 0,
@@ -240,6 +241,9 @@ var searchDay = {
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData(option.from);
     this.shopName = DataFrom.title;
+    if (option && option.status == 'onlyOne') {
+      this.showTurnShop = false;
+    }
     // }
   },
   onShow: function onShow() {

@@ -23,6 +23,7 @@
     import mpvueEcharts from '../../components/mpvue-echarts/src/echarts.vue';
     import echartBlock from '../components/Index-Echarts.vue'
     import topList from '../components/Index-Top.vue'
+    import {number_format} from '../../components/my-components/formater.js'
     import {
         getLineOption1,
         getLineOption2,
@@ -161,7 +162,7 @@
                         })];
                     })
                     this.Request('getHistoryData', {}).then(res => { //获取历史总成交额
-                        this.dataList[0].subTitle = '累计总成交额：' + res.all_order_price;
+                        this.dataList[0].subTitle = '累计总成交额：' + number_format(res.all_order_price,2,'.',',');
                     })
                 } else {
                     setTimeout(() => {

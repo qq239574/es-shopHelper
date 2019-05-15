@@ -59,8 +59,8 @@ function addGoodType(old, list) { //添加修改子规格
             },
             cardStock: {
                 label: '卡密库',
-                id: '', 
-                value:0,
+                id: '',
+                value: '',
                 disabled: false, //可否编辑,活动期间不可编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                 needHide: true
@@ -104,10 +104,10 @@ function addGoodType(old, list) { //添加修改子规格
                 disabled: false, //可否编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
             },
-            cardStock:{
+            cardStock: {
                 label: '卡密库',
-                id: tmp.cardStock.id, 
-                value:tmp.cardStock.value,
+                id: tmp.cardStock.id,
+                value: tmp.cardStock.value,
                 disabled: false, //可否编辑,活动期间不可编辑
                 editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                 needHide: tmp.cardStock.needHide
@@ -132,6 +132,7 @@ function addGoodType(old, list) { //添加修改子规格
     return types
 }
 export default function (val, cacheGoodDetail) {
+    let goodtype = cacheGoodDetail.info1.goodType.type||1; //1为实体 2为虚拟物品 3 卡密 4预约 5核销;
     let static_resources_domain = this.Cacher.getData('static_resources_domain');
     let reg = new RegExp(static_resources_domain, 'g');
 
@@ -199,26 +200,40 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
         cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
         let oldList = cacheGoodDetail.info2.childrenSpecs.list;
-        cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
-        cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3;//电子卡密
-        
+        cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list).map(item => {
+            item.stock.needHide = goodtype == 3;
+            item.cardStock.needHide = goodtype != 3;
+            return item;
+        }); 
+        cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
+
     } else if (val.label == '子规格详情') {
-        cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
+        cacheGoodDetail.info2.childrenSpecs.list = val.other.list.map(item => {
+            item.stock.needHide = goodtype == 3;
+            item.cardStock.needHide = goodtype != 3;
+            return item;
+        });
     } else if (val.label == '自动发货') {
         cacheGoodDetail.info3.autoDeliver.value = val.checked;
     } else if (val.label == '自动发货内容') {
         cacheGoodDetail.info3.autoDeliverContent.value = val.value;
     } else if (val.label == '商品类型') {
+        goodtype = val.id;
         cacheGoodDetail.info1.goodType.value = val.value;
-        cacheGoodDetail.info1.goodType.type = val.id; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
-        cacheGoodDetail.info2.cardStock.needHide = val.id == 3;
-        cacheGoodDetail.info3.autoExt.needHide = val.id != 3;
-        cacheGoodDetail.info3.autoExtTime.needHide = val.id != 3;
-        cacheGoodDetail.info3.autoDeliver.needHide = val.id != 2;
-        cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
-        cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
-        cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
-        cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || val.id != 3;//电子卡密
+        cacheGoodDetail.info1.goodType.type = goodtype; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
+        cacheGoodDetail.info2.cardStock.needHide = goodtype == 3;
+        cacheGoodDetail.info3.autoExt.needHide = goodtype != 3;
+        cacheGoodDetail.info3.autoExtTime.needHide = goodtype != 3;
+        cacheGoodDetail.info3.autoDeliver.needHide = goodtype != 2;
+        cacheGoodDetail.info3.autoDeliverContent.needHide = goodtype != 2;
+        cacheGoodDetail.info3.provideCost.needHide = goodtype == 2;
+        cacheGoodDetail.info3.showProCost.needHide = goodtype == 2;
+        cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || goodtype != 3; //电子卡密
+        cacheGoodDetail.info2.childrenSpecs.list = cacheGoodDetail.info2.childrenSpecs.list.map(item => {
+            item.stock.needHide = goodtype == 3;
+            item.cardStock.needHide = goodtype != 3;
+            return item;
+        }); 
     }
     return cacheGoodDetail;
 

@@ -10620,8 +10620,8 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "http://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-  attachment_url: "http://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
+  base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
+  attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
 global_settings;exports.default = _default;
 
@@ -11098,14 +11098,12 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
 
   function _callee(name, data) {var header, newData;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-
             sessionId = cacher.getData('sessionId');if (
             sessionId) {_context.next = 4;break;}_context.next = 4;return (
               new Promise(function (resolve, reject) {
                 _request.default.get(
                 _domain.default.base_url + indexApi.sessionid.url, {}, {
                   'session-id': '' },
-
 
                 function (res) {
                   if (res.error == 0) {
@@ -11123,7 +11121,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               shopInfo = cacher.getData('selectShop');
             }
 
-
+            console.log('selectShop', shopInfo);
             header = {};
             if (shopInfo && shopInfo.shopInfo) {
               header = {
@@ -11138,7 +11136,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 'client-type': 'assistant' };
 
             }if (!(
-            indexApi[name].type == 'download')) {_context.next = 11;break;}return _context.abrupt("return",
+            indexApi[name].type == 'download')) {_context.next = 12;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
 
               var param = [];
@@ -11155,9 +11153,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 11:if (!(
+            }));case 12:if (!(
 
-            indexApi[name].type == 'image')) {_context.next = 15;break;}return _context.abrupt("return",
+            indexApi[name].type == 'image')) {_context.next = 16;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               uni.uploadFile({
                 url: _domain.default.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
@@ -11176,9 +11174,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 15:if (!(
+            }));case 16:if (!(
 
-            indexApi[name].type == 'get')) {_context.next = 19;break;}return _context.abrupt("return",
+            indexApi[name].type == 'get')) {_context.next = 20;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               _request.default.get(
               _domain.default.base_url + indexApi[name].url,
@@ -11201,7 +11199,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
               });
 
-            }));case 19:
+            }));case 20:
             //post请求
             newData = Object.assign({}, indexApi[name].data, data);return _context.abrupt("return",
             new Promise(function (resolve, reject) {
@@ -11219,7 +11217,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 }
               });
 
-            }));case 21:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+            }));case 22:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -13706,7 +13704,7 @@ function goodData(data) {//单规格商品
             cardStock: {
               label: '卡密库',
               id: item.virtual_card_id,
-              value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name,
+              value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name || '',
               disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
               editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
               needHide: data.goods.type != 3 },
@@ -14291,7 +14289,7 @@ function addGoodType(old, list) {//添加修改子规格
       cardStock: {
         label: '卡密库',
         id: '',
-        value: 0,
+        value: '',
         disabled: false, //可否编辑,活动期间不可编辑
         editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: true },
@@ -14363,6 +14361,7 @@ function addGoodType(old, list) {//添加修改子规格
   return types;
 }
 function _default(val, cacheGoodDetail) {
+  var goodtype = cacheGoodDetail.info1.goodType.type || 1; //1为实体 2为虚拟物品 3 卡密 4预约 5核销;
   var static_resources_domain = this.Cacher.getData('static_resources_domain');
   var reg = new RegExp(static_resources_domain, 'g');
 
@@ -14430,26 +14429,40 @@ function _default(val, cacheGoodDetail) {
     cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
     cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
     var oldList = cacheGoodDetail.info2.childrenSpecs.list;
-    cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list);
+    cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list).map(function (item) {
+      item.stock.needHide = goodtype == 3;
+      item.cardStock.needHide = goodtype != 3;
+      return item;
+    });
     cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
 
   } else if (val.label == '子规格详情') {
-    cacheGoodDetail.info2.childrenSpecs.list = val.other.list;
+    cacheGoodDetail.info2.childrenSpecs.list = val.other.list.map(function (item) {
+      item.stock.needHide = goodtype == 3;
+      item.cardStock.needHide = goodtype != 3;
+      return item;
+    });
   } else if (val.label == '自动发货') {
     cacheGoodDetail.info3.autoDeliver.value = val.checked;
   } else if (val.label == '自动发货内容') {
     cacheGoodDetail.info3.autoDeliverContent.value = val.value;
   } else if (val.label == '商品类型') {
+    goodtype = val.id;
     cacheGoodDetail.info1.goodType.value = val.value;
-    cacheGoodDetail.info1.goodType.type = val.id; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
-    cacheGoodDetail.info2.cardStock.needHide = val.id == 3;
-    cacheGoodDetail.info3.autoExt.needHide = val.id != 3;
-    cacheGoodDetail.info3.autoExtTime.needHide = val.id != 3;
-    cacheGoodDetail.info3.autoDeliver.needHide = val.id != 2;
-    cacheGoodDetail.info3.autoDeliverContent.needHide = val.id != 2;
-    cacheGoodDetail.info3.provideCost.needHide = val.id == 2;
-    cacheGoodDetail.info3.showProCost.needHide = val.id == 2;
-    cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || val.id != 3; //电子卡密
+    cacheGoodDetail.info1.goodType.type = goodtype; //1为实体 2为虚拟物品 3 卡密 4预约 5核销
+    cacheGoodDetail.info2.cardStock.needHide = goodtype == 3;
+    cacheGoodDetail.info3.autoExt.needHide = goodtype != 3;
+    cacheGoodDetail.info3.autoExtTime.needHide = goodtype != 3;
+    cacheGoodDetail.info3.autoDeliver.needHide = goodtype != 2;
+    cacheGoodDetail.info3.autoDeliverContent.needHide = goodtype != 2;
+    cacheGoodDetail.info3.provideCost.needHide = goodtype == 2;
+    cacheGoodDetail.info3.showProCost.needHide = goodtype == 2;
+    cacheGoodDetail.info2.cardStock.needHide = !!cacheGoodDetail.info2.specification.list.length || goodtype != 3; //电子卡密
+    cacheGoodDetail.info2.childrenSpecs.list = cacheGoodDetail.info2.childrenSpecs.list.map(function (item) {
+      item.stock.needHide = goodtype == 3;
+      item.cardStock.needHide = goodtype != 3;
+      return item;
+    });
   }
   return cacheGoodDetail;
 
@@ -14503,7 +14516,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     series: [{
       name: '',
       type: 'line',
-      smooth: true,
+      // smooth: true,
       symbol: "none",
       data: datalist }] };
 
@@ -15026,7 +15039,45 @@ function _default()
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var cacheData = {}; //缓存登录信息
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var cacheData = {}; //缓存登录信息
+function selectShop() {var _this = this;
+  return new Promise(function (resolve, reject) {
+    _this.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
+      pageSize: 2,
+      page: 1 }).
+    then(function (res) {
+      if (res.error == 0) {
+        var shops = (0, _getShopList.default)(res.list);
+        if (shops.length == 1) {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
+          var shop = shops[0];
+          _this.Cacher.setData('selectShop', {
+            from: 'selectShop',
+            shopInfo: shop.shopInfo });
+
+          _this.Request('switchShop', {
+            id: shop.shopInfo.id }).
+          then(function (res) {
+            if (res.error == 0) {
+              uni.reLaunch({
+                url: '../index/index?from=selectShop&status=onlyOne' });
+
+              reject();
+            } else {
+              resolve();
+            }
+          });
+        } else {
+          resolve();
+        }
+      } else {
+        resolve();
+      }
+    }).catch(function (res) {
+      resolve();
+    });
+  });
+}
 function wxLogin() {
   var that = this;
   return new Promise(function (resolve, reject) {
@@ -15098,14 +15149,15 @@ function wxLogin() {
 
 }
 
-function login() {var _this = this;
+function login() {var _this2 = this;
   var that = this;
   var cacheData = this.Cacher.getData('login') || {};
 
   return new Promise(function (resolve, reject) {
-    _this.Request('login', {
-      account: _this.userId,
-      password: _this.password,
+
+    _this2.Request('login', {
+      account: _this2.userId,
+      password: _this2.password,
       is_authorization: 0 }).
     then(function (res) {
       // 验证通过
@@ -15114,22 +15166,28 @@ function login() {var _this = this;
           userId: res.uid });
 
         that.Cacher.setData('login', cacheData);
-        resolve(res);
+        selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
+          resolve(res);
+        });
+
       } else {
         reject(res);
-        _this.Toast(res.message);
+        _this2.Toast(res.message);
       }
-      _this.closePageLoading();
+      _this2.closePageLoading();
     }).catch(function (res) {
 
       if (res.error == -3) {//已登录
         that.Cacher.setData('login', cacheData);
-        resolve(res);
+        selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
+          resolve(res);
+        });
       } else {
         reject(res);
-        _this.Toast(res.message);
+        _this2.Toast(res.message);
       }
     });
+
   });
 
 }
