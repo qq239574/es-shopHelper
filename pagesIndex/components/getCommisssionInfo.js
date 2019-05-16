@@ -1,3 +1,4 @@
+
 function judgeCommissionStatus(info) {
     if (info.status * 1 === 1) { //是分销商
         return 1
@@ -9,13 +10,14 @@ function judgeCommissionStatus(info) {
         return -2
     }
 }
+
 export default function (commission) {
     let status = judgeCommissionStatus(commission)
     let commissionInfo = { //分销商信息
         isCommission: status, //是否分销商，
         registerTime: commission.apply_time, //注册时间
         registerInfo: commission.from, //申请信息
-        
+
         superDistributor: { //上级分销商
             name: commission.agent_nickname
         },

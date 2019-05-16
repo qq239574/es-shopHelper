@@ -2,7 +2,7 @@
     <view class='price-input '>
         <view class="row row1">
             <view class="label">定价（元）</view>
-            <input type="digit" placeholder='0' :value='info.total' @input='inputPrice'>
+            <input type="digit" placeholder='0' :value='info.changedTotal' @input='inputPrice'>
         </view>
     </view>
 </template>

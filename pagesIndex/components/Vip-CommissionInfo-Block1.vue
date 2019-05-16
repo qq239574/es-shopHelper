@@ -22,13 +22,12 @@
         props: {
             info: {
                 type: Object,
-                default: {
-                }
+                default: {}
             }
         },
         methods: {
             formater(val) {
-                return number_format(val)+'元'
+                return number_format(val, 2, '.', ',') + '元'
             }
         },
     }

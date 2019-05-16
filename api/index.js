@@ -39,8 +39,7 @@ export default async function (name, data) {
     if (!shopInfo) {
         shopInfo = cacher.getData('selectShop');
     }
-
-    console.log('selectShop',shopInfo)
+ 
     let header = {};
     if (shopInfo && shopInfo.shopInfo) {
         header = {

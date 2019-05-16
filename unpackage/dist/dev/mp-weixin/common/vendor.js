@@ -10621,6 +10621,7 @@ var postSelfVerifyInfo = { //订单自提
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
+  //  base_url:'https://ceshishop.jacjack.com',
   attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
 global_settings;exports.default = _default;
@@ -11121,7 +11122,6 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               shopInfo = cacher.getData('selectShop');
             }
 
-            console.log('selectShop', shopInfo);
             header = {};
             if (shopInfo && shopInfo.shopInfo) {
               header = {
@@ -11136,7 +11136,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 'client-type': 'assistant' };
 
             }if (!(
-            indexApi[name].type == 'download')) {_context.next = 12;break;}return _context.abrupt("return",
+            indexApi[name].type == 'download')) {_context.next = 11;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
 
               var param = [];
@@ -11153,9 +11153,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 12:if (!(
+            }));case 11:if (!(
 
-            indexApi[name].type == 'image')) {_context.next = 16;break;}return _context.abrupt("return",
+            indexApi[name].type == 'image')) {_context.next = 15;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               uni.uploadFile({
                 url: _domain.default.base_url + indexApi[name].url, //仅为示例，非真实的接口地址
@@ -11174,9 +11174,9 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                   resolve(res);
                 } });
 
-            }));case 16:if (!(
+            }));case 15:if (!(
 
-            indexApi[name].type == 'get')) {_context.next = 20;break;}return _context.abrupt("return",
+            indexApi[name].type == 'get')) {_context.next = 19;break;}return _context.abrupt("return",
             new Promise(function (resolve, reject) {
               _request.default.get(
               _domain.default.base_url + indexApi[name].url,
@@ -11199,7 +11199,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
               });
 
-            }));case 20:
+            }));case 19:
             //post请求
             newData = Object.assign({}, indexApi[name].data, data);return _context.abrupt("return",
             new Promise(function (resolve, reject) {
@@ -11217,7 +11217,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
                 }
               });
 
-            }));case 22:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
+            }));case 21:case "end":return _context.stop();}}}, _callee, this);}));return _ref.apply(this, arguments);}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
@@ -11759,9 +11759,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.number_for
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getDate = getDate;exports.GetDateDiff = GetDateDiff; /**
-                                                                                                                                         * 获取当前日期之前，之后几天的日期
-                                                                                                                                         */
+Object.defineProperty(exports, "__esModule", { value: true });exports.getDate = getDate;exports.GetDateDiff = GetDateDiff;exports.GetDateDiffNoAbs = GetDateDiffNoAbs; /**
+                                                                                                                                                                                     * 获取当前日期之前，之后几天的日期
+                                                                                                                                                                                     */
 function getDate(before) {
   var time = new Date();
   time.setDate(time.getDate() + before); //获取Day天后的日期 
@@ -11780,6 +11780,16 @@ function GetDateDiff(startDate, endDate) {
   var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
   var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
   var dates = Math.abs(startTime - endTime) / (1000 * 60 * 60 * 24);
+  return dates;
+}
+/***
+   * 获取两段时间间隔
+   * 
+   */
+function GetDateDiffNoAbs(startDate, endDate) {
+  var startTime = new Date(Date.parse(startDate.replace(/-/g, "/"))).getTime();
+  var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
+  var dates = (startTime - endTime) / (1000 * 60 * 60 * 24);
   return dates;
 }
 
@@ -14680,7 +14690,8 @@ function getLineOption4(datalist) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function judgeCommissionStatus(info) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;
+function judgeCommissionStatus(info) {
   if (info.status * 1 === 1) {//是分销商
     return 1;
   } else if (info.status * 1 === 0) {//待审核 分销商,
@@ -14691,6 +14702,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     return -2;
   }
 }
+
 function _default(commission) {
   var status = judgeCommissionStatus(commission);
   var commissionInfo = { //分销商信息

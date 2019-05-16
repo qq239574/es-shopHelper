@@ -45,7 +45,7 @@ import {number_format} from '../../components/my-components/formater.js'
         },
         methods: {
             formater(val){
-                return number_format(val,2,',','.')
+                return number_format(val,2,'.',',')
             },
             clickItem(){
                 this.$emit('click',this.info)

@@ -4,14 +4,10 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
-		"minified": true,
-		"newFeature": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"checkInvalidKey": true
+		"minified": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
@@ -28,52 +24,13 @@
 			"current": -1,
 			"list": []
 		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
-			"list": [
-				{
-					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "my",
-					"pathName": "pages/self/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "goods",
-					"pathName": "pages/commodity/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "bills",
-					"pathName": "pages/bill/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "toper",
-					"pathName": "pagesIndex/pages/toper",
-					"scene": null
-				}
-			]
+			"current": -1,
+			"list": []
 		}
 	}
 }

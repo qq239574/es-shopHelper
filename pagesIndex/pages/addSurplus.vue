@@ -23,8 +23,11 @@
 <script>
     import surplusWin from '../components/Vip-Surplus-Window'
     import longButton from '../../components/my-components/LongButton.vue'
-    import {number_format} from '../../components/my-components/formater.js'
+    import {
+        number_format
+    } from '../../components/my-components/formater.js'
     let DataFrom = {}
+    let requesting = false; //正在请求
     export default {
         components: {
             surplusWin,
@@ -79,26 +82,36 @@
                 this.addition = val.detail.value
             },
             sure() {
-                let apis = ['changeVipMoney', 'changeVipScore'];
-                let api = '';
-                let num = 0;
-                if (DataFrom.value.type == 'add') {
-                    num = this.money;
-                } else if (DataFrom.value.type == 'minus') {
-                    num = Math.min(this.money, this.curnum) * -1;
+                this.pageLoading();
+                if (!requesting) {
+                    requesting = true;
+                    let apis = ['changeVipMoney', 'changeVipScore'];
+                    let api = '';
+                    let num = 0;
+                    if (DataFrom.value.type == 'add') {
+                        num = this.money;
+                    } else if (DataFrom.value.type == 'minus') {
+                        num = Math.min(this.money, this.curnum) * -1;
+                    }
+                    if (DataFrom.value.label == '余额') {
+                        api = 'changeVipMoney'
+                    } else if (DataFrom.value.label == '积分') {
+                        api = 'changeVipScore'
+                    }
+                    this.Request(api, {
+                        member_id: DataFrom.info.id,
+                        sum: num, //充值数量 正数添加余额, 负数减少积分
+                        remark: this.addition //
+                    }).then(res => {
+                        this.closePageLoading();
+                        requesting = false;
+                        uni.navigateBack();
+                    }).catch(res => {
+                        this.closePageLoading();
+                        requesting = false;
+                        this.Toast(res.message)
+                    });
                 }
-                if (DataFrom.value.label == '余额') {
-                    api = 'changeVipMoney'
-                } else if (DataFrom.value.label == '积分') {
-                    api = 'changeVipScore'
-                }
-                this.Request(api, {
-                    member_id: DataFrom.info.id,
-                    sum: num, //充值数量 正数添加余额, 负数减少积分
-                    remark: this.addition //
-                }).then(res => {
-                    uni.navigateBack()
-                });
             },
         },
         beforeCreate() {
@@ -107,6 +120,7 @@
             });
         },
         onLoad(option) {
+            requesting = false;
             DataFrom = this.Cacher.getData(option.from);
             this.info = {
                 name: DataFrom.info.nickname,

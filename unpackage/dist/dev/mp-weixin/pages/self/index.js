@@ -32,9 +32,10 @@
 
 
 
+
+
 var DataFrom = {};var _default =
 {
-
   components: {
     selectItem: selectItem,
     inputItem: inputItem },
@@ -43,6 +44,8 @@ var DataFrom = {};var _default =
     return {
       userName: '',
       userTel: '',
+      userId: '',
+      contact_mobile: '',
       userRoleName: '',
       realName: '',
       wxInfo: {} };
@@ -51,9 +54,11 @@ var DataFrom = {};var _default =
   methods: {
     initPage: function initPage() {var _this = this;
       this.Request('myInfo').then(function (res) {
-        _this.userName = res.user.username;
-        _this.userTel = res.user.contact_mobile;
-        _this.userRoleName = res.user.role_name;
+        _this.userName = res.user.nickname;
+        _this.userTel = res.user.mobile;
+        _this.userId = res.user.username;
+        _this.contact_mobile = res.user.contact_mobile;
+        _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
         _this.realName = res.user.contact;
       });
     },

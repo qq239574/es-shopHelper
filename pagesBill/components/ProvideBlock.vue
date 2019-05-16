@@ -119,7 +119,7 @@
 				}
 			},
 			onConfirm(e) {
-				console.log('aaaaaaaaaa', e)
+				console.log(e)
 				this.$emit('change', Object.assign({}, this.info, {
 					provideType: e.label
 				}))

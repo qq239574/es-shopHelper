@@ -1,6 +1,6 @@
 <template>
     <view class='toper page'>
-        <selectItem label='筛选' :value='pageLabel' @click='filteDate'></selectItem>
+        <selectItem label='筛选日期' :value='pageLabel' @click='filteDate'></selectItem>
         <items :list='list' :pageid='pageId'></items>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -37,6 +37,9 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
+              uni.setNavigationBarTitle({
+                    title: DataFrom.show=='vip'?"TOP会员":"TOP商品"
+                });
         },
         onShow() {
             domain = this.Cacher.getData('static_resources_domain')

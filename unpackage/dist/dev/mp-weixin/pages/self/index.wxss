@@ -10,16 +10,39 @@
     display: block;
     margin: auto;
 }
-.bg view.data-v-04b29112 {
+.bg .userInfo.data-v-04b29112 {
     position: absolute;
+    top: 0;
+    left: 64rpx;
+    width: 450rpx;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 38rpx 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
 }
 .bg .name.data-v-04b29112 {
     color: #fff;
     font-size: 32rpx;
-    line-height: 32rpx;
+    line-height: 40rpx;
     top: 54rpx;
     left: 64rpx;
     font-weight: 600;
+    width: 100%;
+    word-break: break-all;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
 }
 .bg .tel.data-v-04b29112 {
     color: #fff;
@@ -28,8 +51,14 @@
     bottom: 54rpx;
     left: 64rpx;
     opacity: .6;
+    width: 100%;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin-top: 10rpx;
 }
 .bg .manager.data-v-04b29112 {
+    position: absolute;
     background: #fff;
     color: #000;
     font-size: 24rpx;

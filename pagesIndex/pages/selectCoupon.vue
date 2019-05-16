@@ -162,6 +162,7 @@
 <style lang="scss" scoped>
     .select-coupon {
         background: #fff;
+        padding-bottom:200upx; 
         .margin30 {
             height: 30upx;
         }

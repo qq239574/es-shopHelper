@@ -35,10 +35,9 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
       default: {} } },
 
 
-
   methods: {
     formater: function formater(val) {
-      return (0, _formater.number_format)(val) + '元';
+      return (0, _formater.number_format)(val, 2, '.', ',') + '元';
     } } };exports.default = _default;
 
 /***/ }),

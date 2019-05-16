@@ -34,36 +34,38 @@ var echarts = _interopRequireWildcard(__webpack_require__(/*! ../../components/e
 
 
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
+
+
 var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOption.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js");
 
 
 
 
 
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};
-
-
-var initing = false; //是否正在刷新
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};var initing = false; //是否正在刷新
 /**
  * 缓存接口数据
- */
-var dataList1 = [0, 0, 0, 0, 0, 0, 0],
-dataList2 = [0, 0, 0, 0, 0, 0, 0],
-dataList3 = [0, 0, 0, 0, 0, 0, 0],
-dataList4 = [0, 0, 0, 0, 0, 0, 0];
-var initdata = [{
-  title: '成交额（元）',
-  subTitle: '累计总成成交额：' + 0,
-  today: 0,
-  yesterday: 0,
-  id: 'trade' },
-{
-  title: '付款订单数（个）',
-  subTitle: '',
-  today: 0,
-  yesterday: 0,
-  id: 'pay' },
-{
+ */var dataList1 = [0, 0, 0, 0, 0, 0, 0],dataList2 = [0, 0, 0, 0, 0, 0, 0],dataList3 = [0, 0, 0, 0, 0, 0, 0],dataList4 = [0, 0, 0, 0, 0, 0, 0];var initdata = [{ title: '成交额（元）', subTitle: '累计总成成交额：' + 0, today: 0, yesterday: 0, id: 'trade' }, { title: '付款订单数（个）', subTitle: '', today: 0, yesterday: 0, id: 'pay' }, {
   title: '付款商品数（件）',
   subTitle: '',
   today: 0,
@@ -74,8 +76,10 @@ var initdata = [{
   subTitle: '',
   today: 0,
   yesterday: 0,
-  id: 'vip' }];var _default =
+  id: 'vip' }];
 
+var cacheDataList = [];
+var timeBar = '';var _default =
 {
   data: function data() {
     return {
@@ -115,7 +119,33 @@ var initdata = [{
   },
   methods: {
     initPage: function initPage() {var _this = this;
+      cacheDataList = [{
+        title: '成交额（元）',
+        subTitle: '累计总成交额：' + 0,
+        today: 0,
+        yesterday: 0,
+        id: 'trade' },
+      {
+        title: '付款订单数（个）',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'pay' },
+      {
+        title: '付款商品数（件）',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'good' },
+      {
+        title: '付款会员数',
+        subTitle: '',
+        today: 0,
+        yesterday: 0,
+        id: 'vip' }];
+
       if (!initing) {
+        var reqResult = []; //用来统计请求是否全部完成
         initing = true;
         this.pageLoading();
         this.Request('getStatisticsData', { //今天的数据
@@ -124,21 +154,28 @@ var initdata = [{
           _this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
           _this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
           _this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
-          _this.closePageLoading();
-          _this.dataList[0].today = res.order_pay_price;
-          _this.dataList[1].today = res.order_pay_count;
-          _this.dataList[3].today = res.order_member_count;
-          initing = false;
-          _this.dataList = _toConsumableArray(_this.dataList);
+          cacheDataList[0].today = res.order_pay_price;
+          cacheDataList[1].today = res.order_pay_count;
+          cacheDataList[3].today = res.order_member_count;
+          reqResult.push(1);
+          if (reqResult.length > 4) {
+            initing = false;
+            _this.dataList = cacheDataList;
+            _this.closePageLoading();
+          }
         });
         this.Request('getStatisticsData', { //昨天的数据
           is_yesterday: 1 }).
         then(function (res) {
-          _this.dataList[0].yesterday = res.order_pay_price;
-          _this.dataList[1].yesterday = res.order_pay_count;
-          _this.dataList[3].yesterday = res.order_member_count;
-          initing = false;
-          _this.dataList = _toConsumableArray(_this.dataList);
+          cacheDataList[0].yesterday = res.order_pay_price;
+          cacheDataList[1].yesterday = res.order_pay_count;
+          cacheDataList[3].yesterday = res.order_member_count;
+          reqResult.push(1);
+          if (reqResult.length > 4) {
+            initing = false;
+            _this.dataList = cacheDataList;
+            _this.closePageLoading();
+          }
         });
         this.Request('getGoodStatisticsData', { //7天的商品曲线
           start: (0, _getDateSection.getDate)(-6),
@@ -154,28 +191,42 @@ var initdata = [{
         this.Request('getGoodNumberByDate', { //今天的商品数
           date: (0, _getDateSection.getDate)(0) }).
         then(function (res) {
-          _this.dataList[2].today = res.data.goods_paid_count;
-          _this.dataList = _toConsumableArray(_this.dataList);
+          reqResult.push(1);
+          cacheDataList[2].today = res.data.goods_paid_count;
+          if (reqResult.length > 4) {
+            initing = false;
+            _this.dataList = cacheDataList;
+            _this.closePageLoading();
+          }
         });
         this.Request('getGoodNumberByDate', { //昨天的商品数
           date: (0, _getDateSection.getDate)(-1) }).
         then(function (res) {
-          _this.dataList[2].yesterday = res.data && res.data.goods_paid_count || {
+          reqResult.push(1);
+          cacheDataList[2].yesterday = res.data && res.data.goods_paid_count || {
             goods_added_cart_count: 0,
             goods_onsale_count: 0,
             goods_paid_count: 0,
             goods_visited_count: 0 };
 
-          _this.dataList = _toConsumableArray(_this.dataList.map(function (item) {
-            return _objectSpread({}, item);
-
-          }));
+          if (reqResult.length > 4) {
+            initing = false;
+            _this.dataList = cacheDataList;
+            _this.closePageLoading();
+          }
         });
         this.Request('getHistoryData', {}).then(function (res) {//获取历史总成交额
-          _this.dataList[0].subTitle = '累计总成交额：' + (0, _formater.number_format)(res.all_order_price, 2, '.', ',');
+          reqResult.push(1);
+          cacheDataList[0].subTitle = '累计总成交额：' + (0, _formater.number_format)(res.all_order_price, 2, '.', ',');
+          if (reqResult.length > 4) {
+            initing = false;
+            _this.dataList = cacheDataList;
+            _this.closePageLoading();
+          }
         });
       } else {
-        setTimeout(function () {
+        clearTimeout(timeBar);
+        timeBar = setTimeout(function () {
           initing = false;
         }, 3000);
       }

@@ -185,8 +185,7 @@
             DataFrom = this.Cacher.getData(option.from); //
             DataGo = {
                 go: ''
-            };
-            console.log(DataFrom)
+            }; 
         }
     }
 </script>

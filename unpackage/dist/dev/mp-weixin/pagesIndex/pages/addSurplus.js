@@ -34,8 +34,11 @@
 
 
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var surplusWin = function surplusWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Surplus-Window */ "pagesIndex/components/Vip-Surplus-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Surplus-Window */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Surplus-Window.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
-var DataFrom = {};var _default =
-{
+
+
+var DataFrom = {};
+var requesting = false; //正在请求
+var _default = {
   components: {
     surplusWin: surplusWin,
     longButton: longButton },
@@ -88,27 +91,37 @@ var DataFrom = {};var _default =
       this.textLength = val.detail.value.length;
       this.addition = val.detail.value;
     },
-    sure: function sure() {
-      var apis = ['changeVipMoney', 'changeVipScore'];
-      var api = '';
-      var num = 0;
-      if (DataFrom.value.type == 'add') {
-        num = this.money;
-      } else if (DataFrom.value.type == 'minus') {
-        num = Math.min(this.money, this.curnum) * -1;
+    sure: function sure() {var _this = this;
+      this.pageLoading();
+      if (!requesting) {
+        requesting = true;
+        var apis = ['changeVipMoney', 'changeVipScore'];
+        var api = '';
+        var num = 0;
+        if (DataFrom.value.type == 'add') {
+          num = this.money;
+        } else if (DataFrom.value.type == 'minus') {
+          num = Math.min(this.money, this.curnum) * -1;
+        }
+        if (DataFrom.value.label == '余额') {
+          api = 'changeVipMoney';
+        } else if (DataFrom.value.label == '积分') {
+          api = 'changeVipScore';
+        }
+        this.Request(api, {
+          member_id: DataFrom.info.id,
+          sum: num, //充值数量 正数添加余额, 负数减少积分
+          remark: this.addition //
+        }).then(function (res) {
+          _this.closePageLoading();
+          requesting = false;
+          uni.navigateBack();
+        }).catch(function (res) {
+          _this.closePageLoading();
+          requesting = false;
+          _this.Toast(res.message);
+        });
       }
-      if (DataFrom.value.label == '余额') {
-        api = 'changeVipMoney';
-      } else if (DataFrom.value.label == '积分') {
-        api = 'changeVipScore';
-      }
-      this.Request(api, {
-        member_id: DataFrom.info.id,
-        sum: num, //充值数量 正数添加余额, 负数减少积分
-        remark: this.addition //
-      }).then(function (res) {
-        uni.navigateBack();
-      });
     } },
 
   beforeCreate: function beforeCreate() {
@@ -117,6 +130,7 @@ var DataFrom = {};var _default =
 
   },
   onLoad: function onLoad(option) {
+    requesting = false;
     DataFrom = this.Cacher.getData(option.from);
     this.info = {
       name: DataFrom.info.nickname,

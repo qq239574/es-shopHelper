@@ -47,6 +47,9 @@ var domain = '';var _default =
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    uni.setNavigationBarTitle({
+      title: DataFrom.show == 'vip' ? "TOP会员" : "TOP商品" });
+
   },
   onShow: function onShow() {
     domain = this.Cacher.getData('static_resources_domain');

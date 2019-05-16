@@ -2,13 +2,15 @@
 	<div class='pages-self-index page'>
 		<view class="bg">
 			<image lazy-load src='/static/img/global/my_bg.png'></image>
-			<view class="name">{{userName}}</view>
-			<view class="tel">{{userTel}}</view>
+			<view class='userInfo'>
+				<view class="name">{{userName}}</view>
+				<view class="tel">{{userTel}}</view>
+			</view>
 			<view class='manager' @click='clickManager'>{{userRoleName}}</view>
 		</view>
-		<inputItem :disabled='true' label='登陆账号' value='1354'></inputItem>
+		<inputItem :disabled='true' label='登陆账号' :value='userId'></inputItem>
 		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
-		<selectItem label='联系方式' :value='userTel' @click='toPage("tel")'></selectItem>
+		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
 		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX' v-if='wxInfo.nickName'></selectItem>
@@ -24,7 +26,6 @@
 	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
 	let DataFrom = {};
 	export default {
-		
 		components: {
 			selectItem,
 			inputItem
@@ -33,6 +34,8 @@
 			return {
 				userName: '',
 				userTel: '',
+				userId: '',
+				contact_mobile: '',
 				userRoleName: '',
 				realName: '',
 				wxInfo: {}
@@ -41,9 +44,11 @@
 		methods: {
 			initPage() {
 				this.Request('myInfo').then(res => {
-					this.userName = res.user.username;
-					this.userTel = res.user.contact_mobile;
-					this.userRoleName = res.user.role_name;
+					this.userName = res.user.nickname;
+					this.userTel = res.user.mobile;
+					this.userId = res.user.username;
+					this.contact_mobile = res.user.contact_mobile;
+					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
 					this.realName = res.user.contact;
 				})
 			},
@@ -130,16 +135,28 @@
 			display: block;
 			margin: auto;
 		}
-		view {
+		.userInfo {
 			position: absolute;
+			top: 0;
+			left: 64upx;
+			width: 450upx;
+			height: 100%;
+			box-sizing: border-box;
+			padding: 38upx 0   ;
+			display: flex;
+			justify-content:space-between;
+			flex-wrap: wrap;
 		}
 		.name {
 			color: #fff;
 			font-size: 32upx;
-			line-height: 32upx;
+			line-height: 40upx;
 			top: 54upx;
 			left: 64upx;
 			font-weight: 600;
+			width: 100%;
+			word-break: break-all;
+			height:fit-content;
 		}
 		.tel {
 			color: #fff;
@@ -148,8 +165,12 @@
 			bottom: 54upx;
 			left: 64upx;
 			opacity: .6;
+			width:100%;
+			height:fit-content;
+			margin-top:10upx;
 		}
 		.manager {
+			position: absolute;
 			background: #fff;
 			color: #000;
 			font-size: 24upx;

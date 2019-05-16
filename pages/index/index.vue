@@ -4,12 +4,12 @@
             <view class='title van-ellipsis '>
                 <van-icon name="shop-o" class='shop-icon' />{{shopName}}
             </view>
-            <view class="button" @click='changeShop' v-if='!onlyOneShop'>
+            <view class="button" @click='changeShop' v-if='showTurnShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
         <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
         <view class="block">
-            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
+            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
             <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
@@ -32,7 +32,7 @@
     import apps from './components/IndexApps.vue'
     import {
         getDate,
-        GetDateDiff
+        GetDateDiffNoAbs
     } from '../../components/my-components/getDateSection.js'
     let DataFrom = {};
     let newNotice = {};
@@ -77,7 +77,6 @@
                 genderIndex: 0,
                 gender: ['男', '女'],
                 dateValue: "请选择",
-                onlyOneShop: false,
                 showData: {
                     money: 0,
                     payedBill: 0,
@@ -175,7 +174,7 @@
                         label: newNotice[0].title || '',
                         date: newNotice[0].date || ''
                     }
-                    this.expireDay = GetDateDiff(getDate(0), res.shop.expire_time);
+                    this.expireDay = Math.round(GetDateDiffNoAbs(res.shop.expire_time, getDate(0)));
                     this.execInfo = { //还没写过期的功能？？？？
                         label: '还有' + Math.ceil(this.expireDay) + '天到期',
                         date: '续费'

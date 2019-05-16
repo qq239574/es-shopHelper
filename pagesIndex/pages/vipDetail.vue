@@ -76,42 +76,42 @@
                 ],
                 commissionInfo: { //分销商信息
                     isCommission: 0, //是否分销商，0不是，1曾是，2是
-                    registerTime: '2017-12-23 12:12:12', //注册时间
+                    registerTime: '', //注册时间
                     superDistributor: { //上级分销商
                         name: '总店'
                     },
                     beDistributorTime: { //成为分销商时间
-                        value: '2017-12-23 12:12:12'
+                        value: ''
                     },
                     distributorClass: { //分销商等级
                         name: '普通分销商'
                     },
                     accumCommission: { //累计佣金
-                        value: 121
+                        value: 0
                     },
                     hadGet: { //已提现佣金
-                        value: 121
+                        value: 0
                     },
                     waitMoney: { //待入账佣金
-                        value: 121
+                        value: 0
                     },
                     commBill: { //分销订单
-                        value: 12
+                        value: 0
                     },
                     subDistributor: { //分销下级
-                        num: 1
+                        num: 0
                     },
                     firstSub: { //一级
-                        num: 12,
-                        distributor: 2
+                        num: 0,
+                        distributor: 0
                     },
                     secondSub: { //二级
-                        num: 12,
-                        distributor: 2
+                        num: 0,
+                        distributor: 0
                     },
                     thirdSub: { //三级
-                        num: 12,
-                        distributor: 2
+                        num: 0,
+                        distributor: 0
                     }
                 }
             }

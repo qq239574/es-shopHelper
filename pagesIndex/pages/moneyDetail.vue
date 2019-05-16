@@ -76,7 +76,7 @@
             }
             this.title = DataFrom.title.replace(/[(（].+[)）]$/, '');
             uni.setNavigationBarTitle({
-                title:this.title 
+                title: this.title
             })
         },
         onShow() {
@@ -90,7 +90,7 @@
         },
         methods: {
             formater(val) {
-                return number_format(val,2,'.',',');
+                return number_format(val, 2, '.', ',');
             },
             initPage() { //初始化页面  
                 DataGo = this.Cacher.getData('filterDate');
@@ -126,7 +126,8 @@
                             if (DataFrom.id == 'vip') { //付款会员数 
                                 table.push({
                                     col1: key,
-                                    col2: tmp[key].order_member_pay_count
+                                    col2: tmp[key].order_member_pay_count,
+                                    time: new Date(key).getTime()
                                 })
                                 keys.push(key)
                                 arr.push(tmp[key].order_member_pay_count);
@@ -134,7 +135,8 @@
                             } else if (DataFrom.id == 'trade') { //..成交额（元）
                                 table.push({
                                     col1: key,
-                                    col2: tmp[key].order_pay_price
+                                    col2: tmp[key].order_pay_price,
+                                    time: new Date(key).getTime()
                                 })
                                 keys.push(key)
                                 arr.push(tmp[key].order_pay_price);
@@ -142,7 +144,8 @@
                             } else if (DataFrom.id == 'pay') { //付款订单数（个）
                                 table.push({
                                     col1: key,
-                                    col2: tmp[key].order_pay_count
+                                    col2: tmp[key].order_pay_count,
+                                    time: new Date(key).getTime()
                                 })
                                 keys.push(key)
                                 arr.push(tmp[key].order_pay_count);
@@ -150,7 +153,8 @@
                             } else if (DataFrom.id == 'good') { //付款商品数（件） 
                                 table.push({
                                     col1: key,
-                                    col2: tmp[key].goods_paid_count
+                                    col2: tmp[key].goods_paid_count,
+                                    time: new Date(key).getTime()
                                 })
                                 keys.push(key)
                                 arr.push(tmp[key].goods_paid_count);
@@ -159,7 +163,7 @@
                         }
                         datalist = arr;
                         keylist = keys;
-                        this.tableList = table;
+                        this.tableList = table.sort((a,b)=>b.time-a.time);
                         this.selectTotal = total;
                         this.$refs.lineChart.init();
                     }).catch(res => {

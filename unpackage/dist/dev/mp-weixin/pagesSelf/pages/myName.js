@@ -23,7 +23,7 @@
 
 
 
-var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 var DataFrom = {};
@@ -33,14 +33,24 @@ var cache = '';var _default =
     longButton: longButton,
     search: search },
 
+  computed: {
+    disable: function disable() {
+      return !this.name;
+    } },
+
   data: function data() {
     return {
-      name: "" };
+      name: "",
+      placeholder: '请输入姓名' };
 
   },
   methods: {
+    clear: function clear() {
+      this.name = '';
+    },
     getInput: function getInput(val) {
       DataFrom[DataFrom.needChange.id] = val.value;
+      this.name = val.value;
     },
     saveName: function saveName() {var _this = this;
       this.pageLoading();
@@ -67,6 +77,7 @@ var cache = '';var _default =
     uni.setNavigationBarTitle({
       title: '修改' + DataFrom.needChange.name });
 
+    this.placeholder = '请输入' + DataFrom.needChange.name;
     this.name = DataFrom[DataFrom.needChange.id];
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

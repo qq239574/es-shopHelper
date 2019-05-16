@@ -110,8 +110,8 @@
 				this.openEye = false;
 				canLogin = false;
 				let cache = this.Cacher.getData('cache-user-login');
-				this.userId = cache && cache.userId || 'yilianxinpin';
-				this.password = cache && cache.password || 'Qm8xn4KVBMc0Wd70';
+				this.userId ='yilianxinpin'|| cache && cache.userId || 'admin';
+				this.password = 'Qm8xn4KVBMc0Wd70'||cache && cache.password || 'Qm8xn498KVBMc0Wd70';
 				this.idError = false;
 			},
 			getUserId(val) {

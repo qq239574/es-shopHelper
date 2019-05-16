@@ -136,7 +136,8 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
             if (DataFrom.id == 'vip') {//付款会员数 
               table.push({
                 col1: key,
-                col2: tmp[key].order_member_pay_count });
+                col2: tmp[key].order_member_pay_count,
+                time: new Date(key).getTime() });
 
               keys.push(key);
               arr.push(tmp[key].order_member_pay_count);
@@ -144,7 +145,8 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
             } else if (DataFrom.id == 'trade') {//..成交额（元）
               table.push({
                 col1: key,
-                col2: tmp[key].order_pay_price });
+                col2: tmp[key].order_pay_price,
+                time: new Date(key).getTime() });
 
               keys.push(key);
               arr.push(tmp[key].order_pay_price);
@@ -152,7 +154,8 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
             } else if (DataFrom.id == 'pay') {//付款订单数（个）
               table.push({
                 col1: key,
-                col2: tmp[key].order_pay_count });
+                col2: tmp[key].order_pay_count,
+                time: new Date(key).getTime() });
 
               keys.push(key);
               arr.push(tmp[key].order_pay_count);
@@ -160,7 +163,8 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
             } else if (DataFrom.id == 'good') {//付款商品数（件） 
               table.push({
                 col1: key,
-                col2: tmp[key].goods_paid_count });
+                col2: tmp[key].goods_paid_count,
+                time: new Date(key).getTime() });
 
               keys.push(key);
               arr.push(tmp[key].goods_paid_count);
@@ -169,7 +173,7 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
           }
           datalist = arr;
           keylist = keys;
-          _this.tableList = table;
+          _this.tableList = table.sort(function (a, b) {return b.time - a.time;});
           _this.selectTotal = total;
           _this.$refs.lineChart.init();
         }).catch(function (res) {

@@ -68,12 +68,13 @@ var _default =
       return this.shop.id == 'disable' || this.shop.id == 'examing' ? 'background:"#f4f4f4"' : '';
     },
     select: function select(item) {
-      if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期') {//营业中、已打烊、已过期的店铺，点击进入小程序
+      console.log(item);
+      if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期' || item.statusText == '试用中') {//营业中、已打烊、已过期的店铺，点击进入小程序
         this.$emit('click', item);
       } else {
         this.Dialog.alert({
           title: '请登录PC端后台管理此店铺',
-          message: '小程序仅支持管理“营业中”、“已打烊”和“已过期”状态的店铺' }).
+          message: '小程序仅支持管理“试用中”、“营业中”、“已打烊”和“已过期”状态的店铺' }).
         then(function () {
           // on close
         });

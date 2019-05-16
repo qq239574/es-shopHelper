@@ -3,7 +3,7 @@
         <view class='grace-items' @click='selectCell' :style='contentStyle'>
             <view class="grace-label" :style='labelStyle'>
                 <slot name='icon'></slot>{{label}}</view>
-            <input :value='value' :type='type' :placeholder="placeholder" :style='valueStyle' :disabled='disabled' class='input' :class='disabled?"disable":""' @input='inputVal' />
+            <input :value='value' :type='type' :placeholder="placeholder" :style='valueStyle' :disabled='disabled' class='input  van-ellipsis' :class='disabled?"disable":""' @input='inputVal' />
         </view>
     </view>
 </template>

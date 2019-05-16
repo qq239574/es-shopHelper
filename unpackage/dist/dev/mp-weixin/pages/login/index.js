@@ -120,8 +120,8 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
       this.openEye = false;
       canLogin = false;
       var cache = this.Cacher.getData('cache-user-login');
-      this.userId = cache && cache.userId || 'yilianxinpin';
-      this.password = cache && cache.password || 'Qm8xn4KVBMc0Wd70';
+      this.userId = 'yilianxinpin' || false || false;
+      this.password = 'Qm8xn4KVBMc0Wd70' || false || false;
       this.idError = false;
     },
     getUserId: function getUserId(val) {

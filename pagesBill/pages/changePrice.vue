@@ -29,7 +29,6 @@
     } from '../../components/my-components/ajaxDataFormater.js'
     let DataFrom = {};
     let cacheList = [];
-    let cacheOldPrice = []; //保存改价前的状态
     export default {
         components: {
             goodBlock,
@@ -64,9 +63,9 @@
             getTotalPrice() {
                 let tmp = 0;
                 cacheList.forEach(item => {
-                    tmp += item.goodInfo.total * 1
+                    tmp += item.goodInfo.changedTotal * 1
                 })
-                this.totalPrice = this.totalFreight * 1 + tmp;
+                this.totalPrice = (this.totalFreight * 1 + tmp).toFixed(2);
             },
             inputPay(val) {
                 this.totalFreight = val.detail.value;
@@ -74,7 +73,7 @@
             },
             getInput(val) {
                 let index = val.info.index; //商品的index
-                cacheList[index].goodInfo.total = val.value.price;
+                cacheList[index].goodInfo.changedTotal = val.value.price;
                 this.getTotalPrice();
             },
             sure() {
@@ -86,12 +85,12 @@
                     }
                     let result = {
                         "id": item.goodInfo.id, //订单商品id
-                        "price_change": Math.round((item.goodInfo.total - cacheOldPrice[index].goodInfo.total) * 100) / 100 //改价变动金额
+                        "price_change": (item.goodInfo.changedTotal - item.goodInfo.total).toFixed(2) //改价变动金额
                     }
                     return result;
-                })
+                }) 
                 if (!/^\d+(\.\d+)?$/.test(this.totalFreight)) {
-                    canSub = false; 
+                    canSub = false;
                 }
                 let data = {
                     id: DataFrom.bill.bill.id, //订单id
@@ -100,7 +99,7 @@
                 }
                 goods.forEach((item, index) => {
                     data['change_items[' + index + ']'] = item;
-                })
+                }) 
                 if (canSub) {
                     this.Request('changeBillPrice', flatten(data)).then(res => {
                         this.Cacher.setData('changePrice', {
@@ -130,18 +129,12 @@
             }).then(res => {
                 this.totalFreight = res.order.dispatch_price;
                 cacheList = res.order_goods.map((item, index) => {
-                    cacheOldPrice[index] = {
-                        goodInfo: {
-                            total: item.price,
-                            index,
-                            id: item.id
-                        },
-                    }
                     let result = {
                         goodInfo: {
-                            price: item.price_unit,
-                            num: item.total,
-                            total: item.price,
+                            price: item.price_unit, //单价
+                            num: item.total, //订单数量
+                            total: item.price_original, //小计
+                            changedTotal: item.price, //定价
                             index,
                             unit: item.unit,
                             id: item.id

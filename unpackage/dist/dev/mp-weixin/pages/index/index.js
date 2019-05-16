@@ -87,7 +87,6 @@ var searchDay = {
       genderIndex: 0,
       gender: ['男', '女'],
       dateValue: "请选择",
-      onlyOneShop: false,
       showData: {
         money: 0,
         payedBill: 0,
@@ -185,7 +184,7 @@ var searchDay = {
           label: newNotice[0].title || '',
           date: newNotice[0].date || '' };
 
-        _this2.expireDay = (0, _getDateSection.GetDateDiff)((0, _getDateSection.getDate)(0), res.shop.expire_time);
+        _this2.expireDay = Math.round((0, _getDateSection.GetDateDiffNoAbs)(res.shop.expire_time, (0, _getDateSection.getDate)(0)));
         _this2.execInfo = { //还没写过期的功能？？？？
           label: '还有' + Math.ceil(_this2.expireDay) + '天到期',
           date: '续费' };

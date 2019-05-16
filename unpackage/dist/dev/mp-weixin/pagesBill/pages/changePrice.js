@@ -38,9 +38,8 @@ var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/a
 
 
 var DataFrom = {};
-var cacheList = [];
-var cacheOldPrice = []; //保存改价前的状态
-var _default = {
+var cacheList = [];var _default =
+{
   components: {
     goodBlock: goodBlock,
     infoBlock: infoBlock,
@@ -74,9 +73,9 @@ var _default = {
     getTotalPrice: function getTotalPrice() {
       var tmp = 0;
       cacheList.forEach(function (item) {
-        tmp += item.goodInfo.total * 1;
+        tmp += item.goodInfo.changedTotal * 1;
       });
-      this.totalPrice = this.totalFreight * 1 + tmp;
+      this.totalPrice = (this.totalFreight * 1 + tmp).toFixed(2);
     },
     inputPay: function inputPay(val) {
       this.totalFreight = val.detail.value;
@@ -84,7 +83,7 @@ var _default = {
     },
     getInput: function getInput(val) {
       var index = val.info.index; //商品的index
-      cacheList[index].goodInfo.total = val.value.price;
+      cacheList[index].goodInfo.changedTotal = val.value.price;
       this.getTotalPrice();
     },
     sure: function sure() {var _this = this;
@@ -96,7 +95,7 @@ var _default = {
         }
         var result = {
           "id": item.goodInfo.id, //订单商品id
-          "price_change": Math.round((item.goodInfo.total - cacheOldPrice[index].goodInfo.total) * 100) / 100 //改价变动金额
+          "price_change": (item.goodInfo.changedTotal - item.goodInfo.total).toFixed(2) //改价变动金额
         };
         return result;
       });
@@ -140,18 +139,12 @@ var _default = {
     then(function (res) {
       _this2.totalFreight = res.order.dispatch_price;
       cacheList = res.order_goods.map(function (item, index) {
-        cacheOldPrice[index] = {
-          goodInfo: {
-            total: item.price,
-            index: index,
-            id: item.id } };
-
-
         var result = {
           goodInfo: {
-            price: item.price_unit,
-            num: item.total,
-            total: item.price,
+            price: item.price_unit, //单价
+            num: item.total, //订单数量
+            total: item.price_original, //小计
+            changedTotal: item.price, //定价
             index: index,
             unit: item.unit,
             id: item.id },

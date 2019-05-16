@@ -70,7 +70,7 @@
                     from: 'billProvide',
                     value: val,
                     bill: DataFrom.bill
-                }) 
+                })
                 if (val.name == "备注") {
                     DataGo.go = 'billAddition';
                     uni.navigateTo({
@@ -95,9 +95,14 @@
             },
             sure() {
                 // sendBillInfo.order_goods_id = cacheSelected;
+                for (let k in sendBillInfo) {
+                    if (k.indexOf('order_goods_id') > -1) {
+                        delete sendBillInfo[k]
+                    }
+                }
                 cacheSelected.forEach((item, index) => {
                     sendBillInfo['order_goods_id[' + index + ']'] = item
-                })
+                });  
                 let canSend = true;
                 if (!this.cityProvide && sendBillInfo['no_express'] == 0) { //需要物流
                     if (!cacheSelected.length) {
@@ -113,14 +118,13 @@
                 }
                 if (canSend) {
                     this.pageLoading();
-                    console.log(sendBillInfo)
-                    // this.Request('sendGoods', sendBillInfo).then(res => {
-                    //     this.closePageLoading();
-                    //     uni.navigateBack();
-                    // }).catch(res=>{
-                    //     this.closePageLoading();
-                    //     this.Toast(res.message)
-                    // });
+                    this.Request('sendGoods', sendBillInfo).then(res => {
+                        this.closePageLoading();
+                        uni.navigateBack();
+                    }).catch(res=>{
+                        this.closePageLoading();
+                        this.Toast(res.message)
+                    });
                 }
             },
             initPage() {
@@ -175,6 +179,7 @@
         },
         onUnload() {
             this.Cacher.clearData('billProvide')
+            this.Cacher.clearData('billId')
         }
     };
 </script>
