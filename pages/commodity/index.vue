@@ -26,6 +26,7 @@
             <van-icon color='#fff' class='addIcon' name="plus" />
             <view class='addWord'>添加</view>
         </view>
+        <MyTabbar :defaultIndex='1' ></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+    import MyTabbar from '../../components/my-components/myTabbar'
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import Card from './index/goodsList.vue';
@@ -55,7 +57,8 @@
             TabCard,
             SearchInput,
             Card,
-            nodata
+            nodata,
+            MyTabbar
         },
         data() {
             return {
@@ -254,20 +257,20 @@
                             this.initPage();
                         })
                     }
-                } else if (item.type == 'good') {//直接点击商品，同样进入编辑页面
+                } else if (item.type == 'good') { //直接点击商品，同样进入编辑页面
                     DataGo = {
                         go: 'editGood'
                     }
                     this.Cacher.setData('good', {
                         from: 'good',
-                        item:{
-                            detail:item.detail.val
+                        item: {
+                            detail: item.detail.val
                         }
                     });
                     uni.navigateTo({
                         url: '../../pagesCommodity/pages/index?from=good'
                     })
-                } 
+                }
             }
         },
         onPullDownRefresh() {

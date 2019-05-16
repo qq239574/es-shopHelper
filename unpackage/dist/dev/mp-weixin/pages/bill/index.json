@@ -10,6 +10,7 @@
     "tab-card": "/components/my-components/Tabs",
     "card": "/pages/bill/index/Card",
     "search-input": "/components/my-components/SearchInput",
-    "nodata": "/components/my-components/nodata"
+    "nodata": "/components/my-components/nodata",
+    "my-tabbar": "/components/my-components/myTabbar"
   }
 }

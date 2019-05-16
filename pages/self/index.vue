@@ -18,17 +18,20 @@
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
 		<van-dialog id="van-dialog" />
+		<MyTabbar :defaultIndex='3' ></MyTabbar>
 	</div>
 </template>
 
 <script>
+	import MyTabbar from '../../components/my-components/myTabbar'
 	import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
 	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
 	let DataFrom = {};
 	export default {
 		components: {
 			selectItem,
-			inputItem
+			inputItem,
+			MyTabbar
 		},
 		data() {
 			return {
@@ -43,7 +46,7 @@
 		},
 		methods: {
 			initPage() {
-				let login_info=this.Cacher.getData('cache-user-login');
+				let login_info = this.Cacher.getData('cache-user-login');
 				this.Request('myInfo').then(res => {
 					this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
 					this.userTel = res.user.username;

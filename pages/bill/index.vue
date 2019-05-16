@@ -33,10 +33,12 @@
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
+        <MyTabbar :defaultIndex='2' ></MyTabbar>
     </view>
 </template>
 
 <script>
+    import MyTabbar from '../../components/my-components/myTabbar'
     import TabCard from '../../components/my-components/Tabs.vue';
     import Card from './index/Card.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
@@ -59,7 +61,8 @@
             TabCard,
             Card,
             SearchInput,
-            nodata
+            nodata,
+            MyTabbar
         },
         data() {
             return {
@@ -208,7 +211,7 @@
             },
             tabChange(tab) {
                 if (!searching) {
-                    searching=true;
+                    searching = true;
                     this.pageLoading();
                     curTab = tab;
                     this.current = 1;
@@ -225,12 +228,12 @@
                         this.billList = res;
                         this.closePageLoading();
                         this.searching = false;
-                        searching=false;
+                        searching = false;
                         requestQueue && this.tabChange(requestQueue);
                         requestQueue = '';
                     }).catch(res => {
                         this.searching = false;
-                        searching=false;
+                        searching = false;
                         requestQueue && this.tabChange(requestQueue);
                         requestQueue = '';
                     });

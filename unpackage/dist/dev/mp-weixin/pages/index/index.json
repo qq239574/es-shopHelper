@@ -15,6 +15,7 @@
     "switch-item": "/components/my-components/editBlock-SwitchItem",
     "data-shower": "/pages/index/components/IndexDataShower",
     "goods-block": "/pages/index/components/IndexGoods",
-    "apps": "/pages/index/components/IndexApps"
+    "apps": "/pages/index/components/IndexApps",
+    "my-tabbar": "/components/my-components/myTabbar"
   }
 }

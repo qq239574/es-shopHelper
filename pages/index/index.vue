@@ -18,6 +18,7 @@
         </view>
         <goodsBlock :list='billList' @click='toBill'></goodsBlock>
         <apps @click='toApp'></apps>
+        <MyTabbar :defaultIndex='0'  ></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -30,6 +31,7 @@
     import dataShower from './components/IndexDataShower.vue'
     import goodsBlock from './components/IndexGoods.vue'
     import apps from './components/IndexApps.vue'
+    import MyTabbar from '../../components/my-components/myTabbar'
     import {
         getDate,
         GetDateDiffNoAbs
@@ -39,6 +41,7 @@
     let searchDay = {
         value: 'today'
     };
+    let userJurisdiction = {}; //用户权限
     export default {
         components: {
             LongButton,
@@ -47,7 +50,8 @@
             switchItem,
             dataShower,
             goodsBlock,
-            apps
+            apps,
+            MyTabbar
         },
         data() {
             return {
@@ -233,6 +237,10 @@
             if (option && option.status == 'onlyOne') {
                 this.showTurnShop = false;
             }
+            this.Request('Jurisdiction').then(res => {
+                this.Cacher.setData('userJurisdiction', res);
+                userJurisdiction = res;
+            })
             // }
         },
         onShow() {

@@ -11,6 +11,7 @@
     "tab-card": "/components/my-components/Tabs",
     "search-input": "/components/my-components/SearchInput",
     "card": "/pages/commodity/index/goodsList",
-    "nodata": "/components/my-components/nodata"
+    "nodata": "/components/my-components/nodata",
+    "my-tabbar": "/components/my-components/myTabbar"
   }
 }

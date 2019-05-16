@@ -48,5 +48,5 @@
 			height: 70upx;
 			line-height: 70upx;
 		}
-	}
+	} 
 </style>
