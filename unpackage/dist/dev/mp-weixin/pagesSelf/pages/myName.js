@@ -54,10 +54,11 @@ var cache = '';var _default =
     },
     saveName: function saveName() {var _this = this;
       this.pageLoading();
+      var profiles = {};
       this.Request('changeUserInfo', (0, _ajaxDataFormater.flatten)({
         profiles: {
-          "contact_name": DataFrom.realName,
-          "contact_mobile": DataFrom.userTel } })).
+          "contact_name": DataFrom.realName || ' ',
+          "contact_mobile": DataFrom.userTel || ' ' } })).
 
       then(function (res) {
         _this.closePageLoading();
@@ -79,6 +80,7 @@ var cache = '';var _default =
 
     this.placeholder = '请输入' + DataFrom.needChange.name;
     this.name = DataFrom[DataFrom.needChange.id];
+    console.log(DataFrom);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

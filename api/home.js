@@ -260,3 +260,12 @@ export const sendCoupon = {//发送优惠券
     },
     type: 'post'
 }
+export const Jurisdiction = {//查看权限
+    url: '/shop/manage/perm/get',
+    data: {
+    },
+    headers: {
+
+    },
+    type: 'get'
+}

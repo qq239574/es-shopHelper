@@ -1,6 +1,6 @@
 <template>
     <div class='Statistics'>
-        <view class="statistic-block" v-for='(item,index) in list' :key='index'>
+        <view class="statistic-block" v-for='(item,index) in info' :key='index'>
             <view class="title">{{item.name}}</view>
             <view class="num">{{item.value}}</view>
         </view>
@@ -27,12 +27,7 @@
                 type: Array,
                 default: cacheList
             }
-        },
-        data() {
-            return {
-                list: cacheList
-            }
-        },
+        }, 
     }
 </script>
 

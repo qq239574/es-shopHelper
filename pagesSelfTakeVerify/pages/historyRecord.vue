@@ -7,6 +7,8 @@
         </block>
         <statisticBlock :info='statisticInfo' v-else></statisticBlock>
         <nodata bgStyle='background:#fff;' type='noresult' tip='没有搜索到相关订单' v-if='showNodata'></nodata>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
         <view class="pager" v-if='showPager'>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -84,22 +86,22 @@
                     },
                     bill: { //订单信息
                         billId: '', //订单号
-                        billDate: '2018-08-19 12:12:12', //订单时间
+                        billDate: '', //订单时间
                         billType: 0, //订单类型，0：分销订单，1：普通订单
                         billPrice: 0,
-                        id:''
+                        id: ''
                     },
                     goodsList: [{ //订单商品信息
-                        img: '/static/img/global/alipay.svg', //商品图片
-                        goodName: '的房间爱空间电费水电费是否水电费', //商品名
-                        color: '收费的水电费', //颜色
-                        size: '水电费双方都', //型号
-                        num: 10, //数量
-                        price: 12, //价格
+                        img: '', //商品图片
+                        goodName: '', //商品名
+                        color: '', //颜色
+                        size: '', //型号
+                        num: 0, //数量
+                        price: 0, //价格
                         specifications: 'single', //单规格
                     }],
                     rights: { // 维权信息
-                        status: '123234', //维权状态
+                        status: '', //维权状态
                         addition: 0, //维权备注
                     }
                 }],
@@ -145,7 +147,7 @@
                 this.totalPage = 1;
                 this.pageLoading();
                 this.searching = true;
-                this.Request('verifyCount', {}).then(res => {
+                this.Request('verifyCount', {}).then(res => { 
                     this.statisticInfo = [{
                         name: '今日核销（单）',
                         value: res.today || 0
@@ -169,7 +171,7 @@
                     this.closePageLoading();
                     if (res.error == 0) {
                         this.totalPage = Math.ceil(res.count / 20) || 1;
-                        this.records = res.list.map(item => {
+                        this.records = res.list.map(item => { 
                             return {
                                 info: { //订单及用户信息
                                     name: item.buyer_name,
@@ -188,7 +190,7 @@
                                     billPrice: 0,
                                     id: item.id
                                 },
-                                goodsList: item.goods_info.map(val => {
+                                goodsList:  item.goods_info instanceof Array && item.goods_info.map(val => {
                                     return { //订单商品信息
                                         img: val.thumb, //商品图片
                                         goodName: val.title, //商品名
@@ -204,11 +206,12 @@
                                     addition: 0, //维权备注
                                 }
                             }
-                        }) 
+                        })
                     } else {
                         this.Toast(res.message)
                     }
-                }).catch(res => {
+                }).catch(res => { 
+                    this.closePageLoading();
                     this.searching = false;
                     this.Toast(res.message)
                 })
@@ -223,8 +226,7 @@
                 }, 500)
             },
             tabChange(tab) {
-                this.tabIndex = tab.index;
-                this.pageLoading();
+                this.tabIndex = tab.index; 
                 curTab = tab;
                 this.current = 1;
                 this.recordsList = [];

@@ -35,14 +35,7 @@ var cacheList = [{
   props: {
     info: {
       type: Array,
-      default: cacheList } },
-
-
-  data: function data() {
-    return {
-      list: cacheList };
-
-  } };exports.default = _default;
+      default: cacheList } } };exports.default = _default;
 
 /***/ }),
 

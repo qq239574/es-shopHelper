@@ -4,7 +4,7 @@
 			<image lazy-load src='/static/img/global/my_bg.png'></image>
 			<view class='userInfo'>
 				<view class="name">{{userName}}</view>
-				<view class="tel">{{userTel}}</view>
+				<view class="tel">{{userId}}</view>
 			</view>
 			<view class='manager' @click='clickManager'>{{userRoleName}}</view>
 		</view>
@@ -43,10 +43,11 @@
 		},
 		methods: {
 			initPage() {
+				let login_info=this.Cacher.getData('cache-user-login');
 				this.Request('myInfo').then(res => {
-					this.userName = res.user.nickname;
-					this.userTel = res.user.mobile;
-					this.userId = res.user.username;
+					this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
+					this.userTel = res.user.username;
+					this.userId = login_info.userId;
 					this.contact_mobile = res.user.contact_mobile;
 					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
 					this.realName = res.user.contact;
@@ -55,8 +56,8 @@
 			toPage(val) {
 				if (val == 'name') {
 					this.Cacher.setData('myself', {
-						userName: this.userName,
-						userTel: this.userTel,
+						userName: this.realName,
+						userTel: this.contact_mobile,
 						userRoleName: this.userRoleName,
 						realName: this.realName,
 						needChange: {
@@ -69,8 +70,8 @@
 					})
 				} else if (val == 'tel') {
 					this.Cacher.setData('myself', {
-						userName: this.userName,
-						userTel: this.userTel,
+						userName: this.realName,
+						userTel: this.contact_mobile,
 						userRoleName: this.userRoleName,
 						realName: this.realName,
 						needChange: {
@@ -142,9 +143,9 @@
 			width: 450upx;
 			height: 100%;
 			box-sizing: border-box;
-			padding: 38upx 0   ;
+			padding: 38upx 0;
 			display: flex;
-			justify-content:space-between;
+			justify-content: space-between;
 			flex-wrap: wrap;
 		}
 		.name {
@@ -156,7 +157,7 @@
 			font-weight: 600;
 			width: 100%;
 			word-break: break-all;
-			height:fit-content;
+			height: fit-content;
 		}
 		.tel {
 			color: #fff;
@@ -165,9 +166,9 @@
 			bottom: 54upx;
 			left: 64upx;
 			opacity: .6;
-			width:100%;
-			height:fit-content;
-			margin-top:10upx;
+			width: 100%;
+			height: fit-content;
+			margin-top: 10upx;
 		}
 		.manager {
 			position: absolute;

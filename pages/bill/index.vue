@@ -161,6 +161,7 @@
                     this.showModel = false;
                 }).catch(res => {
                     this.error = true;
+                    this.Toast(res.message)
                 }).finally(res => {
                     this.surePaying = false;
                     this.closePageLoading();

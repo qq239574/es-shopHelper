@@ -124,6 +124,10 @@ export function login() {
                 cacheData = Object.assign(cacheData || {}, {
                     userId: res.uid
                 })
+                that.Cacher.setData('cache-user-login', {
+                    userId: this.userId,
+                    password: this.password
+                })
                 that.Cacher.setData('login', cacheData);
                 selectShop.call(this).then(r => {//先判断是否只有一个店铺
                     resolve(res);
@@ -138,6 +142,10 @@ export function login() {
 
             if (res.error == -3) { //已登录
                 that.Cacher.setData('login', cacheData)
+                that.Cacher.setData('cache-user-login', {
+                    userId: this.userId,
+                    password: this.password
+                })
                 selectShop.call(this).then(r => {//先判断是否只有一个店铺
                     resolve(res);
                 })

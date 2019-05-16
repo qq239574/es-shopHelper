@@ -10,7 +10,7 @@
                         </view>
                     </view>
                     <view class='share'>
-                        <img src="/static/img/global/product_share_link.png" alt=""><img src="/static/img/global/product_share_wechat.png" alt="">
+                        <img src="/static/img/global/product_share_link.png" alt=""><img src="/static/img/global/product_share_wechat.svg" alt="">
                     </view>
                 </view>
             </view>

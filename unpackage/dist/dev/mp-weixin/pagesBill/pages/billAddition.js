@@ -48,6 +48,8 @@ var cacheVal = '';var _default =
         then(function (res) {
           _this.closePageLoading();
           uni.navigateBack();
+        }).catch(function (res) {
+          _this.Toast(res.message);
         });
       }
     },

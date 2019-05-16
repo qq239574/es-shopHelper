@@ -38,6 +38,14 @@ export default function (result) {
         "2": "/static/img/global/order_detail_state3.png", // 2为已发货
         "3": "/static/img/global/order_detail_state5.png", // 3为已完成。
     }
+    let billStatusMap = {
+        "-2": '', // -2退款完成
+        "-1": "", //-1取消状态。
+        "0": "", //  0普通状态
+        "1": "未发货", // 1为已付款
+        "2": "已发货", // 2为已发货
+        "3": "已完成", // 3为已完成。
+    }
     let commisionState = ['待入账', '已入账']; //分销状态
     let extra_price_package = result.order.extra_price_package || { //优惠活动
         full: 0, //满减
@@ -48,7 +56,7 @@ export default function (result) {
     let discount_total = 0; //会员折扣  商品 price_discount 的 之和
     result.order.order_goods.forEach(item => {
         discount_total += item.price_discount * 1;
-    }) 
+    })
     return {
         billInfo1: {
             billStatusText: result.order.status_text, //订单状态
@@ -81,7 +89,7 @@ export default function (result) {
             provideType: result.order.dispatch_type_text, //配送方式 0 无需发货 1快递 2自提 3同城
             receiver: result.order.buyer_name, //收货人
             address: result.order.address_full, //收货地址
-            tel: result.order.buyer_mobile,//联系方式
+            tel: result.order.buyer_mobile, //联系方式
         },
         billInfo5: {
             moneyState: commission.commission_status == -1 ? -1 : commisionState[commission.commission_status], //佣金状态 0待入账 1已入账  
@@ -122,7 +130,7 @@ export default function (result) {
                     sendTime: '', //发货时间
                     sendComp: '', //物流公司
                     sendId: '', //快递单号
-                    sendStatus: '未发货' //发货信息
+                    sendStatus: item.status_text //发货信息
                 }
             }
         }), ...result.package_send.map(item => { //已发货的包裹
@@ -149,7 +157,7 @@ export default function (result) {
                     sendTime: item.send_time, //发货时间
                     sendComp: item.express_name, //物流公司
                     sendId: item.express_sn, //快递单号
-                    sendStatus: '' //发货信息
+                    sendStatus: '已发货' //发货信息
                 }
             }
         })],

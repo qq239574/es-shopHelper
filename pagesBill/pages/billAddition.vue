@@ -38,6 +38,8 @@
                     }).then(res => {
                         this.closePageLoading();
                         uni.navigateBack();
+                    }).catch(res=>{
+                        this.Toast(res.message)
                     });
                 }
             },

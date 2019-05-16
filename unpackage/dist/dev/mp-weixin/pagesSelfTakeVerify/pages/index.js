@@ -26,7 +26,10 @@
 
 
 
-var cache = '';var _default =
+
+
+var cache = '';
+var requesting = false;var _default =
 {
   data: function data() {
     return {
@@ -41,22 +44,30 @@ var cache = '';var _default =
       cache = val.detail.value;
     },
     submit: function submit() {var _this = this; //提交核销码
-      this.pageLoading();
-      this.Request('postSelfVerifyInfo', {
-        order_id: '',
-        finish_code: cache }).
-      then(function (res) {
-        _this.closePageLoading();
-      }).catch(function (res) {
-        _this.closePageLoading();
-      });
+      if (!requesting) {
+        requesting = true;
+        this.pageLoading();
+        this.Request('postSelfVerifyInfo', {
+          finish_code: cache }).
+        then(function (res) {
+          requesting = false;
+          _this.closePageLoading();
+          if (res.error == 0) {
+            _this.Toast('核销成功');
+          }
+        }).catch(function (res) {
+          requesting = false;
+          _this.closePageLoading();
+          _this.Toast(res.message);
+        });
+      }
     },
     checkVrCode: function checkVrCode() {//扫描获取二维码
       var that = this;
       uni.scanCode({
         success: function success(res) {
           cache = res.result;
-          this.code = cache;
+          that.code = cache;
         },
         fail: function fail(res) {
           // console.log(res)

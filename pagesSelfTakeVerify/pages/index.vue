@@ -11,16 +11,19 @@
         </view>
         <longButton @click='submit'>提交</longButton>
         <view class='check-history' @click='checkHistory'>查看历史核销记录</view>
+        <van-toast id="van-toast" />
+        <van-dialog id="van-dialog" />
     </div>
 </template>
 
 <script>
     import longButton from "../../components/my-components/LongButton";
     let cache = '';
+    let requesting = false;
     export default {
         data() {
             return {
-                code:''
+                code: ''
             }
         },
         components: {
@@ -31,22 +34,30 @@
                 cache = val.detail.value;
             },
             submit() { //提交核销码
-                this.pageLoading();
-                this.Request('postSelfVerifyInfo', {
-                    order_id: '',
-                    finish_code: cache
-                }).then(res => {
-                    this.closePageLoading();
-                }).catch(res => {
-                    this.closePageLoading();
-                })
+                if (!requesting) {
+                    requesting = true;
+                    this.pageLoading();
+                    this.Request('postSelfVerifyInfo', {
+                        finish_code: cache
+                    }).then(res => {
+                        requesting=false;
+                        this.closePageLoading();
+                        if (res.error == 0) {
+                            this.Toast('核销成功')
+                        }
+                    }).catch(res => {
+                        requesting=false;
+                        this.closePageLoading();
+                        this.Toast(res.message)
+                    })
+                }
             },
             checkVrCode() { //扫描获取二维码
                 let that = this;
                 uni.scanCode({
                     success(res) {
                         cache = res.result;
-                        this.code=cache;
+                        that.code = cache;
                     },
                     fail(res) {
                         // console.log(res)

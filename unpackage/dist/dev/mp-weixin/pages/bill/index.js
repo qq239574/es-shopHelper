@@ -171,6 +171,7 @@ var _default = {
         _this.showModel = false;
       }).catch(function (res) {
         _this.error = true;
+        _this.Toast(res.message);
       }).finally(function (res) {
         _this.surePaying = false;
         _this.closePageLoading();

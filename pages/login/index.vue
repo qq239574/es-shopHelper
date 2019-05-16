@@ -35,7 +35,7 @@
 			<view class="surport">微信登录</view>
 			<view class='surportList'>
 				<view class="supporter" @click='loginWithWx'>
-					<image lazy-load src='/static/img/global/wechat.png'></image>
+					<image lazy-load src='/static/img/global/product_share_wechat.svg'></image>
 					<button @click='clickButton' open-type='getUserInfo' class='appletBtn'> </button>
 				</view>
 			</view>
@@ -74,21 +74,22 @@
 			}
 		},
 		onLoad(option) {
+			requesting = false;
 			let that = this;
 			this.Cacher.clearData('sessionId');
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
 			if (!DataFrom.from) {
-				wxLogin.call(this).then(res => {
-					canLogin = true;
-					if (canLogin) {
-						uni.reLaunch({
-							url: '../../pagesLogin/pages/selectShop?from=login'
-						})
-					} else {
-						this.idError = true; //账号密码不对
-					}
-				}).catch(res => {}); //微信登录
+				// wxLogin.call(this).then(res => {
+				// 	canLogin = true;
+				// 	if (canLogin) {
+				// 		uni.reLaunch({
+				// 			url: '../../pagesLogin/pages/selectShop?from=login'
+				// 		})
+				// 	} else {
+				// 		this.idError = true; //账号密码不对
+				// 	}
+				// }).catch(res => {}); //微信登录
 			} else { //从别处跳转过来的 
 				uni.clearStorage(); //清空缓存 
 			}
@@ -110,8 +111,8 @@
 				this.openEye = false;
 				canLogin = false;
 				let cache = this.Cacher.getData('cache-user-login');
-				this.userId ='yilianxinpin'|| cache && cache.userId || 'admin';
-				this.password = 'Qm8xn4KVBMc0Wd70'||cache && cache.password || 'Qm8xn498KVBMc0Wd70';
+				this.userId = cache && cache.userId || '';
+				this.password = '';
 				this.idError = false;
 			},
 			getUserId(val) {
@@ -135,10 +136,6 @@
 					this.pageLoading();
 					login.call(this).then(res => {
 						requesting = false;
-						this.Cacher.setData('cache-user-login', {
-							userId: this.userId,
-							password: this.password
-						})
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})

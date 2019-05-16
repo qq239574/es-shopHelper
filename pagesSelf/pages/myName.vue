@@ -40,14 +40,15 @@
             },
             getInput(val) {
                 DataFrom[DataFrom.needChange.id] = val.value;
-                this.name = val.value; 
+                this.name = val.value;
             },
             saveName() {
                 this.pageLoading();
+                let profiles = {};
                 this.Request('changeUserInfo', flatten({
                     profiles: {
-                        "contact_name": DataFrom.realName,
-                        "contact_mobile": DataFrom.userTel
+                        "contact_name": DataFrom.realName||' ',
+                        "contact_mobile": DataFrom.userTel||' '
                     }
                 })).then(res => {
                     this.closePageLoading();
@@ -68,7 +69,8 @@
                 title: '修改' + DataFrom.needChange.name
             });
             this.placeholder = '请输入' + DataFrom.needChange.name;
-            this.name = DataFrom[DataFrom.needChange.id]
+            this.name = DataFrom[DataFrom.needChange.id];
+            console.log(DataFrom)
         }
     }
 </script>

@@ -54,7 +54,7 @@ var cache = ' ';var _default =
           _this.defaultIndex = index;
           DataFrom.needChange = {
             label: '商品类型',
-            value: item.id,
+            value: item.label,
             from: 'editType',
             id: _this.list[index].id,
             other: {
@@ -83,6 +83,7 @@ var cache = ' ';var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from) || {};
+    console.log(DataFrom);
   },
   onShow: function onShow() {
     this.initPage();

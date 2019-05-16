@@ -12,7 +12,7 @@
             <view class='card--info__footer-item item1'>共{{info.num*1}}件商品</view>
             <view class='card--info__footer-item item2' :style='showPayType?"":"padding-right:0;"' :class='info.payType?"pay-type":""'>应付：
                 <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>（含运费）
-                <image lazy-load src='/static/img/global/product_share_wechat.png' v-if='showPayType'></image>
+                <image lazy-load src='/static/img/global/product_share_wechat.svg' v-if='showPayType'></image>
             </view>
         </view>
         <view class="button-group" v-if='info.subStatus==0||info.subStatus==2'>

@@ -53,10 +53,11 @@ var DataFrom = {};var _default =
   },
   methods: {
     initPage: function initPage() {var _this = this;
+      var login_info = this.Cacher.getData('cache-user-login');
       this.Request('myInfo').then(function (res) {
-        _this.userName = res.user.nickname;
-        _this.userTel = res.user.mobile;
-        _this.userId = res.user.username;
+        _this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
+        _this.userTel = res.user.username;
+        _this.userId = login_info.userId;
         _this.contact_mobile = res.user.contact_mobile;
         _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
         _this.realName = res.user.contact;
@@ -65,8 +66,8 @@ var DataFrom = {};var _default =
     toPage: function toPage(val) {
       if (val == 'name') {
         this.Cacher.setData('myself', {
-          userName: this.userName,
-          userTel: this.userTel,
+          userName: this.realName,
+          userTel: this.contact_mobile,
           userRoleName: this.userRoleName,
           realName: this.realName,
           needChange: {
@@ -79,8 +80,8 @@ var DataFrom = {};var _default =
 
       } else if (val == 'tel') {
         this.Cacher.setData('myself', {
-          userName: this.userName,
-          userTel: this.userTel,
+          userName: this.realName,
+          userTel: this.contact_mobile,
           userRoleName: this.userRoleName,
           realName: this.realName,
           needChange: {

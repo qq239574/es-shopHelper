@@ -232,8 +232,7 @@ export const getSelfVerifyInfo={//订单自提(获取信息)
 }
 export const postSelfVerifyInfo={//订单自提 
     url: '/shop/manage/order/verify/finish',
-    data: {
-        order_id:'',
+    data: { 
         finish_code:''
     },
     headers: {

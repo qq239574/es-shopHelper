@@ -10,12 +10,7 @@ export const myInfo = { //获取用户信息
 }
 export const changeUserInfo = { //修改用户名,用户联系方式
     url: '/api/site/account/profile/set',
-    data: {
-        profiles: {
-            "contact_name": "",
-            "contact_mobile": ""
-        },
-        diy_profiles: {}
+    data: { 
     },
     headers: {
 

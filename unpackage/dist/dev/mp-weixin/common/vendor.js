@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10601,7 +10601,6 @@ var getSelfVerifyInfo = { //订单自提(获取信息)
 var postSelfVerifyInfo = { //订单自提 
   url: '/shop/manage/order/verify/finish',
   data: {
-    order_id: '',
     finish_code: '' },
 
   headers: {},
@@ -10622,6 +10621,7 @@ var postSelfVerifyInfo = { //订单自提
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
   //  base_url:'https://ceshishop.jacjack.com',
+  //  base_url:'https://shop.jacjack.com',
   attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
 global_settings;exports.default = _default;
@@ -10808,7 +10808,7 @@ var uploadImg = { //上传图片
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.manualCommissionStatus = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.Jurisdiction = exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.manualCommissionStatus = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -11069,6 +11069,15 @@ var sendCoupon = { //发送优惠券
 
 
   type: 'post' };exports.sendCoupon = sendCoupon;
+
+var Jurisdiction = { //查看权限
+  url: '/shop/manage/perm/get',
+  data: {},
+
+  headers: {},
+
+
+  type: 'get' };exports.Jurisdiction = Jurisdiction;
 
 /***/ }),
 
@@ -11421,12 +11430,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.changeUser
 
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
-  data: {
-    profiles: {
-      "contact_name": "",
-      "contact_mobile": "" },
-
-    diy_profiles: {} },
+  data: {},
 
   headers: {},
 
@@ -13310,6 +13314,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     "2": "/static/img/global/order_detail_state3.png", // 2为已发货
     "3": "/static/img/global/order_detail_state5.png" // 3为已完成。
   };
+  var billStatusMap = {
+    "-2": '', // -2退款完成
+    "-1": "", //-1取消状态。
+    "0": "", //  0普通状态
+    "1": "未发货", // 1为已付款
+    "2": "已发货", // 2为已发货
+    "3": "已完成" // 3为已完成。
+  };
   var commisionState = ['待入账', '已入账']; //分销状态
   var extra_price_package = result.order.extra_price_package || { //优惠活动
     full: 0, //满减
@@ -13394,7 +13406,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendTime: '', //发货时间
           sendComp: '', //物流公司
           sendId: '', //快递单号
-          sendStatus: '未发货' //发货信息
+          sendStatus: item.status_text //发货信息
         } };
 
     })), _toConsumableArray(result.package_send.map(function (item) {//已发货的包裹
@@ -13421,7 +13433,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendTime: item.send_time, //发货时间
           sendComp: item.express_name, //物流公司
           sendId: item.express_sn, //快递单号
-          sendStatus: '' //发货信息
+          sendStatus: '已发货' //发货信息
         } };
 
     }))),
@@ -15179,6 +15191,10 @@ function login() {var _this2 = this;
         cacheData = Object.assign(cacheData || {}, {
           userId: res.uid });
 
+        that.Cacher.setData('cache-user-login', {
+          userId: _this2.userId,
+          password: _this2.password });
+
         that.Cacher.setData('login', cacheData);
         selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
           resolve(res);
@@ -15193,6 +15209,10 @@ function login() {var _this2 = this;
 
       if (res.error == -3) {//已登录
         that.Cacher.setData('login', cacheData);
+        that.Cacher.setData('cache-user-login', {
+          userId: _this2.userId,
+          password: _this2.password });
+
         selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
           resolve(res);
         });
