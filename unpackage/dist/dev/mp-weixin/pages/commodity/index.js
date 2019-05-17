@@ -49,18 +49,21 @@
 
 
 var _categories = _interopRequireDefault(__webpack_require__(/*! ./index/categories.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js"));
-var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getGoodsList = _interopRequireDefault(__webpack_require__(/*! ./index/getGoodsList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js"));
 
-var requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
-var searching = false;
-var needShare = {};
-var DataFrom = {};
-var DataGo = {};
-var searchData = {};
-var curTab = {
-  cateid: 0,
-  index: 0,
-  name: "出售中" };var _default =
+
+
+
+
+
+
+
+
+
+
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar1 */ "components/my-components/myTabbar1").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar1.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var Card = function Card() {return Promise.all(/*! import() | pages/commodity/index/goodsList */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList")]).then(__webpack_require__.bind(null, /*! ./index/goodsList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
+var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var searchData = {};var curTab = { cateid: 0, index: 0, name: "出售中" };var _default =
 
 {
   components: {
@@ -72,6 +75,7 @@ var curTab = {
 
   data: function data() {
     return {
+      Jurisdiction: {}, //权限
       searchValue: '', //查询条件  
       categories: _categories.default, //标签项
       goodsList: [{ //商品列表
@@ -98,8 +102,13 @@ var curTab = {
       userChannels: {} //用户开通的渠道信息
     };
   },
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     DataFrom = this.Cacher.getData(option.from) || {};
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this.Jurisdiction = res;
+    }).catch(function (res) {
+      _this.Toast(res.message);
+    });
   },
   onShow: function onShow() {
     this.initPage();
@@ -136,7 +145,7 @@ var curTab = {
         this.current = Math.max(this.current - 1, 1);
       }
     },
-    initPage: function initPage() {var _this = this;
+    initPage: function initPage() {var _this2 = this;
       this.searching = true;
       this.toggle = !this.toggle;
       DataFrom = this.Cacher.getData(DataFrom.from) || {};
@@ -161,20 +170,20 @@ var curTab = {
         pagesize: 20,
         page: this.current }).
       then(function (res) {
-        _this.goodsList = res;
-        _this.closePageLoading();
-        _this.searching = false;
+        _this2.goodsList = res;
+        _this2.closePageLoading();
+        _this2.searching = false;
         searching = false;
-        requestQueue && _this.tabChange(requestQueue);
+        requestQueue && _this2.tabChange(requestQueue);
         requestQueue = '';
       }).catch(function (res) {
         searching = false;
-        requestQueue && _this.tabChange(requestQueue);
+        requestQueue && _this2.tabChange(requestQueue);
         requestQueue = '';
       });
       this.Request('getChannels', {}).then(function (res) {//获取用户开通渠道
         if (!res.error) {
-          _this.userChannels = {
+          _this2.userChannels = {
             h5: res.channel.wap.open_status, //// 业务端启用状态 0: 未启用 1: 已经启用
             miniapp: res.channel.wxapp.open_status };
 
@@ -211,7 +220,7 @@ var curTab = {
         url: '../../pagesLogin/pages/searchShop?from=good' });
 
     },
-    clickGood: function clickGood(item) {var _this2 = this; //商品模块的点击事件
+    clickGood: function clickGood(item) {var _this3 = this; //商品模块的点击事件
       this.toggle = !this.toggle;
       if (item.type == 'menu-item') {//点击的是商品的浮层菜单
         this.pageLoading();
@@ -231,9 +240,9 @@ var curTab = {
             goods_ids: item.detail.goodId,
             status: 0 //1上架0下架
           }).then(function (res) {
-            _this2.closePageLoading();
-            _this2.Toast('商品成功下架');
-            _this2.initPage();
+            _this3.closePageLoading();
+            _this3.Toast('商品成功下架');
+            _this3.initPage();
           });
         } else if (item.name == '删除') {
           var delApis = {
@@ -245,26 +254,26 @@ var curTab = {
           this.Request(delApis[this.searchTab.name] || 'tempDelGood', {
             goods_ids: item.detail.goodId }).
           then(function (res) {
-            _this2.closePageLoading();
-            _this2.Toast('成功删除商品');
-            _this2.initPage();
+            _this3.closePageLoading();
+            _this3.Toast('成功删除商品');
+            _this3.initPage();
           });
         } else if (item.name == '上架') {
           this.Request('onOrOffGoods', {
             goods_ids: item.detail.goodId,
             status: 1 //1上架0下架
           }).then(function (res) {
-            _this2.closePageLoading();
-            _this2.Toast('商品成功上架');
-            _this2.initPage();
+            _this3.closePageLoading();
+            _this3.Toast('商品成功上架');
+            _this3.initPage();
           });
         } else if (item.name == '恢复') {
           this.Request('recycleDelGood', {
             goods_ids: item.detail.goodId }).
           then(function (res) {
-            _this2.closePageLoading();
-            _this2.Toast('成功恢复商品');
-            _this2.initPage();
+            _this3.closePageLoading();
+            _this3.Toast('成功恢复商品');
+            _this3.initPage();
           });
         }
       } else if (item.type == 'good') {//直接点击商品，同样进入编辑页面

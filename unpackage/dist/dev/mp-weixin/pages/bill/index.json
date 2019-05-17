@@ -11,6 +11,6 @@
     "card": "/pages/bill/index/Card",
     "search-input": "/components/my-components/SearchInput",
     "nodata": "/components/my-components/nodata",
-    "my-tabbar": "/components/my-components/myTabbar"
+    "my-tabbar": "/components/my-components/myTabbar1"
   }
 }

@@ -20,73 +20,68 @@
 //
 //
 //
-
-var cacheList = [{
-  "pagePath": "pages/index/index",
-  "text": "首页",
-  "iconPath": "/static/img/tabbar/tab_home.png",
-  "selectedIconPath": "/static/img/tabbar/tab_home1.png" },
-{
-  "pagePath": "pages/commodity/index",
-  "text": "商品",
-  "iconPath": "/static/img/tabbar/tab_goods.png",
-  "selectedIconPath": "/static/img/tabbar/tab_goods1.png" },
-{
-  "pagePath": "pages/bill/index",
-  "text": "订单",
-  "iconPath": "/static/img/tabbar/tab_order.png",
-  "selectedIconPath": "/static/img/tabbar/tab_order1.png" },
-{
-  "pagePath": "pages/self/index",
-  "text": "我的",
-  "iconPath": "/static/img/tabbar/tab_me.png",
-  "selectedIconPath": "/static/img/tabbar/tab_me1.png" }];var _default =
-
+//
+//
+var _default =
 {
   props: {
     defaultIndex: {
       type: Number,
-      default: 0 } },
+      default: 0 },
 
+    Jurisdiction: {
+      type: Object,
+      default: {} } },
+
+
+  computed: {
+    showList: function showList() {var _this = this;
+      if (typeof this.Jurisdiction['goods_view'] == 'boolean') {
+        return this.list.filter(function (item) {
+          if (item.text == '商品') {
+            return _this.Jurisdiction['goods_view'];
+          } else if (item.text == '订单') {
+            return _this.Jurisdiction['order_view'];
+          }
+          return true;
+        });
+      } else {
+        return [];
+      }
+    } },
 
   data: function data() {
     return {
-      curIndex: 0,
       "list": [{
         "pagePath": "/pages/index/index",
         "text": "首页",
+        index: 0,
         "iconPath": "/static/img/tabbar/tab_home.png",
         "selectedIconPath": "/static/img/tabbar/tab_home1.png" },
       {
         "pagePath": "/pages/commodity/index",
         "text": "商品",
+        index: 1,
         "iconPath": "/static/img/tabbar/tab_goods.png",
         "selectedIconPath": "/static/img/tabbar/tab_goods1.png" },
       {
         "pagePath": "/pages/bill/index",
         "text": "订单",
+        index: 2,
         "iconPath": "/static/img/tabbar/tab_order.png",
         "selectedIconPath": "/static/img/tabbar/tab_order1.png" },
       {
         "pagePath": "/pages/self/index",
         "text": "我的",
+        index: 3,
         "iconPath": "/static/img/tabbar/tab_me.png",
         "selectedIconPath": "/static/img/tabbar/tab_me1.png" }] };
 
 
   },
-  mounted: function mounted() {
-    this.curIndex = this.defaultIndex;
-  },
-  watch: {
-    defaultIndex: function defaultIndex() {
-      this.curIndex = this.defaultIndex;
-    } },
-
   methods: {
     click: function click(item, index) {
-      this.curIndex = index;
-      uni.reLaunch({
+      uni.switchTab({
         url: item.pagePath });
 
     } } };exports.default = _default;

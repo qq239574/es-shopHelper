@@ -10621,7 +10621,7 @@ var postSelfVerifyInfo = { //订单自提
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
   //  base_url:'https://ceshishop.jacjack.com',
-  //  base_url:'https://shop.jacjack.com',
+  //  base_url: 'https://shop.jacjack.com',
   attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
 global_settings;exports.default = _default;
@@ -11795,6 +11795,141 @@ function GetDateDiffNoAbs(startDate, endDate) {
   var endTime = new Date(Date.parse(endDate.replace(/-/g, "/"))).getTime();
   var dates = (startTime - endTime) / (1000 * 60 * 60 * 24);
   return dates;
+}
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/getJurisdiction.js ***!
+  \*************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdiction = getJurisdiction;var test = {
+  'account-mode_manage': true,
+  'account-mode_view': true,
+  activity_index_create: true,
+  activity_index_pay: true,
+  activity_manage_manage: true,
+  activity_manage_view: true,
+  apps_index_manage: true,
+  'apps_index_manage-wxapp': true,
+  apps_index_pay: true,
+  channel_manage: true,
+  channel_view: true,
+  commission_agent_list_manage: true,
+  commission_agent_list_view: true,
+  commission_apply_list_manage: true,
+  commission_apply_list_view: true,
+  commission_goods_list_manage: true,
+  commission_goods_list_view: true,
+  commission_index_view: true,
+  commission_level_list_manage: true,
+  commission_level_list_view: true,
+  commission_order_list_manage: true,
+  commission_order_list_view: true,
+  commission_setting_basic_manage: true,
+  commission_setting_basic_view: true,
+  coupon_manage: true,
+  coupon_view: true,
+  customer_list_manage: true,
+  customer_sessionHistory_manage: true,
+  customer_session_manage: true,
+  customer_settings_manage: true,
+  'dashboard_index_get-activity-data': true,
+  'dashboard_index_get-goods-data': true,
+  'dashboard_index_get-sell-data': true,
+  'dashboard_index_get-visit-data': true,
+  'dashboard_index_order-data': true,
+  decorate_systemtemplate_buy: true,
+  decorate_systemtemplate_view: true,
+  decorate_template_manage: true,
+  decorate_template_page_manage: true,
+  decorate_template_page_view: true,
+  decorate_template_view: true,
+  finance_bill_view: true,
+  finance_log_balance_view: true,
+  finance_log_credit_view: true,
+  finance_log_recharge_refund: true,
+  finance_log_recharge_view: true,
+  finance_order_view: true,
+  goods_batch_manage: true,
+  goods_batch_view: true,
+  goods_category_manage: true,
+  goods_category_view: true,
+  goods_group_manage: true,
+  goods_group_view: true,
+  goods_label_manage: true,
+  goods_label_view: true,
+  goods_manage: true,
+  goods_params_manage: true,
+  goods_params_view: true,
+  goods_view: false, //商品查看权限
+  member_analyze_view: true,
+  member_goods_manage: true,
+  member_goods_view: true,
+  member_import_manage: true,
+  member_level_manage: true,
+  member_level_view: true,
+  member_list_manage: true,
+  member_list_view: true,
+  member_portrait_manage: true,
+  member_tag_manage: true,
+  member_tag_view: true,
+  'order_batch-send': true,
+  'order_change-price': true,
+  order_close: true,
+  'order_close-and-refund': true,
+  order_commment_manage: true,
+  order_commment_view: true,
+  'order_edit-invoice': true,
+  order_export: true,
+  order_manage: true,
+  order_overview_view: true,
+  order_send: true,
+  order_view: true, //订单查看权限
+  sales_overview_view: true,
+  setting_common_base_manage: true,
+  setting_dispatch_index_manage: true,
+  setting_info_manage: true,
+  setting_managerrole_list_manage: true,
+  setting_managerrole_list_view: true,
+  setting_operator_list_manage: true,
+  setting_operator_list_view: true,
+  setting_payment_index_manage: true,
+  statistics_goods_view: true,
+  statistics_index_view: true,
+  statistics_member_view: true,
+  statistics_trade_view: true,
+  statistics_view_view: true };
+
+function getJurisdiction() {
+  var that = this;
+  var cache = that.Cacher.getData('userJurisdiction');
+  return new Promise(function (resolve, reject) {
+    if (cache.error == 0 && cache.prems) {
+      resolve(test || cache.prems); //测试例子
+    } else {
+      that.Request('Jurisdiction').then(function (res) {
+        if (res.error == 0) {
+          var prems = res.prems;
+          var newPrems = {};
+          for (var k in prems) {
+            newPrems[k.replace(/\./g, '_')] = prems[k];
+          }
+          res.prems = newPrems;
+          that.Cacher.setData('userJurisdiction', res);
+          resolve(res.prems);
+        }
+      }).catch(function (res) {
+        reject(res);
+      });
+    }
+
+  });
+
 }
 
 /***/ }),
@@ -15288,25 +15423,11 @@ _vue.default.use(_vuex.default);
 
 var store = new _vuex.default.Store({
   state: {
-    /**
-            * 是否需要强制登录
-            */
-    forcedLogin: false,
-    hasLogin: false,
-    userName: "",
-    billDetail: {}, //订单管理页面跳转详情页面的缓存
-    goodDetail: {} //商品页面操作的商品信息缓存
+    Jurisdiction: null //权限管理
   },
   mutations: {
-    setBillDetail: function setBillDetail(state, info) {
-      state.billDetail = info;
-    },
-    setGoodDetail: function setGoodDetail(state, info) {
-      state.goodDetail = info;
-    },
-    login: function login(state, userName) {
-      state.userName = userName || '新用户';
-      state.hasLogin = true;
+    getJurisdiction: function getJurisdiction(state, info) {
+      state.Jurisdiction = info;
     } } });var _default =
 
 

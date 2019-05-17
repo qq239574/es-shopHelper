@@ -52,23 +52,26 @@
 
 
 
-var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));
 
-var DataFrom = {};
-var searchData = {};
-var surePassword = ''; //手动确认付款密码
-var member_id = '';
-var curTab = { //当前标签
-  cateid: 0,
-  index: 0,
-  name: "代付款"
-  //{cateid: 0, index: 0, name: "代付款"}
+
+
+
+
+
+
+
+
+
+
+
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar1 */ "components/my-components/myTabbar1").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar1.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var DataFrom = {};var searchData = {};var surePassword = ''; //手动确认付款密码
+var member_id = '';var curTab = { //当前标签
+  cateid: 0, index: 0, name: "代付款" //{cateid: 0, index: 0, name: "代付款"}
 };var requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
-var searching = false;
-var cacheBill = {}; //缓存将要操作的订单 
-var _default = {
-  components: {
-    TabCard: TabCard,
+var searching = false;var cacheBill = {}; //缓存将要操作的订单 
+var _default = { components: { TabCard: TabCard,
     Card: Card,
     SearchInput: SearchInput,
     nodata: nodata,
@@ -76,6 +79,7 @@ var _default = {
 
   data: function data() {
     return {
+      Jurisdiction: {}, //权限
       current: 1,
       totalPage: 1,
       surePassword: '', //弹窗输入密码
@@ -123,11 +127,16 @@ var _default = {
       searching: true };
 
   },
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     this.billList = [];
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this.Jurisdiction = res;
+    }).catch(function (res) {
+      _this.Toast(res.message);
+    });
   },
   onShow: function onShow() {
     this.current = 1;
@@ -156,7 +165,7 @@ var _default = {
         this.current = Math.max(this.current - 1, 1);
       }
     },
-    sure: function sure() {var _this = this;
+    sure: function sure() {var _this2 = this;
       this.surePaying = true;
       var apiNames = ['payBill', 'receiveBill'];
       var apiname = '';
@@ -169,15 +178,15 @@ var _default = {
         id: cacheBill.bill.bill.id, //订单id
         password: surePassword }).
       then(function (res) {
-        _this.Toast(_this.modelTheme.success);
-        _this.initPage();
-        _this.showModel = false;
+        _this2.Toast(_this2.modelTheme.success);
+        _this2.initPage();
+        _this2.showModel = false;
       }).catch(function (res) {
-        _this.error = true;
-        _this.Toast(res.message);
+        _this2.error = true;
+        _this2.Toast(res.message);
       }).finally(function (res) {
-        _this.surePaying = false;
-        _this.closePageLoading();
+        _this2.surePaying = false;
+        _this2.closePageLoading();
       });
     },
     cancel: function cancel() {
@@ -188,7 +197,7 @@ var _default = {
       this.surePassword = surePassword;
       this.error = false;
     },
-    initPage: function initPage() {var _this2 = this;
+    initPage: function initPage() {var _this3 = this;
       this.searching = true;
       this.pageLoading();
       member_id = '';
@@ -211,15 +220,15 @@ var _default = {
         page: this.current,
         pageSize: 20 }).
       then(function (res) {
-        _this2.closePageLoading();
-        _this2.billList = res;
-        _this2.searching = false;
+        _this3.closePageLoading();
+        _this3.billList = res;
+        _this3.searching = false;
       }).catch(function (res) {
-        _this2.searching = false;
-        _this2.Toast(res.message || '出错啦');
+        _this3.searching = false;
+        _this3.Toast(res.message || '出错啦');
       });
     },
-    tabChange: function tabChange(tab) {var _this3 = this;
+    tabChange: function tabChange(tab) {var _this4 = this;
       if (!searching) {
         searching = true;
         this.pageLoading();
@@ -235,16 +244,16 @@ var _default = {
           page: 1,
           pageSize: 20 }).
         then(function (res) {
-          _this3.billList = res;
-          _this3.closePageLoading();
-          _this3.searching = false;
+          _this4.billList = res;
+          _this4.closePageLoading();
+          _this4.searching = false;
           searching = false;
-          requestQueue && _this3.tabChange(requestQueue);
+          requestQueue && _this4.tabChange(requestQueue);
           requestQueue = '';
         }).catch(function (res) {
-          _this3.searching = false;
+          _this4.searching = false;
           searching = false;
-          requestQueue && _this3.tabChange(requestQueue);
+          requestQueue && _this4.tabChange(requestQueue);
           requestQueue = '';
         });
       } else {

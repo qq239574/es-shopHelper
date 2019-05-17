@@ -18,14 +18,17 @@
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
 		<van-dialog id="van-dialog" />
-		<MyTabbar :defaultIndex='3' ></MyTabbar>
+		<MyTabbar :defaultIndex='3' :Jurisdiction='Jurisdiction'></MyTabbar>
 	</div>
 </template>
 
 <script>
-	import MyTabbar from '../../components/my-components/myTabbar'
+	import MyTabbar from '../../components/my-components/myTabbar3'
 	import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
 	import inputItem from '../../components/my-components/editBlock-InputItem.vue'
+	import {
+		getJurisdiction
+	} from '../../components/my-components/getJurisdiction.js'
 	let DataFrom = {};
 	export default {
 		components: {
@@ -35,6 +38,7 @@
 		},
 		data() {
 			return {
+				Jurisdiction:{},//权限
 				userName: '',
 				userTel: '',
 				userId: '',
@@ -123,6 +127,11 @@
 			let info = this.Cacher.getData('login') || {};
 			this.wxInfo = info.userInfo;
 			this.initPage();
+			getJurisdiction.call(this).then(res => {
+				this.Jurisdiction = res;
+			}).catch(res => {
+				this.Toast(res.message)
+			})
 		}
 	}
 </script>

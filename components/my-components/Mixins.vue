@@ -19,8 +19,7 @@
                 Dialog,
                 ShowLoadMore: false,
                 LoadingType: 0, //0'加载更多',   1'已加载全部' 
-                static_resources_domain: '',
-                showTabbar: false
+                static_resources_domain: '', 
             };
         },
         methods: {
@@ -81,10 +80,7 @@
                     }
                 })
             }
-        },
-        onUnload() {
-            this.showTabbar = false; 
-        },
+        }, 
         onHide() {
             this.closePageLoading();
             this.Dialog.close();

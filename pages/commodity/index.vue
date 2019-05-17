@@ -26,7 +26,7 @@
             <van-icon color='#fff' class='addIcon' name="plus" />
             <view class='addWord'>添加</view>
         </view>
-        <MyTabbar :defaultIndex='1' ></MyTabbar>
+        <MyTabbar :defaultIndex='1' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-    import MyTabbar from '../../components/my-components/myTabbar'
+    import MyTabbar from '../../components/my-components/myTabbar1'
     import TabCard from '../../components/my-components/Tabs.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import Card from './index/goodsList.vue';
@@ -52,6 +52,9 @@
         index: 0,
         name: "出售中"
     }
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     export default {
         components: {
             TabCard,
@@ -62,6 +65,7 @@
         },
         data() {
             return {
+                Jurisdiction:{},//权限
                 searchValue: '', //查询条件  
                 categories, //标签项
                 goodsList: [{ //商品列表
@@ -90,6 +94,11 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from) || {};
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
         onShow() {
             this.initPage();

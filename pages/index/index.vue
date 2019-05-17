@@ -18,7 +18,7 @@
         </view>
         <goodsBlock :list='billList' @click='toBill'></goodsBlock>
         <apps @click='toApp'></apps>
-        <MyTabbar :defaultIndex='0'  ></MyTabbar>
+        <MyTabbar :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -31,7 +31,7 @@
     import dataShower from './components/IndexDataShower.vue'
     import goodsBlock from './components/IndexGoods.vue'
     import apps from './components/IndexApps.vue'
-    import MyTabbar from '../../components/my-components/myTabbar'
+    import MyTabbar from '../../components/my-components/myTabbar.vue'
     import {
         getDate,
         GetDateDiffNoAbs
@@ -41,7 +41,9 @@
     let searchDay = {
         value: 'today'
     };
-    let userJurisdiction = {}; //用户权限
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     export default {
         components: {
             LongButton,
@@ -55,6 +57,7 @@
         },
         data() {
             return {
+                Jurisdiction: {},
                 showTurnShop: true,
                 billList: [{
                     name: '待发货',
@@ -87,7 +90,7 @@
                     payedGood: 0,
                     payedVip: 0
                 },
-                expireDay: 0
+                expireDay: 0,
             }
         },
         methods: {
@@ -223,8 +226,7 @@
                         })
                     });
                 }
-                this.Request('getUserJury').then(res => { //获取用户权限
-                })
+               
             }
         },
         onPullDownRefresh() {
@@ -237,9 +239,11 @@
             if (option && option.status == 'onlyOne') {
                 this.showTurnShop = false;
             }
-            this.Request('Jurisdiction').then(res => {
-                this.Cacher.setData('userJurisdiction', res);
-                userJurisdiction = res;
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res; 
+                console.log(res)
+            }).catch(res => {
+                this.Toast(res.message)
             })
             // }
         },

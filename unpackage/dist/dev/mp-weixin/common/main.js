@@ -58,8 +58,7 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
       Dialog: _dialog.default,
       ShowLoadMore: false,
       LoadingType: 0, //0'加载更多',   1'已加载全部' 
-      static_resources_domain: '',
-      showTabbar: false };
+      static_resources_domain: '' };
 
   },
   methods: {
@@ -120,9 +119,6 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
         }
       });
     }
-  },
-  onUnload: function onUnload() {
-    this.showTabbar = false;
   },
   onHide: function onHide() {
     this.closePageLoading();

@@ -33,12 +33,12 @@
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
         <loadMore :loadingType="LoadingType" :loadingText="LoadingText" :show="ShowLoadMore"></loadMore>
-        <MyTabbar :defaultIndex='2' ></MyTabbar>
+        <MyTabbar :defaultIndex='2' :Jurisdiction='Jurisdiction'></MyTabbar>
     </view>
 </template>
 
 <script>
-    import MyTabbar from '../../components/my-components/myTabbar'
+    import MyTabbar from '../../components/my-components/myTabbar1'
     import TabCard from '../../components/my-components/Tabs.vue';
     import Card from './index/Card.vue';
     import SearchInput from '../../components/my-components/SearchInput.vue';
@@ -56,6 +56,9 @@
     let requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
     let searching = false;
     let cacheBill = {}; //缓存将要操作的订单 
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     export default {
         components: {
             TabCard,
@@ -66,6 +69,7 @@
         },
         data() {
             return {
+                Jurisdiction:{},//权限
                 current: 1,
                 totalPage: 1,
                 surePassword: '', //弹窗输入密码
@@ -118,6 +122,11 @@
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
+             getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res; 
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
         onShow() {
             this.current = 1;
