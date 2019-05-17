@@ -1,7 +1,7 @@
 <template>
     <view class='toper page'>
         <selectItem label='筛选日期' :value='pageLabel' @click='filteDate'></selectItem>
-        <items :list='list' :pageid='pageId'></items>
+        <items :list='list' :pageid='pageId' @click='clickItem'></items>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -13,7 +13,9 @@
     import {
         getDate
     } from '../../components/my-components/getDateSection.js'
-    import {number_format} from '../../components/my-components/formater.js'
+    import {
+        number_format
+    } from '../../components/my-components/formater.js'
     let searchSection = [];
     let DataFrom = {}; //上级页面的数据
     let DataGo = {}; //缓存下级页面的数据
@@ -37,9 +39,9 @@
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
-              uni.setNavigationBarTitle({
-                    title: DataFrom.show=='vip'?"TOP会员":"TOP商品"
-                });
+            uni.setNavigationBarTitle({
+                title: DataFrom.show == 'vip' ? "TOP会员" : "TOP商品"
+            });
         },
         onShow() {
             domain = this.Cacher.getData('static_resources_domain')
@@ -49,6 +51,34 @@
             this.initPage();
         },
         methods: {
+            clickItem(info) {
+                if (DataFrom.show == 'vip') {
+                    console.log(info)
+                    this.Cacher.setData('toper', {
+                        from: 'toper',
+                        detail: {
+                            info: {
+                                id: info.id
+                            }
+                        }
+                    });
+                    uni.navigateTo({
+                        url: '../../pagesIndex/pages/vipDetail?from=toper'
+                    })
+                } else {
+                    this.Cacher.setData('toper', {
+                        from: 'toper',
+                        item: {
+                            detail: {
+                                goodId: info.goods_id
+                            }
+                        }
+                    });
+                    uni.navigateTo({
+                        url: '../../pagesCommodity/pages/index?from=toper'
+                    })
+                }
+            },
             initPage() { //初始化页面 
                 let api = '';
                 this.pageId = DataFrom.show;
@@ -81,14 +111,16 @@
                             img: item.avatar || 'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
                             label: item.nickname,
                             value: item.pay_price,
-                            index: item.mobile
+                            index: item.mobile,
+                            id: item.id
                         }))
                     } else {
                         this.list = arr.map(item => ({
                             img: domain + item.thumb,
                             label: item.title,
                             value: item.pay_number_count,
-                            index: item.goods_id
+                            index: item.goods_id,
+                            goods_id: item.goods_id
                         }))
                     }
                 }).catch(res => {

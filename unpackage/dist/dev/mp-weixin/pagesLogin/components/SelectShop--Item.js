@@ -63,7 +63,6 @@ var _default =
 
   },
   methods: {
-
     bgGray: function bgGray(shop) {
       return this.shop.id == 'disable' || this.shop.id == 'examing' ? 'background:"#f4f4f4"' : '';
     },

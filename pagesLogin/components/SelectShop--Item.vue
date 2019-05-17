@@ -3,11 +3,11 @@
         <view class='shop-block' @click='select(shop)' v-for='(shop,index) in shops' :key='index' :class="states[shop.statusText]||'disable'">
             <image :src='shop.img' lazy-load style='border-radius:50%;'></image>
             <view class="info">
-                <view class="title">{{shop.title}}</view>
-                <view class="date">{{shop.left}}</view>
+                <view class="title" :class='shop.left=="已过期"?"expired":""'>{{shop.title}}</view>
+                <view class="date" v-if='shop.left!="已过期"'>{{shop.left}}</view>
             </view>
             <view class="status">
-                <view class="tab"  :class="states[shop.statusText]||'disable'">
+                <view class="tab" :class="states[shop.statusText]||'disable'">
                     {{shop.statusText}}
                 </view>
             </view>
@@ -41,7 +41,7 @@
                 type: Number,
                 default: 0
             }
-        }, 
+        },
         data() {
             return {
                 states: {
@@ -53,13 +53,12 @@
             }
         },
         methods: {
-            
             bgGray(shop) {
                 return (this.shop.id == 'disable' || this.shop.id == 'examing') ? 'background:"#f4f4f4"' : '';
             },
             select(item) {
                 console.log(item)
-                if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期'|| item.statusText == '试用中') { //营业中、已打烊、已过期的店铺，点击进入小程序
+                if (item.statusText == '营业中' || item.statusText == '已打烊' || item.statusText == '已过期' || item.statusText == '试用中') { //营业中、已打烊、已过期的店铺，点击进入小程序
                     this.$emit('click', item)
                 } else {
                     this.Dialog.alert({
@@ -125,6 +124,9 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+            .expired {
+                margin-top: 76upx;
             }
             .date {
                 margin: 16upx 0 0;

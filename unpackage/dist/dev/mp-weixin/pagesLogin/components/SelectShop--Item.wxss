@@ -63,6 +63,9 @@
          text-overflow: ellipsis;
       white-space: nowrap;
 }
+.shop-block .info .expired.data-v-551742ec {
+      margin-top: 76rpx;
+}
 .shop-block .info .date.data-v-551742ec {
       margin: 16rpx 0 0;
       font-weight: 400;
