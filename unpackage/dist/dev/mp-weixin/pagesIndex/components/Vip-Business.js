@@ -51,9 +51,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   methods: {
     checkBill: function checkBill() {
-      this.$emit('click', {
-        type: 'checkBill' });
+      if (this.Jurisdiction.order_view) {
+        this.$emit('click', {
+          type: 'checkBill' });
 
+      } else {
+        this.Toast('暂无查看权限');
+      }
     } } };exports.default = _default;
 
 /***/ }),

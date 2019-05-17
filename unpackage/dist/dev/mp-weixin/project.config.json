@@ -11,7 +11,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
-	"appid": "wx9b314a84156d28fe",
+	"appid": "wxea0039639afb8d4c",
 	"projectname": "MobileManager",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -37,8 +37,8 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
+					"name": "my",
+					"pathName": "pages/self/index",
 					"scene": null
 				}
 			]

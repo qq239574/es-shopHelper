@@ -36,18 +36,17 @@
             submit() { //提交核销码
                 if (!requesting) {
                     requesting = true;
-                    this.pageLoading();
+                    this.closePageLoading();
+                    this.Toast('正在验证')
                     this.Request('postSelfVerifyInfo', {
                         finish_code: cache
                     }).then(res => {
-                        requesting=false;
-                        this.closePageLoading();
+                        requesting = false; 
                         if (res.error == 0) {
                             this.Toast('核销成功')
                         }
                     }).catch(res => {
-                        requesting=false;
-                        this.closePageLoading();
+                        requesting = false; 
                         this.Toast(res.message)
                     })
                 }
@@ -72,6 +71,9 @@
         },
         onShow() {
             this.closePageLoading();
+        },
+        onLoad() {
+            requesting = false;
         }
     };
 </script>

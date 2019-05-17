@@ -43,6 +43,7 @@
         },
         methods: {
             selectShop(item) {
+                item.totalShops=this.totalShop;
                 this.Cacher.setData(pageId, item);
                 this.pageLoading();
                 this.Request('switchShop', { //切换店铺
@@ -129,11 +130,11 @@
                                 this.LoadingType = 1; //
                             }
                             if (this.shops.length == 1 && DataFrom.from != 'home') { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
-                                let shop = this.shops[0];
+                                let shop = this.shops[0]; 
                                 this.Cacher.setData(pageId, {
                                     from: pageId,
-                                    shopInfo: shop.shopInfo
-                                    
+                                    shopInfo: shop.shopInfo,
+                                    totalShops:res.total
                                 });
                                 this.Request('switchShop', {
                                     id: shop.shopInfo.id

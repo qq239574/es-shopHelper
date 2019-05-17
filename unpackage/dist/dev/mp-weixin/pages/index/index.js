@@ -51,7 +51,8 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 
 
 
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var DataFrom = {};var newNotice = {};var searchDay = { value: 'today' };var _default =
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var DataFrom = {};var newNotice = {};var searchDay = { value: 'today' };var cacheData = {};var _default =
 
 
 {
@@ -104,24 +105,9 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 
   },
   methods: {
-    searchData: function searchData(val) {var _this = this; //点击今日昨日按钮查询 
+    searchData: function searchData(val) {//点击今日昨日按钮查询 
       searchDay = val;
-      this.pageLoading();
-      this.Request('checkDealInfo', {
-        type: val.value }).
-      then(function (res) {
-        _this.closePageLoading();
-        if (res.error == 0) {
-          _this.showData = {
-            money: res.sell_data.yesterday_turnover,
-            payedBill: res.sell_data.yesterday_order_num,
-            payedGood: res.sell_data.yesterday_goods_num,
-            payedVip: res.sell_data.yesterday_pay_member_num };
-
-        }
-      }).catch(function (res) {
-        _this.Toast(res.message);
-      });
+      this.showData = cacheData[val.value];
     },
     changeShop: function changeShop() {
       this.Cacher.setData('home', {
@@ -137,6 +123,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         from: 'home',
         info: this.showData });
 
+      this.closePageLoading();
       if (val.title == '数据统计') {
         uni.navigateTo({
           url: '../../pagesIndex/pages/index?from=home' });
@@ -146,7 +133,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           url: '../../pagesIndex/pages/vipManage?from=home' });
 
       } else if (val.title == '自提核销') {
-        this.closePageLoading();
+
         uni.navigateTo({
           url: '../../pagesSelfTakeVerify/pages/index?from=home' });
 
@@ -181,22 +168,23 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         url: '../../pagesIndex/pages/noticeList?from=home' });
 
     },
-    initPage: function initPage() {var _this2 = this;
+    initPage: function initPage() {var _this = this;
+      this.pageLoading();
+      this.execInfo = { //过期时间
+        label: DataFrom.left,
+        date: '续费' };
+
+      this.expireDay = DataFrom.expireDay;
       this.searchData(searchDay); //初始化数据框
       this.Request('homeInfo', {}).then(function (res) {
-        _this2.searchData(searchDay);
-        _this2.shopName = res.shop.name;
+        _this.searchData(searchDay);
+        _this.shopName = res.shop.name;
         newNotice = res.notice;
-        _this2.newNotice = {
+        _this.newNotice = {
           label: newNotice[0].title || '',
           date: newNotice[0].date || '' };
 
-        _this2.expireDay = Math.round((0, _getDateSection.GetDateDiffNoAbs)(res.shop.expire_time, (0, _getDateSection.getDate)(0)));
-        _this2.execInfo = { //还没写过期的功能？？？？
-          label: '还有' + Math.ceil(_this2.expireDay) + '天到期',
-          date: '续费' };
-
-        _this2.billList = [{
+        _this.billList = [{
           name: '待发货',
           num: res.data.order_wait_send,
           cateid: 1 },
@@ -210,6 +198,27 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 
       });
       var userInfo = this.Cacher.getData('login');
+      ['yesterday', '7day', 'today'].forEach(function (item) {//一次性请求全部三段日期的数据
+        _this.Request('checkDealInfo', {
+          type: item }).
+        then(function (res) {
+          _this.closePageLoading();
+          if (res.error == 0) {
+            cacheData[item] = {
+              money: res.sell_data.yesterday_turnover,
+              payedBill: res.sell_data.yesterday_order_num,
+              payedGood: res.sell_data.yesterday_goods_num,
+              payedVip: res.sell_data.yesterday_pay_member_num };
+
+            if (item == searchDay) {
+              _this.showData = cacheData[item];
+            }
+          }
+        }).catch(function (res) {
+          _this.closePageLoading();
+          _this.Toast(res.message);
+        });
+      });
       // if (!userInfo.haveBindWx && userInfo.encryptedData) {
       //     this.closePageLoading();
       //     this.Dialog.confirm({
@@ -241,20 +250,19 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
   onPullDownRefresh: function onPullDownRefresh() {
     this.initPage();
   },
-  onLoad: function onLoad(option) {var _this3 = this;
+  onLoad: function onLoad(option) {var _this2 = this;
     uni.hideTabBar({ //隐藏tabbar
       animation: false });
 
+
     // if (option.from && option.from == 'selectShop') {
-    DataFrom = this.Cacher.getData(option.from);
+    DataFrom = this.Cacher.getData('selectShop');
     this.shopName = DataFrom.title;
-    if (option && option.status == 'onlyOne') {
-      this.showTurnShop = false;
-    }
+    this.showTurnShop = DataFrom.totalShops > 1;
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
-      _this3.Jurisdiction = res;
+      _this2.Jurisdiction = res;
     }).catch(function (res) {
-      _this3.Toast(res.message);
+      _this2.Toast(res.message);
     });
     // }
   },

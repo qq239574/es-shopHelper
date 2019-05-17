@@ -53,6 +53,7 @@ var requesting = false;var _default =
   },
   methods: {
     selectShop: function selectShop(item) {var _this = this;
+      item.totalShops = this.totalShop;
       this.Cacher.setData(pageId, item);
       this.pageLoading();
       this.Request('switchShop', { //切换店铺
@@ -142,8 +143,8 @@ var requesting = false;var _default =
               var shop = _this2.shops[0];
               _this2.Cacher.setData(pageId, {
                 from: pageId,
-                shopInfo: shop.shopInfo });
-
+                shopInfo: shop.shopInfo,
+                totalShops: res.total });
 
               _this2.Request('switchShop', {
                 id: shop.shopInfo.id }).

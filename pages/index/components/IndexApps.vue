@@ -1,5 +1,5 @@
 <template>
-    <view class='index-apps'>
+    <view class='index-apps' v-if='showApps.length'>
         <view class="block">
             <view class="items" v-for='(item,index) in showApps' :key='index' @click='click(item)'>
                 <image lazy-load mode='aspectFit' :src='item.img'></image>

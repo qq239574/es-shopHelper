@@ -127,7 +127,7 @@
 			clickPWIcon() { //切换加密显示与明文显示
 				this.openEye = !this.openEye;
 			},
-			loginWithWx: function() {
+			loginWithWx() {
 				this.closePageLoading();
 			},
 			loginNow(e) { //点击登录

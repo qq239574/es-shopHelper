@@ -10620,7 +10620,7 @@ var postSelfVerifyInfo = { //订单自提
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-  //  base_url:'https://ceshishop.jacjack.com',
+  // base_url:'https://ceshiuser.100cms.com',
   //  base_url: 'https://shop.jacjack.com',
   attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
 };var _default =
@@ -11418,7 +11418,7 @@ var getVRCodeImg = { //获取图形验证码
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.changeUserPassword = exports.changeUserInfo = exports.myInfo = void 0;var myInfo = { //获取用户信息
+Object.defineProperty(exports, "__esModule", { value: true });exports.changeUserPassword = exports.changeUserInfo = exports.myAccount = exports.myInfo = void 0;var myInfo = { //获取用户信息
   url: '/api/site/account/profile/get-info',
   data: {},
 
@@ -11427,6 +11427,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.changeUser
 
 
   type: 'get' };exports.myInfo = myInfo;
+
+var myAccount = { //获取账号信息
+  url: '/api/site/account/login',
+  data: {},
+
+
+  headers: {},
+
+
+  type: 'get' };exports.myAccount = myAccount;
 
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
@@ -11905,30 +11915,28 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdi
   statistics_trade_view: true,
   statistics_view_view: true };
 
-function getJurisdiction() {
+function getJurisdiction(bool) {
   var that = this;
   var cache = that.Cacher.getData('userJurisdiction');
   return new Promise(function (resolve, reject) {
-    if (cache.error == 0 && cache.prems) {
-      resolve(cache.prems); //测试例子
-    } else {
-      that.Request('Jurisdiction').then(function (res) {
-        if (res.error == 0) {
-
-          var prems = res.prems;
-
-          var newPrems = {};
-          for (var k in prems) {
-            newPrems[k.replace(/\./g, '_')] = prems[k];
-          }
-          res.prems = newPrems;
-          that.Cacher.setData('userJurisdiction', res);
-          resolve(res.prems);
+    // if (cache.error == 0 && cache.prems) {
+    //     resolve(cache.prems); //测试例子
+    // } else {
+    that.Request('Jurisdiction').then(function (res) {
+      if (res.error == 0) {
+        var prems = res.prems;
+        var newPrems = {};
+        for (var k in prems) {
+          newPrems[k.replace(/\./g, '_')] = prems[k];
         }
-      }).catch(function (res) {
-        reject(res);
-      });
-    }
+        res.prems = newPrems;
+        that.Cacher.setData('userJurisdiction', res);
+        resolve(res.prems);
+      }
+    }).catch(function (res) {
+      reject(res);
+    });
+    // }
 
   });
 
@@ -14913,7 +14921,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   return list.map(function (item) {
     return {
       title: item.name,
-      left: item.days + '天后到期',
+      left: item.days > 0 ? item.days + '天后到期' : '已过期',
+      expireDay: item.days,
       status: item.status,
       is_checked: item.is_checked,
       statusText: item.status_text,
@@ -15212,11 +15221,15 @@ function selectShop() {var _this = this;
     then(function (res) {
       if (res.error == 0) {
         var shops = (0, _getShopList.default)(res.list);
+
         if (shops.length == 1) {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
           var shop = shops[0];
           _this.Cacher.setData('selectShop', {
             from: 'selectShop',
-            shopInfo: shop.shopInfo });
+            shopInfo: shop.shopInfo,
+            totalShops: res.total,
+            left: shop.days > 0 ? shop.days + '天后到期' : '已过期',
+            expireDay: shop.days });
 
           _this.Request('switchShop', {
             id: shop.shopInfo.id }).
@@ -15251,6 +15264,7 @@ function wxLogin() {
           uni.login({ //微信登录
             provider: 'weixin',
             success: function success(loginRes) {
+              console.log('loginRes', loginRes);
               that.Request('wechatLogin', { //小程序获取登录session
                 code: loginRes.code }).
               then(function (res) {
@@ -15393,7 +15407,7 @@ function getData(key) {
 }
 function clearData(key) {
   try {
-    return uni.removeStorage(namespace + key);
+    uni.removeStorageSync(namespace + key);
   } catch (e) {
     console.error('clearData error >>', e, ' key:', key);
   }

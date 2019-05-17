@@ -96,18 +96,16 @@ let test = {
     statistics_trade_view: true,
     statistics_view_view: true,
 }
-export function getJurisdiction() {
+export function getJurisdiction(bool) {
     let that = this;
-    let cache = that.Cacher.getData('userJurisdiction')
+    let cache = that.Cacher.getData('userJurisdiction');
     return new Promise((resolve, reject) => {
-        if (cache.error == 0 && cache.prems) {
-            resolve(cache.prems); //测试例子
-        } else {
+        // if (cache.error == 0 && cache.prems) {
+        //     resolve(cache.prems); //测试例子
+        // } else {
             that.Request('Jurisdiction').then(res => {
                 if (res.error == 0) {
-
                     let prems = res.prems;
-
                     let newPrems = {};
                     for (let k in prems) {
                         newPrems[k.replace(/\./g, '_')] = prems[k]
@@ -119,7 +117,7 @@ export function getJurisdiction() {
             }).catch(res => {
                 reject(res)
             })
-        }
+        // }
 
     })
 

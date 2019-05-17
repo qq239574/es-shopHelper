@@ -50,14 +50,17 @@
 		},
 		methods: {
 			initPage() {
-				let login_info = this.Cacher.getData('cache-user-login');
 				this.Request('myInfo').then(res => {
-					this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
+					this.userName = res.user.contact;
 					this.userTel = res.user.username;
-					this.userId = login_info.userId;
 					this.contact_mobile = res.user.contact_mobile;
 					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
 					this.realName = res.user.contact;
+				})
+				this.Request('myAccount').then(res => {
+					if (res.error == 0) {
+						this.userId = res.settings.account;
+					}
 				})
 			},
 			toPage(val) {

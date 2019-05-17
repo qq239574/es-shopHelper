@@ -47,8 +47,8 @@
                 "oauth" : {},
                 "share" : {
                     "weixin" : {
-                        "appid" : "wxea0039639afb8d4c",
-                        "appsecret" : "cb3a08c8ec6893499f4f2a9d35081797"
+                        "appid" : "wxe9154b3ec8bbd183",
+                        "appsecret" : "83cfeeda378df155c6ed84b72e78973c"
                     }
                 }
             }
@@ -59,7 +59,7 @@
     /* 快应用特有相关 */
     "mp-weixin" : {
         /* 小程序特有相关 */
-        "appid" : "wxea0039639afb8d4c",
+        "appid" : "wxe9154b3ec8bbd183",
         "setting" : {
             "urlCheck" : false,
             "es6" : true,

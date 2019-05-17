@@ -8,11 +8,15 @@ function selectShop() {
         }).then(res => {
             if (res.error == 0) {
                 let shops = getShops(res.list);
+                
                 if (shops.length == 1) { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
                     let shop = shops[0];
                     this.Cacher.setData('selectShop', {
                         from: 'selectShop',
-                        shopInfo: shop.shopInfo
+                        shopInfo: shop.shopInfo,
+                        totalShops: res.total,
+                        left: shop.days > 0 ? (shop.days + '天后到期') : '已过期',
+                        expireDay: shop.days,
                     });
                     this.Request('switchShop', {
                         id: shop.shopInfo.id
@@ -47,6 +51,7 @@ export function wxLogin() {
                     uni.login({ //微信登录
                         provider: 'weixin',
                         success: function (loginRes) {
+                            console.log('loginRes',loginRes)
                             that.Request('wechatLogin', { //小程序获取登录session
                                 code: loginRes.code
                             }).then(res => {
@@ -129,10 +134,10 @@ export function login() {
                     password: this.password
                 })
                 that.Cacher.setData('login', cacheData);
-                selectShop.call(this).then(r => {//先判断是否只有一个店铺
+                selectShop.call(this).then(r => { //先判断是否只有一个店铺
                     resolve(res);
                 })
-                
+
             } else {
                 reject(res);
                 this.Toast(res.message)
@@ -146,7 +151,7 @@ export function login() {
                     userId: this.userId,
                     password: this.password
                 })
-                selectShop.call(this).then(r => {//先判断是否只有一个店铺
+                selectShop.call(this).then(r => { //先判断是否只有一个店铺
                     resolve(res);
                 })
             } else {

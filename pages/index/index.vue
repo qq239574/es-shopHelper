@@ -9,7 +9,7 @@
         </view>
         <dataShower :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
         <view class="block">
-            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
+            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
             <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
@@ -41,6 +41,7 @@
     let searchDay = {
         value: 'today'
     };
+    let cacheData = { }
     import {
         getJurisdiction
     } from '../../components/my-components/getJurisdiction.js'
@@ -96,22 +97,7 @@
         methods: {
             searchData(val) { //点击今日昨日按钮查询 
                 searchDay = val;
-                this.pageLoading();
-                this.Request('checkDealInfo', {
-                    type: val.value
-                }).then(res => {
-                    this.closePageLoading();
-                    if (res.error == 0) {
-                        this.showData = {
-                            money: res.sell_data.yesterday_turnover,
-                            payedBill: res.sell_data.yesterday_order_num,
-                            payedGood: res.sell_data.yesterday_goods_num,
-                            payedVip: res.sell_data.yesterday_pay_member_num
-                        }
-                    }
-                }).catch(res => {
-                    this.Toast(res.message)
-                });
+                this.showData = cacheData[val.value];
             },
             changeShop() {
                 this.Cacher.setData('home', {
@@ -126,7 +112,8 @@
                 this.Cacher.setData('home', {
                     from: 'home',
                     info: this.showData,
-                })
+                });
+                this.closePageLoading();
                 if (val.title == '数据统计') {
                     uni.navigateTo({
                         url: '../../pagesIndex/pages/index?from=home'
@@ -136,7 +123,7 @@
                         url: '../../pagesIndex/pages/vipManage?from=home'
                     })
                 } else if (val.title == '自提核销') {
-                    this.closePageLoading();
+                    
                     uni.navigateTo({
                         url: '../../pagesSelfTakeVerify/pages/index?from=home'
                     })
@@ -172,6 +159,12 @@
                 })
             },
             initPage() {
+                this.pageLoading();
+                this.execInfo = { //过期时间
+                    label: DataFrom.left,
+                    date: '续费'
+                }
+                this.expireDay = DataFrom.expireDay;
                 this.searchData(searchDay); //初始化数据框
                 this.Request('homeInfo', {}).then(res => {
                     this.searchData(searchDay);
@@ -180,11 +173,6 @@
                     this.newNotice = {
                         label: newNotice[0].title || '',
                         date: newNotice[0].date || ''
-                    }
-                    this.expireDay = Math.round(GetDateDiffNoAbs(res.shop.expire_time, getDate(0)));
-                    this.execInfo = { //还没写过期的功能？？？？
-                        label: '还有' + Math.ceil(this.expireDay) + '天到期',
-                        date: '续费'
                     }
                     this.billList = [{
                         name: '待发货',
@@ -200,6 +188,27 @@
                     }]
                 })
                 let userInfo = this.Cacher.getData('login');
+                ['yesterday', '7day', 'today'].forEach(item => { //一次性请求全部三段日期的数据
+                    this.Request('checkDealInfo', {
+                        type: item
+                    }).then(res => {
+                        this.closePageLoading();
+                        if (res.error == 0) {
+                            cacheData[item] = {
+                                money: res.sell_data.yesterday_turnover,
+                                payedBill: res.sell_data.yesterday_order_num,
+                                payedGood: res.sell_data.yesterday_goods_num,
+                                payedVip: res.sell_data.yesterday_pay_member_num
+                            }
+                            if (item == searchDay) {
+                                this.showData = cacheData[item];
+                            }
+                        }
+                    }).catch(res => {
+                        this.closePageLoading();
+                        this.Toast(res.message);
+                    });
+                })
                 // if (!userInfo.haveBindWx && userInfo.encryptedData) {
                 //     this.closePageLoading();
                 //     this.Dialog.confirm({
@@ -235,12 +244,11 @@
             uni.hideTabBar({ //隐藏tabbar
                 animation: false
             })
+            
             // if (option.from && option.from == 'selectShop') {
-            DataFrom = this.Cacher.getData(option.from);
+            DataFrom = this.Cacher.getData('selectShop');
             this.shopName = DataFrom.title;
-            if (option && option.status == 'onlyOne') {
-                this.showTurnShop = false;
-            }
+            this.showTurnShop = DataFrom.totalShops > 1;
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
             }).catch(res => {

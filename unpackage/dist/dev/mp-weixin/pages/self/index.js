@@ -60,14 +60,17 @@ var DataFrom = {};var _default =
   },
   methods: {
     initPage: function initPage() {var _this = this;
-      var login_info = this.Cacher.getData('cache-user-login');
       this.Request('myInfo').then(function (res) {
-        _this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
+        _this.userName = res.user.contact;
         _this.userTel = res.user.username;
-        _this.userId = login_info.userId;
         _this.contact_mobile = res.user.contact_mobile;
         _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
         _this.realName = res.user.contact;
+      });
+      this.Request('myAccount').then(function (res) {
+        if (res.error == 0) {
+          _this.userId = res.settings.account;
+        }
       });
     },
     toPage: function toPage(val) {

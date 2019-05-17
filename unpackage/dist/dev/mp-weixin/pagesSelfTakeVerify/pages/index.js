@@ -46,18 +46,17 @@ var requesting = false;var _default =
     submit: function submit() {var _this = this; //提交核销码
       if (!requesting) {
         requesting = true;
-        this.pageLoading();
+        this.closePageLoading();
+        this.Toast('正在验证');
         this.Request('postSelfVerifyInfo', {
           finish_code: cache }).
         then(function (res) {
           requesting = false;
-          _this.closePageLoading();
           if (res.error == 0) {
             _this.Toast('核销成功');
           }
         }).catch(function (res) {
           requesting = false;
-          _this.closePageLoading();
           _this.Toast(res.message);
         });
       }
@@ -82,6 +81,9 @@ var requesting = false;var _default =
 
   onShow: function onShow() {
     this.closePageLoading();
+  },
+  onLoad: function onLoad() {
+    requesting = false;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
