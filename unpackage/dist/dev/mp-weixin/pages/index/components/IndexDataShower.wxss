@@ -1,6 +1,7 @@
 .index-data-shower.data-v-3ee2ce6d {
   width: 100%;
   height: 330rpx;
+  margin-bottom: 24rpx;
 }
 .index-data-shower .box.data-v-3ee2ce6d {
     width: 702rpx;

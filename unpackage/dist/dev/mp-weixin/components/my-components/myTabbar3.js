@@ -35,6 +35,13 @@ var _default =
 
 
   computed: {
+    showTabBar: function showTabBar() {
+      var result = this.Jurisdiction.goods_view && this.Jurisdiction.order_view;
+      // result && uni.showTabBar({
+      //     animation: false
+      // })
+      return true;
+    },
     showList: function showList() {var _this = this;
       if (typeof this.Jurisdiction['goods_view'] == 'boolean') {
         return this.list.filter(function (item) {

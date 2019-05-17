@@ -28,6 +28,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     longButton: longButton },
 
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     info: {
       type: Object,
       default: {

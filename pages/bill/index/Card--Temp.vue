@@ -1,10 +1,10 @@
 <template>
     <view class='card--temp' v-if='rights.subStatus==1' @click='clickBill'>
         <view class="button-group">
-            <myButton :badge='rights.addition' @click='clickButton("维权备注")'>备注</myButton>
-            <myButton type='primary' @click='clickButton("确认付款")' v-if='rights.status=="0"'>确认付款</myButton>
-            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='rights.status=="1"'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收货")' v-if='rights.status=="2" '>确认收货</myButton>
+            <myButton :badge='rights.addition' @click='clickButton("维权备注")' v-if='Jurisdiction.order_manage'>备注</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='rights.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='rights.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='rights.status=="2"&&Jurisdiction.order_manage'>确认收货</myButton>
             <myButton type='primary' @click='clickButton("维权中")' v-if='rights.subStatus==1'>维权中</myButton>
         </view>
     </view>
@@ -14,6 +14,11 @@
     import myButton from '../../../components/my-components/RoundButton';
     export default {
         props: {
+            Jurisdiction:{
+                type:Object,
+                default:{},
+                required:true
+            },
             rights: {
                 type: Object,
                 default: () => ({

@@ -5,7 +5,7 @@
             <TabCard :categories='categories' @tabChange='tabChange'></TabCard>
         </view>
         <view class='margin180'></view>
-        <Card @click='clickGood' @shareGoodInfo='shareGoodInfo' :userChannels='userChannels' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'>
+        <Card :Jurisdiction='Jurisdiction' @click='clickGood' @shareGoodInfo='shareGoodInfo' :userChannels='userChannels' :goodsList='goodsList' :toggle='toggle' v-if='goodsList.length'>
             <!-- 生成二维码的方法再Card组件内部，因为canvas在组件内无效 -->
             <canvas style="width: 200px; height: 200px;background:#fff;" id='myQrcode' canvas-id="myQrcode"></canvas>
         </Card>
@@ -22,7 +22,7 @@
                 </view>
             </i-page>
         </view>
-        <view class='addGoods' @click='addGoods'>
+        <view class='addGoods higher' @click='addGoods'>
             <van-icon color='#fff' class='addIcon' name="plus" />
             <view class='addWord'>添加</view>
         </view>
@@ -65,7 +65,7 @@
         },
         data() {
             return {
-                Jurisdiction:{},//权限
+                Jurisdiction: {}, //权限
                 searchValue: '', //查询条件  
                 categories, //标签项
                 goodsList: [{ //商品列表
@@ -93,9 +93,17 @@
             }
         },
         onLoad(option) {
+            uni.hideTabBar({ //隐藏tabbar
+                animation: false
+            })
             DataFrom = this.Cacher.getData(option.from) || {};
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
+                if (!res.goods_manage) { //无权限
+                    uni.switchTab({
+                        url: '/pages/index/index'
+                    });
+                }
             }).catch(res => {
                 this.Toast(res.message)
             })
@@ -331,6 +339,9 @@
         .addIcon {
             top: 5upx;
             font-size: 40upx;
+        }
+        &.higher {
+            bottom: 136upx;
         }
     }
     .pager {

@@ -1,6 +1,6 @@
 <template>
     <view class='goods-list'>
-        <item @click='clickItem' :goodsList='goodsList' :toggle='toggle'></item>
+        <item :Jurisdiction='Jurisdiction' @click='clickItem' :goodsList='goodsList' :toggle='toggle'></item>
         <view class="grace-shade grace-shade-black" v-if="show" @click='closeAll'>
             <view class="  grace-animate fadeIn">
                 <view class="body">
@@ -58,6 +58,11 @@
             poster
         },
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             userChannels: { // 业务端启用状态 0: 未启用 1: 已经启用
                 type: Object,
                 default: {
@@ -109,7 +114,7 @@
                     // uni.showShareMenu({
                     //     title: 'ES业务系统小程序'
                     // })
-                } else if (val.type == 'save') {//保存二维码到相册
+                } else if (val.type == 'save') { //保存二维码到相册
                     uni.canvasToTempFilePath({
                         x: 0,
                         y: 0,
@@ -192,7 +197,6 @@
                             uni.setClipboardData({
                                 data: shareInfo.goods_url,
                                 success: function() {
-                                   
                                 }
                             });
                         } else {

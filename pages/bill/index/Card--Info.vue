@@ -16,11 +16,11 @@
             </view>
         </view>
         <view class="button-group" v-if='info.subStatus==0||info.subStatus==2'>
-            <myButton @click='clickButton("备注")' :badge='info.addtion'>备注</myButton>
-            <myButton @click='clickButton("改价")' v-if='info.status=="0"'>改价</myButton>
-            <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"'>确认付款</myButton>
-            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='info.status=="1"'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收货")' v-if='info.status=="2" '>确认收货</myButton>
+            <myButton @click='clickButton("备注")' :badge='info.addtion' v-if='Jurisdiction.order_manage'>备注</myButton>
+            <myButton @click='clickButton("改价")' v-if='info.status=="0"&&Jurisdiction["order_change-price"]'>改价</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='info.status=="2"&&Jurisdiction.order_manage'>确认收货</myButton>
         </view>
     </view>
 </template>
@@ -35,6 +35,11 @@
             myButton
         },
         props: {
+             Jurisdiction:{
+                type:Object,
+                default:{},
+                required:true
+            },
             info: {
                 type: Object,
                 default: () => ({

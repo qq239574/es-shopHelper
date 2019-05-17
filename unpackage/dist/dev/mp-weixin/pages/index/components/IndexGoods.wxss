@@ -1,5 +1,6 @@
 .goods-block.data-v-ae248da6 {
   width: 100%;
+  margin: 0 auto 24rpx;
 }
 .goods-block .block.data-v-ae248da6 {
     -webkit-box-sizing: border-box;
@@ -7,8 +8,8 @@
     background: #fff;
     width: 704rpx;
     height: 220rpx;
-    margin: 24rpx auto 0;
     border-radius: 8rpx;
+    margin: 0 auto;
 }
 .goods-block .block .goodsList.data-v-ae248da6 {
       -webkit-box-sizing: border-box;

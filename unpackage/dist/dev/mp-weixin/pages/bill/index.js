@@ -128,12 +128,20 @@ var _default = { components: { TabCard: TabCard,
 
   },
   onLoad: function onLoad(option) {var _this = this;
+    uni.hideTabBar({ //隐藏tabbar
+      animation: false });
+
     this.billList = [];
     if (option.from) {
       DataFrom = this.Cacher.getData(option.from);
     }
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
       _this.Jurisdiction = res;
+      if (!res.order_manage) {//无权限
+        uni.switchTab({
+          url: '/pages/index/index' });
+
+      }
     }).catch(function (res) {
       _this.Toast(res.message);
     });

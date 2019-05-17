@@ -133,10 +133,15 @@ var DataFrom = {};var _default =
       });
     } },
 
-  onShow: function onShow() {var _this3 = this;
+  onShow: function onShow() {
     var info = this.Cacher.getData('login') || {};
     this.wxInfo = info.userInfo;
     this.initPage();
+  },
+  onLoad: function onLoad() {var _this3 = this;
+    uni.hideTabBar({ //隐藏tabbar
+      animation: false });
+
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
       _this3.Jurisdiction = res;
     }).catch(function (res) {

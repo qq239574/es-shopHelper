@@ -2,9 +2,9 @@
     <view class='tip-detail page'>
         <vipWin :info='vipInfo'></vipWin>
         <tabs :categories='categories' @tabChange='clickTab'></tabs>
-        <vipBaseInfo v-if='tabIndex==0' :info='baseInfo' @click='clickBaseInfo'></vipBaseInfo>
-        <vipBussiness @click='checkBill' :info='bussinessInfo' v-else-if='tabIndex==1'></vipBussiness>
-        <vipCommission :info='commissionInfo' @click='clickDistriInfo' v-else></vipCommission>
+        <vipBaseInfo :Jurisdiction='Jurisdiction' v-if='tabIndex==0' :info='baseInfo' @click='clickBaseInfo'></vipBaseInfo>
+        <vipBussiness :Jurisdiction='Jurisdiction' @click='checkBill' :info='bussinessInfo' v-else-if='tabIndex==1'></vipBussiness>
+        <vipCommission :Jurisdiction='Jurisdiction' :info='commissionInfo' @click='clickDistriInfo' v-else></vipCommission>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -19,6 +19,9 @@
     import getCommissionInfo from '../components/getCommisssionInfo.js'
     let DataFrom = {};
     let DataGo = {};
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     export default {
         components: {
             tabs,
@@ -29,6 +32,7 @@
         },
         data() {
             return {
+                Jurisdiction: {},
                 baseInfo: { //基本资料
                     info1: {
                         registerTime: '',
@@ -175,44 +179,48 @@
                 this.tabIndex = val.index;
             },
             clickBaseInfo(val) { //点击基础信息中的组件
-                if (val.label == '余额' || val.label == '积分') {
-                    if (val.type == 'add' || val.type == 'minus') { //增加或扣除
+                if (this.Jurisdiction.member_list_manage) {
+                    if (val.label == '余额' || val.label == '积分') {
+                        if (val.type == 'add' || val.type == 'minus') { //增加或扣除
+                            this.Cacher.setData('vipDetail', {
+                                from: 'vipDetail',
+                                value: val,
+                                info: DataFrom.detail.info
+                            });
+                            uni.navigateTo({
+                                url: './addSurplus?from=vipDetail'
+                            })
+                        } else if (val.type == 'clear') { //清空操作
+                            this.pageLoading();
+                            let api = '';
+                            if (val.label == '余额') {
+                                api = 'changeVipMoney'
+                            } else if (val.label == '积分') {
+                                api = 'changeVipScore'
+                            }
+                            let num = 0;
+                            num = Math.min(this.money, this.curnum) * -1;
+                            this.Request(api, {
+                                member_id: DataFrom.detail.info.id,
+                                sum: val.value * -1, //充值数量 正数添加余额, 负数减少积分
+                                remark: '用户确认清空账户' //
+                            }).then(res => {
+                                this.closePageLoading();
+                                this.initPage();
+                            });
+                        }
+                    } else if (val.label == '优惠券') {
                         this.Cacher.setData('vipDetail', {
                             from: 'vipDetail',
                             value: val,
                             info: DataFrom.detail.info
                         });
                         uni.navigateTo({
-                            url: './addSurplus?from=vipDetail'
+                            url: './coupon?from=vipDetail'
                         })
-                    } else if (val.type == 'clear') { //清空操作
-                        this.pageLoading();
-                        let api = '';
-                        if (val.label == '余额') {
-                            api = 'changeVipMoney'
-                        } else if (val.label == '积分') {
-                            api = 'changeVipScore'
-                        }
-                        let num = 0;
-                        num = Math.min(this.money, this.curnum) * -1;
-                        this.Request(api, {
-                            member_id: DataFrom.detail.info.id,
-                            sum: val.value * -1, //充值数量 正数添加余额, 负数减少积分
-                            remark: '用户确认清空账户' //
-                        }).then(res => {
-                            this.closePageLoading();
-                            this.initPage();
-                        });
                     }
-                } else if (val.label == '优惠券') {
-                    this.Cacher.setData('vipDetail', {
-                        from: 'vipDetail',
-                        value: val,
-                        info: DataFrom.detail.info
-                    });
-                    uni.navigateTo({
-                        url: './coupon?from=vipDetail'
-                    })
+                }else{
+                    this.Toast('暂无会员管理权限')
                 }
             },
             clickDistriInfo(val) { //点击分销商信息中的组件 
@@ -257,7 +265,12 @@
             this.initPage()
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from)
+            DataFrom = this.Cacher.getData(option.from);
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         }
     }
 </script>

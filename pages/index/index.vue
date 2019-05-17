@@ -1,13 +1,13 @@
 <template>
     <view class='page pages-index-index'>
-        <view class="tunshop" v-if='showTurnShop'>
+        <view class="tunshop">
             <view class='title van-ellipsis '>
                 <van-icon name="shop-o" class='shop-icon' />{{shopName}}
             </view>
             <view class="button" @click='changeShop' v-if='showTurnShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
-        <dataShower :info='showData' @click='toApp' @search='searchData'></dataShower>
+        <dataShower :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
         <view class="block">
             <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
@@ -16,8 +16,8 @@
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
-        <goodsBlock :list='billList' @click='toBill'></goodsBlock>
-        <apps @click='toApp'></apps>
+        <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_view'></goodsBlock>
+        <apps @click='toApp' :Jurisdiction='Jurisdiction'></apps>
         <MyTabbar :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
@@ -200,39 +200,41 @@
                     }]
                 })
                 let userInfo = this.Cacher.getData('login');
-                if (!userInfo.haveBindWx && userInfo.encryptedData) {
-                    this.closePageLoading();
-                    this.Dialog.confirm({
-                        title: '没有绑定微信',
-                        message: '为方便您的使用，是否与微信账号绑定？',
-                        confirmButtonText: '绑定'
-                    }).then(() => {
-                        this.pageLoading();
-                        this.Request('bindWechat', {
-                            encrypted_data: userInfo.encryptedData,
-                            session_key: userInfo.session_key,
-                            iv: userInfo.iv,
-                            user_id: userInfo.userId
-                        }).then(res => {
-                            this.closePageLoading();
-                            if (res.error == 0) {
-                                this.Toast('绑定成功')
-                            } else {
-                                this.Toast('绑定失败')
-                            }
-                        }).catch(res => {
-                            this.closePageLoading();
-                            this.Toast(res.message)
-                        })
-                    });
-                }
-               
+                // if (!userInfo.haveBindWx && userInfo.encryptedData) {
+                //     this.closePageLoading();
+                //     this.Dialog.confirm({
+                //         title: '没有绑定微信',
+                //         message: '为方便您的使用，是否与微信账号绑定？',
+                //         confirmButtonText: '绑定'
+                //     }).then(() => {
+                //         this.pageLoading();
+                //         this.Request('bindWechat', {
+                //             encrypted_data: userInfo.encryptedData,
+                //             session_key: userInfo.session_key,
+                //             iv: userInfo.iv,
+                //             user_id: userInfo.userId
+                //         }).then(res => {
+                //             this.closePageLoading();
+                //             if (res.error == 0) {
+                //                 this.Toast('绑定成功')
+                //             } else {
+                //                 this.Toast('绑定失败')
+                //             }
+                //         }).catch(res => {
+                //             this.closePageLoading();
+                //             this.Toast(res.message)
+                //         })
+                //     });
+                // }
             }
         },
         onPullDownRefresh() {
             this.initPage();
         },
         onLoad(option) {
+            uni.hideTabBar({ //隐藏tabbar
+                animation: false
+            })
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData(option.from);
             this.shopName = DataFrom.title;
@@ -240,8 +242,7 @@
                 this.showTurnShop = false;
             }
             getJurisdiction.call(this).then(res => {
-                this.Jurisdiction = res; 
-                console.log(res)
+                this.Jurisdiction = res;
             }).catch(res => {
                 this.Toast(res.message)
             })
@@ -308,7 +309,7 @@
         .block {
             background: #fff;
             width: 704upx;
-            margin: 24upx auto 0;
+            margin: 0 auto 24upx;
             border-radius: 8upx;
             overflow: hidden;
             .grace-icons {

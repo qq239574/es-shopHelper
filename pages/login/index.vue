@@ -135,7 +135,7 @@
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
 					login.call(this).then(res => {
-						requesting = false;
+						requesting = false; 
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})

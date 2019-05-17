@@ -6,7 +6,7 @@ let test = {
     activity_manage_manage: true,
     activity_manage_view: true,
     apps_index_manage: true,
-    'apps_index_manage-wxapp': true,
+    'apps_index_manage-wxapp': true, //核销小程序
     apps_index_pay: true,
     channel_manage: true,
     channel_view: true,
@@ -54,33 +54,33 @@ let test = {
     goods_group_view: true,
     goods_label_manage: true,
     goods_label_view: true,
-    goods_manage: true,
+    goods_manage: true, //商品管理权限
     goods_params_manage: true,
     goods_params_view: true,
-    goods_view: false,//商品查看权限
+    goods_view: true, //商品查看权限
     member_analyze_view: true,
     member_goods_manage: true,
     member_goods_view: true,
     member_import_manage: true,
     member_level_manage: true,
     member_level_view: true,
-    member_list_manage: true,
-    member_list_view: true,
+    member_list_manage: true, //会员管理权限
+    member_list_view: true, //会员查看权限
     member_portrait_manage: true,
     member_tag_manage: true,
     member_tag_view: true,
     'order_batch-send': true,
-    'order_change-price': true,
+    'order_change-price': true, //订单改价权限
     order_close: true,
     'order_close-and-refund': true,
     order_commment_manage: true,
     order_commment_view: true,
-    'order_edit-invoice': true,
+    'order_edit-invoice': true, //
     order_export: true,
-    order_manage: true,
+    order_manage: true, //订单管理权限
     order_overview_view: true,
-    order_send: true,
-    order_view: true,//订单查看权限
+    order_send: true, //订单发货权限
+    order_view: false, //订单查看权限
     sales_overview_view: true,
     setting_common_base_manage: true,
     setting_dispatch_index_manage: true,
@@ -91,7 +91,7 @@ let test = {
     setting_operator_list_view: true,
     setting_payment_index_manage: true,
     statistics_goods_view: true,
-    statistics_index_view: true,
+    statistics_index_view: true, //数据概览
     statistics_member_view: true,
     statistics_trade_view: true,
     statistics_view_view: true,
@@ -101,11 +101,13 @@ export function getJurisdiction() {
     let cache = that.Cacher.getData('userJurisdiction')
     return new Promise((resolve, reject) => {
         if (cache.error == 0 && cache.prems) {
-            resolve(test || cache.prems); //测试例子
+            resolve(cache.prems); //测试例子
         } else {
             that.Request('Jurisdiction').then(res => {
                 if (res.error == 0) {
+
                     let prems = res.prems;
+
                     let newPrems = {};
                     for (let k in prems) {
                         newPrems[k.replace(/\./g, '_')] = prems[k]

@@ -3,7 +3,7 @@
         <Block1 :info='info.info1'></Block1>
         <Block2 :info='info.info2'> </Block2>
         <view class='margin50'></view>
-        <longButton @click='checkBill'>查看订单</longButton>
+        <longButton @click='checkBill' v-if='Jurisdiction.member_list_manage'>查看订单</longButton>
     </view>
 </template>
 
@@ -18,6 +18,11 @@
             longButton
         },
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             info: {
                 type: Object,
                 default: {
@@ -36,8 +41,8 @@
         },
         methods: {
             checkBill() {
-                this.$emit('click',{
-                    type:'checkBill'
+                this.$emit('click', {
+                    type: 'checkBill'
                 })
             }
         },

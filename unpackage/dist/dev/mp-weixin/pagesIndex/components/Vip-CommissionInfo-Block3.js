@@ -19,6 +19,13 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 {
+  props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true } },
+
+
   components: {
     roundButton: roundButton },
 

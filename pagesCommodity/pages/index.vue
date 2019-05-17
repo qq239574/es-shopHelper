@@ -11,7 +11,7 @@
         <selectItem :value='goodDetail.info4.sale.value' label='销量' @click='clickCell' v-if='!goodDetail.info4.sale.needHide&&goodDetail.info2.specification.value=="多规格"'></selectItem>
         <inputItem :value='goodDetail.info4.sale.value' :disabled='true' label='销量' v-if='!goodDetail.info4.sale.needHide&&goodDetail.info2.specification.value=="单规格"'></inputItem>
         <view class="padding"></view>
-        <view class="footer" v-if='!showpicker'>
+        <view class="footer" v-if='!showpicker&&Jurisdiction.goods_manage'>
             <longButton @click='save'>保存</longButton>
         </view>
         <van-toast id="van-toast" />
@@ -27,6 +27,9 @@
         goodData,
         addGoodsModel
     } from '../components/goodDetail.js' //测试用数据
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     import goodInfo from '../components/editGood-Block1.vue';
     import goodInfo2 from '../components/editGood-Block2.vue'
     import goodInfo3 from '../components/editGood-Block3.vue'
@@ -61,6 +64,7 @@
         },
         data() {
             return {
+                Jurisdiction: {},
                 defaultIndex: 0,
                 showpicker: false,
                 minDate: new Date().getTime() + 5 * 60000, //5分钟后
@@ -118,8 +122,8 @@
                         })
                     })
                 } else {
-                    uploadImg.call(this, data).then(newData => { 
-                        this.Request('editGoodDetail', newData).then(res => { 
+                    uploadImg.call(this, data).then(newData => {
+                        this.Request('editGoodDetail', newData).then(res => {
                             if (res.error == 0) {
                                 uni.navigateBack();
                             } else {
@@ -145,13 +149,18 @@
             }
         },
         onLoad(option) {
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
             DataFrom = this.Cacher.getData(option.from);
             this.Cacher.setData('editGood', {
                 from: option.from || ''
             })
             this.initPage();
-            cacheSubmitData={};
-            cacheGoodDetail={};
+            cacheSubmitData = {};
+            cacheGoodDetail = {};
             if (DataFrom.from == 'addGoods') { //添加商品，生成模板数据
                 mockApi.call(this, {
                     type: '实体商品', //'实体商品', '虚拟物品', '电子卡密',

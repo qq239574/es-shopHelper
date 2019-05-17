@@ -3,7 +3,7 @@
         <inputItem label='上级分销商' :disabled='true' :value='info.superDistributor.name'></inputItem>
         <inputItem label='申请时间' :disabled='true' :value='info.beDistributorTime.value'></inputItem>
         <view class="hadRefused">已拒绝该用户的分销商申请</view>
-        <view class="button">
+        <view class="button" v-if='Jurisdiction.member_list_manage'>
             <roundButton @click='allow' type='primary'> 设置为分销商 </roundButton>
         </view>
     </view>
@@ -21,7 +21,12 @@
             info: {
                 type: Object,
                 default: {}
-            }
+            },
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
         },
         data() {
             return {

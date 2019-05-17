@@ -5,7 +5,7 @@
             <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
         </view>
         <view class='margin180'></view>
-        <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
         <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -69,7 +69,7 @@
         },
         data() {
             return {
-                Jurisdiction:{},//权限
+                Jurisdiction: {}, //权限
                 current: 1,
                 totalPage: 1,
                 surePassword: '', //弹窗输入密码
@@ -118,12 +118,20 @@
             }
         },
         onLoad(option) {
+            uni.hideTabBar({ //隐藏tabbar
+                animation: false
+            })
             this.billList = [];
             if (option.from) {
                 DataFrom = this.Cacher.getData(option.from);
             }
-             getJurisdiction.call(this).then(res => {
-                this.Jurisdiction = res; 
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+                if (!res.order_manage) {//无权限
+                    uni.switchTab({
+                        url: '/pages/index/index'
+                    });
+                }
             }).catch(res => {
                 this.Toast(res.message)
             })

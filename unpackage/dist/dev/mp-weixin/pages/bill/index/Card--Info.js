@@ -45,6 +45,11 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
     myButton: myButton },
 
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     info: {
       type: Object,
       default: function _default() {return {

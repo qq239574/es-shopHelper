@@ -59,6 +59,11 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
 
   },
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     toggle: {
       type: Boolean,
       default: true },

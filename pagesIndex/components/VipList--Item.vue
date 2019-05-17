@@ -25,11 +25,11 @@
                     <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>查看</view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"充值")'>
+                <view class="item" @click.stop='clickMenuItem(index,item,"充值")' v-if='Jurisdiction.member_list_manage'>
                     <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>充值</view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"订单")'>
+                <view class="item" @click.stop='clickMenuItem(index,item,"订单")' v-if='Jurisdiction.member_list_manage'>
                     <image class='img' src='/static/img/global/product_share_link.png'></image>
                     <view class='title'>订单</view>
                 </view>
@@ -49,6 +49,11 @@
             }
         },
         props: {
+             Jurisdiction:{
+                type:Object,
+                default:{},
+                required:true
+            },
             toggle: {
                 type: Boolean,
                 default: true

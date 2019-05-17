@@ -1,5 +1,5 @@
 <template>
-    <view style='width:100%;hieght:100upx;'>
+    <view style='width:100%;hieght:100upx;' v-if='showTabBar'>
         <view class='my-tabbar'>
             <view v-for='(item,index) in showList' :key='index' @click='click(item,index)' class='i-tab-bar-item'>
                 <image lazy-load :src='item.selectedIconPath' class='i-tab-bar-item-img' v-if='item.index==defaultIndex'></image>
@@ -25,6 +25,13 @@
             },
         },
         computed: {
+            showTabBar() {
+                let result = this.Jurisdiction.goods_view && this.Jurisdiction.order_view
+                // result && uni.showTabBar({
+                //     animation: false
+                // })
+                return true
+            },
             showList() {
                 if (typeof this.Jurisdiction['goods_view'] == 'boolean') {
                     return this.list.filter(item => {

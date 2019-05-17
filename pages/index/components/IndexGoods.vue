@@ -52,13 +52,14 @@
 <style lang="scss" scoped>
     .goods-block {
         width: 100%;
+        margin: 0 auto 24upx;
         .block {
             box-sizing: border-box;
             background: #fff;
             width: 704upx;
             height: 220upx;
-            margin: 24upx auto 0;
             border-radius: 8upx;
+            margin: 0 auto;
             .goodsList {
                 box-sizing: border-box;
                 width: 100%;

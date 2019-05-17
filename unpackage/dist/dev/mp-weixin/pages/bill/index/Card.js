@@ -30,6 +30,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     cardTemp: cardTemp },
 
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     bill: {
       type: Object,
       default: function _default() {return {

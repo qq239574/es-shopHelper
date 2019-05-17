@@ -6,7 +6,7 @@
             <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
         </view>
         <view class='margin200'></view>
-        <Card v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
+        <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
         <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -43,6 +43,9 @@
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from '../../pages/bill/index/getBillList.js'
     import nodata from '../../components/my-components/nodata.vue'
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
@@ -62,6 +65,7 @@
         },
         data() {
             return {
+                Jurisdiction: {},
                 current: 1,
                 totalPage: 1,
                 surePassword: '', //弹窗输入密码
@@ -112,6 +116,11 @@
         onLoad(option) {
             this.billList = [];
             DataFrom = this.Cacher.getData(option.from) || {};
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
         onShow() {
             this.current = 1;
@@ -187,9 +196,9 @@
                     this.tabIndex = DataFrom.cateid || 0;
                 } else if (DataFrom.from == 'vipDetail') {
                     member_id = DataFrom.member_id;
-                }else if (DataFrom.from == 'vipManage') {
+                } else if (DataFrom.from == 'vipManage') {
                     member_id = DataFrom.info.id;
-                }  else {
+                } else {
                     this.tabIndex = curTab.cateid;
                 }
                 getBillList.call(this, this.tabIndex, {

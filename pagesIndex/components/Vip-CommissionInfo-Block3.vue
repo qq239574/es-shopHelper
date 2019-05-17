@@ -2,13 +2,20 @@
     <view class='vip-distributor-isnot'>
         <image lazy-laod src='/static/img/global/isnot-commission.png'></image>
         <view class='title'>该会员不是分销商</view>
-        <roundButton type='primary' @click='click'> 设置分销商 </roundButton>
+        <roundButton type='primary' @click='click' v-if='Jurisdiction.member_list_manage'> 设置分销商 </roundButton>
     </view>
 </template>
 
 <script>
     import roundButton from '../../components/my-components/RoundButton'
     export default {
+        props:{
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
+        },
         components: {
             roundButton
         },

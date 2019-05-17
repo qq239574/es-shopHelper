@@ -65,7 +65,7 @@
 .pages-index-index .block.data-v-78b85d22 {
     background: #fff;
     width: 704rpx;
-    margin: 24rpx auto 0;
+    margin: 0 auto 24rpx;
     border-radius: 8rpx;
     overflow: hidden;
 }

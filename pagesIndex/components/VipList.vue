@@ -1,6 +1,6 @@
 <template>
     <view class='vip-list'>
-        <itemList :toggle='toggle' @click='clickItem' :vipsList='list'></itemList>
+        <itemList :Jurisdiction='Jurisdiction' :toggle='toggle' @click='clickItem' :vipsList='list'></itemList>
         <view class="grace-shade grace-shade-black" v-if="show" @click='closeAll'>
             <view class="  grace-animate fadeIn">
                 <view class="body">
@@ -67,6 +67,11 @@
             }
         },
         props: {
+             Jurisdiction:{
+                type:Object,
+                default:{},
+                required:true
+            },
             list: {
                 type: Array,
                 default: [{

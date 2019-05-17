@@ -13,11 +13,11 @@
             <myRightsBlock :rights='billDetail.billInfo7'></myRightsBlock>
         </view>
         <view class="button-group">
-            <myButton :badge='badgeNum' @click='clickButton("维权备注")'>备注</myButton>
-            <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"'>改价</myButton>
-            <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"'>确认付款</myButton>
-            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"'>确认收货</myButton>
+            <myButton :badge='badgeNum' @click='clickButton("维权备注")' v-if='Jurisdiction.order_manage'>备注</myButton>
+            <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"&&Jurisdiction["order_change-price"]'>改价</myButton>
+            <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
+            <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
+            <myButton type='primary' @click='clickButton("确认收货")' v-if='bill.info.status=="2"&&Jurisdiction.order_manage'>确认收货</myButton>
             <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus'>维权中</myButton>
         </view>
         <!-- 确认付款与收货的弹窗 -->
@@ -46,6 +46,9 @@
     import myButton from '../../components/my-components/RoundButton';
     import myRightsBlock from '../components/BillRightsBlock.vue';
     import createBillDetail from '../components/createBillDetail.js';
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     let cacheBill = {}; //缓存将要操作的订单 
     let DataFrom = {};
     let surePassword = ''; //手动确认付款密码 
@@ -63,6 +66,7 @@
         },
         data() {
             return {
+                Jurisdiction:{},
                 surePassword: '',
                 error: false,
                 surePaying: false, //正在确认付款？
@@ -251,19 +255,19 @@
                     }
                 };
                 let mapStatus = {
-                    '-2': 4,//-2退款完成
-                    '-1': 4,//-1取消状态
-                    0:0,//0普通状态
-                    1:1,//1为已付款
-                    2:2,//2为已发货
-                    3:3//3为已完成。
+                    '-2': 4, //-2退款完成
+                    '-1': 4, //-1取消状态
+                    0: 0, //0普通状态
+                    1: 1, //1为已付款
+                    2: 2, //2为已发货
+                    3: 3 //3为已完成。
                 }
                 this.Request('billDetail', {
                     id: DataFrom.bill.bill.id
                 }).then(res => {
                     this.billDetail = createBillDetail(res); //订单详情生成
                     this.bill.info.status = mapStatus[res.order.status]; //0代付款,1代发货，2待收货，3已完成，4已关闭
-                    this.bill.info.send_able =res.order.send_able;
+                    this.bill.info.send_able = res.order.send_able;
                 })
                 this.Request('billAddition', {
                     id: DataFrom.bill.bill.id
@@ -280,6 +284,11 @@
                 DataFrom = this.Cacher.getData(option.from);
             }
             cacheBill = DataFrom;
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
     }
 </script>

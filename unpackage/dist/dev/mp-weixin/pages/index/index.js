@@ -210,39 +210,41 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 
       });
       var userInfo = this.Cacher.getData('login');
-      if (!userInfo.haveBindWx && userInfo.encryptedData) {
-        this.closePageLoading();
-        this.Dialog.confirm({
-          title: '没有绑定微信',
-          message: '为方便您的使用，是否与微信账号绑定？',
-          confirmButtonText: '绑定' }).
-        then(function () {
-          _this2.pageLoading();
-          _this2.Request('bindWechat', {
-            encrypted_data: userInfo.encryptedData,
-            session_key: userInfo.session_key,
-            iv: userInfo.iv,
-            user_id: userInfo.userId }).
-          then(function (res) {
-            _this2.closePageLoading();
-            if (res.error == 0) {
-              _this2.Toast('绑定成功');
-            } else {
-              _this2.Toast('绑定失败');
-            }
-          }).catch(function (res) {
-            _this2.closePageLoading();
-            _this2.Toast(res.message);
-          });
-        });
-      }
-
+      // if (!userInfo.haveBindWx && userInfo.encryptedData) {
+      //     this.closePageLoading();
+      //     this.Dialog.confirm({
+      //         title: '没有绑定微信',
+      //         message: '为方便您的使用，是否与微信账号绑定？',
+      //         confirmButtonText: '绑定'
+      //     }).then(() => {
+      //         this.pageLoading();
+      //         this.Request('bindWechat', {
+      //             encrypted_data: userInfo.encryptedData,
+      //             session_key: userInfo.session_key,
+      //             iv: userInfo.iv,
+      //             user_id: userInfo.userId
+      //         }).then(res => {
+      //             this.closePageLoading();
+      //             if (res.error == 0) {
+      //                 this.Toast('绑定成功')
+      //             } else {
+      //                 this.Toast('绑定失败')
+      //             }
+      //         }).catch(res => {
+      //             this.closePageLoading();
+      //             this.Toast(res.message)
+      //         })
+      //     });
+      // }
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
     this.initPage();
   },
   onLoad: function onLoad(option) {var _this3 = this;
+    uni.hideTabBar({ //隐藏tabbar
+      animation: false });
+
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData(option.from);
     this.shopName = DataFrom.title;
@@ -251,7 +253,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
     }
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
       _this3.Jurisdiction = res;
-      console.log(res);
     }).catch(function (res) {
       _this3.Toast(res.message);
     });

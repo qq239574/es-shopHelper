@@ -2,7 +2,7 @@
     <view class='vip-was-distributor'>
         <inputItem label='上级分销商' :disabled='true' :value='info.superDistributor.name'></inputItem>
         <inputItem label='申请时间' :disabled='true' :value='info.registerTime'></inputItem>
-        <view class="button">
+        <view class="button" v-if='Jurisdiction.member_list_manage'>
             <roundButton @click='refuse'> 审核拒绝 </roundButton>
             <roundButton @click='allow' type='primary'> 审核通过 </roundButton>
         </view>
@@ -21,7 +21,12 @@
             info: {
                 type: Object,
                 default: {}
-            }
+            },
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
         },
         methods: {
             refuse() {

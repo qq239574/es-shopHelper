@@ -17,7 +17,7 @@
         props: {
             defaultIndex: {
                 type: Number,
-                default: 0
+                default: 3
             },
             Jurisdiction: {
                 type: Object,
@@ -71,6 +71,7 @@
         },
         methods: {
             click(item, index) {
+                console.log(item, index)
                 uni.switchTab({
                     url: item.pagePath
                 });

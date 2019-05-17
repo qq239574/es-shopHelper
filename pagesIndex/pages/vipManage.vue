@@ -1,7 +1,7 @@
 <template>
     <view class='vip-manage page'>
         <SearchInput @input='search' @clear='clearSearch' @click='clickSearch' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
-        <Card :toggle='toggle' :list='viplist' @click='clickGood'></Card>
+        <Card :Jurisdiction='Jurisdiction' :toggle='toggle' :list='viplist' @click='clickGood'></Card>
         <nodata type='noresult' tip='没有搜索到相关会员' v-if='!searching&&!viplist.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
@@ -27,6 +27,9 @@
     import Card from '../components/VipList.vue';
     let bar = '';
     let cacheSearchKey = '';
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     export default {
         components: {
             TabCard,
@@ -36,6 +39,7 @@
         },
         data() {
             return {
+                Jurisdiction:{},
                 searching: false,
                 viplist: [{
                     img: '/static/img/global/home_order_tobepay.png',
@@ -160,6 +164,11 @@
         onLoad() {
             this.viplist = [];
             cacheSearchKey = '';
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
         onShow() {
             this.initPage()

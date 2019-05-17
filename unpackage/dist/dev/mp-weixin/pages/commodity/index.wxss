@@ -34,6 +34,9 @@
     top: 5rpx;
     font-size: 40rpx;
 }
+.addGoods.higher.data-v-3fcc733d {
+    bottom: 136rpx;
+}
 .pager.data-v-3fcc733d {
   width: 100%;
   height: 80rpx;

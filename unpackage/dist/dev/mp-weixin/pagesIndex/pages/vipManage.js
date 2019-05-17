@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -35,8 +35,11 @@
 
 
 
-var bar = '';
-var cacheSearchKey = '';var _default =
+
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pagesIndex/components/VipList */ "pagesIndex/components/VipList").then(__webpack_require__.bind(null, /*! ../components/VipList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList.vue"));};var bar = '';var cacheSearchKey = '';var _default =
+
+
 {
   components: {
     TabCard: TabCard,
@@ -46,6 +49,7 @@ var cacheSearchKey = '';var _default =
 
   data: function data() {var _ref;
     return _ref = {
+      Jurisdiction: {},
       searching: false,
       viplist: [{
         img: '/static/img/global/home_order_tobepay.png',
@@ -167,9 +171,14 @@ var cacheSearchKey = '';var _default =
     this.current = 1;
     this.initPage();
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad() {var _this3 = this;
     this.viplist = [];
     cacheSearchKey = '';
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this3.Jurisdiction = res;
+    }).catch(function (res) {
+      _this3.Toast(res.message);
+    });
   },
   onShow: function onShow() {
     this.initPage();

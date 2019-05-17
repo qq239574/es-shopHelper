@@ -8,9 +8,9 @@
 					this.Cacher.setData('static_resources_domain', res.settings.attachment_root)
 				}
 			});
-			
 		},
 		onShow: function() {
+			
 			console.log('App Show');
 		},
 		onHide: function() {
@@ -48,5 +48,5 @@
 			height: 70upx;
 			line-height: 70upx;
 		}
-	} 
+	}
 </style>

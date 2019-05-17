@@ -26,9 +26,12 @@
 
 
 
-var _getCommisssionInfo = _interopRequireDefault(__webpack_require__(/*! ../components/getCommisssionInfo.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\getCommisssionInfo.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var vipBaseInfo = function vipBaseInfo() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo */ "pagesIndex/components/Vip-BaseInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-BaseInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo.vue"));};var vipBussiness = function vipBussiness() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Business */ "pagesIndex/components/Vip-Business").then(__webpack_require__.bind(null, /*! ../components/Vip-Business.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Business.vue"));};var vipCommission = function vipCommission() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo */ "pagesIndex/components/Vip-CommissionInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-CommissionInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo.vue"));};var vipWin = function vipWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Detail-Window */ "pagesIndex/components/Vip-Detail-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Detail-Window.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Detail-Window.vue"));};
-var DataFrom = {};
-var DataGo = {};var _default =
+var _getCommisssionInfo = _interopRequireDefault(__webpack_require__(/*! ../components/getCommisssionInfo.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\getCommisssionInfo.js"));
+
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var tabs = function tabs() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var vipBaseInfo = function vipBaseInfo() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo */ "pagesIndex/components/Vip-BaseInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-BaseInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo.vue"));};var vipBussiness = function vipBussiness() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Business */ "pagesIndex/components/Vip-Business").then(__webpack_require__.bind(null, /*! ../components/Vip-Business.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Business.vue"));};var vipCommission = function vipCommission() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-CommissionInfo */ "pagesIndex/components/Vip-CommissionInfo").then(__webpack_require__.bind(null, /*! ../components/Vip-CommissionInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-CommissionInfo.vue"));};var vipWin = function vipWin() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-Detail-Window */ "pagesIndex/components/Vip-Detail-Window").then(__webpack_require__.bind(null, /*! ../components/Vip-Detail-Window.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-Detail-Window.vue"));};var DataFrom = {};var DataGo = {};var _default =
+
+
 {
   components: {
     tabs: tabs,
@@ -39,6 +42,7 @@ var DataGo = {};var _default =
 
   data: function data() {
     return {
+      Jurisdiction: {},
       baseInfo: { //基本资料
         info1: {
           registerTime: '',
@@ -185,44 +189,48 @@ var DataGo = {};var _default =
       this.tabIndex = val.index;
     },
     clickBaseInfo: function clickBaseInfo(val) {var _this2 = this; //点击基础信息中的组件
-      if (val.label == '余额' || val.label == '积分') {
-        if (val.type == 'add' || val.type == 'minus') {//增加或扣除
+      if (this.Jurisdiction.member_list_manage) {
+        if (val.label == '余额' || val.label == '积分') {
+          if (val.type == 'add' || val.type == 'minus') {//增加或扣除
+            this.Cacher.setData('vipDetail', {
+              from: 'vipDetail',
+              value: val,
+              info: DataFrom.detail.info });
+
+            uni.navigateTo({
+              url: './addSurplus?from=vipDetail' });
+
+          } else if (val.type == 'clear') {//清空操作
+            this.pageLoading();
+            var api = '';
+            if (val.label == '余额') {
+              api = 'changeVipMoney';
+            } else if (val.label == '积分') {
+              api = 'changeVipScore';
+            }
+            var num = 0;
+            num = Math.min(this.money, this.curnum) * -1;
+            this.Request(api, {
+              member_id: DataFrom.detail.info.id,
+              sum: val.value * -1, //充值数量 正数添加余额, 负数减少积分
+              remark: '用户确认清空账户' //
+            }).then(function (res) {
+              _this2.closePageLoading();
+              _this2.initPage();
+            });
+          }
+        } else if (val.label == '优惠券') {
           this.Cacher.setData('vipDetail', {
             from: 'vipDetail',
             value: val,
             info: DataFrom.detail.info });
 
           uni.navigateTo({
-            url: './addSurplus?from=vipDetail' });
+            url: './coupon?from=vipDetail' });
 
-        } else if (val.type == 'clear') {//清空操作
-          this.pageLoading();
-          var api = '';
-          if (val.label == '余额') {
-            api = 'changeVipMoney';
-          } else if (val.label == '积分') {
-            api = 'changeVipScore';
-          }
-          var num = 0;
-          num = Math.min(this.money, this.curnum) * -1;
-          this.Request(api, {
-            member_id: DataFrom.detail.info.id,
-            sum: val.value * -1, //充值数量 正数添加余额, 负数减少积分
-            remark: '用户确认清空账户' //
-          }).then(function (res) {
-            _this2.closePageLoading();
-            _this2.initPage();
-          });
         }
-      } else if (val.label == '优惠券') {
-        this.Cacher.setData('vipDetail', {
-          from: 'vipDetail',
-          value: val,
-          info: DataFrom.detail.info });
-
-        uni.navigateTo({
-          url: './coupon?from=vipDetail' });
-
+      } else {
+        this.Toast('暂无会员管理权限');
       }
     },
     clickDistriInfo: function clickDistriInfo(val) {var _this3 = this; //点击分销商信息中的组件 
@@ -266,8 +274,13 @@ var DataGo = {};var _default =
   onShow: function onShow() {
     this.initPage();
   },
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this4 = this;
     DataFrom = this.Cacher.getData(option.from);
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this4.Jurisdiction = res;
+    }).catch(function (res) {
+      _this4.Toast(res.message);
+    });
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

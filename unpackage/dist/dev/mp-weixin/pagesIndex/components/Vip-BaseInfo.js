@@ -30,6 +30,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var cache = {};var _default =
 {
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     info: {
       info1: {
         registerTime: '2015-01-12 14:12:12',
@@ -56,16 +61,20 @@ var cache = {};var _default =
   },
   methods: {
     clickItem: function clickItem(val) {
-      if (val.label == '余额') {
-        this.toggle = !this.toggle;
-        cache = val;
-      } else if (val.label == '积分') {
-        this.toggle = !this.toggle;
-        cache = val;
-      } else if (val.label == '优惠券') {
-        this.$emit('click', _objectSpread({},
-        val));
+      if (this.Jurisdiction.member_list_manage) {
+        if (val.label == '余额') {
+          this.toggle = !this.toggle;
+          cache = val;
+        } else if (val.label == '积分') {
+          this.toggle = !this.toggle;
+          cache = val;
+        } else if (val.label == '优惠券') {
+          this.$emit('click', _objectSpread({},
+          val));
 
+        }
+      } else {
+        this.$parent.Toast('暂无会员管理权限');
       }
     },
     clickMenu: function clickMenu(type) {var _this = this;

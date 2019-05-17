@@ -38,7 +38,7 @@
 		},
 		data() {
 			return {
-				Jurisdiction:{},//权限
+				Jurisdiction: {}, //权限
 				userName: '',
 				userTel: '',
 				userId: '',
@@ -127,6 +127,11 @@
 			let info = this.Cacher.getData('login') || {};
 			this.wxInfo = info.userInfo;
 			this.initPage();
+		},
+		onLoad() {
+			uni.hideTabBar({ //隐藏tabbar
+				animation: false
+			});
 			getJurisdiction.call(this).then(res => {
 				this.Jurisdiction = res;
 			}).catch(res => {

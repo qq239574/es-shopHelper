@@ -4,14 +4,14 @@
         <block v-if='info.isCommission==1'>
             <Block1 :info='info'></Block1>
             <Block2 :info='info'></Block2>
-            <view class="button" @click='removeDist'>取消分销商</view>
+            <view class="button" @click='removeDist' v-if='Jurisdiction.member_list_manage'>取消分销商</view>
         </block>
         <!-- 没申请过 -->
-        <Block3 :info='info' @click='setDistributor' v-else-if='info.isCommission==-2'></Block3>
+        <Block3 :Jurisdiction='Jurisdiction' :info='info' @click='setDistributor' v-else-if='info.isCommission==-2'></Block3>
         <!-- 待审核 -->
-        <Block4 :info='info' @click='exame' v-else-if="info.isCommission==0"></Block4>
+        <Block4 :Jurisdiction='Jurisdiction' :info='info' @click='exame' v-else-if="info.isCommission==0"></Block4>
         <!-- 拒绝过 -->
-        <Block5 :info='info' @click='setDistributor' v-else></Block5>
+        <Block5 :Jurisdiction='Jurisdiction' :info='info' @click='setDistributor' v-else></Block5>
     </view>
 </template>
 
@@ -23,6 +23,11 @@
     import Block5 from './Vip-CommissionInfo-Block5.vue'
     export default {
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             info: {
                 type: Object,
                 default: {

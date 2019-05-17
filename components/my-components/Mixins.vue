@@ -19,7 +19,7 @@
                 Dialog,
                 ShowLoadMore: false,
                 LoadingType: 0, //0'加载更多',   1'已加载全部' 
-                static_resources_domain: '', 
+                static_resources_domain: '',
             };
         },
         methods: {
@@ -67,10 +67,8 @@
             this.showReachBottom = true;
         },
         onLoad() {
+            
             this.showTabbar = true;
-            uni.hideTabBar({
-                animation: false
-            })
             this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名
             if (!this.static_resources_domain) {
                 this.Request('getSettings').then(res => {
@@ -80,7 +78,7 @@
                     }
                 })
             }
-        }, 
+        },
         onHide() {
             this.closePageLoading();
             this.Dialog.close();

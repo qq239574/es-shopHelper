@@ -33,6 +33,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 {
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     info: {
       type: Object,
       default: {

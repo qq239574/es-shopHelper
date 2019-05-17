@@ -20,6 +20,11 @@
     let cache = {};
     export default {
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             info: {
                 info1: {
                     registerTime: '2015-01-12 14:12:12',
@@ -46,16 +51,20 @@
         },
         methods: {
             clickItem(val) {
-                if (val.label == '余额') {
-                    this.toggle = !this.toggle;
-                    cache = val;
-                } else if (val.label == '积分') {
-                    this.toggle = !this.toggle;
-                    cache = val;
-                } else if (val.label == '优惠券') {
-                    this.$emit('click', {
-                        ...val
-                    })
+                if (this.Jurisdiction.member_list_manage) {
+                    if (val.label == '余额') {
+                        this.toggle = !this.toggle;
+                        cache = val;
+                    } else if (val.label == '积分') {
+                        this.toggle = !this.toggle;
+                        cache = val;
+                    } else if (val.label == '优惠券') {
+                        this.$emit('click', {
+                            ...val
+                        })
+                    }
+                }else{
+                    this.$parent.Toast('暂无会员管理权限')
                 }
             },
             clickMenu(type) {

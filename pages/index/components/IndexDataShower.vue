@@ -79,6 +79,7 @@
     .index-data-shower {
         width: 100%;
         height: 330upx;
+        margin-bottom: 24upx;
         .box {
             width: 702upx;
             height: 100%;

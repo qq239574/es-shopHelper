@@ -68,6 +68,11 @@ var _default2 = {
     poster: poster },
 
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     userChannels: { // 业务端启用状态 0: 未启用 1: 已经启用
       type: Object,
       default: {
@@ -202,7 +207,6 @@ var _default2 = {
             uni.setClipboardData({
               data: shareInfo.goods_url,
               success: function success() {
-
               } });
 
           } else {

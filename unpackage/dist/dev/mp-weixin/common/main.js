@@ -18,9 +18,9 @@ var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ 
         _this.Cacher.setData('static_resources_domain', res.settings.attachment_root);
       }
     });
-
   },
   onShow: function onShow() {
+
     console.log('App Show');
   },
   onHide: function onHide() {
@@ -106,10 +106,8 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
     this.showReachBottom = true;
   },
   onLoad: function onLoad() {var _this3 = this;
-    this.showTabbar = true;
-    uni.hideTabBar({
-      animation: false });
 
+    this.showTabbar = true;
     this.static_resources_domain = this.Cacher.getData('static_resources_domain'); //静态资源服务器域名
     if (!this.static_resources_domain) {
       this.Request('getSettings').then(function (res) {

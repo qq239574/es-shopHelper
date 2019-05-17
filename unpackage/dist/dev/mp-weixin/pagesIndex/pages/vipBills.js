@@ -51,7 +51,10 @@
 
 
 
-var _getBillList = _interopRequireDefault(__webpack_require__(/*! ../../pages/bill/index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getBillList = _interopRequireDefault(__webpack_require__(/*! ../../pages/bill/index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+
 
 var DataFrom = {};
 var searchData = {};
@@ -72,6 +75,7 @@ var _default = {
 
   data: function data() {
     return {
+      Jurisdiction: {},
       current: 1,
       totalPage: 1,
       surePassword: '', //弹窗输入密码
@@ -119,9 +123,14 @@ var _default = {
       searching: false };
 
   },
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     this.billList = [];
     DataFrom = this.Cacher.getData(option.from) || {};
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this.Jurisdiction = res;
+    }).catch(function (res) {
+      _this.Toast(res.message);
+    });
   },
   onShow: function onShow() {
     this.current = 1;
@@ -150,7 +159,7 @@ var _default = {
         this.current = Math.max(this.current - 1, 1);
       }
     },
-    sure: function sure() {var _this = this;
+    sure: function sure() {var _this2 = this;
       this.surePaying = true;
       var apiNames = ['payBill', 'receiveBill'];
       var apiname = '';
@@ -163,14 +172,14 @@ var _default = {
         id: cacheBill.bill.bill.id, //订单id
         password: surePassword }).
       then(function (res) {
-        _this.Toast(_this.modelTheme.success);
-        _this.initPage();
-        _this.showModel = false;
+        _this2.Toast(_this2.modelTheme.success);
+        _this2.initPage();
+        _this2.showModel = false;
       }).catch(function (res) {
-        _this.error = true;
+        _this2.error = true;
       }).finally(function (res) {
-        _this.surePaying = false;
-        _this.closePageLoading();
+        _this2.surePaying = false;
+        _this2.closePageLoading();
       });
     },
     cancel: function cancel() {
@@ -181,7 +190,7 @@ var _default = {
       this.surePassword = surePassword;
       this.error = false;
     },
-    initPage: function initPage() {var _this2 = this;
+    initPage: function initPage() {var _this3 = this;
       this.searching = true;
       this.pageLoading();
       member_id = '';
@@ -208,12 +217,12 @@ var _default = {
         member_id: member_id,
         pageSize: 20 }).
       then(function (res) {
-        _this2.closePageLoading();
-        _this2.billList = res;
-        _this2.searching = false;
+        _this3.closePageLoading();
+        _this3.billList = res;
+        _this3.searching = false;
       });
     },
-    tabChange: function tabChange(tab) {var _this3 = this;
+    tabChange: function tabChange(tab) {var _this4 = this;
       this.pageLoading();
       curTab = tab;
       this.current = 1;
@@ -226,9 +235,9 @@ var _default = {
         page: 1,
         pageSize: 20 }).
       then(function (res) {
-        _this3.billList = res;
-        _this3.closePageLoading();
-        _this3.searching = false;
+        _this4.billList = res;
+        _this4.closePageLoading();
+        _this4.searching = false;
       });
     },
     search: function search(val) {

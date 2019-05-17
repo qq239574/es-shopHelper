@@ -1,10 +1,10 @@
 <template>
     <view class='card--good'>
         <view class="card--good-item" v-for='(item,index) in goodsList' :key='index'>
-            <view class="imgbox"  @click='clickGood(item)'>
+            <view class="imgbox" @click='clickGood(item)'>
                 <image :src='item.img'></image>
             </view>
-            <view class="good-info"  @click='clickGood(item)'>
+            <view class="good-info" @click='clickGood(item)'>
                 <view class="good-name van-multi-ellipsis--l2">
                     {{item.goodName}}
                 </view>
@@ -24,26 +24,28 @@
                     <image class='img' src='/static/img/global/product_share_download.png'></image>
                     <view class='title'>编辑</view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"下架")' v-if='item.status=="0"||item.status=="1"'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
-                    <view class='title'>下架</view>
-                </view>
-                 <view class="item" @click.stop='clickMenuItem(index,item,"上架")' v-if='item.status=="2"'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
-                    <view class='title'>上架</view>
-                </view>
-                 <view class="item" @click.stop='clickMenuItem(index,item,"恢复")' v-if='item.status=="3"'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
-                    <view class='title'>恢复</view>
-                </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"删除")'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
-                    <view class='title'>删除</view>
-                </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"推广商品")' v-if='item.status=="0"||item.status=="1"'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
-                    <view class='title'>推广商品</view>
-                </view>
+                <block v-if='Jurisdiction.goods_manage'>
+                    <view class="item" @click.stop='clickMenuItem(index,item,"下架")' v-if='item.status=="0"||item.status=="1"'>
+                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class='title'>下架</view>
+                    </view>
+                    <view class="item" @click.stop='clickMenuItem(index,item,"上架")' v-if='item.status=="2"'>
+                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class='title'>上架</view>
+                    </view>
+                    <view class="item" @click.stop='clickMenuItem(index,item,"恢复")' v-if='item.status=="3"'>
+                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class='title'>恢复</view>
+                    </view>
+                    <view class="item" @click.stop='clickMenuItem(index,item,"删除")'>
+                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class='title'>删除</view>
+                    </view>
+                    <view class="item" @click.stop='clickMenuItem(index,item,"推广商品")' v-if='item.status=="0"||item.status=="1"'>
+                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class='title'>推广商品</view>
+                    </view>
+                </block>
             </view>
         </view>
     </view>
@@ -55,6 +57,11 @@
     } from '../../../components/my-components/formater.js'
     export default {
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             goodsList: {
                 type: Array,
                 default () {
@@ -81,7 +88,7 @@
         },
         watch: {
             toggle() {
-                this.menuIndex='';
+                this.menuIndex = '';
             }
         },
         methods: {

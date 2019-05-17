@@ -77,6 +77,11 @@
 
   },
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     list: {
       type: Array,
       default: [{

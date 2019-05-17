@@ -22,6 +22,11 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
+    Jurisdiction: {
+      type: Object,
+      default: {},
+      required: true },
+
     list: {
       type: Array,
       default: [{
@@ -38,6 +43,20 @@ var _default =
         url: '' }] } },
 
 
+
+  computed: {
+    showApps: function showApps() {var _this = this;
+      return this.list.filter(function (item, index) {
+        if (index == 2) {
+          return _this.Jurisdiction['statistics_index_view'];
+        } else if (index == 0) {
+          return _this.Jurisdiction['member_list_view'];
+        } else if (index == 1) {
+          return _this.Jurisdiction['apps_index_manage-wxapp'];
+        }
+        return true;
+      });
+    } },
 
   methods: {
     click: function click(item) {

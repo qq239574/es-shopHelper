@@ -2,8 +2,8 @@
     <view class='bill-card'>
         <cardTitle :bill='bill.bill' @click='clickBill'></cardTitle>
         <cardGood :goodsList='bill.goodsList' @click='clickBill'></cardGood>
-        <cardInfo :info='bill.info' @click='clickBill'></cardInfo>
-        <cardTemp :rights='bill.rights' @click='clickBill'></cardTemp>
+        <cardInfo :Jurisdiction='Jurisdiction' :info='bill.info' @click='clickBill'></cardInfo>
+        <cardTemp :Jurisdiction='Jurisdiction' :rights='bill.rights' @click='clickBill'></cardTemp>
     </view>
 </template>
 
@@ -20,6 +20,11 @@
             cardTemp
         },
         props: {
+            Jurisdiction:{
+                type:Object,
+                default:{},
+                required:true
+            },
             bill: {
                 type: Object,
                 default: () => ({
