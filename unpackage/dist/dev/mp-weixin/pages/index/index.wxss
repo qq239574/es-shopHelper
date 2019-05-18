@@ -1,14 +1,14 @@
-.pages-index-index.data-v-78b85d22 {
+.pages-index-index.data-v-375c1e65 {
   background: #f3f5f9;
 }
-.pages-index-index .shop-icon.data-v-78b85d22 {
+.pages-index-index .shop-icon.data-v-375c1e65 {
     line-height: 88rpx;
     height: 88rpx;
     margin: 0 5rpx 0 0;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
-.pages-index-index .tunshop.data-v-78b85d22 {
+.pages-index-index .tunshop.data-v-375c1e65 {
     vertical-align: text-bottom;
     width: 100%;
     height: 88rpx;
@@ -24,7 +24,7 @@
             box-sizing: border-box;
     padding: 0 24rpx;
 }
-.pages-index-index .tunshop .button.data-v-78b85d22 {
+.pages-index-index .tunshop .button.data-v-375c1e65 {
       margin: auto 0;
       font-size: 26rpx;
       border: 1rpx solid #bdc8df;
@@ -41,13 +41,13 @@
       white-space: nowrap;
       padding: 0 16rpx;
 }
-.pages-index-index .tunshop .button image.data-v-78b85d22 {
+.pages-index-index .tunshop .button image.data-v-375c1e65 {
         width: 20rpx;
         height: 22rpx;
         display: inline-block;
         margin-right: 8rpx;
 }
-.pages-index-index .tunshop .title.data-v-78b85d22 {
+.pages-index-index .tunshop .title.data-v-375c1e65 {
       height: 100%;
       line-height: 86rpx;
       font-size: 26rpx;
@@ -55,21 +55,21 @@
       position: relative;
       padding-left: 30rpx;
 }
-.pages-index-index .tunshop .title .shop-icon.data-v-78b85d22 {
+.pages-index-index .tunshop .title .shop-icon.data-v-375c1e65 {
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto;
         left: 0;
 }
-.pages-index-index .block.data-v-78b85d22 {
+.pages-index-index .block.data-v-375c1e65 {
     background: #fff;
     width: 704rpx;
     margin: 0 auto 24rpx;
     border-radius: 8rpx;
     overflow: hidden;
 }
-.pages-index-index .block .grace-icons.data-v-78b85d22 {
+.pages-index-index .block .grace-icons.data-v-375c1e65 {
       margin: 0 12rpx 0 24rpx;
 }
 

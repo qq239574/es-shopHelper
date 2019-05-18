@@ -1,24 +1,24 @@
-.test > .grace-list.data-v-9835b664 {
+.test > .grace-list.data-v-b3878eaa {
   -webkit-flex-wrap: wrap;
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
 }
-.test > .grace-list > .items.data-v-9835b664 {
+.test > .grace-list > .items.data-v-b3878eaa {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
     overflow: hidden;
 }
-.test .tip.data-v-9835b664 {
+.test .tip.data-v-b3878eaa {
   color: #aaa;
   font-size: 12px;
 }
-.test .normal_title.data-v-9835b664 {
+.test .normal_title.data-v-b3878eaa {
   font-size: 16px;
   margin: 10rpx 20rpx;
   font-weight: bold;
 }
-.test .item.data-v-9835b664 {
+.test .item.data-v-b3878eaa {
   position: absolute;
   border: 1px solid black;
   font-size: 13px;
@@ -27,7 +27,7 @@
   text-align: center;
   border-radius: 90px;
 }
-.test .item_container.data-v-9835b664 {
+.test .item_container.data-v-b3878eaa {
   height: 300rpx;
   width: 100%;
   /* border:1px solid black; */

@@ -1,11 +1,11 @@
-.coupon-item.data-v-300b343a {
+.coupon-item.data-v-75820f7d {
   width: 665rpx;
   height: 217rpx;
   margin: 0 auto 20rpx;
   position: relative;
   overflow: hidden;
 }
-.coupon-item .border.data-v-300b343a {
+.coupon-item .border.data-v-75820f7d {
     width: 665rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -16,18 +16,18 @@
     background: #fef8f8;
     height: 217rpx;
 }
-.coupon-item .border .top.data-v-300b343a,
-    .coupon-item .border .bottom.data-v-300b343a {
+.coupon-item .border .top.data-v-75820f7d,
+    .coupon-item .border .bottom.data-v-75820f7d {
       width: 100%;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       position: absolute;
       left: 0;
 }
-.coupon-item .border .top.data-v-300b343a {
+.coupon-item .border .top.data-v-75820f7d {
       padding: 28rpx 40rpx 0;
 }
-.coupon-item .border .top .title.data-v-300b343a {
+.coupon-item .border .top .title.data-v-75820f7d {
         font-size: 29rpx;
         height: 29rpx;
         line-height: 29rpx;
@@ -35,7 +35,7 @@
         font-weight: 600;
         color: #333;
 }
-.coupon-item .border .top .money.data-v-300b343a {
+.coupon-item .border .top .money.data-v-75820f7d {
         font-size: 20rpx;
         height: 45rpx;
         line-height: 45rpx;
@@ -43,7 +43,7 @@
         font-weight: 600;
         color: #fb6638;
 }
-.coupon-item .border .top .money .num.data-v-300b343a {
+.coupon-item .border .top .money .num.data-v-75820f7d {
           font-size: 45rpx;
           height: 45rpx;
           line-height: 45rpx;
@@ -51,7 +51,7 @@
           display: inline;
           color: #fb6638;
 }
-.coupon-item .border .bottom.data-v-300b343a {
+.coupon-item .border .bottom.data-v-75820f7d {
       height: 66rpx;
       bottom: 0;
       line-height: 66rpx;
@@ -60,7 +60,7 @@
       color: #9da3ae;
       border-top: 1rpx dashed #fddbd2;
 }
-.coupon-item.data-v-300b343a:before, .coupon-item.data-v-300b343a:after {
+.coupon-item.data-v-75820f7d:before, .coupon-item.data-v-75820f7d:after {
     background: #fff;
     content: '';
     position: absolute;
@@ -71,10 +71,10 @@
     bottom: 46rpx;
     z-index: 10;
 }
-.coupon-item.data-v-300b343a:before {
+.coupon-item.data-v-75820f7d:before {
     left: -20rpx;
 }
-.coupon-item.data-v-300b343a:after {
+.coupon-item.data-v-75820f7d:after {
     right: -20rpx;
 }
 

@@ -1,11 +1,11 @@
-.good-modal.data-v-3a2443fa {
+.good-modal.data-v-1612fa97 {
   width: 710rpx;
   background: #fff;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
 }
-.good-modal .row.data-v-3a2443fa {
+.good-modal .row.data-v-1612fa97 {
     width: 100%;
     height: -webkit-fit-content;
     height: -moz-fit-content;
@@ -22,7 +22,7 @@
             box-sizing: border-box;
     line-height: 96rpx;
 }
-.good-modal .row textarea.data-v-3a2443fa {
+.good-modal .row textarea.data-v-1612fa97 {
       text-align: right;
       min-height: 96rpx;
       line-height: 36rpx;
@@ -36,7 +36,7 @@
       white-space: nowrap;
       color: #3d404d;
 }
-.good-modal .row .label.data-v-3a2443fa {
+.good-modal .row .label.data-v-1612fa97 {
       padding: 0 36rpx 0 60rpx;
       position: relative;
       width: -webkit-fit-content;
@@ -48,25 +48,25 @@
       font-size: 28rpx;
       color: #6f7685;
 }
-.good-modal .row .label image.data-v-3a2443fa {
+.good-modal .row .label image.data-v-1612fa97 {
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto;
         left: 20rpx;
 }
-.good-modal .row .del.data-v-3a2443fa {
+.good-modal .row .del.data-v-1612fa97 {
       width: 28rpx;
       height: 28rpx;
 }
-.good-modal .parentType.data-v-3a2443fa {
+.good-modal .parentType.data-v-1612fa97 {
     border-bottom: 1rpx solid #eee;
 }
-.good-modal .childrenType.data-v-3a2443fa {
+.good-modal .childrenType.data-v-1612fa97 {
     padding: 0 0 0 46rpx;
     position: relative;
 }
-.good-modal .childrenType.data-v-3a2443fa:after {
+.good-modal .childrenType.data-v-1612fa97:after {
       content: '';
       position: absolute;
       width: 664rpx;
@@ -75,7 +75,7 @@
       height: 0;
       border-bottom: 1rpx solid #eee;
 }
-.good-modal .childrenType .label.data-v-3a2443fa {
+.good-modal .childrenType .label.data-v-1612fa97 {
       padding: 0 36rpx 0 46rpx;
       position: relative;
       width: -webkit-fit-content;
@@ -87,14 +87,14 @@
       font-size: 28rpx;
       color: #6f7685;
 }
-.good-modal .childrenType .label image.data-v-3a2443fa {
+.good-modal .childrenType .label image.data-v-1612fa97 {
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto;
         left: 0;
 }
-.good-modal .add.data-v-3a2443fa {
+.good-modal .add.data-v-1612fa97 {
     padding: 0 46rpx;
     font-size: 28rpx;
     color: #fb6638;

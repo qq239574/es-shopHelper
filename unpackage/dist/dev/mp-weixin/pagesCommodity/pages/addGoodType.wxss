@@ -1,15 +1,15 @@
-.multi-block.data-v-34ca85df {
+.multi-block.data-v-058c9388 {
   width: 100%;
   margin: 0 auto 20rpx;
 }
-.multi-block .isSingle.data-v-34ca85df {
+.multi-block .isSingle.data-v-058c9388 {
     font-size: 40rpx;
     font-weight: 700;
     color: #ccc;
     text-align: center;
     line-height: 200rpx;
 }
-.multi-block .addType.data-v-34ca85df {
+.multi-block .addType.data-v-058c9388 {
     width: 710rpx;
     height: 100rpx;
     line-height: 98rpx;
@@ -20,21 +20,21 @@
     text-align: center;
     border-radius: 4rpx;
 }
-.multi-block .block.data-v-34ca85df {
+.multi-block .block.data-v-058c9388 {
     width: 710rpx;
     margin: 20rpx auto 0;
     background: #fff;
     border-radius: 4rpx;
     overflow: hidden;
 }
-.multi-block .maxLength.data-v-34ca85df {
+.multi-block .maxLength.data-v-058c9388 {
     font-size: 26rpx;
     line-height: 120rpx;
     text-align: center;
     color: #ccc;
     margin-bottom: 200rpx;
 }
-.multi-block .footer.data-v-34ca85df {
+.multi-block .footer.data-v-058c9388 {
     position: fixed;
     height: 124rpx;
     width: 100%;
@@ -50,7 +50,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
-.multi-block .footer long-button.data-v-34ca85df {
+.multi-block .footer long-button.data-v-058c9388 {
       margin: 10rpx auto 0;
 }
 

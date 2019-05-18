@@ -1,4 +1,4 @@
-.my-round-button.data-v-be0fc932 {
+.my-round-button.data-v-436dd544 {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -10,34 +10,34 @@
   line-height: 60rpx;
   text-align: center;
   font-size: 26rpx;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 4rpx;
   border: 1rpx solid #aaafb5;
   padding: 0 20rpx;
   position: relative;
 }
-.my-round-button.common.data-v-be0fc932 {
+.my-round-button.common.data-v-436dd544 {
     background: #fff;
 }
-.my-round-button.common.tapping.data-v-be0fc932 {
+.my-round-button.common.tapping.data-v-436dd544 {
     background: #eee;
 }
-.my-round-button.primary.data-v-be0fc932 {
+.my-round-button.primary.data-v-436dd544 {
     color: #fff;
     border: none;
     background: #fb6638;
 }
-.my-round-button.primary.tapping.data-v-be0fc932 {
+.my-round-button.primary.tapping.data-v-436dd544 {
     border: none;
     color: #fdfdfd;
     background: #ec673e;
 }
-.my-round-button.disable.data-v-be0fc932 {
+.my-round-button.disable.data-v-436dd544 {
     background: #9da3ae;
     color: #fff;
     border: none;
 }
-.my-round-button .grace-badge.data-v-be0fc932 {
+.my-round-button .grace-badge.data-v-436dd544 {
     position: absolute;
     background: #fb6638;
     font-size: 20rpx;

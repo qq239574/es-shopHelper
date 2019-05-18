@@ -87,12 +87,13 @@
                 .imgbox {
                     width: 120upx;
                     height: 100%;
-                    border-radius: 6upx;
+                    // border-radius: 6upx;
                     overflow: hidden;
                     image {
                         width: 100%;
                         height: 120upx;
                         margin: 15upx 0;
+						border-radius: 8upx;
                     }
                 }
                 .good-info {

@@ -1,12 +1,12 @@
 <template>
     <view class='vip-bus-block'>
-        <inputItem label='注册时间' :disabled='true' :value='info.registerTime'></inputItem>
+        <inputItem labelStyle='font-weight: 500;' label='注册时间' :disabled='true' :value='info.registerTime'></inputItem>
         <view class="image">
-            <inputItem label='来源' :disabled='true' value=' '></inputItem>
+            <inputItem labelStyle='font-weight: 500;' label='来源' :disabled='true' value=' '></inputItem>
             <image :src='judgeOrigin(info.origin)'></image>
         </view>
-        <inputItem label='会员等级' :disabled='true' :value='info.vipClass'></inputItem>
-        <inputItem label='会员标签' :disabled='true' :value='info.vipTag'></inputItem>
+        <inputItem labelStyle='font-weight: 500;' label='会员等级' :disabled='true' :value='info.vipClass'></inputItem>
+        <inputItem labelStyle='font-weight: 500;' label='会员标签' :disabled='true' :value='info.vipTag'></inputItem>
     </view>
 </template>
 

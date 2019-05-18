@@ -1,8 +1,8 @@
-.index-apps.data-v-519d25eb {
+.index-apps.data-v-1a0c5648 {
   width: 100%;
   margin: 0 auto 30rpx;
 }
-.index-apps .block.data-v-519d25eb {
+.index-apps .block.data-v-1a0c5648 {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
@@ -18,19 +18,19 @@
             flex-wrap: wrap;
     padding: 20rpx 0;
 }
-.index-apps .block .items.data-v-519d25eb {
+.index-apps .block .items.data-v-1a0c5648 {
       width: 25%;
       height: 131rpx;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
 }
-.index-apps .block .items image.data-v-519d25eb {
+.index-apps .block .items image.data-v-1a0c5648 {
         width: 61rpx;
         max-height: 48rpx;
         display: block;
         margin: 15rpx auto 0;
 }
-.index-apps .block .items .title.data-v-519d25eb {
+.index-apps .block .items .title.data-v-1a0c5648 {
         width: 100%;
         line-height: 22rpx;
         font-size: 22rpx;

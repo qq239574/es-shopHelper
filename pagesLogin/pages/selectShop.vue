@@ -209,7 +209,8 @@
             width: 702upx;
             margin: 0 auto;
             line-height: 110upx;
-            font-size: 28upx;
+            font-size: 30upx;
+			font-weight: 700;
             color: #495576;
         }
         .load-more {

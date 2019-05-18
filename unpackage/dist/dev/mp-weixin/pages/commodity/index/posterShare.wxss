@@ -1,4 +1,4 @@
-.poster-share .button.data-v-41d87140 {
+.poster-share .button.data-v-f16166fa {
   position: absolute;
   width: 524rpx;
   height: 150rpx;
@@ -11,7 +11,7 @@
   display: -ms-flexbox;
   display: flex;
 }
-.poster-share .button .img.data-v-41d87140 {
+.poster-share .button .img.data-v-f16166fa {
     display: block;
     width: 50%;
     height: 150rpx;
@@ -28,18 +28,18 @@
         -ms-flex-pack: distribute;
             justify-content: space-around;
 }
-.poster-share .button .img image.data-v-41d87140 {
+.poster-share .button .img image.data-v-f16166fa {
       width: 100rpx;
       height: 100rpx;
       border-radius: 50%;
 }
-.poster-share .button .img view.data-v-41d87140 {
+.poster-share .button .img view.data-v-f16166fa {
       width: 100%;
       text-align: center;
       color: #fff;
       font-size: 26rpx;
 }
-.poster-share .close-btn.data-v-41d87140 {
+.poster-share .close-btn.data-v-f16166fa {
   position: absolute;
   background: rgba(0, 0, 0, 0.5);
   width: 140rpx;
@@ -52,7 +52,7 @@
           box-sizing: border-box;
   padding: 71rpx 50rpx 0 28rpx;
 }
-.poster-share .box.data-v-41d87140 {
+.poster-share .box.data-v-f16166fa {
   overflow: hidden;
   width: 524rpx;
   height: 524rpx;
@@ -64,7 +64,7 @@
   margin: auto;
   background: #fff;
 }
-.poster-share .box .img-code.data-v-41d87140 {
+.poster-share .box .img-code.data-v-f16166fa {
     position: absolute;
     top: 0;
     left: 0;
@@ -73,7 +73,7 @@
     margin: auto;
     background: #fff;
 }
-.poster-share .poster.data-v-41d87140 {
+.poster-share .poster.data-v-f16166fa {
   width: 524rpx;
   height: 838rpx;
 }

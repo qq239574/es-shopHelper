@@ -14,7 +14,7 @@
             <view class='counter'>{{textLength}}/40</view>
         </view>
         <view class="margin30"></view>
-        <longButton :disable='getDisabled' @click='sure'>确认{{type}}</longButton>
+        <longButton :disable='getDisabled' @click='sure' fontStyle='font-size: 14px; font-weight: 700; letter-spacing: 0;'>确认{{type}}</longButton>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -178,7 +178,7 @@
         input {
             height: 100%;
             line-height: 120upx;
-            font-size: 28upx;
+            font-size: 36upx;
             color: #213354;
             font-weight: 600;
             padding: 0 5upx;

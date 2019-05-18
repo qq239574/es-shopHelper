@@ -1,4 +1,4 @@
-.number.data-v-383ab6e1 {
+.number.data-v-123ac484 {
   width: 100%;
   line-height: 66rpx;
   -webkit-box-sizing: border-box;
@@ -7,10 +7,10 @@
   font-size: 26rpx;
   color: #9da3ae;
 }
-.number text.data-v-383ab6e1 {
+.number text.data-v-123ac484 {
     color: #fa8a6f;
 }
-.foot.data-v-383ab6e1 {
+.foot.data-v-123ac484 {
   position: fixed;
   width: 100%;
   height: 125rpx;

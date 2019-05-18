@@ -1,1 +1,1 @@
-<view class="search-shop page _div data-v-7bdd0bcb" bind:__l="__l"><search value="{{value}}" placeholder="{{placeholder}}" data-event-opts="{{[['^search',[['search']]],['^clear',[['clear']]]]}}" bind:search="__e" bind:clear="__e" class="data-v-7bdd0bcb"></search></view>
+<view class="search-shop page _div data-v-25435564" bind:__l="__l"><search value="{{value}}" placeholder="{{placeholder}}" data-event-opts="{{[['^search',[['search']]],['^clear',[['clear']]]]}}" bind:search="__e" bind:clear="__e" class="data-v-25435564"></search></view>

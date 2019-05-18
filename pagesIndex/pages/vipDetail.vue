@@ -1,7 +1,7 @@
 <template>
     <view class='tip-detail page'>
         <vipWin :info='vipInfo'></vipWin>
-        <tabs :categories='categories' @tabChange='clickTab'></tabs>
+        <tabs :categories='categories' @tabChange='clickTab' fontStyle='font-size: 13px; color: #6e7685'></tabs>
         <vipBaseInfo :Jurisdiction='Jurisdiction' v-if='tabIndex==0' :info='baseInfo' @click='clickBaseInfo'></vipBaseInfo>
         <vipBussiness :Jurisdiction='Jurisdiction' @click='checkBill' :info='bussinessInfo' v-else-if='tabIndex==1'></vipBussiness>
         <vipCommission :Jurisdiction='Jurisdiction' :info='commissionInfo' @click='clickDistriInfo' v-else></vipCommission>

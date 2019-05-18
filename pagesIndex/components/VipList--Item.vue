@@ -12,8 +12,8 @@
                     <view class="color">
                         <view class='vip-class'>{{item.vipClass}}</view>
                         <view>{{item.tel}}</view>
-                        <view>余额：{{item.money}}</view>
-                        <view>积分：{{item.score}}</view>
+                        <view>余额:{{item.money}}</view>
+                        <view>积分:{{item.score}}</view>
                     </view>
                 </view>
             </view>
@@ -116,7 +116,8 @@
         .card--vip-item {
             position: relative;
             width: 100%;
-            min-height: 210upx;
+            // min-height: 210upx;
+            min-height: 180upx;
             height: fit-content;
             display: flex;
             flex-wrap: nowrap;
@@ -124,19 +125,21 @@
             background: #fff;
             margin: 0 auto 20upx;
             box-sizing: border-box;
-            padding: 20upx 20upx 0;
+            // padding: 20upx 20upx 0;
+            padding: 16upx;
             border-radius: 6upx;
             overflow: hidden;
             .imgbox {
-                width: 160upx;
+                width: 120upx;
                 height: 100%;
                 overflow: hidden;
                 display: flex;
-                margin-top: 5upx;
+				margin: auto 0;
+                // margin-top: 31upx;
                 image {
-                    border-radius: 6upx;
-                    width: 100%;
-                    height: 160upx;
+                    border-radius: 50%;
+                    width: 100upx;
+                    height: 100upx;
                     margin: auto;
                 }
             }
@@ -146,8 +149,9 @@
                 padding: 13upx 0 0;
                 .vip-name {
                     width: 100%;
-                    font-size: 26upx;
+                    font-size: 28upx;
                     line-height: 36upx;
+					font-weight: 700;
                 }
                 .vip-others {
                     width: 100%;
@@ -167,7 +171,8 @@
                         width: fit-content;
                         view {
                             min-width: 40%;
-                            margin: 0 36upx 0 0;
+                            // margin: 0 36upx 0 0;
+                            margin: 0 24upx 0 0;
                             line-height: 44upx;
                         }
                         .vip-class {
@@ -221,7 +226,7 @@
                 height: 100%;
                 top: 0;
                 left: 0;
-                background: rgba(0, 0, 0, .5);
+                background: rgba(0, 0, 0, .6);
                 display: flex;
                 flex-wrap: nowrap;
                 justify-content: space-around;
@@ -234,7 +239,7 @@
                     .img {
                         width: 100%;
                         height: 63upx;
-                        margin-top: 48upx;
+                        margin-top: 37upx;
                     }
                     .title {
                         color: #fff;
@@ -244,7 +249,7 @@
                         left: 50%;
                         transform: translate(-50%, 0);
                         position: absolute;
-                        bottom: 30upx;
+                        bottom: 20upx;
                         font-size: 24upx;
                         color: #c5cede;
                     }

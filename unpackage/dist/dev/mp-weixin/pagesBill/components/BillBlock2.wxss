@@ -1,4 +1,4 @@
-.block.data-v-fba9b44e {
+.block.data-v-5715f5dc {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -7,24 +7,24 @@
   border-radius: 8rpx;
   padding: 21rpx 0 0;
 }
-.block .bill__item.data-v-fba9b44e {
-    color: #000;
+.block .bill__item.data-v-5715f5dc {
+    color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;
 }
-.block .bill__item.data-v-fba9b44e view {
+.block .bill__item.data-v-5715f5dc view {
       height: 100%;
       padding: 0;
 }
-.block .body.data-v-fba9b44e,
-  .block .foot.data-v-fba9b44e {
+.block .body.data-v-5715f5dc,
+  .block .foot.data-v-5715f5dc {
     padding: 2rpx 0;
     font-size: 24rpx;
     font-weight: 500;
     color: #6e7685;
 }
-.block .label.data-v-fba9b44e {
+.block .label.data-v-5715f5dc {
     white-space: nowrap;
 }
 

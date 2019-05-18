@@ -1,4 +1,4 @@
-.noresult.data-v-28445e14 {
+.noresult.data-v-05a1a3d2 {
   width: 100%;
   min-height: 200rpx;
   display: -webkit-box;
@@ -9,12 +9,12 @@
       -ms-flex-wrap: wrap;
           flex-wrap: wrap;
 }
-.noresult image.data-v-28445e14 {
+.noresult image.data-v-05a1a3d2 {
     width: 150rpx;
     height: 184rpx;
     margin: 100rpx auto 50rpx;
 }
-.noresult view.data-v-28445e14 {
+.noresult view.data-v-05a1a3d2 {
     text-align: center;
     width: 100%;
     font-size: 30rpx;

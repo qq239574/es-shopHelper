@@ -1,6 +1,6 @@
 <template>
     <div class='edit-form page'>
-        <radioBlock :items='list' :defaultIndex='defaultIndex' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
+        <radioBlock :items='list' :defaultIndex='defaultIndex' :hideRightArrow='true' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>

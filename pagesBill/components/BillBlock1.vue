@@ -87,6 +87,7 @@
         margin-left: 5upx;
     }
     .bill__item {
+		color: #33373a;
         height: 100%;
         line-height: 38upx;
         position: relative;

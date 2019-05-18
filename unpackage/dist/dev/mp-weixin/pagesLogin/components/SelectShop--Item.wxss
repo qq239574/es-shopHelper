@@ -1,7 +1,7 @@
-.shops-list.data-v-551742ec {
+.shops-list.data-v-3105f989 {
   width: 100%;
 }
-.shops-list .img.data-v-551742ec {
+.shops-list .img.data-v-3105f989 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -11,17 +11,17 @@
             flex-wrap: wrap;
     margin: 100rpx;
 }
-.shops-list .img image.data-v-551742ec {
+.shops-list .img image.data-v-3105f989 {
       width: 150rpx;
       height: 184rpx;
       margin: 50rpx auto;
 }
-.shops-list .h1.data-v-551742ec {
+.shops-list .h1.data-v-3105f989 {
     text-align: center;
     width: 100%;
     color: #666;
 }
-.shop-block.data-v-551742ec {
+.shop-block.data-v-3105f989 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,26 +36,26 @@
   -webkit-box-shadow: 0 0 32rpx rgba(0, 0, 0, 0.08);
           box-shadow: 0 0 32rpx rgba(0, 0, 0, 0.08);
 }
-.shop-block image.data-v-551742ec {
+.shop-block image.data-v-3105f989 {
     width: 110rpx;
     height: 110rpx;
     margin: auto 0 auto 20rpx;
 }
-.shop-block view.data-v-551742ec {
+.shop-block view.data-v-3105f989 {
     margin-left: 20rpx;
 }
-.shop-block .info.data-v-551742ec {
+.shop-block .info.data-v-3105f989 {
     width: 362rpx;
     height: 100%;
 }
-.shop-block .info view.data-v-551742ec {
+.shop-block .info view.data-v-3105f989 {
       font-size: 28rpx;
       line-height: 28rpx;
       height: 28rpx;
       font-weight: 600;
       color: #757c89;
 }
-.shop-block .info .title.data-v-551742ec {
+.shop-block .info .title.data-v-3105f989 {
       color: #495576;
       margin: 60rpx 0 0;
       overflow: hidden;
@@ -63,16 +63,17 @@
          text-overflow: ellipsis;
       white-space: nowrap;
 }
-.shop-block .info .date.data-v-551742ec {
+.shop-block .info .date.data-v-3105f989 {
       margin: 16rpx 0 0;
       font-weight: 400;
+      font-size: 24rpx;
 }
-.shop-block .status.data-v-551742ec {
+.shop-block .status.data-v-3105f989 {
     width: 111rpx;
     height: 44rpx;
     margin: auto 30rpx auto 0;
 }
-.shop-block .status .tab.data-v-551742ec {
+.shop-block .status .tab.data-v-3105f989 {
       width: 100rpx;
       height: 44rpx;
       border-radius: 6rpx;
@@ -82,37 +83,37 @@
       line-height: 44rpx;
       text-align: center;
 }
-.shop-block .status .busy.data-v-551742ec {
+.shop-block .status .busy.data-v-3105f989 {
       background: #bdf1cc;
       color: #16c557;
 }
-.shop-block .status .close.data-v-551742ec {
+.shop-block .status .close.data-v-3105f989 {
       background: #ffd9bc;
       color: #ff8022;
 }
-.shop-block .status .exc.data-v-551742ec {
+.shop-block .status .exc.data-v-3105f989 {
       background: #c8ccd6;
       color: #495576;
 }
-.shop-block .status .examing.data-v-551742ec {
+.shop-block .status .examing.data-v-3105f989 {
       background: #e1e1e1;
       color: #fff;
 }
-.shop-block .status .disable.data-v-551742ec {
+.shop-block .status .disable.data-v-3105f989 {
       background: #e1e1e1;
       color: #fff;
 }
-.shop-block .icon.data-v-551742ec {
+.shop-block .icon.data-v-3105f989 {
     margin: auto 20rpx auto 0;
     line-height: 50rpx;
 }
-.shop-block.disable.data-v-551742ec, .shop-block.examing.data-v-551742ec {
+.shop-block.disable.data-v-3105f989, .shop-block.examing.data-v-3105f989 {
     background: #f4f4f4;
 }
-.shop-block.disable .info .title.data-v-551742ec,
-    .shop-block.disable .info .date.data-v-551742ec,
-    .shop-block.examing .info .title.data-v-551742ec,
-    .shop-block.examing .info .date.data-v-551742ec {
+.shop-block.disable .info .title.data-v-3105f989,
+    .shop-block.disable .info .date.data-v-3105f989,
+    .shop-block.examing .info .title.data-v-3105f989,
+    .shop-block.examing .info .date.data-v-3105f989 {
       color: #9fa2aa;
 }
 

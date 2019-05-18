@@ -1,8 +1,8 @@
-.price-input.data-v-d7048cae {
+.price-input.data-v-706c7046 {
   width: 670rpx;
   margin: auto;
 }
-.price-input .row.data-v-d7048cae {
+.price-input .row.data-v-706c7046 {
     width: 100%;
     height: 96rpx;
     line-height: 96rpx;
@@ -18,15 +18,15 @@
         -ms-flex-wrap: nowrap;
             flex-wrap: nowrap;
 }
-.price-input .row .label.data-v-d7048cae {
+.price-input .row .label.data-v-706c7046 {
       font-size: 28rpx;
       line-height: 96rpx;
       font-weight: 700;
 }
-.price-input .row input.data-v-d7048cae {
+.price-input .row input.data-v-706c7046 {
       height: 70rpx;
       width: 250rpx;
-      background: #fcfcfc;
+      background: #f5f5f5;
       border: 1rpx solid #eee;
       border-radius: 6rpx;
       line-height: 70rpx;
@@ -38,7 +38,7 @@
       margin-top: 13rpx;
       font-weight: 600;
 }
-.price-input .row1.data-v-d7048cae {
+.price-input .row1.data-v-706c7046 {
     border-bottom: 1rpx solid #eee;
 }
 

@@ -1,8 +1,8 @@
-.self-verification.data-v-622be200 {
+.self-verification.data-v-b85641fa {
   position: relative;
   height: 100% !important;
 }
-.self-verification .check-history.data-v-622be200 {
+.self-verification .check-history.data-v-b85641fa {
     position: fixed;
     width: -webkit-fit-content;
     width: -moz-fit-content;
@@ -14,7 +14,7 @@
     color: #fb6638;
     text-decoration: underline;
 }
-.self-verification .code-box.data-v-622be200 {
+.self-verification .code-box.data-v-b85641fa {
     width: 710rpx;
     background: #fff;
     -webkit-box-sizing: border-box;
@@ -34,13 +34,13 @@
         -ms-flex-wrap: wrap;
             flex-wrap: wrap;
 }
-.self-verification .code-box .title.data-v-622be200 {
+.self-verification .code-box .title.data-v-b85641fa {
       font-size: 28rpx;
       color: #333;
       font-weight: 700;
       line-height: 50rpx;
 }
-.self-verification .code-box .vrcode.data-v-622be200 {
+.self-verification .code-box .vrcode.data-v-b85641fa {
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
@@ -52,7 +52,7 @@
       padding: 0 12rpx;
       border-radius: 4rpx;
 }
-.self-verification .code.data-v-622be200 {
+.self-verification .code.data-v-b85641fa {
     background: #fff;
     height: 160rpx;
     width: 100%;
@@ -64,8 +64,8 @@
         -ms-flex-wrap: nowrap;
             flex-wrap: nowrap;
 }
-.self-verification .code view.data-v-622be200,
-    .self-verification .code input.data-v-622be200 {
+.self-verification .code view.data-v-b85641fa,
+    .self-verification .code input.data-v-b85641fa {
       height: 100%;
       line-height: 120rpx;
       font-size: 30rpx;
@@ -75,7 +75,7 @@
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
 }
-.self-verification .code .col2.data-v-622be200 {
+.self-verification .code .col2.data-v-b85641fa {
       border-top: 1rpx solid #eee;
       width: 100%;
       margin: 30rpx auto;

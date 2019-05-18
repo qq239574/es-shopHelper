@@ -64,7 +64,7 @@
             input {
                 height: 70upx;
                 width: 250upx;
-                background: #fcfcfc;
+                background: #f5f5f5;
                 border: 1upx solid #eee;
                 border-radius: 6upx;
                 line-height: 70upx;

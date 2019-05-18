@@ -1,7 +1,7 @@
 <template>
     <view class='editGood-block-selectItem grace-form' @click="selectCell">
         <view class='grace-items' :style='contentStyle'>
-            <view class="grace-label van-ellipsis ">
+            <view class="grace-label van-ellipsis " :style='fontStyle'>
                 <slot name='icon'></slot>{{label}}
             </view>
             <view class="other " :style='"display:inline;"+valueStyle'>
@@ -40,6 +40,10 @@
                 type: String,
                 default: ''
             },
+			fontStyle: {
+				type: String,
+				default: ''
+			},
             other: {
                 type: [Object, Number, String, Array, Boolean],
                 default: ''

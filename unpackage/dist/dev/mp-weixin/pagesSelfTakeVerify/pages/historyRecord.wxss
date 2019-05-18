@@ -1,9 +1,9 @@
-.pager.data-v-17fac69a {
+.pager.data-v-d42a8c94 {
   width: 100%;
   height: 80rpx;
   margin: 30rpx auto 100rpx;
 }
-.pager .button.data-v-17fac69a {
+.pager .button.data-v-d42a8c94 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -18,7 +18,7 @@
     color: 999;
     line-height: 70rpx;
 }
-.pager.data-v-17fac69a button {
+.pager.data-v-d42a8c94 button {
     height: 70rpx;
     font-size: 30rpx;
     color: 999;
@@ -26,17 +26,17 @@
     border-radius: 10rpx;
     margin: 0;
 }
-.pager .prev.data-v-17fac69a {
+.pager .prev.data-v-d42a8c94 {
     padding: 0 10rpx 0 5rpx;
 }
-.pager .next.data-v-17fac69a {
+.pager .next.data-v-d42a8c94 {
     padding: 0 5rpx 0 10rpx;
 }
-.pager.data-v-17fac69a .pager-button {
+.pager.data-v-d42a8c94 .pager-button {
     line-height: 70rpx;
     height: 70rpx;
 }
-.history-record.data-v-17fac69a {
+.history-record.data-v-d42a8c94 {
   min-height: 100%;
 }
 
