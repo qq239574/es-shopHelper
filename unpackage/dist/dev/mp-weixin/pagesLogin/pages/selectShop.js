@@ -69,26 +69,30 @@ var enteringShop = false;var _default =
           if (res.error == 0) {
             _getJurisdiction.getJurisdiction.call(that, true).then(function (res) {//检查该店铺的权限,true是防止死循环在该页，会自动返回该页
               enteringShop = false;
-              if (res['apps_index_manage-wxapp']) {
+              _this.closePageLoading();
+              if (res['apps_index_view']) {
                 _this.searchShop = '';
                 _this.toIndex('from=selectShop&status=selectShop');
-                _this.closePageLoading();
               } else {
-                that.Toast('暂无店铺权限');
+                that.Toast('暂无该店铺权限');
               }
             }).catch(function (res) {
               enteringShop = false;
-              res.message && that.Toast(res.message);
+              _this.closePageLoading();
+              that.Toast('暂无该店铺权限');
             });
           } else {
+            _this.closePageLoading();
             that.Toast('请求失败，请重试');
           }
         }).catch(function (res) {
+          _this.closePageLoading();
           enteringShop = false;
-          res.message && that.Toast(res.message);
+          that.Toast('暂无该店铺权限');
         });
       } else {
         setTimeout(function () {
+          _this.closePageLoading();
           enteringShop = false;
         }, 3000);
       }
@@ -173,11 +177,7 @@ var enteringShop = false;var _default =
                 shopInfo: shop.shopInfo,
                 totalShops: res.total });
 
-              _this2.Request('switchShop', {
-                id: shop.shopInfo.id }).
-              then(function (res) {
-                _this2.toIndex('from=selectShop&status=onlyOne');
-              });
+              _this2.selectShop(shop);
             } else {
               // this.checkUserInfo()
             }
@@ -186,6 +186,7 @@ var enteringShop = false;var _default =
           }
           _this2.closePageLoading();
         }).catch(function (res) {
+          _this2.closePageLoading();
           requesting = false;
           _this2.requesting = requesting;
           _this2.Toast(res.message);

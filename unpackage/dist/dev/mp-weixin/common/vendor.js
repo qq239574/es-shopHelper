@@ -11896,9 +11896,10 @@ function GetDateDiffNoAbs(startDate, endDate) {
   activity_manage_manage: true,
   activity_manage_view: true,
   apps_index_manage: true,
-  'apps_index_manage-wxapp': true, //店铺助手权限
+  'apps_index_manage-wxapp': true, //核销小程序
   apps_index_pay: true,
-  apps_index_verify: true, //核销小程序
+  apps_index_verify: true, //废弃的核销小程序权限
+  apps_index_view: true, //店铺小程序权限
   channel_manage: true,
   channel_view: true,
   commission_agent_list_manage: true,
@@ -12003,10 +12004,10 @@ function getJurisdiction(bool) {
         }
         res.prems = newPrems;
         that.Cacher.setData('userJurisdiction', res);
-        if (res.prems['apps_index_manage-wxapp']) {
+        if (res.prems['apps_index_view']) {
           resolve(res.prems);
         } else if (!bool) {
-          that.Toast('暂无该店铺权限');
+          that.Toast('暂无店铺权限');
           setTimeout(function () {
             uni.redirectTo({
               url: '/pagesLogin/pages/selectShop' });
@@ -14078,7 +14079,7 @@ function goodData(data) {//单规格商品
         value: data.goods.dispatch_price,
         dispatch_list: data.dispatch_list,
         dispatch_id: data.goods.dispatch_id || 0,
-        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0] || '统一运费（元）',
+        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0] || data.goods.dispatch_price,
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -14668,7 +14669,7 @@ function _default(val, cacheGoodDetail) {
   } else if (val.label == '快递运费') {
     cacheGoodDetail.info3.provideCost.value = val.info.subValue * 1;
     cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
-    cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label;
+    cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? val.info.subValue * 1 : val.info.label;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
     cacheGoodDetail.info3.goodForm.id = val.id;
@@ -15400,15 +15401,14 @@ function bindWx(rebind) {var _this2 = this;
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
-var cacheData = {}; //缓存登录信息
-var Jurisdiction = null; //权限
+var cacheData = {}; //缓存登录信息 
 function checkJurisdiction() {//检查权限
   var that = this;
   return new Promise(function (resolve, reject) {
-    _getJurisdiction.getJurisdiction.call(that).then(function (res) {
+    _getJurisdiction.getJurisdiction.call(that, true).then(function (res) {
       resolve(res);
     }).catch(function (res) {
-      res.message ? that.Toast(res.message) : that.Toast('无店铺助手权限');
+      that.closePageLoading();
       reject(res);
     });
   });
@@ -15442,20 +15442,21 @@ function selectShop() {//检测是否只有一个店铺
           then(function (res) {
             if (res.error == 0) {
               checkJurisdiction.call(that).then(function (res) {//检查该店铺的权限
-                if (res['apps_index_manage-wxapp']) {
+                if (res['apps_index_view']) {
                   uni.reLaunch({
                     url: '../index/index?from=selectShop&status=onlyOne' });
 
                 } else {
-                  that.Toast('暂无店铺权限');
+                  resolve();
                 }
               }).catch(function (res) {
-                res.message && that.Toast(res.message);
+                resolve();
               });
             } else {
               that.Toast(res.message || '暂无店铺信息');
             }
           }).catch(function (res) {
+
             that.Toast(res.message);
           });
         } else {
@@ -15640,8 +15641,16 @@ function getData(key) {
 
 }
 function clearData(key) {
+
   try {
-    uni.removeStorageSync(namespace + key);
+    if (typeof key == 'string') {
+      uni.removeStorageSync(namespace + key);
+    } else if (key instanceof Array) {
+      key.forEach(function (item) {
+        uni.removeStorageSync(namespace + item);
+      });
+    }
+
   } catch (e) {
     console.error('clearData error >>', e, ' key:', key);
   }

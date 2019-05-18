@@ -16,8 +16,16 @@ export function getData(key) {
 
 }
 export function clearData(key) {
-    try { 
-         uni.removeStorageSync(namespace + key);
+
+    try {
+        if (typeof key == 'string') {
+            uni.removeStorageSync(namespace + key);
+        } else if (key instanceof Array) {
+            key.forEach(item=>{
+                uni.removeStorageSync(namespace + item);
+            })
+        }
+
     } catch (e) {
         console.error('clearData error >>', e, ' key:', key)
     }

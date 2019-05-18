@@ -57,28 +57,32 @@
                         id: item.shopInfo.id
                     }).then(res => {
                         if (res.error == 0) {
-                            getJurisdiction.call(that,true).then(res => { //检查该店铺的权限,true是防止死循环在该页，会自动返回该页
+                            getJurisdiction.call(that, true).then(res => { //检查该店铺的权限,true是防止死循环在该页，会自动返回该页
                                 enteringShop = false;
-                                if (res['apps_index_manage-wxapp']) {
+                                this.closePageLoading();
+                                if (res['apps_index_view']) {
                                     this.searchShop = '';
                                     this.toIndex('from=selectShop&status=selectShop');
-                                    this.closePageLoading();
                                 } else {
-                                    that.Toast('暂无店铺权限');
+                                    that.Toast('暂无该店铺权限');
                                 }
                             }).catch(res => {
                                 enteringShop = false;
-                                res.message && that.Toast(res.message)
+                                this.closePageLoading();
+                                that.Toast('暂无该店铺权限');
                             })
                         } else {
+                            this.closePageLoading();
                             that.Toast('请求失败，请重试')
                         }
                     }).catch(res => {
+                        this.closePageLoading();
                         enteringShop = false;
-                        res.message && that.Toast(res.message)
+                        that.Toast('暂无该店铺权限')
                     })
                 } else {
                     setTimeout(() => {
+                        this.closePageLoading();
                         enteringShop = false;
                     }, 3000)
                 }
@@ -163,11 +167,7 @@
                                     shopInfo: shop.shopInfo,
                                     totalShops: res.total
                                 });
-                                this.Request('switchShop', {
-                                    id: shop.shopInfo.id
-                                }).then(res => {
-                                    this.toIndex('from=selectShop&status=onlyOne')
-                                })
+                                this.selectShop(shop);
                             } else {
                                 // this.checkUserInfo()
                             }
@@ -176,6 +176,7 @@
                         }
                         this.closePageLoading();
                     }).catch(res => {
+                        this.closePageLoading();
                         requesting = false;
                         this.requesting = requesting;
                         this.Toast(res.message);

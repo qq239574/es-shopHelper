@@ -192,6 +192,9 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
   },
   onShow: function onShow() {
     this.initPage();
+  },
+  onUnload: function onUnload() {
+    this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']); //
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

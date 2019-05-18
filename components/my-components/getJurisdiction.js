@@ -6,9 +6,10 @@ let test = {
     activity_manage_manage: true,
     activity_manage_view: true,
     apps_index_manage: true,
-    'apps_index_manage-wxapp': true, //店铺助手权限
+    'apps_index_manage-wxapp': true,  //核销小程序
     apps_index_pay: true,
-    apps_index_verify: true, //核销小程序
+    apps_index_verify: true,//废弃的核销小程序权限
+    apps_index_view:true,//店铺小程序权限
     channel_manage: true,
     channel_view: true,
     commission_agent_list_manage: true,
@@ -113,10 +114,10 @@ export function getJurisdiction(bool) {
                 }
                 res.prems = newPrems;
                 that.Cacher.setData('userJurisdiction', res);
-                if (res.prems['apps_index_manage-wxapp']) {
+                if (res.prems['apps_index_view']) {
                     resolve(res.prems);
                 } else if (!bool) {
-                    that.Toast('暂无该店铺权限');
+                    that.Toast('暂无店铺权限');
                     setTimeout(() => {
                         uni.redirectTo({
                             url: '/pagesLogin/pages/selectShop'

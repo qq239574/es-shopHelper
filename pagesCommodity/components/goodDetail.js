@@ -307,7 +307,7 @@
                  value: data.goods.dispatch_price,
                  dispatch_list: data.dispatch_list,
                  dispatch_id: data.goods.dispatch_id || 0,
-                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0] || '统一运费（元）',
+                 dispatch_name: data.dispatch_list.filter(item => (item.id == data.goods.dispatch_id)).map(item => item.name)[0] || data.goods.dispatch_price,
                  disabled: false, //可否编辑
                  editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                  needHide: data.goods.type == 2, //虚拟商品无快递运费相关选项，多出自动发货相关

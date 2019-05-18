@@ -2,15 +2,14 @@ import getShops from '../../pagesLogin/components/getShopList.js'
 import {
     getJurisdiction
 } from '../../components/my-components/getJurisdiction.js'
-let cacheData = {}; //缓存登录信息
-let Jurisdiction = null; //权限
+let cacheData = {}; //缓存登录信息 
 function checkJurisdiction() { //检查权限
     let that = this;
     return new Promise((resolve, reject) => {
-        getJurisdiction.call(that).then(res => {
+        getJurisdiction.call(that, true).then(res => {
             resolve(res);
         }).catch(res => {
-            res.message ? that.Toast(res.message) : that.Toast('无店铺助手权限');
+            that.closePageLoading();
             reject(res);
         })
     })
@@ -44,20 +43,21 @@ function selectShop() { //检测是否只有一个店铺
                     }).then(res => {
                         if (res.error == 0) {
                             checkJurisdiction.call(that).then(res => { //检查该店铺的权限
-                                if (res['apps_index_manage-wxapp']) {
+                                if (res['apps_index_view']) {
                                     uni.reLaunch({
                                         url: '../index/index?from=selectShop&status=onlyOne'
                                     });
                                 } else {
-                                    that.Toast('暂无店铺权限');
+                                    resolve()
                                 }
                             }).catch(res => {
-                                res.message && that.Toast(res.message)
+                                resolve()
                             })
                         } else {
                             that.Toast(res.message || '暂无店铺信息')
                         }
                     }).catch(res => {
+
                         that.Toast(res.message)
                     })
                 } else {

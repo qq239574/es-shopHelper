@@ -52,7 +52,7 @@ var _default =
         } else if (index == 0) {
           return _this.Jurisdiction['member_list_view']; //用户列表权限
         } else if (index == 1) {
-          return _this.Jurisdiction['apps_index_verify']; //核销小程序权限
+          return _this.Jurisdiction['apps_index_manage-wxapp']; //核销小程序权限
         }
         return true;
       });
