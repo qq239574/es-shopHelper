@@ -140,7 +140,7 @@
                     } else if (DataGo.go == 'componyList') {
                         this.provideInfo.provideComp = DataGo.data.label || '请选择';
                         sendBillInfo.express_id = DataGo.data.id;
-                    }
+                    } 
                     this.Request("canSendGoods", {
                         id: DataFrom.bill.bill.id
                     }).then(res => {
@@ -180,6 +180,8 @@
         onUnload() {
             this.Cacher.clearData('billProvide')
             this.Cacher.clearData('billId')
+            this.Cacher.clearData('billAddition')
+            this.Cacher.clearData('componyList')
         }
     };
 </script>

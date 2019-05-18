@@ -6,8 +6,9 @@ let test = {
     activity_manage_manage: true,
     activity_manage_view: true,
     apps_index_manage: true,
-    'apps_index_manage-wxapp': true, //核销小程序
+    'apps_index_manage-wxapp': true, //店铺助手权限
     apps_index_pay: true,
+    apps_index_verify: true, //核销小程序
     channel_manage: true,
     channel_view: true,
     commission_agent_list_manage: true,
@@ -78,7 +79,7 @@ let test = {
     'order_edit-invoice': true, //
     order_export: true,
     order_manage: true, //订单管理权限
-    order_overview_view: true,
+    order_overview_view: true, //订单概览
     order_send: true, //订单发货权限
     order_view: false, //订单查看权限
     sales_overview_view: true,
@@ -90,10 +91,10 @@ let test = {
     setting_operator_list_manage: true,
     setting_operator_list_view: true,
     setting_payment_index_manage: true,
-    statistics_goods_view: true,
+    statistics_goods_view: true, //商品统计查看
     statistics_index_view: true, //数据概览
-    statistics_member_view: true,
-    statistics_trade_view: true,
+    statistics_member_view: true, //会员统计查看
+    statistics_trade_view: true, //交易统计查看
     statistics_view_view: true,
 }
 export function getJurisdiction(bool) {
@@ -103,20 +104,33 @@ export function getJurisdiction(bool) {
         // if (cache.error == 0 && cache.prems) {
         //     resolve(cache.prems); //测试例子
         // } else {
-            that.Request('Jurisdiction').then(res => {
-                if (res.error == 0) {
-                    let prems = res.prems;
-                    let newPrems = {};
-                    for (let k in prems) {
-                        newPrems[k.replace(/\./g, '_')] = prems[k]
-                    }
-                    res.prems = newPrems;
-                    that.Cacher.setData('userJurisdiction', res);
-                    resolve(res.prems)
+        that.Request('Jurisdiction').then(res => {
+            if (res.error == 0) {
+                let prems = res.prems;
+                let newPrems = {};
+                for (let k in prems) {
+                    newPrems[k.replace(/\./g, '_')] = prems[k]
                 }
-            }).catch(res => {
-                reject(res)
-            })
+                res.prems = newPrems;
+                that.Cacher.setData('userJurisdiction', res);
+                if (res.prems['apps_index_manage-wxapp']) {
+                    resolve(res.prems);
+                } else if (!bool) {
+                    that.Toast('暂无该店铺权限');
+                    setTimeout(() => {
+                        uni.redirectTo({
+                            url: '/pagesLogin/pages/selectShop'
+                        })
+                    }, 1000)
+
+                } else {
+                    reject(res.prems);
+                }
+
+            }
+        }).catch(res => {
+            reject(res)
+        })
         // }
 
     })

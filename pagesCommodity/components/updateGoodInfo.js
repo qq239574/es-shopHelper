@@ -132,7 +132,7 @@ function addGoodType(old, list) { //添加修改子规格
     return types
 }
 export default function (val, cacheGoodDetail) {
-    let goodtype = cacheGoodDetail.info1.goodType.type||1; //1为实体 2为虚拟物品 3 卡密 4预约 5核销;
+    let goodtype = cacheGoodDetail.info1.goodType.type || 1; //1为实体 2为虚拟物品 3 卡密 4预约 5核销;
     let static_resources_domain = this.Cacher.getData('static_resources_domain');
     let reg = new RegExp(static_resources_domain, 'g');
 
@@ -199,12 +199,13 @@ export default function (val, cacheGoodDetail) {
         cacheGoodDetail.info2.specification.list = val.other.list;
         cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
         cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
+        cacheGoodDetail.info2.price.needHide = val.other.list.length > 0;
         let oldList = cacheGoodDetail.info2.childrenSpecs.list;
         cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list).map(item => {
             item.stock.needHide = goodtype == 3;
             item.cardStock.needHide = goodtype != 3;
             return item;
-        }); 
+        });
         cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
 
     } else if (val.label == '子规格详情') {
@@ -233,7 +234,7 @@ export default function (val, cacheGoodDetail) {
             item.stock.needHide = goodtype == 3;
             item.cardStock.needHide = goodtype != 3;
             return item;
-        }); 
+        });
     }
     return cacheGoodDetail;
 

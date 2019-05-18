@@ -99,7 +99,7 @@
             DataFrom = this.Cacher.getData(option.from) || {};
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
-                if (!res.goods_manage) { //无权限
+                if (!res.goods_view) { //无权限
                     uni.switchTab({
                         url: '/pages/index/index'
                     });

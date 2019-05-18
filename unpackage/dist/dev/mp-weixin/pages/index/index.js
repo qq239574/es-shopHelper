@@ -186,17 +186,19 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           label: newNotice[0].title || '',
           date: newNotice[0].date || '' };
 
+      });
+      this.Request('billOverView').then(function (res) {
         _this.billList = [{
           name: '待发货',
-          num: res.data.order_wait_send,
+          num: res.order_status.express,
           cateid: 1 },
         {
           name: '待付款',
-          num: res.data.order_wait_pay,
+          num: res.order_status.pay,
           cateid: 0 },
         {
           name: '维权订单',
-          num: res.data.order_refund }];
+          num: res.order_status.refund }];
 
       });
       ['yesterday', '7day', 'today'].forEach(function (item) {//一次性请求全部三段日期的数据
@@ -220,7 +222,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           _this.Toast(res.message);
         });
       });
-
       _bindWx.bindWx.call(this).then(function (res) {
         _this.closePageLoading();
       }).catch(function (res) {

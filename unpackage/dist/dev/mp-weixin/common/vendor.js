@@ -475,7 +475,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6571,7 +6571,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6592,14 +6592,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6668,7 +6668,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10876,7 +10876,7 @@ var uploadImg = { //上传图片
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.Jurisdiction = exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.manualCommissionStatus = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
+Object.defineProperty(exports, "__esModule", { value: true });exports.Jurisdiction = exports.sendCoupon = exports.getVipCoupons = exports.getCouponList = exports.changeVipScore = exports.changeVipMoney = exports.manualCommissionStatus = exports.changeCommissionStatus = exports.vipTradeInfo = exports.vipDetail = exports.vipList = exports.vipsTop10 = exports.goodsTop10 = exports.getHistoryData = exports.getTradeDataByDate = exports.getVipDataByDate = exports.getGoodDataByDate = exports.getGoodNumberByDate = exports.getGoodStatisticsData = exports.getStatisticsData = exports.checkDealInfo = exports.billOverView = exports.noticeList = exports.homeInfo = exports.shoplist = void 0;var shoplist = { //获取店铺列表
 
   url: '/api/site/account/shops/list',
   data: {
@@ -10905,6 +10905,16 @@ var noticeList = { //获取公告列表
 
   type: 'get' };exports.noticeList = noticeList;
 
+var billOverView = { //订单概览
+  url: '/shop/manage/order/index',
+  data: {},
+
+
+  headers: {},
+
+
+  type: 'get' };exports.billOverView = billOverView;
+
 var checkDealInfo = { //查询今天，昨天，7天的信息
   url: '/shop/manage/dashboard/deal-info',
   data: {
@@ -10914,6 +10924,7 @@ var checkDealInfo = { //查询今天，昨天，7天的信息
 
 
   type: 'get' };exports.checkDealInfo = checkDealInfo;
+
 
 var getStatisticsData = { //数据概览
   url: '/shop/manage/statistics/index',
@@ -11486,16 +11497,7 @@ var getVRCodeImg = { //获取图形验证码
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.changeUserPassword = exports.changeUserInfo = exports.myInfo = void 0;var myInfo = { //获取用户信息
-  url: '/api/site/account/profile/get-info',
-  data: {},
-
-
-  headers: {},
-
-
-  type: 'get' };exports.myInfo = myInfo;
-
+Object.defineProperty(exports, "__esModule", { value: true });exports.myInfo = exports.changeUserPassword = exports.changeUserInfo = void 0;
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
   data: {},
@@ -11515,6 +11517,17 @@ var changeUserPassword = { //修改用户密码
 
 
   type: 'post' };exports.changeUserPassword = changeUserPassword;
+
+
+var myInfo = { //获取用户信息
+  url: '/shop/manage/setting/operator/get-login-user',
+  data: {},
+
+
+  headers: {},
+
+
+  type: 'get' };exports.myInfo = myInfo;
 
 /***/ }),
 
@@ -11875,7 +11888,7 @@ function GetDateDiffNoAbs(startDate, endDate) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdiction = getJurisdiction;var test = {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdiction = getJurisdiction;var test = {
   'account-mode_manage': true,
   'account-mode_view': true,
   activity_index_create: true,
@@ -11883,8 +11896,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdi
   activity_manage_manage: true,
   activity_manage_view: true,
   apps_index_manage: true,
-  'apps_index_manage-wxapp': true, //核销小程序
+  'apps_index_manage-wxapp': true, //店铺助手权限
   apps_index_pay: true,
+  apps_index_verify: true, //核销小程序
   channel_manage: true,
   channel_view: true,
   commission_agent_list_manage: true,
@@ -11955,7 +11969,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdi
   'order_edit-invoice': true, //
   order_export: true,
   order_manage: true, //订单管理权限
-  order_overview_view: true,
+  order_overview_view: true, //订单概览
   order_send: true, //订单发货权限
   order_view: false, //订单查看权限
   sales_overview_view: true,
@@ -11967,10 +11981,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.getJurisdi
   setting_operator_list_manage: true,
   setting_operator_list_view: true,
   setting_payment_index_manage: true,
-  statistics_goods_view: true,
+  statistics_goods_view: true, //商品统计查看
   statistics_index_view: true, //数据概览
-  statistics_member_view: true,
-  statistics_trade_view: true,
+  statistics_member_view: true, //会员统计查看
+  statistics_trade_view: true, //交易统计查看
   statistics_view_view: true };
 
 function getJurisdiction(bool) {
@@ -11989,7 +12003,20 @@ function getJurisdiction(bool) {
         }
         res.prems = newPrems;
         that.Cacher.setData('userJurisdiction', res);
-        resolve(res.prems);
+        if (res.prems['apps_index_manage-wxapp']) {
+          resolve(res.prems);
+        } else if (!bool) {
+          that.Toast('暂无该店铺权限');
+          setTimeout(function () {
+            uni.redirectTo({
+              url: '/pagesLogin/pages/selectShop' });
+
+          }, 1000);
+
+        } else {
+          reject(res.prems);
+        }
+
       }
     }).catch(function (res) {
       reject(res);
@@ -11999,6 +12026,7 @@ function getJurisdiction(bool) {
   });
 
 }
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -13955,16 +13983,18 @@ function goodData(data) {//单规格商品
         id: '',
         value: data.goods.price,
         disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: data.goods.has_option != 0 },
+
       delPrice: { //划线价格
         label: '划线价格',
         id: '',
         value: data.goods.original_price,
         disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-      },
-      cardStock: { //划线价格
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: false },
+
+      cardStock: { // 
         label: '卡密库',
         id: virtual_card_id,
         value: cardType.name,
@@ -14653,6 +14683,7 @@ function _default(val, cacheGoodDetail) {
     cacheGoodDetail.info2.specification.list = val.other.list;
     cacheGoodDetail.info2.specification.id = val.other.list.length ? 'multi' : 'single';
     cacheGoodDetail.info2.specification.value = val.other.list.length ? '多规格' : '单规格';
+    cacheGoodDetail.info2.price.needHide = val.other.list.length > 0;
     var oldList = cacheGoodDetail.info2.childrenSpecs.list;
     cacheGoodDetail.info2.childrenSpecs.list = addGoodType(oldList, val.other.list).map(function (item) {
       item.stock.needHide = goodtype == 3;
@@ -15305,42 +15336,42 @@ function bindWx(rebind) {var _this2 = this;
     if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
       _this2.Request('myInfo').then(function (res) {//检查是否绑定了微信
         if (res.error == 0 && !res.user.wxapp_openid) {
-          _this2.Cacher.setData('needBindWx', {
+          that.Cacher.setData('needBindWx', {
             testWx: true, //尝试微信登录
             needBind: false, //需要绑定微信true需要
             haveBindWx: false });
 
-          _this2.closePageLoading();
-          _this2.Dialog.confirm({
+          that.closePageLoading();
+          that.Dialog.confirm({
             title: '没有绑定微信',
             message: '为方便您的使用，是否与微信账号绑定？',
             confirmButtonText: '绑定' }).
           then(function () {
-            _this2.pageLoading();
+            that.pageLoading();
             bindWechat.call(that, userInfo).then(function (res) {
-              _this2.Toast('绑定成功');
+              that.Toast('绑定成功');
               resolve(res);
             }).catch(function (res) {
-              _this2.Toast('绑定失败');
+              that.Toast('绑定失败');
               reject(res);
             });
           });
         }
       });
     } else if (rebind) {
-      var cacheData = _this2.Cacher.getData('login');
+      var cacheData = that.Cacher.getData('login');
       uni.getUserInfo({ // 获取用户信息
         provider: 'weixin',
-        success: function success(infoRes) {var _this3 = this;
+        success: function success(infoRes) {
 
           cacheData = Object.assign(cacheData, infoRes);
           that.Cacher.setData('login', cacheData);
           userInfo = cacheData;
           bindWechat.call(that, userInfo).then(function (res) {
-            _this3.Toast('绑定成功');
+            that.Toast('绑定成功');
             resolve(res);
           }).catch(function (res) {
-            _this3.Toast('绑定失败');
+            that.Toast('绑定失败');
             reject(res);
           });
         },
@@ -15365,16 +15396,36 @@ function bindWx(rebind) {var _this2 = this;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+
 var cacheData = {}; //缓存登录信息
+var Jurisdiction = null; //权限
+function checkJurisdiction() {//检查权限
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    _getJurisdiction.getJurisdiction.call(that).then(function (res) {
+      resolve(res);
+    }).catch(function (res) {
+      res.message ? that.Toast(res.message) : that.Toast('无店铺助手权限');
+      reject(res);
+    });
+  });
+
+}
+
 function selectShop() {//检测是否只有一个店铺
   var that = this;
+
   return new Promise(function (resolve, reject) {
     that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
       pageSize: 2,
       page: 1 }).
     then(function (res) {
+
       if (res.error == 0) {
+
         var shops = (0, _getShopList.default)(res.list);
 
         if (shops.length == 1) {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
@@ -15390,13 +15441,22 @@ function selectShop() {//检测是否只有一个店铺
             id: shop.shopInfo.id }).
           then(function (res) {
             if (res.error == 0) {
-              uni.reLaunch({
-                url: '../index/index?from=selectShop&status=onlyOne' });
+              checkJurisdiction.call(that).then(function (res) {//检查该店铺的权限
+                if (res['apps_index_manage-wxapp']) {
+                  uni.reLaunch({
+                    url: '../index/index?from=selectShop&status=onlyOne' });
 
-              reject();
+                } else {
+                  that.Toast('暂无店铺权限');
+                }
+              }).catch(function (res) {
+                res.message && that.Toast(res.message);
+              });
             } else {
-              resolve();
+              that.Toast(res.message || '暂无店铺信息');
             }
+          }).catch(function (res) {
+            that.Toast(res.message);
           });
         } else {
           resolve();
@@ -15407,8 +15467,12 @@ function selectShop() {//检测是否只有一个店铺
     }).catch(function (res) {
       resolve();
     });
+
+
   });
 }
+
+
 function wxLogin() {//微信登录流程
   var that = this;
   return new Promise(function (resolve, reject) {

@@ -127,7 +127,7 @@
             }
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
-                if (!res.order_manage) {//无权限
+                if (!res.order_view) {//无权限
                     uni.switchTab({
                         url: '/pages/index/index'
                     });

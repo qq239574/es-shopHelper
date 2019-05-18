@@ -38,11 +38,11 @@
             showApps() {
                 return this.list.filter((item, index) => {
                     if (index == 2) {
-                        return this.Jurisdiction['statistics_index_view']
+                        return this.Jurisdiction['statistics_index_view']; //数据概览权限
                     } else if (index == 0) {
-                        return this.Jurisdiction['member_list_view']
+                        return this.Jurisdiction['member_list_view']; //用户列表权限
                     } else if (index == 1) {
-                        return this.Jurisdiction['apps_index_manage-wxapp']
+                        return this.Jurisdiction['apps_index_verify']; //核销小程序权限
                     }
                     return true;
                 })
@@ -64,7 +64,7 @@
             box-sizing: border-box;
             background: #fff;
             width: 704upx;
-            margin: 0 auto  ;
+            margin: 0 auto;
             border-radius: 8upx;
             display: flex;
             flex-wrap: wrap;

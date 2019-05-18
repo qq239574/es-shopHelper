@@ -140,7 +140,7 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
     loginWithWx: function loginWithWx() {
       this.closePageLoading();
     },
-    loginNow: function loginNow(e) {var _this3 = this; //点击登录
+    loginNow: function loginNow(e) {var _this3 = this; //点击登录 
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();

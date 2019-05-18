@@ -1,15 +1,15 @@
 <template>
     <view class="echarts page">
-        <echartBlock :info='dataList[0]'>
+        <echartBlock :info='dataList[0]' v-if='Jurisdiction.statistics_trade_view'>
             <mpvue-echarts class="ec-canvas" lazyLoad :onInit="lineInit1" canvasId="line" ref="lineChart1" />
         </echartBlock>
-        <echartBlock :info='dataList[1]'>
+        <echartBlock :info='dataList[1]' v-if='Jurisdiction.order_overview_view'>
             <mpvue-echarts class="ec-canvas" lazyLoad :onInit="lineInit2" canvasId="line" ref="lineChart2" />
         </echartBlock>
-        <echartBlock :info='dataList[2]'>
+        <echartBlock :info='dataList[2]' v-if='Jurisdiction.statistics_goods_view'>
             <mpvue-echarts class="ec-canvas" lazyLoad :onInit="lineInit3" canvasId="line" ref="lineChart3" />
         </echartBlock>
-        <echartBlock :info='dataList[3]'>
+        <echartBlock :info='dataList[3]' v-if='Jurisdiction.statistics_member_view'>
             <mpvue-echarts class="ec-canvas" lazyLoad :onInit="lineInit4" canvasId="line" ref="lineChart4" />
         </echartBlock>
         <topList></topList>
@@ -34,7 +34,10 @@
     } from '../components/Index-EchartsOption.js';
     import {
         getDate
-    } from '../../components/my-components/getDateSection.js'
+    } from '../../components/my-components/getDateSection.js';
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js';
     let initing = false; //是否正在刷新
     /**
      * 缓存接口数据
@@ -73,8 +76,16 @@
     export default {
         data() {
             return {
+                Jurisdiction: {},
                 dataList: initdata,
             }
+        },
+        onLoad() {
+            getJurisdiction.call(this).then(res => {
+                this.Jurisdiction = res;
+            }).catch(res => {
+                this.Toast(res.message)
+            })
         },
         onShow() {
             this.initPage()
@@ -144,7 +155,7 @@
                         this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
                         this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
                         this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
-                        cacheDataList[0].today = number_format(res.order_pay_price, 2, '.', '');
+                        cacheDataList[0].today = res.order_pay_price;
                         cacheDataList[1].today = res.order_pay_count;
                         cacheDataList[3].today = res.order_member_count;
                         reqResult.push(1);

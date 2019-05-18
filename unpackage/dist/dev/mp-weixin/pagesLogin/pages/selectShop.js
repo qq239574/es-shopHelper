@@ -30,12 +30,16 @@
 
 
 
-var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+
+
 var DataFrom = {};
 var DataGo = {};
 var pageId = 'selectShop';
 var ajaxIndex = 1; //当前是第几次请求 
-var requesting = false;var _default =
+var requesting = false;
+var enteringShop = false;var _default =
 {
   components: {
     search: search,
@@ -53,18 +57,41 @@ var requesting = false;var _default =
   },
   methods: {
     selectShop: function selectShop(item) {var _this = this;
-      item.totalShops = this.totalShop;
-      this.Cacher.setData(pageId, item);
-      this.pageLoading();
-      this.Request('switchShop', { //切换店铺
-        id: item.shopInfo.id }).
-      then(function (res) {
-        _this.searchShop = '';
-        _this.toIndex('from=selectShop&status=selectShop');
-        _this.closePageLoading();
-      }).catch(function (res) {
-        if (res) {}
-      });
+      if (!enteringShop) {
+        enteringShop = true;
+        var that = this;
+        item.totalShops = this.totalShop;
+        this.Cacher.setData(pageId, item);
+        this.pageLoading();
+        this.Request('switchShop', { //切换店铺
+          id: item.shopInfo.id }).
+        then(function (res) {
+          if (res.error == 0) {
+            _getJurisdiction.getJurisdiction.call(that, true).then(function (res) {//检查该店铺的权限,true是防止死循环在该页，会自动返回该页
+              enteringShop = false;
+              if (res['apps_index_manage-wxapp']) {
+                _this.searchShop = '';
+                _this.toIndex('from=selectShop&status=selectShop');
+                _this.closePageLoading();
+              } else {
+                that.Toast('暂无店铺权限');
+              }
+            }).catch(function (res) {
+              enteringShop = false;
+              res.message && that.Toast(res.message);
+            });
+          } else {
+            that.Toast('请求失败，请重试');
+          }
+        }).catch(function (res) {
+          enteringShop = false;
+          res.message && that.Toast(res.message);
+        });
+      } else {
+        setTimeout(function () {
+          enteringShop = false;
+        }, 3000);
+      }
     },
     reLogin: function reLogin() {//切换登录账号
       this.Cacher.setData(pageId, {

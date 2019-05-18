@@ -56,13 +56,13 @@
 		methods: {
 			initPage() {
 				this.Request('myInfo').then(res => {
-					this.userName = res.user.contact;
-					this.userTel = res.user.username;
-					this.contact_mobile = res.user.contact_mobile;
-					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
-					this.realName = res.user.contact;
-					this.userId =res.user[res.user.account_type]||res.user.mobile||res.user.email||res.user.username;
-					this.wxapp_openid=res.user.wxapp_openid;
+					this.userName = res.contact;
+					this.userTel = res.username;
+					this.contact_mobile = res.contact_mobile;
+					this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
+					this.realName = res.contact;
+					this.userId =res[res.account_type]||res.mobile||res.email||res.username;
+					this.wxapp_openid=res.wxapp_openid;
 				}) 
 			},
 			toPage(val) {

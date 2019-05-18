@@ -61,7 +61,7 @@
                             this.list = this.list.concat(res.list.map(item => {
                                 return {
                                     title: item.title,
-                                    brief: item.content_text,
+                                    brief: item.description,
                                     date: item.create_time,
                                     img: item.thumb,
                                     content: item.content,

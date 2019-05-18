@@ -190,6 +190,8 @@ var _default = {
   onUnload: function onUnload() {
     this.Cacher.clearData('billProvide');
     this.Cacher.clearData('billId');
+    this.Cacher.clearData('billAddition');
+    this.Cacher.clearData('componyList');
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

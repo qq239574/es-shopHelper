@@ -66,13 +66,13 @@ var DataFrom = {};var _default =
   methods: {
     initPage: function initPage() {var _this = this;
       this.Request('myInfo').then(function (res) {
-        _this.userName = res.user.contact;
-        _this.userTel = res.user.username;
-        _this.contact_mobile = res.user.contact_mobile;
-        _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
-        _this.realName = res.user.contact;
-        _this.userId = res.user[res.user.account_type] || res.user.mobile || res.user.email || res.user.username;
-        _this.wxapp_openid = res.user.wxapp_openid;
+        _this.userName = res.contact;
+        _this.userTel = res.username;
+        _this.contact_mobile = res.contact_mobile;
+        _this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
+        _this.realName = res.contact;
+        _this.userId = res[res.account_type] || res.mobile || res.email || res.username;
+        _this.wxapp_openid = res.wxapp_openid;
       });
     },
     toPage: function toPage(val) {

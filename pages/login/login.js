@@ -1,13 +1,33 @@
 import getShops from '../../pagesLogin/components/getShopList.js'
+import {
+    getJurisdiction
+} from '../../components/my-components/getJurisdiction.js'
 let cacheData = {}; //缓存登录信息
+let Jurisdiction = null; //权限
+function checkJurisdiction() { //检查权限
+    let that = this;
+    return new Promise((resolve, reject) => {
+        getJurisdiction.call(that).then(res => {
+            resolve(res);
+        }).catch(res => {
+            res.message ? that.Toast(res.message) : that.Toast('无店铺助手权限');
+            reject(res);
+        })
+    })
+
+}
+
 function selectShop() { //检测是否只有一个店铺
-    let that=this;
+    let that = this;
+
     return new Promise((resolve, reject) => {
         that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
             pageSize: 2,
             page: 1,
         }).then(res => {
+
             if (res.error == 0) {
+
                 let shops = getShops(res.list);
 
                 if (shops.length == 1) { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
@@ -23,13 +43,22 @@ function selectShop() { //检测是否只有一个店铺
                         id: shop.shopInfo.id
                     }).then(res => {
                         if (res.error == 0) {
-                            uni.reLaunch({
-                                url: '../index/index?from=selectShop&status=onlyOne'
-                            });
-                            reject()
+                            checkJurisdiction.call(that).then(res => { //检查该店铺的权限
+                                if (res['apps_index_manage-wxapp']) {
+                                    uni.reLaunch({
+                                        url: '../index/index?from=selectShop&status=onlyOne'
+                                    });
+                                } else {
+                                    that.Toast('暂无店铺权限');
+                                }
+                            }).catch(res => {
+                                res.message && that.Toast(res.message)
+                            })
                         } else {
-                            resolve()
+                            that.Toast(res.message || '暂无店铺信息')
                         }
+                    }).catch(res => {
+                        that.Toast(res.message)
                     })
                 } else {
                     resolve()
@@ -40,8 +69,12 @@ function selectShop() { //检测是否只有一个店铺
         }).catch(res => {
             resolve()
         })
+
+
     })
 }
+
+
 export function wxLogin() { //微信登录流程
     let that = this;
     return new Promise((resolve, reject) => {
@@ -168,7 +201,7 @@ export function login() { //账号密码登录流程
                     resolve(res);
                 })
             } else {
-                if (res.message == '帐号不存在' || res.message == '帐号或密码错误') {//统一提示‘账号或密码错误’
+                if (res.message == '帐号不存在' || res.message == '帐号或密码错误') { //统一提示‘账号或密码错误’
                     reject(res);
                 } else {
                     that.Toast(res.message)

@@ -213,6 +213,7 @@
                  value: data.goods.price,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide:data.goods.has_option != 0 
              },
              delPrice: { //划线价格
                  label: '划线价格',
@@ -220,8 +221,9 @@
                  value: data.goods.original_price,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide:false 
              },
-             cardStock: { //划线价格
+             cardStock: { // 
                  label: '卡密库',
                  id: virtual_card_id,
                  value: cardType.name,

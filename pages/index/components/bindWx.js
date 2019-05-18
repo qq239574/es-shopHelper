@@ -34,30 +34,30 @@ export function bindWx(rebind) {
         if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
             this.Request('myInfo').then(res => { //检查是否绑定了微信
                 if (res.error == 0 && !res.user.wxapp_openid) {
-                    this.Cacher.setData('needBindWx', {
+                    that.Cacher.setData('needBindWx', {
                         testWx: true, //尝试微信登录
                         needBind: false, //需要绑定微信true需要
                         haveBindWx: false
                     })
-                    this.closePageLoading();
-                    this.Dialog.confirm({
+                    that.closePageLoading();
+                    that.Dialog.confirm({
                         title: '没有绑定微信',
                         message: '为方便您的使用，是否与微信账号绑定？',
                         confirmButtonText: '绑定'
                     }).then(() => {
-                        this.pageLoading();
+                        that.pageLoading();
                         bindWechat.call(that, userInfo).then(res => {
-                            this.Toast('绑定成功');
+                            that.Toast('绑定成功');
                             resolve(res)
                         }).catch(res => {
-                            this.Toast('绑定失败');
+                            that.Toast('绑定失败');
                             reject(res)
                         })
                     });
                 }
             })
         } else if (rebind) {
-            let cacheData = this.Cacher.getData('login')
+            let cacheData = that.Cacher.getData('login')
             uni.getUserInfo({ // 获取用户信息
                 provider: 'weixin',
                 success: function (infoRes) {
@@ -66,10 +66,10 @@ export function bindWx(rebind) {
                     that.Cacher.setData('login', cacheData);
                     userInfo=cacheData;
                     bindWechat.call(that, userInfo).then(res => {
-                        this.Toast('绑定成功');
+                        that.Toast('绑定成功');
                         resolve(res);
                     }).catch(res => {
-                        this.Toast('绑定失败');
+                        that.Toast('绑定失败');
                         reject(res);
                     })
                 },

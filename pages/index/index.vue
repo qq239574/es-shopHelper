@@ -7,7 +7,7 @@
             <view class="button" @click='changeShop' v-if='showTurnShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
-        <dataShower :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
+        <dataShower :Jurisdiction='Jurisdiction' :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
         <view class="block">
             <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
@@ -16,7 +16,7 @@
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
-        <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_view'></goodsBlock>
+        <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_overview_view'></goodsBlock>
         <apps @click='toApp' :Jurisdiction='Jurisdiction'></apps>
         <MyTabbar :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
@@ -176,17 +176,19 @@
                         label: newNotice[0].title || '',
                         date: newNotice[0].date || ''
                     }
+                });
+                this.Request('billOverView').then(res => {
                     this.billList = [{
                         name: '待发货',
-                        num: res.data.order_wait_send,
+                        num: res.order_status.express,
                         cateid: 1
                     }, {
                         name: '待付款',
-                        num: res.data.order_wait_pay,
+                        num: res.order_status.pay,
                         cateid: 0
                     }, {
                         name: '维权订单',
-                        num: res.data.order_refund
+                        num: res.order_status.refund
                     }]
                 });
                 ['yesterday', '7day', 'today'].forEach(item => { //一次性请求全部三段日期的数据
@@ -210,10 +212,9 @@
                         this.Toast(res.message);
                     });
                 });
-                
-                bindWx.call(this).then(res=>{
+                bindWx.call(this).then(res => {
                     this.closePageLoading();
-                }).catch(res=>{
+                }).catch(res => {
                     this.closePageLoading();
                 }); //微信绑定
             }
