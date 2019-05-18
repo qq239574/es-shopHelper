@@ -36,12 +36,15 @@
         getDate,
         GetDateDiffNoAbs
     } from '../../components/my-components/getDateSection.js'
+    import {
+        bindWx
+    } from './components/bindWx.js'
     let DataFrom = {};
     let newNotice = {};
     let searchDay = {
         value: 'today'
     };
-    let cacheData = { }
+    let cacheData = {}
     import {
         getJurisdiction
     } from '../../components/my-components/getJurisdiction.js'
@@ -123,7 +126,6 @@
                         url: '../../pagesIndex/pages/vipManage?from=home'
                     })
                 } else if (val.title == '自提核销') {
-                    
                     uni.navigateTo({
                         url: '../../pagesSelfTakeVerify/pages/index?from=home'
                     })
@@ -186,8 +188,7 @@
                         name: '维权订单',
                         num: res.data.order_refund
                     }]
-                })
-                let userInfo = this.Cacher.getData('login');
+                });
                 ['yesterday', '7day', 'today'].forEach(item => { //一次性请求全部三段日期的数据
                     this.Request('checkDealInfo', {
                         type: item
@@ -208,33 +209,9 @@
                         this.closePageLoading();
                         this.Toast(res.message);
                     });
-                })
-                // if (!userInfo.haveBindWx && userInfo.encryptedData) {
-                //     this.closePageLoading();
-                //     this.Dialog.confirm({
-                //         title: '没有绑定微信',
-                //         message: '为方便您的使用，是否与微信账号绑定？',
-                //         confirmButtonText: '绑定'
-                //     }).then(() => {
-                //         this.pageLoading();
-                //         this.Request('bindWechat', {
-                //             encrypted_data: userInfo.encryptedData,
-                //             session_key: userInfo.session_key,
-                //             iv: userInfo.iv,
-                //             user_id: userInfo.userId
-                //         }).then(res => {
-                //             this.closePageLoading();
-                //             if (res.error == 0) {
-                //                 this.Toast('绑定成功')
-                //             } else {
-                //                 this.Toast('绑定失败')
-                //             }
-                //         }).catch(res => {
-                //             this.closePageLoading();
-                //             this.Toast(res.message)
-                //         })
-                //     });
-                // }
+                });
+                
+                bindWx.call(this); //微信绑定
             }
         },
         onPullDownRefresh() {
@@ -244,7 +221,6 @@
             uni.hideTabBar({ //隐藏tabbar
                 animation: false
             })
-            
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData('selectShop');
             this.shopName = DataFrom.title;

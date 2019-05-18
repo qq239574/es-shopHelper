@@ -63,7 +63,6 @@ var domain = '';var _default =
   methods: {
     clickItem: function clickItem(info) {
       if (DataFrom.show == 'vip') {
-        console.log(info);
         this.Cacher.setData('toper', {
           from: 'toper',
           detail: {

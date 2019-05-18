@@ -46,6 +46,9 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 
 
 
+var _bindWx = __webpack_require__(/*! ./components/bindWx.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\bindWx.js");
+
+
 
 
 
@@ -133,7 +136,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           url: '../../pagesIndex/pages/vipManage?from=home' });
 
       } else if (val.title == '自提核销') {
-
         uni.navigateTo({
           url: '../../pagesSelfTakeVerify/pages/index?from=home' });
 
@@ -197,7 +199,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           num: res.data.order_refund }];
 
       });
-      var userInfo = this.Cacher.getData('login');
       ['yesterday', '7day', 'today'].forEach(function (item) {//一次性请求全部三段日期的数据
         _this.Request('checkDealInfo', {
           type: item }).
@@ -219,32 +220,8 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
           _this.Toast(res.message);
         });
       });
-      // if (!userInfo.haveBindWx && userInfo.encryptedData) {
-      //     this.closePageLoading();
-      //     this.Dialog.confirm({
-      //         title: '没有绑定微信',
-      //         message: '为方便您的使用，是否与微信账号绑定？',
-      //         confirmButtonText: '绑定'
-      //     }).then(() => {
-      //         this.pageLoading();
-      //         this.Request('bindWechat', {
-      //             encrypted_data: userInfo.encryptedData,
-      //             session_key: userInfo.session_key,
-      //             iv: userInfo.iv,
-      //             user_id: userInfo.userId
-      //         }).then(res => {
-      //             this.closePageLoading();
-      //             if (res.error == 0) {
-      //                 this.Toast('绑定成功')
-      //             } else {
-      //                 this.Toast('绑定失败')
-      //             }
-      //         }).catch(res => {
-      //             this.closePageLoading();
-      //             this.Toast(res.message)
-      //         })
-      //     });
-      // }
+
+      _bindWx.bindWx.call(this); //微信绑定
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {
@@ -253,7 +230,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
   onLoad: function onLoad(option) {var _this2 = this;
     uni.hideTabBar({ //隐藏tabbar
       animation: false });
-
 
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData('selectShop');

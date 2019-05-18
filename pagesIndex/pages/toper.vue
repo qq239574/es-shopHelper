@@ -52,8 +52,7 @@
         },
         methods: {
             clickItem(info) {
-                if (DataFrom.show == 'vip') {
-                    console.log(info)
+                if (DataFrom.show == 'vip') { 
                     this.Cacher.setData('toper', {
                         from: 'toper',
                         detail: {

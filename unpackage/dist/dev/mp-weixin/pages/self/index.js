@@ -36,7 +36,11 @@
 
 
 
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar3 */ "components/my-components/myTabbar3").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar3 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");
+
+
+var _bindWx = __webpack_require__(/*! ../index/components/bindWx.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\bindWx.js");var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar3 */ "components/my-components/myTabbar3").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar3 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};
 
 
 var DataFrom = {};var _default =
@@ -66,11 +70,7 @@ var DataFrom = {};var _default =
         _this.contact_mobile = res.user.contact_mobile;
         _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
         _this.realName = res.user.contact;
-      });
-      this.Request('myAccount').then(function (res) {
-        if (res.error == 0) {
-          _this.userId = res.settings.account;
-        }
+        _this.userId = res.user[res.user.account_type] || res.user.mobile || res.user.email || res.user.username;
       });
     },
     toPage: function toPage(val) {
@@ -109,15 +109,9 @@ var DataFrom = {};var _default =
       }
     },
     clickManager: function clickManager() {},
-    bindWX: function bindWX() {
+    reBindWX: function reBindWX() {
       this.closePageLoading();
-      this.Request('bindWechat', {
-        encrypted_data: '',
-        session_key: '',
-        iv: '',
-        user_id: '' });
-
-      this.Toast('绑定微信成功');
+      _bindWx.bindWx.call(this, true);
     },
     leave: function leave() {var _this2 = this;
       this.closePageLoading();

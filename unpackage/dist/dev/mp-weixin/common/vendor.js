@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,7 +6504,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6525,14 +6525,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6601,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -11418,7 +11418,7 @@ var getVRCodeImg = { //获取图形验证码
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.changeUserPassword = exports.changeUserInfo = exports.myAccount = exports.myInfo = void 0;var myInfo = { //获取用户信息
+Object.defineProperty(exports, "__esModule", { value: true });exports.changeUserPassword = exports.changeUserInfo = exports.myInfo = void 0;var myInfo = { //获取用户信息
   url: '/api/site/account/profile/get-info',
   data: {},
 
@@ -11427,16 +11427,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.changeUser
 
 
   type: 'get' };exports.myInfo = myInfo;
-
-var myAccount = { //获取账号信息
-  url: '/api/site/account/login',
-  data: {},
-
-
-  headers: {},
-
-
-  type: 'get' };exports.myAccount = myAccount;
 
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
@@ -15203,6 +15193,89 @@ function _default()
 
 /***/ }),
 
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\bindWx.js":
+/*!**************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/index/components/bindWx.js ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.bindWx = bindWx;var userInfo = null;
+var needBindWx = null;
+
+function bindWechat() {var _this = this;
+  return new Promise(function (resolve, reject) {
+    _this.Request('bindWechat', {
+      encrypted_data: userInfo.encryptedData,
+      session_key: userInfo.session_key,
+      iv: userInfo.iv,
+      user_id: userInfo.userId }).
+    then(function (res) {
+      if (res.error == 0) {
+        _this.Cacher.setData('needBindWx', {
+          testWx: true, //尝试微信登录
+          needBind: false, //需要绑定微信true需要
+          haveBindWx: true });
+
+        resolve(res);
+      } else {
+        reject(res);
+      }
+    }).catch(function (res) {
+      reject(res);
+    });
+  });
+
+}
+
+function bindWx(rebind) {var _this2 = this;
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    userInfo = _this2.Cacher.getData('login');
+    needBindWx = _this2.Cacher.getData('needBindWx');
+    if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
+      _this2.Request('myInfo').then(function (res) {//检查是否绑定了微信
+        if (res.error == 0 && !res.user.wxapp_openid) {
+          _this2.Cacher.setData('needBindWx', {
+            testWx: true, //尝试微信登录
+            needBind: false, //需要绑定微信true需要
+            haveBindWx: false });
+
+          _this2.closePageLoading();
+          _this2.Dialog.confirm({
+            title: '没有绑定微信',
+            message: '为方便您的使用，是否与微信账号绑定？',
+            confirmButtonText: '绑定' }).
+          then(function () {
+            _this2.pageLoading();
+            bindWechat.call(that, userInfo).then(function (res) {
+              _this2.Toast('绑定成功');
+              resolve(res);
+            }).catch(function (res) {
+              _this2.Toast('绑定失败');
+              reject(res);
+            });
+          });
+        }
+      });
+    } else if (rebind) {
+
+
+      bindWechat.call(that, userInfo).then(function (res) {
+        _this2.Toast('绑定成功');
+        resolve(res);
+      }).catch(function (res) {
+        _this2.Toast('绑定失败');
+        reject(res);
+      });
+    }
+  });
+
+}
+
+/***/ }),
+
 /***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\login\\login.js":
 /*!**************************************************************************!*\
   !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/login/login.js ***!
@@ -15213,7 +15286,7 @@ function _default()
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 var cacheData = {}; //缓存登录信息
-function selectShop() {var _this = this;
+function selectShop() {var _this = this; //检测是否只有一个店铺
   return new Promise(function (resolve, reject) {
     _this.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
       pageSize: 2,
@@ -15254,87 +15327,89 @@ function selectShop() {var _this = this;
     });
   });
 }
-function wxLogin() {
+function wxLogin() {//微信登录流程
   var that = this;
   return new Promise(function (resolve, reject) {
-    uni.getProvider({
-      service: 'oauth',
-      success: function success(res) {
-        if (~res.provider.indexOf('weixin')) {
-          uni.login({ //微信登录
-            provider: 'weixin',
-            success: function success(loginRes) {
-              console.log('loginRes', loginRes);
-              that.Request('wechatLogin', { //小程序获取登录session
-                code: loginRes.code }).
-              then(function (res) {
-                if (res.error == 0) {
-                  cacheData = res;
-                  uni.getUserInfo({ // 获取用户信息
-                    provider: 'weixin',
-                    success: function success(infoRes) {
-                      cacheData = Object.assign(cacheData, infoRes);
-                      that.Cacher.setData('login', cacheData);
-                      that.Request('login', {
-                        account: '',
-                        password: '',
-                        open_id: res.openid,
-                        is_authorization: 1 }).
-                      then(function (res) {
-                        // 验证通过
-                        cacheData = Object.assign(cacheData, {
-                          haveBindWx: res.error == 0 && res.open_id });
+    uni.login({ //微信登录
+      provider: 'weixin',
+      success: function success(loginRes) {var _this2 = this;
+        that.Request('wechatLogin', { //小程序获取登录session
+          code: loginRes.code }).
+        then(function (res) {
+          if (res.error == 0) {
+            cacheData = res;
+            uni.getUserInfo({ // 获取用户信息
+              provider: 'weixin',
+              success: function success(infoRes) {
+                cacheData = Object.assign(cacheData, infoRes);
+                that.Cacher.setData('login', cacheData);
+                that.Cacher.setData('needBindWx', {
+                  testWx: true, //尝试微信登录
+                  needBind: false, //需要绑定微信true需要
+                  haveBind: true //已经绑定
+                });
+                that.Request('login', {
+                  account: '',
+                  password: '',
+                  open_id: res.openid,
+                  is_authorization: 1 }).
+                then(function (res) {
+                  // 验证通过
+                  cacheData = Object.assign(cacheData, {
+                    haveBindWx: res.error == 0 && res.open_id });
 
-                        that.Cacher.setData('login', cacheData);
-                        if (res.error == 0) {
-                          resolve(res);
-                        } else {
+                  that.Cacher.setData('login', cacheData);
+                  if (res.error == 0) {
+                    selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+                      resolve(res);
+                    });
+                  } else {
+                    reject(res);
+                  }
+                  that.closePageLoading();
+                }).catch(function (res) {
+                  cacheData = that.Cacher.getData('login') || {};
+                  cacheData = Object.assign(cacheData, {
+                    haveBindWx: false });
 
-                          reject(res);
+                  that.Cacher.setData('login', cacheData);
+                  if (res.error == -3) {//已登录
+                    selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+                      resolve(res);
+                    });
+                  } else {
+                    reject(res);
+                  }
+                });
 
-                        }
-                        that.closePageLoading();
-                      }).catch(function (res) {
-                        cacheData = that.Cacher.getData('login') || {};
-                        cacheData = Object.assign(cacheData, {
-                          haveBindWx: false });
-
-                        that.Cacher.setData('login', cacheData);
-                        if (res.error == -3) {//已登录
-                          resolve(res);
-                        } else {
-                          reject(res);
-                        }
-                      });
-
-                    },
-                    fail: function fail(res) {
-                      console.log('get info fails', res);
-                    } });
+              },
+              fail: function fail(res) {
+                console.log('get info fails', res);
+              } });
 
 
-                }
-              }).catch(function (res) {
-                reject(res);
-              });
-            } });
-
-        }
+          }
+        }).catch(function (res) {
+          _this2.Cacher.setData('needBindWx', {
+            testWx: true, //尝试微信登录
+            needBind: true //需要绑定微信true需要
+          });
+          reject(res);
+        });
       } });
 
   });
-
 }
 
-function login() {var _this2 = this;
+function login() {var _this3 = this; //账号密码登录流程
   var that = this;
   var cacheData = this.Cacher.getData('login') || {};
 
   return new Promise(function (resolve, reject) {
 
-    _this2.Request('login', {
-      account: _this2.userId,
-      password: _this2.password,
+    _this3.Request('login', {
+      account: _this3.userId,
+      password: _this3.password,
       is_authorization: 0 }).
     then(function (res) {
       // 验证通过
@@ -15343,33 +15418,33 @@ function login() {var _this2 = this;
           userId: res.uid });
 
         that.Cacher.setData('cache-user-login', {
-          userId: _this2.userId,
-          password: _this2.password });
+          userId: _this3.userId,
+          password: _this3.password });
 
         that.Cacher.setData('login', cacheData);
-        selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
+        selectShop.call(_this3).then(function (r) {//先判断是否只有一个店铺
           resolve(res);
         });
 
       } else {
         reject(res);
-        _this2.Toast(res.message);
+        _this3.Toast(res.message);
       }
-      _this2.closePageLoading();
+      _this3.closePageLoading();
     }).catch(function (res) {
 
       if (res.error == -3) {//已登录
         that.Cacher.setData('login', cacheData);
         that.Cacher.setData('cache-user-login', {
-          userId: _this2.userId,
-          password: _this2.password });
+          userId: _this3.userId,
+          password: _this3.password });
 
-        selectShop.call(_this2).then(function (r) {//先判断是否只有一个店铺
+        selectShop.call(_this3).then(function (r) {//先判断是否只有一个店铺
           resolve(res);
         });
       } else {
         reject(res);
-        _this2.Toast(res.message);
+        _this3.Toast(res.message);
       }
     });
 

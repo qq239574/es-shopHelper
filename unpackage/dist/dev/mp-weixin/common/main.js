@@ -77,7 +77,7 @@ var pageLoadingBar = '';var _loadMore = '';var DataGo = {};var _default = _defin
           title: '加载中' });
 
         _this.pageIsLoading = false;
-      }, 2000);
+      }, 10000);
     },
     closePageLoading: function closePageLoading() {
       clearTimeout(pageLoadingBar);

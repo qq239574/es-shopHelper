@@ -13,7 +13,8 @@
 		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX' v-if='wxInfo.nickName'></selectItem>
+		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-if='wxInfo.nickName'></selectItem>
+		<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-else></selectItem>
 		<view class="margin20"></view>
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
@@ -29,6 +30,9 @@
 	import {
 		getJurisdiction
 	} from '../../components/my-components/getJurisdiction.js'
+	import {
+		bindWx
+	} from '../index/components/bindWx.js'
 	let DataFrom = {};
 	export default {
 		components: {
@@ -56,12 +60,8 @@
 					this.contact_mobile = res.user.contact_mobile;
 					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
 					this.realName = res.user.contact;
-				})
-				this.Request('myAccount').then(res => {
-					if (res.error == 0) {
-						this.userId = res.settings.account;
-					}
-				})
+					this.userId =res.user[res.user.account_type]||res.user.mobile||res.user.email||res.user.username;
+				}) 
 			},
 			toPage(val) {
 				if (val == 'name') {
@@ -99,15 +99,9 @@
 				}
 			},
 			clickManager() {},
-			bindWX() {
+			reBindWX() { 
 				this.closePageLoading();
-				this.Request('bindWechat', {
-					encrypted_data: '',
-					session_key: '',
-					iv: '',
-					user_id: ''
-				})
-				this.Toast('绑定微信成功')
+				bindWx.call(this, true);
 			},
 			leave() {
 				this.closePageLoading();
@@ -189,6 +183,8 @@
 			width: 100%;
 			height: fit-content;
 			margin-top: 10upx;
+			white-space: pre-wrap;
+			word-break: break-all;
 		}
 		.manager {
 			position: absolute;

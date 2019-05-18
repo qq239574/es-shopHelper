@@ -2,8 +2,8 @@
     <view class='multi-block grace-form'>
         <view class="block" v-for='(item,index) in info' :key='index'>
             <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem>
-            <inputItem :other='item' label='价格' :value='item.price.value' @input='inputCell'></inputItem>
-            <inputItem :other='item' label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' type='digit' label='价格' :value='item.price.value' @input='inputCell'></inputItem>
+            <inputItem :other='item' type='number' label='库存' :value='item.stock.value' @input='inputCell'></inputItem>
             <selectItem :other='item' label='商品编码' :value='item.code.value' @click='clickCell'></selectItem>
         </view>
     </view>

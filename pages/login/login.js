@@ -1,6 +1,6 @@
 import getShops from '../../pagesLogin/components/getShopList.js'
 let cacheData = {}; //缓存登录信息
-function selectShop() {
+function selectShop() { //检测是否只有一个店铺
     return new Promise((resolve, reject) => {
         this.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
             pageSize: 2,
@@ -8,7 +8,7 @@ function selectShop() {
         }).then(res => {
             if (res.error == 0) {
                 let shops = getShops(res.list);
-                
+
                 if (shops.length == 1) { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
                     let shop = shops[0];
                     this.Cacher.setData('selectShop', {
@@ -41,79 +41,81 @@ function selectShop() {
         })
     })
 }
-export function wxLogin() {
+export function wxLogin() { //微信登录流程
     let that = this;
     return new Promise((resolve, reject) => {
-        uni.getProvider({
-            service: 'oauth',
-            success: function (res) {
-                if (~res.provider.indexOf('weixin')) {
-                    uni.login({ //微信登录
-                        provider: 'weixin',
-                        success: function (loginRes) {
-                            console.log('loginRes',loginRes)
-                            that.Request('wechatLogin', { //小程序获取登录session
-                                code: loginRes.code
-                            }).then(res => {
-                                if (res.error == 0) {
-                                    cacheData = res;
-                                    uni.getUserInfo({ // 获取用户信息
-                                        provider: 'weixin',
-                                        success: function (infoRes) {
-                                            cacheData = Object.assign(cacheData, infoRes);
-                                            that.Cacher.setData('login', cacheData);
-                                            that.Request('login', {
-                                                account: '',
-                                                password: '',
-                                                open_id: res.openid,
-                                                is_authorization: 1
-                                            }).then((res) => {
-                                                // 验证通过
-                                                cacheData = Object.assign(cacheData, {
-                                                    haveBindWx: res.error == 0 && res.open_id
-                                                })
-                                                that.Cacher.setData('login', cacheData)
-                                                if (res.error == 0) {
-                                                    resolve(res);
-                                                } else {
+        uni.login({ //微信登录
+            provider: 'weixin',
+            success: function (loginRes) {
+                that.Request('wechatLogin', { //小程序获取登录session
+                    code: loginRes.code
+                }).then(res => {
+                    if (res.error == 0) {
+                        cacheData = res;
+                        uni.getUserInfo({ // 获取用户信息
+                            provider: 'weixin',
+                            success: function (infoRes) {
+                                cacheData = Object.assign(cacheData, infoRes);
+                                that.Cacher.setData('login', cacheData);
+                                that.Cacher.setData('needBindWx', {
+                                    testWx: true, //尝试微信登录
+                                    needBind: false, //需要绑定微信true需要
+                                    haveBind: true, //已经绑定
+                                })
+                                that.Request('login', {
+                                    account: '',
+                                    password: '',
+                                    open_id: res.openid,
+                                    is_authorization: 1
+                                }).then((res) => {
+                                    // 验证通过
+                                    cacheData = Object.assign(cacheData, {
+                                        haveBindWx: res.error == 0 && res.open_id
+                                    })
+                                    that.Cacher.setData('login', cacheData);
+                                    if (res.error == 0) {
+                                        selectShop.call(that).then(r => { //先判断是否只有一个店铺
+                                            resolve(res);
+                                        })
+                                    } else {
+                                        reject(res);
+                                    }
+                                    that.closePageLoading();
+                                }).catch(res => {
+                                    cacheData = that.Cacher.getData('login') || {}
+                                    cacheData = Object.assign(cacheData, {
+                                        haveBindWx: false
+                                    })
+                                    that.Cacher.setData('login', cacheData)
+                                    if (res.error == -3) { //已登录
+                                        selectShop.call(that).then(r => { //先判断是否只有一个店铺
+                                            resolve(res);
+                                        })
+                                    } else {
+                                        reject(res)
+                                    }
+                                })
 
-                                                    reject(res);
+                            },
+                            fail(res) {
+                                console.log('get info fails', res)
+                            }
+                        });
 
-                                                }
-                                                that.closePageLoading();
-                                            }).catch(res => {
-                                                cacheData = that.Cacher.getData('login') || {}
-                                                cacheData = Object.assign(cacheData, {
-                                                    haveBindWx: false
-                                                })
-                                                that.Cacher.setData('login', cacheData)
-                                                if (res.error == -3) { //已登录
-                                                    resolve(res)
-                                                } else {
-                                                    reject(res)
-                                                }
-                                            })
-
-                                        },
-                                        fail(res) {
-                                            console.log('get info fails', res)
-                                        }
-                                    });
-
-                                }
-                            }).catch(res => {
-                                reject(res)
-                            })
-                        }
-                    });
-                }
+                    }
+                }).catch(res => {
+                    this.Cacher.setData('needBindWx', {
+                        testWx: true, //尝试微信登录
+                        needBind: true, //需要绑定微信true需要
+                    })
+                    reject(res)
+                })
             }
         });
     })
-
 }
 
-export function login() {
+export function login() { //账号密码登录流程
     let that = this;
     let cacheData = this.Cacher.getData('login') || {};
 
