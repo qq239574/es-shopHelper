@@ -211,7 +211,11 @@
                     });
                 });
                 
-                bindWx.call(this); //微信绑定
+                bindWx.call(this).then(res=>{
+                    this.closePageLoading();
+                }).catch(res=>{
+                    this.closePageLoading();
+                }); //微信绑定
             }
         },
         onPullDownRefresh() {

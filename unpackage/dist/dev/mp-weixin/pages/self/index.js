@@ -59,7 +59,8 @@ var DataFrom = {};var _default =
       contact_mobile: '',
       userRoleName: '',
       realName: '',
-      wxInfo: {} };
+      wxInfo: {},
+      wxapp_openid: '' };
 
   },
   methods: {
@@ -71,6 +72,7 @@ var DataFrom = {};var _default =
         _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
         _this.realName = res.user.contact;
         _this.userId = res.user[res.user.account_type] || res.user.mobile || res.user.email || res.user.username;
+        _this.wxapp_openid = res.user.wxapp_openid;
       });
     },
     toPage: function toPage(val) {
@@ -108,18 +110,20 @@ var DataFrom = {};var _default =
 
       }
     },
-    clickManager: function clickManager() {},
-    reBindWX: function reBindWX() {
+    reBindWX: function reBindWX() {var _this2 = this;
       this.closePageLoading();
-      _bindWx.bindWx.call(this, true);
+      _bindWx.bindWx.call(this, true).then(function (res) {
+
+        _this2.initPage();
+      });
     },
-    leave: function leave() {var _this2 = this;
+    leave: function leave() {var _this3 = this;
       this.closePageLoading();
       this.Dialog.confirm({
         title: '',
         message: '您确认退出当前账号吗？' }).
       then(function () {
-        _this2.Cacher.setData('self', {
+        _this3.Cacher.setData('self', {
           from: 'self' });
 
         uni.reLaunch({
@@ -135,14 +139,17 @@ var DataFrom = {};var _default =
     this.wxInfo = info.userInfo;
     this.initPage();
   },
-  onLoad: function onLoad() {var _this3 = this;
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.initPage();
+  },
+  onLoad: function onLoad() {var _this4 = this;
     uni.hideTabBar({ //隐藏tabbar
       animation: false });
 
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
-      _this3.Jurisdiction = res;
+      _this4.Jurisdiction = res;
     }).catch(function (res) {
-      _this3.Toast(res.message);
+      _this4.Toast(res.message);
     });
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

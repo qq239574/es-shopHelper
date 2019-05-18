@@ -221,7 +221,11 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         });
       });
 
-      _bindWx.bindWx.call(this); //微信绑定
+      _bindWx.bindWx.call(this).then(function (res) {
+        _this.closePageLoading();
+      }).catch(function (res) {
+        _this.closePageLoading();
+      }); //微信绑定
     } },
 
   onPullDownRefresh: function onPullDownRefresh() {

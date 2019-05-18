@@ -15201,7 +15201,7 @@ function _default()
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.bindWx = bindWx;var userInfo = null;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.bindWx = bindWx;var userInfo = null;
 var needBindWx = null;
 
 function bindWechat() {var _this = this;
@@ -15260,19 +15260,32 @@ function bindWx(rebind) {var _this2 = this;
         }
       });
     } else if (rebind) {
+      var cacheData = _this2.Cacher.getData('login');
+      uni.getUserInfo({ // 获取用户信息
+        provider: 'weixin',
+        success: function success(infoRes) {var _this3 = this;
+
+          cacheData = Object.assign(cacheData, infoRes);
+          that.Cacher.setData('login', cacheData);
+          userInfo = cacheData;
+          bindWechat.call(that, userInfo).then(function (res) {
+            _this3.Toast('绑定成功');
+            resolve(res);
+          }).catch(function (res) {
+            _this3.Toast('绑定失败');
+            reject(res);
+          });
+        },
+        fail: function fail(res) {
+          that.Toast('绑定微信需要用户信息权限');
+        } });
 
 
-      bindWechat.call(that, userInfo).then(function (res) {
-        _this2.Toast('绑定成功');
-        resolve(res);
-      }).catch(function (res) {
-        _this2.Toast('绑定失败');
-        reject(res);
-      });
     }
   });
 
 }
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 
@@ -15338,50 +15351,60 @@ function wxLogin() {//微信登录流程
         then(function (res) {
           if (res.error == 0) {
             cacheData = res;
-            uni.getUserInfo({ // 获取用户信息
-              provider: 'weixin',
-              success: function success(infoRes) {
-                cacheData = Object.assign(cacheData, infoRes);
-                that.Cacher.setData('login', cacheData);
+            that.Cacher.setData('login', cacheData);
+            that.Request('login', {
+              account: '',
+              password: '',
+              open_id: res.openid,
+              is_authorization: 1 }).
+            then(function (res) {
+              // 验证通过
+
+              if (res.error == 0) {
+                cacheData = Object.assign(cacheData || {}, {
+                  userId: res.uid });
+
                 that.Cacher.setData('needBindWx', {
                   testWx: true, //尝试微信登录
                   needBind: false, //需要绑定微信true需要
                   haveBind: true //已经绑定
                 });
-                that.Request('login', {
-                  account: '',
-                  password: '',
-                  open_id: res.openid,
-                  is_authorization: 1 }).
-                then(function (res) {
-                  // 验证通过
-                  cacheData = Object.assign(cacheData, {
-                    haveBindWx: res.error == 0 && res.open_id });
-
-                  that.Cacher.setData('login', cacheData);
-                  if (res.error == 0) {
-                    selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
-                      resolve(res);
-                    });
-                  } else {
-                    reject(res);
-                  }
-                  that.closePageLoading();
-                }).catch(function (res) {
-                  cacheData = that.Cacher.getData('login') || {};
-                  cacheData = Object.assign(cacheData, {
-                    haveBindWx: false });
-
-                  that.Cacher.setData('login', cacheData);
-                  if (res.error == -3) {//已登录
-                    selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
-                      resolve(res);
-                    });
-                  } else {
-                    reject(res);
-                  }
+                selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+                  resolve(res);
                 });
+              } else {
+                that.Cacher.setData('needBindWx', {
+                  testWx: true, //尝试微信登录
+                  needBind: true, //需要绑定微信true需要
+                  haveBind: false //已经绑定
+                });
+                reject(res);
+              }
+            }).catch(function (res) {
 
+              if (res.error == -3) {//已登录
+                that.Cacher.setData('needBindWx', {
+                  testWx: true, //尝试微信登录
+                  needBind: false, //需要绑定微信true需要
+                  haveBind: true //已经绑定
+                });
+                selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+                  resolve(res);
+                });
+              } else {
+                that.Cacher.setData('needBindWx', {
+                  testWx: true, //尝试微信登录
+                  needBind: true, //需要绑定微信true需要
+                  haveBind: false //已经绑定
+                });
+                reject(res);
+              }
+            });
+            uni.getUserInfo({ // 获取用户信息
+              provider: 'weixin',
+              success: function success(infoRes) {
+                cacheData = Object.assign(cacheData, infoRes);
+                that.Cacher.setData('login', cacheData);
               },
               fail: function fail(res) {
                 console.log('get info fails', res);

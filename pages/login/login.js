@@ -52,50 +52,60 @@ export function wxLogin() { //微信登录流程
                 }).then(res => {
                     if (res.error == 0) {
                         cacheData = res;
-                        uni.getUserInfo({ // 获取用户信息
-                            provider: 'weixin',
-                            success: function (infoRes) {
-                                cacheData = Object.assign(cacheData, infoRes);
-                                that.Cacher.setData('login', cacheData);
+                        that.Cacher.setData('login', cacheData);
+                        that.Request('login', {
+                            account: '',
+                            password: '',
+                            open_id: res.openid,
+                            is_authorization: 1
+                        }).then((res) => {
+                            // 验证通过
+
+                            if (res.error == 0) {
+                                cacheData = Object.assign(cacheData || {}, {
+                                    userId: res.uid
+                                })
                                 that.Cacher.setData('needBindWx', {
                                     testWx: true, //尝试微信登录
                                     needBind: false, //需要绑定微信true需要
                                     haveBind: true, //已经绑定
                                 })
-                                that.Request('login', {
-                                    account: '',
-                                    password: '',
-                                    open_id: res.openid,
-                                    is_authorization: 1
-                                }).then((res) => {
-                                    // 验证通过
-                                    cacheData = Object.assign(cacheData, {
-                                        haveBindWx: res.error == 0 && res.open_id
-                                    })
-                                    that.Cacher.setData('login', cacheData);
-                                    if (res.error == 0) {
-                                        selectShop.call(that).then(r => { //先判断是否只有一个店铺
-                                            resolve(res);
-                                        })
-                                    } else {
-                                        reject(res);
-                                    }
-                                    that.closePageLoading();
-                                }).catch(res => {
-                                    cacheData = that.Cacher.getData('login') || {}
-                                    cacheData = Object.assign(cacheData, {
-                                        haveBindWx: false
-                                    })
-                                    that.Cacher.setData('login', cacheData)
-                                    if (res.error == -3) { //已登录
-                                        selectShop.call(that).then(r => { //先判断是否只有一个店铺
-                                            resolve(res);
-                                        })
-                                    } else {
-                                        reject(res)
-                                    }
+                                selectShop.call(that).then(r => { //先判断是否只有一个店铺
+                                    resolve(res);
                                 })
+                            } else {
+                                that.Cacher.setData('needBindWx', {
+                                    testWx: true, //尝试微信登录
+                                    needBind: true, //需要绑定微信true需要
+                                    haveBind: false, //已经绑定
+                                })
+                                reject(res);
+                            }
+                        }).catch(res => {
 
+                            if (res.error == -3) { //已登录
+                                that.Cacher.setData('needBindWx', {
+                                    testWx: true, //尝试微信登录
+                                    needBind: false, //需要绑定微信true需要
+                                    haveBind: true, //已经绑定
+                                })
+                                selectShop.call(that).then(r => { //先判断是否只有一个店铺
+                                    resolve(res);
+                                })
+                            } else {
+                                that.Cacher.setData('needBindWx', {
+                                    testWx: true, //尝试微信登录
+                                    needBind: true, //需要绑定微信true需要
+                                    haveBind: false, //已经绑定
+                                })
+                                reject(res)
+                            }
+                        })
+                        uni.getUserInfo({ // 获取用户信息
+                            provider: 'weixin',
+                            success: function (infoRes) {
+                                cacheData = Object.assign(cacheData, infoRes);
+                                that.Cacher.setData('login', cacheData);
                             },
                             fail(res) {
                                 console.log('get info fails', res)

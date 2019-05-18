@@ -6,14 +6,14 @@
 				<view class="name">{{userName}}</view>
 				<view class="tel">{{userId}}</view>
 			</view>
-			<view class='manager' @click='clickManager'>{{userRoleName}}</view>
+			<view class='manager'>{{userRoleName}}</view>
 		</view>
 		<inputItem :disabled='true' label='登陆账号' :value='userId'></inputItem>
 		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
 		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-if='wxInfo.nickName'></selectItem>
+		<selectItem :label='"微信："+(wxInfo.nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-if='wxapp_openid'></selectItem>
 		<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-else></selectItem>
 		<view class="margin20"></view>
 		<view class="button" @click='leave'>退出登录</view>
@@ -49,7 +49,8 @@
 				contact_mobile: '',
 				userRoleName: '',
 				realName: '',
-				wxInfo: {}
+				wxInfo: {},
+				wxapp_openid:''
 			}
 		},
 		methods: {
@@ -61,6 +62,7 @@
 					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
 					this.realName = res.user.contact;
 					this.userId =res.user[res.user.account_type]||res.user.mobile||res.user.email||res.user.username;
+					this.wxapp_openid=res.user.wxapp_openid;
 				}) 
 			},
 			toPage(val) {
@@ -97,11 +99,13 @@
 						url: '../../pagesSelf/pages/password?from=myself'
 					})
 				}
-			},
-			clickManager() {},
+			}, 
 			reBindWX() { 
 				this.closePageLoading();
-				bindWx.call(this, true);
+				bindWx.call(this, true).then(res=>{
+					
+					this.initPage();
+				});
 			},
 			leave() {
 				this.closePageLoading();
@@ -123,6 +127,9 @@
 		onShow() {
 			let info = this.Cacher.getData('login') || {};
 			this.wxInfo = info.userInfo;
+			this.initPage();
+		},
+		onPullDownRefresh(){ 
 			this.initPage();
 		},
 		onLoad() {

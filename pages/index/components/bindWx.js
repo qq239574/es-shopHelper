@@ -57,15 +57,27 @@ export function bindWx(rebind) {
                 }
             })
         } else if (rebind) {
+            let cacheData = this.Cacher.getData('login')
+            uni.getUserInfo({ // 获取用户信息
+                provider: 'weixin',
+                success: function (infoRes) {
 
-            
-            bindWechat.call(that, userInfo).then(res => {
-                this.Toast('绑定成功');
-                resolve(res);
-            }).catch(res => {
-                this.Toast('绑定失败');
-                reject(res);
-            })
+                    cacheData = Object.assign(cacheData, infoRes);
+                    that.Cacher.setData('login', cacheData);
+                    userInfo=cacheData;
+                    bindWechat.call(that, userInfo).then(res => {
+                        this.Toast('绑定成功');
+                        resolve(res);
+                    }).catch(res => {
+                        this.Toast('绑定失败');
+                        reject(res);
+                    })
+                },
+                fail(res) {
+                    that.Toast('绑定微信需要用户信息权限')
+                }
+            });
+
         }
     })
 
