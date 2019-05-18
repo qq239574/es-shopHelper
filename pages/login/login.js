@@ -1,8 +1,9 @@
 import getShops from '../../pagesLogin/components/getShopList.js'
 let cacheData = {}; //缓存登录信息
 function selectShop() { //检测是否只有一个店铺
+    let that=this;
     return new Promise((resolve, reject) => {
-        this.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
+        that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
             pageSize: 2,
             page: 1,
         }).then(res => {
@@ -11,14 +12,14 @@ function selectShop() { //检测是否只有一个店铺
 
                 if (shops.length == 1) { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
                     let shop = shops[0];
-                    this.Cacher.setData('selectShop', {
+                    that.Cacher.setData('selectShop', {
                         from: 'selectShop',
                         shopInfo: shop.shopInfo,
                         totalShops: res.total,
                         left: shop.days > 0 ? (shop.days + '天后到期') : '已过期',
                         expireDay: shop.days,
                     });
-                    this.Request('switchShop', {
+                    that.Request('switchShop', {
                         id: shop.shopInfo.id
                     }).then(res => {
                         if (res.error == 0) {
@@ -114,7 +115,7 @@ export function wxLogin() { //微信登录流程
 
                     }
                 }).catch(res => {
-                    this.Cacher.setData('needBindWx', {
+                    that.Cacher.setData('needBindWx', {
                         testWx: true, //尝试微信登录
                         needBind: true, //需要绑定微信true需要
                     })
@@ -167,8 +168,11 @@ export function login() { //账号密码登录流程
                     resolve(res);
                 })
             } else {
-                reject(res)
-                this.Toast(res.message)
+                if (res.message == '帐号不存在' || res.message == '帐号或密码错误') {//统一提示‘账号或密码错误’
+                    reject(res);
+                } else {
+                    that.Toast(res.message)
+                }
             }
         })
 

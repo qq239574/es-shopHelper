@@ -144,7 +144,7 @@
                         this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
                         this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
                         this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
-                        cacheDataList[0].today = res.order_pay_price;
+                        cacheDataList[0].today = number_format(res.order_pay_price, 2, '.', '');
                         cacheDataList[1].today = res.order_pay_count;
                         cacheDataList[3].today = res.order_member_count;
                         reqResult.push(1);
@@ -214,7 +214,7 @@
                             this.closePageLoading();
                         }
                     })
-                } else { 
+                } else {
                     clearTimeout(timeBar)
                     timeBar = setTimeout(() => {
                         initing = false;
