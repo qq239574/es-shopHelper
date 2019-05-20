@@ -1,4 +1,4 @@
-.card--good.data-v-c37cebfc {
+.card--good.data-v-5426bc82 {
   width: 670rpx;
   margin: auto;
   padding: 5rpx 0 15rpx;
@@ -6,7 +6,7 @@
   height: -moz-fit-content;
   height: fit-content;
 }
-.card--good .card--good-item.data-v-c37cebfc {
+.card--good .card--good-item.data-v-5426bc82 {
     width: 100%;
     height: 150rpx;
     display: -webkit-box;
@@ -21,30 +21,30 @@
         -ms-flex-pack: justify;
             justify-content: space-between;
 }
-.card--good .card--good-item .imgbox.data-v-c37cebfc {
+.card--good .card--good-item .imgbox.data-v-5426bc82 {
       width: 120rpx;
       height: 100%;
       border-radius: 6rpx;
       overflow: hidden;
 }
-.card--good .card--good-item .imgbox image.data-v-c37cebfc {
+.card--good .card--good-item .imgbox image.data-v-5426bc82 {
         width: 100%;
         height: 120rpx;
         margin: 15rpx 0;
 }
-.card--good .card--good-item .good-info.data-v-c37cebfc {
+.card--good .card--good-item .good-info.data-v-5426bc82 {
       height: 100%;
       width: 527rpx;
       padding: 23rpx 0 0;
 }
-.card--good .card--good-item .good-info .good-name.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-name.data-v-5426bc82 {
         width: 100%;
         font-size: 28rpx;
         line-height: 36rpx;
         height: 72rpx;
         overflow: hidden;
 }
-.card--good .card--good-item .good-info .good-others.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-others.data-v-5426bc82 {
         width: 100%;
         -webkit-flex-wrap: nowrap;
             -ms-flex-wrap: nowrap;
@@ -59,7 +59,7 @@
             -ms-flex-pack: justify;
                 justify-content: space-between;
 }
-.card--good .card--good-item .good-info .good-others view.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-others view.data-v-5426bc82 {
           font-size: 24rpx;
           color: #6e7685;
           width: -webkit-fit-content;
@@ -67,7 +67,7 @@
           width: fit-content;
           line-height: 28rpx;
 }
-.card--good .card--good-item .good-info .good-others .color.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-others .color.data-v-5426bc82 {
           display: -webkit-box;
           display: -webkit-flex;
           display: -ms-flexbox;
@@ -79,11 +79,11 @@
           width: -moz-fit-content;
           width: fit-content;
 }
-.card--good .card--good-item .good-info .good-others .color view.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-others .color view.data-v-5426bc82 {
             margin: 0 8rpx 0 0;
             line-height: 32rpx;
 }
-.card--good .card--good-item .good-info .good-others .price.data-v-c37cebfc {
+.card--good .card--good-item .good-info .good-others .price.data-v-5426bc82 {
           color: #000;
           font-weight: 600;
           font-size: 28rpx;

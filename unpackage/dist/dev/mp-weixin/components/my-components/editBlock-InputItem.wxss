@@ -1,8 +1,8 @@
-.editGood-block-selectItem.data-v-065c2eb7 {
+.editGood-block-selectItem.data-v-359ba1da {
   width: 100%;
   background: #fff;
 }
-.editGood-block-selectItem .grace-items.data-v-065c2eb7 {
+.editGood-block-selectItem .grace-items.data-v-359ba1da {
     width: 94.67%;
     margin: auto;
     padding: 2rpx auto;
@@ -10,14 +10,14 @@
             box-sizing: border-box;
     height: 100rpx;
 }
-.editGood-block-selectItem .grace-items .grace-label.data-v-065c2eb7 {
+.editGood-block-selectItem .grace-items .grace-label.data-v-359ba1da {
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
       white-space: nowrap;
       font-weight: 600;
 }
-.editGood-block-selectItem .grace-items .disable.data-v-065c2eb7 {
+.editGood-block-selectItem .grace-items .disable.data-v-359ba1da {
       color: #9ea3ae;
 }
 

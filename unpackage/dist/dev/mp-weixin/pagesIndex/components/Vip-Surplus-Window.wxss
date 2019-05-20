@@ -1,9 +1,9 @@
-.vip-detail-win.data-v-262b4870 {
+.vip-detail-win.data-v-e9e075da {
   width: 100%;
   height: 210rpx;
   background: #203352;
 }
-.vip-detail-win .center.data-v-262b4870 {
+.vip-detail-win .center.data-v-e9e075da {
     height: 100%;
     width: 628rpx;
     margin: auto;
@@ -19,13 +19,13 @@
         -ms-flex-pack: start;
             justify-content: flex-start;
 }
-.vip-detail-win .center image.data-v-262b4870 {
+.vip-detail-win .center image.data-v-e9e075da {
       width: 110rpx;
       height: 110rpx;
       border-radius: 50%;
       margin: 10rpx auto 0;
 }
-.vip-detail-win .center .name.data-v-262b4870 {
+.vip-detail-win .center .name.data-v-e9e075da {
       width: 100%;
       height: 28rpx;
       color: #fff;

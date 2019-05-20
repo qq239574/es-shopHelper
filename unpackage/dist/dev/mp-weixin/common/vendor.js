@@ -62,7 +62,7 @@ var camelize = cached(function (str) {
   return str.replace(camelizeRE, function (_, c) {return c ? c.toUpperCase() : '';});
 });
 
-var SYNC_API_RE = /requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$/;
+var SYNC_API_RE = /subNVue|requireNativePlugin|upx2px|hideKeyboard|canIUse|^create|Sync$|Manager$/;
 
 var CONTEXT_API_RE = /^create|Manager$/;
 
@@ -166,7 +166,45 @@ function upx2px(number, newDeviceWidth) {
   return number < 0 ? -result : result;
 }
 
-var protocols = {};
+var previewImage = {
+  args: function args(fromArgs) {
+    var currentIndex = parseInt(fromArgs.current);
+    if (isNaN(currentIndex)) {
+      return;
+    }
+    var urls = fromArgs.urls;
+    if (!Array.isArray(urls)) {
+      return;
+    }
+    var len = urls.length;
+    if (!len) {
+      return;
+    }
+    if (currentIndex < 0) {
+      currentIndex = 0;
+    } else if (currentIndex >= len) {
+      currentIndex = len - 1;
+    }
+    if (currentIndex > 0) {
+      fromArgs.current = urls[currentIndex];
+      fromArgs.urls = urls.filter(
+      function (item, index) {return index < currentIndex ? item !== urls[currentIndex] : true;});
+
+    } else {
+      fromArgs.current = urls[0];
+    }
+    return {
+      indicator: false,
+      loop: false };
+
+  } };
+
+
+var protocols = {
+  previewImage: previewImage };
+
+var todos = [];
+var canIUses = [];
 
 var CALLBACKS = ['success', 'fail', 'cancel', 'complete'];
 
@@ -331,8 +369,7 @@ function initTriggerEvent(mpInstance) {
   };
 }
 
-Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var name = 'onLoad';
+function initHook(name, options) {
   var oldHook = options[name];
   if (!oldHook) {
     options[name] = function () {
@@ -344,22 +381,53 @@ Page = function Page() {var options = arguments.length > 0 && arguments[0] !== u
       return oldHook.apply(this, args);
     };
   }
+}
+
+Page = function Page() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  initHook('onLoad', options);
   return MPPage(options);
 };
 
-var behavior = Behavior({
-  created: function created() {
-    initTriggerEvent(this);
-  } });
-
-
 Component = function Component() {var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  (options.behaviors || (options.behaviors = [])).unshift(behavior);
+  initHook('created', options);
   return MPComponent(options);
 };
 
 var mocks = ['__route__', '__wxExparserNodeId__', '__wxWebviewId__'];
 
+function initPage(pageOptions) {
+  return initComponent(pageOptions);
+}
+
+function initComponent(componentOptions) {
+  return Component(componentOptions);
+}
+
+function initBehavior(options) {
+  return Behavior(options);
+}
+function initRefs(vm) {
+  var mpInstance = vm.$scope;
+  Object.defineProperty(vm, '$refs', {
+    get: function get() {
+      var $refs = {};
+      var components = mpInstance.selectAllComponents('.vue-ref');
+      components.forEach(function (component) {
+        var ref = component.dataset.ref;
+        $refs[ref] = component.$vm || component;
+      });
+      var forComponents = mpInstance.selectAllComponents('.vue-ref-in-for');
+      forComponents.forEach(function (component) {
+        var ref = component.dataset.ref;
+        if (!$refs[ref]) {
+          $refs[ref] = [];
+        }
+        $refs[ref].push(component.$vm || component);
+      });
+      return $refs;
+    } });
+
+}
 function triggerLink(mpInstance, vueOptions) {
   mpInstance.triggerEvent('__l', mpInstance.$vm || vueOptions, {
     bubbles: true,
@@ -382,9 +450,9 @@ function handleLink(event) {
   }
 }
 
-function initMocks(vm, mocks) {
+function initMocks(vm, mocks$$1) {
   var mpInstance = vm.$mp[vm.mpType];
-  mocks.forEach(function (mock) {
+  mocks$$1.forEach(function (mock) {
     if (hasOwn(mpInstance, mock)) {
       vm[mock] = mpInstance[mock];
     }
@@ -407,7 +475,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -469,7 +537,7 @@ function getBehaviors(vueOptions) {
   }
   if (isPlainObject(vueExtends) && vueExtends.props) {
     behaviors.push(
-    Behavior({
+    initBehavior({
       properties: getProperties(vueExtends.props, true) }));
 
 
@@ -478,7 +546,7 @@ function getBehaviors(vueOptions) {
     vueMixins.forEach(function (vueMixin) {
       if (isPlainObject(vueMixin) && vueMixin.props) {
         behaviors.push(
-        Behavior({
+        initBehavior({
           properties: getProperties(vueMixin.props, true) }));
 
 
@@ -746,29 +814,6 @@ function handleEvent(event) {var _this = this;
   });
 }
 
-function initRefs(vm) {
-  var mpInstance = vm.$mp[vm.mpType];
-  Object.defineProperty(vm, '$refs', {
-    get: function get() {
-      var $refs = {};
-      var components = mpInstance.selectAllComponents('.vue-ref');
-      components.forEach(function (component) {
-        var ref = component.dataset.ref;
-        $refs[ref] = component.$vm || component;
-      });
-      var forComponents = mpInstance.selectAllComponents('.vue-ref-in-for');
-      forComponents.forEach(function (component) {
-        var ref = component.dataset.ref;
-        if (!$refs[ref]) {
-          $refs[ref] = [];
-        }
-        $refs[ref].push(component.$vm || component);
-      });
-      return $refs;
-    } });
-
-}
-
 var hooks = [
 'onHide',
 'onError',
@@ -794,24 +839,27 @@ function initVm(vm) {
 }
 
 function createApp(vm) {
-  // 外部初始化时 Vue 还未初始化，放到 createApp 内部初始化 mixin
+
   _vue.default.mixin({
     beforeCreate: function beforeCreate() {
       if (!this.$options.mpType) {
         return;
       }
+
       this.mpType = this.$options.mpType;
+
       this.$mp = _defineProperty({
         data: {} },
       this.mpType, this.$options.mpInstance);
+
+
+      this.$scope = this.$options.mpInstance;
 
       delete this.$options.mpType;
       delete this.$options.mpInstance;
 
       if (this.mpType !== 'app') {
-        {// 头条的 selectComponent 竟然是异步的
-          initRefs(this);
-        }
+        initRefs(this);
         initMocks(this, mocks);
       }
     },
@@ -922,7 +970,7 @@ function createPage(vueOptions) {
 
   initHooks(pageOptions.methods, hooks$1);
 
-  return Component(pageOptions);
+  return initPage(pageOptions, vueOptions);
 }
 
 function initVm$2(VueComponent) {
@@ -930,16 +978,18 @@ function initVm$2(VueComponent) {
     return;
   }
 
+  var properties = this.properties;
+
   var options = {
     mpType: 'component',
     mpInstance: this,
-    propsData: this.properties };
+    propsData: properties };
 
   // 初始化 vue 实例
   this.$vm = new VueComponent(options);
 
   // 处理$slots,$scopedSlots（暂不支持动态变化$slots）
-  var vueSlots = this.properties.vueSlots;
+  var vueSlots = properties.vueSlots;
   if (Array.isArray(vueSlots) && vueSlots.length) {
     var $slots = Object.create(null);
     vueSlots.forEach(function (slotName) {
@@ -955,11 +1005,17 @@ function initVm$2(VueComponent) {
 function createComponent(vueOptions) {
   vueOptions = vueOptions.default || vueOptions;
 
+  var VueComponent;
+  if (isFn(vueOptions)) {
+    VueComponent = vueOptions; // TODO form-field props.name,props.value
+    vueOptions = VueComponent.extendOptions;
+  } else {
+    VueComponent = _vue.default.extend(vueOptions);
+  }
+
   var behaviors = getBehaviors(vueOptions);
 
   var properties = getProperties(vueOptions.props, false, vueOptions.__file);
-
-  var VueComponent = _vue.default.extend(vueOptions);
 
   var componentOptions = {
     options: {
@@ -1005,8 +1061,19 @@ function createComponent(vueOptions) {
 
 
 
-  return Component(componentOptions);
+  return initComponent(componentOptions, vueOptions);
 }
+
+todos.forEach(function (todoApi) {
+  protocols[todoApi] = false;
+});
+
+canIUses.forEach(function (canIUseApi) {
+  var apiName = protocols[canIUseApi] && protocols[canIUseApi].name ? protocols[canIUseApi].name : canIUseApi;
+  if (!wx.canIUse(apiName)) {
+    protocols[canIUseApi] = false;
+  }
+});
 
 var uni = {};
 
@@ -1697,8 +1764,8 @@ if (true) {
 
   formatComponentName = function (vm, includeFile) {
     {
-      if(vm.$mp && vm.$mp[vm.mpType]){
-        return vm.$mp[vm.mpType].is
+      if(vm.$scope && vm.$scope.is){
+        return vm.$scope.is
       }
     }
     if (vm.$root === vm) {
@@ -6504,8 +6571,8 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
-            var mpInstance = vm.$mp[vm.mpType];
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
         }
@@ -6525,15 +6592,15 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance = vm.$mp[vm.mpType];
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+            var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance$1 = vm.$mp[vm.mpType];
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+            var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
         }
@@ -6592,7 +6659,7 @@ var patch = function(oldVnode, vnode) {
         return
     }
     if (this.mpType === 'page' || this.mpType === 'component') {
-        var mpInstance = this.$mp[this.mpType];
+        var mpInstance = this.$scope;
         var data = cloneWithData(this);
         data.__webviewId__ = mpInstance.data.__webviewId__;
         var mpData = Object.create(null);
@@ -6601,7 +6668,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -6774,8 +6841,8 @@ function internalMixin(Vue) {
     var oldEmit = Vue.prototype.$emit;
 
     Vue.prototype.$emit = function(event) {
-        if (this.$mp && event) {
-            this.$mp[this.mpType]['triggerEvent'](event, {
+        if (this.$scope && event) {
+            this.$scope['triggerEvent'](event, {
                 __args__: toArray(arguments, 1)
             });
         }
@@ -6788,8 +6855,8 @@ function internalMixin(Vue) {
 
     MP_METHODS.forEach(function (method) {
         Vue.prototype[method] = function(args) {
-            if (this.$mp) {
-                return this.$mp[this.mpType][method](args)
+            if (this.$scope) {
+                return this.$scope[method](args)
             }
         };
     });
@@ -6879,6 +6946,7 @@ var LIFECYCLE_HOOKS$1 = [
     'onReachBottom',
     'onTabItemTap',
     'onShareAppMessage',
+    'onResize',
     'onPageScroll',
     'onNavigationBarButtonTap',
     'onBackPress',
@@ -6886,7 +6954,7 @@ var LIFECYCLE_HOOKS$1 = [
     'onNavigationBarSearchInputConfirmed',
     'onNavigationBarSearchInputClicked',
     //Component
-    'onReady', // 兼容旧版本，应该移除该事件
+    // 'onReady', // 兼容旧版本，应该移除该事件
     'onPageShow',
     'onPageHide',
     'onPageResize'
@@ -10358,10 +10426,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\bill.js":
-/*!*************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/bill.js ***!
-  \*************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js":
+/*!*****************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/bill.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10610,10 +10678,10 @@ var postSelfVerifyInfo = { //订单自提
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js":
-/*!***************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/domain.js ***!
-  \***************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js":
+/*!*******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/domain.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10628,10 +10696,10 @@ global_settings;exports.default = _default;
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\good.js":
-/*!*************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/good.js ***!
-  \*************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js":
+/*!*****************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/good.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10800,10 +10868,10 @@ var uploadImg = { //上传图片
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\home.js":
-/*!*************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/home.js ***!
-  \*************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js":
+/*!*****************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/home.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11092,22 +11160,22 @@ var Jurisdiction = { //查看权限
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\index.js":
-/*!**************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/index.js ***!
-  \**************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\index.js":
+/*!******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/index.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "F:\\YLHD\\project\\es-shopHelper\\api\\login.js"));
-var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "F:\\YLHD\\project\\es-shopHelper\\api\\home.js"));
-var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "F:\\YLHD\\project\\es-shopHelper\\store\\cache.js"));
-var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "F:\\YLHD\\project\\es-shopHelper\\api\\bill.js"));
-var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "F:\\YLHD\\project\\es-shopHelper\\api\\good.js"));
-var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "F:\\YLHD\\project\\es-shopHelper\\api\\myself.js"));
-var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\jsTools\\request.js"));
-var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
+var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js"));
+var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
+var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js"));
+var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js"));
+var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
+var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));
+var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 var sessionId = '';
 var shopInfo = '';
 var indexApi = _objectSpread({},
@@ -11242,10 +11310,10 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\login.js":
-/*!**************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/login.js ***!
-  \**************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js":
+/*!******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/login.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11421,15 +11489,15 @@ var getVRCodeImg = { //获取图形验证码
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\api\\myself.js":
-/*!***************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/api/myself.js ***!
-  \***************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js":
+/*!*******************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/api/myself.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.myInfo = exports.changeUserPassword = exports.changeUserInfo = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.myInfo = exports.changeUserInfo2 = exports.changeUserPassword = exports.changeUserInfo = void 0;
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
   data: {},
@@ -11450,6 +11518,19 @@ var changeUserPassword = { //修改用户密码
 
   type: 'post' };exports.changeUserPassword = changeUserPassword;
 
+var changeUserInfo2 = { //修改员工姓名与联系人
+  url: '/shop/manage/setting/operator/edit-manager',
+  data: {
+    member_id: '',
+    name: '',
+    contact: '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.changeUserInfo2 = changeUserInfo2;
+
+
 
 var myInfo = { //获取用户信息
   url: '/shop/manage/setting/operator/get-login-user',
@@ -11463,10 +11544,10 @@ var myInfo = { //获取用户信息
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\echarts\\echarts.simple.min.js":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/echarts/echarts.simple.min.js ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\echarts\\echarts.simple.min.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/echarts/echarts.simple.min.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11496,10 +11577,10 @@ var myInfo = { //获取用户信息
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\mpvue-echarts\\src\\wx-canvas.js":
-/*!*******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/mpvue-echarts/src/wx-canvas.js ***!
-  \*******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\wx-canvas.js":
+/*!***********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/mpvue-echarts/src/wx-canvas.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11579,10 +11660,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\ajaxDataFormater.js":
-/*!**********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/ajaxDataFormater.js ***!
-  \**********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/ajaxDataFormater.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11658,10 +11739,10 @@ var unflatten2 = function unflatten2(data) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\animateAddNum.js":
-/*!*******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/animateAddNum.js ***!
-  \*******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\animateAddNum.js":
+/*!***********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/animateAddNum.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11697,10 +11778,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\dataOrigin.js":
-/*!****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/dataOrigin.js ***!
-  \****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\dataOrigin.js":
+/*!********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/dataOrigin.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11726,10 +11807,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\formater.js":
-/*!**************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/formater.js ***!
-  \**************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js":
+/*!******************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/formater.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11768,10 +11849,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.number_for
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getDateSection.js":
-/*!********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/getDateSection.js ***!
-  \********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js":
+/*!************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/getDateSection.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11812,10 +11893,10 @@ function GetDateDiffNoAbs(startDate, endDate) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js":
-/*!*********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/getJurisdiction.js ***!
-  \*********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/getJurisdiction.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11963,10 +12044,10 @@ function getJurisdiction(bool) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\payType.js":
-/*!*************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/payType.js ***!
-  \*************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js":
+/*!*****************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/payType.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11986,10 +12067,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\weapp.qrcode.esm.js":
-/*!**********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/components/my-components/weapp.qrcode.esm.js ***!
-  \**********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\weapp.qrcode.esm.js":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/components/my-components/weapp.qrcode.esm.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12002,10 +12083,10 @@ var hasOwn = Object.prototype.hasOwnProperty,toStr = Object.prototype.toString,d
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\graceUI2.0\\jsTools\\date.js":
-/*!****************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/graceUI2.0/jsTools/date.js ***!
-  \****************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\date.js":
+/*!********************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI2.0/jsTools/date.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12077,10 +12158,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\graceUI2.0\\jsTools\\graceChecker.js":
-/*!************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/graceUI2.0/jsTools/graceChecker.js ***!
-  \************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\graceChecker.js":
+/*!****************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI2.0/jsTools/graceChecker.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12188,10 +12269,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\graceChecker.js":
-/*!*************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/graceUI/graceChecker.js ***!
-  \*************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\graceChecker.js":
+/*!*****************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI/graceChecker.js ***!
+  \*****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12299,10 +12380,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\jsTools\\request.js":
-/*!****************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/graceUI/jsTools/request.js ***!
-  \****************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js":
+/*!********************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI/jsTools/request.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12381,10 +12462,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\jsTools\\richText.js":
-/*!*****************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/graceUI/jsTools/richText.js ***!
-  \*****************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\richText.js":
+/*!*********************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/graceUI/jsTools/richText.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12467,21 +12548,21 @@ module.exports = {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js":
-/*!*********************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js ***!
-  \*********************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js":
+/*!*************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createApp) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "F:\\YLHD\\project\\es-shopHelper\\App.vue"));
-var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "F:\\YLHD\\project\\es-shopHelper\\store\\index.js"));
+var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\App.vue"));
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\index.js"));
 
 
-var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceLoading.vue"));};
+var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceLoading.vue"));};
 
 _vue.default.config.productionTip = false;
 _vue.default.component('pageLoading', graceFullLoading);
@@ -12500,928 +12581,928 @@ createApp(app).$mount();
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pages%2Fbill%2Findex\"}":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pages%2Fbill%2Findex"} ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pages%2Fbill%2Findex\"}":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pages%2Fbill%2Findex"} ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/bill/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\bill\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/bill/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pages%2Fcommodity%2Findex\"}":
-/*!**********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pages%2Fcommodity%2Findex"} ***!
-  \**********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pages%2Fcommodity%2Findex\"}":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pages%2Fcommodity%2Findex"} ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/commodity/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\commodity\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/commodity/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pages%2Findex%2Findex\"}":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pages%2Findex%2Findex"} ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pages%2Findex%2Findex\"}":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pages%2Findex%2Findex"} ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\index\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/index/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pages%2Flogin%2Findex\"}":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pages%2Flogin%2Findex"} ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pages%2Flogin%2Findex\"}":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pages%2Flogin%2Findex"} ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/login/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\login\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/login/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\login\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pages%2Fself%2Findex\"}":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pages%2Fself%2Findex"} ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pages%2Fself%2Findex\"}":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pages%2Fself%2Findex"} ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/self/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\self\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pages/self/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\self\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FadditionList\"}":
-/*!*****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FadditionList"} ***!
-  \*****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FadditionList\"}":
+/*!*********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FadditionList"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _additionList = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/additionList.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\additionList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _additionList = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/additionList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\additionList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_additionList.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillAddition\"}":
-/*!*****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FbillAddition"} ***!
-  \*****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillAddition\"}":
+/*!*********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillAddition"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _billAddition = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billAddition.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\billAddition.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _billAddition = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billAddition.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\billAddition.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_billAddition.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillDetail\"}":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FbillDetail"} ***!
-  \***************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillDetail\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillDetail"} ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _billDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billDetail.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\billDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _billDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\billDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_billDetail.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillId\"}":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FbillId"} ***!
-  \***********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillId\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillId"} ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _billId = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billId.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\billId.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _billId = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billId.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\billId.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_billId.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillProvide\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FbillProvide"} ***!
-  \****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FbillProvide\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FbillProvide"} ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _billProvide = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billProvide.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\billProvide.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _billProvide = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/billProvide.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\billProvide.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_billProvide.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FchangePrice\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FchangePrice"} ***!
-  \****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FchangePrice\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FchangePrice"} ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _changePrice = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/changePrice.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\changePrice.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _changePrice = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/changePrice.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\changePrice.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_changePrice.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesBill%2Fpages%2FcomponyList\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesBill%2Fpages%2FcomponyList"} ***!
-  \****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesBill%2Fpages%2FcomponyList\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesBill%2Fpages%2FcomponyList"} ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _componyList = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/componyList.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\pages\\componyList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _componyList = _interopRequireDefault(__webpack_require__(/*! ./pagesBill/pages/componyList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\pages\\componyList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_componyList.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FaddGoodType\"}":
-/*!*********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FaddGoodType"} ***!
-  \*********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FaddGoodType\"}":
+/*!*************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FaddGoodType"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _addGoodType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/addGoodType.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\addGoodType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _addGoodType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/addGoodType.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\addGoodType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_addGoodType.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FautoDeliverContent\"}":
-/*!****************************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FautoDeliverContent"} ***!
-  \****************************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FautoDeliverContent\"}":
+/*!********************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FautoDeliverContent"} ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _autoDeliverContent = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/autoDeliverContent.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\autoDeliverContent.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _autoDeliverContent = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/autoDeliverContent.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\autoDeliverContent.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_autoDeliverContent.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditCode\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditCode"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditCode\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditCode"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editCode.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editCode.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editCode.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditForm\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditForm"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditForm\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditForm"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editForm = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editForm.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editForm.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editForm = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editForm.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editForm.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editForm.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditGood\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditGood"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditGood\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditGood"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editGood = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editGood.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editGood.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editGood = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editGood.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editGood.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editGood.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditMultiCode\"}":
-/*!***********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditMultiCode"} ***!
-  \***********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditMultiCode\"}":
+/*!***************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditMultiCode"} ***!
+  \***************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editMultiCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editMultiCode.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editMultiCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editMultiCode = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editMultiCode.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editMultiCode.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editMultiCode.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditName\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditName"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditName\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditName"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editName = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editName.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editName.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editName = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editName.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editName.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editName.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditStatus\"}":
-/*!********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditStatus"} ***!
-  \********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditStatus\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditStatus"} ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editStatus = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editStatus.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editStatus.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editStatus = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editStatus.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editStatus.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editStatus.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditSubTitle\"}":
-/*!**********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditSubTitle"} ***!
-  \**********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditSubTitle\"}":
+/*!**************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditSubTitle"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editSubTitle = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editSubTitle.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editSubTitle.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editSubTitle = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editSubTitle.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editSubTitle.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editSubTitle.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditType\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FeditType"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FeditType\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FeditType"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _editType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editType.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\editType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _editType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/editType.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\editType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_editType.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2Findex\"}":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2Findex"} ***!
-  \***************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2Findex\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2Findex"} ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FselectType\"}":
-/*!********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FselectType"} ***!
-  \********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FselectType\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FselectType"} ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _selectType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/selectType.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\selectType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _selectType = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/selectType.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\selectType.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_selectType.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FsetFreight\"}":
-/*!********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FsetFreight"} ***!
-  \********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FsetFreight\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FsetFreight"} ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _setFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setFreight.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\setFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _setFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setFreight.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\setFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_setFreight.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FsetTotalFreight\"}":
-/*!*************************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FsetTotalFreight"} ***!
-  \*************************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FsetTotalFreight\"}":
+/*!*****************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FsetTotalFreight"} ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _setTotalFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setTotalFreight.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\setTotalFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _setTotalFreight = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/setTotalFreight.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\setTotalFreight.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_setTotalFreight.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FshowGoodSale\"}":
-/*!**********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FshowGoodSale"} ***!
-  \**********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FshowGoodSale\"}":
+/*!**************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FshowGoodSale"} ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _showGoodSale = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/showGoodSale.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\showGoodSale.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _showGoodSale = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/showGoodSale.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\showGoodSale.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_showGoodSale.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FwebViewPage\"}":
-/*!*********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesCommodity%2Fpages%2FwebViewPage"} ***!
-  \*********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesCommodity%2Fpages%2FwebViewPage\"}":
+/*!*************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesCommodity%2Fpages%2FwebViewPage"} ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _webViewPage = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/webViewPage.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\pages\\webViewPage.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _webViewPage = _interopRequireDefault(__webpack_require__(/*! ./pagesCommodity/pages/webViewPage.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\pages\\webViewPage.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_webViewPage.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FaddSurplus\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FaddSurplus"} ***!
-  \****************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FaddSurplus\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FaddSurplus"} ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _addSurplus = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/addSurplus.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\addSurplus.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _addSurplus = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/addSurplus.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\addSurplus.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_addSurplus.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FadditionList\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FadditionList"} ***!
-  \******************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FadditionList\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FadditionList"} ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _additionList = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/additionList.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\additionList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _additionList = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/additionList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\additionList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_additionList.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2Fcoupon\"}":
-/*!************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2Fcoupon"} ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _coupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/coupon.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\coupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_coupon.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FfilterDate\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FfilterDate"} ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _filterDate = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/filterDate.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\filterDate.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_filterDate.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2Findex\"}":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2Findex"} ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FmoneyDetail\"}":
-/*!*****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FmoneyDetail"} ***!
-  \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _moneyDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/moneyDetail.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\moneyDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_moneyDetail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FnoticeDetail\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FnoticeDetail"} ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _noticeDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/noticeDetail.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\noticeDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_noticeDetail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FnoticeList\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FnoticeList"} ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _noticeList = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/noticeList.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\noticeList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_noticeList.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FsearchCoupon\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FsearchCoupon"} ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _searchCoupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/searchCoupon.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\searchCoupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_searchCoupon.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FselectCoupon\"}":
-/*!******************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FselectCoupon"} ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _selectCoupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/selectCoupon.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\selectCoupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_selectCoupon.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2Ftoper\"}":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2Ftoper"} ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _toper = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/toper.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\toper.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_toper.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipBills\"}":
-/*!**************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FvipBills"} ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _vipBills = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipBills.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\vipBills.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_vipBills.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipDetail\"}":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FvipDetail"} ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _vipDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipDetail.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\vipDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_vipDetail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipManage\"}":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesIndex%2Fpages%2FvipManage"} ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _vipManage = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipManage.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\pages\\vipManage.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_vipManage.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2Findex\"}":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2Findex"} ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_index.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2Fquestions\"}":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2Fquestions"} ***!
-  \***************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _questions = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/questions.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\questions.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_questions.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2FsearchShop\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2FsearchShop"} ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _searchShop = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/searchShop.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\searchShop.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_searchShop.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2FselectShop\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2FselectShop"} ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _selectShop = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/selectShop.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\selectShop.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_selectShop.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2FsetNew\"}":
-/*!************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2FsetNew"} ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _setNew = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/setNew.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\setNew.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_setNew.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesLogin%2Fpages%2FtelOrEmail\"}":
-/*!****************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesLogin%2Fpages%2FtelOrEmail"} ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _telOrEmail = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/telOrEmail.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\pages\\telOrEmail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_telOrEmail.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesSelf%2Fpages%2FmyName\"}":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesSelf%2Fpages%2FmyName"} ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _myName = _interopRequireDefault(__webpack_require__(/*! ./pagesSelf/pages/myName.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesSelf\\pages\\myName.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_myName.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesSelf%2Fpages%2Fpassword\"}":
-/*!*************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesSelf%2Fpages%2Fpassword"} ***!
-  \*************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
-
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _password = _interopRequireDefault(__webpack_require__(/*! ./pagesSelf/pages/password.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesSelf\\pages\\password.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_password.default);
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
-
-/***/ }),
-
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2FhistoryRecord\"}":
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2Fcoupon\"}":
 /*!****************************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2FhistoryRecord"} ***!
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2Fcoupon"} ***!
   \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _historyRecord = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/historyRecord.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesSelfTakeVerify\\pages\\historyRecord.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-createPage(_historyRecord.default);
+var _coupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/coupon.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\coupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_coupon.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2Findex\"}":
-/*!********************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2Findex"} ***!
-  \********************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FfilterDate\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FfilterDate"} ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/index.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesSelfTakeVerify\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _filterDate = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/filterDate.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\filterDate.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_filterDate.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2Findex\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2Findex"} ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesTest%2Fpages%2Fecharts\"}":
-/*!************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesTest%2Fpages%2Fecharts"} ***!
-  \************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FmoneyDetail\"}":
+/*!*********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FmoneyDetail"} ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _echarts = _interopRequireDefault(__webpack_require__(/*! ./pagesTest/pages/echarts.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesTest\\pages\\echarts.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _moneyDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/moneyDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\moneyDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_moneyDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FnoticeDetail\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FnoticeDetail"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _noticeDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/noticeDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\noticeDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_noticeDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FnoticeList\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FnoticeList"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _noticeList = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/noticeList.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\noticeList.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_noticeList.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FsearchCoupon\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FsearchCoupon"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _searchCoupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/searchCoupon.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\searchCoupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_searchCoupon.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FselectCoupon\"}":
+/*!**********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FselectCoupon"} ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _selectCoupon = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/selectCoupon.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\selectCoupon.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_selectCoupon.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2Ftoper\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2Ftoper"} ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _toper = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/toper.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\toper.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_toper.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipBills\"}":
+/*!******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FvipBills"} ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _vipBills = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipBills.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\vipBills.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_vipBills.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipDetail\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FvipDetail"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _vipDetail = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipDetail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\vipDetail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_vipDetail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesIndex%2Fpages%2FvipManage\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesIndex%2Fpages%2FvipManage"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _vipManage = _interopRequireDefault(__webpack_require__(/*! ./pagesIndex/pages/vipManage.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\pages\\vipManage.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_vipManage.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2Findex\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2Findex"} ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2Fquestions\"}":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2Fquestions"} ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _questions = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/questions.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\questions.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_questions.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2FsearchShop\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2FsearchShop"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _searchShop = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/searchShop.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\searchShop.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_searchShop.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2FselectShop\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2FselectShop"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _selectShop = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/selectShop.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\selectShop.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_selectShop.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2FsetNew\"}":
+/*!****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2FsetNew"} ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _setNew = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/setNew.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\setNew.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_setNew.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2FtelOrEmail\"}":
+/*!********************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2FtelOrEmail"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _telOrEmail = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/telOrEmail.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\telOrEmail.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_telOrEmail.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelf%2Fpages%2FmyName\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelf%2Fpages%2FmyName"} ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _myName = _interopRequireDefault(__webpack_require__(/*! ./pagesSelf/pages/myName.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\pages\\myName.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_myName.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelf%2Fpages%2Fpassword\"}":
+/*!*****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelf%2Fpages%2Fpassword"} ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _password = _interopRequireDefault(__webpack_require__(/*! ./pagesSelf/pages/password.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelf\\pages\\password.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_password.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2FhistoryRecord\"}":
+/*!********************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2FhistoryRecord"} ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _historyRecord = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/historyRecord.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelfTakeVerify\\pages\\historyRecord.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_historyRecord.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesSelfTakeVerify%2Fpages%2Findex\"}":
+/*!************************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesSelfTakeVerify%2Fpages%2Findex"} ***!
+  \************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesSelfTakeVerify/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesSelfTakeVerify\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesTest%2Fpages%2Fecharts\"}":
+/*!****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesTest%2Fpages%2Fecharts"} ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _echarts = _interopRequireDefault(__webpack_require__(/*! ./pagesTest/pages/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesTest\\pages\\echarts.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_echarts.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\main.js?{\"page\":\"pagesTest%2Fpages%2Ftest\"}":
-/*!*********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/main.js?{"page":"pagesTest%2Fpages%2Ftest"} ***!
-  \*********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesTest%2Fpages%2Ftest\"}":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesTest%2Fpages%2Ftest"} ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "F:\\YLHD\\project\\es-shopHelper\\pages.json");
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
 
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
-var _test = _interopRequireDefault(__webpack_require__(/*! ./pagesTest/pages/test.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesTest\\pages\\test.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+var _test = _interopRequireDefault(__webpack_require__(/*! ./pagesTest/pages/test.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesTest\\pages\\test.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_test.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages.json":
-/*!************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages.json ***!
-  \************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json":
+/*!****************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages.json ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13430,10 +13511,10 @@ createPage(_test.default);
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesBill\\components\\createBillDetail.js":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesBill/components/createBillDetail.js ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\createBillDetail.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesBill/components/createBillDetail.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13613,10 +13694,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\checkAddSpecs.js":
-/*!********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/checkAddSpecs.js ***!
-  \********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\checkAddSpecs.js":
+/*!************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/checkAddSpecs.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13658,10 +13739,10 @@ function _default(list) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\deleteNullData.js":
-/*!*********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/deleteNullData.js ***!
-  \*********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\deleteNullData.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/deleteNullData.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13694,15 +13775,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\goodDetail.js":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/goodDetail.js ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodDetail.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/goodDetail.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;var _updateGoodInfoItems = __webpack_require__(/*! ./updateGoodInfo-items */ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\updateGoodInfo-items.js");
+Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;var _updateGoodInfoItems = __webpack_require__(/*! ./updateGoodInfo-items */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js");
 
 
 
@@ -14079,15 +14160,15 @@ function addGoodsModel(data) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\goodEditDataModel.js":
-/*!************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/goodEditDataModel.js ***!
-  \************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\goodEditDataModel.js":
+/*!****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/goodEditDataModel.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 
 var goodModel = {}; //商品编辑模板数据
@@ -14226,10 +14307,10 @@ function _default(data, cache) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\mockGoodDetailApi.js":
-/*!************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/mockGoodDetailApi.js ***!
-  \************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\mockGoodDetailApi.js":
+/*!****************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/mockGoodDetailApi.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14280,10 +14361,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\toEditPage.js":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/toEditPage.js ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\toEditPage.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/toEditPage.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14331,15 +14412,15 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\upLoadImage.js":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/upLoadImage.js ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\upLoadImage.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/upLoadImage.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _domain = _interopRequireDefault(__webpack_require__(/*! ../../api/domain.js */ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _domain = _interopRequireDefault(__webpack_require__(/*! ../../api/domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 function _default(data) {var _this = this;
   var tmp = '';
   var list = [];var _loop = function _loop(
@@ -14377,10 +14458,10 @@ function _default(data) {var _this = this;
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\updateGoodInfo-items.js":
-/*!***************************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/updateGoodInfo-items.js ***!
-  \***************************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js":
+/*!*******************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo-items.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14407,10 +14488,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.activeGood
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesCommodity\\components\\updateGoodInfo.js":
-/*!*********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesCommodity/components/updateGoodInfo.js ***!
-  \*********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesCommodity/components/updateGoodInfo.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14659,10 +14740,10 @@ function _default(val, cacheGoodDetail) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\Detail-EchartsOption.js":
-/*!***********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesIndex/components/Detail-EchartsOption.js ***!
-  \***********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Detail-EchartsOption.js":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesIndex/components/Detail-EchartsOption.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14714,10 +14795,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\Detail-TableList.js":
-/*!*******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesIndex/components/Detail-TableList.js ***!
-  \*******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Detail-TableList.js":
+/*!***********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesIndex/components/Detail-TableList.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14758,10 +14839,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\Index-EchartsOption.js":
-/*!**********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesIndex/components/Index-EchartsOption.js ***!
-  \**********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-EchartsOption.js":
+/*!**************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesIndex/components/Index-EchartsOption.js ***!
+  \**************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14861,10 +14942,10 @@ function getLineOption4(datalist) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\getCommisssionInfo.js":
-/*!*********************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesIndex/components/getCommisssionInfo.js ***!
-  \*********************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\getCommisssionInfo.js":
+/*!*************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesIndex/components/getCommisssionInfo.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14931,10 +15012,10 @@ function _default(commission) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\getShopList.js":
-/*!**************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pagesLogin/components/getShopList.js ***!
-  \**************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js":
+/*!******************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pagesLogin/components/getShopList.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14956,10 +15037,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\bill\\index\\getBillList.js":
-/*!*********************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/bill/index/getBillList.js ***!
-  \*********************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js":
+/*!*************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/bill/index/getBillList.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15038,10 +15119,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\commodity\\index\\categories.js":
-/*!*************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/commodity/index/categories.js ***!
-  \*************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\categories.js":
+/*!*****************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index/categories.js ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15072,10 +15153,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\commodity\\index\\getGoodsList.js":
-/*!***************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/commodity/index/getGoodsList.js ***!
-  \***************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\getGoodsList.js":
+/*!*******************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index/getGoodsList.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15132,10 +15213,10 @@ function _default()
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\commodity\\index\\savePicToAlbum.js":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/commodity/index/savePicToAlbum.js ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/commodity/index/savePicToAlbum.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15225,10 +15306,10 @@ function _default()
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\index\\components\\bindWx.js":
-/*!**********************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/index/components/bindWx.js ***!
-  \**********************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\bindWx.js":
+/*!**************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/index/components/bindWx.js ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15268,7 +15349,7 @@ function bindWx(rebind) {var _this2 = this;
     needBindWx = _this2.Cacher.getData('needBindWx');
     if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
       _this2.Request('myInfo').then(function (res) {//检查是否绑定了微信
-        if (res.error == 0 && !res.user.wxapp_openid) {
+        if (res.error == 0 && !res.wxapp_openid) {
           that.Cacher.setData('needBindWx', {
             testWx: true, //尝试微信登录
             needBind: false, //需要绑定微信true需要
@@ -15278,7 +15359,8 @@ function bindWx(rebind) {var _this2 = this;
           that.Dialog.confirm({
             title: '没有绑定微信',
             message: '为方便您的使用，是否与微信账号绑定？',
-            confirmButtonText: '绑定' }).
+            confirmButtonText: '绑定',
+            confirmButtonOpenType: 'getUserInfo' }).
           then(function () {
             that.pageLoading();
             bindWechat.call(that, userInfo).then(function (res) {
@@ -15296,7 +15378,6 @@ function bindWx(rebind) {var _this2 = this;
       uni.getUserInfo({ // 获取用户信息
         provider: 'weixin',
         success: function success(infoRes) {
-
           cacheData = Object.assign(cacheData, infoRes);
           that.Cacher.setData('login', cacheData);
           userInfo = cacheData;
@@ -15321,16 +15402,16 @@ function bindWx(rebind) {var _this2 = this;
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\pages\\login\\login.js":
-/*!**********************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/pages/login/login.js ***!
-  \**********************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\login\\login.js":
+/*!**************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/pages/login/login.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\getShopList.js"));
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.wxLogin = wxLogin;exports.login = login;var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../../pagesLogin/components/getShopList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\components\\getShopList.js"));
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
 
 var cacheData = {}; //缓存登录信息 
@@ -15405,6 +15486,50 @@ function selectShop() {//检测是否只有一个店铺
   });
 }
 
+function getWxInfo() {//获取用户微信信息
+  var that = this;
+  return new Promise(function (resolve, reject) {
+    uni.login({ //微信登录
+      provider: 'weixin',
+      success: function success(loginRes) {
+        that.Request('wechatLogin', { //小程序获取登录session
+          code: loginRes.code }).
+        then(function (res) {
+          that.Cacher.setData('needBindWx', {
+            testWx: true, //尝试微信登录
+            needBind: true, //需要绑定微信true需要
+            haveBind: false //已经绑定
+          });
+          if (res.error == 0) {
+            cacheData = Object.assign(cacheData, res);
+
+            that.Cacher.setData('login', cacheData);
+          }
+          uni.getUserInfo({ // 获取用户信息
+            provider: 'weixin',
+            success: function success(infoRes) {
+              cacheData = Object.assign(cacheData, infoRes);
+              that.Cacher.setData('login', cacheData);
+              resolve(res);
+            },
+            fail: function fail(res) {
+              console.log('get info fails', res);
+              resolve(res);
+            } });
+
+
+        }).catch(function (res) {
+          that.Cacher.setData('needBindWx', {
+            testWx: true, //尝试微信登录
+            needBind: true, //需要绑定微信true需要
+            haveBind: false //已经绑定
+          });
+          resolve(res);
+        });
+      } });
+
+  });
+}
 
 function wxLogin() {//微信登录流程
   var that = this;
@@ -15473,7 +15598,7 @@ function wxLogin() {//微信登录流程
                 that.Cacher.setData('login', cacheData);
               },
               fail: function fail(res) {
-                console.log('get info fails', res);
+
               } });
 
 
@@ -15490,54 +15615,56 @@ function wxLogin() {//微信登录流程
   });
 }
 
-function login() {var _this = this; //账号密码登录流程
+function login() {//账号密码登录流程
   var that = this;
-  var cacheData = this.Cacher.getData('login') || {};
 
   return new Promise(function (resolve, reject) {
+    getWxInfo.call(that).then(function (res) {
 
-    _this.Request('login', {
-      account: _this.userId,
-      password: _this.password,
-      is_authorization: 0 }).
-    then(function (res) {
-      // 验证通过
-      if (res.error == 0) {
-        cacheData = Object.assign(cacheData || {}, {
-          userId: res.uid });
+      that.Request('login', {
+        account: that.userId,
+        password: that.password,
+        is_authorization: 0 }).
+      then(function (res) {
+        // 验证通过
+        if (res.error == 0) {
+          cacheData = Object.assign(cacheData || {}, {
+            userId: res.uid });
 
-        that.Cacher.setData('cache-user-login', {
-          userId: _this.userId,
-          password: _this.password });
+          that.Cacher.setData('cache-user-login', {
+            userId: that.userId,
+            password: that.password });
 
-        that.Cacher.setData('login', cacheData);
-        selectShop.call(_this).then(function (r) {//先判断是否只有一个店铺
-          resolve(res);
-        });
+          that.Cacher.setData('login', cacheData);
+          selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+            resolve(res);
+          });
 
-      } else {
-        reject(res);
-        _this.Toast(res.message);
-      }
-      _this.closePageLoading();
-    }).catch(function (res) {
-
-      if (res.error == -3) {//已登录
-        that.Cacher.setData('login', cacheData);
-        that.Cacher.setData('cache-user-login', {
-          userId: _this.userId,
-          password: _this.password });
-
-        selectShop.call(_this).then(function (r) {//先判断是否只有一个店铺
-          resolve(res);
-        });
-      } else {
-        if (res.message == '帐号不存在' || res.message == '帐号或密码错误') {//统一提示‘账号或密码错误’
-          reject(res);
         } else {
+          reject(res);
           that.Toast(res.message);
         }
-      }
+        that.closePageLoading();
+      }).catch(function (res) {
+
+        if (res.error == -3) {//已登录
+          that.Cacher.setData('login', cacheData);
+          that.Cacher.setData('cache-user-login', {
+            userId: that.userId,
+            password: that.password });
+
+          selectShop.call(that).then(function (r) {//先判断是否只有一个店铺
+            resolve(res);
+          });
+        } else {
+          if (res.message == '帐号不存在' || res.message == '帐号或密码错误') {//统一提示‘账号或密码错误’
+            reject(res);
+          } else {
+            that.Toast(res.message);
+          }
+        }
+      });
+
     });
 
   });
@@ -15547,10 +15674,10 @@ function login() {var _this = this; //账号密码登录流程
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\store\\cache.js":
-/*!****************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/store/cache.js ***!
-  \****************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js":
+/*!********************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/store/cache.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15599,10 +15726,10 @@ function clearAll() {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\store\\index.js":
-/*!****************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/store/index.js ***!
-  \****************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\index.js":
+/*!********************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/store/index.js ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15627,10 +15754,10 @@ store;exports.default = _default;
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\wxcomponents\\vant-weapp\\common\\utils.js":
-/*!*****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/wxcomponents/vant-weapp/common/utils.js ***!
-  \*****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\common\\utils.js":
+/*!*********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/wxcomponents/vant-weapp/common/utils.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15651,10 +15778,10 @@ function range(num, min, max) {
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\wxcomponents\\vant-weapp\\dialog\\dialog.js":
-/*!******************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/wxcomponents/vant-weapp/dialog/dialog.js ***!
-  \******************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\dialog\\dialog.js":
+/*!**********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/wxcomponents/vant-weapp/dialog/dialog.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15720,15 +15847,15 @@ Dialog;exports.default = _default;
 
 /***/ }),
 
-/***/ "F:\\YLHD\\project\\es-shopHelper\\wxcomponents\\vant-weapp\\toast\\toast.js":
-/*!****************************************************************************!*\
-  !*** F:/YLHD/project/es-shopHelper/wxcomponents/vant-weapp/toast/toast.js ***!
-  \****************************************************************************/
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js":
+/*!********************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/wxcomponents/vant-weapp/toast/toast.js ***!
+  \********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../common/utils */ "F:\\YLHD\\project\\es-shopHelper\\wxcomponents\\vant-weapp\\common\\utils.js");
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _utils = __webpack_require__(/*! ../common/utils */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\common\\utils.js");
 var defaultOptions = {
   type: 'text',
   mask: false,

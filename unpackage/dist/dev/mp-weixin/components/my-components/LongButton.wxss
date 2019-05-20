@@ -1,4 +1,4 @@
-.my-long-button.data-v-15ba02cc {
+.my-long-button.data-v-31f5e817 {
   width: 680rpx;
   height: 90rpx;
   background: -webkit-gradient(linear, left top, right top, from(#ff8245), to(#fb6638));
@@ -13,11 +13,11 @@
   margin: auto;
   letter-spacing: 4rpx;
 }
-.my-long-button.tapping.data-v-15ba02cc {
+.my-long-button.tapping.data-v-31f5e817 {
     color: #eee;
     background: #ec673e;
 }
-.my-long-button.disable.data-v-15ba02cc {
+.my-long-button.disable.data-v-31f5e817 {
     background: #ccc;
     color: #fff !important;
 }

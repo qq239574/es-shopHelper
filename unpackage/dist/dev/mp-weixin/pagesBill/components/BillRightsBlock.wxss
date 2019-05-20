@@ -1,10 +1,10 @@
-.card--temp.data-v-dcaa0122 {
+.card--temp.data-v-219574dc {
   width: 670rpx;
   margin: auto;
   border-top: 1rpx solid #eee;
   padding-bottom: 10rpx;
 }
-.card--temp .card--info__row.data-v-dcaa0122 {
+.card--temp .card--info__row.data-v-219574dc {
     width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -19,25 +19,25 @@
             justify-content: space-between;
     margin: 10rpx auto 0;
 }
-.card--temp .card--info__row view.data-v-dcaa0122 {
+.card--temp .card--info__row view.data-v-219574dc {
       font-size: 26rpx;
       color: #33373a;
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
 }
-.card--temp .card--info__row .card--info__row__tile.data-v-dcaa0122 {
+.card--temp .card--info__row .card--info__row__tile.data-v-219574dc {
       color: #333;
       font-weight: 700;
 }
-.card--temp .card--info__row .card--info__row__status.data-v-dcaa0122 {
+.card--temp .card--info__row .card--info__row__status.data-v-219574dc {
       color: #333;
       font-weight: 700;
 }
-.card--temp .card--info__row .card--info__row__status.total.data-v-dcaa0122 {
+.card--temp .card--info__row .card--info__row__status.total.data-v-219574dc {
         font-size: 30rpx;
 }
-.card--temp .foot.data-v-dcaa0122 {
+.card--temp .foot.data-v-219574dc {
     width: 670rpx;
     margin: auto;
     border-top: 1rpx solid #eee;

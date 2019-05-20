@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import selectItem from '../../components/my-components/editBlock-SelectItem'
+    import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     import items from '../components/Toper-list.vue'
     import {
         getDate
@@ -111,7 +111,8 @@
                             label: item.nickname,
                             value: item.pay_price,
                             index: item.mobile,
-                            id: item.id
+                            id: item.id,
+                            tiFixed:2//有效数字
                         }))
                     } else {
                         this.list = arr.map(item => ({
@@ -119,7 +120,8 @@
                             label: item.title,
                             value: item.pay_number_count,
                             index: item.goods_id,
-                            goods_id: item.goods_id
+                            goods_id: item.goods_id,
+                            tiFixed:0//有效数字
                         }))
                     }
                 }).catch(res => {

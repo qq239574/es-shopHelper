@@ -1,21 +1,27 @@
-.select-tabs.data-v-d0271060 {
+.select-tabs.data-v-509b690d {
   width: 710rpx;
   margin: 20rpx auto 0;
   background: #fff;
   padding: 20rpx 20rpx 30rpx;
   border-radius: 7rpx;
 }
+<<<<<<< HEAD
 .select-tabs .grace-title.data-v-d0271060 {
     padding-left: 8rpx;
 }
 .select-tabs .grace-title view.data-v-d0271060,
     .select-tabs .grace-title text.data-v-d0271060 {
       line-height: 40rpx;
+=======
+.select-tabs .grace-title view.data-v-509b690d,
+  .select-tabs .grace-title text.data-v-509b690d {
+    line-height: 40rpx;
+>>>>>>> d8b2d284219a531b92ae50cfed19ad9c4c19e345
 }
-.select-tabs .grace-more.data-v-d0271060 {
+.select-tabs .grace-more.data-v-509b690d {
     position: relative;
 }
-.select-tabs .grace-more .allSelect.data-v-d0271060 {
+.select-tabs .grace-more .allSelect.data-v-509b690d {
       -webkit-transform: scale(0.6);
           -ms-transform: scale(0.6);
               transform: scale(0.6);
@@ -23,20 +29,20 @@
       height: 30rpx;
       margin-right: 10rpx;
 }
-.select-tabs .grace-search-taps.data-v-d0271060 {
+.select-tabs .grace-search-taps.data-v-509b690d {
     border: none;
     min-height: 52rpx;
     line-height: 50rpx;
     padding: 20rpx 26rpx 0 0;
 }
-.select-tabs .grace-search-taps view.data-v-d0271060 {
+.select-tabs .grace-search-taps view.data-v-509b690d {
       border: none;
       font-size: 26rpx;
       background: #f6f6f6;
       height: 52rpx;
       line-height: 50rpx;
 }
-.select-tabs .grace-search-taps .selected.data-v-d0271060 {
+.select-tabs .grace-search-taps .selected.data-v-509b690d {
       background: #fff2f2;
       border: 1rpx solid #fb6e42;
       color: #fb6e42;

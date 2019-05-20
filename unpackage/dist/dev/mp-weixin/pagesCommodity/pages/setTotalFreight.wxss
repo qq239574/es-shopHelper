@@ -1,4 +1,4 @@
-.settotle-freight .input.data-v-5c2e9976 {
+.settotle-freight .input.data-v-2f72f968 {
   height: 100rpx;
   margin: 20rpx auto 100rpx;
   background: #fff;
@@ -14,7 +14,7 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.settotle-freight .label.data-v-5c2e9976 {
+.settotle-freight .label.data-v-2f72f968 {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -24,7 +24,7 @@
   font-size: 26rpx;
   padding: 0 20rpx;
 }
-.settotle-freight input.data-v-5c2e9976 {
+.settotle-freight input.data-v-2f72f968 {
   height: 100%;
   width: 100%;
   text-align: right;

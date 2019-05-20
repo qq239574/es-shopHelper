@@ -1,7 +1,7 @@
-.bill-addition.data-v-2538b501 {
+.bill-addition.data-v-0ee3c03e {
   position: relative;
 }
-.bill-addition .counter.data-v-2538b501 {
+.bill-addition .counter.data-v-0ee3c03e {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -13,7 +13,7 @@
     top: 158rpx;
     right: 40rpx;
 }
-.bill-addition .textarea.data-v-2538b501 {
+.bill-addition .textarea.data-v-0ee3c03e {
     width: 710rpx;
     background: #fff;
     height: 180rpx;

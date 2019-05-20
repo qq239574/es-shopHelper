@@ -62,7 +62,7 @@
                                 this.Toast('重置密码成功');
                                 setTimeout(() => {
                                     uni.reLaunch({
-                                        url: '../../pages/index/index?from=setNewPassword'
+                                        url: '../../pages/login/index?from=setNewPassword'
                                     })
                                 }, 1500)
                             } else {
