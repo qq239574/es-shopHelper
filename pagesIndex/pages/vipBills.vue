@@ -248,10 +248,9 @@
             clickBill(val) {
                 cacheBill = val;
                 this.closePageLoading();
-                this.Cacher.setData('bill', {
-                    from: 'bill',
-                    ...val
-                });
+                this.Cacher.setData('bill', Object.assign({
+                    from: 'bill'
+                }, val));
                 if (val.type != 'button') {
                     uni.navigateTo({ //去详情页
                         url: '../../pagesBill/pages/billDetail?from=bill'

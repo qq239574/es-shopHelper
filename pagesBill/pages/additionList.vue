@@ -31,10 +31,9 @@
         },
         methods: {
             clickButton() {
-                this.Cacher.setData('additionList', {
-                    from: 'additionList',
-                    ...DataFrom
-                })
+                this.Cacher.setData('additionList', Object.assign({
+                    from: 'additionList' 
+                },DataFrom))
                 uni.navigateTo({
                     url: './billAddition?from=additionList'
                 })

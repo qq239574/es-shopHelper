@@ -5,7 +5,7 @@ let goodModel = {} //商品编辑模板数据
 
 function mapOptions(data, cache) {
     let options = data.info2.childrenSpecs.list.map((item, index) => {
-        let tmp = {
+        let tmp = Object.assign({
             goods_code: item.code.value, //
             price: item.price.value, //
             stock: item.stock.value, //
@@ -14,8 +14,7 @@ function mapOptions(data, cache) {
             specs: item.specsId,
             stock_warning: 0,
             weight: 0,
-            ...item.other
-        }
+        }, item.other)
         if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') { //多规格电子卡密
             tmp.virtual_card_id = item.cardStock.id
         }
@@ -73,7 +72,7 @@ function mapGoods(data, cache) {
     if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') { //多规格电子卡密
         delete goods.virtual_card_id
     }
-  
+
     return goods;
 
 

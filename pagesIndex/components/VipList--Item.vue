@@ -1,6 +1,6 @@
 <template>
     <view class='card--vip'>
-        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index' >
+        <view class="card--vip-item" v-for='(item,index) in vipsList' :key='index'>
             <view class="imgbox" @click.stop='clickItem(index,item)'>
                 <image :src='item.img'></image>
             </view>
@@ -49,10 +49,10 @@
             }
         },
         props: {
-             Jurisdiction:{
-                type:Object,
-                default:{},
-                required:true
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
             },
             toggle: {
                 type: Boolean,
@@ -82,10 +82,9 @@
             clickItem(vipindex, item) {
                 this.$emit('click', {
                     type: 'item',
-                    detail: {
+                    detail: Object.assign({
                         vipIndex: vipindex,
-                        ...item
-                    }
+                    }, item)
                 })
             },
             clickMenuItem(vipindex, item, name) {
@@ -93,10 +92,9 @@
                 this.$emit('click', {
                     type: 'menu-item',
                     name: name,
-                    detail: {
+                    detail: Object.assign({
                         vipIndex: vipindex,
-                        ...item
-                    }
+                    },item)
                 })
             },
             formatePrice(val) {
@@ -115,8 +113,7 @@
         min-height: 210upx;
         .card--vip-item {
             position: relative;
-            width: 100%;
-            // min-height: 210upx;
+            width: 100%; // min-height: 210upx;
             min-height: 180upx;
             height: fit-content;
             display: flex;
@@ -124,8 +121,7 @@
             justify-content: space-between;
             background: #fff;
             margin: 0 auto 20upx;
-            box-sizing: border-box;
-            // padding: 20upx 20upx 0;
+            box-sizing: border-box; // padding: 20upx 20upx 0;
             padding: 16upx;
             border-radius: 6upx;
             overflow: hidden;
@@ -134,8 +130,7 @@
                 height: 100%;
                 overflow: hidden;
                 display: flex;
-				margin: auto 0;
-                // margin-top: 31upx;
+                margin: auto 0; // margin-top: 31upx;
                 image {
                     border-radius: 50%;
                     width: 100upx;
@@ -151,7 +146,7 @@
                     width: 100%;
                     font-size: 28upx;
                     line-height: 36upx;
-					font-weight: 700;
+                    font-weight: 700;
                 }
                 .vip-others {
                     width: 100%;
@@ -170,8 +165,7 @@
                         flex-wrap: wrap;
                         width: fit-content;
                         view {
-                            min-width: 40%;
-                            // margin: 0 36upx 0 0;
+                            min-width: 40%; // margin: 0 36upx 0 0;
                             margin: 0 24upx 0 0;
                             line-height: 44upx;
                         }

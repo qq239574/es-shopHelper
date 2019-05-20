@@ -45,45 +45,45 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}
-
-
-var cachelist = [];var _default2 =
-{
-  props: {
-    goodsList: {
-      type: Array,
-      default: function _default() {
-        return [{
-          img: '/static/img/global/tmp.png',
-          goodName: '',
-          color: '',
-          size: '',
-          num: 0,
-          price: '0',
-          status: 0 //0未发货
-        }];
-      } } },
-
-
-  watch: {
-    goodsList: function goodsList() {
-      cachelist = this.goodsList.map(function (item) {return true;});
-      this.defaultIndex = _toConsumableArray(cachelist);
-    } },
-
-  beforeMount: function beforeMount() {
-    cachelist = this.goodsList.map(function (item) {return true;});
-    this.defaultIndex = _toConsumableArray(cachelist);
-  },
-  methods: {
-    clickGood: function clickGood(item, index) {
-      var tmp = cachelist[index];
-      cachelist[index] = !tmp;
-      this.$emit('click', this.goodsList.filter(function (item, index) {
-        return cachelist[index] && !item.status && !item.refund_type;
-      }));
-      this.defaultIndex = _toConsumableArray(cachelist);
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var cachelist = [];var _default2 = { props: { goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png', goodName: '', color: '', size: '', num: 0, price: '0', status: 0 //0未发货
+        }];} } }, watch: { goodsList: function goodsList() {cachelist = this.goodsList.map(function (item) {return true;});this.defaultIndex = cachelist.map(function (item) {return item;});} }, beforeMount: function beforeMount() {cachelist = this.goodsList.map(function (item) {return true;});this.defaultIndex = cachelist.map(function (item) {return item;});}, methods: { clickGood: function clickGood(item, index) {var tmp = cachelist[index];cachelist[index] = !tmp;this.$emit('click', this.goodsList.filter(function (item, index) {return cachelist[index] && !item.status && !item.refund_type;}));
+      this.defaultIndex = cachelist.map(function (item) {return item;});
     },
     formatePrice: function formatePrice(val) {
       return (0, _formater.number_format)(val, 2, '.', ',');

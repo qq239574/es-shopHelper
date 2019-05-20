@@ -109,7 +109,7 @@ VantComponent({
             if (this.picker == null) {
                 const picker = this.picker = this.selectComponent('.van-datetime-picker');
                 const { setColumnValues } = picker;
-                picker.setColumnValues = (...args) => setColumnValues.apply(picker, [...args, false]);
+                picker.setColumnValues = (...args) => setColumnValues.apply(picker,args.concat([false]) );
             }
             return this.picker;
         },

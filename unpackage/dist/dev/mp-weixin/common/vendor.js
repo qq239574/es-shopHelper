@@ -11172,16 +11172,10 @@ var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\Cur
 var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js"));
 var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
 var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));
-var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 var sessionId = '';
 var shopInfo = '';
-var indexApi = _objectSpread({},
-loginApi,
-homeApi,
-billApi,
-goodApi,
-myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
-
+var indexApi = Object.assign({}, loginApi, homeApi, billApi, goodApi, myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
 
   function _callee(name, data) {var header, newData;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
             sessionId = cacher.getData('sessionId');if (
@@ -12556,7 +12550,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "I:\\CurProje
 var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\index.js"));
 
 
-var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceLoading.vue"));};
+var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceLoading.vue"));};
 
 _vue.default.config.productionTip = false;
 _vue.default.component('pageLoading', graceFullLoading);
@@ -12566,10 +12560,9 @@ _vue.default.prototype.$store = _store.default;
 
 _App.default.mpType = 'app';
 
-var app = new _vue.default(_objectSpread({
+var app = new _vue.default(Object.assign({
   store: _store.default },
 _App.default));
-
 createApp(app).$mount();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createApp"]))
 
@@ -14162,14 +14155,14 @@ function addGoodsModel(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");
 
 
 var goodModel = {}; //商品编辑模板数据
 
 function mapOptions(data, cache) {
   var options = data.info2.childrenSpecs.list.map(function (item, index) {
-    var tmp = _objectSpread({
+    var tmp = Object.assign({
       goods_code: item.code.value, //
       price: item.price.value, //
       stock: item.stock.value, //
@@ -14179,7 +14172,6 @@ function mapOptions(data, cache) {
       stock_warning: 0,
       weight: 0 },
     item.other);
-
     if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') {//多规格电子卡密
       tmp.virtual_card_id = item.cardStock.id;
     }

@@ -39,9 +39,7 @@
                     needChange: {
                         label: '快递运费',
                         value: this.list[0].subValue,
-                        info: {
-                            ...this.list[this.defaultIndex]
-                        }
+                        info: Object.assign({}, this.list[this.defaultIndex])
                     }
                 })
             },
@@ -51,8 +49,7 @@
                     needChange: {
                         label: '快递运费',
                         value: val.subValue,
-                        info: { ...val
-                        }
+                        info: Object.assign({},val)
                     }
                 })
                 this.defaultIndex = val.index;
@@ -70,7 +67,7 @@
                 from: option.from || '',
                 go: 'setTotalFreight'
             })
-            let dispatch_id=DataFrom.needChange.other.dispatch_id;
+            let dispatch_id = DataFrom.needChange.other.dispatch_id;
             this.list = [{
                 label: '统一运费（元）',
                 value: '修改',
@@ -78,7 +75,7 @@
                 id: -1,
                 index: 0
             }].concat(DataFrom.needChange.other.dispatch_list.map((item, index) => {
-                if (item.id==dispatch_id) { //计算默认的模板
+                if (item.id == dispatch_id) { //计算默认的模板
                     this.defaultIndex = index + 1;
                 }
                 return {
@@ -88,7 +85,7 @@
                     subValue: ' ',
                     index: index + 1
                 }
-            })); 
+            }));
         },
         onShow() {
             this.initPage();

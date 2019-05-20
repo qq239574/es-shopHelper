@@ -59,30 +59,26 @@
                         this.toggle = !this.toggle;
                         cache = val;
                     } else if (val.label == '优惠券') {
-                        this.$emit('click', {
-                            ...val
-                        })
+                        this.$emit('click', Object.assign({}, val))
                     }
-                }else{
+                } else {
                     this.$parent.Toast('暂无会员管理权限')
                 }
             },
             clickMenu(type) {
                 this.toggle = !this.toggle;
                 if (type == 'add' || type == 'minus') {
-                    this.$emit('click', {
+                    this.$emit('click', Object.assign({
                         type,
-                        ...cache
-                    })
+                    }, cache))
                 } else if (type == 'clear') { //清空需要二次确认
                     this.Dialog.confirm({
                         title: '清空' + cache.label,
                         message: '您确认将该用户的' + cache.label + '清零吗？'
                     }).then(() => {
-                        this.$emit('click', {
-                            type,
-                            ...cache
-                        })
+                        this.$emit('click', Object.assign({
+                            type
+                        }, cache))
                     }).catch(() => {
                         // on cancel
                     });

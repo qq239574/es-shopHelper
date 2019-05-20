@@ -20,18 +20,16 @@
         },
         methods: {
             clear() {
-                this.Cacher.setData('searchShop', {
+                this.Cacher.setData('searchShop', Object.assign({
                     from: 'searchShop',
-                    value: '',
-                    ...DataFrom
-                })
+                    value: ''
+                }, DataFrom))
             },
             search(val) {
-                this.Cacher.setData('searchShop', {
+                this.Cacher.setData('searchShop', Object.assign({
                     from: 'searchShop',
-                    value: val,
-                    ...DataFrom
-                })
+                    value: ''
+                }, DataFrom))
                 uni.navigateBack();
             }
         },

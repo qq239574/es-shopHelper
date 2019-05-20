@@ -22,20 +22,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _wxCanvas = _interopRequireDefault(__webpack_require__(/*! ./wx-canvas */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\wx-canvas.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
-
-{
-  props: {
-    onInit: {
-      required: true,
-      type: Function,
-      default: null },
-
-    canvasId: {
-      type: String,
-      default: 'ec-canvas' },
-
-    lazyLoad: {
+var _wxCanvas = _interopRequireDefault(__webpack_require__(/*! ./wx-canvas */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\wx-canvas.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { props: { onInit: { required: true, type: Function, default: null }, canvasId: { type: String, default: 'ec-canvas' }, lazyLoad: {
       type: Boolean,
       default: false },
 
@@ -82,10 +82,9 @@ var _wxCanvas = _interopRequireDefault(__webpack_require__(/*! ./wx-canvas */ "I
     canvasToTempFilePath: function canvasToTempFilePath(opt) {var
       canvasId = this.canvasId;
       this.ctx.draw(true, function () {
-        wx.canvasToTempFilePath(_objectSpread({
+        wx.canvasToTempFilePath(Object.assign({
           canvasId: canvasId },
         opt));
-
       });
     },
     touchStart: function touchStart(e) {var

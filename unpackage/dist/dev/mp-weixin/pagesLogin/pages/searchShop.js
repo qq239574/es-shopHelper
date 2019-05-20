@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -30,18 +30,16 @@ var DataFrom = {};var search = function search() {return __webpack_require__.e(/
   },
   methods: {
     clear: function clear() {
-      this.Cacher.setData('searchShop', _objectSpread({
+      this.Cacher.setData('searchShop', Object.assign({
         from: 'searchShop',
         value: '' },
       DataFrom));
-
     },
     search: function search(val) {
-      this.Cacher.setData('searchShop', _objectSpread({
+      this.Cacher.setData('searchShop', Object.assign({
         from: 'searchShop',
-        value: val },
+        value: '' },
       DataFrom));
-
       uni.navigateBack();
     } },
 

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}} //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -71,8 +71,8 @@ var _default =
           index: this.infoId,
           list: [{
             name: this.typeList.name,
-            id: this.typeList.id }].concat(_toConsumableArray(
-          this.selected)) });
+            id: this.typeList.id }].
+          concat(this.selected) });
 
       } else {
         this.$emit('change', {
@@ -84,7 +84,7 @@ var _default =
     clearKey: function clearKey(val) {//全选或全清理
       this.checked = !this.checked;
       if (this.checked) {
-        this.selected = _toConsumableArray(this.typeList.children);
+        this.selected = this.typeList.children.map(function (item) {return item;});
       } else {
         this.selected = [];
       }
@@ -92,8 +92,8 @@ var _default =
         index: this.infoId,
         list: this.checked ? [{
           name: this.typeList.name,
-          id: this.typeList.id }].concat(_toConsumableArray(
-        this.selected)) : [] });
+          id: this.typeList.id }].
+        concat(this.selected) : [] });
 
     },
     setKey: function setKey(val) {
@@ -109,8 +109,8 @@ var _default =
           index: this.infoId,
           list: [{
             name: this.typeList.name,
-            id: this.typeList.id }].concat(_toConsumableArray(
-          this.selected)) });
+            id: this.typeList.id }].
+          concat(this.selected) });
 
       } else {
         this.$emit('change', {

@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var additionBlock = function additionBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/Addition-Block */ "pagesBill/components/Addition-Block").then(__webpack_require__.bind(null, /*! ../components/Addition-Block */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\Addition-Block.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var additionBlock = function additionBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/Addition-Block */ "pagesBill/components/Addition-Block").then(__webpack_require__.bind(null, /*! ../components/Addition-Block */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\Addition-Block.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};
 
 
 
@@ -41,10 +41,9 @@ var DataFrom = {};var _default =
   },
   methods: {
     clickButton: function clickButton() {
-      this.Cacher.setData('additionList', _objectSpread({
+      this.Cacher.setData('additionList', Object.assign({
         from: 'additionList' },
       DataFrom));
-
       uni.navigateTo({
         url: './billAddition?from=additionList' });
 

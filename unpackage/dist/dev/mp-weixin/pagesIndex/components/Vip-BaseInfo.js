@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var Block1 = function Block1() {return Promise.all(/*! import() | pagesIndex/components/Vip-BaseInfo-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Vip-BaseInfo-Block1")]).then(__webpack_require__.bind(null, /*! ./Vip-BaseInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo-Block2 */ "pagesIndex/components/Vip-BaseInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-BaseInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo-Block2.vue"));};var detailPicker = function detailPicker() {return __webpack_require__.e(/*! import() | pagesIndex/components/Detail-Picker */ "pagesIndex/components/Detail-Picker").then(__webpack_require__.bind(null, /*! ./Detail-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Detail-Picker.vue"));};
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Block1 = function Block1() {return Promise.all(/*! import() | pagesIndex/components/Vip-BaseInfo-Block1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Vip-BaseInfo-Block1")]).then(__webpack_require__.bind(null, /*! ./Vip-BaseInfo-Block1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo-Block1.vue"));};var Block2 = function Block2() {return __webpack_require__.e(/*! import() | pagesIndex/components/Vip-BaseInfo-Block2 */ "pagesIndex/components/Vip-BaseInfo-Block2").then(__webpack_require__.bind(null, /*! ./Vip-BaseInfo-Block2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Vip-BaseInfo-Block2.vue"));};var detailPicker = function detailPicker() {return __webpack_require__.e(/*! import() | pagesIndex/components/Detail-Picker */ "pagesIndex/components/Detail-Picker").then(__webpack_require__.bind(null, /*! ./Detail-Picker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Detail-Picker.vue"));};
 
 
 
@@ -69,9 +69,7 @@ var cache = {};var _default =
           this.toggle = !this.toggle;
           cache = val;
         } else if (val.label == '优惠券') {
-          this.$emit('click', _objectSpread({},
-          val));
-
+          this.$emit('click', Object.assign({}, val));
         }
       } else {
         this.$parent.Toast('暂无会员管理权限');
@@ -80,19 +78,17 @@ var cache = {};var _default =
     clickMenu: function clickMenu(type) {var _this = this;
       this.toggle = !this.toggle;
       if (type == 'add' || type == 'minus') {
-        this.$emit('click', _objectSpread({
+        this.$emit('click', Object.assign({
           type: type },
         cache));
-
       } else if (type == 'clear') {//清空需要二次确认
         this.Dialog.confirm({
           title: '清空' + cache.label,
           message: '您确认将该用户的' + cache.label + '清零吗？' }).
         then(function () {
-          _this.$emit('click', _objectSpread({
+          _this.$emit('click', Object.assign({
             type: type },
           cache));
-
         }).catch(function () {
           // on cancel
         });

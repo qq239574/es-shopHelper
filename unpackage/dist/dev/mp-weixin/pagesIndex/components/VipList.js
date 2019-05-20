@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var itemList = function itemList() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var itemList = function itemList() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
 
 
 
@@ -111,10 +111,9 @@
       this.show2 = false;
     },
     clickItem: function clickItem(val) {
-      this.Cacher.setData('vipManage', _objectSpread({
+      this.Cacher.setData('vipManage', Object.assign({
         from: 'vipManage' },
       val));
-
       if (val.type == 'menu-item') {
         // this.show = true;
         if (val.name == '查看') {

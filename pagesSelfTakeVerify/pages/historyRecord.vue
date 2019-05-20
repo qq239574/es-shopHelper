@@ -135,10 +135,9 @@
             },
             clickBill(val) {
                 this.closePageLoading();
-                this.Cacher.setData('selfVerifyHistory', {
-                    from: 'selfVerifyHistory',
-                    ...val
-                })
+                this.Cacher.setData('selfVerifyHistory',Object.assign({
+                    from: 'selfVerifyHistory' 
+                },val) )
                 uni.navigateTo({
                     url: '../../pagesBill/pages/billDetail?from=selfVerifyHistory'
                 })

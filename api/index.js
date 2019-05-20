@@ -8,13 +8,7 @@ import graceRequest from '../graceUI/jsTools/request.js'
 import global_settings from './domain.js'
 let sessionId = '';
 let shopInfo = '';
-const indexApi = {
-    ...loginApi,
-    ...homeApi,
-    ...billApi,
-    ...goodApi,
-    ...myApi
-};
+const indexApi =Object.assign({},loginApi,homeApi,billApi,goodApi,myApi) ;
 
 export default async function (name, data) {
     sessionId = cacher.getData('sessionId');

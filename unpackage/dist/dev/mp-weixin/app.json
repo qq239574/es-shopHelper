@@ -167,6 +167,5 @@
   "usingComponents": {
     "page-loading": "/graceUI/components/graceFullLoading",
     "load-more": "/graceUI/components/graceLoading"
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }
