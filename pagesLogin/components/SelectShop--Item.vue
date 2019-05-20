@@ -93,6 +93,7 @@
         }
     }
     .shop-block {
+		position: relative;
         display: flex;
         flex-wrap: nowrap;
         width: 702upx;
@@ -135,12 +136,16 @@
             }
         }
         .status {
-            width: 111upx;
+			position:absolute;	// 新添加
+			right:50rpx;	// 新添加
+			top:70rpx;	// 新添加
+            // width: 111upx;
             height: 44upx;
-            margin: auto 30upx auto 0;
+            margin: auto 10upx auto 0;
             .tab {
-                width: 100upx;
+                min-width: 100upx;
                 height: 44upx;
+				padding: 0 5upx;
                 border-radius: 6upx;
                 background: #bdf1cc;
                 color: #16c557;
@@ -170,6 +175,9 @@
             }
         }
         .icon {
+			position:absolute;
+			right:0;
+			top:70rpx;
             margin: auto 20upx auto 0;
             line-height: 50upx;
         }

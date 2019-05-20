@@ -1,7 +1,7 @@
 <template>
     <view class='selectItem '>
         <view class="grace-items swiper-imgs">
-            <view class="grace-label" style='text-indent:1em;'>{{label}}</view>
+            <view class="grace-label" >{{label}}</view>
             <view class="imgbox">
                 <chooseImg @getImages='getImages' @startmove='startmove' :imglist='imglist.list' :maxNum='maxNum' :button='button'></chooseImg>
                 <view class='tips' v-if='tips'>{{tips}}</view>
