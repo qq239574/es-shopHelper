@@ -1,6 +1,6 @@
 <template>
     <div class='setfreight page'>
-        <radioBlock :items='list' :defaultIndex='defaultIndex' valueStyle='color:#fb6638' @clickItem='change'></radioBlock>
+        <radioBlock :items='list' :defaultIndex='defaultIndex' valueStyle='color:#fb6638; margin-left: 0;' fontStyle='font-size: 28upx;' @clickItem='change'></radioBlock>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </div>

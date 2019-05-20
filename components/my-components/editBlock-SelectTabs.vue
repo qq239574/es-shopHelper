@@ -121,6 +121,7 @@
         padding: 20upx 20upx 30upx;
         border-radius: 7upx;
         .grace-title {
+			padding-left: 8upx;
             view,
             text {
                 line-height: 40upx;
@@ -139,7 +140,8 @@
             border: none;
             min-height: 52upx;
             line-height: 50upx;
-            padding: 0 26upx;
+            // padding: 0 26upx;
+            padding: 20upx 26upx 0 0;
             view {
                 border: none;
                 font-size: 26upx;

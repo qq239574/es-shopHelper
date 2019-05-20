@@ -7,7 +7,7 @@
                 </view>
                 <view class="grace-label">{{item.label}}</view>
                 <view class="other" :style="'color:#fb6638;opacity:'+(index === current?'1':'0;')+valueStyle">
-                    <text class="subContent" style='color:#c2c6ce;'>{{item.subValue}}</text>{{item.value}}
+                    <text class="subContent" :style="'color:#c2c6ce;'+fontStyle">{{item.subValue}}</text>{{item.value}}
                     <view style='display:inline;' v-if='item.value===""'>{{placeholder}}</view>
                 </view><text class="grace-icons icon-arrow-right" style='color:#5E5E5E;' v-if='!hideRightArrow'></text>
             </view>
@@ -30,6 +30,10 @@
                 type: String,
                 default: ''
             },
+			fontStyle: {
+			    type: String,
+			    default: ''
+			},
             placeholder: {
                 type: String,
                 default: '请选择'

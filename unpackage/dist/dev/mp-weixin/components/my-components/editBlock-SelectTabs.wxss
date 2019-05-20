@@ -5,9 +5,12 @@
   padding: 20rpx 20rpx 30rpx;
   border-radius: 7rpx;
 }
+.select-tabs .grace-title.data-v-d0271060 {
+    padding-left: 8rpx;
+}
 .select-tabs .grace-title view.data-v-d0271060,
-  .select-tabs .grace-title text.data-v-d0271060 {
-    line-height: 40rpx;
+    .select-tabs .grace-title text.data-v-d0271060 {
+      line-height: 40rpx;
 }
 .select-tabs .grace-more.data-v-d0271060 {
     position: relative;
@@ -24,7 +27,7 @@
     border: none;
     min-height: 52rpx;
     line-height: 50rpx;
-    padding: 0 26rpx;
+    padding: 20rpx 26rpx 0 0;
 }
 .select-tabs .grace-search-taps view.data-v-d0271060 {
       border: none;

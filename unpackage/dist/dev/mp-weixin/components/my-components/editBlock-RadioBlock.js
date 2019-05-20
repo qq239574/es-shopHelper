@@ -40,6 +40,10 @@ var _default =
       type: String,
       default: '' },
 
+    fontStyle: {
+      type: String,
+      default: '' },
+
     placeholder: {
       type: String,
       default: '请选择' },
