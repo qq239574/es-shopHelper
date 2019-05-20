@@ -1,6 +1,4 @@
-import {
-    VantComponent
-} from '../common/component';
+import { VantComponent } from '../common/component';
 VantComponent({
     relation: {
         name: 'collapse-item',
@@ -37,16 +35,14 @@ VantComponent({
         }
     },
     methods: {
-        switch (name, expanded) {
-            const {
-                accordion,
-                value
-            } = this.data;
+        switch(name, expanded) {
+            const { accordion, value } = this.data;
             if (!accordion) {
-                name = expanded ?
-                    value.concat(name) :
-                    value.filter(activeName => activeName !== name);
-            } else {
+                name = expanded
+                    ? value.concat(name)
+                    : value.filter(activeName => activeName !== name);
+            }
+            else {
                 name = expanded ? name : '';
             }
             this.$emit('change', name);
