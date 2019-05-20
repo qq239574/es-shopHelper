@@ -8,7 +8,7 @@
   padding: 21rpx 0 0;
 }
 .block .bill__item.data-v-fb8d854c {
-    color: #000;
+    color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;

@@ -11,7 +11,7 @@
 .card--vip .card--vip-item.data-v-01064aa4 {
     position: relative;
     width: 100%;
-    min-height: 210rpx;
+    min-height: 180rpx;
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
@@ -30,24 +30,24 @@
     margin: 0 auto 20rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    padding: 20rpx 20rpx 0;
+    padding: 16rpx;
     border-radius: 6rpx;
     overflow: hidden;
 }
 .card--vip .card--vip-item .imgbox.data-v-01064aa4 {
-      width: 160rpx;
+      width: 120rpx;
       height: 100%;
       overflow: hidden;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
-      margin-top: 5rpx;
+      margin: auto 0;
 }
 .card--vip .card--vip-item .imgbox image.data-v-01064aa4 {
-        border-radius: 6rpx;
-        width: 100%;
-        height: 160rpx;
+        border-radius: 50%;
+        width: 100rpx;
+        height: 100rpx;
         margin: auto;
 }
 .card--vip .card--vip-item .vip-info.data-v-01064aa4 {
@@ -57,8 +57,9 @@
 }
 .card--vip .card--vip-item .vip-info .vip-name.data-v-01064aa4 {
         width: 100%;
-        font-size: 26rpx;
+        font-size: 28rpx;
         line-height: 36rpx;
+        font-weight: 700;
 }
 .card--vip .card--vip-item .vip-info .vip-others.data-v-01064aa4 {
         width: 100%;
@@ -97,7 +98,7 @@
 }
 .card--vip .card--vip-item .vip-info .vip-others .color view.data-v-01064aa4 {
             min-width: 40%;
-            margin: 0 36rpx 0 0;
+            margin: 0 24rpx 0 0;
             line-height: 44rpx;
 }
 .card--vip .card--vip-item .vip-info .vip-others .color .vip-class.data-v-01064aa4 {
@@ -160,7 +161,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -183,7 +184,7 @@
 .card--vip .card--vip-item .model .item .img.data-v-01064aa4 {
           width: 100%;
           height: 63rpx;
-          margin-top: 48rpx;
+          margin-top: 37rpx;
 }
 .card--vip .card--vip-item .model .item .title.data-v-01064aa4 {
           color: #fff;
@@ -197,7 +198,7 @@
               -ms-transform: translate(-50%, 0);
                   transform: translate(-50%, 0);
           position: absolute;
-          bottom: 30rpx;
+          bottom: 20rpx;
           font-size: 24rpx;
           color: #c5cede;
 }

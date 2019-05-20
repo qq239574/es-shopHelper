@@ -1,7 +1,7 @@
 <template>
     <view class='my-tabs'>
         <scroll-view class="grace-tab-title grace-center" scroll-x="true" id="grace-tab-title">
-            <view class='grace-tab-title__item' :style='getWidth' v-for="(cate, index) in categories" :key="index" :data-cateid="cate.cateid" :data-index="index" :class="[cateCurrentIndex == index ? 'grace-tab-current' : '']" @tap="tabChange">{{cate.name}}</view>
+            <view class='grace-tab-title__item' :style='getWidth+fontStyle' v-for="(cate, index) in categories" :key="index" :data-cateid="cate.cateid" :data-index="index" :class="[cateCurrentIndex == index ? 'grace-tab-current' : '']" @tap="tabChange">{{cate.name}}</view>
         </scroll-view>
     </view>
 </template>
@@ -35,7 +35,11 @@
             index:{
                 type:Number,
                 default:0
-            }
+            },
+			fontStyle: {
+				type: String,
+				default: ''
+			}
         },
         watch:{
             index(){
@@ -47,7 +51,7 @@
         },
         computed: {
             getWidth() {
-                return 'width:' + Math.floor(1 / this.categories.length * 100) + '%';
+                return 'width:' + Math.floor(1 / this.categories.length * 100) + '%;';
             }
         },
         data() {
@@ -103,14 +107,14 @@
         }
     }
     .grace-tab-current {
-        color: #000!important;
+        color: #6e7685!important;
         border: none!important;
         font-size: 30upx!important;
         font-weight: 600;
         position: relative;
-        &:after {
+        &::after {
             position: absolute;
-            bottom: -1upx;
+            bottom: 2upx;
             content: '';
             background: #fb6638;
             height: 4upx;

@@ -53,7 +53,7 @@
         line-height: 60upx;
         text-align: center;
         font-size: 26upx;
-        font-weight: 600;
+        font-weight: 500;
         letter-spacing: 4upx;
         border: 1upx solid #aaafb5;
         padding: 0 20upx;

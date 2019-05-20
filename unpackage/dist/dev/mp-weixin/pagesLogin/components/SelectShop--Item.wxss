@@ -69,6 +69,7 @@
 .shop-block .info .date.data-v-551742ec {
       margin: 16rpx 0 0;
       font-weight: 400;
+      font-size: 24rpx;
 }
 .shop-block .status.data-v-551742ec {
     width: 111rpx;

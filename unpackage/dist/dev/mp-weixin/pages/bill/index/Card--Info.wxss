@@ -28,6 +28,9 @@
 .card--info .card--info__row .card--info__row__tile.data-v-4649be90 {
       color: #6e7685;
 }
+.card--info .card--info__row .card--info__row__name.data-v-4649be90 {
+      font-weight: 700;
+}
 .card--info .card--info__row .item1.data-v-4649be90 {
       font-size: 24rpx;
       line-height: 74rpx;

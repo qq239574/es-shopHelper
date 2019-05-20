@@ -8,7 +8,7 @@
   padding: 21rpx 0 0;
 }
 .block .bill__item.data-v-4aff71c2 {
-    color: #000;
+    color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;
@@ -30,7 +30,6 @@
 .block.data-v-4aff71c2 {
   width: 100%;
   padding: 0 20rpx 0;
-  background: #fcfcfc;
   margin: 0 auto 0;
 }
 .block .border.data-v-4aff71c2 {

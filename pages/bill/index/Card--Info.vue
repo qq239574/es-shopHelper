@@ -2,16 +2,16 @@
     <view class='card--info' @click='clickBill'>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>买家姓名：</view>
-            <view>{{info.name}}</view>
+            <view class="card--info__row__name">{{info.name}}</view>
         </view>
         <view class='card--info__row'>
             <view class='card--info__row__tile'>配送方式：</view>
-            <view>{{info.provide}}</view>
+            <view class="card--info__row__name">{{info.provide}}</view>
         </view>
         <view class='card--info__row card--info__footer'>
             <view class='card--info__footer-item item1'>共{{info.num*1}}件商品</view>
             <view class='card--info__footer-item item2' :style='showPayType?"":"padding-right:0;"' :class='info.payType?"pay-type":""'>应付：
-                <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>（含运费）
+                <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>(含运费)
                 <image lazy-load src='/static/img/global/product_share_wechat.svg' v-if='showPayType'></image>
             </view>
         </view>
@@ -109,6 +109,9 @@
             .card--info__row__tile {
                 color: #6e7685;
             }
+			.card--info__row__name {
+				font-weight: 700;
+			}
             .item1 {
                 font-size: 24upx;
                 line-height: 74upx;

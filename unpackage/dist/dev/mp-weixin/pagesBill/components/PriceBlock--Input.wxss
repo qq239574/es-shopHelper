@@ -26,7 +26,7 @@
 .price-input .row input.data-v-d7048cae {
       height: 70rpx;
       width: 250rpx;
-      background: #fcfcfc;
+      background: #f5f5f5;
       border: 1rpx solid #eee;
       border-radius: 6rpx;
       line-height: 70rpx;

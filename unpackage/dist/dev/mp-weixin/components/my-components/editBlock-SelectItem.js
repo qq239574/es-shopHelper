@@ -50,6 +50,10 @@ var _default =
       type: String,
       default: '' },
 
+    fontStyle: {
+      type: String,
+      default: '' },
+
     other: {
       type: [Object, Number, String, Array, Boolean],
       default: '' } },

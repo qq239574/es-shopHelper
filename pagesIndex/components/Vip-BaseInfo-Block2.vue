@@ -1,8 +1,8 @@
 <template>
     <view class='vip-baseinfo-block2'>
-        <selectItem label='余额' :value='info.money' @click='clickItem'></selectItem>
-        <selectItem label='积分' :value='info.score' @click='clickItem'></selectItem>
-        <selectItem label='优惠券' :value='info.coupon' @click='clickItem'></selectItem>
+        <selectItem fontStyle='font-weight: 500;' label='余额' :value='info.money' @click='clickItem'></selectItem>
+        <selectItem fontStyle='font-weight: 500;' label='积分' :value='info.score' @click='clickItem'></selectItem>
+        <selectItem fontStyle='font-weight: 500;' contentStyle='border-bottom: none;' label='优惠券' :value='info.coupon' @click='clickItem'></selectItem>
     </view>
 </template>
 

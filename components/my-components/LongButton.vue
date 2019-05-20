@@ -1,6 +1,6 @@
 <template>
 	<view class='my-long-button' :class='tappingClass' @click='clickBuntton' @touchstart='clickStart' @touchend='cancelTap'
-	 @touchcancel='cancelTap'>
+	 @touchcancel='cancelTap' :style='fontStyle'>
 		<slot></slot>
 	</view>
 </template>
@@ -11,6 +11,10 @@
 			disable: {
 				type: Boolean,
 				default: false
+			},
+			fontStyle: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {

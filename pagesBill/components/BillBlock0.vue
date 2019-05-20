@@ -61,12 +61,12 @@
             }
         }
         .right {
-            width: 112upx;
+            width: 130upx;
             display: flex;
             image {
-                width: 112upx;
+                width: 130upx;
                 margin: auto;
-                max-height: 100upx;
+                max-height: 130upx;
                 ;
             }
         }

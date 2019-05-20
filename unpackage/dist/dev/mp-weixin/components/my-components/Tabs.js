@@ -44,7 +44,11 @@ var _default =
 
     index: {
       type: Number,
-      default: 0 } },
+      default: 0 },
+
+    fontStyle: {
+      type: String,
+      default: '' } },
 
 
   watch: {
@@ -57,7 +61,7 @@ var _default =
   },
   computed: {
     getWidth: function getWidth() {
-      return 'width:' + Math.floor(1 / this.categories.length * 100) + '%';
+      return 'width:' + Math.floor(1 / this.categories.length * 100) + '%;';
     } },
 
   data: function data() {

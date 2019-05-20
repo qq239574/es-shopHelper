@@ -22,15 +22,15 @@
     height: 84rpx;
 }
 .grace-tab-current {
-  color: #000 !important;
+  color: #6e7685 !important;
   border: none !important;
   font-size: 30rpx !important;
   font-weight: 600;
   position: relative;
 }
-.grace-tab-current:after {
+.grace-tab-current::after {
     position: absolute;
-    bottom: -1rpx;
+    bottom: 2rpx;
     content: '';
     background: #fb6638;
     height: 4rpx;

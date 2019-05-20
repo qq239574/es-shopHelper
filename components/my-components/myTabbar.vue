@@ -1,6 +1,6 @@
 <template>
     <view style='width:100%;hieght:100upx;'>
-        <view class='my-tabbar'>
+        <view class='my-tabbar' :style='fontStyle'>
             <view v-for='(item,index) in showList' :key='index' @click='click(item,index)' class='i-tab-bar-item'>
                 <image lazy-load :src='item.selectedIconPath' class='i-tab-bar-item-img' v-if='item.index==defaultIndex'></image>
                 <image lazy-load :src='item.iconPath' class='i-tab-bar-item-img' v-else></image>
@@ -23,6 +23,10 @@
                 type: Object,
                 default: {}
             },
+			fontStyle: {
+				type: String,
+				default: ''
+			}
         },
         computed: {
             showList() {

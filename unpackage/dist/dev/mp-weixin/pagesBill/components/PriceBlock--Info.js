@@ -28,6 +28,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var cellBlock = function cellBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillDetailCell */ "pagesBill/components/BillDetailCell").then(__webpack_require__.bind(null, /*! ./BillDetailCell */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillDetailCell.vue"));};var _default =
 {
   props: {

@@ -31,7 +31,11 @@ var _default =
 
     Jurisdiction: {
       type: Object,
-      default: {} } },
+      default: {} },
+
+    fontStyle: {
+      type: String,
+      default: '' } },
 
 
   computed: {

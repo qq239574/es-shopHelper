@@ -20,7 +20,11 @@ var _default =
   props: {
     disable: {
       type: Boolean,
-      default: false } },
+      default: false },
+
+    fontStyle: {
+      type: String,
+      default: '' } },
 
 
   data: function data() {

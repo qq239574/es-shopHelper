@@ -48,7 +48,7 @@
         margin: auto;
         padding: 5upx 0 15upx;
         height: fit-content;
-        background: #fcfcfc;
+        // background: #fcfcfc;
         .card--good-item {
             width: 100%;
             height: 150upx;

@@ -49,7 +49,7 @@
   .money input.data-v-1fa08866 {
     height: 100%;
     line-height: 120rpx;
-    font-size: 28rpx;
+    font-size: 36rpx;
     color: #213354;
     font-weight: 600;
     padding: 0 5rpx;

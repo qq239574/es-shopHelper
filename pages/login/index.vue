@@ -168,6 +168,11 @@
 			position: relative;
 			width: fit-content;
 			margin: auto;
+			.my-long-button {
+				font-size: 30upx;
+				font-weight: 700;
+				letter-spacing: 1upx;
+			}
 			button {
 				position: absolute;
 				top: 0;

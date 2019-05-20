@@ -13,6 +13,7 @@
             <view class="label bill__item" slot='pre'>小计：</view>
             <view class="body bill__item" slot='aft'>￥{{formater(info.total)}}</view>
         </cellBlock>
+		<view class="border"></view>
     </view>
 </template>
 
@@ -46,7 +47,7 @@
     .block {
         width: 100%;
         padding: 0 20upx 0;
-        background: #fcfcfc;
+        // background: #fcfcfc;
         margin: 0 auto 0;
         .border {
             height: 0;

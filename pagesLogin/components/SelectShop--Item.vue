@@ -131,6 +131,7 @@
             .date {
                 margin: 16upx 0 0;
                 font-weight: 400;
+				font-size: 24upx;
             }
         }
         .status {

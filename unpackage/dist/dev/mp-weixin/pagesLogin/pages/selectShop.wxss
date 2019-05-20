@@ -17,7 +17,8 @@
     width: 702rpx;
     margin: 0 auto;
     line-height: 110rpx;
-    font-size: 28rpx;
+    font-size: 30rpx;
+    font-weight: 700;
     color: #495576;
 }
 .my-shops .load-more.data-v-3417471f {

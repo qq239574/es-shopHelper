@@ -9,16 +9,16 @@
         </view>
         <dataShower :Jurisdiction='Jurisdiction' :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
         <view class="block">
-            <selectItem contentStyle='width:100%;' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31'>
+            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' labelStyle='color:#6e7685; ' valueStyle='color:#9da3ae; font-size: 12px;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
-            <selectItem contentStyle='width:100%;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
+            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae; font-size: 12px;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
         <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_overview_view'></goodsBlock>
         <apps @click='toApp' :Jurisdiction='Jurisdiction'></apps>
-        <MyTabbar :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
+        <MyTabbar fontStyle='border-top: 1px solid #f7f8fa' :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>

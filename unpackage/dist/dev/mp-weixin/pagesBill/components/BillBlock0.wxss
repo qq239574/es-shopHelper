@@ -42,15 +42,15 @@
       margin: 23rpx 0 0 0;
 }
 .bill-block0 .right.data-v-fbe21252 {
-    width: 112rpx;
+    width: 130rpx;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
 }
 .bill-block0 .right image.data-v-fbe21252 {
-      width: 112rpx;
+      width: 130rpx;
       margin: auto;
-      max-height: 100rpx;
+      max-height: 130rpx;
 }
 
