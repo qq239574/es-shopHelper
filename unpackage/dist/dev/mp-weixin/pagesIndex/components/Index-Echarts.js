@@ -76,8 +76,8 @@ var _default = { props: { info: { type: Object, default: { title: '', subTitle: 
         url: './moneyDetail?from=dataGraph' });
 
     },
-    formater: function formater(num) {
-      return (0, _formater.number_format)(Math.min(9999999999, num));
+    formater: function formater(num, toFixed) {
+      return (0, _formater.number_format)(Math.min(9999999999, num), toFixed, '.', ',');
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
@@ -109,8 +109,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.formater(_vm.today)
-  var m1 = _vm.formater(_vm.yesterday)
+  var m0 = _vm.formater(_vm.today, _vm.info.toFixed)
+  var m1 = _vm.formater(_vm.yesterday, _vm.info.toFixed)
   _vm.$mp.data = Object.assign(
     {},
     {

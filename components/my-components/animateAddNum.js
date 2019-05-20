@@ -2,7 +2,7 @@ export default function () { //数字累加效果
     let bar = '';
     let cachetime = 0;
     let that = this;
-    let maxTime = 1500; //2s
+    let maxTime = 1500; //1.5s
     let cachenum = 0;
     let gap = 0;
     let rate = 0;

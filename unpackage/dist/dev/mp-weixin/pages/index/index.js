@@ -55,7 +55,7 @@ var _bindWx = __webpack_require__(/*! ./components/bindWx.js */ "I:\\CurProject\
 
 
 
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var DataFrom = {};var newNotice = {};var searchDay = { value: 'today' };var cacheData = {};var _default =
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var switchItem = function switchItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SwitchItem */ "components/my-components/editBlock-SwitchItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SwitchItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SwitchItem.vue"));};var dataShower = function dataShower() {return Promise.all(/*! import() | pages/index/components/IndexDataShower */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/index/components/IndexDataShower")]).then(__webpack_require__.bind(null, /*! ./components/IndexDataShower.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexDataShower.vue"));};var goodsBlock = function goodsBlock() {return __webpack_require__.e(/*! import() | pages/index/components/IndexGoods */ "pages/index/components/IndexGoods").then(__webpack_require__.bind(null, /*! ./components/IndexGoods.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexGoods.vue"));};var apps = function apps() {return __webpack_require__.e(/*! import() | pages/index/components/IndexApps */ "pages/index/components/IndexApps").then(__webpack_require__.bind(null, /*! ./components/IndexApps.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\IndexApps.vue"));};var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar */ "components/my-components/myTabbar").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar.vue"));};var DataFrom = {};var newNotice = {};var searchDay = { value: 'today' };var cacheData = {};var _default =
 
 
 {
@@ -142,11 +142,10 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
       }
     },
     toBill: function toBill(val) {//跳转订单页
-      this.Cacher.setData('home', _objectSpread({
-        from: 'home' },
-      val, {
-        info: this.showData }));
-      //页面传参 
+      this.Cacher.setData('home', Object.assign({
+        from: 'home',
+        info: this.showData },
+      val)); //页面传参 
       uni.reLaunch({
         url: '../bill/index?from=home' });
 
@@ -161,11 +160,10 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
       });
     },
     toNotice: function toNotice(val) {
-      this.Cacher.setData('home', _objectSpread({
-        from: 'home' },
-      val, {
-        list: newNotice }));
-      //页面传参
+      this.Cacher.setData('home', Object.assign({
+        from: 'home',
+        list: newNotice },
+      val)); //页面传参
       uni.navigateTo({
         url: '../../pagesIndex/pages/noticeList?from=home' });
 

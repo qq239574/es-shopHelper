@@ -30,8 +30,8 @@ export function bindWx(rebind) {
     let that = this;
     return new Promise((resolve, reject) => {
         userInfo = this.Cacher.getData('login');
-        needBindWx = this.Cacher.getData('needBindWx'); 
-        if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
+        needBindWx = this.Cacher.getData('needBindWx');
+        if (needBindWx.testWx && needBindWx.needBind && !rebind) {
             this.Request('myInfo').then(res => { //检查是否绑定了微信
                 if (res.error == 0 && !res.wxapp_openid) {
                     that.Cacher.setData('needBindWx', {
@@ -40,31 +40,27 @@ export function bindWx(rebind) {
                         haveBindWx: false
                     })
                     that.closePageLoading();
-                    that.Dialog.confirm({
+                    that.Dialog.confirm({//二次确认
                         title: '没有绑定微信',
                         message: '为方便您的使用，是否与微信账号绑定？',
                         confirmButtonText: '绑定',
-                        confirmButtonOpenType:'getUserInfo'
+                        confirmButtonOpenType: 'getUserInfo'
                     }).then(() => {
                         that.pageLoading();
-                        bindWechat.call(that, userInfo).then(res => {
-                            that.Toast('绑定成功');
-                            resolve(res)
-                        }).catch(res => {
-                            that.Toast('绑定失败');
-                            reject(res)
-                        })
+                        bindWx.call(that,true);
+                    }).catch(res=>{ 
+                        that.closePageLoading()
                     });
                 }
             })
-        } else if (rebind) {
+        } else if (rebind) {//重新绑定
             let cacheData = that.Cacher.getData('login')
             uni.getUserInfo({ // 获取用户信息
                 provider: 'weixin',
                 success: function (infoRes) {
                     cacheData = Object.assign(cacheData, infoRes);
                     that.Cacher.setData('login', cacheData);
-                    userInfo=cacheData;
+                    userInfo = cacheData;
                     bindWechat.call(that, userInfo).then(res => {
                         that.Toast('绑定成功');
                         resolve(res);
@@ -74,6 +70,7 @@ export function bindWx(rebind) {
                     })
                 },
                 fail(res) {
+                    that.closePageLoading()
                     that.Toast('绑定微信需要用户信息权限')
                 }
             });

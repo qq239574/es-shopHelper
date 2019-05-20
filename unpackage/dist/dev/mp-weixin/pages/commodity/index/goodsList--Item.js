@@ -62,61 +62,60 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default2 =
-
-
-{
-  props: {
-    Jurisdiction: {
-      type: Object,
-      default: {},
-      required: true },
-
-    goodsList: {
-      type: Array,
-      default: function _default() {
-        return [{
-          img: '/static/img/global/tmp.png',
-          goodName: '',
-          color: '',
-          size: '',
-          num: 0,
-          price: '0',
-          saled: 0 }];
-
-      } },
-
-    toggle: {
-      type: Boolean,
-      default: false } },
-
-
-  data: function data() {
-    return {
-      menuIndex: '' };
-
-  },
-  watch: {
-    toggle: function toggle() {
-      this.menuIndex = '';
-    } },
-
-  methods: {
-    showMenu: function showMenu(goodindex) {
-      this.menuIndex = 'good-' + goodindex;
-    },
-    clickMenuItem: function clickMenuItem(goodindex, item, name) {
-      this.menuIndex = '';
-      this.$emit('click', {
-        type: 'menu-item',
-        name: name,
-        detail: _objectSpread({
-          goodIndex: goodindex },
-        item) });
-
-
-    },
-    clickGood: function clickGood(item) {
+var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = { props: { Jurisdiction: { type: Object, default: {}, required: true }, goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png', goodName: '', color: '', size: '', num: 0, price: '0', saled: 0 }];} }, toggle: { type: Boolean, default: false } }, data: function data() {return { menuIndex: '' };}, watch: { toggle: function toggle() {this.menuIndex = '';} }, methods: { showMenu: function showMenu(goodindex) {this.menuIndex = 'good-' + goodindex;}, clickMenuItem: function clickMenuItem(goodindex, item, name) {this.menuIndex = '';this.$emit('click', { type: 'menu-item', name: name, detail: Object.assign({ goodIndex: goodindex }, item) });}, clickGood: function clickGood(item) {
       this.$emit('click', {
         type: 'good',
         detail: {

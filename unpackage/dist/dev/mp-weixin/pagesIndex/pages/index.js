@@ -68,7 +68,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 var mpvueEcharts = function mpvueEcharts() {return Promise.all(/*! import() | components/mpvue-echarts/src/echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/mpvue-echarts/src/echarts")]).then(__webpack_require__.bind(null, /*! ../../components/mpvue-echarts/src/echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\mpvue-echarts\\src\\echarts.vue"));};var echartBlock = function echartBlock() {return Promise.all(/*! import() | pagesIndex/components/Index-Echarts */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/Index-Echarts")]).then(__webpack_require__.bind(null, /*! ../components/Index-Echarts.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Echarts.vue"));};var topList = function topList() {return __webpack_require__.e(/*! import() | pagesIndex/components/Index-Top */ "pagesIndex/components/Index-Top").then(__webpack_require__.bind(null, /*! ../components/Index-Top.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Index-Top.vue"));};var initing = false; //是否正在刷新
 /**
  * 缓存接口数据
- */var dataList1 = [0, 0, 0, 0, 0, 0, 0],dataList2 = [0, 0, 0, 0, 0, 0, 0],dataList3 = [0, 0, 0, 0, 0, 0, 0],dataList4 = [0, 0, 0, 0, 0, 0, 0];var initdata = [{ title: '成交额（元）', subTitle: '累计总成成交额：' + 0, today: 0, yesterday: 0, id: 'trade' }, { title: '付款订单数（个）', subTitle: '', today: 0, yesterday: 0, id: 'pay' }, {
+ */var dataList1 = [0, 0, 0, 0, 0, 0, 0],dataList2 = [0, 0, 0, 0, 0, 0, 0],dataList3 = [0, 0, 0, 0, 0, 0, 0],dataList4 = [0, 0, 0, 0, 0, 0, 0];var initdata = [{ title: '成交额（元）', subTitle: '累计总成交额：' + 0, today: 0, yesterday: 0, id: 'trade' }, { title: '付款订单数（个）', subTitle: '', today: 0, yesterday: 0, id: 'pay' }, {
   title: '付款商品数（件）',
   subTitle: '',
   today: 0,
@@ -106,25 +106,29 @@ var timeBar = '';var _default =
       subTitle: '累计总成交额：' + 0,
       today: 0,
       yesterday: 0,
-      id: 'trade' },
+      id: 'trade',
+      toFixed: 2 },
     {
       title: '付款订单数（个）',
       subTitle: '',
       today: 0,
       yesterday: 0,
-      id: 'pay' },
+      id: 'pay',
+      toFixed: 0 },
     {
       title: '付款商品数（件）',
       subTitle: '',
       today: 0,
       yesterday: 0,
-      id: 'good' },
+      id: 'good',
+      toFixed: 0 },
     {
       title: '付款会员数',
       subTitle: '',
       today: 0,
       yesterday: 0,
-      id: 'vip' }];
+      id: 'vip',
+      toFixed: 0 }];
 
     this.initPage();
   },
@@ -135,25 +139,29 @@ var timeBar = '';var _default =
         subTitle: '累计总成交额：' + 0,
         today: 0,
         yesterday: 0,
-        id: 'trade' },
+        id: 'trade',
+        toFixed: 2 },
       {
         title: '付款订单数（个）',
         subTitle: '',
         today: 0,
         yesterday: 0,
-        id: 'pay' },
+        id: 'pay',
+        toFixed: 0 },
       {
         title: '付款商品数（件）',
         subTitle: '',
         today: 0,
         yesterday: 0,
-        id: 'good' },
+        id: 'good',
+        toFixed: 0 },
       {
         title: '付款会员数',
         subTitle: '',
         today: 0,
         yesterday: 0,
-        id: 'vip' }];
+        id: 'vip',
+        toFixed: 0 }];
 
       if (!initing) {
         var reqResult = []; //用来统计请求是否全部完成

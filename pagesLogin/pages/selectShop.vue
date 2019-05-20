@@ -148,7 +148,8 @@
                     this.Request('shoplist', {
                         pageSize: 20,
                         page: ajaxIndex,
-                        keywords: this.searchShop
+                        keywords: this.searchShop,
+                        source: 'assistant'
                     }).then(res => {
                         requesting = false;
                         this.requesting = requesting;
@@ -165,7 +166,7 @@
                                 this.Cacher.setData(pageId, {
                                     from: pageId,
                                     shopInfo: shop.shopInfo,
-                                    totalShops: res.total
+                                    totalShops: res.count
                                 });
                                 this.selectShop(shop);
                             } else {
@@ -239,7 +240,7 @@
             margin: 0 auto;
             line-height: 110upx;
             font-size: 30upx;
-			font-weight: 700;
+            font-weight: 700;
             color: #495576;
         }
         .load-more {

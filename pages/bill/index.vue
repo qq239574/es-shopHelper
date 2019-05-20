@@ -127,7 +127,7 @@
             }
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
-                if (!res.order_view) {//无权限
+                if (!res.order_view) { //无权限
                     uni.switchTab({
                         url: '/pages/index/index'
                     });
@@ -278,10 +278,9 @@
             clickBill(val) {
                 cacheBill = val;
                 this.closePageLoading();
-                this.Cacher.setData('bill', {
+                this.Cacher.setData('bill', Object.assign({
                     from: 'bill',
-                    ...val
-                });
+                }, val));
                 if (val.type != 'button') {
                     uni.navigateTo({ //去详情页
                         url: '../../pagesBill/pages/billDetail?from=bill'

@@ -475,7 +475,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6571,7 +6571,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6592,14 +6592,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6668,7 +6668,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10687,11 +10687,8 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-  // base_url:'https://ceshiuser.100cms.com',
-  //  base_url: 'https://shop.jacjack.com',
-  attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
-};var _default =
+  base_url: "https://user.qdev.eldev.cn" };var _default =
+
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -11205,10 +11202,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               }));case 4:
 
 
-
-            if (!shopInfo) {
-              shopInfo = cacher.getData('selectShop');
-            }
+            shopInfo = cacher.getData('selectShop');
 
             header = {};
             if (shopInfo && shopInfo.shopInfo) {
@@ -11751,7 +11745,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   var bar = '';
   var cachetime = 0;
   var that = this;
-  var maxTime = 1500; //2s
+  var maxTime = 1500; //1.5s
   var cachenum = 0;
   var gap = 0;
   var rate = 0;
@@ -13519,7 +13513,7 @@ createPage(_test.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}function _default(result) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(result) {
   var commission = result.commission || { //上级分销商信息
     "agent_level1": { //一级上线分销商信息
       "nickname": "", //分销商昵称
@@ -13630,7 +13624,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         money: commission.agent_level3 && commission.agent_level3.commission || ''
         //三级分销商
       } },
-    billInfo6: [].concat(_toConsumableArray(result.goods_waits.map(function (item) {//未发货的商品
+    billInfo6: result.goods_waits.map(function (item) {//未发货的商品
       if (item.refund_status != 0) {
         refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
       }
@@ -13654,7 +13648,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendStatus: item.status_text //发货信息
         } };
 
-    })), _toConsumableArray(result.package_send.map(function (item) {//已发货的包裹
+    }).concat(result.package_send.map(function (item) {//已发货的包裹
 
       return {
         goodsInfo: item.order_goods.map(function (val, key) {//商品信息
@@ -13681,7 +13675,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendStatus: '已发货' //发货信息
         } };
 
-    }))),
+    })),
     billInfo7: {
       goodTotal: result.order.goods_price, //商品总计
       vipCount: (discount_total || 0).toFixed(2), //会员折扣
@@ -15347,7 +15341,7 @@ function bindWx(rebind) {var _this2 = this;
   return new Promise(function (resolve, reject) {
     userInfo = _this2.Cacher.getData('login');
     needBindWx = _this2.Cacher.getData('needBindWx');
-    if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
+    if (needBindWx.testWx && needBindWx.needBind && !rebind) {
       _this2.Request('myInfo').then(function (res) {//检查是否绑定了微信
         if (res.error == 0 && !res.wxapp_openid) {
           that.Cacher.setData('needBindWx', {
@@ -15356,24 +15350,20 @@ function bindWx(rebind) {var _this2 = this;
             haveBindWx: false });
 
           that.closePageLoading();
-          that.Dialog.confirm({
+          that.Dialog.confirm({ //二次确认
             title: '没有绑定微信',
             message: '为方便您的使用，是否与微信账号绑定？',
             confirmButtonText: '绑定',
             confirmButtonOpenType: 'getUserInfo' }).
           then(function () {
             that.pageLoading();
-            bindWechat.call(that, userInfo).then(function (res) {
-              that.Toast('绑定成功');
-              resolve(res);
-            }).catch(function (res) {
-              that.Toast('绑定失败');
-              reject(res);
-            });
+            bindWx.call(that, true);
+          }).catch(function (res) {
+            that.closePageLoading();
           });
         }
       });
-    } else if (rebind) {
+    } else if (rebind) {//重新绑定
       var cacheData = that.Cacher.getData('login');
       uni.getUserInfo({ // 获取用户信息
         provider: 'weixin',
@@ -15390,6 +15380,7 @@ function bindWx(rebind) {var _this2 = this;
           });
         },
         fail: function fail(res) {
+          that.closePageLoading();
           that.Toast('绑定微信需要用户信息权限');
         } });
 
@@ -15434,7 +15425,8 @@ function selectShop() {//检测是否只有一个店铺
   return new Promise(function (resolve, reject) {
     that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
       pageSize: 2,
-      page: 1 }).
+      page: 1,
+      source: 'assistant' }).
     then(function (res) {
 
       if (res.error == 0) {

@@ -109,7 +109,7 @@ export default function (result) {
                 money: commission.agent_level3 && commission.agent_level3.commission || ''
             } //三级分销商
         },
-        billInfo6: [...result.goods_waits.map(item => { //未发货的商品
+        billInfo6: result.goods_waits.map(item => { //未发货的商品
             if (item.refund_status != 0) {
                 refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
             }
@@ -133,7 +133,7 @@ export default function (result) {
                     sendStatus: item.status_text //发货信息
                 }
             }
-        }), ...result.package_send.map(item => { //已发货的包裹
+        }).concat(result.package_send.map(item => { //已发货的包裹
 
             return {
                 goodsInfo: item.order_goods.map((val, key) => { //商品信息
@@ -160,7 +160,7 @@ export default function (result) {
                     sendStatus: '已发货' //发货信息
                 }
             }
-        })],
+        })),
         billInfo7: {
             goodTotal: result.order.goods_price, //商品总计
             vipCount: (discount_total || 0).toFixed(2), //会员折扣

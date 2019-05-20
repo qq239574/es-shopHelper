@@ -64,8 +64,9 @@ var managerId = '';var _default =
       userRoleName: '',
       realName: '',
       wxInfo: {},
-      wxapp_openid: '' };
-
+      wxapp_openid: '',
+      nickName: '' //绑定的微信的昵称
+    };
   },
   methods: {
     initPage: function initPage() {var _this = this;
@@ -78,6 +79,7 @@ var managerId = '';var _default =
         _this.userId = res[res.account_type] || res.mobile || res.email || res.username;
         _this.wxapp_openid = res.wxapp_openid;
         managerId = res.manage_id;
+        _this.nickName = res.nickName;
       });
     },
     toPage: function toPage(val) {
