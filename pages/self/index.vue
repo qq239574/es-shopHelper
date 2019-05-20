@@ -34,6 +34,7 @@
 		bindWx
 	} from '../index/components/bindWx.js'
 	let DataFrom = {};
+	let managerId=''
 	export default {
 		components: {
 			selectItem,
@@ -58,11 +59,12 @@
 				this.Request('myInfo').then(res => {
 					this.userName = res.contact;
 					this.userTel = res.username;
-					this.contact_mobile = res.contact_mobile;
+					this.contact_mobile = res.manager_contact_mobile;
 					this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
-					this.realName = res.contact;
+					this.realName = res.manager_contact;
 					this.userId =res[res.account_type]||res.mobile||res.email||res.username;
 					this.wxapp_openid=res.wxapp_openid;
+					managerId=res.manage_id
 				}) 
 			},
 			toPage(val) {
@@ -72,6 +74,7 @@
 						userTel: this.contact_mobile,
 						userRoleName: this.userRoleName,
 						realName: this.realName,
+						managerId,
 						needChange: {
 							name: '姓名',
 							id: 'realName'
@@ -86,6 +89,7 @@
 						userTel: this.contact_mobile,
 						userRoleName: this.userRoleName,
 						realName: this.realName,
+						managerId,
 						needChange: {
 							name: '联系方式',
 							id: 'userTel'

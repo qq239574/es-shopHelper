@@ -45,12 +45,11 @@
             saveName() {
                 this.pageLoading();
                 let profiles = {};
-                this.Request('changeUserInfo', flatten({
-                    profiles: {
-                        "contact_name": DataFrom.realName||' ',
-                        "contact_mobile": DataFrom.userTel||' '
-                    }
-                })).then(res => {
+                this.Request('changeUserInfo2', {
+                    member_id:DataFrom.managerId,
+                    "name": DataFrom.realName || ' ',
+                    "contact": DataFrom.userTel || ' '
+                }).then(res => {
                     this.closePageLoading();
                     if (res.error == 0) {
                         uni.navigateBack();

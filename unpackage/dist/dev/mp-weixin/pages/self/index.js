@@ -43,7 +43,8 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 var _bindWx = __webpack_require__(/*! ../index/components/bindWx.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\index\\components\\bindWx.js");var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar3 */ "components/my-components/myTabbar3").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar3 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};
 
 
-var DataFrom = {};var _default =
+var DataFrom = {};
+var managerId = '';var _default =
 {
   components: {
     selectItem: selectItem,
@@ -68,11 +69,12 @@ var DataFrom = {};var _default =
       this.Request('myInfo').then(function (res) {
         _this.userName = res.contact;
         _this.userTel = res.username;
-        _this.contact_mobile = res.contact_mobile;
+        _this.contact_mobile = res.manager_contact_mobile;
         _this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
-        _this.realName = res.contact;
+        _this.realName = res.manager_contact;
         _this.userId = res[res.account_type] || res.mobile || res.email || res.username;
         _this.wxapp_openid = res.wxapp_openid;
+        managerId = res.manage_id;
       });
     },
     toPage: function toPage(val) {
@@ -82,6 +84,7 @@ var DataFrom = {};var _default =
           userTel: this.contact_mobile,
           userRoleName: this.userRoleName,
           realName: this.realName,
+          managerId: managerId,
           needChange: {
             name: '姓名',
             id: 'realName' } });
@@ -96,6 +99,7 @@ var DataFrom = {};var _default =
           userTel: this.contact_mobile,
           userRoleName: this.userRoleName,
           realName: this.realName,
+          managerId: managerId,
           needChange: {
             name: '联系方式',
             id: 'userTel' } });

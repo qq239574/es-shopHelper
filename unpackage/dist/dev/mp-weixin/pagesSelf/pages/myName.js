@@ -55,11 +55,10 @@ var cache = '';var _default =
     saveName: function saveName() {var _this = this;
       this.pageLoading();
       var profiles = {};
-      this.Request('changeUserInfo', (0, _ajaxDataFormater.flatten)({
-        profiles: {
-          "contact_name": DataFrom.realName || ' ',
-          "contact_mobile": DataFrom.userTel || ' ' } })).
-
+      this.Request('changeUserInfo2', {
+        member_id: DataFrom.managerId,
+        "name": DataFrom.realName || ' ',
+        "contact": DataFrom.userTel || ' ' }).
       then(function (res) {
         _this.closePageLoading();
         if (res.error == 0) {

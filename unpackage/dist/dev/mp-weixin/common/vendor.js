@@ -11497,7 +11497,7 @@ var getVRCodeImg = { //获取图形验证码
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.myInfo = exports.changeUserPassword = exports.changeUserInfo = void 0;
+Object.defineProperty(exports, "__esModule", { value: true });exports.myInfo = exports.changeUserInfo2 = exports.changeUserPassword = exports.changeUserInfo = void 0;
 var changeUserInfo = { //修改用户名,用户联系方式
   url: '/api/site/account/profile/set',
   data: {},
@@ -11517,6 +11517,19 @@ var changeUserPassword = { //修改用户密码
 
 
   type: 'post' };exports.changeUserPassword = changeUserPassword;
+
+var changeUserInfo2 = { //修改员工姓名与联系人
+  url: '/shop/manage/setting/operator/edit-manager',
+  data: {
+    member_id: '',
+    name: '',
+    contact: '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.changeUserInfo2 = changeUserInfo2;
+
 
 
 var myInfo = { //获取用户信息
