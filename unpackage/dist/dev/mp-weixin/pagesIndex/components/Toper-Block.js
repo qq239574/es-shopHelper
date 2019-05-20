@@ -55,7 +55,7 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
 //
 //
 //
-var _default = { props: { info: { type: Object, default: { img: '', label: '', value: 0, index: 0 } }, index: { type: Number, default: 0 }, pageid: { type: String, default: 'goods' } }, methods: { formater: function formater(val) {return (0, _formater.number_format)(val, 2, '.', ',');
+var _default = { props: { info: { type: Object, default: { img: '', label: '', value: 0, index: 0 } }, index: { type: Number, default: 0 }, pageid: { type: String, default: 'goods' } }, methods: { formater: function formater(val, num) {return (0, _formater.number_format)(val, num, '.', ',');
     },
     clickItem: function clickItem() {
       this.$emit('click', this.info);
@@ -89,7 +89,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = _vm.formater(_vm.info.value)
+  var m0 = _vm.formater(_vm.info.value, _vm.info.tiFixed)
   _vm.$mp.data = Object.assign(
     {},
     {

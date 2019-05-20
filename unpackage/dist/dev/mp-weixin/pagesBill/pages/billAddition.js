@@ -61,6 +61,7 @@ var cacheVal = '';var _default =
 
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    this.val = DataFrom.value.content;
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

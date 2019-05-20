@@ -16,7 +16,7 @@
             </view>
         </view>
         <view class="num">
-            {{formater(info.value)}}
+            {{formater(info.value,info.tiFixed)}}
         </view>
     </view>
 </template>
@@ -44,8 +44,8 @@ import {number_format} from '../../components/my-components/formater.js'
             }
         },
         methods: {
-            formater(val){
-                return number_format(val,2,'.',',')
+            formater(val,num){
+                return number_format(val,num,'.',',')
             },
             clickItem(){
                 this.$emit('click',this.info)

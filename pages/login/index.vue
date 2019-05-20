@@ -25,7 +25,7 @@
 			</van-cell-group>
 		</view>
 		<view class='getUserInfo'>
-			<LongButton @click='loginNow' :disable='disableButton'><button open-type='getUserInfo' class='appletBtn'></button>登录</LongButton>
+			<LongButton @click='loginNow' :disable='disableButton'><button  class='appletBtn'></button>登录</LongButton>
 		</view>
 		<view class="forget-pw cell-font-gray">
 			<view @tap="reg">忘记密码?</view>

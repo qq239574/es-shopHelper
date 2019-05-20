@@ -8,10 +8,11 @@
                 </view>
             </view>
             <view class='button'>
-                <button open-type='share' class="img" @click.stop='share("share")' v-if='info.type=="mini"'>
-                                <image src='/static/img/global/wechat.png'></image>
-                                <view>分享好友</view>
-                            </button>
+                <view  class="img" v-if='info.type=="mini"'>
+                    <button open-type='share'  @click.stop='share("share")' ></button>
+                    <image src='/static/img/global/wechat.png'></image>
+                    <view>分享好友</view>
+                </view>
                 <view open-type='share' class="img" @click.stop='share("share")' v-else>
                     <image src='/static/img/global/wechat.png'></image>
                     <view>分享好友</view>
@@ -69,11 +70,12 @@
 <style lang="scss" scoped>
     // @import "../../../graceUI/animate.css";
     .poster-share {
+        box-sizing: border-box;
         .button {
             position: absolute;
             width: 524upx;
             height: 150upx;
-            bottom: 20upx;
+            bottom: 120upx;
             left: 0;
             right: 0;
             margin: auto;
@@ -82,11 +84,20 @@
                 display: block;
                 width: 50%;
                 height: 150upx;
+                position: relative;
                 display: flex;
                 margin: 0;
                 flex-wrap: wrap;
                 background: rgba(0, 0, 0, 0);
                 justify-content: space-around;
+                button{
+                    position: absolute;
+                    width:100%;
+                    height:100%;
+                    top:0;
+                    left:0;
+                    opacity: 0;
+                }
                 image {
                     width: 100upx;
                     height: 100upx;

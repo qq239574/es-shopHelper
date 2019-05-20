@@ -23,7 +23,7 @@
 var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");
 
 
-var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
 
 
 var searchSection = [];
@@ -121,16 +121,18 @@ var domain = '';var _default =
               label: item.nickname,
               value: item.pay_price,
               index: item.mobile,
-              id: item.id };});
-
+              id: item.id,
+              tiFixed: 2 //有效数字
+            };});
         } else {
           _this.list = arr.map(function (item) {return {
               img: domain + item.thumb,
               label: item.title,
               value: item.pay_number_count,
               index: item.goods_id,
-              goods_id: item.goods_id };});
-
+              goods_id: item.goods_id,
+              tiFixed: 0 //有效数字
+            };});
         }
       }).catch(function (res) {
         _this.closePageLoading();

@@ -30,10 +30,10 @@ export function bindWx(rebind) {
     let that = this;
     return new Promise((resolve, reject) => {
         userInfo = this.Cacher.getData('login');
-        needBindWx = this.Cacher.getData('needBindWx');
+        needBindWx = this.Cacher.getData('needBindWx'); 
         if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
             this.Request('myInfo').then(res => { //检查是否绑定了微信
-                if (res.error == 0 && !res.user.wxapp_openid) {
+                if (res.error == 0 && !res.wxapp_openid) {
                     that.Cacher.setData('needBindWx', {
                         testWx: true, //尝试微信登录
                         needBind: false, //需要绑定微信true需要
@@ -43,7 +43,8 @@ export function bindWx(rebind) {
                     that.Dialog.confirm({
                         title: '没有绑定微信',
                         message: '为方便您的使用，是否与微信账号绑定？',
-                        confirmButtonText: '绑定'
+                        confirmButtonText: '绑定',
+                        confirmButtonOpenType:'getUserInfo'
                     }).then(() => {
                         that.pageLoading();
                         bindWechat.call(that, userInfo).then(res => {
@@ -61,7 +62,6 @@ export function bindWx(rebind) {
             uni.getUserInfo({ // 获取用户信息
                 provider: 'weixin',
                 success: function (infoRes) {
-
                     cacheData = Object.assign(cacheData, infoRes);
                     that.Cacher.setData('login', cacheData);
                     userInfo=cacheData;

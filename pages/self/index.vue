@@ -13,8 +13,11 @@
 		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem :label='"微信："+(wxInfo.nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-if='wxapp_openid'></selectItem>
-		<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-else></selectItem>
+		<view class='rebindWx'>
+			<selectItem :label='"微信："+(wxInfo.nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' v-if='wxapp_openid'></selectItem>
+			<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' v-else></selectItem>
+			<button open-type='getUserInfo' @click='reBindWX' class='appletBtn'> </button>
+		</view>
 		<view class="margin20"></view>
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
@@ -34,7 +37,7 @@
 		bindWx
 	} from '../index/components/bindWx.js'
 	let DataFrom = {};
-	let managerId=''
+	let managerId = ''
 	export default {
 		components: {
 			selectItem,
@@ -51,7 +54,7 @@
 				userRoleName: '',
 				realName: '',
 				wxInfo: {},
-				wxapp_openid:''
+				wxapp_openid: ''
 			}
 		},
 		methods: {
@@ -62,10 +65,10 @@
 					this.contact_mobile = res.manager_contact_mobile;
 					this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
 					this.realName = res.manager_contact;
-					this.userId =res[res.account_type]||res.mobile||res.email||res.username;
-					this.wxapp_openid=res.wxapp_openid;
-					managerId=res.manage_id
-				}) 
+					this.userId = res[res.account_type] || res.mobile || res.email || res.username;
+					this.wxapp_openid = res.wxapp_openid;
+					managerId = res.manage_id
+				})
 			},
 			toPage(val) {
 				if (val == 'name') {
@@ -103,11 +106,10 @@
 						url: '../../pagesSelf/pages/password?from=myself'
 					})
 				}
-			}, 
-			reBindWX() { 
+			},
+			reBindWX() {
 				this.closePageLoading();
-				bindWx.call(this, true).then(res=>{
-					
+				bindWx.call(this, true).then(res => {
 					this.initPage();
 				});
 			},
@@ -133,7 +135,7 @@
 			this.wxInfo = info.userInfo;
 			this.initPage();
 		},
-		onPullDownRefresh(){ 
+		onPullDownRefresh() {
 			this.initPage();
 		},
 		onLoad() {
@@ -213,6 +215,19 @@
 	}
 	.margin20 {
 		height: 20upx;
+	}
+	.rebindWx {
+		position: relative;
+		width: 100%;
+		height: fit-content;
+		button {
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
 	}
 	.button {
 		width: 100%;

@@ -153,6 +153,7 @@
                         this.Request('introGoodInfo', {
                             id: cacheGood.detail.goodId
                         }).then(res => {
+                            this.closePageLoading();
                             if (!res.error) {
                                 shareInfo = res;
                                 this.show2 = true;
@@ -162,6 +163,7 @@
                                 }))
                             }
                         }).catch(res => {
+                            this.closePageLoading();
                             that.Toast(res.message)
                         })
                     }

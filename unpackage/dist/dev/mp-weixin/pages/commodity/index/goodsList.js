@@ -163,6 +163,7 @@ var _default2 = {
           this.Request('introGoodInfo', {
             id: cacheGood.detail.goodId }).
           then(function (res) {
+            _this.closePageLoading();
             if (!res.error) {
               shareInfo = res;
               _this.show2 = true;
@@ -172,6 +173,7 @@ var _default2 = {
 
             }
           }).catch(function (res) {
+            _this.closePageLoading();
             that.Toast(res.message);
           });
         }

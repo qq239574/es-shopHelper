@@ -75,6 +75,21 @@
 .margin20.data-v-04b29112 {
   height: 20rpx;
 }
+.rebindWx.data-v-04b29112 {
+  position: relative;
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.rebindWx button.data-v-04b29112 {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
 .button.data-v-04b29112 {
   width: 100%;
   height: 100rpx;

@@ -37,6 +37,9 @@
 
 
 
+
+
+
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");
 
 
@@ -117,7 +120,6 @@ var managerId = '';var _default =
     reBindWX: function reBindWX() {var _this2 = this;
       this.closePageLoading();
       _bindWx.bindWx.call(this, true).then(function (res) {
-
         _this2.initPage();
       });
     },

@@ -72,7 +72,7 @@ var DataFrom = {};var _default =
               _this.Toast('重置密码成功');
               setTimeout(function () {
                 uni.reLaunch({
-                  url: '../../pages/index/index?from=setNewPassword' });
+                  url: '../../pages/login/index?from=setNewPassword' });
 
               }, 1500);
             } else {

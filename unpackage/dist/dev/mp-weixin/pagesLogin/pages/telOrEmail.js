@@ -49,10 +49,10 @@ var bar = '';var _default =
       return this.userId === '' || this.password === '';
     },
     canSendVfCode: function canSendVfCode() {
-      if (type == 'email') {
+      if (type == 'email') {//验证邮箱
         var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
         return re.test(this.userId) && !!this.imageCode;
-      } else {
+      } else {//
         return /^1[0-9]{10}$/.test(this.userId) && !!this.imageCode;
       }
     } },
@@ -129,6 +129,7 @@ var bar = '';var _default =
           _this.Toast(res.message);
         }
       }).catch(function (res) {
+        _this.closePageLoading();
         _this.Toast(res.message);
       });
     },
@@ -147,8 +148,11 @@ var bar = '';var _default =
         this.requestCode();
       } else if (this.canSendVfCode && !bool) {//正在请求中
         this.Toast('请稍后');
-      } else {//验证不通过
-        this.Toast(this.placeholder1 + '与图形验证码');
+      } else if (!this.imageCode) {//验证不通过
+        console.log('>>>>', this.imageCode, this.imageCode.length);
+        this.Toast('请填写图形验证码');
+      } else {
+        this.Toast(this.placeholder1);
       }
     },
     requestCode: function requestCode() {var _this3 = this;
