@@ -1,15 +1,23 @@
-import { VantComponent } from '../common/component';
-import { isDef } from '../common/utils';
+import {
+    VantComponent
+} from '../common/component';
+import {
+    isDef
+} from '../common/utils';
 const currentYear = new Date().getFullYear();
+
 function isValidDate(date) {
     return isDef(date) && !isNaN(new Date(date).getTime());
 }
+
 function range(num, min, max) {
     return Math.min(Math.max(num, min), max);
 }
+
 function padZero(val) {
     return `00${val}`.slice(-2);
 }
+
 function times(n, iteratee) {
     let index = -1;
     const result = Array(n);
@@ -18,6 +26,7 @@ function times(n, iteratee) {
     }
     return result;
 }
+
 function getTrueValue(formattedValue) {
     if (!formattedValue)
         return;
@@ -26,6 +35,7 @@ function getTrueValue(formattedValue) {
     }
     return parseInt(formattedValue, 10);
 }
+
 function getMonthEndDay(year, month) {
     return 32 - new Date(year, month - 1, 32).getDate();
 }
@@ -89,7 +99,9 @@ VantComponent({
     },
     watch: {
         value(val) {
-            const { data } = this;
+            const {
+                data
+            } = this;
             val = this.correctValue(val);
             const isEqual = val === data.innerValue;
             if (!isEqual) {
@@ -106,29 +118,44 @@ VantComponent({
     },
     methods: {
         getPicker() {
+            function tmp() {
+                let args = Array.prototype.slice.apply(arguments);
+                return setColumnValues.apply(picker, args.concat([false]));
+            }
             if (this.picker == null) {
                 const picker = this.picker = this.selectComponent('.van-datetime-picker');
-                const { setColumnValues } = picker;
-                picker.setColumnValues = (...args) => setColumnValues.apply(picker, args.concat([false]));
+                const {
+                    setColumnValues
+                } = picker;
+                picker.setColumnValues = tmp.bind(this); 
+ 
             }
             return this.picker;
         },
         updateColumns() {
-            const results = this.getRanges().map(({ type, range }, index) => {
+            const results = this.getRanges().map(({
+                type,
+                range
+            }, index) => {
                 const values = times(range[1] - range[0] + 1, index => {
                     let value = range[0] + index;
                     value = type === 'year' ? `${value}` : padZero(value);
                     return value;
                 });
-                return { values };
+                return {
+                    values
+                };
             });
-            return this.set({ columns: results });
+            return this.set({
+                columns: results
+            });
         },
         getRanges() {
-            const { data } = this;
+            const {
+                data
+            } = this;
             if (data.type === 'time') {
-                return [
-                    {
+                return [{
                         type: 'hour',
                         range: [data.minHour, data.maxHour]
                     },
@@ -138,10 +165,21 @@ VantComponent({
                     }
                 ];
             }
-            const { maxYear, maxDate, maxMonth, maxHour, maxMinute } = this.getBoundary('max', data.innerValue);
-            const { minYear, minDate, minMonth, minHour, minMinute } = this.getBoundary('min', data.innerValue);
-            const result = [
-                {
+            const {
+                maxYear,
+                maxDate,
+                maxMonth,
+                maxHour,
+                maxMinute
+            } = this.getBoundary('max', data.innerValue);
+            const {
+                minYear,
+                minDate,
+                minMonth,
+                minHour,
+                minMinute
+            } = this.getBoundary('min', data.innerValue);
+            const result = [{
                     type: 'year',
                     range: [minYear, maxYear]
                 },
@@ -169,14 +207,17 @@ VantComponent({
             return result;
         },
         correctValue(value) {
-            const { data } = this;
+            const {
+                data
+            } = this;
             // validate value
             const isDateType = data.type !== 'time';
             if (isDateType && !isValidDate(value)) {
                 value = data.minDate;
-            }
-            else if (!isDateType && !value) {
-                const { minHour } = data;
+            } else if (!isDateType && !value) {
+                const {
+                    minHour
+                } = data;
                 value = `${padZero(minHour)}:00`;
             }
             // time type
@@ -232,14 +273,15 @@ VantComponent({
             this.$emit('confirm', this.data.innerValue);
         },
         onChange() {
-            const { data } = this;
+            const {
+                data
+            } = this;
             let value;
             const picker = this.getPicker();
             if (data.type === 'time') {
                 const indexes = picker.getIndexes();
                 value = `${indexes[0] + data.minHour}:${indexes[1] + data.minMinute}`;
-            }
-            else {
+            } else {
                 const values = picker.getValues();
                 const year = getTrueValue(values[0]);
                 const month = getTrueValue(values[1]);
@@ -265,13 +307,14 @@ VantComponent({
         },
         updateColumnValue(value) {
             let values = [];
-            const { data } = this;
+            const {
+                data
+            } = this;
             const picker = this.getPicker();
             if (data.type === 'time') {
                 const pair = value.split(':');
                 values = [pair[0], pair[1]];
-            }
-            else {
+            } else {
                 const date = new Date(value);
                 values = [`${date.getFullYear()}`, padZero(date.getMonth() + 1)];
                 if (data.type === 'date') {
@@ -281,7 +324,9 @@ VantComponent({
                     values.push(padZero(date.getDate()), padZero(date.getHours()), padZero(date.getMinutes()));
                 }
             }
-            return this.set({ innerValue: value })
+            return this.set({
+                    innerValue: value
+                })
                 .then(() => this.updateColumns())
                 .then(() => picker.setValues(values));
         }

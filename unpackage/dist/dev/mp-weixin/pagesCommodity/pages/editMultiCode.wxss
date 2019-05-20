@@ -1,6 +1,7 @@
 .multi-block.data-v-7a7ceaa3 {
   width: 100%;
-  margin: 0 auto 20rpx;
+  margin: 0 auto;
+  padding-bottom: 20rpx;
 }
 .multi-block .block.data-v-7a7ceaa3 {
     width: 710rpx;

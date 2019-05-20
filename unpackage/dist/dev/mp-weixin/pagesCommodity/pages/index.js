@@ -123,7 +123,11 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
           data && _this.Request('addGoods', res).then(function (res) {
             if (res.error == 0) {
               _this.Cacher.clearData('editGood');
-              uni.navigateBack();
+              _this.closePageLoading();
+              _this.Toast('保存成功');
+              setTimeout(function () {
+                uni.navigateBack();
+              }, 1000);
             } else {
               _this.Toast(res.message);
             }
@@ -135,7 +139,11 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
         _upLoadImage.default.call(this, data).then(function (newData) {
           _this.Request('editGoodDetail', newData).then(function (res) {
             if (res.error == 0) {
-              uni.navigateBack();
+              _this.closePageLoading();
+              _this.Toast('保存成功');
+              setTimeout(function () {
+                uni.navigateBack();
+              }, 1000);
             } else {
               _this.Toast(res.message);
             }

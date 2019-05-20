@@ -38,7 +38,7 @@ var DataFrom = {};var search = function search() {return __webpack_require__.e(/
     search: function search(val) {
       this.Cacher.setData('searchShop', Object.assign({
         from: 'searchShop',
-        value: '' },
+        value: val },
       DataFrom));
       uni.navigateBack();
     } },
@@ -52,7 +52,6 @@ var DataFrom = {};var search = function search() {return __webpack_require__.e(/
         title: DataFrom.title });
 
     }
-    console.log(DataFrom);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

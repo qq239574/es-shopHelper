@@ -34,19 +34,31 @@
 .card--info .card--info__row .item1.data-v-4649be90 {
       font-size: 24rpx;
       line-height: 74rpx;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
 }
 .card--info .card--info__row .item2.data-v-4649be90 {
       font-size: 24rpx;
       line-height: 20rpx;
-      position: relative;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      white-space: pre-wrap;
+      word-break: break-all;
 }
-.card--info .card--info__row .item2 image.data-v-4649be90 {
-        position: absolute;
+.card--info .card--info__row .item2 .imgBox.data-v-4649be90 {
+        position: relative;
         display: inline-block;
         width: 30rpx;
         height: 30rpx;
-        top: 24rpx;
-        right: 0;
+        margin: 0 0 0 5rpx;
+}
+.card--info .card--info__row .item2 .imgBox image.data-v-4649be90 {
+          position: absolute;
+          width: 30rpx;
+          height: 30rpx;
+          top: 8rpx;
+          right: 0;
 }
 .card--info .card--info__row .item2.pay-type.data-v-4649be90 {
         padding-right: 32rpx;

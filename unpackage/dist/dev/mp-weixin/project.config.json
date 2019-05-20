@@ -11,7 +11,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
-	"appid": "wxea0039639afb8d4c",
+	"appid": "wxfe654a9a0053e113",
 	"projectname": "MobileManager",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -24,13 +24,31 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"current": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "goods",
+					"pathName": "pages/bill/index",
+					"scene": null
+				}
+			]
 		}
 	}
 }

@@ -6,7 +6,7 @@
         </view>
         <view class='margin180'></view>
         <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
-        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
+        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!billList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -82,39 +82,9 @@
                     state: ''
                 },
                 searchValue: '', //查询条件 
-                billList: [{ //完整数据
-                    info: { //订单及用户信息
-                        name: '', //客户姓名
-                        provide: '', //配送方式
-                        num: 0, //商品数量
-                        pay: 0, //实付
-                        addtion: 0, //备注
-                        payType: '', //支付方式
-                        subStatus: 0, //订单状态，1：维权
-                        status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
-                    },
-                    bill: { //订单信息
-                        billId: '', //订单号
-                        billDate: '', //订单时间
-                        billType: 0, //订单类型，0：分销订单，1：普通订单
-                        billPrice: 0
-                    },
-                    goodsList: [{ //订单商品信息
-                        img: '', //商品图片
-                        goodName: '', //商品名
-                        color: '', //颜色
-                        size: '', //型号
-                        num: 0, //数量
-                        price: 0, //价格
-                        specifications: 'single', //单规格
-                    }],
-                    rights: { // 维权信息
-                        status: '', //维权状态
-                        addition: 0, //维权备注
-                    }
-                }],
+                billList: [],
                 tabIndex: 0, //默认tabs的index
-                searching: true
+                searching: false
             }
         },
         onLoad(option) {
@@ -223,6 +193,7 @@
                     this.searching = false;
                 }).catch(res => {
                     this.searching = false;
+                    this.closePageLoading();
                     this.Toast(res.message || '出错啦')
                 });
             },
@@ -251,6 +222,7 @@
                     }).catch(res => {
                         this.searching = false;
                         searching = false;
+                        this.closePageLoading();
                         requestQueue && this.tabChange(requestQueue);
                         requestQueue = '';
                     });

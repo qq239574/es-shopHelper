@@ -37,6 +37,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
 var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var _default2 =
 
 
@@ -126,11 +128,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   var m0 = _vm.formatePrice(_vm.info.pay)
+  var m1 = _vm.formatePrice(_vm.info.dispatch_price)
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0
+        m0: m0,
+        m1: m1
       }
     }
   )
