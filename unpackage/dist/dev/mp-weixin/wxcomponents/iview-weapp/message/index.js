@@ -10,14 +10,16 @@ let timmer = null;
 Component({
     externalClasses: ['i-class'],
 
-    data: Object.assign({},default_data),
+    data:Object.assign({ 
+    },default_data) ,
 
     methods: {
-        handleShow (options) {
-            const { type = 'default', duration = 2 } = options;
+        handleShow(options) {
+            const {
+                type = 'default', duration = 2
+            } = options;
 
-            this.setData(Object.assign(options,{
-               
+            this.setData(Object.assign(options, {
                 type,
                 duration,
                 visible: true
@@ -34,9 +36,10 @@ Component({
             }
         },
 
-        handleHide () {
-            this.setData(Object.assign({ 
-            },default_data));
+        handleHide() {
+            this.setData(Object.assign({
+
+            }, default_data));
         }
     }
 });

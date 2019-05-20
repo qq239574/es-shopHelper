@@ -14,7 +14,6 @@ Component({
     externalClasses: ['i-class'],
 
     data: Object.assign({
-        
     },default_data),
 
     methods: {
@@ -39,7 +38,8 @@ Component({
         },
 
         handleHide () {
-            this.setData(Object.assign({},default_data));
+            this.setData(Object.assign({ 
+            },default_data));
         }
     }
 });

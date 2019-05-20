@@ -1,11 +1,13 @@
-import { VantComponent } from '../common/component';
+import {
+    VantComponent
+} from '../common/component';
 VantComponent({
     relation: {
         name: 'collapse-item',
         type: 'descendant',
         linked(child) {
             this.set({
-                items: this.data.items.concat(child) 
+                items: this.data.items.concat([child])
             }, () => {
                 child.updateExpanded();
             });
@@ -35,14 +37,16 @@ VantComponent({
         }
     },
     methods: {
-        switch(name, expanded) {
-            const { accordion, value } = this.data;
+        switch (name, expanded) {
+            const {
+                accordion,
+                value
+            } = this.data;
             if (!accordion) {
-                name = expanded
-                    ? value.concat(name)
-                    : value.filter(activeName => activeName !== name);
-            }
-            else {
+                name = expanded ?
+                    value.concat(name) :
+                    value.filter(activeName => activeName !== name);
+            } else {
                 name = expanded ? name : '';
             }
             this.$emit('change', name);
