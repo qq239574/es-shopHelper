@@ -38,7 +38,7 @@
                         title: '加载中'
                     });
                     this.pageIsLoading = false;
-                }, 2000)
+                }, 10000)
             },
             closePageLoading() {
                 clearTimeout(pageLoadingBar);

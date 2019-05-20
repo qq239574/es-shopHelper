@@ -9,7 +9,7 @@
             <view class="th">付款金额(元)</view>
         </view>
         <block v-for='(item,index) in list' :key='index'>
-            <item :info='item' :index='index' :pageid='pageid' ></item>
+            <item :info='item' :index='index' :pageid='pageid' @click='clickItem'></item>
         </block>
     </view>
 </template>
@@ -25,16 +25,21 @@
                 type: String,
                 default: 'goods'
             },
-            list:{
-                type:Array,
-                default:[{
+            list: {
+                type: Array,
+                default: [{
                     img: '',
                     label: '',
                     value: 0,
                     index: 0
                 }]
             }
-        }, 
+        },
+        methods: {
+            clickItem(info) {
+                this.$emit('click',info)
+            }
+        },
     }
 </script>
 
@@ -62,8 +67,8 @@
             &.vip {
                 padding: 0 30upx 0 80upx;
             }
-            &.goods{
-                 padding: 0 50upx 0 80upx;
+            &.goods {
+                padding: 0 50upx 0 80upx;
             }
         }
     }

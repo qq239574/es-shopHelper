@@ -30,12 +30,16 @@
 
 
 
-var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\getShopList.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\LongButton.vue"));};
+var _getShopList = _interopRequireDefault(__webpack_require__(/*! ../components/getShopList.js */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\getShopList.js"));
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var search = function search() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\SearchInput.vue"));};var shopBlock = function shopBlock() {return __webpack_require__.e(/*! import() | pagesLogin/components/SelectShop--Item */ "pagesLogin/components/SelectShop--Item").then(__webpack_require__.bind(null, /*! ../components/SelectShop--Item.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesLogin\\components\\SelectShop--Item.vue"));};var longButton = function longButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\LongButton.vue"));};
+
+
 var DataFrom = {};
 var DataGo = {};
 var pageId = 'selectShop';
 var ajaxIndex = 1; //当前是第几次请求 
-var requesting = false;var _default =
+var requesting = false;
+var enteringShop = false;var _default =
 {
   components: {
     search: search,
@@ -53,17 +57,45 @@ var requesting = false;var _default =
   },
   methods: {
     selectShop: function selectShop(item) {var _this = this;
-      this.Cacher.setData(pageId, item);
-      this.pageLoading();
-      this.Request('switchShop', { //切换店铺
-        id: item.shopInfo.id }).
-      then(function (res) {
-        _this.searchShop = '';
-        _this.toIndex('from=selectShop&status=selectShop');
-        _this.closePageLoading();
-      }).catch(function (res) {
-        if (res) {}
-      });
+      if (!enteringShop) {
+        enteringShop = true;
+        var that = this;
+        item.totalShops = this.totalShop;
+        this.Cacher.setData(pageId, item);
+        this.pageLoading();
+        this.Request('switchShop', { //切换店铺
+          id: item.shopInfo.id }).
+        then(function (res) {
+          if (res.error == 0) {
+            _getJurisdiction.getJurisdiction.call(that, true).then(function (res) {//检查该店铺的权限,true是防止死循环在该页，会自动返回该页
+              enteringShop = false;
+              _this.closePageLoading();
+              if (res['apps_index_view']) {
+                _this.searchShop = '';
+                _this.toIndex('from=selectShop&status=selectShop');
+              } else {
+                that.Toast('暂无该店铺权限');
+              }
+            }).catch(function (res) {
+              enteringShop = false;
+              _this.closePageLoading();
+              that.Toast('暂无该店铺权限');
+            });
+          } else {
+            _this.closePageLoading();
+            that.Toast('请求失败，请重试');
+          }
+        }).catch(function (res) {
+          _this.closePageLoading();
+          enteringShop = false;
+          that.Toast('暂无该店铺权限');
+        });
+      } else {
+        setTimeout(function () {
+          _this.closePageLoading();
+          enteringShop = false;
+        }, 3000);
+      }
     },
     reLogin: function reLogin() {//切换登录账号
       this.Cacher.setData(pageId, {
@@ -142,14 +174,10 @@ var requesting = false;var _default =
               var shop = _this2.shops[0];
               _this2.Cacher.setData(pageId, {
                 from: pageId,
-                shopInfo: shop.shopInfo });
+                shopInfo: shop.shopInfo,
+                totalShops: res.total });
 
-
-              _this2.Request('switchShop', {
-                id: shop.shopInfo.id }).
-              then(function (res) {
-                _this2.toIndex('from=selectShop&status=onlyOne');
-              });
+              _this2.selectShop(shop);
             } else {
               // this.checkUserInfo()
             }
@@ -158,6 +186,7 @@ var requesting = false;var _default =
           }
           _this2.closePageLoading();
         }).catch(function (res) {
+          _this2.closePageLoading();
           requesting = false;
           _this2.requesting = requesting;
           _this2.Toast(res.message);

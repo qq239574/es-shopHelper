@@ -109,7 +109,7 @@ var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var s
     DataFrom = this.Cacher.getData(option.from) || {};
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
       _this.Jurisdiction = res;
-      if (!res.goods_manage) {//无权限
+      if (!res.goods_view) {//无权限
         uni.switchTab({
           url: '/pages/index/index' });
 

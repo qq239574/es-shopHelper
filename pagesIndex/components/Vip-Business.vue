@@ -41,9 +41,13 @@
         },
         methods: {
             checkBill() {
-                this.$emit('click', {
-                    type: 'checkBill'
-                })
+                if (this.Jurisdiction.order_view) {
+                    this.$emit('click', {
+                        type: 'checkBill'
+                    })
+                }else{
+                    this.Toast('暂无查看权限')
+                }
             }
         },
     }

@@ -80,16 +80,16 @@
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
 			if (!DataFrom.from) {
-				// wxLogin.call(this).then(res => {
-				// 	canLogin = true;
-				// 	if (canLogin) {
-				// 		uni.reLaunch({
-				// 			url: '../../pagesLogin/pages/selectShop?from=login'
-				// 		})
-				// 	} else {
-				// 		this.idError = true; //账号密码不对
-				// 	}
-				// }).catch(res => {}); //微信登录
+				wxLogin.call(this).then(res => {
+					canLogin = true;
+					if (canLogin) {
+						uni.reLaunch({
+							url: '../../pagesLogin/pages/selectShop?from=login'
+						})
+					} else {
+						this.idError = true; //账号密码不对
+					}
+				}); //微信登录
 			} else { //从别处跳转过来的 
 				uni.clearStorage(); //清空缓存 
 			}
@@ -127,15 +127,15 @@
 			clickPWIcon() { //切换加密显示与明文显示
 				this.openEye = !this.openEye;
 			},
-			loginWithWx: function() {
+			loginWithWx() {
 				this.closePageLoading();
 			},
-			loginNow(e) { //点击登录
+			loginNow(e) { //点击登录 
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
 					login.call(this).then(res => {
-						requesting = false; 
+						requesting = false;
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})

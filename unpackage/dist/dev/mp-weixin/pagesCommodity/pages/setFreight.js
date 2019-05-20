@@ -84,7 +84,7 @@ var pageId = 'setFreight';var _default =
     this.list = [{
       label: '统一运费（元）',
       value: '修改',
-      subValue: 0,
+      subValue: DataFrom.needChange.other.value,
       id: -1,
       index: 0 }].
     concat(DataFrom.needChange.other.dispatch_list.map(function (item, index) {

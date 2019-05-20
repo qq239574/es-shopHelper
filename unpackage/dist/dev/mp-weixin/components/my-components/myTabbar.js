@@ -56,6 +56,32 @@ var _default =
 
   data: function data() {
     return {
+      // "tabBar": {
+      // 	"color": "#c9ccd0",
+      // 	"selectedColor": "#7a7e83",
+      // 	"backgroundColor": "#ffffff",
+      // 	"list": [{
+      // 		"pagePath": "pages/index/index",
+      // 		"text": "首页",
+      // 		"iconPath": "static/img/tabbar/tab_home.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_home1.png"
+      // 	}, {
+      // 		"pagePath": "pages/commodity/index",
+      // 		"text": "商品",
+      // 		"iconPath": "static/img/tabbar/tab_goods.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_goods1.png"
+      // 	}, {
+      // 		"pagePath": "pages/bill/index",
+      // 		"text": "订单",
+      // 		"iconPath": "static/img/tabbar/tab_order.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_order1.png"
+      // 	}, {
+      // 		"pagePath": "pages/self/index",
+      // 		"text": "我的",
+      // 		"iconPath": "static/img/tabbar/tab_me.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_me1.png"
+      // 	}]
+      // },
       "list": [{
         "pagePath": "/pages/index/index",
         "text": "首页",

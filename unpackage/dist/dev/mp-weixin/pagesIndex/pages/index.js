@@ -42,7 +42,10 @@ var _IndexEchartsOption = __webpack_require__(/*! ../components/Index-EchartsOpt
 
 
 
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getDateSection.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getDateSection.js");
+
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}} //
 //
 //
 //
@@ -83,8 +86,16 @@ var timeBar = '';var _default =
 {
   data: function data() {
     return {
+      Jurisdiction: {},
       dataList: initdata };
 
+  },
+  onLoad: function onLoad() {var _this = this;
+    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
+      _this.Jurisdiction = res;
+    }).catch(function (res) {
+      _this.Toast(res.message);
+    });
   },
   onShow: function onShow() {
     this.initPage();
@@ -118,7 +129,7 @@ var timeBar = '';var _default =
     this.initPage();
   },
   methods: {
-    initPage: function initPage() {var _this = this;
+    initPage: function initPage() {var _this2 = this;
       cacheDataList = [{
         title: '成交额（元）',
         subTitle: '累计总成交额：' + 0,
@@ -151,17 +162,17 @@ var timeBar = '';var _default =
         this.Request('getStatisticsData', { //今天的数据
           is_yesterday: 0 }).
         then(function (res) {
-          _this.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
-          _this.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
-          _this.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
+          _this2.initLine1(res.order_count_chart['7'].order_pay_price); //成交额
+          _this2.initLine2(res.order_count_chart['7'].order_pay_count); //付款订单数
+          _this2.initLine4(res.pay_rate_chart['7'].order_member_pay_count); //付款会员数
           cacheDataList[0].today = res.order_pay_price;
           cacheDataList[1].today = res.order_pay_count;
           cacheDataList[3].today = res.order_member_count;
           reqResult.push(1);
           if (reqResult.length > 4) {
             initing = false;
-            _this.dataList = cacheDataList;
-            _this.closePageLoading();
+            _this2.dataList = cacheDataList;
+            _this2.closePageLoading();
           }
         });
         this.Request('getStatisticsData', { //昨天的数据
@@ -173,8 +184,8 @@ var timeBar = '';var _default =
           reqResult.push(1);
           if (reqResult.length > 4) {
             initing = false;
-            _this.dataList = cacheDataList;
-            _this.closePageLoading();
+            _this2.dataList = cacheDataList;
+            _this2.closePageLoading();
           }
         });
         this.Request('getGoodStatisticsData', { //7天的商品曲线
@@ -186,7 +197,7 @@ var timeBar = '';var _default =
           for (var key in tmp) {
             arr.push(tmp[key].goods_paid_count);
           }
-          _this.initLine3(arr); //付款商品数
+          _this2.initLine3(arr); //付款商品数
         });
         this.Request('getGoodNumberByDate', { //今天的商品数
           date: (0, _getDateSection.getDate)(0) }).
@@ -195,8 +206,8 @@ var timeBar = '';var _default =
           cacheDataList[2].today = res.data.goods_paid_count;
           if (reqResult.length > 4) {
             initing = false;
-            _this.dataList = cacheDataList;
-            _this.closePageLoading();
+            _this2.dataList = cacheDataList;
+            _this2.closePageLoading();
           }
         });
         this.Request('getGoodNumberByDate', { //昨天的商品数
@@ -211,8 +222,8 @@ var timeBar = '';var _default =
 
           if (reqResult.length > 4) {
             initing = false;
-            _this.dataList = cacheDataList;
-            _this.closePageLoading();
+            _this2.dataList = cacheDataList;
+            _this2.closePageLoading();
           }
         });
         this.Request('getHistoryData', {}).then(function (res) {//获取历史总成交额
@@ -220,8 +231,8 @@ var timeBar = '';var _default =
           cacheDataList[0].subTitle = '累计总成交额：' + (0, _formater.number_format)(res.all_order_price, 2, '.', ',');
           if (reqResult.length > 4) {
             initing = false;
-            _this.dataList = cacheDataList;
-            _this.closePageLoading();
+            _this2.dataList = cacheDataList;
+            _this2.closePageLoading();
           }
         });
       } else {

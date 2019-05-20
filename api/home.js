@@ -27,6 +27,16 @@ export const noticeList = { //获取公告列表
     },
     type: 'get'
 }
+export const billOverView={//订单概览
+    url: '/shop/manage/order/index',
+    data: {
+        
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
 export const checkDealInfo = { //查询今天，昨天，7天的信息
     url: '/shop/manage/dashboard/deal-info',
     data: {
@@ -37,6 +47,7 @@ export const checkDealInfo = { //查询今天，昨天，7天的信息
     },
     type: 'get'
 }
+
 export const getStatisticsData = { //数据概览
     url: '/shop/manage/statistics/index',
     data: {

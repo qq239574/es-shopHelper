@@ -137,7 +137,7 @@ var _default = { components: { TabCard: TabCard,
     }
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
       _this.Jurisdiction = res;
-      if (!res.order_manage) {//无权限
+      if (!res.order_view) {//无权限
         uni.switchTab({
           url: '/pages/index/index' });
 

@@ -7,7 +7,7 @@
             <view class="button" @click='changeShop' v-if='showTurnShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
-        <dataShower :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
+        <dataShower :Jurisdiction='Jurisdiction' :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
         <view class="block">
             <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' labelStyle='color:#6e7685; ' valueStyle='color:#9da3ae; font-size: 12px;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
@@ -16,7 +16,7 @@
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
-        <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_view'></goodsBlock>
+        <goodsBlock :list='billList' @click='toBill' v-if='Jurisdiction.order_overview_view'></goodsBlock>
         <apps @click='toApp' :Jurisdiction='Jurisdiction'></apps>
         <MyTabbar fontStyle='border-top: 1px solid #f7f8fa' :defaultIndex='0' :Jurisdiction='Jurisdiction'></MyTabbar>
         <van-toast id="van-toast" />
@@ -36,11 +36,15 @@
         getDate,
         GetDateDiffNoAbs
     } from '../../components/my-components/getDateSection.js'
+    import {
+        bindWx
+    } from './components/bindWx.js'
     let DataFrom = {};
     let newNotice = {};
     let searchDay = {
         value: 'today'
     };
+    let cacheData = {}
     import {
         getJurisdiction
     } from '../../components/my-components/getJurisdiction.js'
@@ -96,22 +100,7 @@
         methods: {
             searchData(val) { //点击今日昨日按钮查询 
                 searchDay = val;
-                this.pageLoading();
-                this.Request('checkDealInfo', {
-                    type: val.value
-                }).then(res => {
-                    this.closePageLoading();
-                    if (res.error == 0) {
-                        this.showData = {
-                            money: res.sell_data.yesterday_turnover,
-                            payedBill: res.sell_data.yesterday_order_num,
-                            payedGood: res.sell_data.yesterday_goods_num,
-                            payedVip: res.sell_data.yesterday_pay_member_num
-                        }
-                    }
-                }).catch(res => {
-                    this.Toast(res.message)
-                });
+                this.showData = cacheData[val.value];
             },
             changeShop() {
                 this.Cacher.setData('home', {
@@ -126,7 +115,8 @@
                 this.Cacher.setData('home', {
                     from: 'home',
                     info: this.showData,
-                })
+                });
+                this.closePageLoading();
                 if (val.title == '数据统计') {
                     uni.navigateTo({
                         url: '../../pagesIndex/pages/index?from=home'
@@ -136,7 +126,6 @@
                         url: '../../pagesIndex/pages/vipManage?from=home'
                     })
                 } else if (val.title == '自提核销') {
-                    this.closePageLoading();
                     uni.navigateTo({
                         url: '../../pagesSelfTakeVerify/pages/index?from=home'
                     })
@@ -172,6 +161,12 @@
                 })
             },
             initPage() {
+                this.pageLoading();
+                this.execInfo = { //过期时间
+                    label: DataFrom.left,
+                    date: '续费'
+                }
+                this.expireDay = DataFrom.expireDay;
                 this.searchData(searchDay); //初始化数据框
                 this.Request('homeInfo', {}).then(res => {
                     this.searchData(searchDay);
@@ -181,51 +176,47 @@
                         label: newNotice[0].title || '',
                         date: newNotice[0].date || ''
                     }
-                    this.expireDay = Math.round(GetDateDiffNoAbs(res.shop.expire_time, getDate(0)));
-                    this.execInfo = { //还没写过期的功能？？？？
-                        label: '还有' + Math.ceil(this.expireDay) + '天到期',
-                        date: '续费'
-                    }
+                });
+                this.Request('billOverView').then(res => {
                     this.billList = [{
                         name: '待发货',
-                        num: res.data.order_wait_send,
+                        num: res.order_status.express,
                         cateid: 1
                     }, {
                         name: '待付款',
-                        num: res.data.order_wait_pay,
+                        num: res.order_status.pay,
                         cateid: 0
                     }, {
                         name: '维权订单',
-                        num: res.data.order_refund
+                        num: res.order_status.refund
                     }]
-                })
-                let userInfo = this.Cacher.getData('login');
-                // if (!userInfo.haveBindWx && userInfo.encryptedData) {
-                //     this.closePageLoading();
-                //     this.Dialog.confirm({
-                //         title: '没有绑定微信',
-                //         message: '为方便您的使用，是否与微信账号绑定？',
-                //         confirmButtonText: '绑定'
-                //     }).then(() => {
-                //         this.pageLoading();
-                //         this.Request('bindWechat', {
-                //             encrypted_data: userInfo.encryptedData,
-                //             session_key: userInfo.session_key,
-                //             iv: userInfo.iv,
-                //             user_id: userInfo.userId
-                //         }).then(res => {
-                //             this.closePageLoading();
-                //             if (res.error == 0) {
-                //                 this.Toast('绑定成功')
-                //             } else {
-                //                 this.Toast('绑定失败')
-                //             }
-                //         }).catch(res => {
-                //             this.closePageLoading();
-                //             this.Toast(res.message)
-                //         })
-                //     });
-                // }
+                });
+                ['yesterday', '7day', 'today'].forEach(item => { //一次性请求全部三段日期的数据
+                    this.Request('checkDealInfo', {
+                        type: item
+                    }).then(res => {
+                        this.closePageLoading();
+                        if (res.error == 0) {
+                            cacheData[item] = {
+                                money: res.sell_data.yesterday_turnover,
+                                payedBill: res.sell_data.yesterday_order_num,
+                                payedGood: res.sell_data.yesterday_goods_num,
+                                payedVip: res.sell_data.yesterday_pay_member_num
+                            }
+                            if (item == searchDay) {
+                                this.showData = cacheData[item];
+                            }
+                        }
+                    }).catch(res => {
+                        this.closePageLoading();
+                        this.Toast(res.message);
+                    });
+                });
+                bindWx.call(this).then(res => {
+                    this.closePageLoading();
+                }).catch(res => {
+                    this.closePageLoading();
+                }); //微信绑定
             }
         },
         onPullDownRefresh() {
@@ -236,11 +227,9 @@
                 animation: false
             })
             // if (option.from && option.from == 'selectShop') {
-            DataFrom = this.Cacher.getData(option.from);
+            DataFrom = this.Cacher.getData('selectShop');
             this.shopName = DataFrom.title;
-            if (option && option.status == 'onlyOne') {
-                this.showTurnShop = false;
-            }
+            this.showTurnShop = DataFrom.totalShops > 1;
             getJurisdiction.call(this).then(res => {
                 this.Jurisdiction = res;
             }).catch(res => {

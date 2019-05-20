@@ -150,7 +150,7 @@
                         }
                     };
                     this.vipInfo = {
-                        img: data.avatar,
+                        img: data.avatar||'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
                         name: data.nickname,
                         tel: data.mobile,
                         verification: data.mobile_verified == 0 ? '未验证' : '已验证',

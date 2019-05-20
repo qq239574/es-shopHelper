@@ -36,7 +36,11 @@
 
 
 
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar3 */ "components/my-components/myTabbar3").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar3 */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\myTabbar3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\editBlock-InputItem.vue"));};
+
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");
+
+
+var _bindWx = __webpack_require__(/*! ../index/components/bindWx.js */ "F:\\YLHD\\project\\es-shopHelper\\pages\\index\\components\\bindWx.js");var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar3 */ "components/my-components/myTabbar3").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar3 */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\myTabbar3.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\editBlock-InputItem.vue"));};
 
 
 var DataFrom = {};var _default =
@@ -55,19 +59,20 @@ var DataFrom = {};var _default =
       contact_mobile: '',
       userRoleName: '',
       realName: '',
-      wxInfo: {} };
+      wxInfo: {},
+      wxapp_openid: '' };
 
   },
   methods: {
     initPage: function initPage() {var _this = this;
-      var login_info = this.Cacher.getData('cache-user-login');
       this.Request('myInfo').then(function (res) {
-        _this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
-        _this.userTel = res.user.username;
-        _this.userId = login_info.userId;
-        _this.contact_mobile = res.user.contact_mobile;
-        _this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
-        _this.realName = res.user.contact;
+        _this.userName = res.contact;
+        _this.userTel = res.username;
+        _this.contact_mobile = res.contact_mobile;
+        _this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
+        _this.realName = res.contact;
+        _this.userId = res[res.account_type] || res.mobile || res.email || res.username;
+        _this.wxapp_openid = res.wxapp_openid;
       });
     },
     toPage: function toPage(val) {
@@ -105,24 +110,20 @@ var DataFrom = {};var _default =
 
       }
     },
-    clickManager: function clickManager() {},
-    bindWX: function bindWX() {
+    reBindWX: function reBindWX() {var _this2 = this;
       this.closePageLoading();
-      this.Request('bindWechat', {
-        encrypted_data: '',
-        session_key: '',
-        iv: '',
-        user_id: '' });
+      _bindWx.bindWx.call(this, true).then(function (res) {
 
-      this.Toast('绑定微信成功');
+        _this2.initPage();
+      });
     },
-    leave: function leave() {var _this2 = this;
+    leave: function leave() {var _this3 = this;
       this.closePageLoading();
       this.Dialog.confirm({
         title: '',
         message: '您确认退出当前账号吗？' }).
       then(function () {
-        _this2.Cacher.setData('self', {
+        _this3.Cacher.setData('self', {
           from: 'self' });
 
         uni.reLaunch({
@@ -138,14 +139,17 @@ var DataFrom = {};var _default =
     this.wxInfo = info.userInfo;
     this.initPage();
   },
-  onLoad: function onLoad() {var _this3 = this;
+  onPullDownRefresh: function onPullDownRefresh() {
+    this.initPage();
+  },
+  onLoad: function onLoad() {var _this4 = this;
     uni.hideTabBar({ //隐藏tabbar
       animation: false });
 
     _getJurisdiction.getJurisdiction.call(this).then(function (res) {
-      _this3.Jurisdiction = res;
+      _this4.Jurisdiction = res;
     }).catch(function (res) {
-      _this3.Toast(res.message);
+      _this4.Toast(res.message);
     });
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

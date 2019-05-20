@@ -182,6 +182,9 @@
         },
         onShow() {
             this.initPage();
+        },
+        onUnload() {
+            this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']);//
         }
     }
 </script>

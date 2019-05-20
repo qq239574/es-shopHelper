@@ -1,13 +1,4 @@
-export const myInfo = { //获取用户信息
-    url: '/api/site/account/profile/get-info',
-    data: {
 
-    },
-    headers: {
-
-    },
-    type: 'get'
-}
 export const changeUserInfo = { //修改用户名,用户联系方式
     url: '/api/site/account/profile/set',
     data: { 
@@ -28,3 +19,16 @@ export const changeUserPassword = { //修改用户密码
     },
     type: 'post'
 }
+
+export const myInfo = { //获取用户信息
+    url: '/shop/manage/setting/operator/get-login-user',
+    data: {
+
+    },
+    headers: {
+
+    },
+    type: 'get'
+} 
+
+

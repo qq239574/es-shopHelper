@@ -41,7 +41,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         img: '',
         label: '',
         value: 0,
-        index: 0 }] } } };exports.default = _default;
+        index: 0 }] } },
+
+
+
+  methods: {
+    clickItem: function clickItem(info) {
+      this.$emit('click', info);
+    } } };exports.default = _default;
 
 /***/ }),
 

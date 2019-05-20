@@ -2,7 +2,7 @@
     <view class='index-data-shower'>
         <view class="box">
             <image src='/static/img/global/my_bg.png'></image>
-            <view class="moneybox childbox" @click='clickItem'>
+            <view class="moneybox childbox" @click='clickItem' v-if='Jurisdiction.statistics_trade_view'>
                 <view class="title">成交额（元）</view>
                 <view class="num">{{formater(info.money,2)}}</view>
             </view>
@@ -12,15 +12,15 @@
                 <view class="day sevenday" :class='activeButton==2?"active":""' @click='clickButton(2,"七日","7day")'>七日</view>
             </view>
             <view class="datalist childbox" @click='clickItem'>
-                <view class="item">
+                <view class="item" v-if='Jurisdiction.order_overview_view'>
                     <view class="title">付款订单数</view>
                     <view class="num">{{formater(info.payedBill,0)}}</view>
                 </view>
-                <view class="item">
+                <view class="item" v-if='Jurisdiction.statistics_goods_view'>
                     <view class="title">付款商品数</view>
                     <view class="num">{{formater(info.payedGood,0)}}</view>
                 </view>
-                <view class="item">
+                <view class="item" v-if='Jurisdiction.statistics_member_view'>
                     <view class="title">付款会员数</view>
                     <view class="num">{{formater(info.payedVip,0)}}</view>
                 </view>
@@ -36,6 +36,11 @@
     } from '../../../components/my-components/formater.js'
     export default {
         props: {
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
+            },
             info: {
                 type: Object,
                 default: {
@@ -90,7 +95,7 @@
             image {
                 width: 750upx;
                 height: 330upx;
-                margin-left:-20upx;
+                margin-left: -20upx;
             }
             .childbox {
                 position: absolute;

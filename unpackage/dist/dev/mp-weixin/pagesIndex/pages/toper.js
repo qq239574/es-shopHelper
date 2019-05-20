@@ -24,6 +24,8 @@ var _getDateSection = __webpack_require__(/*! ../../components/my-components/get
 
 
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\formater.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\Toper-list.vue"));};
+
+
 var searchSection = [];
 var DataFrom = {}; //上级页面的数据
 var DataGo = {}; //缓存下级页面的数据
@@ -59,6 +61,33 @@ var domain = '';var _default =
     this.initPage();
   },
   methods: {
+    clickItem: function clickItem(info) {
+      if (DataFrom.show == 'vip') {
+        this.Cacher.setData('toper', {
+          from: 'toper',
+          detail: {
+            info: {
+              id: info.id } } });
+
+
+
+        uni.navigateTo({
+          url: '../../pagesIndex/pages/vipDetail?from=toper' });
+
+      } else {
+        this.Cacher.setData('toper', {
+          from: 'toper',
+          item: {
+            detail: {
+              goodId: info.goods_id } } });
+
+
+
+        uni.navigateTo({
+          url: '../../pagesCommodity/pages/index?from=toper' });
+
+      }
+    },
     initPage: function initPage() {var _this = this; //初始化页面 
       var api = '';
       this.pageId = DataFrom.show;
@@ -91,14 +120,16 @@ var domain = '';var _default =
               img: item.avatar || 'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
               label: item.nickname,
               value: item.pay_price,
-              index: item.mobile };});
+              index: item.mobile,
+              id: item.id };});
 
         } else {
           _this.list = arr.map(function (item) {return {
               img: domain + item.thumb,
               label: item.title,
               value: item.pay_number_count,
-              index: item.goods_id };});
+              index: item.goods_id,
+              goods_id: item.goods_id };});
 
         }
       }).catch(function (res) {

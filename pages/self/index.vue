@@ -6,14 +6,15 @@
 				<view class="name">{{userName}}</view>
 				<view class="tel">{{userId}}</view>
 			</view>
-			<view class='manager' @click='clickManager'>{{userRoleName}}</view>
+			<view class='manager'>{{userRoleName}}</view>
 		</view>
 		<inputItem :disabled='true' label='登陆账号' :value='userId'></inputItem>
 		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
 		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
-		<selectItem :label='"微信："+wxInfo.nickName' value='重新绑定' valueStyle='color:#fb6638;' @click='bindWX' v-if='wxInfo.nickName'></selectItem>
+		<selectItem :label='"微信："+(wxInfo.nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-if='wxapp_openid'></selectItem>
+		<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' @click='reBindWX' v-else></selectItem>
 		<view class="margin20"></view>
 		<view class="button" @click='leave'>退出登录</view>
 		<van-toast id="van-toast" />
@@ -29,6 +30,9 @@
 	import {
 		getJurisdiction
 	} from '../../components/my-components/getJurisdiction.js'
+	import {
+		bindWx
+	} from '../index/components/bindWx.js'
 	let DataFrom = {};
 	export default {
 		components: {
@@ -45,20 +49,21 @@
 				contact_mobile: '',
 				userRoleName: '',
 				realName: '',
-				wxInfo: {}
+				wxInfo: {},
+				wxapp_openid:''
 			}
 		},
 		methods: {
 			initPage() {
-				let login_info = this.Cacher.getData('cache-user-login');
 				this.Request('myInfo').then(res => {
-					this.userName = res.user.is_root == 1 ? '超级管理员' : res.user.manager_name;
-					this.userTel = res.user.username;
-					this.userId = login_info.userId;
-					this.contact_mobile = res.user.contact_mobile;
-					this.userRoleName = res.user.is_root == 1 ? '超级管理员' : res.user.role_name;
-					this.realName = res.user.contact;
-				})
+					this.userName = res.contact;
+					this.userTel = res.username;
+					this.contact_mobile = res.contact_mobile;
+					this.userRoleName = res.is_root == 1 ? '超级管理员' : res.role_name;
+					this.realName = res.contact;
+					this.userId =res[res.account_type]||res.mobile||res.email||res.username;
+					this.wxapp_openid=res.wxapp_openid;
+				}) 
 			},
 			toPage(val) {
 				if (val == 'name') {
@@ -94,17 +99,13 @@
 						url: '../../pagesSelf/pages/password?from=myself'
 					})
 				}
-			},
-			clickManager() {},
-			bindWX() {
+			}, 
+			reBindWX() { 
 				this.closePageLoading();
-				this.Request('bindWechat', {
-					encrypted_data: '',
-					session_key: '',
-					iv: '',
-					user_id: ''
-				})
-				this.Toast('绑定微信成功')
+				bindWx.call(this, true).then(res=>{
+					
+					this.initPage();
+				});
 			},
 			leave() {
 				this.closePageLoading();
@@ -126,6 +127,9 @@
 		onShow() {
 			let info = this.Cacher.getData('login') || {};
 			this.wxInfo = info.userInfo;
+			this.initPage();
+		},
+		onPullDownRefresh(){ 
 			this.initPage();
 		},
 		onLoad() {
@@ -186,6 +190,8 @@
 			width: 100%;
 			height: fit-content;
 			margin-top: 10upx;
+			white-space: pre-wrap;
+			word-break: break-all;
 		}
 		.manager {
 			position: absolute;

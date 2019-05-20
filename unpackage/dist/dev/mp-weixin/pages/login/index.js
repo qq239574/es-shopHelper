@@ -109,21 +109,21 @@ var _login = __webpack_require__(/*! ./login.js */ "F:\\YLHD\\project\\es-shopHe
 //
 var graceChecker = __webpack_require__(/*! ../../graceUI/graceChecker.js */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\graceChecker.js");var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\LongButton.vue"));};var requesting = false;var canLogin = false; //可否登录 
 var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: LongButton }, data: function data() {return { openEye: false, userId: '', password: '', idError: false //用户信息错误
-    };}, computed: { disableButton: function disableButton() {this.idError = false;return !this.userId || !this.password;} }, onLoad: function onLoad(option) {requesting = false;var that = this;this.Cacher.clearData('sessionId');DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
-    this.initPage();if (!DataFrom.from) {// wxLogin.call(this).then(res => {
-      // 	canLogin = true;
-      // 	if (canLogin) {
-      // 		uni.reLaunch({
-      // 			url: '../../pagesLogin/pages/selectShop?from=login'
-      // 		})
-      // 	} else {
-      // 		this.idError = true; //账号密码不对
-      // 	}
-      // }).catch(res => {}); //微信登录
+    };}, computed: { disableButton: function disableButton() {this.idError = false;return !this.userId || !this.password;} }, onLoad: function onLoad(option) {var _this = this;requesting = false;var that = this;this.Cacher.clearData('sessionId');DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
+    this.initPage();if (!DataFrom.from) {_login.wxLogin.call(this).then(function (res) {canLogin = true;if (canLogin) {uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });} else {_this.idError = true; //账号密码不对
+        }}); //微信登录
     } else {//从别处跳转过来的 
       uni.clearStorage(); //清空缓存 
-    }}, mounted: function mounted() {this.closePageLoading();}, methods: { clickButton: function clickButton() {var _this = this;_login.wxLogin.call(this).then(function (res) {uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });}).catch(function (res) {res.message && _this.Toast(res.message);}); //微信登录
-    }, initPage: function initPage() {this.openEye = false;canLogin = false;var cache = this.Cacher.getData('cache-user-login');this.userId = cache && cache.userId || '';this.password = '';this.idError = false;
+    }}, mounted: function mounted() {this.closePageLoading();}, methods: { clickButton: function clickButton() {var _this2 = this;_login.wxLogin.call(this).then(function (res) {uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });}).catch(function (res) {res.message && _this2.Toast(res.message);
+      }); //微信登录
+    },
+    initPage: function initPage() {
+      this.openEye = false;
+      canLogin = false;
+      var cache = this.Cacher.getData('cache-user-login');
+      this.userId = cache && cache.userId || '';
+      this.password = '';
+      this.idError = false;
     },
     getUserId: function getUserId(val) {
       this.userId = val.detail;
@@ -140,7 +140,7 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
     loginWithWx: function loginWithWx() {
       this.closePageLoading();
     },
-    loginNow: function loginNow(e) {var _this2 = this; //点击登录
+    loginNow: function loginNow(e) {var _this3 = this; //点击登录 
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();
@@ -150,14 +150,14 @@ var sessionId = '';var DataFrom = {};var _default = { components: { LongButton: 
             url: '../../pagesLogin/pages/selectShop?from=login' });
 
         }).catch(function (res) {
-          _this2.closePageLoading();
-          _this2.idError = true; //账号密码不对
+          _this3.closePageLoading();
+          _this3.idError = true; //账号密码不对
           requesting = false;
         }); //微信登录; //账号密码登录
       } else {
         setTimeout(function () {
           requesting = false;
-          _this2.Toast('登录时间长，请重试');
+          _this3.Toast('登录时间长，请重试');
         }, 3000);
       }
     },

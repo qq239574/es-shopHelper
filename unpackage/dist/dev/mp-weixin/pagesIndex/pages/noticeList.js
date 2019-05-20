@@ -71,7 +71,7 @@ var ajaxIndex = 1;var _default =
             _this.list = _this.list.concat(res.list.map(function (item) {
               return {
                 title: item.title,
-                brief: item.content_text,
+                brief: item.description,
                 date: item.create_time,
                 img: item.thumb,
                 content: item.content,

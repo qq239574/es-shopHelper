@@ -21,11 +21,15 @@
     import shopBlock from '../components/SelectShop--Item.vue'
     import longButton from '../../components/my-components/LongButton.vue'
     import getShops from '../components/getShopList.js'
+    import {
+        getJurisdiction
+    } from '../../components/my-components/getJurisdiction.js'
     let DataFrom = {};
     let DataGo = {};
     let pageId = 'selectShop';
     let ajaxIndex = 1; //当前是第几次请求 
     let requesting = false;
+    let enteringShop = false;
     export default {
         components: {
             search,
@@ -43,17 +47,45 @@
         },
         methods: {
             selectShop(item) {
-                this.Cacher.setData(pageId, item);
-                this.pageLoading();
-                this.Request('switchShop', { //切换店铺
-                    id: item.shopInfo.id
-                }).then(res => {
-                    this.searchShop = '';
-                    this.toIndex('from=selectShop&status=selectShop');
-                    this.closePageLoading();
-                }).catch(res => {
-                    if (res) {}
-                })
+                if (!enteringShop) {
+                    enteringShop = true;
+                    let that = this;
+                    item.totalShops = this.totalShop;
+                    this.Cacher.setData(pageId, item);
+                    this.pageLoading();
+                    this.Request('switchShop', { //切换店铺
+                        id: item.shopInfo.id
+                    }).then(res => {
+                        if (res.error == 0) {
+                            getJurisdiction.call(that, true).then(res => { //检查该店铺的权限,true是防止死循环在该页，会自动返回该页
+                                enteringShop = false;
+                                this.closePageLoading();
+                                if (res['apps_index_view']) {
+                                    this.searchShop = '';
+                                    this.toIndex('from=selectShop&status=selectShop');
+                                } else {
+                                    that.Toast('暂无该店铺权限');
+                                }
+                            }).catch(res => {
+                                enteringShop = false;
+                                this.closePageLoading();
+                                that.Toast('暂无该店铺权限');
+                            })
+                        } else {
+                            this.closePageLoading();
+                            that.Toast('请求失败，请重试')
+                        }
+                    }).catch(res => {
+                        this.closePageLoading();
+                        enteringShop = false;
+                        that.Toast('暂无该店铺权限')
+                    })
+                } else {
+                    setTimeout(() => {
+                        this.closePageLoading();
+                        enteringShop = false;
+                    }, 3000)
+                }
             },
             reLogin() { //切换登录账号
                 this.Cacher.setData(pageId, {
@@ -132,14 +164,10 @@
                                 let shop = this.shops[0];
                                 this.Cacher.setData(pageId, {
                                     from: pageId,
-                                    shopInfo: shop.shopInfo
-                                    
+                                    shopInfo: shop.shopInfo,
+                                    totalShops: res.total
                                 });
-                                this.Request('switchShop', {
-                                    id: shop.shopInfo.id
-                                }).then(res => {
-                                    this.toIndex('from=selectShop&status=onlyOne')
-                                })
+                                this.selectShop(shop);
                             } else {
                                 // this.checkUserInfo()
                             }
@@ -148,6 +176,7 @@
                         }
                         this.closePageLoading();
                     }).catch(res => {
+                        this.closePageLoading();
                         requesting = false;
                         this.requesting = requesting;
                         this.Toast(res.message);
@@ -185,7 +214,7 @@
             DataFrom = this.Cacher.getData(option.from); //
             DataGo = {
                 go: ''
-            }; 
+            };
         }
     }
 </script>
