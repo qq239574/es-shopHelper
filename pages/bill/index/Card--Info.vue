@@ -22,7 +22,7 @@
             <myButton @click='clickButton("改价")' v-if='info.status=="0"&&Jurisdiction["order_change-price"]'>改价</myButton>
             <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
             <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收货")' v-if='info.status=="2"&&Jurisdiction.order_manage'>确认收货</myButton>
+            <myButton type='primary' @click='clickButton("确认收款")' v-if='info.status=="2"&&Jurisdiction.order_manage'>确认收款</myButton>
         </view>
     </view>
 </template>

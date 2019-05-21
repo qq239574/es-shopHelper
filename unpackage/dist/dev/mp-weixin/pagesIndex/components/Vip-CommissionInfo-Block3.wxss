@@ -1,4 +1,4 @@
-.vip-distributor-isnot.data-v-56ccbb6d {
+.vip-distributor-isnot.data-v-c0f75d2c {
   background: #fff;
   width: 100%;
   display: -webkit-box;
@@ -13,7 +13,7 @@
           justify-content: space-around;
   position: relative;
 }
-.vip-distributor-isnot.data-v-56ccbb6d:after {
+.vip-distributor-isnot.data-v-c0f75d2c:after {
     position: absolute;
     width: 100%;
     height: 600rpx;
@@ -22,12 +22,12 @@
     bottom: -600rpx;
     content: '';
 }
-.vip-distributor-isnot image.data-v-56ccbb6d {
+.vip-distributor-isnot image.data-v-c0f75d2c {
     width: 158rpx;
     height: 202rpx;
     margin: 140rpx auto 20rpx;
 }
-.vip-distributor-isnot .title.data-v-56ccbb6d {
+.vip-distributor-isnot .title.data-v-c0f75d2c {
     font-size: 26rpx;
     width: 100%;
     height: 26rpx;

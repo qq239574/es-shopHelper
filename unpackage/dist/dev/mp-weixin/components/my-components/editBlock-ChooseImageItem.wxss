@@ -1,7 +1,7 @@
-.selectItem.data-v-035974f1 {
+.selectItem.data-v-2f70c1d4 {
   width: 100%;
 }
-.selectItem .grace-items.data-v-035974f1 {
+.selectItem .grace-items.data-v-2f70c1d4 {
     width: 710rpx;
     margin: auto;
     padding: 2rpx auto;
@@ -9,29 +9,29 @@
     margin: auto;
     padding: 2rpx auto;
 }
-.selectItem .grace-items .address.data-v-035974f1 {
+.selectItem .grace-items .address.data-v-2f70c1d4 {
       height: -webkit-fit-content;
       height: -moz-fit-content;
       height: fit-content;
       width: 490rpx;
       line-height: 38rpx;
 }
-.selectItem .grace-items .imgbox.data-v-035974f1 {
+.selectItem .grace-items .imgbox.data-v-2f70c1d4 {
       width: 490rpx;
       padding-bottom: 10rpx;
 }
-.selectItem .grace-items .imgbox .tips.data-v-035974f1 {
+.selectItem .grace-items .imgbox .tips.data-v-2f70c1d4 {
         width: 100%;
         font-size: 20rpx;
         text-align: left;
         color: #9ea3ae;
         line-height: 60rpx;
 }
-.selectItem .grace-items.swiper-imgs.data-v-035974f1 {
+.selectItem .grace-items.swiper-imgs.data-v-2f70c1d4 {
       min-height: 200rpx;
       padding: 0 0 10rpx;
 }
-.selectItem .grace-items .grace-label.data-v-035974f1 {
+.selectItem .grace-items .grace-label.data-v-2f70c1d4 {
       font-weight: 600;
 }
 

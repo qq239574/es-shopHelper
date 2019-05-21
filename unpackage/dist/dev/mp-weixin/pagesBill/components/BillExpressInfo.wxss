@@ -1,10 +1,10 @@
-.card--temp.data-v-316b6ab7 {
+.card--temp.data-v-e2149e4c {
   width: 670rpx;
   margin: auto;
   border-top: 1rpx solid #eee;
   padding-bottom: 10rpx;
 }
-.card--temp .card--info__row.data-v-316b6ab7 {
+.card--temp .card--info__row.data-v-e2149e4c {
     width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -19,18 +19,18 @@
             justify-content: space-between;
     margin: 10rpx auto 0;
 }
-.card--temp .card--info__row view.data-v-316b6ab7 {
+.card--temp .card--info__row view.data-v-e2149e4c {
       font-size: 24rpx;
       color: #33373a;
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
 }
-.card--temp .card--info__row .copy-item.data-v-316b6ab7 {
+.card--temp .card--info__row .copy-item.data-v-e2149e4c {
       padding-right: 40rpx;
       position: relative;
 }
-.card--temp .card--info__row .copy-item .copy-icon.data-v-316b6ab7 {
+.card--temp .card--info__row .copy-item .copy-icon.data-v-e2149e4c {
         position: absolute;
         width: 24rpx;
         height: 24rpx;
@@ -39,10 +39,10 @@
         bottom: 0;
         margin: auto;
 }
-.card--temp .card--info__row .card--info__row__tile.data-v-316b6ab7 {
+.card--temp .card--info__row .card--info__row__tile.data-v-e2149e4c {
       color: #6e7685;
 }
-.card--temp .card--info__row .card--info__row__status.data-v-316b6ab7 {
+.card--temp .card--info__row .card--info__row__status.data-v-e2149e4c {
       color: #6e7685;
       display: -webkit-box;
       display: -webkit-flex;
@@ -52,11 +52,11 @@
           -ms-flex-wrap: nowrap;
               flex-wrap: nowrap;
 }
-.card--temp .card--info__row .card--info__row__status .icon-share.data-v-316b6ab7 {
+.card--temp .card--info__row .card--info__row__status .icon-share.data-v-e2149e4c {
         display: inline-block;
         margin: 0 10rpx;
 }
-.card--temp .card--info__row .primary.data-v-316b6ab7 {
+.card--temp .card--info__row .primary.data-v-e2149e4c {
       background: #fd6b3e;
       color: #fff;
       line-height: 34rpx;

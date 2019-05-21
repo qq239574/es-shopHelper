@@ -1,4 +1,4 @@
-.change-price .row.data-v-5fa0f5a5 {
+.change-price .row.data-v-23c0a7bc {
   width: 710rpx;
   height: 96rpx;
   line-height: 96rpx;
@@ -20,12 +20,12 @@
   background: #fff;
   border-radius: 8rpx;
 }
-.change-price .row .label.data-v-5fa0f5a5 {
+.change-price .row .label.data-v-23c0a7bc {
     font-size: 28rpx;
     line-height: 96rpx;
     font-weight: 700;
 }
-.change-price .row input.data-v-5fa0f5a5 {
+.change-price .row input.data-v-23c0a7bc {
     height: 70rpx;
     width: 250rpx;
     background: #fcfcfc;
@@ -40,11 +40,11 @@
     margin-top: 13rpx;
     font-weight: 600;
 }
-.change-price .child-block.data-v-5fa0f5a5 {
+.change-price .child-block.data-v-23c0a7bc {
   margin-top: 20rpx;
   background: #fff;
 }
-.change-price .block.data-v-5fa0f5a5 {
+.change-price .block.data-v-23c0a7bc {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -52,13 +52,13 @@
   border-radius: 8rpx;
   padding: 0 0;
 }
-.change-price .block .bill__item.data-v-5fa0f5a5 {
+.change-price .block .bill__item.data-v-23c0a7bc {
     color: #000;
     font-weight: 600;
     line-height: 35rpx;
 }
-.change-price .block .body.data-v-5fa0f5a5,
-  .change-price .block .foot.data-v-5fa0f5a5 {
+.change-price .block .body.data-v-23c0a7bc,
+  .change-price .block .foot.data-v-23c0a7bc {
     padding: 5rpx 0;
     font-size: 20rpx;
     font-weight: 500;

@@ -34,7 +34,7 @@ export default function (search = {
                     color: item.sub_title,
                     size: '',
                     num: item.stock, //库存
-                    price: item.price, //价格
+                    price: item.min_price, //价格
                     saled: item.sales_count, //销量
                     status: status, //0出售中,1已售罄,2仓库中,3回收站
                     goodId: item.id,

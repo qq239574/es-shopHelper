@@ -147,7 +147,7 @@ export const payBill = { //确认付款
     },
     type: 'post'
 }
-export const receiveBill = { //确认收货
+export const receiveBill = { //确认收款
 
     url: '/shop/manage/order/op/finish',
     data: {

@@ -1,9 +1,9 @@
-.card--info.data-v-2a5d0d73 {
+.card--info.data-v-62082530 {
   width: 670rpx;
   margin: auto;
   border-top: 1rpx solid #eee;
 }
-.card--info .card--info__row.data-v-2a5d0d73 {
+.card--info .card--info__row.data-v-62082530 {
     width: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -18,26 +18,26 @@
             justify-content: space-between;
     margin-top: 10rpx;
 }
-.card--info .card--info__row view.data-v-2a5d0d73 {
+.card--info .card--info__row view.data-v-62082530 {
       font-size: 24rpx;
       color: #33373a;
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
 }
-.card--info .card--info__row .card--info__row__tile.data-v-2a5d0d73 {
+.card--info .card--info__row .card--info__row__tile.data-v-62082530 {
       color: #6e7685;
 }
-.card--info .card--info__row .item1.data-v-2a5d0d73 {
+.card--info .card--info__row .item1.data-v-62082530 {
       font-size: 24rpx;
       line-height: 74rpx;
 }
-.card--info .card--info__row .item2.data-v-2a5d0d73 {
+.card--info .card--info__row .item2.data-v-62082530 {
       font-size: 24rpx;
       line-height: 20rpx;
       position: relative;
 }
-.card--info .card--info__row .item2 image.data-v-2a5d0d73 {
+.card--info .card--info__row .item2 image.data-v-62082530 {
         position: absolute;
         display: inline-block;
         width: 30rpx;
@@ -45,19 +45,19 @@
         top: 24rpx;
         right: 0;
 }
-.card--info .card--info__row .item2.pay-type.data-v-2a5d0d73 {
+.card--info .card--info__row .item2.pay-type.data-v-62082530 {
         padding-right: 32rpx;
 }
-.card--info .card--info__row .card--info__footer-item__price.data-v-2a5d0d73 {
+.card--info .card--info__row .card--info__footer-item__price.data-v-62082530 {
       display: inline;
       color: #fd6b3e;
       font-weight: 600;
       font-size: 34rpx;
 }
-.card--info .card--info__footer.data-v-2a5d0d73 {
+.card--info .card--info__footer.data-v-62082530 {
     margin: 10rpx auto 10rpx;
 }
-.card--info .button-group.data-v-2a5d0d73 {
+.card--info .button-group.data-v-62082530 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -74,13 +74,13 @@
     border-top: 1rpx solid #eee;
     margin-top: 20rpx;
 }
-.card--info .button-group .content.data-v-2a5d0d73 {
+.card--info .button-group .content.data-v-62082530 {
       white-space: nowrap;
       line-height: 91rpx;
       font-size: 26rpx;
       color: #6e7685;
 }
-.card--info .button-group .content .money.data-v-2a5d0d73 {
+.card--info .button-group .content .money.data-v-62082530 {
         display: inline;
         font-size: 26rpx;
         font-weight: 700;

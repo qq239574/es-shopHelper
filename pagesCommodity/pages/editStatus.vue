@@ -33,13 +33,8 @@
                 showpicker: false,
                 minDate: new Date().getTime() + 5 * 60000, //5分钟后
                 maxDate: new Date(getDate(365)).getTime(), //一年后
-                list: [{
-                    label: '已删除',
-                    value: ' ',
-                    subValue: '',
-                    id: -1
-                }, {
-                    label: '下架',
+                list: [ {
+                    label: '放置仓库',
                     value: ' ',
                     subValue: '',
                     id: 0
@@ -65,7 +60,7 @@
             confirm() {
                 this.showpicker = false;
                 this.currentDate = currentDate;
-                this.list[4].subValue = currentDate;
+                this.list[3].subValue = currentDate;
                 DataFrom.needChange = {
                     label: '状态',
                     value: '定时上架',
@@ -101,7 +96,7 @@
                             }
                         }
                         if (item.label == '定时上架') {
-                            this.list[4].subValue = DataFrom.detail.info4.status.putaway_time;
+                            this.list[3].subValue = DataFrom.detail.info4.status.putaway_time;
                         }
                         this.Cacher.setData('editStatus', DataFrom)
                     }

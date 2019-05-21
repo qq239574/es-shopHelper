@@ -1,4 +1,4 @@
-.block.data-v-57240d5d {
+.block.data-v-fb8d854c {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -7,24 +7,24 @@
   border-radius: 8rpx;
   padding: 21rpx 0 0;
 }
-.block .bill__item.data-v-57240d5d {
+.block .bill__item.data-v-fb8d854c {
     color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;
 }
-.block .bill__item.data-v-57240d5d view {
+.block .bill__item.data-v-fb8d854c view {
       height: 100%;
       padding: 0;
 }
-.block .body.data-v-57240d5d,
-  .block .foot.data-v-57240d5d {
+.block .body.data-v-fb8d854c,
+  .block .foot.data-v-fb8d854c {
     padding: 2rpx 0;
     font-size: 24rpx;
     font-weight: 500;
     color: #6e7685;
 }
-.block .label.data-v-57240d5d {
+.block .label.data-v-fb8d854c {
     white-space: nowrap;
 }
 

@@ -56,6 +56,7 @@
 		"path": "pages/commodity/index",
 		"style": {
 			"navigationBarTitleText": "商品管理",
+			"enablePullDownRefresh": false,
 			"usingComponents": {
 				"van-toast": "/wxcomponents/vant-weapp/toast/index",
 				"van-dialog": "/wxcomponents/vant-weapp/dialog/index",

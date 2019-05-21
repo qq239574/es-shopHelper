@@ -1,4 +1,4 @@
-.toper-block.data-v-794c76a5 {
+.toper-block.data-v-33d59b62 {
   width: 702rpx;
   height: 126rpx;
   background: #fff;
@@ -13,7 +13,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
-.toper-block view.data-v-794c76a5 {
+.toper-block view.data-v-33d59b62 {
     height: 100%;
     display: -webkit-box;
     display: -webkit-flex;
@@ -23,10 +23,10 @@
             box-sizing: border-box;
     overflow: hidden;
 }
-.toper-block .icon.data-v-794c76a5 {
+.toper-block .icon.data-v-33d59b62 {
     width: 83rpx;
 }
-.toper-block .icon .img.data-v-794c76a5 {
+.toper-block .icon .img.data-v-33d59b62 {
       width: 32rpx;
       height: 43rpx;
       font-size: 20rpx;
@@ -39,21 +39,21 @@
           -ms-flex-pack: distribute;
               justify-content: space-around;
 }
-.toper-block .image.data-v-794c76a5 {
+.toper-block .image.data-v-33d59b62 {
     width: 80rpx;
     border-bottom: 1rpx solid #eee;
 }
-.toper-block .image image.data-v-794c76a5 {
+.toper-block .image image.data-v-33d59b62 {
       width: 100%;
       height: 80rpx;
       border-radius: 10rpx;
       margin: auto;
 }
-.toper-block .title.data-v-794c76a5 {
+.toper-block .title.data-v-33d59b62 {
     width: 335rpx;
     border-bottom: 1rpx solid #eee;
 }
-.toper-block .title .label.data-v-794c76a5 {
+.toper-block .title .label.data-v-33d59b62 {
       width: 100%;
       line-height: 36rpx;
       font-size: 24rpx;
@@ -65,17 +65,17 @@
       display: -webkit-box;
       -webkit-box-orient: vertical;
 }
-.toper-block .title .van-multi-ellipsis--l2.data-v-794c76a5 {
+.toper-block .title .van-multi-ellipsis--l2.data-v-33d59b62 {
       -webkit-line-clamp: 2;
       line-clamp: 2;
       max-height: 72rpx;
 }
-.toper-block .title .van-multi-ellipsis--l1.data-v-794c76a5 {
+.toper-block .title .van-multi-ellipsis--l1.data-v-33d59b62 {
       -webkit-line-clamp: 1;
       line-clamp: 1;
       max-height: 36rpx;
 }
-.toper-block .num.data-v-794c76a5 {
+.toper-block .num.data-v-33d59b62 {
     width: 204rpx;
     line-height: 126rpx;
     font-size: 26rpx;

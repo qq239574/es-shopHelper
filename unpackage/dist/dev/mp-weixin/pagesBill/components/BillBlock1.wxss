@@ -1,4 +1,4 @@
-.block.data-v-5707de5b {
+.block.data-v-fbc5e350 {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -7,27 +7,27 @@
   border-radius: 8rpx;
   padding: 21rpx 0 0;
 }
-.block .bill__item.data-v-5707de5b {
+.block .bill__item.data-v-fbc5e350 {
     color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;
 }
-.block .bill__item.data-v-5707de5b view {
+.block .bill__item.data-v-fbc5e350 view {
       height: 100%;
       padding: 0;
 }
-.block .body.data-v-5707de5b,
-  .block .foot.data-v-5707de5b {
+.block .body.data-v-fbc5e350,
+  .block .foot.data-v-fbc5e350 {
     padding: 2rpx 0;
     font-size: 24rpx;
     font-weight: 500;
     color: #6e7685;
 }
-.block .label.data-v-5707de5b {
+.block .label.data-v-fbc5e350 {
     white-space: nowrap;
 }
-.grace-boxes-img.data-v-5707de5b {
+.grace-boxes-img.data-v-fbc5e350 {
   width: 24rpx;
   height: 24rpx;
   font-size: 24rpx;
@@ -35,13 +35,13 @@
   display: inline-block;
   margin-left: 5rpx;
 }
-.bill__item.data-v-5707de5b {
+.bill__item.data-v-fbc5e350 {
   color: #33373a;
   height: 100%;
   line-height: 38rpx;
   position: relative;
 }
-.bill__item .copy-icon.data-v-5707de5b {
+.bill__item .copy-icon.data-v-fbc5e350 {
     position: absolute;
     width: 24rpx;
     height: 24rpx;
@@ -50,10 +50,10 @@
     bottom: 0;
     margin: auto;
 }
-.bill__item.copy-item.data-v-5707de5b {
+.bill__item.copy-item.data-v-fbc5e350 {
     padding-right: 40rpx;
 }
-.origin.data-v-5707de5b {
+.origin.data-v-fbc5e350 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -62,13 +62,13 @@
       -ms-flex-wrap: nowrap;
           flex-wrap: nowrap;
 }
-.origin .content.data-v-5707de5b {
+.origin .content.data-v-fbc5e350 {
     color: #6e7685;
     font-size: 24rpx;
     height: 34rpx;
     line-height: 34rpx;
 }
-.paytype.data-v-5707de5b {
+.paytype.data-v-fbc5e350 {
   width: 24rpx;
   height: 24rpx;
   margin: auto 0 auto 10rpx;

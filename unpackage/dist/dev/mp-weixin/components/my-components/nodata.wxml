@@ -1,1 +1,1 @@
-<view class="noresult data-v-05a1a3d2" style="{{(bgStyle)}}" bind:__l="__l"><image lazy-load src="{{image.img}}" class="data-v-05a1a3d2"></image><view class="data-v-05a1a3d2">{{tip||image.tip}}</view></view>
+<view class="noresult data-v-28445e14" style="{{(bgStyle)}}" bind:__l="__l"><image lazy-load src="{{image.img}}" class="data-v-28445e14"></image><view class="data-v-28445e14">{{tip||image.tip}}</view></view>

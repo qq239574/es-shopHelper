@@ -1,7 +1,7 @@
-.qrcode-share.data-v-fa8df1a8 {
+.qrcode-share.data-v-8b6c5262 {
   position: relative;
 }
-.qrcode-share canvas.data-v-fa8df1a8 {
+.qrcode-share canvas.data-v-8b6c5262 {
     position: absolute;
     top: 300rpx;
     right: 0;
@@ -9,7 +9,7 @@
     bottom: 0;
     margin: 0 auto;
 }
-.qrcode-share .tip.data-v-fa8df1a8 {
+.qrcode-share .tip.data-v-8b6c5262 {
     font-size: 24rpx;
     width: 100%;
     position: absolute;
@@ -18,7 +18,7 @@
     text-align: center;
     color: #aaa;
 }
-.qrcode-share .footer.data-v-fa8df1a8 {
+.qrcode-share .footer.data-v-8b6c5262 {
     position: fixed;
     height: 124rpx;
     width: 100%;
@@ -34,7 +34,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
-.qrcode-share .footer long-button.data-v-fa8df1a8 {
+.qrcode-share .footer long-button.data-v-8b6c5262 {
       margin: 10rpx auto 0;
 }
 

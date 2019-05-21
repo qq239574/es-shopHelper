@@ -1,8 +1,8 @@
-.vip-coupon.data-v-1a597a6d {
+.vip-coupon.data-v-91ee112c {
   background: #fff;
   padding: 30rpx 0 150rpx;
 }
-.vip-coupon .addCoupon.data-v-1a597a6d {
+.vip-coupon .addCoupon.data-v-91ee112c {
     position: fixed;
     width: 100%;
     height: 120rpx;
@@ -17,7 +17,7 @@
     background: #fff;
     z-index: 10000;
 }
-.vip-coupon .addCoupon long-button.data-v-1a597a6d {
+.vip-coupon .addCoupon long-button.data-v-91ee112c {
       margin: auto;
 }
 

@@ -1,4 +1,4 @@
-.my-round-button.data-v-13aa6aab {
+.my-round-button.data-v-71c24da8 {
   width: 150rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -11,16 +11,16 @@
   color: #fb6638;
   border: 1rpx solid #fb6638;
 }
-.my-round-button.timing.data-v-13aa6aab {
+.my-round-button.timing.data-v-71c24da8 {
   color: #9da3ae;
   border: 1rpx solid #9da3ae;
 }
-.imgCode.data-v-13aa6aab {
+.imgCode.data-v-71c24da8 {
   width: 150rpx;
   height: 54rpx;
   margin: auto 10rpx auto 0;
 }
-.password-code.data-v-13aa6aab {
+.password-code.data-v-71c24da8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

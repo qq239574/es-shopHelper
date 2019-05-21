@@ -1,4 +1,4 @@
-.edit-status .bg.data-v-34301f68 {
+.edit-status .bg.data-v-5f454f65 {
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   width: 100%;
@@ -6,7 +6,7 @@
   top: 0;
   left: 0;
 }
-.edit-status .bg .picker.data-v-34301f68 {
+.edit-status .bg .picker.data-v-5f454f65 {
     width: 100%;
     position: absolute;
     bottom: 0;

@@ -1,11 +1,11 @@
-.tel-email.data-v-38ac8924 {
+.tel-email.data-v-722871eb {
   background: #fff;
 }
-.tel-email .grace-form.data-v-38ac8924 {
+.tel-email .grace-form.data-v-722871eb {
     width: 670rpx;
     margin: 80rpx auto 81rpx;
 }
-.tel-email .imgCode.data-v-38ac8924 {
+.tel-email .imgCode.data-v-722871eb {
     width: 150rpx;
     height: 54rpx;
 }

@@ -1,7 +1,7 @@
-.margin180.data-v-cf504a00 {
+.margin180.data-v-3fcc733d {
   height: 176rpx;
 }
-.addGoods.data-v-cf504a00 {
+.addGoods.data-v-3fcc733d {
   width: 94rpx;
   height: 94rpx;
   position: fixed;
@@ -13,8 +13,8 @@
           box-shadow: 0 0 20rpx 0 rgba(0, 0, 0, 0.35);
   color: #fff;
 }
-.addGoods .addWord.data-v-cf504a00,
-  .addGoods .addIcon.data-v-cf504a00 {
+.addGoods .addWord.data-v-3fcc733d,
+  .addGoods .addIcon.data-v-3fcc733d {
     color: #fff;
     position: absolute;
     width: 100%;
@@ -27,22 +27,22 @@
     font-size: 22rpx;
     text-align: center;
 }
-.addGoods .addWord.data-v-cf504a00 {
+.addGoods .addWord.data-v-3fcc733d {
     top: 45rpx;
 }
-.addGoods .addIcon.data-v-cf504a00 {
+.addGoods .addIcon.data-v-3fcc733d {
     top: 5rpx;
     font-size: 40rpx;
 }
-.addGoods.higher.data-v-cf504a00 {
+.addGoods.higher.data-v-3fcc733d {
     bottom: 136rpx;
 }
-.pager.data-v-cf504a00 {
+.pager.data-v-3fcc733d {
   width: 100%;
   height: 80rpx;
   margin: 30rpx auto 130rpx;
 }
-.pager .button.data-v-cf504a00 {
+.pager .button.data-v-3fcc733d {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -57,7 +57,7 @@
     color: 999;
     line-height: 70rpx;
 }
-.pager.data-v-cf504a00 button {
+.pager.data-v-3fcc733d button {
     height: 70rpx;
     font-size: 30rpx;
     color: 999;
@@ -65,13 +65,13 @@
     border-radius: 10rpx;
     margin: 0;
 }
-.pager .prev.data-v-cf504a00 {
+.pager .prev.data-v-3fcc733d {
     padding: 0 10rpx 0 5rpx;
 }
-.pager .next.data-v-cf504a00 {
+.pager .next.data-v-3fcc733d {
     padding: 0 5rpx 0 10rpx;
 }
-.pager.data-v-cf504a00 .pager-button {
+.pager.data-v-3fcc733d .pager-button {
     line-height: 70rpx;
     height: 70rpx;
 }

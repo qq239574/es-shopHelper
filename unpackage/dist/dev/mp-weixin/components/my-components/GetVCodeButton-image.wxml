@@ -1,1 +1,1 @@
-<view class="img-code data-v-04ff928e" bind:__l="__l"><image class="imgCode data-v-04ff928e" src="{{imgSrc}}" data-event-opts="{{[['tap',[['refresh',['$event']]]]]}}" bindtap="__e"></image></view>
+<view class="img-code data-v-93a1b014" bind:__l="__l"><image class="imgCode data-v-93a1b014" src="{{imgSrc}}" data-event-opts="{{[['tap',[['refresh',['$event']]]]]}}" bindtap="__e"></image></view>

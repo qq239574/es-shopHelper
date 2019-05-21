@@ -1,7 +1,7 @@
-.notice-detail.data-v-725f1a60 {
+.notice-detail.data-v-9f0903e6 {
   background: #fff;
 }
-.title.data-v-725f1a60 {
+.title.data-v-9f0903e6 {
   width: 680rpx;
   margin: auto;
   padding: 28rpx 0;
@@ -10,7 +10,7 @@
   font-weight: 600;
   color: #333;
 }
-.subTit.data-v-725f1a60 {
+.subTit.data-v-9f0903e6 {
   width: 680rpx;
   margin: 0 auto 48rpx;
   display: -webkit-box;
@@ -25,7 +25,7 @@
       -ms-flex-wrap: nowrap;
           flex-wrap: nowrap;
 }
-.subTit view.data-v-725f1a60 {
+.subTit view.data-v-9f0903e6 {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -37,7 +37,7 @@
     -o-text-overflow: ellipsis;
        text-overflow: ellipsis;
 }
-.brief.data-v-725f1a60 {
+.brief.data-v-9f0903e6 {
   width: 680rpx;
   padding: 17rpx 20rpx;
   line-height: 39rpx;
@@ -47,7 +47,7 @@
   border-radius: 10rpx;
   margin: 0 auto 26rpx;
 }
-rich-text.data-v-725f1a60 {
+rich-text.data-v-9f0903e6 {
   display: block;
   width: 680rpx;
   margin: auto;

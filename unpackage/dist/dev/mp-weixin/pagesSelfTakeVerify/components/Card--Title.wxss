@@ -1,4 +1,4 @@
-.card--title.data-v-5b2e9163 {
+.card--title.data-v-18e67146 {
   width: 670rpx;
   margin: auto;
   height: 100rpx;
@@ -15,27 +15,27 @@
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-.card--title .card--title-item.data-v-5b2e9163 {
+.card--title .card--title-item.data-v-18e67146 {
     height: 100%;
 }
-.card--title .card--title-item .icon-arrow-right.data-v-5b2e9163 {
+.card--title .card--title-item .icon-arrow-right.data-v-18e67146 {
       margin: 22rpx 0;
 }
-.card--title .billId.data-v-5b2e9163,
-  .card--title .billDate.data-v-5b2e9163 {
+.card--title .billId.data-v-18e67146,
+  .card--title .billDate.data-v-18e67146 {
     font-size: 24rpx;
     font-weight: 400;
     line-height: 24rpx;
 }
-.card--title .billId.data-v-5b2e9163 {
+.card--title .billId.data-v-18e67146 {
     color: #333;
     margin-top: 20rpx;
 }
-.card--title .billDate.data-v-5b2e9163 {
+.card--title .billDate.data-v-18e67146 {
     color: #9da3ae;
     margin-top: 14rpx;
 }
-.card--title .billType.data-v-5b2e9163 {
+.card--title .billType.data-v-18e67146 {
     width: 94rpx;
     height: 31rpx;
     border-radius: 4rpx;
@@ -46,7 +46,7 @@
     margin: 34rpx 0 0;
     font-size: 20rpx;
 }
-.card--title .billType.common.data-v-5b2e9163 {
+.card--title .billType.common.data-v-18e67146 {
       background: #9da3ae;
 }
 
