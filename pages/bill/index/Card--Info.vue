@@ -22,7 +22,7 @@
             <myButton @click='clickButton("改价")' v-if='info.status=="0"&&Jurisdiction["order_change-price"]'>改价</myButton>
             <myButton type='primary' @click='clickButton("确认付款")' v-if='info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
             <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收款")' v-if='info.status=="2"&&Jurisdiction.order_manage'>确认收款</myButton>
+            <myButton type='primary' @click='clickButton(info.payType==3?"确认收款":"确认收货")' v-if='info.status=="2"&&Jurisdiction.order_manage'>{{info.payType==3?"确认收款":"确认收货"}}</myButton>
         </view>
     </view>
 </template>
@@ -117,7 +117,7 @@
             .item1 {
                 font-size: 24upx;
                 line-height: 74upx;
-                width:fit-content;
+                width: fit-content;
             }
             .item2 {
                 font-size: 24upx;
@@ -148,7 +148,6 @@
                 color: #fd6b3e;
                 font-weight: 600;
                 font-size: 34upx;
-                
             }
         }
         .card--info__footer {

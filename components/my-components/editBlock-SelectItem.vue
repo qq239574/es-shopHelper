@@ -69,9 +69,9 @@
         .grace-items {
             width: 94.67%;
             margin: auto ;
-          
             padding: 2upx 10upx 2upx 0;
             box-sizing: border-box;
+            position: relative;
             height: 100upx;
             display: flex;
             flex-wrap: nowrap;
@@ -91,21 +91,26 @@
             }
             .other {
                 white-space: nowrap;
-                overflow: hidden;
-                width: fit-content;
+                overflow: hidden; 
                 display: flex;
                 flex-wrap: nowrap;
                 height: 100upx;
                 text-overflow: ellipsis;
                 max-width: 550upx;
                 box-sizing: border-box;
-                padding-right: 40upx;
+                padding-right: 10upx;
                 line-height: 100upx;
                 text-align: right;
             }
             .grace-icons {
-                position: absolute;
+                // position: absolute;
                 right: 30upx;
+                height:100%;
+                line-height: 100upx;
+                display: inline-block;
+                // top:0;
+                // bottom:0;
+                // margin:auto;
             }
         }
     }

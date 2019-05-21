@@ -1,13 +1,19 @@
 import getPayType from '../../../components/my-components/payType.js'
 export default function (tabid, data) {
-
     let billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', ];
     let rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
-
         '0': "无效",
         '1': "仅退款",
         '2': "退款退货",
         '3': "换货",
+    }
+    let statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        '-2': 4,
+        '-1': 4
     }
     return new Promise((resolve, reject) => {
         this.Request(billtype[tabid], data).then(res => {
@@ -17,10 +23,10 @@ export default function (tabid, data) {
             this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
 
             list = res.list.map(item => {
-                countGood=0;
+                countGood = 0;
                 goodlist = item.order_goods || [];
                 goodlist.forEach(item => {
-                    countGood += item.total*1;
+                    countGood += item.total * 1;
                 })
                 return {
                     info: { //订单及用户信息
@@ -30,12 +36,12 @@ export default function (tabid, data) {
                         pay: item.pay_price, //实付
                         addtion: item.remark_num, //备注数量
                         payType: item.pay_type, //支付方式
-                        payTypeImg:getPayType(item.pay_type),
+                        payTypeImg: getPayType(item.pay_type),
                         subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
-                        status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+                        status:statusMap[item.status] , //0代付款,1代发货，2待收货，3已完成，4已关闭
                         send_able: item.send_able, // 是否可发货
-                        groups_success: item.groups_success,///拼团结果
-                        dispatch_price:item.dispatch_price,// 运费价格
+                        groups_success: item.groups_success, ///拼团结果
+                        dispatch_price: item.dispatch_price, // 运费价格
                     },
                     bill: { //订单信息
                         billId: item.order_no, //订单号
@@ -60,11 +66,12 @@ export default function (tabid, data) {
                         }
                     }),
                     rights: { // 维权信息 
-                        status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
-                        groups_success: item.groups_success,///拼团结果
+                        status: statusMap[item.status], //0代付款,1代发货，2待收货，3已完成，4已关闭
+                        groups_success: item.groups_success, ///拼团结果
                         send_able: item.send_able, // 是否可发货
                         addition: item.remark_num, //维权备注
                         subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
+                        payType: item.pay_type, //支付方式
                     }
                 };
             });

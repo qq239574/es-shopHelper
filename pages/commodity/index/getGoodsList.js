@@ -19,13 +19,13 @@ export default function (search = {
         let status = 0;
         this.Request('goodsList', search).then(res => {
             if (search.status == 1) {
-                status=0;
+                status = 0;
             } else if (search.status == 3) {
-                status=1;
+                status = 1;
             } else if (search.status == -2) {
-                status=2;
+                status = 2;
             } else if (search.status == -1) {
-                status=3;
+                status = 3;
             }
             list = res.list.map(item => {
                 return {
@@ -34,7 +34,7 @@ export default function (search = {
                     color: item.sub_title,
                     size: '',
                     num: item.stock, //库存
-                    price: item.min_price, //价格
+                    price: item.has_option == 1 ?item.min_price :item.price  , //价格
                     saled: item.sales_count, //销量
                     status: status, //0出售中,1已售罄,2仓库中,3回收站
                     goodId: item.id,

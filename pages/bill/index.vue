@@ -139,7 +139,7 @@
                 let apiname = '';
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
-                } else if (this.modelTheme.state == 'receive') { //确认收款
+                } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
                 }
                 this.Request(apiname, {
@@ -302,13 +302,13 @@
                         uni.navigateTo({
                             url: '../../pagesBill/pages/billProvide?from=bill'
                         })
-                    } else if (val.detail.val == '确认收款') {
+                    } else if (val.detail.val == '确认收款' || val.detail.val == '确认收货') {
                         this.showModel = true;
                         this.modelTheme = {
-                            title: '手动确认收款',
-                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收款',
+                            title: '手动' + val.detail.val,
+                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前' + val.detail.val,
                             state: 'receive',
-                            success: '确认收款成功'
+                            success: val.detail.val + '成功'
                         }
                     }
                 }

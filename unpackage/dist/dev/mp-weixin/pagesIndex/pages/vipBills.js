@@ -50,11 +50,9 @@
 
 
 
-
-
 var _getBillList = _interopRequireDefault(__webpack_require__(/*! ../../pages/bill/index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));
 
-var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
 
 
 var DataFrom = {};
@@ -69,14 +67,13 @@ var curTab = { //当前标签
 };var cacheBill = {}; //缓存将要操作的订单 
 var _default = {
   components: {
-    TabCard: TabCard,
     Card: Card,
     SearchInput: SearchInput,
     nodata: nodata },
 
   data: function data() {
     return {
-      Jurisdiction: {},
+      Jurisdiction: {}, //权限
       current: 1,
       totalPage: 1,
       surePassword: '', //弹窗输入密码
@@ -91,23 +88,23 @@ var _default = {
       searchValue: '', //查询条件 
       billList: [{ //完整数据
         info: { //订单及用户信息
-          name: '张三', //客户姓名
-          provide: '到店自提', //配送方式
-          num: 4, //商品数量
-          pay: 2165653.453, //实付
+          name: '', //客户姓名
+          provide: '', //配送方式
+          num: 0, //商品数量
+          pay: 0.00, //实付
           addtion: 0, //备注
           payType: 'wx', //支付方式
           subStatus: 0, //订单状态，1：维权
           status: 0 //0代付款,1代发货，2待收货，3已完成，4已关闭
         },
         bill: { //订单信息
-          billId: 'ES204565656526265656565', //订单号
-          billDate: '2018-05-12 15:23:12', //订单时间
+          billId: '', //订单号
+          billDate: '', //订单时间
           billType: 0, //订单类型，0：分销订单，1：普通订单
-          billPrice: 121212 },
+          billPrice: 0 },
 
         goodsList: [{ //订单商品信息
-          img: '/static/img/global/tmp.png', //商品图片
+          img: '', //商品图片
           goodName: '', //商品名
           color: '', //颜色
           size: '', //型号
@@ -116,11 +113,10 @@ var _default = {
           specifications: 'single' //单规格
         }],
         rights: { // 维权信息
-          status: '退款退货', //维权状态
+          status: '', //维权状态
           addition: 0 //维权备注
         } }],
 
-      tabIndex: 0, //默认tabs的index
       searching: false };
 
   },
@@ -148,8 +144,8 @@ var _default = {
     } },
 
   methods: {
-    handleChange: function handleChange(obj) {var
-
+    handleChange: function handleChange(obj) {//分页
+      var
 
       type =
 
@@ -160,13 +156,13 @@ var _default = {
         this.current = Math.max(this.current - 1, 1);
       }
     },
-    sure: function sure() {var _this2 = this;
+    sure: function sure() {var _this2 = this; //确认付款与收货
       this.surePaying = true;
       var apiNames = ['payBill', 'receiveBill'];
       var apiname = '';
       if (this.modelTheme.state == 'pay') {//确认付款
         apiname = apiNames[0];
-      } else if (this.modelTheme.state == 'receive') {//确认收款
+      } else if (this.modelTheme.state == 'receive') {//确认收货
         apiname = apiNames[1];
       }
       this.Request(apiname, {
@@ -194,26 +190,16 @@ var _default = {
     initPage: function initPage() {var _this3 = this;
       this.searching = true;
       this.pageLoading();
-      member_id = '';
-      if (DataFrom.from == 'home') {
-        if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
-          this.tabIndex = DataFrom.cateid;
-        } else {
-          this.tabIndex = 0;
-        }
-      } else if (DataFrom.from == 'searchShop') {
+      if (DataFrom.from == 'searchShop') {
         searchData = this.Cacher.getData('searchShop') || {};
         this.searchValue = searchData.value || '';
-        this.tabIndex = DataFrom.cateid || 0;
       } else if (DataFrom.from == 'vipDetail') {
         member_id = DataFrom.member_id;
       } else if (DataFrom.from == 'vipManage') {
         member_id = DataFrom.info.id;
-      } else {
-        this.tabIndex = curTab.cateid;
       }
-      _getBillList.default.call(this, this.tabIndex, {
-        // keywords: searchData.value || '',
+      _getBillList.default.call(this, {
+        keywords: searchData.value || '',
         page: this.current,
         member_id: member_id,
         pageSize: 20 }).
@@ -221,31 +207,14 @@ var _default = {
         _this3.closePageLoading();
         _this3.billList = res;
         _this3.searching = false;
+      }).catch(function (res) {
+        _this3.searching = false;
       });
     },
-    tabChange: function tabChange(tab) {var _this4 = this;
-      this.pageLoading();
-      curTab = tab;
-      this.current = 1;
-      this.billList = [];
-      this.searching = true;
-      this.totalPage = 1;
-      _getBillList.default.call(this, tab.cateid, {
-        keywords: searchData.value || '',
-        member_id: member_id,
-        page: 1,
-        pageSize: 20 }).
-      then(function (res) {
-        _this4.billList = res;
-        _this4.closePageLoading();
-        _this4.searching = false;
-      });
-    },
-    search: function search(val) {
+    search: function search(val) {//点击搜索框
       DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
         from: 'searchShop',
-        value: '',
-        cateid: this.tabIndex });
+        value: '' });
 
       this.Cacher.setData('bill', {
         from: 'searchShop',
@@ -311,13 +280,13 @@ var _default = {
           uni.navigateTo({
             url: '../../pagesBill/pages/billProvide?from=bill' });
 
-        } else if (val.detail.val == '确认收款') {
+        } else if (val.detail.val == '确认收货') {
           this.showModel = true;
           this.modelTheme = {
-            title: '手动确认收款',
-            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收款',
+            title: '手动确认收货',
+            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收货',
             state: 'receive',
-            success: '确认收款成功' };
+            success: '确认收货成功' };
 
         }
       }

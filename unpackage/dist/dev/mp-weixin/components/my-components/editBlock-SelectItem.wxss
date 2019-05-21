@@ -12,6 +12,7 @@
     padding: 2rpx 10rpx 2rpx 0;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    position: relative;
     height: 100rpx;
     display: -webkit-box;
     display: -webkit-flex;
@@ -45,9 +46,6 @@
 .editGood-block-selectItem .grace-items .other.data-v-686243bc {
       white-space: nowrap;
       overflow: hidden;
-      width: -webkit-fit-content;
-      width: -moz-fit-content;
-      width: fit-content;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -61,12 +59,14 @@
       max-width: 550rpx;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
-      padding-right: 40rpx;
+      padding-right: 10rpx;
       line-height: 100rpx;
       text-align: right;
 }
 .editGood-block-selectItem .grace-items .grace-icons.data-v-686243bc {
-      position: absolute;
       right: 30rpx;
+      height: 100%;
+      line-height: 100rpx;
+      display: inline-block;
 }
 

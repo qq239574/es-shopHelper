@@ -4,11 +4,10 @@
             <view class="margin20"></view>
             <SearchInput @click='search' :value='searchValue' placeholder='请输入订单号' :disabled='true'></SearchInput>
             <view class="margin20"></view>
-            <!-- <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard> -->
         </view>
         <view class='margin100'></view>
         <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
-        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
+        <nodata type='noresult' :tip='searching?"正在搜索相关订单":"没有搜索到相关订单"' v-if='!billList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -39,7 +38,6 @@
 </template>
 
 <script>
-    import TabCard from '../../components/my-components/Tabs';
     import Card from '../../pages/bill/index/Card';
     import SearchInput from '../../components/my-components/SearchInput.vue';
     import getBillList from '../../pages/bill/index/getBillList.js'
@@ -59,14 +57,13 @@
     let cacheBill = {}; //缓存将要操作的订单 
     export default {
         components: {
-            TabCard,
             Card,
             SearchInput,
             nodata
         },
         data() {
             return {
-                Jurisdiction: {},
+                Jurisdiction: {}, //权限
                 current: 1,
                 totalPage: 1,
                 surePassword: '', //弹窗输入密码
@@ -81,23 +78,23 @@
                 searchValue: '', //查询条件 
                 billList: [{ //完整数据
                     info: { //订单及用户信息
-                        name: '张三', //客户姓名
-                        provide: '到店自提', //配送方式
-                        num: 4, //商品数量
-                        pay: 2165653.453, //实付
+                        name: '', //客户姓名
+                        provide: '', //配送方式
+                        num: 0, //商品数量
+                        pay: 0.00, //实付
                         addtion: 0, //备注
                         payType: 'wx', //支付方式
                         subStatus: 0, //订单状态，1：维权
                         status: 0, //0代付款,1代发货，2待收货，3已完成，4已关闭
                     },
                     bill: { //订单信息
-                        billId: 'ES204565656526265656565', //订单号
-                        billDate: '2018-05-12 15:23:12', //订单时间
+                        billId: '', //订单号
+                        billDate: '', //订单时间
                         billType: 0, //订单类型，0：分销订单，1：普通订单
-                        billPrice: 121212
+                        billPrice: 0
                     },
                     goodsList: [{ //订单商品信息
-                        img: '/static/img/global/tmp.png', //商品图片
+                        img: '', //商品图片
                         goodName: '', //商品名
                         color: '', //颜色
                         size: '', //型号
@@ -106,11 +103,10 @@
                         specifications: 'single', //单规格
                     }],
                     rights: { // 维权信息
-                        status: '退款退货', //维权状态
+                        status: '', //维权状态
                         addition: 0, //维权备注
                     }
                 }],
-                tabIndex: 0, //默认tabs的index
                 searching: false
             }
         },
@@ -138,7 +134,7 @@
             }
         },
         methods: {
-            handleChange(obj) {
+            handleChange(obj) { //分页
                 let {
                     detail: {
                         type
@@ -150,13 +146,13 @@
                     this.current = Math.max(this.current - 1, 1);
                 }
             },
-            sure() {
+            sure() { //确认付款与收货
                 this.surePaying = true;
                 let apiNames = ['payBill', 'receiveBill'];
                 let apiname = '';
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
-                } else if (this.modelTheme.state == 'receive') { //确认收款
+                } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
                 }
                 this.Request(apiname, {
@@ -184,26 +180,16 @@
             initPage() {
                 this.searching = true;
                 this.pageLoading();
-                member_id = '';
-                if (DataFrom.from == 'home') {
-                    if (DataFrom.name == '待付款' || DataFrom.name == '待发货') {
-                        this.tabIndex = DataFrom.cateid;
-                    } else {
-                        this.tabIndex = 0;
-                    }
-                } else if (DataFrom.from == 'searchShop') {
+                if (DataFrom.from == 'searchShop') {
                     searchData = this.Cacher.getData('searchShop') || {};
                     this.searchValue = searchData.value || '';
-                    this.tabIndex = DataFrom.cateid || 0;
                 } else if (DataFrom.from == 'vipDetail') {
                     member_id = DataFrom.member_id;
                 } else if (DataFrom.from == 'vipManage') {
                     member_id = DataFrom.info.id;
-                } else {
-                    this.tabIndex = curTab.cateid;
                 }
-                getBillList.call(this, this.tabIndex, {
-                    // keywords: searchData.value || '',
+                getBillList.call(this, {
+                    keywords: searchData.value || '',
                     page: this.current,
                     member_id: member_id,
                     pageSize: 20
@@ -211,31 +197,14 @@
                     this.closePageLoading();
                     this.billList = res;
                     this.searching = false;
-                });
-            },
-            tabChange(tab) {
-                this.pageLoading();
-                curTab = tab;
-                this.current = 1;
-                this.billList = [];
-                this.searching = true;
-                this.totalPage = 1;
-                getBillList.call(this, tab.cateid, {
-                    keywords: searchData.value || '',
-                    member_id: member_id,
-                    page: 1,
-                    pageSize: 20
-                }).then(res => {
-                    this.billList = res;
-                    this.closePageLoading();
+                }).catch(res => {
                     this.searching = false;
                 });
             },
-            search(val) {
+            search(val) { //点击搜索框
                 DataFrom = Object.assign(DataFrom, { //这里预先设置返回的页面，由于back()函数无法设置query
                     from: 'searchShop',
                     value: '',
-                    cateid: this.tabIndex
                 })
                 this.Cacher.setData('bill', {
                     from: 'searchShop',
@@ -301,13 +270,13 @@
                         uni.navigateTo({
                             url: '../../pagesBill/pages/billProvide?from=bill'
                         })
-                    } else if (val.detail.val == '确认收款') {
+                    } else if (val.detail.val == '确认收货') {
                         this.showModel = true;
                         this.modelTheme = {
-                            title: '手动确认收款',
-                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收款',
+                            title: '手动确认收货',
+                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收货',
                             state: 'receive',
-                            success: '确认收款成功'
+                            success: '确认收货成功'
                         }
                     }
                 }
@@ -327,7 +296,7 @@
         height: 20upx;
         width: 100%;
         background: #fff;
-    } 
+    }
     .model__title {
         font-weight: 700;
         font-size: 30upx;

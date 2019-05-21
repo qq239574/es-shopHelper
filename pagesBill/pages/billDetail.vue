@@ -17,7 +17,7 @@
             <myButton @click='clickButton("改价")' v-if='bill.info.status=="0"&&Jurisdiction["order_change-price"]'>改价</myButton>
             <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
             <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
-            <myButton type='primary' @click='clickButton("确认收款")' v-if='bill.info.status=="2"&&Jurisdiction.order_manage'>确认收款</myButton>
+            <myButton type='primary' @click='clickButton(bill.info.payType==3?"确认收款":"确认收货")' v-if='bill.info.status=="2"&&Jurisdiction.order_manage'>{{bill.info.payType==3?"确认收款":"确认收货"}}</myButton>
             <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus'>维权中</myButton>
         </view>
         <!-- 确认付款与收货的弹窗 -->
@@ -66,7 +66,7 @@
         },
         data() {
             return {
-                Jurisdiction:{},
+                Jurisdiction: {},
                 surePassword: '',
                 error: false,
                 surePaying: false, //正在确认付款？
@@ -127,7 +127,7 @@
                 let apiname = '';
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
-                } else if (this.modelTheme.state == 'receive') { //确认收款
+                } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
                 }
                 this.Request(apiname, {
@@ -211,13 +211,13 @@
                     uni.navigateTo({
                         url: '../../pagesBill/pages/billProvide?from=billDetail'
                     })
-                } else if (state == '确认收款') {
+                } else if (state == '确认收款' || state == '确认收货') {
                     this.showModel = true;
                     this.modelTheme = {
-                        title: '手动确认收款',
-                        detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收款',
+                        title: '手动' + state,
+                        detail: '确保买家已经收到您的商品，并且与买家协商完毕提前' + state,
                         state: 'receive',
-                        success: '确认收款成功'
+                        success: state + '成功'
                     }
                 }
             },

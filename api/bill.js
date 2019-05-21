@@ -89,6 +89,25 @@ export const closedBill = { //已关闭
     type: 'get'
 }
 
+export const allBills = { //全部订单
+    url: '/shop/manage/order/list/all',
+    data: {
+        keywords_type: 'order_no',
+        keywords: "",
+        pay_type: '',
+        status: '',
+        dispatch_type: '',
+        time_type: '',
+        time: '',
+        create_from: '',
+        type: '',
+    },
+    headers: {
+
+    },
+    type: 'get'
+}
+
 export const billAddition = { //订单备注
     url: '/shop/manage/order/op/remark',
     data: {
@@ -147,7 +166,7 @@ export const payBill = { //确认付款
     },
     type: 'post'
 }
-export const receiveBill = { //确认收款
+export const receiveBill = { //确认收货
 
     url: '/shop/manage/order/op/finish',
     data: {

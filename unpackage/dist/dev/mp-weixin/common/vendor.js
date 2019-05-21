@@ -10434,7 +10434,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.postSelfVerifyInfo = exports.getSelfVerifyInfo = exports.verifyCount = exports.selfVerifyLog = exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
+Object.defineProperty(exports, "__esModule", { value: true });exports.postSelfVerifyInfo = exports.getSelfVerifyInfo = exports.verifyCount = exports.selfVerifyLog = exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.allBills = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
   url: '/shop/manage/order/list/pay',
   data: {
     keywords_type: 'order_no',
@@ -10525,6 +10525,25 @@ var closedBill = { //已关闭
   type: 'get' };exports.closedBill = closedBill;
 
 
+var allBills = { //全部订单
+  url: '/shop/manage/order/list/all',
+  data: {
+    keywords_type: 'order_no',
+    keywords: "",
+    pay_type: '',
+    status: '',
+    dispatch_type: '',
+    time_type: '',
+    time: '',
+    create_from: '',
+    type: '' },
+
+  headers: {},
+
+
+  type: 'get' };exports.allBills = allBills;
+
+
 var billAddition = { //订单备注
   url: '/shop/manage/order/op/remark',
   data: {
@@ -10583,7 +10602,7 @@ var payBill = { //确认付款
 
   type: 'post' };exports.payBill = payBill;
 
-var receiveBill = { //确认收款
+var receiveBill = { //确认收货
 
   url: '/shop/manage/order/op/finish',
   data: {
@@ -10687,7 +10706,9 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "http://user.jiangyk.eldev.cn" };var _default =
+  base_url: "http://user.jiangyk.eldev.cn"
+  // base_url: "https://ceshiuser.100cms.com", 
+};var _default =
 
 global_settings;exports.default = _default;
 
@@ -12043,12 +12064,16 @@ function getJurisdiction(bool) {
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(origin) {//订单或用户来源
 
 
-  var all = {
+  var all = { //付款方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付 
+    0: '',
+    1: '',
+    2: '/static/img/global/money.png',
+    3: '',
     10: '/static/img/global/wechat.png',
     20: '/static/img/global/alipay.svg',
-    2: '/static/img/global/money.png'
-    //付款方式 0 未支付 1 后台确认2 余额支付 3 货到付款 10 微信支付 20 支付宝支付30 银联支付 
-  };
+    30: '' };
+
+
   var name = all[origin] || '';
   return name;
 }
@@ -15050,14 +15075,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _payType = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 function _default(tabid, data) {var _this = this;
-
   var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
   var rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
-
     '0': "无效",
     '1': "仅退款",
     '2': "退款退货",
     '3': "换货" };
+
+  var statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    '-2': 4,
+    '-1': 4 };
 
   return new Promise(function (resolve, reject) {
     _this.Request(billtype[tabid], data).then(function (res) {
@@ -15082,7 +15113,7 @@ function _default(tabid, data) {var _this = this;
             payType: item.pay_type, //支付方式
             payTypeImg: (0, _payType.default)(item.pay_type),
             subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
-            status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+            status: statusMap[item.status], //0代付款,1代发货，2待收货，3已完成，4已关闭
             send_able: item.send_able, // 是否可发货
             groups_success: item.groups_success, ///拼团结果
             dispatch_price: item.dispatch_price // 运费价格
@@ -15110,11 +15141,12 @@ function _default(tabid, data) {var _this = this;
 
           }),
           rights: { // 维权信息 
-            status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
+            status: statusMap[item.status], //0代付款,1代发货，2待收货，3已完成，4已关闭
             groups_success: item.groups_success, ///拼团结果
             send_able: item.send_able, // 是否可发货
             addition: item.remark_num, //维权备注
-            subStatus: item.is_refund // //订单状态// 0 无维权 1 正在维权中 2 维权过
+            subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
+            payType: item.pay_type //支付方式
           } };
 
       });
@@ -15203,7 +15235,7 @@ function _default()
           color: item.sub_title,
           size: '',
           num: item.stock, //库存
-          price: item.min_price, //价格
+          price: item.has_option == 1 ? item.min_price : item.price, //价格
           saled: item.sales_count, //销量
           status: status, //0出售中,1已售罄,2仓库中,3回收站
           goodId: item.id,
