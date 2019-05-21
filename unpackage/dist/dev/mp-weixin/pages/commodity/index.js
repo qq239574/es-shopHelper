@@ -78,16 +78,7 @@ var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var s
       Jurisdiction: {}, //权限
       searchValue: '', //查询条件  
       categories: _categories.default, //标签项
-      goodsList: [{ //商品列表
-        img: '/static/img/global/tmp.png',
-        goodName: '',
-        color: '',
-        size: '',
-        num: 0, //库存
-        price: '0', //价格
-        saled: 0, //销量
-        status: 0 //0出售中,1已售罄,2仓库中,3回收站
-      }],
+      goodsList: [], //商品列表
       toggle: false, //只用于关闭各个模块的浮层效果
       searchTab: { //当前选项
         cateid: 0,
@@ -95,7 +86,7 @@ var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var s
         name: "出售中",
         searchId: 1 },
 
-      searching: false,
+      searching: true,
       current: 1,
       totalPage: 1,
       tabIndex: 0, //默认tabs的index

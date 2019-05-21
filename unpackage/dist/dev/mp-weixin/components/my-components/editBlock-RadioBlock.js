@@ -51,7 +51,7 @@ var _default =
     items: {
       type: Array,
       default: [{
-        label: 'label1',
+        label: '',
         value: '',
         subValue: '' }] },
 

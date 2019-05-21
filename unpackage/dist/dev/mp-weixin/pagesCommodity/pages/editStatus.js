@@ -44,12 +44,7 @@ var currentDate = [];var _default =
       minDate: new Date().getTime() + 5 * 60000, //5分钟后
       maxDate: new Date((0, _getDateSection.getDate)(365)).getTime(), //一年后
       list: [{
-        label: '已删除',
-        value: ' ',
-        subValue: '',
-        id: -1 },
-      {
-        label: '下架',
+        label: '放置仓库',
         value: ' ',
         subValue: '',
         id: 0 },
@@ -75,7 +70,7 @@ var currentDate = [];var _default =
     confirm: function confirm() {
       this.showpicker = false;
       this.currentDate = currentDate;
-      this.list[4].subValue = currentDate;
+      this.list[3].subValue = currentDate;
       DataFrom.needChange = {
         label: '状态',
         value: '定时上架',
@@ -111,7 +106,7 @@ var currentDate = [];var _default =
 
 
           if (item.label == '定时上架') {
-            _this.list[4].subValue = DataFrom.detail.info4.status.putaway_time;
+            _this.list[3].subValue = DataFrom.detail.info4.status.putaway_time;
           }
           _this.Cacher.setData('editStatus', DataFrom);
         }

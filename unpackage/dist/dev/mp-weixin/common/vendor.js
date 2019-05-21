@@ -10583,7 +10583,7 @@ var payBill = { //确认付款
 
   type: 'post' };exports.payBill = payBill;
 
-var receiveBill = { //确认收货
+var receiveBill = { //确认收款
 
   url: '/shop/manage/order/op/finish',
   data: {
@@ -15186,7 +15186,7 @@ function _default()
           color: item.sub_title,
           size: '',
           num: item.stock, //库存
-          price: item.price, //价格
+          price: item.min_price, //价格
           saled: item.sales_count, //销量
           status: status, //0出售中,1已售罄,2仓库中,3回收站
           goodId: item.id,

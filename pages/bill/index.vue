@@ -6,7 +6,7 @@
         </view>
         <view class='margin180'></view>
         <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
-        <nodata type='noresult' tip='没有搜索到相关订单' v-if='!billList.length'></nodata>
+        <nodata type='noresult' :tip='searching?"正在搜索相关订单":"没有搜索到相关订单"' v-if='!billList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -84,7 +84,7 @@
                 searchValue: '', //查询条件 
                 billList: [],
                 tabIndex: 0, //默认tabs的index
-                searching: false
+                searching: true
             }
         },
         onLoad(option) {
@@ -139,7 +139,7 @@
                 let apiname = '';
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
-                } else if (this.modelTheme.state == 'receive') { //确认收货
+                } else if (this.modelTheme.state == 'receive') { //确认收款
                     apiname = apiNames[1];
                 }
                 this.Request(apiname, {
@@ -302,13 +302,13 @@
                         uni.navigateTo({
                             url: '../../pagesBill/pages/billProvide?from=bill'
                         })
-                    } else if (val.detail.val == '确认收货') {
+                    } else if (val.detail.val == '确认收款') {
                         this.showModel = true;
                         this.modelTheme = {
-                            title: '手动确认收货',
-                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收货',
+                            title: '手动确认收款',
+                            detail: '确保买家已经收到您的商品，并且与买家协商完毕提前确认收款',
                             state: 'receive',
-                            success: '确认收货成功'
+                            success: '确认收款成功'
                         }
                     }
                 }

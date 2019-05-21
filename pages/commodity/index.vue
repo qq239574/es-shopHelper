@@ -9,7 +9,7 @@
             <!-- 生成二维码的方法再Card组件内部，因为canvas在组件内无效 -->
             <canvas style="width: 200px; height: 200px;background:#fff;" id='myQrcode' canvas-id="myQrcode"></canvas>
         </Card>
-        <nodata type='noresult' tip='没有搜索到相关商品' v-if='!searching&&!goodsList.length'></nodata>
+        <nodata type='noresult' :tip='searching?"正在搜索相关商品":"没有搜索到相关商品"' v-if='!goodsList.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -68,16 +68,7 @@
                 Jurisdiction: {}, //权限
                 searchValue: '', //查询条件  
                 categories, //标签项
-                goodsList: [{ //商品列表
-                    img: '/static/img/global/tmp.png',
-                    goodName: '',
-                    color: '',
-                    size: '',
-                    num: 0, //库存
-                    price: '0', //价格
-                    saled: 0, //销量
-                    status: 0, //0出售中,1已售罄,2仓库中,3回收站
-                }],
+                goodsList: [],//商品列表
                 toggle: false, //只用于关闭各个模块的浮层效果
                 searchTab: { //当前选项
                     cateid: 0,
@@ -85,7 +76,7 @@
                     name: "出售中",
                     searchId: 1
                 },
-                searching: false,
+                searching: true,
                 current: 1,
                 totalPage: 1,
                 tabIndex: 0, //默认tabs的index
