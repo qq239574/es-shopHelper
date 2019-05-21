@@ -37,13 +37,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-<<<<<<< HEAD
+
+
 var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\formater.js");var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../../components/my-components/RoundButton */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\RoundButton.vue"));};var _default2 =
-=======
-
-
-var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var _default2 =
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 
 
 {

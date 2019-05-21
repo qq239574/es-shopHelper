@@ -1,9 +1,9 @@
 <template>
     <view class='multi-block grace-form'>
         <view class="block">
-            <inputItem label='原密码' @input='getInput'></inputItem>
-            <inputItem label='新密码' @input='getInput'></inputItem>
-            <inputItem label='确认密码' @input='getInput'></inputItem>
+            <inputItem label='原密码' @input='getInput' placeholder='请输入原密码'></inputItem>
+            <inputItem label='新密码' @input='getInput' placeholder='请输入新密码'></inputItem>
+            <inputItem label='确认密码' @input='getInput' placeholder='重新输入新密码'></inputItem>
         </view>
     </view>
 </template>

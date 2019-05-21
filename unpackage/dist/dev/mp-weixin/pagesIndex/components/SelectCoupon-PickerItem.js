@@ -8,11 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var numberBox = function numberBox() {return __webpack_require__.e(/*! import() | components/my-components/Number-Box */ "components/my-components/Number-Box").then(__webpack_require__.bind(null, /*! ../../components/my-components/Number-Box */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Number-Box.vue"));};var _default =
-=======
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var numberBox = function numberBox() {return __webpack_require__.e(/*! import() | components/my-components/Number-Box */ "components/my-components/Number-Box").then(__webpack_require__.bind(null, /*! ../../components/my-components/Number-Box */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Number-Box.vue"));};var _default =
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var numberBox = function numberBox() {return __webpack_require__.e(/*! import() | components/my-components/Number-Box */ "components/my-components/Number-Box").then(__webpack_require__.bind(null, /*! ../../components/my-components/Number-Box */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Number-Box.vue"));};var _default =
 
 
 

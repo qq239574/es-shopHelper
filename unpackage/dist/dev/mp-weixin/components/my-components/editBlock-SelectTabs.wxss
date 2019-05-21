@@ -5,19 +5,11 @@
   padding: 20rpx 20rpx 30rpx;
   border-radius: 7rpx;
 }
-<<<<<<< HEAD
 .select-tabs .grace-title.data-v-d0271060 {
     padding-left: 8rpx;
 }
 .select-tabs .grace-title view.data-v-d0271060,
     .select-tabs .grace-title text.data-v-d0271060 {
-=======
-.select-tabs .grace-title.data-v-509b690d {
-    padding-left: 8rpx;
-}
-.select-tabs .grace-title view.data-v-509b690d,
-    .select-tabs .grace-title text.data-v-509b690d {
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
       line-height: 40rpx;
 }
 .select-tabs .grace-more.data-v-d0271060 {

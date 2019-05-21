@@ -34,12 +34,8 @@ export default function (tabid, data) {
                         subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
                         status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
                         send_able: item.send_able, // 是否可发货
-<<<<<<< HEAD
-                        groups_success: item.groups_success,///拼团结果,
-=======
                         groups_success: item.groups_success,///拼团结果
-                        dispatch_price:item.dispatch_price,//
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+                        dispatch_price:item.dispatch_price,// 运费价格
                     },
                     bill: { //订单信息
                         billId: item.order_no, //订单号

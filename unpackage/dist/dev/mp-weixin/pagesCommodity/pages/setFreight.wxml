@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 <view class="setfreight page _div data-v-6e77d6cd" bind:__l="__l"><radio-block items="{{list}}" defaultIndex="{{defaultIndex}}" valueStyle="color:#fb6638; margin-left: 0;" fontStyle="font-size: 28upx;" data-event-opts="{{[['^clickItem',[['change']]]]}}" bind:clickItem="__e" class="data-v-6e77d6cd"></radio-block><van-toast id="van-toast" data-com-type="wx" class="data-v-6e77d6cd"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-6e77d6cd"></van-dialog></view>
-=======
-<view class="setfreight page _div data-v-cce5f26c" bind:__l="__l"><radio-block items="{{list}}" defaultIndex="{{defaultIndex}}" valueStyle="color:#fb6638; margin-left: 0;" fontStyle="font-size: 28upx;" data-event-opts="{{[['^clickItem',[['change']]]]}}" bind:clickItem="__e" class="data-v-cce5f26c"></radio-block><van-toast id="van-toast" data-com-type="wx" class="data-v-cce5f26c"></van-toast><van-dialog id="van-dialog" data-com-type="wx" class="data-v-cce5f26c"></van-dialog></view>
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41

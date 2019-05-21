@@ -46,19 +46,14 @@
       white-space: pre-wrap;
       word-break: break-all;
 }
-<<<<<<< HEAD
-.card--info .card--info__row .item2 image.data-v-9069efda {
-        position: absolute;
-=======
-.card--info .card--info__row .item2 .imgBox.data-v-4649be90 {
+.card--info .card--info__row .item2 .imgBox.data-v-9069efda {
         position: relative;
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
         display: inline-block;
         width: 30rpx;
         height: 30rpx;
         margin: 0 0 0 5rpx;
 }
-.card--info .card--info__row .item2 .imgBox image.data-v-4649be90 {
+.card--info .card--info__row .item2 .imgBox image.data-v-9069efda {
           position: absolute;
           width: 30rpx;
           height: 30rpx;

@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,13 +6504,8 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-<<<<<<< HEAD
         if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
-=======
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
-            var mpInstance = vm.$scope;
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
         }
@@ -6530,25 +6525,15 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-<<<<<<< HEAD
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
-=======
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance = vm.$scope;
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-<<<<<<< HEAD
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
-=======
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
-            var mpInstance$1 = vm.$scope;
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
         }
@@ -6616,7 +6601,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -11112,7 +11097,6 @@ var Jurisdiction = { //查看权限
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "F:\\YLHD\\project\\es-shopHelper\\api\\login.js"));
 var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "F:\\YLHD\\project\\es-shopHelper\\api\\home.js"));
 var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "F:\\YLHD\\project\\es-shopHelper\\store\\cache.js"));
@@ -11120,17 +11104,7 @@ var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "F:\\YLH
 var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "F:\\YLHD\\project\\es-shopHelper\\api\\good.js"));
 var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "F:\\YLHD\\project\\es-shopHelper\\api\\myself.js"));
 var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\jsTools\\request.js"));
-var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
-=======
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
-var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js"));
-var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
-var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js"));
-var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js"));
-var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
-var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));
-var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
 var sessionId = '';
 var shopInfo = '';
 var indexApi = Object.assign({}, loginApi, homeApi, billApi, goodApi, myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
@@ -12508,11 +12482,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "F:\\YLHD\\pr
 var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "F:\\YLHD\\project\\es-shopHelper\\store\\index.js"));
 
 
-<<<<<<< HEAD
-var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceLoading.vue"));};
-=======
-var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceLoading.vue"));};
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceLoading.vue"));};
 
 _vue.default.config.productionTip = false;
 _vue.default.component('pageLoading', graceFullLoading);
@@ -13983,7 +13953,7 @@ function goodData(data) {//单规格商品
       soldNum: { //已出售数
         label: '已出售数',
         id: '',
-        value: data.goods.sales_count,
+        value: data.goods.virtual_sales,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
@@ -14117,11 +14087,7 @@ function addGoodsModel(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
-=======
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\ajaxDataFormater.js");
 
 
 var goodModel = {}; //商品编辑模板数据
@@ -14997,7 +14963,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _payType = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _payType = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/payType.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 function _default(tabid, data) {var _this = this;
 
   var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
@@ -15033,12 +14999,8 @@ function _default(tabid, data) {var _this = this;
             subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
             status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
             send_able: item.send_able, // 是否可发货
-<<<<<<< HEAD
-            groups_success: item.groups_success ///拼团结果,
-=======
             groups_success: item.groups_success, ///拼团结果
-            dispatch_price: item.dispatch_price //
->>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
+            dispatch_price: item.dispatch_price // 运费价格
           },
           bill: { //订单信息
             billId: item.order_no, //订单号
