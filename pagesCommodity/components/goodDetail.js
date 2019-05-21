@@ -250,7 +250,7 @@
              soldNum: { //已出售数
                  label: '已出售数',
                  id: '',
-                 value: data.goods.sales_count,
+                 value: data.goods.virtual_sales,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
              },

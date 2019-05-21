@@ -14035,7 +14035,7 @@ function goodData(data) {//单规格商品
       soldNum: { //已出售数
         label: '已出售数',
         id: '',
-        value: data.goods.sales_count,
+        value: data.goods.virtual_sales,
         disabled: false, //可否编辑
         editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
       },
@@ -15085,7 +15085,7 @@ function _default(tabid, data) {var _this = this;
             status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
             send_able: item.send_able, // 是否可发货
             groups_success: item.groups_success, ///拼团结果
-            dispatch_price: item.dispatch_price //
+            dispatch_price: item.dispatch_price // 运费价格
           },
           bill: { //订单信息
             billId: item.order_no, //订单号

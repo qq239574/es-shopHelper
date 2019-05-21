@@ -35,7 +35,7 @@ export default function (tabid, data) {
                         status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
                         send_able: item.send_able, // 是否可发货
                         groups_success: item.groups_success,///拼团结果
-                        dispatch_price:item.dispatch_price,//
+                        dispatch_price:item.dispatch_price,// 运费价格
                     },
                     bill: { //订单信息
                         billId: item.order_no, //订单号
