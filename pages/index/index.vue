@@ -159,6 +159,11 @@
                 })
             },
             initPage() {
+                getJurisdiction.call(this).then(res => {//权限获取
+                    this.Jurisdiction = res;
+                }).catch(res => {
+                    this.Toast(res.message)
+                })
                 this.pageLoading();
                 this.execInfo = { //过期时间
                     label: DataFrom.left,
@@ -228,11 +233,6 @@
             DataFrom = this.Cacher.getData('selectShop');
             this.shopName = DataFrom.title;
             this.showTurnShop = DataFrom.totalShops > 1;
-            getJurisdiction.call(this).then(res => {
-                this.Jurisdiction = res;
-            }).catch(res => {
-                this.Toast(res.message)
-            })
             // }
         },
         onShow() {

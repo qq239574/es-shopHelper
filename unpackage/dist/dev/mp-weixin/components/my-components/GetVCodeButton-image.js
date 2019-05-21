@@ -29,7 +29,10 @@ var _default = { props: { imageCode: { type: String, default: '' },
 
   data: function data() {
     return {
-      imgSrc: '' };
+      imgSrc: '',
+      sessionId: "",
+      domain: _domain.default,
+      time: new Date().getTime() };
 
   },
   watch: {
@@ -38,19 +41,22 @@ var _default = { props: { imageCode: { type: String, default: '' },
     } },
 
   methods: {
-    refresh: function refresh() {var _this = this;
-      this.Request('getVRCodeImg', {
-        type: 'forget',
-        width: 135,
-        height: 32,
-        timestamp: new Date().getTime() }).
-      then(function (res) {
-        _this.imgSrc = res.tempFilePath;
-      });
+    refresh: function refresh() {
+      this.time = new Date().getTime();
+      // this.Request('getVRCodeImg', {
+      //     type: 'forget',
+      //     width: 135,
+      //     height: 32,
+      //     timestamp: new Date().getTime()
+      // }).then(res => {
+      //     console.log('get img',res)
+      //     this.imgSrc = res.tempFilePath
+      // })
     } },
 
   beforeMount: function beforeMount() {
     this.refresh();
+    this.sessionId = this.Cacher.getData('sessionId');
   } };exports.default = _default;
 
 /***/ }),

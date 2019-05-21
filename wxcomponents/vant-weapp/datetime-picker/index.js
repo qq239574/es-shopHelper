@@ -118,17 +118,19 @@ VantComponent({
     },
     methods: {
         getPicker() {
-            function tmp() {
-                let args = Array.prototype.slice.apply(arguments);
-                return setColumnValues.apply(picker, args.concat([false]));
-            }
+
             if (this.picker == null) {
                 const picker = this.picker = this.selectComponent('.van-datetime-picker');
                 const {
                     setColumnValues
                 } = picker;
-                picker.setColumnValues = tmp.bind(this); 
- 
+
+                function tmp() {
+                    let args = Array.prototype.slice.apply(arguments);
+                    return setColumnValues.apply(picker, args.concat([false]));
+                }
+                picker.setColumnValues = tmp.bind(this);
+
             }
             return this.picker;
         },

@@ -1,6 +1,6 @@
 <template>
     <view class='img-code'>
-        <image class='imgCode' :src='imgSrc' @click='refresh'></image>
+        <image class='imgCode' :src='domain.base_url+"/utility/captcha/get?type=forget&client-type=assistant&width=135&height=32&session-id="+sessionId+"&timestamp="+ time' @click='refresh'></image>
     </view>
 </template>
 
@@ -19,7 +19,10 @@
         },
         data() {
             return {
-                imgSrc: ''
+                imgSrc: '',
+                sessionId: "",
+                domain: domain,
+                time: new Date().getTime()
             }
         },
         watch: {
@@ -29,18 +32,21 @@
         },
         methods: {
             refresh() {
-                this.Request('getVRCodeImg', {
-                    type: 'forget',
-                    width: 135,
-                    height: 32,
-                    timestamp: new Date().getTime()
-                }).then(res => {
-                    this.imgSrc = res.tempFilePath
-                })
+                this.time= new Date().getTime();
+                // this.Request('getVRCodeImg', {
+                //     type: 'forget',
+                //     width: 135,
+                //     height: 32,
+                //     timestamp: new Date().getTime()
+                // }).then(res => {
+                //     console.log('get img',res)
+                //     this.imgSrc = res.tempFilePath
+                // })
             }
         },
         beforeMount() {
             this.refresh();
+            this.sessionId = this.Cacher.getData('sessionId');
         },
     }
 </script>

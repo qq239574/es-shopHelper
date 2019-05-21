@@ -95,7 +95,7 @@
                 cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
             },
             getImages(list) {
-                cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail)
+                cacheGoodDetail = updateGoodInfo.call(this, list, cacheGoodDetail);
             },
             clickCell(val) {
                 if (val.label == '定时下架时间') {
@@ -146,13 +146,14 @@
             initPage() {
                 DataGo = this.Cacher.getData('editGood');
                 DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
-                if (DataGo.go) {
+                // if (DataGo.go) {
                     // DataGo = this.Cacher.getData(DataGo.go);
-                }
+                // }
                 if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
-                    this.goodDetail = cacheGoodDetail;
-                    this.Cacher.clearData(DataGo.go)
+                    this.goodDetail = cacheGoodDetail; 
+                    this.Cacher.clearData([DataGo.go,'editGood'])
+                     
                 }
             }
         },
@@ -192,6 +193,7 @@
             this.initPage();
         },
         onUnload() {
+            console.log('on unload')
             this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']); //
         }
     }

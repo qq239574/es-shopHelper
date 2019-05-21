@@ -69,7 +69,6 @@ var cache = ' ';var _default =
     },
     change: function change(val) {
       cacheVal = val;
-      console.log(val);
       this.Cacher.setData('editType', {
         needChange: {
           label: '商品类型',

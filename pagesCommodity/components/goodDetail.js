@@ -72,7 +72,7 @@
          id: 0,
          name: '不使用表单'
      })
-     let statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
+     let statusList = ['已删除', '放置仓库', '上架售卖', '上架隐藏', '定时上架'];
 
      let info = {
          info1: {
@@ -186,7 +186,7 @@
                          cardStock: {
                              label: '卡密库',
                              id: item.virtual_card_id,
-                             value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name||'',
+                             value: data.goods.type == 3 && mapVartualCard(data.virtual_list, item.virtual_card_id).name || '',
                              disabled: !!data.goods.activity_goods, //可否编辑,活动期间不可编辑
                              editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
                              needHide: data.goods.type != 3
@@ -213,7 +213,7 @@
                  value: data.goods.price,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide:data.goods.has_option != 0 
+                 needHide: data.goods.has_option != 0
              },
              delPrice: { //划线价格
                  label: '划线价格',
@@ -221,7 +221,7 @@
                  value: data.goods.original_price,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
-                 needHide:false 
+                 needHide: false
              },
              cardStock: { // 
                  label: '卡密库',
@@ -238,6 +238,7 @@
                  value: data.goods.stock,
                  disabled: false, //可否编辑
                  editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+                 needHide: data.goods.has_option != 0 //多规格无总库存
              },
              showStock: { //显示库存
                  label: '显示库存',

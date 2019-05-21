@@ -1,13 +1,15 @@
 <template>
     <view class='toper-list'>
-        <view class='toper-header goods' v-if='pageid=="goods"'>
-            <view class="th">商品</view>
-            <view class="th">销售量(件)</view>
-        </view>
-        <view class='toper-header vip' v-else>
-            <view class="th">会员</view>
-            <view class="th">付款金额(元)</view>
-        </view>
+        <block v-if='list.length'>
+            <view class='toper-header goods' v-if='pageid=="goods"'>
+                <view class="th">商品</view>
+                <view class="th">销售量(件)</view>
+            </view>
+            <view class='toper-header vip' v-else>
+                <view class="th">会员</view>
+                <view class="th">付款金额(元)</view>
+            </view>
+        </block>
         <block v-for='(item,index) in list' :key='index'>
             <item :info='item' :index='index' :pageid='pageid' @click='clickItem'></item>
         </block>
@@ -37,7 +39,7 @@
         },
         methods: {
             clickItem(info) {
-                this.$emit('click',info)
+                this.$emit('click', info)
             }
         },
     }

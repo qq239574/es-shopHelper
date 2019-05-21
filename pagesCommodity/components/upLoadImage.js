@@ -1,9 +1,11 @@
 import domain from '../../api/domain.js'
 export default function (data) {
+    let imgUrl = this.Cacher.getData('static_resources_domain');
+
     let tmp = '';
-    let list = []; 
+    let list = [];
     for (let k in data) {
-        if (k.indexOf('data[goods][thumbs]') > -1 || k.indexOf('data[goods][thumb]') > -1) { 
+        if (k.indexOf('data[goods][thumbs]') > -1 || k.indexOf('data[goods][thumb]') > -1) {
             tmp = data[k];
             if (/^http|wxfile.+/.test(tmp)) {
                 list.push(new Promise((resolve, reject) => {
@@ -29,6 +31,7 @@ export default function (data) {
 
     return new Promise((resolve, reject) => {
         Promise.all(list).then(res => {
+            data['data[goods][content]'] = '<img src="' + imgUrl + data['data[goods][thumb]'] + '"></img>'
             resolve(data)
         });
     })

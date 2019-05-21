@@ -3,9 +3,10 @@
         <view class="grace-fixed-top grace-gtbg-blue top1" style='background:rgba(0,0,0,0)'>
             <view class="margin20"></view>
             <SearchInput @click='search' :value='searchValue' placeholder='请输入订单号' :disabled='true'></SearchInput>
-            <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard>
+            <view class="margin20"></view>
+            <!-- <TabCard @tabChange='tabChange' :index='tabIndex'></TabCard> -->
         </view>
-        <view class='margin200'></view>
+        <view class='margin100'></view>
         <Card :Jurisdiction='Jurisdiction' v-for='(item,index) in billList' :key='index' :bill='item' @click='clickBill'></Card>
         <nodata type='noresult' tip='没有搜索到相关订单' v-if='!searching&&!billList.length'></nodata>
         <view class="pager" v-else>
@@ -202,7 +203,7 @@
                     this.tabIndex = curTab.cateid;
                 }
                 getBillList.call(this, this.tabIndex, {
-                    keywords: searchData.value || '',
+                    // keywords: searchData.value || '',
                     page: this.current,
                     member_id: member_id,
                     pageSize: 20
@@ -319,14 +320,14 @@
 </script>
 
 <style lang="scss" scoped>
-    .margin200 {
-        height: 196upx;
+    .margin100 {
+        height: 126upx;
     }
     .margin20 {
         height: 20upx;
         width: 100%;
         background: #fff;
-    }
+    } 
     .model__title {
         font-weight: 700;
         font-size: 30upx;

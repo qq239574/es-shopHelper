@@ -169,6 +169,11 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 
     },
     initPage: function initPage() {var _this = this;
+      _getJurisdiction.getJurisdiction.call(this).then(function (res) {//权限获取
+        _this.Jurisdiction = res;
+      }).catch(function (res) {
+        _this.Toast(res.message);
+      });
       this.pageLoading();
       this.execInfo = { //过期时间
         label: DataFrom.left,
@@ -230,7 +235,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
   onPullDownRefresh: function onPullDownRefresh() {
     this.initPage();
   },
-  onLoad: function onLoad(option) {var _this2 = this;
+  onLoad: function onLoad(option) {
     uni.hideTabBar({ //隐藏tabbar
       animation: false });
 
@@ -238,11 +243,6 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
     DataFrom = this.Cacher.getData('selectShop');
     this.shopName = DataFrom.title;
     this.showTurnShop = DataFrom.totalShops > 1;
-    _getJurisdiction.getJurisdiction.call(this).then(function (res) {
-      _this2.Jurisdiction = res;
-    }).catch(function (res) {
-      _this2.Toast(res.message);
-    });
     // }
   },
   onShow: function onShow() {

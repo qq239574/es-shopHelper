@@ -4,6 +4,7 @@
     "van-toast": "/wxcomponents/vant-weapp/toast/index",
     "van-dialog": "/wxcomponents/vant-weapp/dialog/index",
     "select-item": "/components/my-components/editBlock-SelectItem",
-    "items": "/pagesIndex/components/Toper-list"
+    "items": "/pagesIndex/components/Toper-list",
+    "nodata": "/components/my-components/nodata"
   }
 }

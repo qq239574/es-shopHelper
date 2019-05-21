@@ -2,6 +2,7 @@
     <view class='toper page'>
         <selectItem label='筛选日期' :value='pageLabel' @click='filteDate'></selectItem>
         <items :list='list' :pageid='pageId' @click='clickItem'></items>
+        <nodata type='noresult' :tip='searching?"正在搜索相关数据":nodataContent' v-if='!list.length'></nodata>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -9,6 +10,7 @@
 
 <script>
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
+    import nodata from '../../components/my-components/nodata.vue'
     import items from '../components/Toper-list.vue'
     import {
         getDate
@@ -23,22 +25,21 @@
     export default {
         components: {
             selectItem,
-            items
+            items,
+            nodata
         },
         data() {
             return {
                 pageId: 'goods',
                 pageLabel: '今天',
-                list: [{
-                    img: '/static/img/global/product_share_download.png',
-                    label: '',
-                    value: '',
-                    index: ''
-                }, ]
+                list: [],
+                searching: true,
+                nodataContent: "当前日期无商品销售"
             }
         },
         onLoad(option) {
             DataFrom = this.Cacher.getData(option.from);
+            this.nodataContent=DataFrom.show == 'vip' ?"当前日期无付款会员":"当前日期无商品销售"
             uni.setNavigationBarTitle({
                 title: DataFrom.show == 'vip' ? "TOP会员" : "TOP商品"
             });
@@ -52,7 +53,7 @@
         },
         methods: {
             clickItem(info) {
-                if (DataFrom.show == 'vip') { 
+                if (DataFrom.show == 'vip') {
                     this.Cacher.setData('toper', {
                         from: 'toper',
                         detail: {
@@ -79,7 +80,7 @@
                 }
             },
             initPage() { //初始化页面 
-                let api = '';
+                let api = ''; 
                 this.pageId = DataFrom.show;
                 DataGo = this.Cacher.getData(DataGo.go);
                 DataGo = DataGo.date ? DataGo : {
@@ -93,11 +94,13 @@
                 }
                 this.pageLabel = DataGo.date[2];
                 this.pageLoading();
+                this.searching=true;
                 this.Request(api, {
                     type: 4, //	1:今天，2:昨天，3:7天，4:自定义
                     start: DataGo.date[0], //	自定义开始时间
                     end: DataGo.date[1] //	自定义结束时间
                 }).then(res => {
+                    this.searching=false;
                     this.closePageLoading();
                     let arr = [];
                     for (let k in res) {
@@ -112,7 +115,7 @@
                             value: item.pay_price,
                             index: item.mobile,
                             id: item.id,
-                            tiFixed:2//有效数字
+                            tiFixed: 2 //有效数字
                         }))
                     } else {
                         this.list = arr.map(item => ({
@@ -121,7 +124,7 @@
                             value: item.pay_number_count,
                             index: item.goods_id,
                             goods_id: item.goods_id,
-                            tiFixed:0//有效数字
+                            tiFixed: 0 //有效数字
                         }))
                     }
                 }).catch(res => {

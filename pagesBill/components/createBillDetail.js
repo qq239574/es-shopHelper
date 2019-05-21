@@ -1,3 +1,6 @@
+import {
+    number_format
+} from '../../components/my-components/formater.js'
 export default function (result) {
     let commission = result.commission || { //上级分销商信息
         "agent_level1": { //一级上线分销商信息
@@ -96,17 +99,17 @@ export default function (result) {
             firstOne: {
                 name: commission.agent_level1 && commission.agent_level1.nickname || '',
                 tel: commission.agent_level1 && commission.agent_level1.mobile || '',
-                money: commission.agent_level1 && commission.agent_level1.commission || '',
+                money: number_format((commission.agent_level1 && commission.agent_level1.commission) || 0, 2, '.', ','),
             }, //一级分销商
             secondOne: {
                 name: commission.agent_level2 && commission.agent_level2.nickname || '',
                 tel: commission.agent_level2 && commission.agent_level2.mobile || '',
-                money: commission.agent_level2 && commission.agent_level2.commission || ''
+                money: number_format((commission.agent_level2 && commission.agent_level2.commission) || 0, 2, '.', ',')
             }, //二级分销商
             thirdOne: {
                 name: commission.agent_level3 && commission.agent_level3.nickname || '',
                 tel: commission.agent_level3 && commission.agent_level3.mobile || '',
-                money: commission.agent_level3 && commission.agent_level3.commission || ''
+                money: number_format((commission.agent_level3 && commission.agent_level3.commission) || 0, 2, '.', ',')
             } //三级分销商
         },
         billInfo6: result.goods_waits.map(item => { //未发货的商品

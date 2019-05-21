@@ -10687,7 +10687,7 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "https://user.qdev.eldev.cn" };var _default =
+  base_url: "http://user.jiangyk.eldev.cn" };var _default =
 
 global_settings;exports.default = _default;
 
@@ -13506,7 +13506,10 @@ createPage(_test.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(result) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
+
+
+function _default(result) {
   var commission = result.commission || { //上级分销商信息
     "agent_level1": { //一级上线分销商信息
       "nickname": "", //分销商昵称
@@ -13604,17 +13607,17 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       firstOne: {
         name: commission.agent_level1 && commission.agent_level1.nickname || '',
         tel: commission.agent_level1 && commission.agent_level1.mobile || '',
-        money: commission.agent_level1 && commission.agent_level1.commission || '' },
+        money: (0, _formater.number_format)(commission.agent_level1 && commission.agent_level1.commission || 0, 2, '.', ',') },
       //一级分销商
       secondOne: {
         name: commission.agent_level2 && commission.agent_level2.nickname || '',
         tel: commission.agent_level2 && commission.agent_level2.mobile || '',
-        money: commission.agent_level2 && commission.agent_level2.commission || '' },
+        money: (0, _formater.number_format)(commission.agent_level2 && commission.agent_level2.commission || 0, 2, '.', ',') },
       //二级分销商
       thirdOne: {
         name: commission.agent_level3 && commission.agent_level3.nickname || '',
         tel: commission.agent_level3 && commission.agent_level3.mobile || '',
-        money: commission.agent_level3 && commission.agent_level3.commission || ''
+        money: (0, _formater.number_format)(commission.agent_level3 && commission.agent_level3.commission || 0, 2, '.', ',')
         //三级分销商
       } },
     billInfo6: result.goods_waits.map(function (item) {//未发货的商品
@@ -13734,12 +13737,22 @@ function _default(list) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(data) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;
+function _default(data) {
+
   this.closePageLoading();
   delete data.goods_id;
   delete data['data[goods][virtual_card_id]'];
   delete data['data[goods][auto_warehouse_time]'];
   delete data['data[goods][putaway_time]'];
+  console.log(data);
+  if (data['data[goods][has_option]'] == 1) {
+    delete data['data[goods][price]'];
+    delete data['data[goods][stock]'];
+  }
+
+
+
   var res = true;
   if (!data['data[goods][title]']) {
     this.Toast('请填写商品名称');
@@ -13750,7 +13763,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   } else if (!data['data[goods][thumbs][0]']) {
     this.Toast('请填写轮播图');
     res = false;
-  } else if (!data['data[goods][price]'] * 1) {
+  } else if (!data['data[goods][price]'] * 1 && data['data[goods][has_option]' == 0]) {//单規格必填
     this.Toast('请填写售卖价格');
     res = false;
   } else if (data['data[goods][type]'] != 3 && data['data[goods][stock]'] === '') {
@@ -13844,7 +13857,7 @@ function goodData(data) {//单规格商品
     id: 0,
     name: '不使用表单' });
 
-  var statusList = ['已删除', '下架', '上架售卖', '上架隐藏', '定时上架'];
+  var statusList = ['已删除', '放置仓库', '上架售卖', '上架隐藏', '定时上架'];
 
   var info = {
     info1: {
@@ -14009,7 +14022,8 @@ function goodData(data) {//单规格商品
         id: '',
         value: data.goods.stock,
         disabled: false, //可否编辑
-        editable: 'input' //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        editable: 'input', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
+        needHide: data.goods.has_option != 0 //多规格无总库存
       },
       showStock: { //显示库存
         label: '显示库存',
@@ -14408,6 +14422,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _domain = _interopRequireDefault(__webpack_require__(/*! ../../api/domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 function _default(data) {var _this = this;
+  var imgUrl = this.Cacher.getData('static_resources_domain');
+
   var tmp = '';
   var list = [];var _loop = function _loop(
   k) {
@@ -14437,6 +14453,7 @@ function _default(data) {var _this = this;
 
   return new Promise(function (resolve, reject) {
     Promise.all(list).then(function (res) {
+      data['data[goods][content]'] = '<img src="' + imgUrl + data['data[goods][thumb]'] + '"></img>';
       resolve(data);
     });
   });
@@ -14691,7 +14708,7 @@ function _default(val, cacheGoodDetail) {
       return item;
     });
     cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
-
+    cacheGoodDetail.info2.stockNum.needHide = val.other.list.length > 0;
   } else if (val.label == '子规格详情') {
     cacheGoodDetail.info2.childrenSpecs.list = val.other.list.map(function (item) {
       item.stock.needHide = goodtype == 3;
@@ -15367,9 +15384,11 @@ function bindWx(rebind) {var _this2 = this;
           that.Cacher.setData('login', cacheData);
           userInfo = cacheData;
           bindWechat.call(that, userInfo).then(function (res) {
+            that.closePageLoading();
             that.Toast('绑定成功');
             resolve(res);
           }).catch(function (res) {
+            that.closePageLoading();
             that.Toast('绑定失败');
             reject(res);
           });

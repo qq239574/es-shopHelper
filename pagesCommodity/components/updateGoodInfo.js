@@ -184,7 +184,7 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '快递运费') {
         cacheGoodDetail.info3.provideCost.value = val.info.subValue * 1;
         cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
-        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费')>-1?val.info.subValue * 1:val.info.label;
+        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? val.info.subValue * 1 : val.info.label;
     } else if (val.label == '商品表单') {
         cacheGoodDetail.info3.goodForm.value = val.value;
         cacheGoodDetail.info3.goodForm.id = val.id;
@@ -207,7 +207,7 @@ export default function (val, cacheGoodDetail) {
             return item;
         });
         cacheGoodDetail.info2.cardStock.needHide = !!val.other.list.length || cacheGoodDetail.info1.goodType.type != 3; //电子卡密
-
+        cacheGoodDetail.info2.stockNum.needHide = val.other.list.length > 0;
     } else if (val.label == '子规格详情') {
         cacheGoodDetail.info2.childrenSpecs.list = val.other.list.map(item => {
             item.stock.needHide = goodtype == 3;

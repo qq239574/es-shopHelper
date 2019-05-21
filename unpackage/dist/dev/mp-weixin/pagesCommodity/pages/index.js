@@ -156,13 +156,14 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
     initPage: function initPage() {
       DataGo = this.Cacher.getData('editGood');
       DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
-      if (DataGo.go) {
-        // DataGo = this.Cacher.getData(DataGo.go);
-      }
+      // if (DataGo.go) {
+      // DataGo = this.Cacher.getData(DataGo.go);
+      // }
       if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
         cacheGoodDetail = _updateGoodInfo.default.call(this, DataGo.needChange, cacheGoodDetail);
         this.goodDetail = cacheGoodDetail;
-        this.Cacher.clearData(DataGo.go);
+        this.Cacher.clearData([DataGo.go, 'editGood']);
+
       }
     } },
 
@@ -202,6 +203,7 @@ var goodInfo = function goodInfo() {return Promise.all(/*! import() | pagesCommo
     this.initPage();
   },
   onUnload: function onUnload() {
+    console.log('on unload');
     this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']); //
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

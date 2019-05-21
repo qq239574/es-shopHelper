@@ -51,6 +51,7 @@
 
 
 
+
 var _getBillList = _interopRequireDefault(__webpack_require__(/*! ../../pages/bill/index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));
 
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};
@@ -212,7 +213,7 @@ var _default = {
         this.tabIndex = curTab.cateid;
       }
       _getBillList.default.call(this, this.tabIndex, {
-        keywords: searchData.value || '',
+        // keywords: searchData.value || '',
         page: this.current,
         member_id: member_id,
         pageSize: 20 }).

@@ -20,10 +20,12 @@
 
 
 
+
+
 var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");
 
 
-var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var items = function items() {return __webpack_require__.e(/*! import() | pagesIndex/components/Toper-list */ "pagesIndex/components/Toper-list").then(__webpack_require__.bind(null, /*! ../components/Toper-list.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Toper-list.vue"));};
 
 
 var searchSection = [];
@@ -33,22 +35,21 @@ var domain = '';var _default =
 {
   components: {
     selectItem: selectItem,
-    items: items },
+    items: items,
+    nodata: nodata },
 
   data: function data() {
     return {
       pageId: 'goods',
       pageLabel: '今天',
-      list: [{
-        img: '/static/img/global/product_share_download.png',
-        label: '',
-        value: '',
-        index: '' }] };
-
+      list: [],
+      searching: true,
+      nodataContent: "当前日期无商品销售" };
 
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
+    this.nodataContent = DataFrom.show == 'vip' ? "当前日期无付款会员" : "当前日期无商品销售";
     uni.setNavigationBarTitle({
       title: DataFrom.show == 'vip' ? "TOP会员" : "TOP商品" });
 
@@ -103,11 +104,13 @@ var domain = '';var _default =
       }
       this.pageLabel = DataGo.date[2];
       this.pageLoading();
+      this.searching = true;
       this.Request(api, {
         type: 4, //	1:今天，2:昨天，3:7天，4:自定义
         start: DataGo.date[0], //	自定义开始时间
         end: DataGo.date[1] //	自定义结束时间
       }).then(function (res) {
+        _this.searching = false;
         _this.closePageLoading();
         var arr = [];
         for (var k in res) {

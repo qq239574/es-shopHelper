@@ -58,8 +58,7 @@
                 })
             },
             change(val) {
-                cacheVal = val;
-                console.log(val)
+                cacheVal = val; 
                 this.Cacher.setData('editType', {
                     needChange: {
                         label: '商品类型',

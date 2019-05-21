@@ -62,9 +62,11 @@ export function bindWx(rebind) {
                     that.Cacher.setData('login', cacheData);
                     userInfo = cacheData;
                     bindWechat.call(that, userInfo).then(res => {
+                        that.closePageLoading();
                         that.Toast('绑定成功');
                         resolve(res);
                     }).catch(res => {
+                        that.closePageLoading();
                         that.Toast('绑定失败');
                         reject(res);
                     })
