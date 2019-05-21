@@ -38,10 +38,9 @@
         },
         methods: {
             clickItem(val) {
-                this.Cacher.setData('noticeList', {
-                    from: 'noticeList',
-                    ...val
-                });
+                this.Cacher.setData('noticeList',Object.assign( {
+                    from: 'noticeList', 
+                },val));
                 uni.navigateTo({
                     url: './noticeDetail?from=noticeList'
                 })

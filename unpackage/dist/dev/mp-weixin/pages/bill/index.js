@@ -66,7 +66,11 @@ var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBil
 
 
 
+<<<<<<< HEAD
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar1 */ "components/my-components/myTabbar1").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar1 */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\myTabbar1.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "F:\\YLHD\\project\\es-shopHelper\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\nodata.vue"));};var DataFrom = {};var searchData = {};var surePassword = ''; //手动确认付款密码
+=======
+var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar1 */ "components/my-components/myTabbar1").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar1.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var DataFrom = {};var searchData = {};var surePassword = ''; //手动确认付款密码
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 var member_id = '';var curTab = { //当前标签
   cateid: 0, index: 0, name: "代付款" //{cateid: 0, index: 0, name: "代付款"}
 };var requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
@@ -92,39 +96,9 @@ var _default = { components: { TabCard: TabCard,
         state: '' },
 
       searchValue: '', //查询条件 
-      billList: [{ //完整数据
-        info: { //订单及用户信息
-          name: '', //客户姓名
-          provide: '', //配送方式
-          num: 0, //商品数量
-          pay: 0, //实付
-          addtion: 0, //备注
-          payType: '', //支付方式
-          subStatus: 0, //订单状态，1：维权
-          status: 0 //0代付款,1代发货，2待收货，3已完成，4已关闭
-        },
-        bill: { //订单信息
-          billId: '', //订单号
-          billDate: '', //订单时间
-          billType: 0, //订单类型，0：分销订单，1：普通订单
-          billPrice: 0 },
-
-        goodsList: [{ //订单商品信息
-          img: '', //商品图片
-          goodName: '', //商品名
-          color: '', //颜色
-          size: '', //型号
-          num: 0, //数量
-          price: 0, //价格
-          specifications: 'single' //单规格
-        }],
-        rights: { // 维权信息
-          status: '', //维权状态
-          addition: 0 //维权备注
-        } }],
-
+      billList: [],
       tabIndex: 0, //默认tabs的index
-      searching: true };
+      searching: false };
 
   },
   onLoad: function onLoad(option) {var _this = this;
@@ -233,6 +207,7 @@ var _default = { components: { TabCard: TabCard,
         _this3.searching = false;
       }).catch(function (res) {
         _this3.searching = false;
+        _this3.closePageLoading();
         _this3.Toast(res.message || '出错啦');
       });
     },
@@ -261,6 +236,7 @@ var _default = { components: { TabCard: TabCard,
         }).catch(function (res) {
           _this4.searching = false;
           searching = false;
+          _this4.closePageLoading();
           requestQueue && _this4.tabChange(requestQueue);
           requestQueue = '';
         });
@@ -288,10 +264,9 @@ var _default = { components: { TabCard: TabCard,
     clickBill: function clickBill(val) {
       cacheBill = val;
       this.closePageLoading();
-      this.Cacher.setData('bill', _objectSpread({
+      this.Cacher.setData('bill', Object.assign({
         from: 'bill' },
       val));
-
       if (val.type != 'button') {
         uni.navigateTo({ //去详情页
           url: '../../pagesBill/pages/billDetail?from=bill' });

@@ -158,7 +158,8 @@ var enteringShop = false;var _default =
         this.Request('shoplist', {
           pageSize: 20,
           page: ajaxIndex,
-          keywords: this.searchShop }).
+          keywords: this.searchShop,
+          source: 'assistant' }).
         then(function (res) {
           requesting = false;
           _this2.requesting = requesting;
@@ -175,7 +176,7 @@ var enteringShop = false;var _default =
               _this2.Cacher.setData(pageId, {
                 from: pageId,
                 shopInfo: shop.shopInfo,
-                totalShops: res.total });
+                totalShops: res.count });
 
               _this2.selectShop(shop);
             } else {

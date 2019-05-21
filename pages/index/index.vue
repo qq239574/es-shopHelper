@@ -132,11 +132,10 @@
                 }
             },
             toBill(val) { //跳转订单页
-                this.Cacher.setData('home', {
+                this.Cacher.setData('home', Object.assign({
                     from: 'home',
-                    ...val,
                     info: this.showData,
-                }); //页面传参 
+                }, val)); //页面传参 
                 uni.reLaunch({
                     url: '../bill/index?from=home'
                 });
@@ -151,11 +150,10 @@
                 });
             },
             toNotice(val) {
-                this.Cacher.setData('home', {
+                this.Cacher.setData('home', Object.assign({
                     from: 'home',
-                    ...val,
                     list: newNotice
-                }); //页面传参
+                }, val)); //页面传参
                 uni.navigateTo({
                     url: '../../pagesIndex/pages/noticeList?from=home'
                 })

@@ -36,7 +36,7 @@
 			<view class='surportList'>
 				<view class="supporter" @click='loginWithWx'>
 					<image lazy-load src='/static/img/global/product_share_wechat.svg'></image>
-					<button @click='clickButton' open-type='getUserInfo' class='appletBtn'> </button>
+					<button @click='clickButton'  open-type='getUserInfo' class='appletBtn'> </button>
 				</view>
 			</view>
 		</view>
@@ -97,7 +97,7 @@
 		mounted() {
 			this.closePageLoading()
 		},
-		methods: {
+		methods: { 
 			clickButton() {
 				wxLogin.call(this).then(res => {
 					uni.reLaunch({

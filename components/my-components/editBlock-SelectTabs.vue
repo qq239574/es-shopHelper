@@ -62,7 +62,7 @@
                         list: [{
                             name: this.typeList.name,
                             id: this.typeList.id
-                        }, ...this.selected]
+                        }].concat(this.selected)
                     })
                 } else {
                     this.$emit('change', {
@@ -74,7 +74,7 @@
             clearKey(val) { //全选或全清理
                 this.checked = !this.checked;
                 if (this.checked) {
-                    this.selected = [...this.typeList.children];
+                    this.selected =this.typeList.children.map(item=>item);
                 } else {
                     this.selected = [];
                 }
@@ -83,7 +83,7 @@
                     list: this.checked ? [{
                         name: this.typeList.name,
                         id: this.typeList.id
-                    }, ...this.selected] : []
+                    }].concat(this.selected) : []
                 });
             },
             setKey(val) {
@@ -100,7 +100,7 @@
                         list: [{
                             name: this.typeList.name,
                             id: this.typeList.id
-                        }, ...this.selected]
+                        }].concat(this.selected)
                     })
                 } else {
                     this.$emit('change', {

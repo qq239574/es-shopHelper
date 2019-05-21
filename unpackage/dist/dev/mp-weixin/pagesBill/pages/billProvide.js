@@ -142,13 +142,13 @@ var _default = {
         sendBillInfo.id = DataFrom.bill.bill.id; //订单id
         DataGo.data = this.Cacher.getData(DataGo.go) || {};
         if (DataGo.go == 'billAddition') {
-          this.provideInfo.provideAddition = DataGo.data.billAddition || '未填写';
+          this.provideInfo.provideAddition = DataGo.data.billAddition || '';
           sendBillInfo.remark = DataGo.data.billAddition;
         } else if (DataGo.go == 'billId') {
-          this.provideInfo.provideId = DataGo.data.billId || '填写';
+          this.provideInfo.provideId = DataGo.data.billId || '';
           sendBillInfo.express_sn = DataGo.data.billId;
         } else if (DataGo.go == 'componyList') {
-          this.provideInfo.provideComp = DataGo.data.label || '请选择';
+          this.provideInfo.provideComp = DataGo.data.label || '';
           sendBillInfo.express_id = DataGo.data.id;
         }
         this.Request("canSendGoods", {
@@ -185,13 +185,9 @@ var _default = {
   },
   onLoad: function onLoad(option) {
     DataFrom = this.Cacher.getData(option.from);
-    this.initPage();
   },
   onUnload: function onUnload() {
-    this.Cacher.clearData('billProvide');
-    this.Cacher.clearData('billId');
-    this.Cacher.clearData('billAddition');
-    this.Cacher.clearData('componyList');
+    this.Cacher.clearData(['billProvide', 'billId', 'billAddition', 'componyList']);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

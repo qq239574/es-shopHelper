@@ -8,7 +8,11 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var item = function item() {return __webpack_require__.e(/*! import() | pagesIndex/components/Notice-Block */ "pagesIndex/components/Notice-Block").then(__webpack_require__.bind(null, /*! ../components/Notice-Block.vue */ "F:\\YLHD\\project\\es-shopHelper\\pagesIndex\\components\\Notice-Block.vue"));};
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var item = function item() {return __webpack_require__.e(/*! import() | pagesIndex/components/Notice-Block */ "pagesIndex/components/Notice-Block").then(__webpack_require__.bind(null, /*! ../components/Notice-Block.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\Notice-Block.vue"));};
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 
 
 
@@ -48,10 +52,9 @@ var ajaxIndex = 1;var _default =
   },
   methods: {
     clickItem: function clickItem(val) {
-      this.Cacher.setData('noticeList', _objectSpread({
+      this.Cacher.setData('noticeList', Object.assign({
         from: 'noticeList' },
       val));
-
       uni.navigateTo({
         url: './noticeDetail?from=noticeList' });
 

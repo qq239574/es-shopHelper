@@ -7,10 +7,10 @@
         <view class="echarts-box">
             <view class="title">
                 <view class='title__day title__today'>今日
-                    <view class="title__day__num">{{formater(today)}}</view>
+                    <view class="title__day__num">{{formater(today,info.toFixed)}}</view>
                 </view>
                 <view class='title__day title__yesterday'>昨日
-                    <view class="title__day__num">{{formater(yesterday)}}</view>
+                    <view class="title__day__num">{{formater(yesterday,info.toFixed)}}</view>
                 </view>
             </view>
             <view class="canvasView">
@@ -47,14 +47,14 @@
             }
         },
         watch: {
-            info() { 
+            info() {
                 let adder1 = new numAdder();
                 let adder2 = new numAdder();
                 let that = this;
-                adder1.start(this.info.today, function(num) { 
+                adder1.start(this.info.today, function(num) {
                     that.today = num;
                 });
-                adder2.start(this.info.yesterday, function(num) { 
+                adder2.start(this.info.yesterday, function(num) {
                     that.yesterday = num;
                 })
             }
@@ -66,8 +66,8 @@
                     url: './moneyDetail?from=dataGraph'
                 })
             },
-            formater(num) {
-                return number_format(Math.min(9999999999, num))
+            formater(num, toFixed) {
+                return number_format(Math.min(9999999999, num), toFixed, '.', ',')
             }
         },
     }

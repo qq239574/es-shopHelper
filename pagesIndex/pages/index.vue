@@ -48,7 +48,7 @@
         dataList4 = [0, 0, 0, 0, 0, 0, 0];
     let initdata = [{
         title: '成交额（元）',
-        subTitle: '累计总成成交额：' + 0,
+        subTitle: '累计总成交额：' + 0,
         today: 0,
         yesterday: 0,
         id: 'trade'
@@ -96,25 +96,29 @@
                 subTitle: '累计总成交额：' + 0,
                 today: 0,
                 yesterday: 0,
-                id: 'trade'
+                id: 'trade',
+                toFixed: 2
             }, {
                 title: '付款订单数（个）',
                 subTitle: '',
                 today: 0,
                 yesterday: 0,
-                id: 'pay'
+                id: 'pay',
+                toFixed: 0
             }, {
                 title: '付款商品数（件）',
                 subTitle: '',
                 today: 0,
                 yesterday: 0,
-                id: 'good'
+                id: 'good',
+                toFixed: 0
             }, {
                 title: '付款会员数',
                 subTitle: '',
                 today: 0,
                 yesterday: 0,
-                id: 'vip'
+                id: 'vip',
+                toFixed: 0
             }]
             this.initPage();
         },
@@ -125,25 +129,29 @@
                     subTitle: '累计总成交额：' + 0,
                     today: 0,
                     yesterday: 0,
-                    id: 'trade'
+                    id: 'trade',
+                    toFixed: 2
                 }, {
                     title: '付款订单数（个）',
                     subTitle: '',
                     today: 0,
                     yesterday: 0,
-                    id: 'pay'
+                    id: 'pay',
+                    toFixed: 0
                 }, {
                     title: '付款商品数（件）',
                     subTitle: '',
                     today: 0,
                     yesterday: 0,
-                    id: 'good'
+                    id: 'good',
+                    toFixed: 0
                 }, {
                     title: '付款会员数',
                     subTitle: '',
                     today: 0,
                     yesterday: 0,
-                    id: 'vip'
+                    id: 'vip',
+                    toFixed: 0
                 }];
                 if (!initing) {
                     let reqResult = []; //用来统计请求是否全部完成

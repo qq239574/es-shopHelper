@@ -72,10 +72,9 @@ export default {
     canvasToTempFilePath(opt) {
       const { canvasId } = this;
       this.ctx.draw(true, () => {
-        wx.canvasToTempFilePath({
-          canvasId,
-          ...opt,
-        });
+        wx.canvasToTempFilePath(Object.assign({
+          canvasId
+        },opt));
       });
     },
     touchStart(e) {

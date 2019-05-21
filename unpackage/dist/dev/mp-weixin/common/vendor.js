@@ -407,7 +407,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6504,8 +6504,13 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
+<<<<<<< HEAD
         if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$mp[vm.mpType];
+=======
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            var mpInstance = vm.$scope;
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
         }
@@ -6525,15 +6530,25 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
+<<<<<<< HEAD
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$mp[vm.mpType];
+=======
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+            var mpInstance = vm.$scope;
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
+<<<<<<< HEAD
         if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$mp[vm.mpType];
+=======
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+            var mpInstance$1 = vm.$scope;
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
         }
@@ -6601,7 +6616,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10619,11 +10634,8 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "https://user.qdev.eldev.cn", //https://user.qd.ailings.cn/  http://user.jiangyk.eldev.cn/#/
-  // base_url:'https://ceshiuser.100cms.com',
-  //  base_url: 'https://shop.jacjack.com',
-  attachment_url: "https://es-static.eldev.cn/" //'https://es-static.ailings.cn/'
-};var _default =
+  base_url: "https://user.qdev.eldev.cn" };var _default =
+
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -11100,6 +11112,7 @@ var Jurisdiction = { //查看权限
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "F:\\YLHD\\project\\es-shopHelper\\api\\login.js"));
 var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "F:\\YLHD\\project\\es-shopHelper\\api\\home.js"));
 var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "F:\\YLHD\\project\\es-shopHelper\\store\\cache.js"));
@@ -11108,15 +11121,19 @@ var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "F:\\YLH
 var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "F:\\YLHD\\project\\es-shopHelper\\api\\myself.js"));
 var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\jsTools\\request.js"));
 var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "F:\\YLHD\\project\\es-shopHelper\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+=======
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js"));var loginApi = _interopRequireWildcard(__webpack_require__(/*! ./login */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\login.js"));
+var homeApi = _interopRequireWildcard(__webpack_require__(/*! ./home */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\home.js"));
+var cacher = _interopRequireWildcard(__webpack_require__(/*! ../store/cache */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));
+var billApi = _interopRequireWildcard(__webpack_require__(/*! ./bill */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\bill.js"));
+var goodApi = _interopRequireWildcard(__webpack_require__(/*! ./good */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\good.js"));
+var myApi = _interopRequireWildcard(__webpack_require__(/*! ./myself */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\myself.js"));
+var _request = _interopRequireDefault(__webpack_require__(/*! ../graceUI/jsTools/request.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\jsTools\\request.js"));
+var _domain = _interopRequireDefault(__webpack_require__(/*! ./domain.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\api\\domain.js"));function _interopRequireWildcard(obj) {if (obj && obj.__esModule) {return obj;} else {var newObj = {};if (obj != null) {for (var key in obj) {if (Object.prototype.hasOwnProperty.call(obj, key)) {var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {};if (desc.get || desc.set) {Object.defineProperty(newObj, key, desc);} else {newObj[key] = obj[key];}}}}newObj.default = obj;return newObj;}}function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 var sessionId = '';
 var shopInfo = '';
-var indexApi = _objectSpread({},
-loginApi,
-homeApi,
-billApi,
-goodApi,
-myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
-
+var indexApi = Object.assign({}, loginApi, homeApi, billApi, goodApi, myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function _ref() {_ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(
 
   function _callee(name, data) {var header, newData;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
             sessionId = cacher.getData('sessionId');if (
@@ -11137,10 +11154,7 @@ myApi);function _default(_x, _x2) {return _ref.apply(this, arguments);}function 
               }));case 4:
 
 
-
-            if (!shopInfo) {
-              shopInfo = cacher.getData('selectShop');
-            }
+            shopInfo = cacher.getData('selectShop');
 
             header = {};
             if (shopInfo && shopInfo.shopInfo) {
@@ -11683,7 +11697,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   var bar = '';
   var cachetime = 0;
   var that = this;
-  var maxTime = 1500; //2s
+  var maxTime = 1500; //1.5s
   var cachenum = 0;
   var gap = 0;
   var rate = 0;
@@ -12494,7 +12508,11 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ "F:\\YLHD\\pr
 var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ "F:\\YLHD\\project\\es-shopHelper\\store\\index.js"));
 
 
+<<<<<<< HEAD
 var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "F:\\YLHD\\project\\es-shopHelper\\graceUI\\components\\graceLoading.vue"));};
+=======
+var _Mixins = _interopRequireDefault(__webpack_require__(/*! ./components/my-components/Mixins.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Mixins.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var graceFullLoading = function graceFullLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceFullLoading */ "graceUI/components/graceFullLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceFullLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceFullLoading.vue"));};var graceLoading = function graceLoading() {return __webpack_require__.e(/*! import() | graceUI/components/graceLoading */ "graceUI/components/graceLoading").then(__webpack_require__.bind(null, /*! ./graceUI/components/graceLoading.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI\\components\\graceLoading.vue"));};
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 
 _vue.default.config.productionTip = false;
 _vue.default.component('pageLoading', graceFullLoading);
@@ -12504,10 +12522,9 @@ _vue.default.prototype.$store = _store.default;
 
 _App.default.mpType = 'app';
 
-var app = new _vue.default(_objectSpread({
+var app = new _vue.default(Object.assign({
   store: _store.default },
 _App.default));
-
 createApp(app).$mount();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createApp"]))
 
@@ -13451,7 +13468,7 @@ createPage(_test.default);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance");}function _iterableToArray(iter) {if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) {for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {arr2[i] = arr[i];}return arr2;}}function _default(result) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(result) {
   var commission = result.commission || { //上级分销商信息
     "agent_level1": { //一级上线分销商信息
       "nickname": "", //分销商昵称
@@ -13562,7 +13579,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         money: commission.agent_level3 && commission.agent_level3.commission || ''
         //三级分销商
       } },
-    billInfo6: [].concat(_toConsumableArray(result.goods_waits.map(function (item) {//未发货的商品
+    billInfo6: result.goods_waits.map(function (item) {//未发货的商品
       if (item.refund_status != 0) {
         refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
       }
@@ -13586,7 +13603,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendStatus: item.status_text //发货信息
         } };
 
-    })), _toConsumableArray(result.package_send.map(function (item) {//已发货的包裹
+    }).concat(result.package_send.map(function (item) {//已发货的包裹
 
       return {
         goodsInfo: item.order_goods.map(function (val, key) {//商品信息
@@ -13613,7 +13630,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
           sendStatus: '已发货' //发货信息
         } };
 
-    }))),
+    })),
     billInfo7: {
       goodTotal: result.order.goods_price, //商品总计
       vipCount: (discount_total || 0).toFixed(2), //会员折扣
@@ -14100,14 +14117,18 @@ function addGoodsModel(data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+<<<<<<< HEAD
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "F:\\YLHD\\project\\es-shopHelper\\components\\my-components\\ajaxDataFormater.js");function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+=======
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _ajaxDataFormater = __webpack_require__(/*! ../../components/my-components/ajaxDataFormater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\ajaxDataFormater.js");
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
 
 
 var goodModel = {}; //商品编辑模板数据
 
 function mapOptions(data, cache) {
   var options = data.info2.childrenSpecs.list.map(function (item, index) {
-    var tmp = _objectSpread({
+    var tmp = Object.assign({
       goods_code: item.code.value, //
       price: item.price.value, //
       stock: item.stock.value, //
@@ -14117,7 +14138,6 @@ function mapOptions(data, cache) {
       stock_warning: 0,
       weight: 0 },
     item.other);
-
     if (data.info1.goodType.type == 3 && data.info2.specification.value == '多规格') {//多规格电子卡密
       tmp.virtual_card_id = item.cardStock.id;
     }
@@ -14977,7 +14997,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(tabid, data) {var _this = this;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _payType = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+function _default(tabid, data) {var _this = this;
 
   var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
   var rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
@@ -15008,10 +15029,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
             pay: item.pay_price, //实付
             addtion: item.remark_num, //备注数量
             payType: item.pay_type, //支付方式
+            payTypeImg: (0, _payType.default)(item.pay_type),
             subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
             status: tabid, //0代付款,1代发货，2待收货，3已完成，4已关闭
             send_able: item.send_able, // 是否可发货
+<<<<<<< HEAD
             groups_success: item.groups_success ///拼团结果,
+=======
+            groups_success: item.groups_success, ///拼团结果
+            dispatch_price: item.dispatch_price //
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
           },
           bill: { //订单信息
             billId: item.order_no, //订单号
@@ -15279,7 +15306,7 @@ function bindWx(rebind) {var _this2 = this;
   return new Promise(function (resolve, reject) {
     userInfo = _this2.Cacher.getData('login');
     needBindWx = _this2.Cacher.getData('needBindWx');
-    if (!userInfo.haveBindWx && userInfo.encryptedData && needBindWx.testWx && needBindWx.needBind && !rebind) {
+    if (needBindWx.testWx && needBindWx.needBind && !rebind) {
       _this2.Request('myInfo').then(function (res) {//检查是否绑定了微信
         if (res.error == 0 && !res.wxapp_openid) {
           that.Cacher.setData('needBindWx', {
@@ -15288,24 +15315,20 @@ function bindWx(rebind) {var _this2 = this;
             haveBindWx: false });
 
           that.closePageLoading();
-          that.Dialog.confirm({
+          that.Dialog.confirm({ //二次确认
             title: '没有绑定微信',
             message: '为方便您的使用，是否与微信账号绑定？',
             confirmButtonText: '绑定',
             confirmButtonOpenType: 'getUserInfo' }).
           then(function () {
             that.pageLoading();
-            bindWechat.call(that, userInfo).then(function (res) {
-              that.Toast('绑定成功');
-              resolve(res);
-            }).catch(function (res) {
-              that.Toast('绑定失败');
-              reject(res);
-            });
+            bindWx.call(that, true);
+          }).catch(function (res) {
+            that.closePageLoading();
           });
         }
       });
-    } else if (rebind) {
+    } else if (rebind) {//重新绑定
       var cacheData = that.Cacher.getData('login');
       uni.getUserInfo({ // 获取用户信息
         provider: 'weixin',
@@ -15322,6 +15345,7 @@ function bindWx(rebind) {var _this2 = this;
           });
         },
         fail: function fail(res) {
+          that.closePageLoading();
           that.Toast('绑定微信需要用户信息权限');
         } });
 
@@ -15366,7 +15390,8 @@ function selectShop() {//检测是否只有一个店铺
   return new Promise(function (resolve, reject) {
     that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
       pageSize: 2,
-      page: 1 }).
+      page: 1,
+      source: 'assistant' }).
     then(function (res) {
 
       if (res.error == 0) {

@@ -101,10 +101,9 @@
                 this.show2 = false;
             },
             clickItem(val) {
-                this.Cacher.setData('vipManage', {
+                this.Cacher.setData('vipManage', Object.assign({
                     from: 'vipManage',
-                    ...val
-                });
+                },val));
                 if (val.type == 'menu-item') {
                     // this.show = true;
                     if (val.name == '查看') {

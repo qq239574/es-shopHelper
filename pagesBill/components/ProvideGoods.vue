@@ -59,12 +59,12 @@
         watch: {
             goodsList() {
                 cachelist = this.goodsList.map(item => true);
-                this.defaultIndex = [...cachelist];
+                this.defaultIndex = cachelist.map(item=>item);
             }
         },
         beforeMount() {
             cachelist = this.goodsList.map(item => true);
-            this.defaultIndex = [...cachelist];
+            this.defaultIndex = cachelist.map(item=>item);
         },
         methods: {
             clickGood(item, index) {
@@ -73,7 +73,7 @@
                 this.$emit('click', this.goodsList.filter((item, index) => {
                     return cachelist[index] && !item.status&&!item.refund_type
                 }));
-                this.defaultIndex = [...cachelist];
+                this.defaultIndex = cachelist.map(item=>item);
             },
             formatePrice(val) {
                 return number_format(val, 2, '.', ',')

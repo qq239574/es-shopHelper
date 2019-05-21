@@ -24,8 +24,7 @@
         },
         methods: {
             change(val) {
-                this.$emit('change', Object.assign({ ...this.info
-                }, {
+                this.$emit('change', Object.assign({}, this.info, {
                     newNumber: val[0]
                 }))
             }

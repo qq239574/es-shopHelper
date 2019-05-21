@@ -3,7 +3,7 @@
 		<view class="bg">
 			<image lazy-load src='/static/img/global/my_bg.png'></image>
 			<view class='userInfo'>
-				<view class="name">{{userName}}</view>
+				<view class="name">{{realName}}</view>
 				<view class="tel">{{userId}}</view>
 			</view>
 			<view class='manager'>{{userRoleName}}</view>
@@ -14,7 +14,7 @@
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
 		<view class="margin20"></view>
 		<view class='rebindWx'>
-			<selectItem :label='"微信："+(wxInfo.nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' v-if='wxapp_openid'></selectItem>
+			<selectItem :label='"微信："+(nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' v-if='nickName'></selectItem>
 			<selectItem label='暂未绑定微信~' value='立即绑定' valueStyle='color:#fb6638;' v-else></selectItem>
 			<button open-type='getUserInfo' @click='reBindWX' class='appletBtn'> </button>
 		</view>
@@ -54,7 +54,8 @@
 				userRoleName: '',
 				realName: '',
 				wxInfo: {},
-				wxapp_openid: ''
+				wxapp_openid: '',
+				nickName: '' //绑定的微信的昵称
 			}
 		},
 		methods: {
@@ -67,7 +68,8 @@
 					this.realName = res.manager_contact;
 					this.userId = res[res.account_type] || res.mobile || res.email || res.username;
 					this.wxapp_openid = res.wxapp_openid;
-					managerId = res.manage_id
+					managerId = res.manage_id;
+					this.nickName = res.nickName;
 				})
 			},
 			toPage(val) {

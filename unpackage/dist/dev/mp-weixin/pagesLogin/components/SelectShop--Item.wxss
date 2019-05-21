@@ -21,7 +21,11 @@
     width: 100%;
     color: #666;
 }
+<<<<<<< HEAD
 .shop-block.data-v-3105f989 {
+=======
+.shop-block.data-v-551742ec {
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -72,14 +76,22 @@
       font-weight: 400;
       font-size: 24rpx;
 }
+<<<<<<< HEAD
 .shop-block .status.data-v-3105f989 {
+=======
+.shop-block .status.data-v-551742ec {
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
     position: absolute;
     right: 50rpx;
     top: 70rpx;
     height: 44rpx;
     margin: auto 10rpx auto 0;
 }
+<<<<<<< HEAD
 .shop-block .status .tab.data-v-3105f989 {
+=======
+.shop-block .status .tab.data-v-551742ec {
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
       min-width: 100rpx;
       height: 44rpx;
       padding: 0 5rpx;
@@ -110,7 +122,11 @@
       background: #e1e1e1;
       color: #fff;
 }
+<<<<<<< HEAD
 .shop-block .icon.data-v-3105f989 {
+=======
+.shop-block .icon.data-v-551742ec {
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
     position: absolute;
     right: 0;
     top: 70rpx;

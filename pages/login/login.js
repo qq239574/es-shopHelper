@@ -23,6 +23,7 @@ function selectShop() { //检测是否只有一个店铺
         that.Request('shoplist', { //如果只有一个店铺就绕过选择店铺的页面
             pageSize: 2,
             page: 1,
+            source: 'assistant'
         }).then(res => {
 
             if (res.error == 0) {

@@ -112,8 +112,12 @@
                     uploadImg.call(this, data).then(res => {
                         data && this.Request('addGoods', res).then(res => {
                             if (res.error == 0) {
-                                this.Cacher.clearData('editGood')
-                                uni.navigateBack();
+                                this.Cacher.clearData('editGood');
+                                this.closePageLoading();
+                                this.Toast('保存成功');
+                                setTimeout(() => {
+                                    uni.navigateBack();
+                                }, 1000)
                             } else {
                                 this.Toast(res.message);
                             }
@@ -125,7 +129,11 @@
                     uploadImg.call(this, data).then(newData => {
                         this.Request('editGoodDetail', newData).then(res => {
                             if (res.error == 0) {
-                                uni.navigateBack();
+                                this.closePageLoading();
+                                this.Toast('保存成功');
+                                setTimeout(() => {
+                                    uni.navigateBack();
+                                }, 1000)
                             } else {
                                 this.Toast(res.message);
                             }
@@ -184,7 +192,7 @@
             this.initPage();
         },
         onUnload() {
-            this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']);//
+            this.Cacher.clearData(['autoDeliverContent', 'editCode', 'editForm', 'setFreight', 'editMultiCode', 'selectType', 'setTotalFreight']); //
         }
     }
 </script>

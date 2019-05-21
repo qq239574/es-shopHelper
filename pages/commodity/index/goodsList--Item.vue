@@ -100,10 +100,9 @@
                 this.$emit('click', {
                     type: 'menu-item',
                     name: name,
-                    detail: {
-                        goodIndex: goodindex,
-                        ...item
-                    }
+                    detail: Object.assign({
+                        goodIndex: goodindex
+                    },item)
                 })
             },
             clickGood(item) {

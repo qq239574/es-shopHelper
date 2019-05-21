@@ -19,9 +19,8 @@
             clickGood() {
                 this.$emit('click', {
                     type: 'good',
-                    detail: {
-                        ...this.info
-                    }
+                    detail: Object.assign({
+                    }, this.info)
                 })
             }
         },
@@ -47,8 +46,7 @@
         width: 100%;
         margin: auto;
         padding: 5upx 0 15upx;
-        height: fit-content;
-        // background: #fcfcfc;
+        height: fit-content; // background: #fcfcfc;
         .card--good-item {
             width: 100%;
             height: 150upx;
@@ -58,7 +56,7 @@
             .imgbox {
                 width: 120upx;
                 height: 100%;
-                margin-left:20upx;
+                margin-left: 20upx;
                 image {
                     width: 100%;
                     height: 120upx;

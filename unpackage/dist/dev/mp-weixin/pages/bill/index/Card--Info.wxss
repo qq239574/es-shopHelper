@@ -34,19 +34,36 @@
 .card--info .card--info__row .item1.data-v-9069efda {
       font-size: 24rpx;
       line-height: 74rpx;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
 }
 .card--info .card--info__row .item2.data-v-9069efda {
       font-size: 24rpx;
       line-height: 20rpx;
-      position: relative;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      white-space: pre-wrap;
+      word-break: break-all;
 }
+<<<<<<< HEAD
 .card--info .card--info__row .item2 image.data-v-9069efda {
         position: absolute;
+=======
+.card--info .card--info__row .item2 .imgBox.data-v-4649be90 {
+        position: relative;
+>>>>>>> 5753bd2f0431b589c53f8690821e8d720a66df41
         display: inline-block;
         width: 30rpx;
         height: 30rpx;
-        top: 24rpx;
-        right: 0;
+        margin: 0 0 0 5rpx;
+}
+.card--info .card--info__row .item2 .imgBox image.data-v-4649be90 {
+          position: absolute;
+          width: 30rpx;
+          height: 30rpx;
+          top: 8rpx;
+          right: 0;
 }
 .card--info .card--info__row .item2.pay-type.data-v-9069efda {
         padding-right: 32rpx;

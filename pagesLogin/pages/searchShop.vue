@@ -20,18 +20,16 @@
         },
         methods: {
             clear() {
-                this.Cacher.setData('searchShop', {
+                this.Cacher.setData('searchShop', Object.assign({
                     from: 'searchShop',
-                    value: '',
-                    ...DataFrom
-                })
+                    value: ''
+                }, DataFrom))
             },
-            search(val) {
-                this.Cacher.setData('searchShop', {
+            search(val) { 
+                this.Cacher.setData('searchShop', Object.assign({
                     from: 'searchShop',
-                    value: val,
-                    ...DataFrom
-                })
+                    value: val
+                }, DataFrom))
                 uni.navigateBack();
             }
         },
@@ -43,8 +41,7 @@
                 uni.setNavigationBarTitle({
                     title: DataFrom.title
                 });
-            }
-            console.log(DataFrom)
+            } 
         }
     }
 </script>

@@ -11,8 +11,10 @@
         <view class='card--info__row card--info__footer'>
             <view class='card--info__footer-item item1'>共{{info.num*1}}件商品</view>
             <view class='card--info__footer-item item2' :style='showPayType?"":"padding-right:0;"' :class='info.payType?"pay-type":""'>应付：
-                <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>(含运费)
-                <image lazy-load src='/static/img/global/product_share_wechat.svg' v-if='showPayType'></image>
+                <view class='card--info__footer-item__price'>￥{{formatePrice(info.pay)}}</view>(含运费:￥{{formatePrice(info.dispatch_price)}})
+                <view class="imgBox" v-if='info.payTypeImg'>
+                    <image lazy-load :src='info.payTypeImg'></image>
+                </view>
             </view>
         </view>
         <view class="button-group" v-if='info.subStatus==0||info.subStatus==2'>
@@ -35,10 +37,10 @@
             myButton
         },
         props: {
-             Jurisdiction:{
-                type:Object,
-                default:{},
-                required:true
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
             },
             info: {
                 type: Object,
@@ -56,11 +58,11 @@
         },
         computed: {
             canSendGood() { //判断可否发货
-                if (this.info.groups_success==1||this.info.groups_success===undefined) {
+                if (this.info.groups_success == 1 || this.info.groups_success === undefined) {
                     return !!this.info.send_able ? "primary" : "disable"
-                } else{
+                } else {
                     return "disable";
-                } 
+                }
             },
             showPayType() {
                 return (this.info.status != 0 && this.info.status != 4) && this.info.payType == "wx"
@@ -109,24 +111,33 @@
             .card--info__row__tile {
                 color: #6e7685;
             }
-			.card--info__row__name {
-				font-weight: 700;
-			}
+            .card--info__row__name {
+                font-weight: 700;
+            }
             .item1 {
                 font-size: 24upx;
                 line-height: 74upx;
+                width:fit-content;
             }
             .item2 {
                 font-size: 24upx;
                 line-height: 20upx;
-                position: relative;
-                image {
-                    position: absolute;
+                box-sizing: border-box;
+                white-space: pre-wrap;
+                word-break: break-all;
+                .imgBox {
+                    position: relative;
                     display: inline-block;
                     width: 30upx;
                     height: 30upx;
-                    top: 24upx;
-                    right: 0;
+                    margin: 0 0 0 5upx;
+                    image {
+                        position: absolute;
+                        width: 30upx;
+                        height: 30upx;
+                        top: 8upx;
+                        right: 0;
+                    }
                 }
                 &.pay-type {
                     padding-right: 32upx;
@@ -137,6 +148,7 @@
                 color: #fd6b3e;
                 font-weight: 600;
                 font-size: 34upx;
+                
             }
         }
         .card--info__footer {

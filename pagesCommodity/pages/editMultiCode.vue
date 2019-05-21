@@ -132,7 +132,8 @@
 <style lang="scss" scoped>
     .multi-block {
         width: 100%;
-        margin: 0 auto 20upx;
+        margin: 0 auto ;
+        padding-bottom: 20upx;
         .block {
             width: 710upx;
             margin: 20upx auto 0;
