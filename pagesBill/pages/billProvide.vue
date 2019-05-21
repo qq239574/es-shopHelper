@@ -45,7 +45,7 @@
                 }],
                 provideInfo: {
                     address: '请选择',
-                    provideType: '',
+                    provideType: '需要物流',
                     provideComp: '请选择',
                     provideId: '填写',
                     provideAddition: '未填写',
