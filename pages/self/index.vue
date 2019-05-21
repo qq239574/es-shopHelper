@@ -8,7 +8,7 @@
 			</view>
 			<view class='manager'>{{userRoleName}}</view>
 		</view>
-		<inputItem :disabled='true' label='登陆账号' :value='userId'></inputItem>
+		<inputItem :disabled='true' label='登录账号' :value='userId'></inputItem>
 		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
 		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
 		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>

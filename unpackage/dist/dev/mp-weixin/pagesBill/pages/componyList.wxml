@@ -1,1 +1,1 @@
-<view class="compony-list page data-v-061c60f2" bind:__l="__l"><radio-group hideRightArrow="{{true}}" placeholder=" " items="{{list}}" data-event-opts="{{[['clickItem',[['select',['$event']]]]]}}" bindclickItem="__e" class="data-v-061c60f2"></radio-group></view>
+<view class="compony-list page data-v-779daa75" bind:__l="__l"><radio-group hideRightArrow="{{true}}" placeholder=" " items="{{list}}" data-event-opts="{{[['clickItem',[['select',['$event']]]]]}}" bindclickItem="__e" class="data-v-779daa75"></radio-group></view>

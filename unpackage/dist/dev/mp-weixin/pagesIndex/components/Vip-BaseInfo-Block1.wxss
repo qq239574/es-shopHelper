@@ -1,11 +1,11 @@
-.vip-bus-block.data-v-143f1c7c {
+.vip-bus-block.data-v-83954bf6 {
   background: #fff;
   margin-bottom: 20rpx;
 }
-.vip-bus-block .image.data-v-143f1c7c {
+.vip-bus-block .image.data-v-83954bf6 {
     position: relative;
 }
-.vip-bus-block .image image.data-v-143f1c7c {
+.vip-bus-block .image image.data-v-83954bf6 {
       position: absolute;
       top: 28rpx;
       right: 30rpx;

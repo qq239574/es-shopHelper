@@ -1,13 +1,13 @@
-.margin30.data-v-1fa08866 {
+.margin30.data-v-61b10550 {
   height: 30rpx;
 }
-.curMoney.data-v-1fa08866 {
+.curMoney.data-v-61b10550 {
   width: 100%;
   height: 220rpx;
   background: #fff;
   overflow: hidden;
 }
-.curMoney .tit.data-v-1fa08866 {
+.curMoney .tit.data-v-61b10550 {
     width: 100%;
     font-size: 28rpx;
     color: #8494af;
@@ -16,7 +16,7 @@
     margin: 40rpx auto 32rpx;
     text-align: center;
 }
-.curMoney .num.data-v-1fa08866 {
+.curMoney .num.data-v-61b10550 {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -24,16 +24,16 @@
     width: fit-content;
     margin: auto;
 }
-.curMoney .num text.data-v-1fa08866 {
+.curMoney .num text.data-v-61b10550 {
       color: #213354;
       font-size: 30rpx;
 }
-.curMoney .num .no.data-v-1fa08866 {
+.curMoney .num .no.data-v-61b10550 {
       font-size: 60rpx;
       line-height: 60rpx;
       font-weight: 600;
 }
-.money.data-v-1fa08866 {
+.money.data-v-61b10550 {
   background: #fff;
   height: 120rpx;
   width: 100%;
@@ -45,8 +45,8 @@
       -ms-flex-wrap: nowrap;
           flex-wrap: nowrap;
 }
-.money view.data-v-1fa08866,
-  .money input.data-v-1fa08866 {
+.money view.data-v-61b10550,
+  .money input.data-v-61b10550 {
     height: 100%;
     line-height: 120rpx;
     font-size: 36rpx;
@@ -56,32 +56,32 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
-.money .col1.data-v-1fa08866 {
+.money .col1.data-v-61b10550 {
     width: 50rpx;
     margin-left: 20rpx;
     border-top: 1rpx solid #eee;
     border-bottom: 1rpx solid #eee;
     text-align: center;
 }
-.money .col2.data-v-1fa08866 {
+.money .col2.data-v-61b10550 {
     border-top: 1rpx solid #eee;
     border-bottom: 1rpx solid #eee;
     width: 650rpx;
 }
-.textarea.data-v-1fa08866 {
+.textarea.data-v-61b10550 {
   width: 100%;
   height: 170rpx;
   position: relative;
   background: #fff;
 }
-.textarea textarea.data-v-1fa08866 {
+.textarea textarea.data-v-61b10550 {
     width: 100%;
     height: 100%;
     padding: 30rpx 70rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
 }
-.textarea .counter.data-v-1fa08866 {
+.textarea .counter.data-v-61b10550 {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;

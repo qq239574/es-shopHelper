@@ -1,4 +1,4 @@
-.block.data-v-4aff71c2 {
+.block.data-v-f27c6e3c {
   width: 710rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -7,39 +7,39 @@
   border-radius: 8rpx;
   padding: 21rpx 0 0;
 }
-.block .bill__item.data-v-4aff71c2 {
+.block .bill__item.data-v-f27c6e3c {
     color: #33373a;
     font-weight: 600;
     line-height: 35rpx;
     height: 100%;
 }
-.block .bill__item.data-v-4aff71c2 view {
+.block .bill__item.data-v-f27c6e3c view {
       height: 100%;
       padding: 0;
 }
-.block .body.data-v-4aff71c2,
-  .block .foot.data-v-4aff71c2 {
+.block .body.data-v-f27c6e3c,
+  .block .foot.data-v-f27c6e3c {
     padding: 2rpx 0;
     font-size: 24rpx;
     font-weight: 500;
     color: #6e7685;
 }
-.block .label.data-v-4aff71c2 {
+.block .label.data-v-f27c6e3c {
     white-space: nowrap;
 }
-.block.data-v-4aff71c2 {
+.block.data-v-f27c6e3c {
   width: 100%;
   padding: 0 20rpx 0;
   margin: 0 auto 0;
 }
-.block .border.data-v-4aff71c2 {
+.block .border.data-v-f27c6e3c {
     height: 0;
     width: 670rpx;
     margin: auto;
     border-top: 1rpx solid #eee;
     margin-bottom: 20rpx;
 }
-.block .label.data-v-4aff71c2 {
+.block .label.data-v-f27c6e3c {
     font-size: 24rpx;
     color: #6e7685;
     font-weight: 500;

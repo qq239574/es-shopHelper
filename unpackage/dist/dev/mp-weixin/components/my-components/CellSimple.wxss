@@ -1,4 +1,4 @@
-.my-cell-simple.data-v-5e6c8dfd {
+.my-cell-simple.data-v-2199a480 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10,7 +10,7 @@
           box-sizing: border-box;
   height: 100rpx;
 }
-.my-cell-simple.data-v-5e6c8dfd:after {
+.my-cell-simple.data-v-2199a480:after {
     content: '';
     position: absolute;
     width: 702rpx;
@@ -20,18 +20,18 @@
     left: 24rpx;
     margin: auto;
 }
-.my-cell-simple > .my-cell-simple__pre.data-v-5e6c8dfd,
-  .my-cell-simple > .my-cell-simple__aft.data-v-5e6c8dfd {
+.my-cell-simple > .my-cell-simple__pre.data-v-2199a480,
+  .my-cell-simple > .my-cell-simple__aft.data-v-2199a480 {
     position: absolute;
     height: 100%;
     top: 0;
     height: 100%;
     line-height: 100rpx;
 }
-.my-cell-simple > .my-cell-simple__pre.data-v-5e6c8dfd {
+.my-cell-simple > .my-cell-simple__pre.data-v-2199a480 {
     left: 47rpx;
 }
-.my-cell-simple > .my-cell-simple__aft.data-v-5e6c8dfd {
+.my-cell-simple > .my-cell-simple__aft.data-v-2199a480 {
     right: 47rpx;
 }
 

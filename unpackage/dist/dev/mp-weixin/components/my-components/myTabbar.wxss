@@ -1,4 +1,4 @@
-.my-tabbar.data-v-29e95ada {
+.my-tabbar.data-v-30822dd6 {
   height: 100rpx;
   background: #fff;
   width: 100%;
@@ -14,7 +14,7 @@
   left: 0;
   border-top: 1rpx solid #ccc;
 }
-.my-tabbar .i-tab-bar-item.data-v-29e95ada {
+.my-tabbar .i-tab-bar-item.data-v-30822dd6 {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
         -ms-flex: 1;
@@ -39,7 +39,7 @@
             flex-direction: column;
     text-align: center;
 }
-.my-tabbar .i-tab-bar-item-img.data-v-29e95ada {
+.my-tabbar .i-tab-bar-item-img.data-v-30822dd6 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -53,7 +53,7 @@
     width: 56rpx;
     height: 56rpx;
 }
-.my-tabbar .i-tab-bar-item-title.data-v-29e95ada {
+.my-tabbar .i-tab-bar-item-title.data-v-30822dd6 {
     font-size: 10px;
     margin: 3px 0 0;
     line-height: 1;
@@ -62,7 +62,7 @@
             box-sizing: border-box;
     color: #80848f;
 }
-.my-tabbar .i-tab-bar-item-img.data-v-29e95ada {
+.my-tabbar .i-tab-bar-item-img.data-v-30822dd6 {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;

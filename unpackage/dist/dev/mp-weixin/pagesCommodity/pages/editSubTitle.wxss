@@ -1,7 +1,7 @@
-.bill-subtitle.data-v-62e45dab {
+.bill-subtitle.data-v-af498e24 {
   position: relative;
 }
-.bill-subtitle .counter.data-v-62e45dab {
+.bill-subtitle .counter.data-v-af498e24 {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -13,7 +13,7 @@
     top: 158rpx;
     right: 40rpx;
 }
-.bill-subtitle .textarea.data-v-62e45dab {
+.bill-subtitle .textarea.data-v-af498e24 {
     width: 710rpx;
     background: #fff;
     height: 180rpx;

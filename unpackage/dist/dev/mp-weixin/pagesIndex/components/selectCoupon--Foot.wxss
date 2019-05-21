@@ -1,4 +1,4 @@
-.block-foot.data-v-575dac40 {
+.block-foot.data-v-1b0da0c6 {
   width: 100%;
   height: 100rpx;
   background: #f7f8f9;
@@ -18,21 +18,21 @@
   left: 0;
   z-index: 10000;
 }
-.block-foot view.data-v-575dac40 {
+.block-foot view.data-v-1b0da0c6 {
     height: 100%;
     line-height: 100rpx;
     font-size: 28rpx;
     font-weight: 600;
 }
-.block-foot .info.data-v-575dac40 {
+.block-foot .info.data-v-1b0da0c6 {
     width: 488rpx;
     padding: 0 40rpx 0;
 }
-.block-foot .price.data-v-575dac40 {
+.block-foot .price.data-v-1b0da0c6 {
     color: #fd6b3e;
     display: inline;
 }
-.block-foot .button.data-v-575dac40 {
+.block-foot .button.data-v-1b0da0c6 {
     width: 262rpx;
     color: #fff;
     text-align: center;

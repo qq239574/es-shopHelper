@@ -1,9 +1,9 @@
-.vip-detail-win.data-v-325d23fc {
+.vip-detail-win.data-v-57757e02 {
   width: 100%;
   height: 190rpx;
   background: #203352;
 }
-.vip-detail-win .center.data-v-325d23fc {
+.vip-detail-win .center.data-v-57757e02 {
     height: 100%;
     width: 628rpx;
     margin: auto;
@@ -19,31 +19,31 @@
         -ms-flex-pack: justify;
             justify-content: space-between;
 }
-.vip-detail-win .center .image.data-v-325d23fc,
-    .vip-detail-win .center .info.data-v-325d23fc {
+.vip-detail-win .center .image.data-v-57757e02,
+    .vip-detail-win .center .info.data-v-57757e02 {
       height: 100%;
 }
-.vip-detail-win .center .image.data-v-325d23fc {
+.vip-detail-win .center .image.data-v-57757e02 {
       width: 110rpx;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
 }
-.vip-detail-win .center .image image.data-v-325d23fc {
+.vip-detail-win .center .image image.data-v-57757e02 {
         width: 110rpx;
         height: 110rpx;
         border-radius: 50%;
         margin: auto;
 }
-.vip-detail-win .center .info.data-v-325d23fc {
+.vip-detail-win .center .info.data-v-57757e02 {
       width: 498rpx;
 }
-.vip-detail-win .center .info .title.data-v-325d23fc,
-      .vip-detail-win .center .info .detail.data-v-325d23fc {
+.vip-detail-win .center .info .title.data-v-57757e02,
+      .vip-detail-win .center .info .detail.data-v-57757e02 {
         width: 100%;
 }
-.vip-detail-win .center .info .title.data-v-325d23fc {
+.vip-detail-win .center .info .title.data-v-57757e02 {
         font-size: 30rpx;
         height: 30rpx;
         line-height: 30rpx;
@@ -51,7 +51,7 @@
         margin: 50rpx 0 24rpx;
         font-weight: 600;
 }
-.vip-detail-win .center .info .detail.data-v-325d23fc {
+.vip-detail-win .center .info .detail.data-v-57757e02 {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
@@ -65,7 +65,7 @@
                 justify-content: flex-start;
         height: 32rpx;
 }
-.vip-detail-win .center .info .detail view.data-v-325d23fc {
+.vip-detail-win .center .info .detail view.data-v-57757e02 {
           height: 32rpx;
           -webkit-box-sizing: border-box;
                   box-sizing: border-box;
@@ -73,7 +73,7 @@
           font-size: 20rpx;
           color: #bdc8df;
 }
-.vip-detail-win .center .info .detail .left.data-v-325d23fc {
+.vip-detail-win .center .info .detail .left.data-v-57757e02 {
           width: 80rpx;
           height: 100%;
           border: 1rpx solid #bdc8df;

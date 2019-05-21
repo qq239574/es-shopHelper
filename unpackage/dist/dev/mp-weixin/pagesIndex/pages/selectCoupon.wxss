@@ -1,11 +1,11 @@
-.select-coupon.data-v-2f6ce6f4 {
+.select-coupon.data-v-02c2fd6e {
   background: #fff;
   padding-bottom: 200rpx;
 }
-.select-coupon .margin30.data-v-2f6ce6f4 {
+.select-coupon .margin30.data-v-02c2fd6e {
     height: 30rpx;
 }
-.select-coupon .item-box.data-v-2f6ce6f4 {
+.select-coupon .item-box.data-v-02c2fd6e {
     height: 100%;
     width: 100%;
     overflow: auto;
