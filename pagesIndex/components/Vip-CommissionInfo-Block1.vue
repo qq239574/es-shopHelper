@@ -1,12 +1,12 @@
 <template>
     <view class=' vip-com-block1'>
-        <inputItem label='上级分销商' :value='info.superDistributor.name'></inputItem>
-        <inputItem label='成为分销商时间' :value='info.beDistributorTime.value'></inputItem>
-        <inputItem label='分销商等级' :value='info.distributorClass.name'></inputItem>
-        <inputItem label='累计佣金' :value='formater(info.accumCommission.value)'></inputItem>
-        <inputItem label='已提现佣金' :value='formater(info.hadGet.value)'></inputItem>
-        <inputItem label='待入账佣金' :value='formater(info.waitMoney.value)'></inputItem>
-        <inputItem label='分销订单' :value='info.commBill.value+"个"'></inputItem>
+        <inputItem label='上级分销商' :disabled='true' :value='info.superDistributor.name'></inputItem>
+        <inputItem label='成为分销商时间' :disabled='true' :value='info.beDistributorTime.value'></inputItem>
+        <inputItem label='分销商等级' :disabled='true' :value='info.distributorClass.name'></inputItem>
+        <inputItem label='累计佣金' :disabled='true' :value='formater(info.accumCommission.value)'></inputItem>
+        <inputItem label='已提现佣金' :disabled='true' :value='formater(info.hadGet.value)'></inputItem>
+        <inputItem label='待入账佣金' :disabled='true' :value='formater(info.waitMoney.value)'></inputItem>
+        <inputItem label='分销订单' :disabled='true' :value='info.commBill.value+"个"'></inputItem>
     </view>
 </template>
 

@@ -54,7 +54,7 @@
         },
         methods: {
             inputCell(val) {
-                this.$emit('input',val)
+                this.$emit('input', val)
             },
             clickCell(val) {
                 this.$emit('click', val)

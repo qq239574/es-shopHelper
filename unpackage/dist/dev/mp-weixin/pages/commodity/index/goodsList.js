@@ -56,6 +56,8 @@
 
 
 
+
+
 var _savePicToAlbum = _interopRequireDefault(__webpack_require__(/*! ./savePicToAlbum.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\savePicToAlbum.js"));
 var _weappQrcodeEsm = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/weapp.qrcode.esm.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\weapp.qrcode.esm.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var item = function item() {return Promise.all(/*! import() | pages/commodity/index/goodsList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/commodity/index/goodsList--Item")]).then(__webpack_require__.bind(null, /*! ./goodsList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\goodsList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var poster = function poster() {return __webpack_require__.e(/*! import() | pages/commodity/index/posterShare */ "pages/commodity/index/posterShare").then(__webpack_require__.bind(null, /*! ./posterShare.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\commodity\\index\\posterShare.vue"));};
 var cacheGood = {};
@@ -202,19 +204,25 @@ var _default2 = {
               dWidth: 60,
               dHeight: 60 },
 
-            callback: function callback() {} });
+            callback: function callback() {
+              that.closePageLoading();
+            } });
 
         } else if (val2 == '复制链接') {
           if (shareInfo.goods_url) {
             uni.setClipboardData({
               data: shareInfo.goods_url,
               success: function success() {
+                that.closePageLoading();
               } });
 
           } else {
+            that.closePageLoading();
             this.Toast('复制链接失败');
           }
         }
+      } else {
+        this.closePageLoading();
       }
     } } };exports.default = _default2;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))

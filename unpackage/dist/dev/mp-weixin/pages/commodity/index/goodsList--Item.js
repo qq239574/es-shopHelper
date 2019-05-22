@@ -62,6 +62,18 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 var _formater = __webpack_require__(/*! ../../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
 //
 //
@@ -115,17 +127,19 @@ var _formater = __webpack_require__(/*! ../../../components/my-components/format
 //
 //
 //
-var _default2 = { props: { Jurisdiction: { type: Object, default: {}, required: true }, goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png', goodName: '', color: '', size: '', num: 0, price: '0', saled: 0 }];} }, toggle: { type: Boolean, default: false } }, data: function data() {return { menuIndex: '' };}, watch: { toggle: function toggle() {this.menuIndex = '';} }, methods: { showMenu: function showMenu(goodindex) {this.menuIndex = 'good-' + goodindex;}, clickMenuItem: function clickMenuItem(goodindex, item, name) {this.menuIndex = '';this.$emit('click', { type: 'menu-item', name: name, detail: Object.assign({ goodIndex: goodindex }, item) });}, clickGood: function clickGood(item) {
-      this.$emit('click', {
-        type: 'good',
-        detail: {
-          val: item } });
-
-
-    },
-    formatePrice: function formatePrice(val) {
-      return (0, _formater.number_format)(val, 2, '.', ',');
-    } } };exports.default = _default2;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default2 = { props: { Jurisdiction: { type: Object, default: {}, required: true }, goodsList: { type: Array, default: function _default() {return [{ img: '/static/img/global/tmp.png', goodName: '', color: '', size: '', num: 0, price: '0', saled: 0 }];} }, toggle: { type: Boolean, default: false } }, data: function data() {return { menuIndex: '' };}, watch: { toggle: function toggle() {this.menuIndex = '';} }, methods: { showMenu: function showMenu(goodindex) {this.menuIndex = 'good-' + goodindex;}, clickMenuItem: function clickMenuItem(goodindex, item, name) {this.menuIndex = '';this.$emit('click', { type: 'menu-item', name: name, detail: Object.assign({ goodIndex: goodindex }, item) });}, clickGood: function clickGood(item) {this.$emit('click', { type: 'good', detail: { val: item } });}, formatePrice: function formatePrice(val) {return (0, _formater.number_format)(val, 2, '.', ',');} } };exports.default = _default2;
 
 /***/ }),
 

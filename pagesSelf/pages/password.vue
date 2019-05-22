@@ -41,7 +41,8 @@
             },
             save() {
                 let canset = true;
-                if (this.CacheData.newPw != this.CacheData.surePw) {
+
+                if (this.CacheData.newPw != this.CacheData.surePw) { 
                     this.Toast('新密码两次输入不一致')
                 } else {
                     this.pageLoading();
@@ -51,7 +52,10 @@
                     }).then(res => {
                         this.closePageLoading();
                         if (res.error == 0) {
-                            uni.navigateBack();
+                            this.Toast('保存成功');
+                            setTimeout(() => {
+                                uni.navigateBack();
+                            }, 1000)
                         } else {
                             this.Toast(res.message)
                         }

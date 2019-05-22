@@ -24,14 +24,14 @@
     left: 0;
     right: 0;
     margin: auto;
-    font-size: 22rpx;
+    font-size: 23rpx;
     text-align: center;
 }
 .addGoods .addWord.data-v-3fcc733d {
-    top: 45rpx;
+    top: 39rpx;
 }
 .addGoods .addIcon.data-v-3fcc733d {
-    top: 5rpx;
+    top: 0;
     font-size: 40rpx;
 }
 .addGoods.higher.data-v-3fcc733d {

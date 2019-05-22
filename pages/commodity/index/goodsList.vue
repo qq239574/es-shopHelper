@@ -20,12 +20,14 @@
                 <view class="share-h1">商品推广</view>
                 <view class="share-items model">
                     <view class="share-item" @click='clickModel("h5","微信好友")'>
-                        <image class='share-img' src='/static/img/global/product_share_download.png'></image>
+                        <image class='share-img' src='/static/img/global/product_share_wechat.svg'></image>
                         <view class='share-title'>微信好友</view>
                         <button open-type='share' id='shareByH5' class='open-share'></button>
                     </view>
                     <view class="share-item" @click='clickModel("h5","二维码")'>
-                        <image class='share-img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="share">
+                            <image class='share-img' src='/static/img/global/qrcode.svg'></image>
+                        </view>
                         <view class='share-title'>二维码</view>
                     </view>
                     <view class="share-item" @click='clickModel("h5","复制链接")'>
@@ -192,19 +194,25 @@
                                 dWidth: 60,
                                 dHeight: 60
                             },
-                            callback() {}
+                            callback() {
+                                that.closePageLoading();
+                            }
                         })
                     } else if (val2 == '复制链接') {
                         if (shareInfo.goods_url) {
                             uni.setClipboardData({
                                 data: shareInfo.goods_url,
                                 success: function() {
+                                    that.closePageLoading(); 
                                 }
                             });
                         } else {
+                            that.closePageLoading();
                             this.Toast('复制链接失败')
                         }
                     }
+                }else{
+                    this.closePageLoading();
                 }
             }
         }
@@ -239,7 +247,7 @@
         }
         .scroll {
             width: 100%;
-            height: 500upx;
+            height: 545upx;
             position: relative;
             overflow: auto;
             box-sizing: border-box;
@@ -247,9 +255,10 @@
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                height: 84upx;
+                height: 100upx;
                 width: 100%;
                 background: #fafafa;
+                border-top: 1upx solid #eee;
                 line-height: 84upx;
                 text-align: center;
                 font-size: 28upx;
@@ -284,6 +293,25 @@
                     margin: auto;
                     display: block;
                 }
+                .share {
+                    width: 100upx;
+                    height: 100upx;
+                    margin: auto;
+                    display: block;
+                    background: #48bffc;
+                    border-radius: 50%;
+                    position: relative;
+                    .share-img {
+                        position: absolute;
+                        width: 46upx;
+                        height: 46upx;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        margin: auto;
+                    }
+                }
                 .share-title {
                     color: #fff;
                     white-space: nowrap;
@@ -298,7 +326,6 @@
             &:after {
                 content: '';
                 height: 0;
-                border-bottom: 1upx solid #eee;
                 position: absolute;
                 width: 710upx;
                 left: 0;

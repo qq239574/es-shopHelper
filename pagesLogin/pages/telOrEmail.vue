@@ -2,13 +2,14 @@
     <view class='tel-email page'>
         <view class="grace-form" style='border-top:none;'>
             <van-cell-group>
+               
                 <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
                 <van-field :type="text" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
                     <imgCodeButton :refreshAgain='refreshAgain' slot='icon' :imageCode='imageCode'></imgCodeButton>
                 </van-field>
                 <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
-                    <RoundButton slot='icon' :refreshButton='refreshButton' :canSend='canSendVfCode' @click='getVCode'></RoundButton>
+                    <RoundButton slot='icon' :start='successGetCode' @click='getVCode' @refresh='refreshTiming'></RoundButton>
                 </van-field>
             </van-cell-group>
         </view>
@@ -39,10 +40,10 @@
                 return this.userId === '' || this.password === '';
             },
             canSendVfCode() {
-                if (type == 'email') {//验证邮箱
+                if (type == 'email') { //验证邮箱
                     var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
                     return re.test(this.userId) && !!this.imageCode;
-                } else {//
+                } else { //
                     return /^1[0-9]{10}$/.test(this.userId) && !!this.imageCode;
                 }
             }
@@ -56,8 +57,9 @@
                 placeholder2: '请输入短信验证码',
                 imageCode: '',
                 sendVfCode: false,
-                refreshAgain: false,
-                refreshButton: false
+                refreshAgain: false,//toggle刷新验证码
+                refreshButton: false,
+                successGetCode: false, //成功获取验证码
             }
         },
         onLoad(option) {
@@ -85,6 +87,9 @@
             this.closePageLoading();
         },
         methods: {
+            refreshTiming() { //倒计时结束时触发
+                this.successGetCode = false;
+            },
             getImgCode(val) {
                 this.imageCode = val.detail;
             },
@@ -98,6 +103,7 @@
                     question: '',
                     answer: ''
                 }).then(res => {
+                    this.refreshAgain = !this.refreshAgain;
                     this.closePageLoading();
                     if (res.error == 0) {
                         this.Cacher.setData('telOrEmail', {
@@ -119,6 +125,8 @@
                         this.Toast(res.message)
                     }
                 }).catch(res => {
+                    this.refreshAgain = !this.refreshAgain;
+                    this.successGetCode=false;
                     this.closePageLoading();
                     this.Toast(res.message)
                 })
@@ -133,16 +141,13 @@
                         // this.getVCode(true);
                         this.requestCode();
                     })
-                } else if (this.imageCode && bool) { //填写了图形验证码
+                } else if (this.imageCode && this.canSendVfCode) { //填写了图形验证码
                     this.pageLoading();
                     this.requestCode();
-                } else if (this.canSendVfCode && !bool) { //正在请求中
-                    this.Toast('请稍后')
-                } else if(!this.imageCode){ //验证不通过
-                console.log('>>>>',this.imageCode,this.imageCode.length)
+                } else if (!this.imageCode) { //验证不通过 
                     this.Toast('请填写图形验证码')
-                }else{
-                    this.Toast( this.placeholder1);
+                } else {
+                    this.Toast(this.placeholder1);
                 }
             },
             requestCode() {
@@ -156,14 +161,17 @@
                         type: type
                     }).then(res => {
                         if (res.error != 0) {
-                            this.Toast(res.message)
+                            this.Toast(res.message);
+                        } else {
+                            this.successGetCode = true;
                         }
                         this.closePageLoading();
                         setTimeout(() => {
                             sending = false;
-                        }, 5000)
+                        }, 500)
                     }).catch(res => {
-                        this.Toast(res.message||'图形验证码错误');
+                        this.successGetCode = false;
+                        this.Toast(res.message || '图形验证码错误');
                         this.closePageLoading();
                         this.refreshAgain = !this.refreshAgain;
                         this.refreshButton = !this.refreshButton;
@@ -192,6 +200,7 @@
 <style lang="scss" scoped>
     .tel-email {
         background: #fff;
+        border-top:1upx solid #eee;
         .grace-form {
             width: 670upx;
             margin: 80upx auto 81upx;

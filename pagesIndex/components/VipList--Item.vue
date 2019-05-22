@@ -11,9 +11,9 @@
                 <view class="vip-others">
                     <view class="color">
                         <view class='vip-class'>{{item.vipClass}}</view>
-                        <view>{{item.tel}}</view>
+                        <view style='margin:0;'>{{item.tel}}</view>
                         <view>余额:{{item.money}}</view>
-                        <view>积分:{{item.score}}</view>
+                        <view style='margin:0;'>积分:{{item.score}}</view>
                     </view>
                 </view>
             </view>
@@ -22,16 +22,22 @@
             </view>
             <view class="model" v-if='menuIndex==="vip-"+index' @click.stop='showMenu("")'>
                 <view class="item" @click.stop='clickMenuItem(index,item,"查看")'>
-                    <image class='img' src='/static/img/global/product_share_link.png'></image>
-                    <view class='title'>查看</view>
+                    <view class='item-mid'>
+                        <image class='img' src='/static/img/global/product_share_link.png'></image>
+                        <view class='title'>查看</view>
+                    </view>
                 </view>
                 <view class="item" @click.stop='clickMenuItem(index,item,"充值")' v-if='Jurisdiction.member_list_manage'>
-                    <image class='img' src='/static/img/global/product_share_link.png'></image>
-                    <view class='title'>充值</view>
+                    <view class='item-mid'>
+                        <image class='img' src='/static/img/global/product_share_link.png'></image>
+                        <view class='title'>充值</view>
+                    </view>
                 </view>
-                <view class="item" @click.stop='clickMenuItem(index,item,"订单")' v-if='Jurisdiction.member_list_manage'>
-                    <image class='img' src='/static/img/global/product_share_link.png'></image>
-                    <view class='title'>订单</view>
+                <view class="item" @click.stop='clickMenuItem(index,item,"订单")' v-if='Jurisdiction.member_list_manage&&Jurisdiction.order_view'>
+                    <view class='item-mid'>
+                        <image class='img' src='/static/img/global/product_share_link.png'></image>
+                        <view class='title'>订单</view>
+                    </view>
                 </view>
             </view>
         </view>
@@ -94,7 +100,7 @@
                     name: name,
                     detail: Object.assign({
                         vipIndex: vipindex,
-                    },item)
+                    }, item)
                 })
             },
             formatePrice(val) {
@@ -140,13 +146,15 @@
             }
             .vip-info {
                 height: 100%;
-                width: 390upx;
+                width: 450upx;
                 padding: 13upx 0 0;
                 .vip-name {
                     width: 100%;
                     font-size: 28upx;
                     line-height: 36upx;
                     font-weight: 700;
+                    word-break: break-all;
+                    white-space: pre-wrap;
                 }
                 .vip-others {
                     width: 100%;
@@ -230,22 +238,25 @@
                     width: 63upx;
                     height: 100%;
                     position: relative;
-                    .img {
+                    .item-mid {
+                        position: relative;
+                        height: 120upx;
                         width: 100%;
-                        height: 63upx;
-                        margin-top: 37upx;
-                    }
-                    .title {
-                        color: #fff;
-                        white-space: nowrap;
-                        width: fit-content;
-                        text-align: center;
-                        left: 50%;
-                        transform: translate(-50%, 0);
-                        position: absolute;
-                        bottom: 20upx;
-                        font-size: 24upx;
-                        color: #c5cede;
+                        top:50%;
+                        transform: translate(0 ,-50%);
+                        .img {
+                            width: 100%;
+                            height: 63upx;
+                        }
+                        .title {
+                            white-space: nowrap;
+                            width: fit-content;
+                            min-width: 64upx;
+                            text-align: center;
+                            left: 50%;
+                            font-size: 24upx;
+                            color: #c5cede;
+                        }
                     }
                 }
             }

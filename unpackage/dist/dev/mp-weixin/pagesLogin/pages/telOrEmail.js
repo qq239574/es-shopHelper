@@ -32,6 +32,7 @@
 
 
 
+
 var type = '';
 var session_id = ''; //
 var questions = []; //	安全问题
@@ -66,9 +67,10 @@ var bar = '';var _default =
       placeholder2: '请输入短信验证码',
       imageCode: '',
       sendVfCode: false,
-      refreshAgain: false,
-      refreshButton: false };
-
+      refreshAgain: false, //toggle刷新验证码
+      refreshButton: false,
+      successGetCode: false //成功获取验证码
+    };
   },
   onLoad: function onLoad(option) {
     if (option.from == 'email') {
@@ -95,6 +97,9 @@ var bar = '';var _default =
     this.closePageLoading();
   },
   methods: {
+    refreshTiming: function refreshTiming() {//倒计时结束时触发
+      this.successGetCode = false;
+    },
     getImgCode: function getImgCode(val) {
       this.imageCode = val.detail;
     },
@@ -108,6 +113,7 @@ var bar = '';var _default =
         question: '',
         answer: '' }).
       then(function (res) {
+        _this.refreshAgain = !_this.refreshAgain;
         _this.closePageLoading();
         if (res.error == 0) {
           _this.Cacher.setData('telOrEmail', {
@@ -129,6 +135,8 @@ var bar = '';var _default =
           _this.Toast(res.message);
         }
       }).catch(function (res) {
+        _this.refreshAgain = !_this.refreshAgain;
+        _this.successGetCode = false;
         _this.closePageLoading();
         _this.Toast(res.message);
       });
@@ -143,13 +151,10 @@ var bar = '';var _default =
           // this.getVCode(true);
           _this2.requestCode();
         });
-      } else if (this.imageCode && bool) {//填写了图形验证码
+      } else if (this.imageCode && this.canSendVfCode) {//填写了图形验证码
         this.pageLoading();
         this.requestCode();
-      } else if (this.canSendVfCode && !bool) {//正在请求中
-        this.Toast('请稍后');
-      } else if (!this.imageCode) {//验证不通过
-        console.log('>>>>', this.imageCode, this.imageCode.length);
+      } else if (!this.imageCode) {//验证不通过 
         this.Toast('请填写图形验证码');
       } else {
         this.Toast(this.placeholder1);
@@ -167,12 +172,15 @@ var bar = '';var _default =
         then(function (res) {
           if (res.error != 0) {
             _this3.Toast(res.message);
+          } else {
+            _this3.successGetCode = true;
           }
           _this3.closePageLoading();
           setTimeout(function () {
             sending = false;
-          }, 5000);
+          }, 500);
         }).catch(function (res) {
+          _this3.successGetCode = false;
           _this3.Toast(res.message || '图形验证码错误');
           _this3.closePageLoading();
           _this3.refreshAgain = !_this3.refreshAgain;

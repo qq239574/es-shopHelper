@@ -102,7 +102,8 @@
             width: 710upx;
             height: 100upx;
             line-height: 98upx;
-            font-size: 26upx;
+            font-size: 28upx;
+            font-weight: 600;
             margin: 20upx auto 300upx;
             background: #fff;
             color: #fb6638;
@@ -132,7 +133,7 @@
             bottom: 0;
             left: 0;
             box-shadow: 0 0 10upx 0 rgba(0, 0, 0, .1);
-            z-index: 1000;
+            // z-index: 1000;
             overflow: hidden;
             padding-top: 18upx;
             box-sizing: border-box;

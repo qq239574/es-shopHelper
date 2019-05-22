@@ -1,8 +1,11 @@
 .editGood-block-selectItem.data-v-7f601caa {
   width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0 20rpx;
 }
 .editGood-block-selectItem .grace-items.data-v-7f601caa {
-    width: 710rpx;
+    width: 100%;
     margin: auto;
     padding: 0 auto;
     -webkit-box-sizing: border-box;
@@ -27,6 +30,9 @@
       width: fit-content;
       line-height: 38rpx;
       margin: auto 40rpx auto 60rpx;
+}
+.editGood-block-selectItem .grace-items .address.noarrow.data-v-7f601caa {
+        margin: auto 0 auto 60rpx;
 }
 .editGood-block-selectItem .grace-items .grace-label.data-v-7f601caa {
       font-weight: 600;

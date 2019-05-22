@@ -17,33 +17,20 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
-    canSend: {
-      type: Boolean,
-      default: false },
-
-    refreshButton: {
+    start: {
       type: Boolean,
       default: false } },
-
 
 
   data: function data() {
     return {
       timer: 60,
-      timing: false,
       bar: '' };
 
   },
   watch: {
-    refreshButton: function refreshButton() {
-      this.refresh();
-    } },
-
-  methods: {
-    clickBuntton: function clickBuntton() {var _this = this;
-      if (!this.timing && this.canSend) {
-        this.$emit('click', true);
-        this.timing = true;
+    start: function start() {var _this = this;
+      if (this.start) {
         this.bar = setInterval(function () {
           if (_this.timer > 1) {
             _this.timer--;
@@ -52,13 +39,22 @@ var _default =
           }
         }, 1000);
       } else {
+        this.refresh();
+      }
+    } },
+
+  methods: {
+    clickBuntton: function clickBuntton() {
+      if (!this.start) {
         this.$emit('click', false);
+      } else {
+        this.$parent.Toast(this.timer + 's后可重新发送');
       }
     },
     refresh: function refresh() {
       this.timer = 60;
-      this.timing = false;
       clearInterval(this.bar);
+      this.$emit('refresh');
     } },
 
   beforeMount: function beforeMount() {

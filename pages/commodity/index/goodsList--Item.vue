@@ -21,28 +21,40 @@
             </view>
             <view class="model" v-if='menuIndex==="good-"+index' @click.stop='showMenu("")'>
                 <view class="item" @click.stop='clickMenuItem(index,item,"编辑")'>
-                    <image class='img' src='/static/img/global/product_share_download.png'></image>
+                    <view class="imgBg img1">
+                        <image class='img' src='/static/img/global/edit.svg'></image>
+                    </view>
                     <view class='title'>编辑</view>
                 </view>
                 <block v-if='Jurisdiction.goods_manage'>
                     <view class="item" @click.stop='clickMenuItem(index,item,"下架")' v-if='item.status=="0"||item.status=="1"'>
-                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="imgBg img2">
+                            <image class='img' src='/static/img/global/down.svg'></image>
+                        </view>
                         <view class='title'>下架</view>
                     </view>
                     <view class="item" @click.stop='clickMenuItem(index,item,"上架")' v-if='item.status=="2"'>
-                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="imgBg img3">
+                            <image class='img' src='/static/img/global/up.svg'></image>
+                        </view>
                         <view class='title'>上架</view>
                     </view>
                     <view class="item" @click.stop='clickMenuItem(index,item,"恢复")' v-if='item.status=="3"'>
-                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="imgBg img4">
+                            <image class='img' src='/static/img/global/refresh.svg'></image>
+                        </view>
                         <view class='title'>恢复</view>
                     </view>
                     <view class="item" @click.stop='clickMenuItem(index,item,"删除")'>
-                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="imgBg img5">
+                            <image class='img' src='/static/img/global/delete.svg'></image>
+                        </view>
                         <view class='title'>删除</view>
                     </view>
                     <view class="item" @click.stop='clickMenuItem(index,item,"推广商品")' v-if='item.status=="0"||item.status=="1"'>
-                        <image class='img' src='/static/img/global/product_share_download.png'></image>
+                        <view class="imgBg img6">
+                            <image class='img' src='/static/img/global/public.svg'></image>
+                        </view>
                         <view class='title'>推广商品</view>
                     </view>
                 </block>
@@ -102,7 +114,7 @@
                     name: name,
                     detail: Object.assign({
                         goodIndex: goodindex
-                    },item)
+                    }, item)
                 })
             },
             clickGood(item) {
@@ -240,10 +252,38 @@
                     width: 63upx;
                     height: 100%;
                     position: relative;
-                    .img {
+                    .imgBg {
                         width: 100%;
                         height: 63upx;
                         margin-top: 48upx;
+                        border-radius: 50%;
+                        image{
+                            width:30upx;
+                            height:30upx;
+                            position: absolute;
+                            top:0;
+                            left:0;
+                            bottom: 0;
+                            right: 0;
+                            margin:auto;
+                        }
+                        &.img1{
+                            background: linear-gradient(135deg,#5cd4fe,#487dfc);
+                            position: relative;
+                        }
+                        &.img2,&.img3{
+                            background: linear-gradient(135deg,#fb905a,#ff6805);
+                            position: relative;
+                        }
+                        &.img4,&.img5{
+                            background: linear-gradient(135deg,#fb8685,#ff361c);
+                            position: relative;
+                        }
+                        &.img6{
+                            background: linear-gradient(135deg,#39e6ad,#0ded8d);
+                            position: relative;
+                        }
+                       
                     }
                     .title {
                         color: #fff;

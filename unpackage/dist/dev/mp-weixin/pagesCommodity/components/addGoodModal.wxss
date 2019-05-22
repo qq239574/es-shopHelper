@@ -32,7 +32,7 @@
       height: -webkit-fit-content;
       height: -moz-fit-content;
       height: fit-content;
-      padding: 30rpx 20rpx 30rpx 0;
+      padding: 33rpx 20rpx 30rpx 0;
       white-space: nowrap;
       color: #3d404d;
 }
@@ -97,7 +97,7 @@
 .good-modal .add.data-v-3a2443fa {
     padding: 0 46rpx;
     font-size: 28rpx;
+    font-weight: 600;
     color: #fb6638;
-    font-weight: 500;
 }
 

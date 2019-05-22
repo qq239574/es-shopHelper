@@ -5,11 +5,11 @@
                 <view class='card--info__row__tile'>发货时间</view>
                 <view class='card--info__row__status'>{{rights.sendTime}}</view>
             </view>
-            <view class='card--info__row'>
+            <view class='card--info__row' v-if='!rights.dispatch_type'>
                 <view class='card--info__row__tile'>物流公司</view>
                 <view class='card--info__row__status'>{{rights.sendComp}}</view>
             </view>
-            <view class='card--info__row'>
+            <view class='card--info__row'  v-if='!rights.dispatch_type'>
                 <view class='card--info__row__tile'>快递单号</view>
                 <view class='card--info__row__status copy-item'>{{rights.sendId}}
                     <image lazy-load src='/static/img/global/copy.png' class='copy-icon' @click='copy(rights.sendId)'></image>

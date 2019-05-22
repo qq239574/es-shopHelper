@@ -32,16 +32,7 @@
         },
         methods: {
             refresh() {
-                this.time= new Date().getTime();
-                // this.Request('getVRCodeImg', {
-                //     type: 'forget',
-                //     width: 135,
-                //     height: 32,
-                //     timestamp: new Date().getTime()
-                // }).then(res => {
-                //     console.log('get img',res)
-                //     this.imgSrc = res.tempFilePath
-                // })
+                this.time= new Date().getTime(); 
             }
         },
         beforeMount() {

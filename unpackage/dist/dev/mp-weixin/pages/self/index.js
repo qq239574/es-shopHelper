@@ -40,6 +40,14 @@
 
 
 
+
+
+
+
+
+
+
+
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");
 
 
@@ -68,6 +76,11 @@ var managerId = '';var _default =
       nickName: '' //绑定的微信的昵称
     };
   },
+  computed: {
+    halfWidth: function halfWidth() {
+      return uni.upx2px(40) + 'px';
+    } },
+
   methods: {
     initPage: function initPage() {var _this = this;
       this.Request('myInfo').then(function (res) {

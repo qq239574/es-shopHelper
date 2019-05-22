@@ -1,7 +1,7 @@
 <template>
     <div class='my-name page'>
         <view class="bg">
-            <search :value='name' @input='getInput' :placeholder='placeholder' @clear='clear'></search>
+            <search :noSearch='true' :value='name' inputStyle='background:#fff' @input='getInput' :placeholder='placeholder' @clear='clear'></search>
         </view>
         <view class="margin200"></view>
         <longButton class='save' :disable='disable' @click='saveName'>保存</longButton>
@@ -80,11 +80,10 @@
             height: 50upx;
         }
         .bg {
-            width: 100%;
-            height: 110upx;
+            width: 100%; 
             background: #fff;
             margin-top: 20upx;
-            padding: 20upx;
+            padding: 10upx;
         }
     }
 </style>

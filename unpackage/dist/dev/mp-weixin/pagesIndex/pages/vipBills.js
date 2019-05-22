@@ -198,7 +198,7 @@ var _default = {
       } else if (DataFrom.from == 'vipManage') {
         member_id = DataFrom.info.id;
       }
-      _getBillList.default.call(this, {
+      _getBillList.default.call(this, 5, { //5是全部订单
         keywords: searchData.value || '',
         page: this.current,
         member_id: member_id,

@@ -73,6 +73,11 @@ var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var s
     nodata: nodata,
     MyTabbar: MyTabbar },
 
+  computed: {
+    iconSize: function iconSize() {
+      return uni.upx2px(35) + 'px';
+    } },
+
   data: function data() {
     return {
       Jurisdiction: {}, //权限

@@ -117,7 +117,7 @@
                     }
                 }
                 if (canSend) {
-                    this.pageLoading();
+                    this.pageLoading(); 
                     this.Request('sendGoods', sendBillInfo).then(res => {
                         this.closePageLoading();
                         uni.navigateBack();

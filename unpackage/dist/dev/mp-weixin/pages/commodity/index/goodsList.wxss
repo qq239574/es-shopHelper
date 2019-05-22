@@ -30,7 +30,7 @@
 }
 .goods-list .scroll.data-v-0df92442 {
   width: 100%;
-  height: 500rpx;
+  height: 545rpx;
   position: relative;
   overflow: auto;
   -webkit-box-sizing: border-box;
@@ -40,9 +40,10 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    height: 84rpx;
+    height: 100rpx;
     width: 100%;
     background: #fafafa;
+    border-top: 1rpx solid #eee;
     line-height: 84rpx;
     text-align: center;
     font-size: 28rpx;
@@ -84,6 +85,25 @@
       margin: auto;
       display: block;
 }
+.goods-list .model .share-item .share.data-v-0df92442 {
+      width: 100rpx;
+      height: 100rpx;
+      margin: auto;
+      display: block;
+      background: #48bffc;
+      border-radius: 50%;
+      position: relative;
+}
+.goods-list .model .share-item .share .share-img.data-v-0df92442 {
+        position: absolute;
+        width: 46rpx;
+        height: 46rpx;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+}
 .goods-list .model .share-item .share-title.data-v-0df92442 {
       color: #fff;
       white-space: nowrap;
@@ -99,7 +119,6 @@
 .goods-list .model.data-v-0df92442:after {
     content: '';
     height: 0;
-    border-bottom: 1rpx solid #eee;
     position: absolute;
     width: 710rpx;
     left: 0;

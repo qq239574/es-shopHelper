@@ -8,10 +8,18 @@
 			</view>
 			<view class='manager'>{{userRoleName}}</view>
 		</view>
-		<inputItem :disabled='true' label='登录账号' :value='userId'></inputItem>
-		<selectItem label='姓名' :value='realName' @click='toPage("name")'></selectItem>
-		<selectItem label='联系方式' :value='contact_mobile' @click='toPage("tel")'></selectItem>
-		<selectItem label='修改密码' value=' ' @click='toPage("password")'></selectItem>
+		<inputItem :disabled='true' :label-style='"position:relative;padding-left:"+halfWidth+""' label='登录账号' :value='userId'>
+			<image slot='icon' lazy-load class='icon' src='/static/img/global/user-icon.jpg'></image>
+		</inputItem>
+		<selectItem label='姓名' :fontStyle='"position:relative;padding-left:"+halfWidth+""' :value='realName' @click='toPage("name")'>
+			<image slot='icon' lazy-load class='icon' src='/static/img/global/diamond.svg'></image>
+		</selectItem>
+		<selectItem label='联系方式' :fontStyle='"position:relative;padding-left:"+halfWidth+""' :value='contact_mobile' @click='toPage("tel")'>
+			<image slot='icon' lazy-load class='icon' src='/static/img/global/phone.svg'></image>
+		</selectItem>
+		<selectItem label='修改密码' :fontStyle='"position:relative;padding-left:"+halfWidth+""' value=' ' @click='toPage("password")'>
+			<image slot='icon' lazy-load class='icon' src='/static/img/global/pw-con.png'></image>
+		</selectItem>
 		<view class="margin20"></view>
 		<view class='rebindWx'>
 			<selectItem :label='"微信："+(nickName||"")' value='重新绑定' valueStyle='color:#fb6638;' v-if='nickName'></selectItem>
@@ -56,6 +64,11 @@
 				wxInfo: {},
 				wxapp_openid: '',
 				nickName: '' //绑定的微信的昵称
+			}
+		},
+		computed: {
+			halfWidth() {
+				return uni.upx2px(40) + 'px';
 			}
 		},
 		methods: {
@@ -214,6 +227,12 @@
 			top: 76upx;
 			right: 56upx;
 		}
+	}
+	.icon {
+		width: 28upx;
+		height: 28upx;
+		position: absolute;
+		top:0;bottom: 0;left:0;margin: auto;
 	}
 	.margin20 {
 		height: 20upx;

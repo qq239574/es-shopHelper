@@ -7,6 +7,7 @@
     "i-page": "/wxcomponents/iview-weapp/page/index",
     "i-icon": "/wxcomponents/iview-weapp/icon/index",
     "input-item": "/components/my-components/editBlock-InputItem",
-    "select-item": "/components/my-components/editBlock-SelectItem"
+    "select-item": "/components/my-components/editBlock-SelectItem",
+    "multi-line": "/components/my-components/editBlock-MultiLine"
   }
 }

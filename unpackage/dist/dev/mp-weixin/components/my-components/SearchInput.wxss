@@ -48,4 +48,7 @@
       color: #999;
       font-size: 24rpx;
 }
+.my-search-input .grace-items .input.noSearch.data-v-c2b739ee {
+        width: 680rpx;
+}
 

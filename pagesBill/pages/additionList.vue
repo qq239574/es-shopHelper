@@ -6,7 +6,10 @@
         </block>
         <view class="foot">
             <longButton @click='clickButton'>
-                <van-icon name="edit" color='#fff' />添加备注</longButton>
+                <view class="icon">
+                    <image class='add-addition' lazy-load src='/static/img/global/addition.svg'></image>
+                </view>
+                添加备注</longButton>
         </view>
     </view>
 </template>
@@ -85,5 +88,22 @@
         border-top: 1upx solid #eee;
         padding: 16upx 0;
         box-sizing: border-box;
+
+        .icon{
+            width:26upx;
+            height:26upx;
+            margin-right:10upx;
+            display: inline-block; 
+            line-height: 30upx;
+            box-sizing: border-box;
+            position: relative;
+            .add-addition{
+                position: absolute;
+                left:0;
+                top:4upx;
+                width:26upx;
+                height:26upx; 
+            }
+        }
     }
 </style>

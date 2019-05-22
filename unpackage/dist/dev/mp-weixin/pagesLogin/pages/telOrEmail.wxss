@@ -1,5 +1,6 @@
 .tel-email.data-v-722871eb {
   background: #fff;
+  border-top: 1rpx solid #eee;
 }
 .tel-email .grace-form.data-v-722871eb {
     width: 670rpx;

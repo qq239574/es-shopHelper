@@ -20,7 +20,7 @@
 					<text class="grace-icons icon-arrow-right" style='color:#5E5E5E;'></text>
 				</view>
 			</view>
-			<view class="grace-items" v-if='!needProvide'>
+			<view class="grace-items" v-if='!cityProvide&&!needProvide'>
 				<view class="grace-label">物流单号</view>
 				<view @click.stop="selectCell(3,info.provideId)" class="other">
 					{{info.provideId}}

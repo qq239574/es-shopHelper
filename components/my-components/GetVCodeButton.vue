@@ -1,39 +1,26 @@
 <template>
-    <View class='my-round-button' :class='timing?"timing":""' @click='clickBuntton'>
-        {{timing?(timer+'s'):'获取验证码'}}
+    <View class='my-round-button van-hairline' :class='start?"timing":""' @click='clickBuntton'>
+        {{start?(timer+'s'):'获取验证码'}}
     </View>
 </template>
 
 <script>
     export default {
         props: {
-            canSend: {
+            start: {
                 type: Boolean,
                 default: false
-            },
-            refreshButton:{
-                type:Boolean,
-                default:false
-
             }
         },
         data() {
             return {
                 timer: 60,
-                timing: false,
                 bar: ''
             }
         },
-        watch:{
-            refreshButton(){
-                this.refresh();
-            }
-        },
-        methods: {
-            clickBuntton() {
-                if (!this.timing && this.canSend) {
-                    this.$emit('click', true);
-                    this.timing = true;
+        watch: {
+            start() {
+                if (this.start) {
                     this.bar = setInterval(() => {
                         if (this.timer > 1) {
                             this.timer--;
@@ -42,13 +29,22 @@
                         }
                     }, 1000);
                 } else {
+                    this.refresh();
+                }
+            }
+        },
+        methods: {
+            clickBuntton() {
+                if (!this.start) {
                     this.$emit('click', false);
+                } else {
+                    this.$parent.Toast(this.timer + 's后可重新发送')
                 }
             },
             refresh() {
                 this.timer = 60;
-                this.timing = false;
                 clearInterval(this.bar);
+                this.$emit('refresh');
             }
         },
         beforeMount() {
@@ -60,19 +56,27 @@
 <style lang="scss" scoped>
     .my-round-button {
         width: 150upx;
-        box-sizing: border-box;
         height: 54upx;
         border-radius: 27upx;
-        line-height: 52upx;
+        line-height: 54upx;
         text-align: center;
         font-size: 24upx;
         font-weight: 500;
         color: #fb6638;
-        border: 1upx solid #fb6638;
+        overflow: visible;
+        &:after {
+            border: 1upx solid #fb6638;
+            border-radius: 54upx;
+            bottom:-47%;
+        }
     }
     .my-round-button.timing {
         color: #9da3ae;
-        border: 1upx solid #9da3ae;
+         &:after {
+            border: 1upx solid #9da3ae;
+            border-radius: 54upx;
+            bottom:-47%;
+        }
     }
     .imgCode {
         width: 150upx;

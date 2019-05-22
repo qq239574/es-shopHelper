@@ -1,3 +1,6 @@
+import {
+    number_format
+} from '../../components/my-components/formater.js'
 function combination(arr) { //排列组合商品规格
     let box = [];
     let tmp = '';
@@ -184,7 +187,7 @@ export default function (val, cacheGoodDetail) {
     } else if (val.label == '快递运费') {
         cacheGoodDetail.info3.provideCost.value = val.info.subValue * 1;
         cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
-        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? val.info.subValue * 1 : val.info.label;
+        cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? '统一运费 ￥'+number_format(val.info.subValue,2,'.',','): val.info.label;
     } else if (val.label == '商品表单') {
         cacheGoodDetail.info3.goodForm.value = val.value;
         cacheGoodDetail.info3.goodForm.id = val.id;

@@ -122,7 +122,7 @@
                 font-size: 28upx;
                 box-sizing: border-box;
                 height: fit-content;
-                padding: 30upx 20upx 30upx 0;
+                padding: 33upx 20upx 30upx 0;
                 white-space: nowrap;
                 color: #3d404d;
             }
@@ -184,8 +184,8 @@
         .add {
             padding: 0 46upx;
             font-size: 28upx;
-            color: #fb6638;
-            font-weight: 500;
+            font-weight: 600;
+            color: #fb6638; 
         }
     }
 </style>

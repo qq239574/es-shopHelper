@@ -43,15 +43,6 @@ var _default = { props: { imageCode: { type: String, default: '' },
   methods: {
     refresh: function refresh() {
       this.time = new Date().getTime();
-      // this.Request('getVRCodeImg', {
-      //     type: 'forget',
-      //     width: 135,
-      //     height: 32,
-      //     timestamp: new Date().getTime()
-      // }).then(res => {
-      //     console.log('get img',res)
-      //     this.imgSrc = res.tempFilePath
-      // })
     } },
 
   beforeMount: function beforeMount() {

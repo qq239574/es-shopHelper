@@ -10706,10 +10706,11 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
+  // base_url: "https://shop.jacjack.com", 
+  //  base_url: "https://ceshiuser.100cms.com", 
   base_url: "http://user.jiangyk.eldev.cn"
-  // base_url: "https://ceshiuser.100cms.com", 
+  //  base_url: "https://user.qdev.eldev.cn",
 };var _default =
-
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -13666,7 +13667,8 @@ function _default(result) {
           sendTime: '', //发货时间
           sendComp: '', //物流公司
           sendId: '', //快递单号
-          sendStatus: item.status_text //发货信息
+          sendStatus: item.status_text, //发货信息
+          dispatch_type: item.no_express //0无需物流 1需要物流
         } };
 
     }).concat(result.package_send.map(function (item) {//已发货的包裹
@@ -13688,12 +13690,14 @@ function _default(result) {
             refund_status: val.refund_status,
             refund_id: val.refund_id };
 
+
         }),
         billInfo: { //订单信息 
           sendTime: item.send_time, //发货时间
           sendComp: item.express_name, //物流公司
           sendId: item.express_sn, //快递单号
-          sendStatus: '已发货' //发货信息
+          sendStatus: '已发货', //发货信息
+          dispatch_type: item.no_express //1无需物流 0需要物流
         } };
 
     })),
@@ -13809,6 +13813,9 @@ function _default(data) {
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.goodData = goodData;exports.addGoodsModel = addGoodsModel;var _updateGoodInfoItems = __webpack_require__(/*! ./updateGoodInfo-items */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesCommodity\\components\\updateGoodInfo-items.js");
+
+
+var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
 
 
 
@@ -14118,7 +14125,7 @@ function goodData(data) {//单规格商品
         value: data.goods.dispatch_price,
         dispatch_list: data.dispatch_list,
         dispatch_id: data.goods.dispatch_id || 0,
-        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0] || data.goods.dispatch_price,
+        dispatch_name: data.dispatch_list.filter(function (item) {return item.id == data.goods.dispatch_id;}).map(function (item) {return item.name;})[0] || '统一运费 ￥' + (0, _formater.number_format)(data.goods.dispatch_price, 2, '.', ','),
         disabled: false, //可否编辑
         editable: 'select', //如何编辑，input当前页输入，switch当前页选择，image选图，imagelist图列，select跳转
         needHide: data.goods.type == 2 //虚拟商品无快递运费相关选项，多出自动发货相关
@@ -14524,7 +14531,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.activeGood
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function combination(arr) {//排列组合商品规格
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js");
+
+
+function combination(arr) {//排列组合商品规格
   var box = [];
   var tmp = '';
   if (arr.length == 1) {
@@ -14710,7 +14720,7 @@ function _default(val, cacheGoodDetail) {
   } else if (val.label == '快递运费') {
     cacheGoodDetail.info3.provideCost.value = val.info.subValue * 1;
     cacheGoodDetail.info3.provideCost.dispatch_id = val.info.id;
-    cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? val.info.subValue * 1 : val.info.label;
+    cacheGoodDetail.info3.provideCost.dispatch_name = val.info.label.indexOf('统一运费') > -1 ? '统一运费 ￥' + (0, _formater.number_format)(val.info.subValue, 2, '.', ',') : val.info.label;
   } else if (val.label == '商品表单') {
     cacheGoodDetail.info3.goodForm.value = val.value;
     cacheGoodDetail.info3.goodForm.id = val.id;
@@ -15075,7 +15085,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;var _payType = _interopRequireDefault(__webpack_require__(/*! ../../../components/my-components/payType.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\payType.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 function _default(tabid, data) {var _this = this;
-  var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill'];
+  var billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', 'allBills'];
   var rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
     '0': "无效",
     '1': "仅退款",

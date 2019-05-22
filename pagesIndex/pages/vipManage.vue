@@ -2,7 +2,7 @@
     <view class='vip-manage page'>
         <SearchInput @input='search' @clear='clearSearch' @click='clickSearch' placeholder='搜索会员' inputStyle='background:#fff;margin:10px auto;' bgStyle='background:#f5f7fa;'></SearchInput>
         <Card :Jurisdiction='Jurisdiction' :toggle='toggle' :list='viplist' @click='clickGood'></Card>
-        <nodata type='noresult' tip='没有搜索到相关会员' v-if='!searching&&!viplist.length'></nodata>
+        <nodata type='noresult' :tip='searching?"正在搜索相关会员":"没有搜索到相关会员"' v-if='!viplist.length'></nodata>
         <view class="pager" v-else>
             <i-page i-class='pager-button' :current="current" :total="totalPage" @change="handleChange">
                 <view class='prev button' slot="prev">
@@ -39,7 +39,7 @@
         },
         data() {
             return {
-                Jurisdiction:{},
+                Jurisdiction: {},
                 searching: false,
                 viplist: [{
                     img: '/static/img/global/home_order_tobepay.png',
@@ -118,13 +118,12 @@
                             url: './vipBills?from=vipManage'
                         })
                     }
-                } else {
-                }
+                } else {}
                 this.toggle = !this.toggle;
             },
             initPage() {
-                this.searching = true;
                 this.pageLoading();
+                this.searching = true;
                 this.Request('vipList', {
                     keywords: cacheSearchKey,
                     tag_id: '',
@@ -152,6 +151,7 @@
                     })
                     this.searching = false;
                 }).catch(res => {
+                    this.closePageLoading();
                     this.searching = false;
                     this.Toast(res.message || '出错啦')
                 })

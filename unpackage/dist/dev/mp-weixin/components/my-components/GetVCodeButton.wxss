@@ -1,19 +1,26 @@
 .my-round-button.data-v-71c24da8 {
   width: 150rpx;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
   height: 54rpx;
   border-radius: 27rpx;
-  line-height: 52rpx;
+  line-height: 54rpx;
   text-align: center;
   font-size: 24rpx;
   font-weight: 500;
   color: #fb6638;
-  border: 1rpx solid #fb6638;
+  overflow: visible;
+}
+.my-round-button.data-v-71c24da8:after {
+    border: 1rpx solid #fb6638;
+    border-radius: 54rpx;
+    bottom: -47%;
 }
 .my-round-button.timing.data-v-71c24da8 {
   color: #9da3ae;
-  border: 1rpx solid #9da3ae;
+}
+.my-round-button.timing.data-v-71c24da8:after {
+    border: 1rpx solid #9da3ae;
+    border-radius: 54rpx;
+    bottom: -47%;
 }
 .imgCode.data-v-71c24da8 {
   width: 150rpx;

@@ -16,23 +16,25 @@
     width: 53rpx !important;
 }
 .grace-number-box .doBtn {
-  width: 40rpx;
-  line-height: 0;
-  padding: 14rpx 0;
-  font-weight: 700;
-  height: 40rpx;
-  text-align: center;
-  font-size: 40rpx;
-  color: #9fa5b0;
+  width: 42rpx;
+  height: 42rpx;
   border-radius: 50%;
   border: 1rpx solid #9fa5b0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   margin: auto;
+  position: relative;
+}
+.grace-number-box .doBtn image {
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    top: 5rpx;
+    left: 5rpx;
 }
 .grace-number-box .doBtn.primary {
-    color: #fff;
     background: #fb6638;
-    border: none;
-    padding: 16rpx 0;
+    border: 1rpx solid #fb6638;
 }
 .grace-number-box input {
   display: block;

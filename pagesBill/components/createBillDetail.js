@@ -133,7 +133,8 @@ export default function (result) {
                     sendTime: '', //发货时间
                     sendComp: '', //物流公司
                     sendId: '', //快递单号
-                    sendStatus: item.status_text //发货信息
+                    sendStatus: item.status_text, //发货信息
+                    dispatch_type:item.no_express//0无需物流 1需要物流
                 }
             }
         }).concat(result.package_send.map(item => { //已发货的包裹
@@ -153,14 +154,16 @@ export default function (result) {
                         discount: val.price_discount, //折扣
                         total: val.price_original, //小计
                         refund_status: val.refund_status,
-                        refund_id: val.refund_id
+                        refund_id: val.refund_id,
+                        
                     }
                 }),
                 billInfo: { //订单信息 
                     sendTime: item.send_time, //发货时间
                     sendComp: item.express_name, //物流公司
                     sendId: item.express_sn, //快递单号
-                    sendStatus: '已发货' //发货信息
+                    sendStatus: '已发货' ,//发货信息
+                    dispatch_type:item.no_express//1无需物流 0需要物流
                 }
             }
         })),

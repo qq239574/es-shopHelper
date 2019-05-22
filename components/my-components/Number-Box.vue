@@ -1,8 +1,12 @@
 <template name="graceNumberBox">
     <view class="grace-number-box">
-        <view class="doBtn" @tap="reduce">-</view>
+        <view class="doBtn" @tap="reduce">
+            <image lazy-laod src='/static/img/global/minus.svg'></image>
+        </view>
         <input class='number' type="number" style='background:#fff;' :value="inputNumber" :disabled="disabled" @blur="blur"></input>
-        <view class="doBtn primary" @tap="add">+</view>
+        <view class="doBtn primary" @tap="add">
+            <image lazy-laod src='/static/img/global/add.svg'></image>
+        </view>
     </view>
 </template>
 <script>
@@ -70,32 +74,33 @@
     .grace-number-box {
         width: 140upx;
         height: 65upx;
-        display: flex !important;
+        display: flex!important;
         overflow: hidden;
         flex-wrap: nowrap;
         .number {
             height: 100%!important;
             padding: 0!important;
-            width:53upx!important;
+            width: 53upx!important;
         }
     }
     .grace-number-box .doBtn {
-        width: 40upx;
-        line-height: 0;
-        padding: 14upx 0;
-        font-weight: 700;
-        height: 40upx;
-        text-align: center;
-        font-size: 40upx;
-        color: #9fa5b0;
+        width: 42upx;
+        height: 42upx;
         border-radius: 50%;
         border: 1upx solid #9fa5b0;
+        box-sizing: border-box;
         margin: auto;
+        position: relative; 
+        image {
+            width: 30upx;
+            height: 30upx;
+            position: absolute;
+            top:5upx;
+            left:5upx; 
+        }
         &.primary {
-            color: #fff;
             background: #fb6638;
-            border: none;
-            padding: 16upx 0;
+            border: 1upx solid #fb6638;
         }
     }
     .grace-number-box input {

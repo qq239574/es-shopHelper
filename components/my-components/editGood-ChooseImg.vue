@@ -161,7 +161,7 @@
                     return false;
                 }
                 uni.showLoading({
-                    title: ""
+                    title: "加载中"
                 });
                 uni.chooseImage({
                     count: num,

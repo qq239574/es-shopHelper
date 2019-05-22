@@ -51,6 +51,7 @@
     },
     save: function save() {var _this = this;
       var canset = true;
+
       if (this.CacheData.newPw != this.CacheData.surePw) {
         this.Toast('新密码两次输入不一致');
       } else {
@@ -61,7 +62,10 @@
         then(function (res) {
           _this.closePageLoading();
           if (res.error == 0) {
-            uni.navigateBack();
+            _this.Toast('保存成功');
+            setTimeout(function () {
+              uni.navigateBack();
+            }, 1000);
           } else {
             _this.Toast(res.message);
           }

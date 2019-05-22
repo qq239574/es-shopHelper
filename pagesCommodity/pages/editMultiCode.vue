@@ -1,11 +1,12 @@
 <template>
     <view class='multi-block  page' @click='clickModel'>
         <view class="block" v-for='(item,index) in list' :key='index'>
-            <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem>
-            <inputItem :other='item' label='价格' :disabled='item.disabled' :value='item.price.value' @input='inputCell'></inputItem>
+            <!-- <inputItem :other='item' :disabled='true' label='规格' :value='item.specif.value'></inputItem> -->
+            <multiLine :noArrow='true' color='#9ea3ae' :other='item' :disabled='true' label='规格' :value='item.specif.value'></multiLine>
+            <inputItem :other='item' label='价格' type='digit' :disabled='item.disabled' :value='item.price.value' @input='inputCell'></inputItem>
             <!-- 卡密商品没有库存 -->
-            <selectItem :other='item' label='卡密库' :value='item.cardStock.value' @click='clickCell' v-if='!item.cardStock.needHide'></selectItem>
-            <inputItem :other='item' label='库存' :disabled='item.disabled' :value='item.stock.value' @input='inputCell' v-else></inputItem>
+            <selectItem :other='item' label='卡密库'  :value='item.cardStock.value' @click='clickCell' v-if='!item.cardStock.needHide'></selectItem>
+            <inputItem :other='item' label='库存' type='number' :disabled='item.disabled' :value='item.stock.value' @input='inputCell' v-else></inputItem>
             <inputItem :other='item' label='商品编码' :disabled='item.disabled' :value='item.code.value' @input='inputCell'></inputItem>
         </view>
         <!-- <view class="pager" >
@@ -27,6 +28,7 @@
 
 <script>
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
+    import multiLine from '../../components/my-components/editBlock-MultiLine.vue'
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     let DataFrom = {};
     let cacheList = [];
@@ -37,7 +39,8 @@
     export default {
         components: {
             inputItem,
-            selectItem
+            selectItem,
+            multiLine
         },
         data() {
             return {

@@ -173,10 +173,41 @@
         height: 100%;
         position: relative;
 }
-.card--good .card--good-item .model .item .img.data-v-af537fd6 {
+.card--good .card--good-item .model .item .imgBg.data-v-af537fd6 {
           width: 100%;
           height: 63rpx;
           margin-top: 48rpx;
+          border-radius: 50%;
+}
+.card--good .card--good-item .model .item .imgBg image.data-v-af537fd6 {
+            width: 30rpx;
+            height: 30rpx;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+}
+.card--good .card--good-item .model .item .imgBg.img1.data-v-af537fd6 {
+            background: -o-linear-gradient(315deg, #5cd4fe, #487dfc);
+            background: linear-gradient(135deg, #5cd4fe, #487dfc);
+            position: relative;
+}
+.card--good .card--good-item .model .item .imgBg.img2.data-v-af537fd6, .card--good .card--good-item .model .item .imgBg.img3.data-v-af537fd6 {
+            background: -o-linear-gradient(315deg, #fb905a, #ff6805);
+            background: linear-gradient(135deg, #fb905a, #ff6805);
+            position: relative;
+}
+.card--good .card--good-item .model .item .imgBg.img4.data-v-af537fd6, .card--good .card--good-item .model .item .imgBg.img5.data-v-af537fd6 {
+            background: -o-linear-gradient(315deg, #fb8685, #ff361c);
+            background: linear-gradient(135deg, #fb8685, #ff361c);
+            position: relative;
+}
+.card--good .card--good-item .model .item .imgBg.img6.data-v-af537fd6 {
+            background: -o-linear-gradient(315deg, #39e6ad, #0ded8d);
+            background: linear-gradient(135deg, #39e6ad, #0ded8d);
+            position: relative;
 }
 .card--good .card--good-item .model .item .title.data-v-af537fd6 {
           color: #fff;

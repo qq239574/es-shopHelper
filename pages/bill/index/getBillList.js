@@ -1,6 +1,6 @@
 import getPayType from '../../../components/my-components/payType.js'
 export default function (tabid, data) {
-    let billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', ];
+    let billtype = ['waitPayBill', 'waitProvideBill', 'waitReceiveBill', 'finishedBill', 'closedBill', 'allBills'];
     let rightsTypeText = { //0 无效 1 仅退款 2 退款退货 3 换货
         '0': "无效",
         '1': "仅退款",

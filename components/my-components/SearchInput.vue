@@ -1,8 +1,8 @@
 <template>
     <view class='my-search-input' :style='bgStyle' @click='clickSearch'>
         <view class="grace-items" :style='inputStyle'>
-            <view class="grace-boxes-img grace-iconfont icon-search"></view>
-            <input type="text" class="input" name="name" :value='val' :disabled='disabled' :placeholder="placeholder" @input='getInput' @change='getInput' />
+            <view class="grace-boxes-img grace-iconfont icon-search" v-if='!noSearch'></view>
+            <input type="text" class="input" :class='noSearch?"noSearch":""' name="name" :value='val' :disabled='disabled' :placeholder="placeholder" @input='getInput' @change='getInput' />
             <view class="grace-boxes-img grace-iconfont icon-close" style='margin:0;' @click='getInput("clear")' v-show='showClear&&!disabled'></view>
         </view>
     </view>
@@ -27,14 +27,18 @@
                 type: Boolean,
                 default: false
             },
-            value:{
-                type:String, 
-                default:''
+            value: {
+                type: String,
+                default: ''
+            },
+            noSearch: {
+                type: Boolean,
+                default: false
             }
         },
-        watch:{
-            value(){
-                this.val=this.value; 
+        watch: {
+            value() {
+                this.val = this.value;
             }
         },
         data() {
@@ -42,8 +46,8 @@
                 val: ''
             }
         },
-        mounted(){
-            this.val=this.value; 
+        mounted() {
+            this.val = this.value;
         },
         computed: {
             showClear() {
@@ -54,14 +58,14 @@
             getInput(val) {
                 if (val == 'clear') {
                     this.val = '';
-                    this.$emit('clear') 
+                    this.$emit('clear')
                 } else {
                     this.val = val.detail.value;
                     this.$emit(val.type, val.detail)
                 }
             },
-            clickSearch(){
-                this.$emit('click',this.val)
+            clickSearch() {
+                this.$emit('click', this.val)
             }
         },
     }
@@ -100,6 +104,9 @@
                 padding: 0 10upx;
                 color: #999;
                 font-size: 24upx;
+                &.noSearch{
+                    width:680upx;
+                }
             }
         }
     }

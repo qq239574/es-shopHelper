@@ -171,7 +171,7 @@ startPY = 0;var _default =
         return false;
       }
       uni.showLoading({
-        title: "" });
+        title: "加载中" });
 
       uni.chooseImage({
         count: num,

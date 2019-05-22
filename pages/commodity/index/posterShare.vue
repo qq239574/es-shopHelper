@@ -10,15 +10,15 @@
             <view class='button'>
                 <view  class="img" v-if='info.type=="mini"'>
                     <button open-type='share'  @click.stop='share("share")' ></button>
-                    <image src='/static/img/global/wechat.png'></image>
+                    <image src='/static/img/global/product_share_wechat.svg'></image>
                     <view>分享好友</view>
                 </view>
                 <view open-type='share' class="img" @click.stop='share("share")' v-else>
-                    <image src='/static/img/global/wechat.png'></image>
+                    <image src='/static/img/global/product_share_wechat.svg'></image>
                     <view>分享好友</view>
                 </view>
                 <view class="img" @click.stop='share("save")'>
-                    <image src='/static/img/global/wechat.png'></image>
+                    <image src='/static/img/global/product_share_download.png'></image>
                     <view>保存到相册</view>
                 </view>
             </view>

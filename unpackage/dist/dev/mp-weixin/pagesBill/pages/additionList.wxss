@@ -29,4 +29,21 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
 }
+.foot .icon.data-v-383ab6e1 {
+    width: 26rpx;
+    height: 26rpx;
+    margin-right: 10rpx;
+    display: inline-block;
+    line-height: 30rpx;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    position: relative;
+}
+.foot .icon .add-addition.data-v-383ab6e1 {
+      position: absolute;
+      left: 0;
+      top: 4rpx;
+      width: 26rpx;
+      height: 26rpx;
+}
 

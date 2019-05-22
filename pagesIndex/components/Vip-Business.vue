@@ -3,7 +3,7 @@
         <Block1 :info='info.info1'></Block1>
         <Block2 :info='info.info2'> </Block2>
         <view class='margin50'></view>
-        <longButton @click='checkBill' v-if='Jurisdiction.member_list_manage'>查看订单</longButton>
+        <longButton @click='checkBill' v-if='Jurisdiction.member_list_manage&&Jurisdiction.order_view'>查看订单</longButton>
     </view>
 </template>
 

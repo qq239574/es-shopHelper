@@ -21,6 +21,14 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   props: {
+    color: {
+      type: String,
+      default: '' },
+
+    noArrow: {
+      type: Boolean,
+      default: false },
+
     label: {
       type: String,
       default: '标签' },

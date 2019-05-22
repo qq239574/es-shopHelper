@@ -4,7 +4,7 @@
             <van-cell-group>
                 <van-field placeholder="请输入6-20位新密码" use-icon-slot @input='getUserId' clearable>
                 </van-field>
-                <van-field :type="openEye?'text':'password'" placeholder="请再次输入密码" use-icon-slot @input='getPassWord' clearable>
+                <van-field type="text" placeholder="请再次输入密码" use-icon-slot @input='getPassWord' clearable>
                 </van-field>
             </van-cell-group>
         </view>

@@ -23,7 +23,7 @@
             </i-page>
         </view>
         <view class='addGoods higher' @click='addGoods'>
-            <van-icon color='#fff' class='addIcon' name="plus" />
+            <van-icon color='#fff' class='addIcon' name="plus"  :size='iconSize'/>
             <view class='addWord'>添加</view>
         </view>
         <MyTabbar :defaultIndex='1' :Jurisdiction='Jurisdiction'></MyTabbar>
@@ -62,6 +62,11 @@
             Card,
             nodata,
             MyTabbar
+        },
+        computed:{
+            iconSize(){
+                return uni.upx2px(35) + 'px';
+            }
         },
         data() {
             return {
@@ -315,20 +320,19 @@
         .addIcon {
             color: #fff;
             position: absolute;
-            width: 100%;
-            ;
+            width: 100%; 
             height: fit-content;
             left: 0;
             right: 0;
             margin: auto;
-            font-size: 22upx;
+            font-size: 23upx;
             text-align: center;
         }
         .addWord {
-            top: 45upx;
+            top: 39upx;
         }
         .addIcon {
-            top: 5upx;
+            top: 0;
             font-size: 40upx;
         }
         &.higher {

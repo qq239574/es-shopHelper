@@ -49,6 +49,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
 var _formater = __webpack_require__(/*! ../../components/my-components/formater.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\formater.js"); //
 //
 //
@@ -89,13 +95,13 @@ var _formater = __webpack_require__(/*! ../../components/my-components/formater.
 //
 //
 //
-var _default = { data: function data() {return { menuIndex: '' };}, props: { Jurisdiction: { type: Object, default: {}, required: true }, toggle: { type: Boolean, default: true }, vipsList: { type: Array, default: [{ img: '/static/img/global/home_order_tobepay.png', title: '', vipClass: '会员', tel: 1524516566, money: 0, score: 0 }] } }, watch: { toggle: function toggle() {this.menuIndex = '';} }, methods: { showMenu: function showMenu(vipindex) {this.menuIndex = 'vip-' + vipindex;}, clickItem: function clickItem(vipindex, item) {
-      this.$emit('click', {
-        type: 'item',
-        detail: Object.assign({
-          vipIndex: vipindex },
-        item) });
-
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { menuIndex: '' };}, props: { Jurisdiction: { type: Object, default: {}, required: true }, toggle: { type: Boolean, default: true }, vipsList: { type: Array, default: [{ img: '/static/img/global/home_order_tobepay.png', title: '', vipClass: '会员', tel: 1524516566, money: 0, score: 0 }] } }, watch: { toggle: function toggle() {this.menuIndex = '';} }, methods: { showMenu: function showMenu(vipindex) {this.menuIndex = 'vip-' + vipindex;}, clickItem: function clickItem(vipindex, item) {this.$emit('click', { type: 'item', detail: Object.assign({ vipIndex: vipindex }, item) });
     },
     clickMenuItem: function clickMenuItem(vipindex, item, name) {
       this.menuIndex = '';

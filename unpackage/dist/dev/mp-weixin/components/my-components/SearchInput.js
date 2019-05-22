@@ -39,7 +39,11 @@ var _default =
 
     value: {
       type: String,
-      default: '' } },
+      default: '' },
+
+    noSearch: {
+      type: Boolean,
+      default: false } },
 
 
   watch: {

@@ -128,13 +128,12 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
             url: './vipBills?from=vipManage' });
 
         }
-      } else {
-      }
+      } else {}
       this.toggle = !this.toggle;
     },
     initPage: function initPage() {var _this2 = this;
-      this.searching = true;
       this.pageLoading();
+      this.searching = true;
       this.Request('vipList', {
         keywords: cacheSearchKey,
         tag_id: '',
@@ -162,6 +161,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         });
         _this2.searching = false;
       }).catch(function (res) {
+        _this2.closePageLoading();
         _this2.searching = false;
         _this2.Toast(res.message || '出错啦');
       });
