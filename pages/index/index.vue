@@ -4,7 +4,7 @@
             <view class='title van-ellipsis '>
                 <van-icon name="shop-o" class='shop-icon' />{{shopName}}
             </view>
-            <view class="button" @click='changeShop' v-if='showTurnShop'>
+            <view class="button van-hairline" @click='changeShop' v-if='showTurnShop'>
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
         <dataShower :Jurisdiction='Jurisdiction' :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
@@ -159,7 +159,7 @@
                 })
             },
             initPage() {
-                getJurisdiction.call(this).then(res => {//权限获取
+                getJurisdiction.call(this).then(res => { //权限获取
                     this.Jurisdiction = res;
                 }).catch(res => {
                     this.Toast(res.message)
@@ -228,15 +228,13 @@
         onLoad(option) {
             uni.hideTabBar({ //隐藏tabbar
                 animation: false
-            })
+            });
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData('selectShop');
             this.shopName = DataFrom.title;
             this.showTurnShop = DataFrom.totalShops > 1;
-            // }
-        },
-        onShow() {
             this.initPage();
+            // }
         }
     }
 </script>
@@ -260,7 +258,6 @@
             .button {
                 margin: auto 0;
                 font-size: 26upx;
-                border: 1upx solid #bdc8df;
                 line-height: 40upx;
                 text-align: center;
                 color: #6e7685;
@@ -275,6 +272,11 @@
                     height: 22upx;
                     display: inline-block;
                     margin-right: 8upx;
+                }
+                &:after {
+                    border: 1upx solid #9da3ae;
+                    border-radius: 40upx;
+                    bottom: -47%;
                 }
             }
             .title {

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import myButton from '../../../components/my-components/RoundButton';
+    import myButton from '../../../components/my-components/RoundButton.vue';
     import {
         number_format
     } from '../../../components/my-components/formater.js'

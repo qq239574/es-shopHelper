@@ -8,17 +8,18 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    var currentDate = this.getDate({
-      format: true });
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
+
+
+
+
+var _getDateSection = __webpack_require__(/*! ./getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js"); //
+//
+//
+//
+//
+var _default = { data: function data() {var currentDate = this.getDate({ format: true });
     return {
       date: currentDate };
 
@@ -42,13 +43,11 @@ var _default =
       var month = date.getMonth() + 1;
       var day = date.getDate();
       if (type === 'start') {
-        year = year - 90;
+        return (0, _getDateSection.getDate)(-90);
+
       } else if (type === 'end') {
-        year = year + 2;
+        return (0, _getDateSection.getDate)(0);
       }
-      month = month > 9 ? month : '0' + month;;
-      day = day > 9 ? day : '0' + day;
-      return "".concat(year, "-").concat(month, "-").concat(day);
     } } };exports.default = _default;
 
 /***/ }),

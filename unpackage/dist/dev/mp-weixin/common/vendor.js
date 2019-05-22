@@ -10708,9 +10708,9 @@ var postSelfVerifyInfo = { //订单自提
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   // base_url: "https://shop.jacjack.com", 
   //  base_url: "https://ceshiuser.100cms.com", 
-  base_url: "http://user.jiangyk.eldev.cn"
-  //  base_url: "https://user.qdev.eldev.cn",
-};var _default =
+  //  base_url: "http://user.jiangyk.eldev.cn", 
+  base_url: "https://user.qdev.eldev.cn" };var _default =
+
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -14925,7 +14925,15 @@ function getLineOption1(datalist) {
       type: 'line',
       // smooth: true,
       symbol: "none",
-      data: datalist }] });
+      data: datalist,
+      itemStyle: {
+        normal: {
+          color: '#ffffff',
+          lineStyle: {
+            width: 2 //设置线条粗细
+          } } } }] });
+
+
 
 
 }
@@ -14941,7 +14949,15 @@ function getLineOption2(datalist) {
       type: 'line',
       // smooth: true,
       symbol: "none",
-      data: datalist }] });
+      data: datalist,
+      itemStyle: {
+        normal: {
+          color: '#ffffff',
+          lineStyle: {
+            width: 2 //设置线条粗细
+          } } } }] });
+
+
 
 
 }
@@ -14957,7 +14973,15 @@ function getLineOption3(datalist) {
       type: 'line',
       // smooth: true,
       symbol: "none",
-      data: datalist }] });
+      data: datalist,
+      itemStyle: {
+        normal: {
+          color: '#ffffff',
+          lineStyle: {
+            width: 2 //设置线条粗细
+          } } } }] });
+
+
 
 
 }
@@ -14973,7 +14997,15 @@ function getLineOption4(datalist) {
       type: 'line',
       // smooth: true,
       symbol: "none",
-      data: datalist }] });
+      data: datalist,
+      itemStyle: {
+        normal: {
+          color: '#ffffff',
+          lineStyle: {
+            width: 2 //设置线条粗细
+          } } } }] });
+
+
 
 
 }
@@ -15058,11 +15090,12 @@ function _default(commission) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(list) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;
+function _default(list) {
   return list.map(function (item) {
     return {
       title: item.name,
-      left: item.days > 0 ? item.days + '天后到期' : '已过期',
+      left: item.days >= 0 ? item.days + '天后到期' : '已过期',
       expireDay: item.days,
       status: item.status,
       is_checked: item.is_checked,

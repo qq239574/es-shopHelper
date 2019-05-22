@@ -1,8 +1,9 @@
+ 
 export default function (list) {
     return list.map(item => {
-        return { 
+        return {
             title: item.name,
-            left: item.days > 0 ? (item.days + '天后到期') : '已过期',
+            left: item.days >= 0 ? (item.days + '天后到期') : '已过期',
             expireDay: item.days,
             status: item.status,
             is_checked: item.is_checked,

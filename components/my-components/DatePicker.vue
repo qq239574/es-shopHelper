@@ -4,6 +4,7 @@
     </picker>
 </template>
 <script>
+import {getDate} from './getDateSection.js'
     export default {
         data() {
             const currentDate = this.getDate({
@@ -32,13 +33,11 @@
                 let month = date.getMonth() + 1;
                 let day = date.getDate();
                 if (type === 'start') {
-                    year = year - 90;
+                    return getDate(-90)
+                     
                 } else if (type === 'end') {
-                    year = year + 2;
+                     return getDate(0)
                 }
-                month = month > 9 ? month : '0' + month;;
-                day = day > 9 ? day : '0' + day;
-                return `${year}-${month}-${day}`;
             }
         }
     }

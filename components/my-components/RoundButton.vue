@@ -1,5 +1,5 @@
 <template>
-    <view class='my-round-button cell-font-gray' :class='tappingClass' @click.stop='clickBuntton' @touchstart='clickStart' @touchend='cancelTap' @touchcancel='cancelTap'>
+    <view class='my-round-button cell-font-gray van-hairline' :class='tappingClass' @click.stop='clickBuntton' @touchstart='clickStart' @touchend='cancelTap' @touchcancel='cancelTap'>
         <slot></slot><text class="grace-badge" v-if='badge!==0'>{{badge}}</text>
     </view>
 </template>
@@ -28,9 +28,9 @@
         },
         methods: {
             clickBuntton() {
-                this.$emit('click',{
-                    type:this.type,
-                    badge:this.badge
+                this.$emit('click', {
+                    type: this.type,
+                    badge: this.badge
                 })
             },
             clickStart() {
@@ -55,29 +55,30 @@
         font-size: 26upx;
         font-weight: 500;
         letter-spacing: 4upx;
-        border: 1upx solid #aaafb5;
         padding: 0 20upx;
         position: relative;
         &.common {
             background: #fff;
+            &:after {
+                border: 1upx solid #9da3ae;
+                border-radius: 60upx;
+                bottom: -47%;
+            }
         }
         &.common.tapping {
             background: #eee;
         }
         &.primary {
-            color: #fff;
-            border: none;
+            color: #fff; 
             background: #fb6638;
         }
         &.primary.tapping {
-            border: none;
             color: #fdfdfd;
             background: #ec673e;
         }
-        &.disable{
+        &.disable {
             background: #9da3ae;
-            color:#fff;
-            border: none;
+            color: #fff; 
         }
         .grace-badge {
             position: absolute;

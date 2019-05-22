@@ -38,7 +38,15 @@ export function getLineOption1(datalist) {
             type: 'line',
             // smooth: true,
             symbol: "none",
-            data: datalist
+            data: datalist,
+            itemStyle: {
+                normal: {
+                    color: '#ffffff',
+                    lineStyle:{
+                        width:2//设置线条粗细
+                    }
+                }
+            }
         }]
     });
 }
@@ -54,7 +62,15 @@ export function getLineOption2(datalist) {
             type: 'line',
             // smooth: true,
             symbol: "none",
-            data: datalist
+            data: datalist,
+            itemStyle: {
+                normal: {
+                    color: '#ffffff',
+                    lineStyle:{
+                        width:2//设置线条粗细
+                    }
+                }
+            }
         }]
     });
 }
@@ -70,7 +86,15 @@ export function getLineOption3(datalist) {
             type: 'line',
             // smooth: true,
             symbol: "none",
-            data: datalist
+            data: datalist,
+            itemStyle: {
+                normal: {
+                    color: '#ffffff',
+                    lineStyle:{
+                        width:2//设置线条粗细
+                    }
+                }
+            }
         }]
     });
 }
@@ -86,7 +110,15 @@ export function getLineOption4(datalist) {
             type: 'line',
             // smooth: true,
             symbol: "none",
-            data: datalist
+            data: datalist,
+            itemStyle: {
+                normal: {
+                    color: '#ffffff',
+                    lineStyle:{
+                        width:2//设置线条粗细
+                    }
+                }
+            }
         }]
     });
 }

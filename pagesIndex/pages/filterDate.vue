@@ -68,10 +68,22 @@
             DataFrom = this.Cacher.getData(option.from);
             if (DataFrom.from == 'toper') {
                 this.showLimit = false;
+                // this.items = [{
+                //     label: '今日',
+                //     value: 7,
+                //     id: 0
+                // }, {
+                //     label: '昨日',
+                //     value: 15,
+                //     id: 1
+                // }, {
+                //     label: '近7日',
+                //     value: 30,
+                //     id: 2
+                // }]
             } else {
                 this.showLimit = true;
             }
-            this.initPage();
         },
         onShow() {
             this.initPage();

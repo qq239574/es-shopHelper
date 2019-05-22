@@ -65,7 +65,7 @@
         },
         computed:{
             iconSize(){
-                return uni.upx2px(35) + 'px';
+                return uni.upx2px(25) + 'px';
             }
         },
         data() {
@@ -332,8 +332,8 @@
             top: 39upx;
         }
         .addIcon {
-            top: 0;
-            font-size: 40upx;
+            top: 3upx;
+            font-size: 30upx;
         }
         &.higher {
             bottom: 136upx;

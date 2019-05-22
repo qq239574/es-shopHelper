@@ -75,7 +75,7 @@ var searching = false;var needShare = {};var DataFrom = {};var DataGo = {};var s
 
   computed: {
     iconSize: function iconSize() {
-      return uni.upx2px(35) + 'px';
+      return uni.upx2px(25) + 'px';
     } },
 
   data: function data() {

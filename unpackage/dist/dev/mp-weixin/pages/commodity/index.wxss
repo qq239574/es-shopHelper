@@ -31,8 +31,8 @@
     top: 39rpx;
 }
 .addGoods .addIcon.data-v-3fcc733d {
-    top: 0;
-    font-size: 40rpx;
+    top: 3rpx;
+    font-size: 30rpx;
 }
 .addGoods.higher.data-v-3fcc733d {
     bottom: 136rpx;

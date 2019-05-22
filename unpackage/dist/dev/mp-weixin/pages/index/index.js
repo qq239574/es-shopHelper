@@ -243,10 +243,8 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
     DataFrom = this.Cacher.getData('selectShop');
     this.shopName = DataFrom.title;
     this.showTurnShop = DataFrom.totalShops > 1;
-    // }
-  },
-  onShow: function onShow() {
     this.initPage();
+    // }
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

@@ -27,7 +27,6 @@
 .pages-index-index .tunshop .button.data-v-78b85d22 {
       margin: auto 0;
       font-size: 26rpx;
-      border: 1rpx solid #bdc8df;
       line-height: 40rpx;
       text-align: center;
       color: #6e7685;
@@ -46,6 +45,11 @@
         height: 22rpx;
         display: inline-block;
         margin-right: 8rpx;
+}
+.pages-index-index .tunshop .button.data-v-78b85d22:after {
+        border: 1rpx solid #9da3ae;
+        border-radius: 40rpx;
+        bottom: -47%;
 }
 .pages-index-index .tunshop .title.data-v-78b85d22 {
       height: 100%;

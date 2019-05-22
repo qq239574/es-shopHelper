@@ -216,7 +216,7 @@
                 flex-wrap: nowrap;
                 justify-content: space-between;
                 padding: 0 11upx;
-                margin: auto 0;
+                margin: auto 0; 
                 .point {
                     width: 6upx;
                     height: 6upx;
@@ -257,33 +257,34 @@
                         height: 63upx;
                         margin-top: 48upx;
                         border-radius: 50%;
-                        image{
-                            width:30upx;
-                            height:30upx;
+                        image {
+                            width: 30upx;
+                            height: 30upx;
                             position: absolute;
-                            top:0;
-                            left:0;
+                            top: 0;
+                            left: 0;
                             bottom: 0;
                             right: 0;
-                            margin:auto;
+                            margin: auto;
                         }
-                        &.img1{
-                            background: linear-gradient(135deg,#5cd4fe,#487dfc);
+                        &.img1 {
+                            background: linear-gradient(135deg, #5cd4fe, #487dfc);
                             position: relative;
                         }
-                        &.img2,&.img3{
-                            background: linear-gradient(135deg,#fb905a,#ff6805);
+                        &.img2,
+                        &.img3 {
+                            background: linear-gradient(135deg, #fb905a, #ff6805);
                             position: relative;
                         }
-                        &.img4,&.img5{
-                            background: linear-gradient(135deg,#fb8685,#ff361c);
+                        &.img4,
+                        &.img5 {
+                            background: linear-gradient(135deg, #fb8685, #ff361c);
                             position: relative;
                         }
-                        &.img6{
-                            background: linear-gradient(135deg,#39e6ad,#0ded8d);
+                        &.img6 {
+                            background: linear-gradient(135deg, #39e6ad, #0ded8d);
                             position: relative;
                         }
-                       
                     }
                     .title {
                         color: #fff;
