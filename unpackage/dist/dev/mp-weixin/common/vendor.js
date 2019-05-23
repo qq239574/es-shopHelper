@@ -10709,10 +10709,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   // base_url: "https://shop.jacjack.com", 
   //  base_url: "https://ceshiuser.100cms.com", 
   //  base_url: "http://user.jiangyk.eldev.cn", 
-  base_url: "https://user.qdev.eldev.cn"
+  //  base_url: "https://user.qdev.eldev.cn",
 
-  //  base_url: "https://ceshishop.jacjack.com",
-};var _default =
+  base_url: "https://ceshishop.jacjack.com" };var _default =
+
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -15542,7 +15542,6 @@ function checkJurisdiction() {//检查权限
     _getJurisdiction.getJurisdiction.call(that, true).then(function (res) {
       resolve(res);
     }).catch(function (res) {
-      that.closePageLoading();
       reject(res);
     });
   });
@@ -15766,7 +15765,6 @@ function login() {//账号密码登录流程
           reject(res);
           that.Toast(res.message);
         }
-        that.closePageLoading();
       }).catch(function (res) {
 
         if (res.error == -3) {//已登录

@@ -8,8 +8,7 @@ function checkJurisdiction() { //检查权限
     return new Promise((resolve, reject) => {
         getJurisdiction.call(that, true).then(res => {
             resolve(res);
-        }).catch(res => {
-            that.closePageLoading();
+        }).catch(res => { 
             reject(res);
         })
     })
@@ -232,8 +231,7 @@ export function login() { //账号密码登录流程
                 } else {
                     reject(res);
                     that.Toast(res.message)
-                }
-                that.closePageLoading();
+                } 
             }).catch(res => {
 
                 if (res.error == -3) { //已登录

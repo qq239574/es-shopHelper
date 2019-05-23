@@ -176,8 +176,8 @@
                     this.shopName = res.shop.name;
                     newNotice = res.notice;
                     this.newNotice = {
-                        label: newNotice[0].title || '',
-                        date: newNotice[0].date || ''
+                        label: newNotice[0] && newNotice[0].title || '',
+                        date: newNotice[0] && newNotice[0].date || ''
                     }
                 });
                 this.Request('billOverView').then(res => {
@@ -207,7 +207,7 @@
                                 payedVip: res.sell_data.yesterday_pay_member_num
                             }
                             if (item == searchDay) {
-                                this.showData = cacheData[item];
+                                this.showData = Object.assign({}, cacheData[item]);
                             }
                         }
                     }).catch(res => {

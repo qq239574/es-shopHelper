@@ -121,10 +121,13 @@ var sessionId = '';var DataFrom = {};var requestBar = '';var _default = { compon
     this.initPage();if (!DataFrom.from) {setTimeout(function () {//防止接口过久
         _this.tryLogining = false;_this.closePageLoading();}, 3000);this.pageLoading();_login.wxLogin.call(this).then(function (res) {//先尝试微信登录
         canLogin = true;_this.Cacher.setData('cache-user-login', { //清空密码
-          userId: _this.userId, password: '' });uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });}).finally(function (res) {_this.tryLogining = false;if (_this.userId && _this.password && !canLogin) {//缓存了账号密码而且没有绑定微信就直接登录
-          _this.loginNow();}}); //微信登录
+          userId: _this.userId, password: '' });uni.reLaunch({ url: '../../pagesLogin/pages/selectShop?from=login' });}).finally(function (res) {console.log('loding....', _this.userId, _this.password, !canLogin);clearTimeout(requestBar);_this.closePageLoading();_this.tryLogining = false;if (_this.userId && _this.password && !canLogin) {//缓存了账号密码而且没有绑定微信就直接登录
+          _this.loginNow(false);
+        }
+      }); //微信登录
     } else {//从别处跳转过来的 
-      this.closePageLoading();this.tryLogining = false;
+      this.closePageLoading();
+      this.tryLogining = false;
       uni.clearStorage(); //清空缓存 
       this.Cacher.setData('cache-user-login', { //清空除账号密码以外的缓存
         userId: this.userId,
@@ -171,23 +174,22 @@ var sessionId = '';var DataFrom = {};var requestBar = '';var _default = { compon
     loginNow: function loginNow(val) {var _this3 = this; //点击登录 
       clearTimeout(requestBar);
       requestBar = setTimeout(function () {
-        requestBar = '';
         requesting = false;
-        typeof val == 'boolean' && val && _this3.Toast('登录时间长，请重试');
+        typeof val == 'boolean' || _this3.Toast('登录时间长，请重试');
       }, 3000);
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();
         _login.login.call(this).then(function (res) {
-          requesting = false;
           uni.reLaunch({
             url: '../../pagesLogin/pages/selectShop?from=login' });
 
         }).catch(function (res) {
-          _this3.closePageLoading();
           _this3.idError = true; //账号密码不对
-          requesting = false;
         }).finally(function (res) {
+          clearTimeout(requestBar);
+          requesting = false;
+          _this3.closePageLoading();
           _this3.tryLogining = false;
         }); //微信登录; //账号密码登录
       } else {

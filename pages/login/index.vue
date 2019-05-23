@@ -107,9 +107,12 @@
 						url: '../../pagesLogin/pages/selectShop?from=login'
 					})
 				}).finally(res => {
+					console.log('loding....', this.userId, this.password, !canLogin)
+					clearTimeout(requestBar);
+					this.closePageLoading();
 					this.tryLogining = false;
 					if (this.userId && this.password && !canLogin) { //缓存了账号密码而且没有绑定微信就直接登录
-						this.loginNow();
+						this.loginNow(false);
 					}
 				}); //微信登录
 			} else { //从别处跳转过来的 
@@ -161,23 +164,22 @@
 			loginNow(val) { //点击登录 
 				clearTimeout(requestBar);
 				requestBar = setTimeout(() => {
-					requestBar = '';
 					requesting = false;
-					(typeof val == 'boolean' && val) && this.Toast('登录时间长，请重试');
+					(typeof val == 'boolean') || this.Toast('登录时间长，请重试');
 				}, 3000);
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
 					login.call(this).then(res => {
-						requesting = false;
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})
 					}).catch(res => {
-						this.closePageLoading();
 						this.idError = true; //账号密码不对
-						requesting = false;
 					}).finally(res => {
+						clearTimeout(requestBar);
+						requesting = false;
+						this.closePageLoading();
 						this.tryLogining = false;
 					}); //微信登录; //账号密码登录
 				} else {

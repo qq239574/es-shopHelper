@@ -125,6 +125,7 @@
 			reBindWX() {
 				this.closePageLoading();
 				bindWx.call(this, true).then(res => {
+				}).finally(res => {
 					this.initPage();
 				});
 			},
@@ -232,7 +233,10 @@
 		width: 28upx;
 		height: 28upx;
 		position: absolute;
-		top:0;bottom: 0;left:0;margin: auto;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		margin: auto;
 	}
 	.margin20 {
 		height: 20upx;

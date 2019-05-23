@@ -186,8 +186,8 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         _this.shopName = res.shop.name;
         newNotice = res.notice;
         _this.newNotice = {
-          label: newNotice[0].title || '',
-          date: newNotice[0].date || '' };
+          label: newNotice[0] && newNotice[0].title || '',
+          date: newNotice[0] && newNotice[0].date || '' };
 
       });
       this.Request('billOverView').then(function (res) {
@@ -217,7 +217,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
               payedVip: res.sell_data.yesterday_pay_member_num };
 
             if (item == searchDay) {
-              _this.showData = cacheData[item];
+              _this.showData = Object.assign({}, cacheData[item]);
             }
           }
         }).catch(function (res) {
