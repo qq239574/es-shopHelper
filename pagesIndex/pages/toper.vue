@@ -31,7 +31,7 @@
         data() {
             return {
                 pageId: 'goods',
-                pageLabel: '今天',
+                pageLabel: '今日',
                 list: [],
                 searching: true,
                 nodataContent: "当前日期无商品销售"
@@ -85,7 +85,7 @@
                 DataGo = this.Cacher.getData(DataGo.go);
                 DataGo = DataGo.date ? DataGo : {
                     from: 'filterDate',
-                    date: [getDate(-1), getDate(0), '今天']
+                    date: [getDate(0), getDate(0), '今天']
                 };
                 if (DataFrom.show == 'vip') {
                     api = 'vipsTop10';

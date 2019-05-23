@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "暂无网络",
+  "usingComponents": {
+    "nodata": "/components/my-components/nodata"
+  }
+}

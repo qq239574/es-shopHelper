@@ -7,9 +7,8 @@ author : 5213606@qq.com 深海
 GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠道！
 侵权必究，请遵守版权约定！
 */
-
+let storeNetWork = true; //判断断网
 export default {
-
 	get(url, data, header, callback) {
 		uni.request({
 			url: url,
@@ -18,18 +17,31 @@ export default {
 			header: header || {},
 			dataType: "json",
 			success: (res) => {
+				storeNetWork = true;
 				callback(res.data);
 			},
 			fail: () => {
-				uni.showToast({
-					title: "网络请求失败",
-					icon: "none"
-				});
+				if (storeNetWork) {
+					storeNetWork = false;
+					setTimeout(() => {
+						storeNetWork = true;
+					}, 3000)
+					uni.navigateTo({
+						url: '/pagesLogin/pages/noWeb'
+					})
+				}else{
+					callback({
+						error:-100,
+						message:'网络较差，请稍后重试'
+					})
+				}
+
 			}
 		});
 	},
 
-	post(url, data, contentType, headers, callback) { 
+	post(url, data, contentType, headers, callback) {
+		let noweb = getApp(); // 取得全局App
 		switch (contentType) {
 			case "form":
 				var headerObj = {
@@ -49,22 +61,32 @@ export default {
 		for (let k in headers) {
 			headerObj[k] = headers[k];
 		}
-		
-		wx.request({
+
+		uni.request({
 			url: url,
 			data: data,
 			method: "POST",
 			dataType: "json",
 			header: headerObj,
 			success: (res) => {
-				console.log('what happende::', res)
+				storeNetWork = true;
 				callback(res.data);
 			},
 			fail: () => {
-				uni.showToast({
-					title: "网络请求失败",
-					icon: "none"
-				});
+				if (storeNetWork) {
+					storeNetWork = false;
+					setTimeout(() => {
+						storeNetWork = true;
+					}, 3000)
+					uni.navigateTo({
+						url: '/pagesLogin/pages/noWeb'
+					})
+				}else{
+					callback({
+						error:-100,
+						message:'网络较差，请稍后重试'
+					})
+				}
 			}
 		});
 	}

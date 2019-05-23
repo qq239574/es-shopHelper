@@ -1,6 +1,9 @@
 <script>
 	import cacher from './store/cache.js'
 	export default {
+		globalData:{
+			netWork:true
+		},
 		onLaunch: function() {
 			let that = this;
 			this.Request('getSettings').then(res => {

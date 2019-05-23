@@ -64,13 +64,14 @@
         image {
             width: 150upx;
             height: 184upx;
-            margin: 100upx auto 50upx;
+            margin: 100upx auto 20upx;
         }
         view {
             text-align: center;
             width: 100%;
             font-size: 30upx;
             line-height: 60upx;
+            color:#6e7685;
         }
     }
 </style>

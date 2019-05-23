@@ -19,7 +19,15 @@ var _getDateSection = __webpack_require__(/*! ./getDateSection.js */ "I:\\CurPro
 //
 //
 //
-var _default = { data: function data() {var currentDate = this.getDate({ format: true });
+var _default = { props: { showLimit: { //是否限制选择范围
+      type: Boolean,
+      default: false } },
+
+
+  data: function data() {
+    var currentDate = this.getDate({
+      format: true });
+
     return {
       date: currentDate };
 
@@ -42,9 +50,10 @@ var _default = { data: function data() {var currentDate = this.getDate({ format:
       var year = date.getFullYear();
       var month = date.getMonth() + 1;
       var day = date.getDate();
-      if (type === 'start') {
+      if (type === 'start' && !this.showLimit) {
+        return '2018-01-01';
+      } else if (type === 'start' && this.showLimit) {
         return (0, _getDateSection.getDate)(-90);
-
       } else if (type === 'end') {
         return (0, _getDateSection.getDate)(0);
       }

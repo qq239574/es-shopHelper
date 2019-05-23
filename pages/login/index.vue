@@ -1,45 +1,48 @@
 <template>
 	<view class=" page pages-login-index">
-		<view class="grace-center">
-			<image src='../../static/img/global/logo.jpg' class='web-logo'></image>
-		</view>
-		<view class="tips" v-if='idError'>
-			<image src='/static/img/global/warn.png' class='tips__round'></image>
-			账号或密码错误！
-		</view>
-		<view class="grace-form">
-			<van-cell-group>
-				<van-field :value="userId" placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable @clear='clearInput("userId")'>
-					<image slot='left-icon' src='/static/img/global/user-icon.jpg' class='icon user-icon'></image>
-				</van-field>
-				<van-field :value="password" type="text" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"":"display:none"'>
-					<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
-					<van-icon slot="icon" @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
-					<van-icon slot="icon" @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
-				</van-field>
-				<van-field :value="password" type="password" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"display:none":""'>
-					<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
-					<van-icon slot="icon" @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
-					<van-icon slot="icon" @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
-				</van-field>
-			</van-cell-group>
-		</view>
-		<view class='getUserInfo'>
-			<LongButton @click='loginNow' :disable='disableButton'><button  class='appletBtn'></button>登录</LongButton>
-		</view>
-		<view class="forget-pw cell-font-gray">
-			<view @tap="reg">忘记密码?</view>
-		</view>
-		<!-- 第三方登录 -->
-		<view class="grace-login-three">
-			<view class="surport">微信登录</view>
-			<view class='surportList'>
-				<view class="supporter" @click='loginWithWx'>
-					<image lazy-load src='/static/img/global/product_share_wechat.svg'></image>
-					<button @click='clickButton'  open-type='getUserInfo' class='appletBtn'> </button>
+		<block v-if='!tryLogining'>
+			<view class="grace-center">
+				<image src='../../static/img/global/logo.jpg' class='web-logo'></image>
+			</view>
+			<view class="tips" v-if='idError'>
+				<image src='/static/img/global/warn.png' class='tips__round'></image>
+				账号或密码错误！
+			</view>
+			<view class="grace-form">
+				<van-cell-group :border='false'>
+					<van-field :value="userId" placeholder="请输入用户名" use-icon-slot @input='getUserId' clearable @clear='clearInput("userId")'>
+						<image slot='left-icon' src='/static/img/global/user-icon.jpg' class='icon user-icon'></image>
+					</van-field>
+					<view :style='height22'></view>
+					<van-field :value="password" type="text" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"":"display:none"'>
+						<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
+						<van-icon slot="icon" custom-style='vertical-align:-20%;color:#9a9eaa;' :size='height30' @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
+						<van-icon slot="icon" custom-style='vertical-align:-20%;color:#9a9eaa;' :size='height30' @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
+					</van-field>
+					<van-field :value="password" type="password" placeholder="请输入密码" use-icon-slot @input='getPassWord' clearable @clear='clearInput("password")' :style='openEye?"display:none":""'>
+						<image slot='left-icon' src='/static/img/global/pw-con.png' class='icon user-icon'></image>
+						<van-icon slot="icon" custom-style='vertical-align:-20%;color:#9a9eaa;' :size='height30' @click='clickPWIcon' name="eye-o" class="van-cell__right-icon" v-if='openEye' />
+						<van-icon slot="icon" custom-style='vertical-align:-20%;color:#9a9eaa;' :size='height30' @click='clickPWIcon' name="closed-eye" class="van-cell__right-icon" v-else />
+					</van-field>
+				</van-cell-group>
+			</view>
+			<view class='getUserInfo'>
+				<LongButton @click='loginNow' :disable='disableButton'><button class='appletBtn'></button>登录</LongButton>
+			</view>
+			<view class="forget-pw cell-font-gray">
+				<view @tap="reg">忘记密码?</view>
+			</view>
+			<!-- 第三方登录 -->
+			<view class="grace-login-three">
+				<view class="surport">微信登录</view>
+				<view class='surportList'>
+					<view class="supporter" @click='loginWithWx'>
+						<image lazy-load src='/static/img/global/product_share_wechat.svg'></image>
+						<button @click='clickButton' open-type='getUserInfo' class='appletBtn'> </button>
+					</view>
 				</view>
 			</view>
-		</view>
+		</block>
 		<van-toast id="van-toast" />
 		<van-dialog id="van-dialog" />
 	</view>
@@ -50,7 +53,8 @@
 	let requesting = false;
 	let canLogin = false; //可否登录 
 	let sessionId = ''
-	let DataFrom = {}
+	let DataFrom = {};
+	let requestBar = '';
 	import {
 		wxLogin,
 		login
@@ -65,39 +69,63 @@
 				userId: '',
 				password: '',
 				idError: false, //用户信息错误
+				tryLogining: true, //正在尝试登录的
 			}
 		},
 		computed: {
 			disableButton() {
 				this.idError = false;
 				return !this.userId || !this.password;
+			},
+			height22() {
+				return 'height:' + uni.upx2px(22) + 'px'
+			},
+			height30() {
+				return uni.upx2px(30) + 'px'
 			}
 		},
 		onLoad(option) {
+			let canLogin = false;
 			requesting = false;
 			let that = this;
 			this.Cacher.clearData('sessionId');
 			DataFrom = this.Cacher.getData(option.from) || {}; //获取页面传参//如果没有from就说明是刚进入小程序
 			this.initPage();
 			if (!DataFrom.from) {
-				wxLogin.call(this).then(res => {
+				setTimeout(() => { //防止接口过久
+					this.tryLogining = false;
+					this.closePageLoading();
+				}, 3000);
+				this.pageLoading();
+				wxLogin.call(this).then(res => { //先尝试微信登录
 					canLogin = true;
-					if (canLogin) {
-						uni.reLaunch({
-							url: '../../pagesLogin/pages/selectShop?from=login'
-						})
-					} else {
-						this.idError = true; //账号密码不对
+					this.Cacher.setData('cache-user-login', { //清空密码
+						userId: this.userId,
+						password: ''
+					})
+					uni.reLaunch({
+						url: '../../pagesLogin/pages/selectShop?from=login'
+					})
+				}).finally(res => {
+					this.tryLogining = false;
+					if (this.userId && this.password && !canLogin) { //缓存了账号密码而且没有绑定微信就直接登录
+						this.loginNow();
 					}
 				}); //微信登录
 			} else { //从别处跳转过来的 
+				this.closePageLoading();
+				this.tryLogining = false;
 				uni.clearStorage(); //清空缓存 
+				this.Cacher.setData('cache-user-login', { //清空除账号密码以外的缓存
+					userId: this.userId,
+					password: this.password
+				})
 			}
 		},
 		mounted() {
-			this.closePageLoading()
+			this.closePageLoading();
 		},
-		methods: { 
+		methods: {
 			clickButton() {
 				wxLogin.call(this).then(res => {
 					uni.reLaunch({
@@ -105,14 +133,14 @@
 					})
 				}).catch(res => {
 					res.message && this.Toast(res.message)
-				}); //微信登录
+				}) //微信登录
 			},
 			initPage() {
 				this.openEye = false;
 				canLogin = false;
 				let cache = this.Cacher.getData('cache-user-login');
 				this.userId = cache && cache.userId || '';
-				this.password = '';
+				this.password = cache && cache.password || '';
 				this.idError = false;
 			},
 			getUserId(val) {
@@ -130,7 +158,13 @@
 			loginWithWx() {
 				this.closePageLoading();
 			},
-			loginNow(e) { //点击登录 
+			loginNow(val) { //点击登录 
+				clearTimeout(requestBar);
+				requestBar = setTimeout(() => {
+					requestBar = '';
+					requesting = false;
+					(typeof val == 'boolean' && val) && this.Toast('登录时间长，请重试');
+				}, 3000);
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
@@ -143,12 +177,12 @@
 						this.closePageLoading();
 						this.idError = true; //账号密码不对
 						requesting = false;
+					}).finally(res => {
+						this.tryLogining = false;
 					}); //微信登录; //账号密码登录
 				} else {
-					setTimeout(() => {
-						requesting = false;
-						this.Toast('登录时间长，请重试');
-					}, 3000)
+					this.closePageLoading();
+					this.Toast('正在登录,请稍候');
 				}
 			},
 			reg: function() { //找回密码
@@ -225,6 +259,7 @@
 					height: 80upx;
 					display: inline-block;
 					position: relative;
+					margin: 0;
 					button,
 					image {
 						width: 80upx;
@@ -298,7 +333,7 @@
 		.icon {
 			width: 29upx;
 			height: 30upx;
-			margin: 10upx 24upx 0 12upx;
+			margin: 12upx 34upx 0 12upx;
 		}
 		.login-sendmsg-btn {
 			border: 1px solid #00C777 !important;

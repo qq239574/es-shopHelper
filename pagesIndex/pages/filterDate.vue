@@ -5,10 +5,10 @@
             <inputItem :disabled='true' label='自定义日期' value=' ' labelStyle='color:#6f7685'></inputItem>
             <radio :value="item.value" :checked="true" color='#fb6638' v-if='selectNearDays<0' />
         </view>
-        <DatePicker @change='getStart'>
+        <DatePicker @change='getStart' :showLimit='showLimit'>
             <selectItem label='开始日期' :value='startDate'></selectItem>
         </DatePicker>
-        <DatePicker @change='getEnd'>
+        <DatePicker @change='getEnd' :showLimit='showLimit'>
             <selectItem label='截止日期' :value='endDate'></selectItem>
         </DatePicker>
         <view class="tip">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-    import dateBlock from '../components/FilteDate--radioGroup'
+    import dateBlock from '../components/FilteDate--radioGroup.vue'
     import selectItem from '../../components/my-components/editBlock-SelectItem.vue'
     import inputItem from '../../components/my-components/editBlock-InputItem.vue'
     import langButton from '../../components/my-components/LongButton.vue'
@@ -46,21 +46,24 @@
             return {
                 items: [{
                     label: '近7日',
-                    value: 7,
+                    from: -7,
+                    to: 0,
                     id: 0
                 }, {
                     label: '近15日',
-                    value: 15,
+                    from: -15,
+                    to: 0,
                     id: 1
                 }, {
                     label: '近30日',
-                    value: 30,
+                    from: -30,
+                    to: 0,
                     id: 2
                 }],
-                nearDay: 7,
+                nearDay: 0,
                 startDate: '',
                 endDate: '',
-                selectNearDays: 0,
+                selectNearDays: 0,//标识，用于判断返回“今天”还是返回"from~to"
                 showLimit: true
             }
         },
@@ -68,19 +71,22 @@
             DataFrom = this.Cacher.getData(option.from);
             if (DataFrom.from == 'toper') {
                 this.showLimit = false;
-                // this.items = [{
-                //     label: '今日',
-                //     value: 7,
-                //     id: 0
-                // }, {
-                //     label: '昨日',
-                //     value: 15,
-                //     id: 1
-                // }, {
-                //     label: '近7日',
-                //     value: 30,
-                //     id: 2
-                // }]
+                this.items = [{
+                    label: '今日',
+                    from: 0,
+                    to: 0,
+                    id: 0
+                }, {
+                    label: '昨日',
+                    from: -1,
+                    to: -1,
+                    id: 1
+                }, {
+                    label: '近7日',
+                    from: -7,
+                    to: 0,
+                    id: 2
+                }];
             } else {
                 this.showLimit = true;
             }
@@ -90,20 +96,22 @@
         },
         methods: {
             initPage() {
-                searchSection = [getDate(-7), getDate(0), '近7日'];
+                searchSection = [getDate(this.items[0].from), getDate(this.items[0].to), this.items[0].label]; //默认第一选项
                 // this.startDate = searchSection[0];
                 // this.endDate = searchSection[1];
             },
             getStart(date) {
                 this.startDate = date;
                 this.nearDay = 0;
-                selectNearDays = this.selectNearDays = -1;
+                selectNearDays = -1;
+                this.selectNearDays = selectNearDays;
                 searchSection[0] = this.startDate;
             },
             getEnd(date) {
                 this.endDate = date;
                 this.nearDay = 0;
-                selectNearDays = this.selectNearDays = -1;
+                selectNearDays = -1;
+                this.selectNearDays = selectNearDays;
                 searchSection[1] = this.endDate;
             },
             goBack() {
@@ -130,9 +138,10 @@
                 }
             },
             getDay(val) {
-                this.nearDay = val.value;
-                searchSection = [getDate(-val.value), getDate(0), val.label];
+                this.nearDay = val.to - val.from;
+                searchSection = [getDate(val.from), getDate(val.to), val.label];
                 this.selectNearDays = val.id;
+                selectNearDays=val.id;
             }
         },
     }

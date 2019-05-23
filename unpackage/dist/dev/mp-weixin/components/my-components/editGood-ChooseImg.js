@@ -30,6 +30,8 @@
 //
 //
 //
+//
+//
 
 var static_resources_domain = '';
 var startX = 0,
@@ -101,6 +103,9 @@ startPY = 0;var _default =
     }
   },
   methods: {
+    startMove: function startMove() {
+
+    },
     getImgUrl: function getImgUrl(url) {
       var newUrl = '';
       if (static_resources_domain) {

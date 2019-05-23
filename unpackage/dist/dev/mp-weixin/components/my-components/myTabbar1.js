@@ -27,21 +27,18 @@ var _default =
   props: {
     defaultIndex: {
       type: Number,
-      default: 0 },
+      default: 3 },
 
     Jurisdiction: {
       type: Object,
-      default: {} } },
+      default: {} },
+
+    fontStyle: {
+      type: String,
+      default: '' } },
 
 
   computed: {
-    showTabBar: function showTabBar() {
-      var result = this.Jurisdiction.goods_view && this.Jurisdiction.order_view;
-      // result && uni.showTabBar({
-      //     animation: false
-      // })
-      return true;
-    },
     showList: function showList() {var _this = this;
       if (typeof this.Jurisdiction['goods_view'] == 'boolean') {
         return this.list.filter(function (item) {
@@ -59,6 +56,32 @@ var _default =
 
   data: function data() {
     return {
+      // "tabBar": {
+      // 	"color": "#c9ccd0",
+      // 	"selectedColor": "#7a7e83",
+      // 	"backgroundColor": "#ffffff",
+      // 	"list": [{
+      // 		"pagePath": "pages/index/index",
+      // 		"text": "首页",
+      // 		"iconPath": "static/img/tabbar/tab_home.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_home1.png"
+      // 	}, {
+      // 		"pagePath": "pages/commodity/index",
+      // 		"text": "商品",
+      // 		"iconPath": "static/img/tabbar/tab_goods.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_goods1.png"
+      // 	}, {
+      // 		"pagePath": "pages/bill/index",
+      // 		"text": "订单",
+      // 		"iconPath": "static/img/tabbar/tab_order.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_order1.png"
+      // 	}, {
+      // 		"pagePath": "pages/self/index",
+      // 		"text": "我的",
+      // 		"iconPath": "static/img/tabbar/tab_me.png",
+      // 		"selectedIconPath": "static/img/tabbar/tab_me1.png"
+      // 	}]
+      // },
       "list": [{
         "pagePath": "/pages/index/index",
         "text": "首页",
@@ -88,6 +111,7 @@ var _default =
   },
   methods: {
     click: function click(item, index) {
+      console.log(item, index);
       uni.switchTab({
         url: item.pagePath });
 

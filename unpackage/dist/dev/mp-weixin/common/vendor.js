@@ -475,7 +475,7 @@ function getData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -6571,7 +6571,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -6592,14 +6592,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -6668,7 +6668,7 @@ var patch = function(oldVnode, vnode) {
         });
         var diffData = diff(data, mpData);
         if (Object.keys(diffData).length) {
-            if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+            if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
                 console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
                     ']差量更新',
                     JSON.stringify(diffData));
@@ -10709,8 +10709,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   // base_url: "https://shop.jacjack.com", 
   //  base_url: "https://ceshiuser.100cms.com", 
   //  base_url: "http://user.jiangyk.eldev.cn", 
-  base_url: "https://user.qdev.eldev.cn" };var _default =
+  base_url: "https://user.qdev.eldev.cn"
 
+  //  base_url: "https://ceshishop.jacjack.com",
+};var _default =
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -12410,10 +12412,9 @@ module.exports = {
                                                                                                      版权声明 : 
                                                                                                      GraceUI 的版权约束是不能转售或者将 GraceUI 直接发布到公开渠道！
                                                                                                      侵权必究，请遵守版权约定！
-                                                                                                     */var _default =
-
-{
-
+                                                                                                     */
+var storeNetWork = true; //判断断网
+var _default = {
   get: function get(url, data, header, callback) {
     uni.request({
       url: url,
@@ -12422,18 +12423,31 @@ module.exports = {
       header: header || {},
       dataType: "json",
       success: function success(res) {
+        storeNetWork = true;
         callback(res.data);
       },
       fail: function fail() {
-        uni.showToast({
-          title: "网络请求失败",
-          icon: "none" });
+        if (storeNetWork) {
+          storeNetWork = false;
+          setTimeout(function () {
+            storeNetWork = true;
+          }, 3000);
+          uni.navigateTo({
+            url: '/pagesLogin/pages/noWeb' });
+
+        } else {
+          callback({
+            error: -100,
+            message: '网络较差，请稍后重试' });
+
+        }
 
       } });
 
   },
 
   post: function post(url, data, contentType, headers, callback) {
+    var noweb = getApp(); // 取得全局App
     switch (contentType) {
       case "form":
         var headerObj = {
@@ -12454,21 +12468,31 @@ module.exports = {
       headerObj[k] = headers[k];
     }
 
-    wx.request({
+    uni.request({
       url: url,
       data: data,
       method: "POST",
       dataType: "json",
       header: headerObj,
       success: function success(res) {
-        console.log('what happende::', res);
+        storeNetWork = true;
         callback(res.data);
       },
       fail: function fail() {
-        uni.showToast({
-          title: "网络请求失败",
-          icon: "none" });
+        if (storeNetWork) {
+          storeNetWork = false;
+          setTimeout(function () {
+            storeNetWork = true;
+          }, 3000);
+          uni.navigateTo({
+            url: '/pagesLogin/pages/noWeb' });
 
+        } else {
+          callback({
+            error: -100,
+            message: '网络较差，请稍后重试' });
+
+        }
       } });
 
   } };exports.default = _default;
@@ -13321,6 +13345,23 @@ createPage(_vipManage.default);
 var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
 var _index = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/index.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\index.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 createPage(_index.default);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
+
+/***/ }),
+
+/***/ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\main.js?{\"page\":\"pagesLogin%2Fpages%2FnoWeb\"}":
+/*!***************************************************************************************************!*\
+  !*** I:/CurProject/ES_Mobile_Manager/MobileManager/main.js?{"page":"pagesLogin%2Fpages%2FnoWeb"} ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages.json");
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ "./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js"));
+var _noWeb = _interopRequireDefault(__webpack_require__(/*! ./pagesLogin/pages/noWeb.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesLogin\\pages\\noWeb.vue"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+createPage(_noWeb.default);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["createPage"]))
 
 /***/ }),

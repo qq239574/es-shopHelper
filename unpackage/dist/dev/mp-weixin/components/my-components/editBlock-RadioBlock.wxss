@@ -10,7 +10,7 @@
 .editGood-block-selectItem .grace-items.data-v-287b5876 {
     width: 710rpx;
     margin: auto;
-    padding: 2rpx auto;
+    padding: 2rpx 0 0 20rpx;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     height: 100rpx;
@@ -35,13 +35,10 @@
 .editGood-block-selectItem .subContent.data-v-287b5876 {
     font-size: 24rpx;
 }
-.editGood-block-selectItem .radio-box.data-v-287b5876 {
-    margin-right: 20rpx;
-}
 .editGood-block-selectItem .radio-box radio.data-v-287b5876 {
-      -webkit-transform: scale(0.7);
-          -ms-transform: scale(0.7);
-              transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+        -ms-transform: scale(0.7);
+            transform: scale(0.7);
 }
 .editGood-block-selectItem .grace-label.data-v-287b5876 {
     font-weight: 600;

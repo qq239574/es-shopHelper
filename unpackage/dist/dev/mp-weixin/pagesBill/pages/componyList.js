@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioGroup = function radioGroup() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var radioGroup = function radioGroup() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-RadioBlock */ "components/my-components/editBlock-RadioBlock").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-RadioBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-RadioBlock.vue"));};
 
 
 
@@ -24,13 +24,8 @@ var compList = [];var _default =
 
   data: function data() {
     return {
-      list: [{
-        label: '公司1',
-        value: '',
-        id: 0,
-        code: '' }] };
-
-
+      list: [] //{label:'公司1',value:'',id:0,code:''}
+    };
   },
   methods: {
     select: function select(item) {
@@ -40,6 +35,15 @@ var compList = [];var _default =
     } },
 
   onLoad: function onLoad(option) {
+    if (option.from == 'safeQuestions') {
+      uni.setNavigationBarTitle({
+        title: '选择安全提示问题' });
+
+    } else {
+      uni.setNavigationBarTitle({
+        title: '物流公司' });
+
+    }
     DataFrom = this.Cacher.getData(option.from);
     compList = DataFrom.value.info.express.map(function (item) {
       return {
@@ -49,12 +53,11 @@ var compList = [];var _default =
         code: item.code,
         id: item.id };
 
-
     });
     this.list = compList;
-    console.log(compList);
     this.Cacher.setData('componyList', compList[0]);
   } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

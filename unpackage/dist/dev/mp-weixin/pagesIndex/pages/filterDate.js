@@ -38,7 +38,7 @@
 
 
 var _toast = _interopRequireDefault(__webpack_require__(/*! ../../wxcomponents/vant-weapp/toast/toast */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\wxcomponents\\vant-weapp\\toast\\toast.js"));
-var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var dateBlock = function dateBlock() {return __webpack_require__.e(/*! import() | pagesIndex/components/FilteDate--radioGroup */ "pagesIndex/components/FilteDate--radioGroup").then(__webpack_require__.bind(null, /*! ../components/FilteDate--radioGroup */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\FilteDate--radioGroup.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var langButton = function langButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var DatePicker = function DatePicker() {return __webpack_require__.e(/*! import() | components/my-components/DatePicker */ "components/my-components/DatePicker").then(__webpack_require__.bind(null, /*! ../../components/my-components/DatePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\DatePicker.vue"));};
+var _getDateSection = __webpack_require__(/*! ../../components/my-components/getDateSection.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getDateSection.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var dateBlock = function dateBlock() {return __webpack_require__.e(/*! import() | pagesIndex/components/FilteDate--radioGroup */ "pagesIndex/components/FilteDate--radioGroup").then(__webpack_require__.bind(null, /*! ../components/FilteDate--radioGroup.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\FilteDate--radioGroup.vue"));};var selectItem = function selectItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-SelectItem */ "components/my-components/editBlock-SelectItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-SelectItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-SelectItem.vue"));};var inputItem = function inputItem() {return __webpack_require__.e(/*! import() | components/my-components/editBlock-InputItem */ "components/my-components/editBlock-InputItem").then(__webpack_require__.bind(null, /*! ../../components/my-components/editBlock-InputItem.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\editBlock-InputItem.vue"));};var langButton = function langButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var DatePicker = function DatePicker() {return __webpack_require__.e(/*! import() | components/my-components/DatePicker */ "components/my-components/DatePicker").then(__webpack_require__.bind(null, /*! ../../components/my-components/DatePicker.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\DatePicker.vue"));};
 
 
 var searchSection = []; //搜索日期区间
@@ -56,21 +56,24 @@ var selectNearDays = 0;var _default =
     return {
       items: [{
         label: '近7日',
-        value: 7,
+        from: -7,
+        to: 0,
         id: 0 },
       {
         label: '近15日',
-        value: 15,
+        from: -15,
+        to: 0,
         id: 1 },
       {
         label: '近30日',
-        value: 30,
+        from: -30,
+        to: 0,
         id: 2 }],
 
-      nearDay: 7,
+      nearDay: 0,
       startDate: '',
       endDate: '',
-      selectNearDays: 0,
+      selectNearDays: 0, //标识，用于判断返回“今天”还是返回"from~to"
       showLimit: true };
 
   },
@@ -78,19 +81,22 @@ var selectNearDays = 0;var _default =
     DataFrom = this.Cacher.getData(option.from);
     if (DataFrom.from == 'toper') {
       this.showLimit = false;
-      // this.items = [{
-      //     label: '今日',
-      //     value: 7,
-      //     id: 0
-      // }, {
-      //     label: '昨日',
-      //     value: 15,
-      //     id: 1
-      // }, {
-      //     label: '近7日',
-      //     value: 30,
-      //     id: 2
-      // }]
+      this.items = [{
+        label: '今日',
+        from: 0,
+        to: 0,
+        id: 0 },
+      {
+        label: '昨日',
+        from: -1,
+        to: -1,
+        id: 1 },
+      {
+        label: '近7日',
+        from: -7,
+        to: 0,
+        id: 2 }];
+
     } else {
       this.showLimit = true;
     }
@@ -100,20 +106,22 @@ var selectNearDays = 0;var _default =
   },
   methods: {
     initPage: function initPage() {
-      searchSection = [(0, _getDateSection.getDate)(-7), (0, _getDateSection.getDate)(0), '近7日'];
+      searchSection = [(0, _getDateSection.getDate)(this.items[0].from), (0, _getDateSection.getDate)(this.items[0].to), this.items[0].label]; //默认第一选项
       // this.startDate = searchSection[0];
       // this.endDate = searchSection[1];
     },
     getStart: function getStart(date) {
       this.startDate = date;
       this.nearDay = 0;
-      selectNearDays = this.selectNearDays = -1;
+      selectNearDays = -1;
+      this.selectNearDays = selectNearDays;
       searchSection[0] = this.startDate;
     },
     getEnd: function getEnd(date) {
       this.endDate = date;
       this.nearDay = 0;
-      selectNearDays = this.selectNearDays = -1;
+      selectNearDays = -1;
+      this.selectNearDays = selectNearDays;
       searchSection[1] = this.endDate;
     },
     goBack: function goBack() {
@@ -140,9 +148,10 @@ var selectNearDays = 0;var _default =
       }
     },
     getDay: function getDay(val) {
-      this.nearDay = val.value;
-      searchSection = [(0, _getDateSection.getDate)(-val.value), (0, _getDateSection.getDate)(0), val.label];
+      this.nearDay = val.to - val.from;
+      searchSection = [(0, _getDateSection.getDate)(val.from), (0, _getDateSection.getDate)(val.to), val.label];
       this.selectNearDays = val.id;
+      selectNearDays = val.id;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

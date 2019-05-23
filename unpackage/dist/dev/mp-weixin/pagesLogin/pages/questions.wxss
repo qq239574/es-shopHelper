@@ -1,6 +1,6 @@
 .pagesLogin-pages-questions.data-v-0624fb50 {
   background: #fff;
-  padding: 20rpx 24rpx;
+  padding: 80rpx 24rpx 20rpx;
 }
 .pagesLogin-pages-questions .margin.data-v-0624fb50 {
     height: 80rpx;

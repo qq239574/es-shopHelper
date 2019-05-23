@@ -1,19 +1,14 @@
 <template>
     <view class='pagesLogin-pages-questions page'>
-        <van-cell-group>
+        <van-cell-group :border='false'>
             <van-field :value="newName" placeholder="请输入用户名" @input="getName" clearable @clear='getName' />
+            <view :style='height22'></view>
             <van-cell :title="question" is-link @click='showQuestions' />
+            <view :style='height22'></view>
             <van-field :value="answer" placeholder="请输入安全提示答案" @input="getAnswer" clearable @clear='getAnswer' />
         </van-cell-group>
         <view class='margin'></view>
         <LongButton class='button' :disable='canSub' @click='nextPage'>确定</LongButton>
-        <PopUp :toggle='showList'>
-            <van-cell-group>
-                <van-cell :title="item" v-for='(item,index) in questionList' :key='index' @tap.stop='select(item,index)'>
-                    <van-icon slot='right-icon' name="checked" class='checked' custom-style='color:#fb6638;margin-top:6px;' v-if='index===checkedNo' />
-                </van-cell>
-            </van-cell-group>
-        </PopUp>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -28,12 +23,18 @@
     let session_id = ''; //
     let questions = []; //	安全问题
     let registerType = ''; //	注册类型(username,mobile,email)
+    let DataFrom = {
+        from: ''
+    };
     export default {
         components: {
             LongButton,
             PopUp
         },
         computed: {
+            height22() {
+                return 'height:' + uni.upx2px(10) + 'px'
+            },
             canSub() {
                 return this.newName === '' || this.question === '请选择安全提示问题' || this.answer === '';
             }
@@ -42,20 +43,31 @@
             return {
                 openEye: false,
                 questionList: [],
-                checkedNo: '',
-                showList: false,
                 newName: '',
                 answer: '',
                 question: '请选择安全提示问题'
             }
         },
         methods: {
-            select(val, index) {
-                this.checkedNo = index;
-                this.question = val;
-            },
             showQuestions() {
-                this.showList = !this.showList;
+                if (questions.length) {
+                    DataFrom = {
+                        from: 'componyList',
+                    }
+                    this.Cacher.setData('safeQuestions', {
+                        from: 'safeQuestions',
+                        value: {
+                            info: {
+                                express: questions
+                            }
+                        }
+                    })
+                    uni.navigateTo({
+                        url: '../../pagesBill/pages/componyList?from=safeQuestions'
+                    })
+                } else {
+                    this.Toast('请求出错啦，请退出重试');
+                }
             },
             nextPage() {
                 this.pageLoading();
@@ -72,13 +84,13 @@
                         this.Cacher.setData('questions', {
                             from: 'questions',
                             info: {
-                                type:'username', //验证类型
+                                type: 'username', //验证类型
                                 session_id,
                                 account: this.newName,
                                 registerType, //注册类型
                                 question: this.question,
                                 answer: this.answer,
-                                verify_code:''
+                                verify_code: ''
                             }
                         })
                         uni.navigateTo({
@@ -106,15 +118,32 @@
                 }
             }
         },
-        onLoad() {
+        onLoad(options) {
             this.pageLoading();
             this.Request('initPassword', {}).then(res => {
                 session_id = res.session_id;
-                questions = res.settings.questions;
+                questions = res.settings.questions.map((item, index) => {
+                    return {
+                        name: item,
+                        key: '',
+                        code: '',
+                        id: index,
+                    }
+                });
+                this.questionList = questions;
                 registerType = res.settings.type;
-                this.questionList=questions;
                 this.closePageLoading();
             })
+        },
+        onShow() {
+            if (DataFrom.from) {
+                DataFrom = this.Cacher.getData(DataFrom.from);
+                this.question = DataFrom.label;
+            }
+        },
+        onUnload() {
+            DataFrom=null;
+            this.Cacher.clearData(['componyList'])
         }
     }
 </script>
@@ -122,7 +151,7 @@
 <style lang="scss" scoped>
     .pagesLogin-pages-questions {
         background: #fff;
-        padding: 20upx 24upx;
+        padding: 80upx 24upx 20upx;
         .margin {
             height: 80upx;
         }

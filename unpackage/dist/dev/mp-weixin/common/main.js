@@ -11,6 +11,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 var _cache = _interopRequireDefault(__webpack_require__(/*! ./store/cache.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\store\\cache.js"));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var _default =
 {
+  globalData: {
+    netWork: true },
+
   onLaunch: function onLaunch() {var _this = this;
     var that = this;
     this.Request('getSettings').then(function (res) {

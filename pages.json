@@ -536,6 +536,11 @@
 					"van-loading": "/wxcomponents/vant-weapp/loading/index"
 				}
 			}
+		}, {
+			"path": "pages/noWeb",
+			"style": {
+				"navigationBarTitleText": "暂无网络"
+			}
 		}]
 	}, {
 		"root": "pagesTest",

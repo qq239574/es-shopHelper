@@ -33,6 +33,7 @@
 
 
 
+
 var type = '';
 var session_id = ''; //
 var questions = []; //	安全问题
@@ -46,6 +47,9 @@ var bar = '';var _default =
     imgCodeButton: imgCodeButton },
 
   computed: {
+    height20: function height20() {
+      return 'height:' + uni.upx2px(20) + 'px';
+    },
     disable: function disable() {
       return this.userId === '' || this.password === '';
     },

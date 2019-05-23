@@ -1,13 +1,13 @@
 <template>
-    <view class="editgood-chooseimg grace-form">
+    <view class="editgood-chooseimg grace-form" id='editimg'>
         <movable-area class='move-area' style='width:100%;height:100%;' ref='ref'>
             <view class="imglist">
-                <view class="items item" :style="endIndex==index?'border:1px dashed #ccc;':''" v-for="(item, index) in imgLists" :key="index" :id="item.index" :data-index='index' @longpress='_longtap' @touchstart='touchstart' @touchend='touchend' @touchmove='touchmove'>
+                <view class="items item" :style="endIndex==index?'border:1px dashed #ccc;':''" v-for="(item, index) in imgLists" :key="index" :id="item.index" :data-index='index' @longpress='_longtap' @touchstart='touchstart' @touchend='touchend' @touchmove.stop='touchmove'>
                     <image mode='aspectFill' class='items--img' :src="getImgUrl(item)" :data-imgurl="getImgUrl(item)" @tap="showImgs"></image>
                     <view class="grace-boxes-img grace-iconfont icon-close" @click='removeImg(index)'></view>
                     <view class="imgTitle" v-if='imgTitle'>{{imgTitle}}</view>
                 </view>
-                <view class="add-btn" @tap="addImg" v-if="canAdd">
+                <view class="add-btn van-hairline" @tap="addImg" v-if="canAdd">
                     <view class='button-content'>添加</view>
                     <view class='button-content'>{{button}}</view>
                     <view class='button-content'>({{imgLists.length+'/'+maxNum}})</view>
@@ -18,6 +18,8 @@
                 </view>
             </movable-view>
         </movable-area>
+        <view class="stopMove" @touchmove.stop='startMove' v-if='!hidden '>
+        </view>
     </view>
 </template>
 <script>
@@ -91,6 +93,9 @@
             }
         },
         methods: {
+            startMove() {
+                
+            },
             getImgUrl(url) {
                 let newUrl = '';
                 if (static_resources_domain) {
@@ -203,6 +208,15 @@
     .editgood-chooseimg {
         width: 100%;
         background: #fff;
+        position: relative;
+        .stopMove {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            border:1upx solid blue;
+            left: 0;
+        }
         .imglist {
             display: flex;
             flex-wrap: wrap;
@@ -247,12 +261,14 @@
         .add-btn {
             margin: 20upx 20upx 0 0;
             background: #fff;
-            border: 1upx dashed #9ea3ae;
             width: 143upx;
             height: 143upx;
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start;
+            &:after {
+                border: 1upx dashed #9ea3ae;
+            }
             .button-content {
                 white-space: pre-wrap;
                 text-align: center;
@@ -274,7 +290,7 @@
             display: inline-block;
             width: 143rpx;
             height: 143rpx;
-            border: 2px dashed #fb6638;
+            border: 1px dashed #fb6638;
         }
     }
 </style>

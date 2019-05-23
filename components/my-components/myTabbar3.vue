@@ -1,6 +1,6 @@
 <template>
-    <view style='width:100%;hieght:100upx;' v-if='showTabBar'>
-        <view class='my-tabbar'>
+    <view class='my-tabbar'>
+        <view class='my-tabbar' :style='fontStyle'>
             <view v-for='(item,index) in showList' :key='index' @click='click(item,index)' class='i-tab-bar-item'>
                 <image lazy-load :src='item.selectedIconPath' class='i-tab-bar-item-img' v-if='item.index==defaultIndex'></image>
                 <image lazy-load :src='item.iconPath' class='i-tab-bar-item-img' v-else></image>
@@ -17,21 +17,18 @@
         props: {
             defaultIndex: {
                 type: Number,
-                default: 0
+                default: 3
             },
             Jurisdiction: {
                 type: Object,
                 default: {}
             },
+            fontStyle: {
+                type: String,
+                default: ''
+            }
         },
         computed: {
-            showTabBar() {
-                let result = this.Jurisdiction.goods_view && this.Jurisdiction.order_view
-                // result && uni.showTabBar({
-                //     animation: false
-                // })
-                return true
-            },
             showList() {
                 if (typeof this.Jurisdiction['goods_view'] == 'boolean') {
                     return this.list.filter(item => {
@@ -49,6 +46,32 @@
         },
         data() {
             return {
+                // "tabBar": {
+                // 	"color": "#c9ccd0",
+                // 	"selectedColor": "#7a7e83",
+                // 	"backgroundColor": "#ffffff",
+                // 	"list": [{
+                // 		"pagePath": "pages/index/index",
+                // 		"text": "首页",
+                // 		"iconPath": "static/img/tabbar/tab_home.png",
+                // 		"selectedIconPath": "static/img/tabbar/tab_home1.png"
+                // 	}, {
+                // 		"pagePath": "pages/commodity/index",
+                // 		"text": "商品",
+                // 		"iconPath": "static/img/tabbar/tab_goods.png",
+                // 		"selectedIconPath": "static/img/tabbar/tab_goods1.png"
+                // 	}, {
+                // 		"pagePath": "pages/bill/index",
+                // 		"text": "订单",
+                // 		"iconPath": "static/img/tabbar/tab_order.png",
+                // 		"selectedIconPath": "static/img/tabbar/tab_order1.png"
+                // 	}, {
+                // 		"pagePath": "pages/self/index",
+                // 		"text": "我的",
+                // 		"iconPath": "static/img/tabbar/tab_me.png",
+                // 		"selectedIconPath": "static/img/tabbar/tab_me1.png"
+                // 	}]
+                // },
                 "list": [{
                     "pagePath": "/pages/index/index",
                     "text": "首页",
@@ -78,6 +101,7 @@
         },
         methods: {
             click(item, index) {
+                console.log(item, index)
                 uni.switchTab({
                     url: item.pagePath
                 });
@@ -88,50 +112,54 @@
 
 <style lang="scss" scoped>
     .my-tabbar {
-        height: 100upx;
-        background: #fff;
         width: 100%;
-        display: flex;
-        flex-wrap: nowrap;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        border-top: 1upx solid #ccc;
-        .i-tab-bar-item {
-            flex: 1;
-            display: flex;
+        height: 101upx;
+        .my-tabbar {
+            height: 100upx;
+            background: #fff;
             width: 100%;
-            -webkit-box-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            flex-direction: column;
-            text-align: center
-        }
-        .i-tab-bar-item-img {
             display: flex;
-            -webkit-box-pack: center;
-            justify-content: center;
-            box-sizing: border-box;
-            width: 56upx;
-            height: 56upx
-        }
-        .i-tab-bar-item-title {
-            font-size: 10px;
-            margin: 3px 0 0;
-            line-height: 1;
-            text-align: center;
-            box-sizing: border-box;
-            color: #80848f
-        }
-        .i-tab-bar-item-img {
-            display: flex;
-            -webkit-box-pack: center;
-            justify-content: center;
-            box-sizing: border-box;
-            color: #80848f
+            flex-wrap: nowrap;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            border-top: 1upx solid #ccc;
+            .i-tab-bar-item {
+                flex: 1;
+                display: flex;
+                width: 100%;
+                -webkit-box-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+                text-align: center
+            }
+            .i-tab-bar-item-img {
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                box-sizing: border-box;
+                width: 56upx;
+                height: 56upx
+            }
+            .i-tab-bar-item-title {
+                font-size: 10px;
+                margin: 3px 0 0;
+                line-height: 1;
+                text-align: center;
+                box-sizing: border-box;
+                color: #80848f
+            }
+            .i-tab-bar-item-img {
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                box-sizing: border-box;
+                color: #80848f
+            }
         }
     }
 </style>

@@ -2,14 +2,14 @@
     <view class='editGood-block-selectItem grace-form'>
         <radio-group class='group'>
             <view class='grace-items' v-for="(item, index) in items" :key="index" @click='clickItem(index)'>
-                <view class='radio-box'>
-                    <radio :value="item.value" :checked="index === current" color='#fb6638' />
-                </view>
                 <view class="grace-label">{{item.label}}</view>
                 <view class="other" :style="'color:#fb6638;opacity:'+(index === current?'1':'0;')+valueStyle">
                     <text class="subContent" :style="'color:#c2c6ce;'+fontStyle">{{item.subValue}}</text>{{item.value}}
                     <view style='display:inline;' v-if='item.value===""'>{{placeholder}}</view>
                 </view><text class="grace-icons icon-arrow-right" style='color:#5E5E5E;' v-if='!hideRightArrow'></text>
+                <view class='radio-box'>
+                    <radio :value="item.value" :checked="index === current" color='#fb6638' />
+                </view>
             </view>
         </radio-group>
     </view>
@@ -82,7 +82,7 @@
         .grace-items {
             width: 710upx;
             margin: auto;
-            padding: 2upx auto;
+            padding: 2upx 0 0 20upx;
             box-sizing: border-box;
             height: 100upx;
             .address {
@@ -98,8 +98,7 @@
         .subContent {
             font-size: 24upx;
         }
-        .radio-box {
-            margin-right: 20upx;
+        .radio-box { 
             radio {
                 transform: scale(.7)
             }

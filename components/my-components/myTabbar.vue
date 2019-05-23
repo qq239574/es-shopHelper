@@ -1,5 +1,5 @@
 <template>
-    <view style='width:100%;hieght:100upx;'>
+    <view class='my-tabbar'>
         <view class='my-tabbar' :style='fontStyle'>
             <view v-for='(item,index) in showList' :key='index' @click='click(item,index)' class='i-tab-bar-item'>
                 <image lazy-load :src='item.selectedIconPath' class='i-tab-bar-item-img' v-if='item.index==defaultIndex'></image>
@@ -23,10 +23,10 @@
                 type: Object,
                 default: {}
             },
-			fontStyle: {
-				type: String,
-				default: ''
-			}
+            fontStyle: {
+                type: String,
+                default: ''
+            }
         },
         computed: {
             showList() {
@@ -112,50 +112,54 @@
 
 <style lang="scss" scoped>
     .my-tabbar {
-        height: 100upx;
-        background: #fff;
         width: 100%;
-        display: flex;
-        flex-wrap: nowrap;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        border-top: 1upx solid #ccc;
-        .i-tab-bar-item {
-            flex: 1;
-            display: flex;
+        height: 101upx;
+        .my-tabbar {
+            height: 100upx;
+            background: #fff;
             width: 100%;
-            -webkit-box-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            flex-direction: column;
-            text-align: center
-        }
-        .i-tab-bar-item-img {
             display: flex;
-            -webkit-box-pack: center;
-            justify-content: center;
-            box-sizing: border-box;
-            width: 56upx;
-            height: 56upx
-        }
-        .i-tab-bar-item-title {
-            font-size: 10px;
-            margin: 3px 0 0;
-            line-height: 1;
-            text-align: center;
-            box-sizing: border-box;
-            color: #80848f
-        }
-        .i-tab-bar-item-img {
-            display: flex;
-            -webkit-box-pack: center;
-            justify-content: center;
-            box-sizing: border-box;
-            color: #80848f
+            flex-wrap: nowrap;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            border-top: 1upx solid #ccc;
+            .i-tab-bar-item {
+                flex: 1;
+                display: flex;
+                width: 100%;
+                -webkit-box-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                flex-direction: column;
+                text-align: center
+            }
+            .i-tab-bar-item-img {
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                box-sizing: border-box;
+                width: 56upx;
+                height: 56upx
+            }
+            .i-tab-bar-item-title {
+                font-size: 10px;
+                margin: 3px 0 0;
+                line-height: 1;
+                text-align: center;
+                box-sizing: border-box;
+                color: #80848f
+            }
+            .i-tab-bar-item-img {
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                box-sizing: border-box;
+                color: #80848f
+            }
         }
     }
 </style>

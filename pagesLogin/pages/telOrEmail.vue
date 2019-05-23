@@ -1,13 +1,14 @@
 <template>
     <view class='tel-email page'>
         <view class="grace-form" style='border-top:none;'>
-            <van-cell-group>
-               
+            <van-cell-group :border='false'> 
                 <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
+                <view :style='height20'></view>
                 <van-field :type="text" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
                     <imgCodeButton :refreshAgain='refreshAgain' slot='icon' :imageCode='imageCode'></imgCodeButton>
                 </van-field>
+                <view :style='height20'></view>
                 <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
                     <RoundButton slot='icon' :start='successGetCode' @click='getVCode' @refresh='refreshTiming'></RoundButton>
                 </van-field>
@@ -36,6 +37,9 @@
             imgCodeButton
         },
         computed: {
+            height20() {
+				return 'height:' + uni.upx2px(20) + 'px'
+			},
             disable() {
                 return this.userId === '' || this.password === '';
             },

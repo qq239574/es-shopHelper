@@ -74,7 +74,8 @@
         "pages/questions",
         "pages/setNew",
         "pages/searchShop",
-        "pages/selectShop"
+        "pages/selectShop",
+        "pages/noWeb"
       ]
     },
     {

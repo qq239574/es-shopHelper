@@ -41,7 +41,7 @@ var domain = '';var _default =
   data: function data() {
     return {
       pageId: 'goods',
-      pageLabel: '今天',
+      pageLabel: '今日',
       list: [],
       searching: true,
       nodataContent: "当前日期无商品销售" };
@@ -95,7 +95,7 @@ var domain = '';var _default =
       DataGo = this.Cacher.getData(DataGo.go);
       DataGo = DataGo.date ? DataGo : {
         from: 'filterDate',
-        date: [(0, _getDateSection.getDate)(-1), (0, _getDateSection.getDate)(0), '今天'] };
+        date: [(0, _getDateSection.getDate)(0), (0, _getDateSection.getDate)(0), '今天'] };
 
       if (DataFrom.show == 'vip') {
         api = 'vipsTop10';

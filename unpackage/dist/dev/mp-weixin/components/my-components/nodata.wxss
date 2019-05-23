@@ -12,12 +12,13 @@
 .noresult image.data-v-28445e14 {
     width: 150rpx;
     height: 184rpx;
-    margin: 100rpx auto 50rpx;
+    margin: 100rpx auto 20rpx;
 }
 .noresult view.data-v-28445e14 {
     text-align: center;
     width: 100%;
     font-size: 30rpx;
     line-height: 60rpx;
+    color: #6e7685;
 }
 

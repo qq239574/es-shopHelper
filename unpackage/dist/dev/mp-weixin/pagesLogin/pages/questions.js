@@ -24,11 +24,6 @@
 //
 //
 //
-//
-//
-//
-//
-//
 
 var userId = '',
 password = '';var LongButton = function LongButton() {return __webpack_require__.e(/*! import() | components/my-components/LongButton */ "components/my-components/LongButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/LongButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\LongButton.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp2 */ "components/my-components/PopUp2").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp2.vue"));};
@@ -38,12 +33,18 @@ var type = '';
 var session_id = ''; //
 var questions = []; //	安全问题
 var registerType = ''; //	注册类型(username,mobile,email)
-var _default = {
+var DataFrom = {
+  from: '' };var _default =
+
+{
   components: {
     LongButton: LongButton,
     PopUp: PopUp },
 
   computed: {
+    height22: function height22() {
+      return 'height:' + uni.upx2px(10) + 'px';
+    },
     canSub: function canSub() {
       return this.newName === '' || this.question === '请选择安全提示问题' || this.answer === '';
     } },
@@ -52,20 +53,31 @@ var _default = {
     return {
       openEye: false,
       questionList: [],
-      checkedNo: '',
-      showList: false,
       newName: '',
       answer: '',
       question: '请选择安全提示问题' };
 
   },
   methods: {
-    select: function select(val, index) {
-      this.checkedNo = index;
-      this.question = val;
-    },
     showQuestions: function showQuestions() {
-      this.showList = !this.showList;
+      if (questions.length) {
+        DataFrom = {
+          from: 'componyList' };
+
+        this.Cacher.setData('safeQuestions', {
+          from: 'safeQuestions',
+          value: {
+            info: {
+              express: questions } } });
+
+
+
+        uni.navigateTo({
+          url: '../../pagesBill/pages/componyList?from=safeQuestions' });
+
+      } else {
+        this.Toast('请求出错啦，请退出重试');
+      }
     },
     nextPage: function nextPage() {var _this = this;
       this.pageLoading();
@@ -116,15 +128,32 @@ var _default = {
       }
     } },
 
-  onLoad: function onLoad() {var _this2 = this;
+  onLoad: function onLoad(options) {var _this2 = this;
     this.pageLoading();
     this.Request('initPassword', {}).then(function (res) {
       session_id = res.session_id;
-      questions = res.settings.questions;
-      registerType = res.settings.type;
+      questions = res.settings.questions.map(function (item, index) {
+        return {
+          name: item,
+          key: '',
+          code: '',
+          id: index };
+
+      });
       _this2.questionList = questions;
+      registerType = res.settings.type;
       _this2.closePageLoading();
     });
+  },
+  onShow: function onShow() {
+    if (DataFrom.from) {
+      DataFrom = this.Cacher.getData(DataFrom.from);
+      this.question = DataFrom.label;
+    }
+  },
+  onUnload: function onUnload() {
+    DataFrom = null;
+    this.Cacher.clearData(['componyList']);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
