@@ -38,8 +38,8 @@ var _default =
 
     valueStyle: {
       type: String,
-      default: '' },
-
+      default: '' //www
+    },
     fontStyle: {
       type: String,
       default: '' },
