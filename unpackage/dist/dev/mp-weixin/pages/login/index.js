@@ -175,22 +175,24 @@ var sessionId = '';var DataFrom = {};var requestBar = '';var _default = { compon
       clearTimeout(requestBar);
       requestBar = setTimeout(function () {
         requesting = false;
-        typeof val == 'boolean' || _this3.Toast('登录时间长，请重试');
+        // (typeof val == 'boolean') || this.Toast('登录时间长，请重试');
       }, 6000);
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();
         _login.login.call(this).then(function (res) {
+          clearTimeout(requestBar);
           uni.reLaunch({
             url: '../../pagesLogin/pages/selectShop?from=login' });
 
         }).catch(function (res) {
           _this3.idError = true; //账号密码不对
+          typeof val == 'boolean' || _this3.Toast(res.message);
+          _this3.tryLogining = false;
         }).finally(function (res) {
           clearTimeout(requestBar);
           requesting = false;
           _this3.closePageLoading();
-          _this3.tryLogining = false;
         }); //微信登录; //账号密码登录
       } else {
         this.closePageLoading();

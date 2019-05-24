@@ -72,6 +72,9 @@
   padding: 0 20rpx;
   font-size: 24rpx;
 }
+.model__input.model__input--tel.data-v-3c60780d {
+    margin-bottom: 20rpx;
+}
 .model__img.data-v-3c60780d {
   width: 100rpx;
   height: 100rpx;

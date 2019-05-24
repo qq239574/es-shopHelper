@@ -162,12 +162,13 @@
                     this.Toast(this.modelTheme.success);
                     this.initPage();
                     this.showModel = false;
+                     this.surePaying = false;
+                    this.closePageLoading();
                 }).catch(res => {
                     this.error = true;
-                }).finally(res => {
-                    this.surePaying = false;
+                     this.surePaying = false;
                     this.closePageLoading();
-                })
+                }) 
             },
             cancel() {
                 this.showModel = false;

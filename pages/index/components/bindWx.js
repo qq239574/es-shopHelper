@@ -3,25 +3,30 @@ let needBindWx = null;
 
 function bindWechat() {
     return new Promise((resolve, reject) => {
-        this.Request('bindWechat', {
-            encrypted_data: userInfo.encryptedData,
-            session_key: userInfo.session_key,
-            iv: userInfo.iv,
-            user_id: userInfo.userId
-        }).then(res => {
-            if (res.error == 0) {
-                this.Cacher.setData('needBindWx', {
-                    testWx: true, //尝试微信登录
-                    needBind: false, //需要绑定微信true需要
-                    haveBindWx: true
-                })
-                resolve(res)
-            } else {
+        if (userInfo.userId) {
+            this.Request('bindWechat', {
+                encrypted_data: userInfo.encryptedData,
+                session_key: userInfo.session_key,
+                iv: userInfo.iv,
+                user_id: userInfo.userId
+            }).then(res => {
+                if (res.error == 0) {
+                    this.Cacher.setData('needBindWx', {
+                        testWx: true, //尝试微信登录
+                        needBind: false, //需要绑定微信true需要
+                        haveBindWx: true
+                    })
+                    resolve(res)
+                } else {
+                    reject(res)
+                }
+            }).catch(res => {
                 reject(res)
-            }
-        }).catch(res => {
-            reject(res)
-        })
+            })
+        }else{
+            this.Toast('请用账号密码登录后重试')
+        }
+
     })
 
 }
@@ -40,20 +45,20 @@ export function bindWx(rebind) {
                         haveBindWx: false
                     })
                     that.closePageLoading();
-                    that.Dialog.confirm({//二次确认
+                    that.Dialog.confirm({ //二次确认
                         title: '没有绑定微信',
                         message: '为方便您的使用，是否与微信账号绑定？',
                         confirmButtonText: '绑定',
                         confirmButtonOpenType: 'getUserInfo'
                     }).then(() => {
                         that.pageLoading();
-                        bindWx.call(that,true);
-                    }).catch(res=>{ 
+                        bindWx.call(that, true);
+                    }).catch(res => {
                         that.closePageLoading()
                     });
                 }
             })
-        } else if (rebind) {//重新绑定
+        } else if (rebind) { //重新绑定
             let cacheData = that.Cacher.getData('login')
             uni.getUserInfo({ // 获取用户信息
                 provider: 'weixin',
@@ -67,7 +72,7 @@ export function bindWx(rebind) {
                         resolve(res);
                     }).catch(res => {
                         that.closePageLoading();
-                        that.Toast('绑定失败');
+                        that.Toast('绑定失败，请稍后重试');
                         reject(res);
                     })
                 },

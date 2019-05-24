@@ -1,16 +1,18 @@
 <template>
     <view class='multi-block  page'>
-        <view class="block" v-for='(item,index) in list' :key='index'>
-            <goodModal :info='item' @delete='delSpec' @input='getSpec'></goodModal>
+        <view class='container'>
+            <view class="block" v-for='(item,index) in list' :key='index'>
+                <goodModal :info='item' @delete='delSpec' @input='getSpec'></goodModal>
+            </view>
+            <view class='isSingle' v-if='!list.length'>单规格</view>
+            <view class='addType' @click='addType' v-if='list.length<3'>
+                +添加规格
+            </view>
+            <view class='maxLength' v-else>*最多添加3个规格</view>
         </view>
-        <view class='isSingle' v-if='!list.length'>单规格</view>
-        <view class='addType' @click='addType' v-if='list.length<3'>
-            +添加规格
-        </view>
-        <view class='maxLength' v-else>*最多添加3个规格</view>
-        <view class="footer" v-if='!list[0]||(list[0]&&!list[0].disabled)'>
+        <cover-view class="footer" v-if='!list[0]||(list[0]&&!list[0].disabled)'>
             <longButton @click='sure'>确认</longButton>
-        </view>
+        </cover-view>
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -91,6 +93,14 @@
     .multi-block {
         width: 100%;
         margin: 0 auto 20upx;
+        .container{
+            position: absolute;
+            top:0;
+            bottom: 124upx;
+            left:0;
+            right:0;
+            overflow: auto;
+        }
         .isSingle {
             font-size: 40upx;
             font-weight: 700;
@@ -132,8 +142,7 @@
             background: #fff;
             bottom: 0;
             left: 0;
-            box-shadow: 0 0 10upx 0 rgba(0, 0, 0, .1);
-            // z-index: 1000;
+            box-shadow: 0 0 10upx 0 rgba(0, 0, 0, .1); // z-index: 1000;
             overflow: hidden;
             padding-top: 18upx;
             box-sizing: border-box;

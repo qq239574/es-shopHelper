@@ -52,6 +52,9 @@
 
 
 
+
+
+
 var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBillList.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\getBillList.js"));
 
 
@@ -66,13 +69,14 @@ var _getBillList = _interopRequireDefault(__webpack_require__(/*! ./index/getBil
 
 
 
+
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var MyTabbar = function MyTabbar() {return __webpack_require__.e(/*! import() | components/my-components/myTabbar1 */ "components/my-components/myTabbar1").then(__webpack_require__.bind(null, /*! ../../components/my-components/myTabbar1 */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\myTabbar1.vue"));};var TabCard = function TabCard() {return __webpack_require__.e(/*! import() | components/my-components/Tabs */ "components/my-components/Tabs").then(__webpack_require__.bind(null, /*! ../../components/my-components/Tabs.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\Tabs.vue"));};var Card = function Card() {return __webpack_require__.e(/*! import() | pages/bill/index/Card */ "pages/bill/index/Card").then(__webpack_require__.bind(null, /*! ./index/Card.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card.vue"));};var SearchInput = function SearchInput() {return __webpack_require__.e(/*! import() | components/my-components/SearchInput */ "components/my-components/SearchInput").then(__webpack_require__.bind(null, /*! ../../components/my-components/SearchInput.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\SearchInput.vue"));};var nodata = function nodata() {return __webpack_require__.e(/*! import() | components/my-components/nodata */ "components/my-components/nodata").then(__webpack_require__.bind(null, /*! ../../components/my-components/nodata.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\nodata.vue"));};var DataFrom = {};var searchData = {};var surePassword = ''; //手动确认付款密码
+var sureMobile = ''; //手动确认手机号
 var member_id = '';var curTab = { //当前标签
   cateid: 0, index: 0, name: "代付款" //{cateid: 0, index: 0, name: "代付款"}
 };var requestQueue = ''; //请求队列，标签操作过快会导致结果混乱
 var searching = false;var cacheBill = {}; //缓存将要操作的订单 
-var _default = { components: { TabCard: TabCard,
-    Card: Card,
+var _default = { components: { TabCard: TabCard, Card: Card,
     SearchInput: SearchInput,
     nodata: nodata,
     MyTabbar: MyTabbar },
@@ -83,6 +87,7 @@ var _default = { components: { TabCard: TabCard,
       current: 1,
       totalPage: 1,
       surePassword: '', //弹窗输入密码
+      sureMobile: '', ////弹窗输入手机号
       error: false, //弹窗输入密码错误提示用
       surePaying: false, //正在确认付款？
       showModel: false, //是否显示弹窗
@@ -94,7 +99,8 @@ var _default = { components: { TabCard: TabCard,
       searchValue: '', //查询条件 
       billList: [],
       tabIndex: 0, //默认tabs的index
-      searching: true };
+      searching: true,
+      sureErrorMessage: '' };
 
   },
   onLoad: function onLoad(option) {var _this = this;
@@ -145,26 +151,32 @@ var _default = { components: { TabCard: TabCard,
     },
     sure: function sure() {var _this2 = this;
       this.surePaying = true;
-      var apiNames = ['payBill', 'receiveBill'];
+      var apiNames = ['payBill', 'receiveBill', 'sureSelfGet'];
       var apiname = '';
+      var data = {
+        id: cacheBill.bill.bill.id, //订单id
+        password: surePassword };
+
       if (this.modelTheme.state == 'pay') {//确认付款
         apiname = apiNames[0];
       } else if (this.modelTheme.state == 'receive') {//确认收货
         apiname = apiNames[1];
+      } else if (this.modelTheme.state == 'self') {
+        apiname = apiNames[2];
+        data.mobile = sureMobile;
       }
-      this.Request(apiname, {
-        id: cacheBill.bill.bill.id, //订单id
-        password: surePassword }).
-      then(function (res) {
+      this.Request(apiname, data).then(function (res) {
         _this2.Toast(_this2.modelTheme.success);
         _this2.initPage();
         _this2.showModel = false;
+        _this2.surePaying = false;
+        _this2.closePageLoading();
       }).catch(function (res) {
         _this2.error = true;
         _this2.Toast(res.message);
-      }).finally(function (res) {
         _this2.surePaying = false;
         _this2.closePageLoading();
+        _this2.sureErrorMessage = res.message;
       });
     },
     cancel: function cancel() {
@@ -174,6 +186,12 @@ var _default = { components: { TabCard: TabCard,
       surePassword = val.detail.value;
       this.surePassword = surePassword;
       this.error = false;
+    },
+    getSureMobile: function getSureMobile(val) {
+      sureMobile = val.detail.value;
+      this.sureMobile = sureMobile;
+      this.error = false;
+      console.log('sureMobile', sureMobile);
     },
     initPage: function initPage() {var _this3 = this;
       this.searching = true;
@@ -289,6 +307,14 @@ var _default = { components: { TabCard: TabCard,
             detail: '确保买家已经付款，并且与买家协商完毕确认付款',
             state: 'pay',
             success: '确认付款成功' };
+
+        } else if (val.detail.val == '确认自提') {
+          this.showModel = true;
+          this.modelTheme = {
+            title: '手动确认自提',
+            detail: '确保买家已经付款，并且与买家协商完毕确认自提',
+            state: 'self',
+            success: '确认自提成功' };
 
         } else if (val.detail.val == '维权备注') {
           DataFrom = Object.assign(DataFrom, {

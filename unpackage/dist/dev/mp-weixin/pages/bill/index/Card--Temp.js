@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 {
   props: {
     Jurisdiction: {
@@ -42,6 +43,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     myButton: myButton },
 
   computed: {
+    selfGet: function selfGet() {
+      return this.rights.status == 1.5 && this.rights.provide == "自提" && this.Jurisdiction.order_manage;
+    },
     canSendGood: function canSendGood() {//判断可否发货
       if (this.rights.groups_success == 1 || this.rights.groups_success === undefined) {
         return !!this.rights.send_able ? "primary" : "disable";

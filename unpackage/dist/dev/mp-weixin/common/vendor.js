@@ -10434,7 +10434,7 @@ module.exports = function(module) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.postSelfVerifyInfo = exports.getSelfVerifyInfo = exports.verifyCount = exports.selfVerifyLog = exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.allBills = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
+Object.defineProperty(exports, "__esModule", { value: true });exports.postSelfVerifyInfo = exports.getSelfVerifyInfo = exports.verifyCount = exports.selfVerifyLog = exports.billDetail = exports.sendGoods = exports.canSendGoods = exports.sureSelfGet = exports.receiveBill = exports.payBill = exports.changeBillPrice = exports.billPrice = exports.addAddition = exports.billAddition = exports.allBills = exports.closedBill = exports.finishedBill = exports.waitReceiveBill = exports.waitProvideBill = exports.waitPayBill = void 0;var waitPayBill = { //代付款
   url: '/shop/manage/order/list/pay',
   data: {
     keywords_type: 'order_no',
@@ -10614,6 +10614,19 @@ var receiveBill = { //确认收货
 
   type: 'post' };exports.receiveBill = receiveBill;
 
+var sureSelfGet = { //确认自提
+
+  url: '/shop/manage/order/op/fetch',
+  data: {
+    id: '', //订单id
+    mobile: '',
+    password: '' },
+
+  headers: {},
+
+
+  type: 'post' };exports.sureSelfGet = sureSelfGet;
+
 var canSendGoods = { //获取发货信息
 
   url: '/shop/manage/order/op/send',
@@ -10706,13 +10719,14 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  base_url: "https://shop.jacjack.com"
+  // base_url: "https://shop.jacjack.com", 
   //  base_url: "https://ceshiuser.100cms.com", 
   //  base_url: "http://user.jiangyk.eldev.cn", 
-  //  base_url: "https://user.qdev.eldev.cn",
-
-  //  base_url: "https://ceshishop.jacjack.com",
+  base_url: "https://user.qdev.eldev.cn"
+  // base_url: "https://ceshishop.jacjack.com",
+  //  base_url: "https://www.xiedei.cn",
 };var _default =
+
 global_settings;exports.default = _default;
 
 /***/ }),
@@ -15133,8 +15147,7 @@ function _default(commission) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;
-function _default(list) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = _default;function _default(list) {
   return list.map(function (item) {
     return {
       title: item.name,
@@ -15168,9 +15181,10 @@ function _default(tabid, data) {var _this = this;
     '2': "退款退货",
     '3': "换货" };
 
-  var statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成
+  var statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成,1.5自提
     0: 0,
     1: 1,
+    '1.5': 1.5,
     2: 2,
     3: 3,
     '-2': 4,
@@ -15202,8 +15216,9 @@ function _default(tabid, data) {var _this = this;
             status: statusMap[item.status], //0代付款,1代发货，2待收货，3已完成，4已关闭
             send_able: item.send_able, // 是否可发货
             groups_success: item.groups_success, ///拼团结果
-            dispatch_price: item.dispatch_price // 运费价格
-          },
+            dispatch_price: item.dispatch_price, // 运费价格
+            dispatch_type: item.dispatch_type },
+
           bill: { //订单信息
             billId: item.order_no, //订单号
             billDate: item.create_time, //订单时间
@@ -15232,7 +15247,8 @@ function _default(tabid, data) {var _this = this;
             send_able: item.send_able, // 是否可发货
             addition: item.remark_num, //维权备注
             subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
-            payType: item.pay_type //支付方式
+            payType: item.pay_type, //支付方式
+            provide: item.dispatch_type_text //配送方式
           } };
 
       });
@@ -15443,25 +15459,30 @@ var needBindWx = null;
 
 function bindWechat() {var _this = this;
   return new Promise(function (resolve, reject) {
-    _this.Request('bindWechat', {
-      encrypted_data: userInfo.encryptedData,
-      session_key: userInfo.session_key,
-      iv: userInfo.iv,
-      user_id: userInfo.userId }).
-    then(function (res) {
-      if (res.error == 0) {
-        _this.Cacher.setData('needBindWx', {
-          testWx: true, //尝试微信登录
-          needBind: false, //需要绑定微信true需要
-          haveBindWx: true });
+    if (userInfo.userId) {
+      _this.Request('bindWechat', {
+        encrypted_data: userInfo.encryptedData,
+        session_key: userInfo.session_key,
+        iv: userInfo.iv,
+        user_id: userInfo.userId }).
+      then(function (res) {
+        if (res.error == 0) {
+          _this.Cacher.setData('needBindWx', {
+            testWx: true, //尝试微信登录
+            needBind: false, //需要绑定微信true需要
+            haveBindWx: true });
 
-        resolve(res);
-      } else {
+          resolve(res);
+        } else {
+          reject(res);
+        }
+      }).catch(function (res) {
         reject(res);
-      }
-    }).catch(function (res) {
-      reject(res);
-    });
+      });
+    } else {
+      _this.Toast('请用账号密码登录后重试');
+    }
+
   });
 
 }
@@ -15507,7 +15528,7 @@ function bindWx(rebind) {var _this2 = this;
             resolve(res);
           }).catch(function (res) {
             that.closePageLoading();
-            that.Toast('绑定失败');
+            that.Toast('绑定失败，请稍后重试');
             reject(res);
           });
         },
@@ -15566,13 +15587,13 @@ function selectShop() {//检测是否只有一个店铺
 
         if (shops.length == 1) {//只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
           var shop = shops[0];
-          that.Cacher.setData('selectShop', {
+          that.Cacher.setData('selectShop', Object.assign({
             from: 'selectShop',
             shopInfo: shop.shopInfo,
             totalShops: res.total,
             left: shop.days > 0 ? shop.days + '天后到期' : '已过期',
-            expireDay: shop.days });
-
+            expireDay: shop.days },
+          shop));
           that.Request('switchShop', {
             id: shop.shopInfo.id }).
           then(function (res) {
@@ -15625,7 +15646,6 @@ function getWxInfo() {//获取用户微信信息
           });
           if (res.error == 0) {
             cacheData = Object.assign(cacheData, res);
-
             that.Cacher.setData('login', cacheData);
           }
           uni.getUserInfo({ // 获取用户信息
@@ -15636,7 +15656,6 @@ function getWxInfo() {//获取用户微信信息
               resolve(res);
             },
             fail: function fail(res) {
-              console.log('get info fails', res);
               resolve(res);
             } });
 

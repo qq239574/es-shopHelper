@@ -55,6 +55,12 @@
 
 
 
+
+
+
+
+
+
 var _createBillDetail = _interopRequireDefault(__webpack_require__(/*! ../components/createBillDetail.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\createBillDetail.js"));
 var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/getJurisdiction.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\getJurisdiction.js");function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var block0 = function block0() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock0 */ "pagesBill/components/BillBlock0").then(__webpack_require__.bind(null, /*! ../components/BillBlock0.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock0.vue"));};var block1 = function block1() {return Promise.all(/*! import() | pagesBill/components/BillBlock1 */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesBill/components/BillBlock1")]).then(__webpack_require__.bind(null, /*! ../components/BillBlock1.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock1.vue"));};var block2 = function block2() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock2 */ "pagesBill/components/BillBlock2").then(__webpack_require__.bind(null, /*! ../components/BillBlock2.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock2.vue"));};var block3 = function block3() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock3 */ "pagesBill/components/BillBlock3").then(__webpack_require__.bind(null, /*! ../components/BillBlock3.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock3.vue"));};var block4 = function block4() {return __webpack_require__.e(/*! import() | pagesBill/components/BillBlock4 */ "pagesBill/components/BillBlock4").then(__webpack_require__.bind(null, /*! ../components/BillBlock4.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillBlock4.vue"));};var goodBlock = function goodBlock() {return Promise.all(/*! import() | pages/bill/index/Card--Good */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pages/bill/index/Card--Good")]).then(__webpack_require__.bind(null, /*! ../../pages/bill/index/Card--Good.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pages\\bill\\index\\Card--Good.vue"));};var expressBlock = function expressBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillExpressInfo */ "pagesBill/components/BillExpressInfo").then(__webpack_require__.bind(null, /*! ../components/BillExpressInfo.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillExpressInfo.vue"));};var myButton = function myButton() {return __webpack_require__.e(/*! import() | components/my-components/RoundButton */ "components/my-components/RoundButton").then(__webpack_require__.bind(null, /*! ../../components/my-components/RoundButton */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\RoundButton.vue"));};var myRightsBlock = function myRightsBlock() {return __webpack_require__.e(/*! import() | pagesBill/components/BillRightsBlock */ "pagesBill/components/BillRightsBlock").then(__webpack_require__.bind(null, /*! ../components/BillRightsBlock.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesBill\\components\\BillRightsBlock.vue"));};
 
@@ -62,6 +68,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 var cacheBill = {}; //缓存将要操作的订单 
 var DataFrom = {};
 var surePassword = ''; //手动确认付款密码 
+var sureMobile = ''; //
 var _default = {
   components: {
     block0: block0,
@@ -78,6 +85,7 @@ var _default = {
     return {
       Jurisdiction: {},
       surePassword: '',
+      sureMobile: '',
       error: false,
       surePaying: false, //正在确认付款？
       showModel: false,
@@ -118,10 +126,14 @@ var _default = {
           addition: 0 } },
 
 
-      billDetail: {} };
+      billDetail: {},
+      sureErrorMessage: '' };
 
   },
   computed: {
+    selfGet: function selfGet() {//是否显示自提按钮
+      return this.bill.info.status == 1.5 && this.bill.info.provide == "自提" && this.Jurisdiction.order_manage;
+    },
     canSendGood: function canSendGood() {//判断可否发货
       if (this.bill.info.groups_success == 1 || this.bill.info.groups_success === undefined) {
         return !!this.bill.info.send_able ? "primary" : "disable";
@@ -133,25 +145,31 @@ var _default = {
   methods: {
     sure: function sure() {var _this = this;
       this.surePaying = true;
-      var apiNames = ['payBill', 'receiveBill'];
+      var apiNames = ['payBill', 'receiveBill', 'sureSelfGet'];
       var apiname = '';
+      var data = {
+        id: cacheBill.bill.bill.id, //订单id
+        password: surePassword };
+
       if (this.modelTheme.state == 'pay') {//确认付款
         apiname = apiNames[0];
       } else if (this.modelTheme.state == 'receive') {//确认收货
         apiname = apiNames[1];
+      } else if (this.modelTheme.state == 'self') {
+        apiname = apiNames[2];
+        data.mobile = sureMobile;
       }
-      this.Request(apiname, {
-        id: cacheBill.bill.bill.id, //订单id
-        password: surePassword }).
-      then(function (res) {
+      this.Request(apiname, data).then(function (res) {
         _this.Toast(_this.modelTheme.success);
         _this.initPage();
         _this.showModel = false;
-      }).catch(function (res) {
-        _this.error = true;
-      }).finally(function (res) {
         _this.surePaying = false;
         _this.closePageLoading();
+      }).catch(function (res) {
+        _this.error = true;
+        _this.surePaying = false;
+        _this.closePageLoading();
+        _this.sureErrorMessage = res.message;
       });
     },
     cancel: function cancel() {
@@ -160,6 +178,11 @@ var _default = {
     getSurePassword: function getSurePassword(val) {
       surePassword = val.detail.value;
       this.surePassword = surePassword;
+      this.error = false;
+    },
+    getSureMobile: function getSureMobile(val) {
+      sureMobile = val.detail.value;
+      this.sureMobile = sureMobile;
       this.error = false;
     },
     clickButton: function clickButton(state) {
@@ -198,6 +221,14 @@ var _default = {
           detail: '确保买家已经付款，并且与买家协商完毕确认付款',
           state: 'pay',
           success: '确认付款成功' };
+
+      } else if (state == '确认自提') {
+        this.showModel = true;
+        this.modelTheme = {
+          title: '手动确认自提',
+          detail: '确保买家已经付款，并且与买家协商完毕确认自提',
+          state: 'self',
+          success: '确认自提成功' };
 
       } else if (state == '维权备注') {
         DataFrom = Object.assign(DataFrom, {
@@ -267,6 +298,7 @@ var _default = {
       var mapStatus = {
         '-2': 4, //-2退款完成
         '-1': 4, //-1取消状态
+        '1.5': 1.5,
         0: 0, //0普通状态
         1: 1, //1为已付款
         2: 2, //2为已发货

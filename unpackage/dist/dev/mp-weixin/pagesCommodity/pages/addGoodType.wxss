@@ -2,6 +2,14 @@
   width: 100%;
   margin: 0 auto 20rpx;
 }
+.multi-block .container.data-v-34ca85df {
+    position: absolute;
+    top: 0;
+    bottom: 124rpx;
+    left: 0;
+    right: 0;
+    overflow: auto;
+}
 .multi-block .isSingle.data-v-34ca85df {
     font-size: 40rpx;
     font-weight: 700;

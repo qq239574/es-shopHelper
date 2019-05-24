@@ -73,6 +73,7 @@
 		},
 		methods: {
 			initPage() {
+				let login = this.Cacher.getData('login');
 				this.Request('myInfo').then(res => {
 					this.userName = res.contact;
 					this.userTel = res.username;
@@ -83,6 +84,8 @@
 					this.wxapp_openid = res.wxapp_openid;
 					managerId = res.manage_id;
 					this.nickName = res.nickName;
+					login.userId = login.userId || res.uid;
+					this.Cacher.setData('login',login);
 				})
 			},
 			toPage(val) {
@@ -122,10 +125,8 @@
 					})
 				}
 			},
-			reBindWX() {
-				bindWx.call(this, true).then(res => {
-					
-				}).finally(res => {
+			reBindWX(e) {
+				bindWx.call(this, true).then(res => {}).finally(res => {
 					this.closePageLoading();
 					this.initPage();
 				});

@@ -172,9 +172,10 @@ var _default = {
         _this2.Toast(_this2.modelTheme.success);
         _this2.initPage();
         _this2.showModel = false;
+        _this2.surePaying = false;
+        _this2.closePageLoading();
       }).catch(function (res) {
         _this2.error = true;
-      }).finally(function (res) {
         _this2.surePaying = false;
         _this2.closePageLoading();
       });

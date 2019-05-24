@@ -8,7 +8,7 @@ function checkJurisdiction() { //检查权限
     return new Promise((resolve, reject) => {
         getJurisdiction.call(that, true).then(res => {
             resolve(res);
-        }).catch(res => { 
+        }).catch(res => {
             reject(res);
         })
     })
@@ -31,13 +31,13 @@ function selectShop() { //检测是否只有一个店铺
 
                 if (shops.length == 1) { //只有一个合格的店铺就直接跳转首页；如果是从首页跳转的就不必
                     let shop = shops[0];
-                    that.Cacher.setData('selectShop', {
+                    that.Cacher.setData('selectShop', Object.assign({
                         from: 'selectShop',
                         shopInfo: shop.shopInfo,
                         totalShops: res.total,
                         left: shop.days > 0 ? (shop.days + '天后到期') : '已过期',
                         expireDay: shop.days,
-                    });
+                    }, shop)); 
                     that.Request('switchShop', {
                         id: shop.shopInfo.id
                     }).then(res => {
@@ -90,7 +90,6 @@ function getWxInfo() { //获取用户微信信息
                     });
                     if (res.error == 0) {
                         cacheData = Object.assign(cacheData, res);
-
                         that.Cacher.setData('login', cacheData);
                     }
                     uni.getUserInfo({ // 获取用户信息
@@ -101,7 +100,6 @@ function getWxInfo() { //获取用户微信信息
                             resolve(res)
                         },
                         fail(res) {
-                            console.log('get info fails', res)
                             resolve(res)
                         }
                     });
@@ -186,7 +184,7 @@ export function wxLogin() { //微信登录流程
                                 that.Cacher.setData('login', cacheData);
                             },
                             fail(res) {
-                              
+
                             }
                         });
 
@@ -231,7 +229,7 @@ export function login() { //账号密码登录流程
                 } else {
                     reject(res);
                     that.Toast(res.message)
-                } 
+                }
             }).catch(res => {
 
                 if (res.error == -3) { //已登录

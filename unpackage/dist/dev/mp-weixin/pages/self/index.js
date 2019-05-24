@@ -83,6 +83,7 @@ var managerId = '';var _default =
 
   methods: {
     initPage: function initPage() {var _this = this;
+      var login = this.Cacher.getData('login');
       this.Request('myInfo').then(function (res) {
         _this.userName = res.contact;
         _this.userTel = res.username;
@@ -93,6 +94,8 @@ var managerId = '';var _default =
         _this.wxapp_openid = res.wxapp_openid;
         managerId = res.manage_id;
         _this.nickName = res.nickName;
+        login.userId = login.userId || res.uid;
+        _this.Cacher.setData('login', login);
       });
     },
     toPage: function toPage(val) {
@@ -132,10 +135,8 @@ var managerId = '';var _default =
 
       }
     },
-    reBindWX: function reBindWX() {var _this2 = this;
-      _bindWx.bindWx.call(this, true).then(function (res) {
-
-      }).finally(function (res) {
+    reBindWX: function reBindWX(e) {var _this2 = this;
+      _bindWx.bindWx.call(this, true).then(function (res) {}).finally(function (res) {
         _this2.closePageLoading();
         _this2.initPage();
       });

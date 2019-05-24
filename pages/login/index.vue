@@ -165,22 +165,24 @@
 				clearTimeout(requestBar);
 				requestBar = setTimeout(() => {
 					requesting = false;
-					(typeof val == 'boolean') || this.Toast('登录时间长，请重试');
+					// (typeof val == 'boolean') || this.Toast('登录时间长，请重试');
 				}, 6000);
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
 					login.call(this).then(res => {
+						clearTimeout(requestBar);
 						uni.reLaunch({
 							url: '../../pagesLogin/pages/selectShop?from=login'
 						})
 					}).catch(res => {
 						this.idError = true; //账号密码不对
+						(typeof val == 'boolean') || this.Toast(res.message);
+						this.tryLogining = false;
 					}).finally(res => {
 						clearTimeout(requestBar);
 						requesting = false;
 						this.closePageLoading();
-						this.tryLogining = false;
 					}); //微信登录; //账号密码登录
 				} else {
 					this.closePageLoading();

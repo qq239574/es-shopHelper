@@ -178,6 +178,19 @@ export const receiveBill = { //确认收货
     },
     type: 'post'
 }
+export const sureSelfGet = { //确认自提
+
+    url: '/shop/manage/order/op/fetch',
+    data: {
+        id: '', //订单id
+        mobile: '',
+        password: ''
+    },
+    headers: {
+
+    },
+    type: 'post'
+}
 export const canSendGoods = { //获取发货信息
 
     url: '/shop/manage/order/op/send',

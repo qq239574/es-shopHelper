@@ -8,11 +8,11 @@
                 <image lazy-load src='/static/img/global/turnshop.png'></image>切换店铺</view>
         </view>
         <dataShower :Jurisdiction='Jurisdiction' :info='showData' @click='toApp' @search='searchData' v-if='Jurisdiction.statistics_index_view'></dataShower>
-        <view class="block">
-            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' labelStyle='color:#6e7685; ' valueStyle='color:#9da3ae; font-size: 12px;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='expireDay<31&&expireDay>0'>
+        <view class="block" v-if='showExpireInfo||showNoticeInfo'>
+            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' labelStyle='color:#6e7685; ' valueStyle='color:#9da3ae; font-size: 12px;' :label='execInfo.label' :value='execInfo.date' :disabled='true' @click='toPay' v-if='showExpireInfo'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
-            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae; font-size: 12px;' @click='toNotice' v-if='newNotice.label||newNotice.date'>
+            <selectItem contentStyle='width:100%;' fontStyle='font-weight: 500;' :label='newNotice.label' :value='newNotice.date' labelStyle='color:#6e7685;' valueStyle='color:#9da3ae; font-size: 12px;' @click='toNotice' v-if='showNoticeInfo'>
                 <view class="grace-swiper-msg-icon grace-icons icon-speaker" style='display:inline-block;color:#ff9e56;' slot='icon'></view>
             </selectItem>
         </view>
@@ -59,6 +59,14 @@
             apps,
             MyTabbar
         },
+        computed: {
+            showExpireInfo() {
+                return this.expireDay < 31 && this.expireDay >= 0&&this.statusText!='已过期'
+            },
+            showNoticeInfo() {
+                return this.newNotice.label || this.newNotice.date;
+            }
+        },
         data() {
             return {
                 Jurisdiction: {},
@@ -95,6 +103,7 @@
                     payedVip: 0
                 },
                 expireDay: 0,
+                statusText:''
             }
         },
         methods: {
@@ -231,6 +240,7 @@
             });
             // if (option.from && option.from == 'selectShop') {
             DataFrom = this.Cacher.getData('selectShop');
+            this.statusText=DataFrom.statusText;
             this.shopName = DataFrom.title;
             this.showTurnShop = DataFrom.totalShops > 1;
             this.initPage();

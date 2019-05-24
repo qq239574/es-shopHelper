@@ -69,6 +69,14 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
     apps: apps,
     MyTabbar: MyTabbar },
 
+  computed: {
+    showExpireInfo: function showExpireInfo() {
+      return this.expireDay < 31 && this.expireDay >= 0 && this.statusText != '已过期';
+    },
+    showNoticeInfo: function showNoticeInfo() {
+      return this.newNotice.label || this.newNotice.date;
+    } },
+
   data: function data() {
     return {
       Jurisdiction: {},
@@ -104,7 +112,8 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
         payedGood: 0,
         payedVip: 0 },
 
-      expireDay: 0 };
+      expireDay: 0,
+      statusText: '' };
 
   },
   methods: {
@@ -241,6 +250,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
 
     // if (option.from && option.from == 'selectShop') {
     DataFrom = this.Cacher.getData('selectShop');
+    this.statusText = DataFrom.statusText;
     this.shopName = DataFrom.title;
     this.showTurnShop = DataFrom.totalShops > 1;
     this.initPage();

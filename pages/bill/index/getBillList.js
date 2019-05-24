@@ -7,9 +7,10 @@ export default function (tabid, data) {
         '2': "退款退货",
         '3': "换货",
     }
-    let statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成
+    let statusMap = { // -2退款完成，-1取消状态，0普通状态，1为已付款，2为已发货，3为已完成,1.5自提
         0: 0,
         1: 1,
+        '1.5': 1.5,
         2: 2,
         3: 3,
         '-2': 4,
@@ -27,7 +28,7 @@ export default function (tabid, data) {
                 goodlist = item.order_goods || [];
                 goodlist.forEach(item => {
                     countGood += item.total * 1;
-                })
+                }) 
                 return {
                     info: { //订单及用户信息
                         name: item.member_nickname, //客户姓名昵称
@@ -38,10 +39,11 @@ export default function (tabid, data) {
                         payType: item.pay_type, //支付方式
                         payTypeImg: getPayType(item.pay_type),
                         subStatus: item.is_refund, //订单状态// 0 无维权 1 正在维权中 2 维权过
-                        status:statusMap[item.status] , //0代付款,1代发货，2待收货，3已完成，4已关闭
+                        status: statusMap[item.status], //0代付款,1代发货，2待收货，3已完成，4已关闭
                         send_able: item.send_able, // 是否可发货
                         groups_success: item.groups_success, ///拼团结果
                         dispatch_price: item.dispatch_price, // 运费价格
+                        dispatch_type: item.dispatch_type
                     },
                     bill: { //订单信息
                         billId: item.order_no, //订单号
@@ -72,6 +74,7 @@ export default function (tabid, data) {
                         addition: item.remark_num, //维权备注
                         subStatus: item.is_refund, // //订单状态// 0 无维权 1 正在维权中 2 维权过
                         payType: item.pay_type, //支付方式
+                        provide: item.dispatch_type_text, //配送方式
                     }
                 };
             });

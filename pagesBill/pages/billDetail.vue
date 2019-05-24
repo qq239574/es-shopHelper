@@ -18,16 +18,22 @@
             <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
             <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
             <myButton type='primary' @click='clickButton(bill.info.payType==3?"确认收款":"确认收货")' v-if='bill.info.status=="2"&&Jurisdiction.order_manage'>{{bill.info.payType==3?"确认收款":"确认收货"}}</myButton>
+            <myButton type='primary' @click='clickButton("确认自提")' v-if='selfGet'>确认自提</myButton>
             <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus*1'>维权中</myButton>
         </view>
         <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
-            <view class="model__title">{{modelTheme.title}}</view>
-            <view class="model__content">{{modelTheme.detail}}</view>
-            <view class="model__error" :style='error?"color:red;":"color:#fff;"'>*密码输入错误</view>
-            <input class='model__input' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码' v-if='!surePaying'>
-            <view class="model__img" v-else>
-                <image src='/static/img/global/loading.jpg'></image>
+            <view class='sureWindow'>
+                <view class="model__title">{{modelTheme.title}}</view>
+                <view class="model__content">{{modelTheme.detail}}</view>
+                <view class="model__error" :style='error?"color:red;":"color:#fff;"'>*{{sureErrorMessage}}</view>
+                <block v-if='!surePaying'>
+                    <input class='model__input model__input--tel' type="text" :value='sureMobile' @input='getSureMobile' placeholder='请输入提货手机号' v-if='selfGet'>
+                    <input class='model__input model__input--pw' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码'>
+                </block>
+                <view class="model__img" v-else>
+                    <image src='/static/img/global/loading.jpg'></image>
+                </view>
             </view>
         </i-modal>
         <van-toast id="van-toast" />
@@ -52,6 +58,7 @@
     let cacheBill = {}; //缓存将要操作的订单 
     let DataFrom = {};
     let surePassword = ''; //手动确认付款密码 
+    let sureMobile = ''; //
     export default {
         components: {
             block0,
@@ -68,6 +75,7 @@
             return {
                 Jurisdiction: {},
                 surePassword: '',
+                sureMobile: '',
                 error: false,
                 surePaying: false, //正在确认付款？
                 showModel: false,
@@ -108,10 +116,14 @@
                         addition: 0
                     }
                 },
-                billDetail: {}
+                billDetail: {},
+                sureErrorMessage:''
             }
         },
         computed: {
+            selfGet() { //是否显示自提按钮
+                return (this.bill.info.status == 1.5) && (this.bill.info.provide == "自提") && this.Jurisdiction.order_manage
+            },
             canSendGood() { //判断可否发货
                 if (this.bill.info.groups_success == 1 || this.bill.info.groups_success === undefined) {
                     return !!this.bill.info.send_able ? "primary" : "disable"
@@ -123,25 +135,31 @@
         methods: {
             sure() {
                 this.surePaying = true;
-                let apiNames = ['payBill', 'receiveBill'];
+                let apiNames = ['payBill', 'receiveBill', 'sureSelfGet'];
                 let apiname = '';
+                let data = {
+                    id: cacheBill.bill.bill.id, //订单id
+                    password: surePassword
+                };
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
                 } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
+                } else if (this.modelTheme.state == 'self') {
+                    apiname = apiNames[2];
+                    data.mobile = sureMobile;
                 }
-                this.Request(apiname, {
-                    id: cacheBill.bill.bill.id, //订单id
-                    password: surePassword
-                }).then(res => {
+                this.Request(apiname, data).then(res => {
                     this.Toast(this.modelTheme.success);
                     this.initPage();
                     this.showModel = false;
-                }).catch(res => {
-                    this.error = true;
-                }).finally(res => {
                     this.surePaying = false;
                     this.closePageLoading();
+                }).catch(res => {
+                    this.error = true;
+                    this.surePaying = false;
+                    this.closePageLoading();
+                    this.sureErrorMessage=res.message;
                 })
             },
             cancel() {
@@ -150,6 +168,11 @@
             getSurePassword(val) {
                 surePassword = val.detail.value;
                 this.surePassword = surePassword;
+                this.error = false;
+            },
+            getSureMobile(val) {
+                sureMobile = val.detail.value;
+                this.sureMobile = sureMobile;
                 this.error = false;
             },
             clickButton(state) {
@@ -188,6 +211,14 @@
                         detail: '确保买家已经付款，并且与买家协商完毕确认付款',
                         state: 'pay',
                         success: '确认付款成功'
+                    }
+                } else if (state == '确认自提') {
+                    this.showModel = true;
+                    this.modelTheme = {
+                        title: '手动确认自提',
+                        detail: '确保买家已经付款，并且与买家协商完毕确认自提',
+                        state: 'self',
+                        success: '确认自提成功'
                     }
                 } else if (state == '维权备注') {
                     DataFrom = Object.assign(DataFrom, {
@@ -257,6 +288,7 @@
                 let mapStatus = {
                     '-2': 4, //-2退款完成
                     '-1': 4, //-1取消状态
+                    '1.5': 1.5,
                     0: 0, //0普通状态
                     1: 1, //1为已付款
                     2: 2, //2为已发货
@@ -371,6 +403,9 @@
             text-align: left;
             padding: 0 20upx;
             font-size: 24upx;
+            &.model__input--tel {
+                margin-bottom: 20upx;
+            }
         }
         .model__img {
             width: 100upx;

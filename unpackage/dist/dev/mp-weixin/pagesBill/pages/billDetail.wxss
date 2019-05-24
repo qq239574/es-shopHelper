@@ -88,6 +88,9 @@
     padding: 0 20rpx;
     font-size: 24rpx;
 }
+.pagesBill-bill-index .model__input.model__input--tel.data-v-6dc8251f {
+      margin-bottom: 20rpx;
+}
 .pagesBill-bill-index .model__img.data-v-6dc8251f {
     width: 100rpx;
     height: 100rpx;

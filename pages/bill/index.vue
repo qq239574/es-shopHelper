@@ -23,8 +23,11 @@
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>
             <view class="model__title">{{modelTheme.title}}</view>
             <view class="model__content">{{modelTheme.detail}}</view>
-            <view class="model__error" :style='error?"color:red;":"color:#fff;"'>*密码输入错误</view>
-            <input class='model__input' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码' v-if='!surePaying'>
+            <view class="model__error" :style='error?"color:red;":"color:#fff;"'>*{{sureErrorMessage}}</view>
+            <block v-if='!surePaying'>
+                <input class='model__input model__input--tel' type="text" :value='sureMobile' @input='getSureMobile' placeholder='请输入提货手机号' v-if='modelTheme.title=="手动确认自提"'>
+                <input class='model__input model__input--pw' type="text" :value='surePassword' @input='getSurePassword' placeholder='请输入系统登录密码'>
+            </block>
             <view class="model__img" v-else>
                 <image src='/static/img/global/loading.jpg'></image>
             </view>
@@ -47,6 +50,7 @@
     let DataFrom = {};
     let searchData = {};
     let surePassword = ''; //手动确认付款密码
+    let sureMobile = ''; //手动确认手机号
     let member_id = '';
     let curTab = { //当前标签
         cateid: 0,
@@ -73,6 +77,7 @@
                 current: 1,
                 totalPage: 1,
                 surePassword: '', //弹窗输入密码
+                sureMobile: '', ////弹窗输入手机号
                 error: false, //弹窗输入密码错误提示用
                 surePaying: false, //正在确认付款？
                 showModel: false, //是否显示弹窗
@@ -84,7 +89,8 @@
                 searchValue: '', //查询条件 
                 billList: [],
                 tabIndex: 0, //默认tabs的index
-                searching: true
+                searching: true,
+                sureErrorMessage: ''
             }
         },
         onLoad(option) {
@@ -135,26 +141,32 @@
             },
             sure() {
                 this.surePaying = true;
-                let apiNames = ['payBill', 'receiveBill'];
+                let apiNames = ['payBill', 'receiveBill', 'sureSelfGet'];
                 let apiname = '';
+                let data = {
+                    id: cacheBill.bill.bill.id, //订单id
+                    password: surePassword
+                }
                 if (this.modelTheme.state == 'pay') { //确认付款
                     apiname = apiNames[0];
                 } else if (this.modelTheme.state == 'receive') { //确认收货
                     apiname = apiNames[1];
+                } else if (this.modelTheme.state == 'self') {
+                    apiname = apiNames[2];
+                    data.mobile = sureMobile;
                 }
-                this.Request(apiname, {
-                    id: cacheBill.bill.bill.id, //订单id
-                    password: surePassword
-                }).then(res => {
+                this.Request(apiname, data).then(res => {
                     this.Toast(this.modelTheme.success);
                     this.initPage();
                     this.showModel = false;
-                }).catch(res => {
-                    this.error = true;
-                    this.Toast(res.message)
-                }).finally(res => {
                     this.surePaying = false;
                     this.closePageLoading();
+                }).catch(res => {
+                    this.error = true;
+                    this.Toast(res.message);
+                    this.surePaying = false;
+                    this.closePageLoading();
+                    this.sureErrorMessage = res.message;
                 })
             },
             cancel() {
@@ -164,6 +176,12 @@
                 surePassword = val.detail.value;
                 this.surePassword = surePassword;
                 this.error = false;
+            },
+            getSureMobile(val) {
+                sureMobile = val.detail.value;
+                this.sureMobile = sureMobile;
+                this.error = false;
+                console.log('sureMobile',sureMobile)
             },
             initPage() {
                 this.searching = true;
@@ -280,6 +298,14 @@
                             state: 'pay',
                             success: '确认付款成功'
                         }
+                    } else if (val.detail.val == '确认自提') {
+                        this.showModel = true;
+                        this.modelTheme = {
+                            title: '手动确认自提',
+                            detail: '确保买家已经付款，并且与买家协商完毕确认自提',
+                            state: 'self',
+                            success: '确认自提成功'
+                        }
                     } else if (val.detail.val == '维权备注') {
                         DataFrom = Object.assign(DataFrom, {
                             from: 'additionList'
@@ -355,6 +381,9 @@
         text-align: left;
         padding: 0 20upx;
         font-size: 24upx;
+        &.model__input--tel {
+            margin-bottom: 20upx;
+        }
     }
     .model__img {
         width: 100upx;
