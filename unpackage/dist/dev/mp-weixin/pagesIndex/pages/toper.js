@@ -95,7 +95,7 @@ var domain = '';var _default =
       DataGo = this.Cacher.getData(DataGo.go);
       DataGo = DataGo.date ? DataGo : {
         from: 'filterDate',
-        date: [(0, _getDateSection.getDate)(0), (0, _getDateSection.getDate)(0), '今天'] };
+        date: [(0, _getDateSection.getDate)(0), (0, _getDateSection.getDate)(0), '今日'] };
 
       if (DataFrom.show == 'vip') {
         api = 'vipsTop10';

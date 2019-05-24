@@ -106,7 +106,7 @@ var keylist = [];var DataFrom = {};var DataGo = { go: 'filterDate' };var request
       DataGo = this.Cacher.getData('filterDate');
       DataGo = DataGo.date ? DataGo : {
         go: 'filterDate',
-        date: [(0, _getDateSection.getDate)(-6), (0, _getDateSection.getDate)(0), '7日'] };
+        date: [(0, _getDateSection.getDate)(-6), (0, _getDateSection.getDate)(0), '近7日'] };
 
       if (!requesting) {
         requesting = true;

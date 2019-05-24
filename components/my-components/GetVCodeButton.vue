@@ -1,6 +1,6 @@
 <template>
     <View class='my-round-button van-hairline' :class='start?"timing":""' @click='clickBuntton'>
-        {{start?(timer+'s'):'获取验证码'}}
+        {{start?(timer+'s后重新发送'):'获取验证码'}}
     </View>
 </template>
 
@@ -37,9 +37,7 @@
             clickBuntton() {
                 if (!this.start) {
                     this.$emit('click', false);
-                } else {
-                    this.$parent.Toast(this.timer + 's后可重新发送')
-                }
+                }  
             },
             refresh() {
                 this.timer = 60;
@@ -55,7 +53,8 @@
 
 <style lang="scss" scoped>
     .my-round-button {
-        width: 150upx;
+        width:fit-content;
+        min-width: 150upx;
         height: 54upx;
         border-radius: 27upx;
         line-height: 54upx;
@@ -64,6 +63,7 @@
         font-weight: 500;
         color: #fb6638;
         overflow: visible;
+        padding: 0 20upx;
         &:after {
             border: 1upx solid #fb6638;
             border-radius: 54upx;

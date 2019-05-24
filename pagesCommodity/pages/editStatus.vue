@@ -1,6 +1,6 @@
 <template>
     <div class='edit-status page'>
-        <radioBlock :items='list' valueStyle='color:#fb6638' :defaultIndex='defaultIndex' @clickItem='change'></radioBlock>
+        <radioBlock :hideRightArrow='true' :items='list' valueStyle='color:#fb6638' :defaultIndex='defaultIndex' @clickItem='change'></radioBlock>
         <view class="bg" v-show='showpicker'>
             <van-datetime-picker class='picker' type="datetime" :value="currentDate" :min-date="minDate" :max-date="maxDate" @input="onInput" @confirm='confirm' @cancel='cancel' />
         </view>

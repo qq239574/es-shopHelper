@@ -96,7 +96,7 @@
                 DataGo = this.Cacher.getData('filterDate');
                 DataGo = DataGo.date ? DataGo : {
                     go: 'filterDate',
-                    date: [getDate(-6), getDate(0), '7日']
+                    date: [getDate(-6), getDate(0), '近7日']
                 };
                 if (!requesting) {
                     requesting = true;

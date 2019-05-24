@@ -91,11 +91,14 @@
                 }, 500)
             },
             clickGood(item) {
+                this.toggle = !this.toggle;
                 if (item.type == 'menu-item') {
-                    if (item.name == '编辑') {
-                        this.setGood(item);
+                    if (item.name == '查看') {
+                        this.Cacher.setData('vipManage', Object.assign({
+                            from: 'vipManage',
+                        }, item));
                         uni.navigateTo({
-                            url: '../../pagesCommodity/pages/multiSpecifications'
+                            url: '../pages/vipDetail?from=vipManage'
                         })
                     } else if (item.name == '充值') {
                         this.Cacher.setData('vipManage', {
@@ -118,8 +121,14 @@
                             url: './vipBills?from=vipManage'
                         })
                     }
-                } else {}
-                this.toggle = !this.toggle;
+                } else if (item.type == 'item') {
+                    this.Cacher.setData('vipManage', Object.assign({
+                        from: 'vipManage',
+                    }, item));
+                    uni.navigateTo({
+                        url: '../pages/vipDetail?from=vipManage'
+                    })
+                }
             },
             initPage() {
                 this.pageLoading();
@@ -140,7 +149,7 @@
                     this.totalPage = Math.max(Math.ceil(res.count / 20), 1);
                     this.viplist = res.list.map(item => {
                         return {
-                            img: item.avatar || '/static/img/global/home_order_tobepay.png',
+                            img: item.avatar || 'https://ceshiuser.100cms.com/static/dist/shop/image/noface.png',
                             title: item.nickname,
                             vipClass: item.level_name,
                             tel: item.mobile,

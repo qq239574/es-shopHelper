@@ -1022,10 +1022,10 @@ to {-webkit-transform:rotateY(360deg);transform:rotateY(360deg);}}
   -webkit-transform-origin: center;
   -ms-transform-origin: center;
       transform-origin: center;
-  top: -50%;
+  top: -48%;
   left: -50%;
   right: -50%;
-  bottom: -50%;
+  bottom: -48%;
   -webkit-transform: scale(0.5);
   -ms-transform: scale(0.5);
       transform: scale(0.5);

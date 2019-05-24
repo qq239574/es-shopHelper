@@ -67,10 +67,10 @@
             }
         },
         props: {
-             Jurisdiction:{
-                type:Object,
-                default:{},
-                required:true
+            Jurisdiction: {
+                type: Object,
+                default: {},
+                required: true
             },
             list: {
                 type: Array,
@@ -83,16 +83,16 @@
                     score: ''
                 }]
             },
-            toggle:{
-                type:Boolean,
-                default:true
+            toggle: {
+                type: Boolean,
+                default: true
             }
         },
         watch: {
-            toggle(){
+            toggle() {
                 console.log('tooggle')
-                this.show2=false;
-                this.show=false;
+                this.show2 = false;
+                this.show = false;
             }
         },
         methods: {
@@ -101,27 +101,8 @@
                 this.show2 = false;
             },
             clickItem(val) {
-                this.Cacher.setData('vipManage', Object.assign({
-                    from: 'vipManage',
-                },val));
-                if (val.type == 'menu-item') {
-                    // this.show = true;
-                    if (val.name == '查看') {
-                        uni.navigateTo({
-                            url: '../pages/vipDetail?from=vipManage'
-                        })
-                    } else if (val.name == '充值') {
-                        this.$emit('click',val)
-                    } else if (val.name == '订单') {
-                        this.$emit('click',val) 
-                    }
-                } else if (val.type == 'item') {
-                    uni.navigateTo({
-                        url: '../pages/vipDetail?from=vipManage'
-                    })
-                }else{
-                    this.$emit('click',val)
-                }
+               
+                this.$emit('click', val)
             },
             showBanner: function() {
                 this.show = true;

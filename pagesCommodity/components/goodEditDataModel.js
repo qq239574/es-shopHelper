@@ -50,7 +50,7 @@ function mapGoods(data, cache) {
         original_price: data.info2.delPrice.value || 0, //划线价格
         stock: data.info2.stockNum.value, //商品库存
         stock_hide: data.info2.showStock.value ? 0 : 1, //显示库存
-        sales_count: data.info2.soldNum.value || 0, //已出售数
+        virtual_sales: data.info2.soldNum.value || 0, //已出售数
         sales_hide: data.info2.showSold.value ? 0 : 1, //显示销量
         goods_code: data.info3.goodCode.value, //商品编码
         auto_warehouse: data.info3.autoExt.value ? 1 : 0, //定时下架
@@ -123,8 +123,7 @@ export default function (data, cache) {
                 thumb: '',
                 thumbs: [],
                 title: '',
-                type: '',
-                virtual_sales: 0,
+                type: '', 
                 weight: 0
             }, goods, mapGoods(data, cache)),
             // options: mapOptions(data, cache),

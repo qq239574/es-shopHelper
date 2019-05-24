@@ -17,7 +17,7 @@
                 <view class="price">￥{{formatePrice(item.price)}}</view>
             </view>
             <view class="menu" @click.stop='showMenu(index)'>
-                <view class="point"></view>
+                <image class='point' lazy-load src='/static/img/global/moreOperation.png'></image>
             </view>
             <view class="model" v-if='menuIndex==="good-"+index' @click.stop='showMenu("")'>
                 <view class="item" @click.stop='clickMenuItem(index,item,"编辑")'>
@@ -207,33 +207,11 @@
             .menu {
                 width: 59upx;
                 height: 34upx;
-                box-sizing: border-box;
-                border-radius: 1upx solid #eee;
-                border-radius: 17upx;
-                display: flex;
-                border: 1upx solid #dbdbdb;
-                line-height: 32upx;
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                padding: 0 11upx;
-                margin: auto 0; 
+                box-sizing: border-box; 
+                margin: auto 0;
                 .point {
-                    width: 6upx;
-                    height: 6upx;
-                    box-sizing: border-box;
-                    border: 1upx solid #666;
-                    border-radius: 50%;
-                    margin: auto;
-                }
-                &:after,
-                &:before {
-                    content: '';
-                    width: 6upx;
-                    height: 6upx;
-                    box-sizing: border-box;
-                    border: 1upx solid #666;
-                    border-radius: 50%;
-                    margin: auto;
+                    width: 100%;
+                    height: 100%;
                 }
             }
             .model {

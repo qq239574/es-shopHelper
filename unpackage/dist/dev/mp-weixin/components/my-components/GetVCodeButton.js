@@ -47,8 +47,6 @@ var _default =
     clickBuntton: function clickBuntton() {
       if (!this.start) {
         this.$emit('click', false);
-      } else {
-        this.$parent.Toast(this.timer + 's后可重新发送');
       }
     },
     refresh: function refresh() {

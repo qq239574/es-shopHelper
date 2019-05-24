@@ -8,7 +8,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var itemList = function itemList() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var itemList = function itemList() {return Promise.all(/*! import() | pagesIndex/components/VipList--Item */[__webpack_require__.e("common/vendor"), __webpack_require__.e("pagesIndex/components/VipList--Item")]).then(__webpack_require__.bind(null, /*! ./VipList--Item.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\pagesIndex\\components\\VipList--Item.vue"));};var PopUp = function PopUp() {return __webpack_require__.e(/*! import() | components/my-components/PopUp */ "components/my-components/PopUp").then(__webpack_require__.bind(null, /*! ../../components/my-components/PopUp.vue */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\components\\my-components\\PopUp.vue"));};var _default =
 
 
 
@@ -111,27 +111,8 @@
       this.show2 = false;
     },
     clickItem: function clickItem(val) {
-      this.Cacher.setData('vipManage', Object.assign({
-        from: 'vipManage' },
-      val));
-      if (val.type == 'menu-item') {
-        // this.show = true;
-        if (val.name == '查看') {
-          uni.navigateTo({
-            url: '../pages/vipDetail?from=vipManage' });
 
-        } else if (val.name == '充值') {
-          this.$emit('click', val);
-        } else if (val.name == '订单') {
-          this.$emit('click', val);
-        }
-      } else if (val.type == 'item') {
-        uni.navigateTo({
-          url: '../pages/vipDetail?from=vipManage' });
-
-      } else {
-        this.$emit('click', val);
-      }
+      this.$emit('click', val);
     },
     showBanner: function showBanner() {
       this.show = true;
@@ -139,7 +120,6 @@
     closeBanner: function closeBanner() {
       this.show = false;
     } } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),
 

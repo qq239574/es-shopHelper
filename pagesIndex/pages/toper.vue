@@ -85,7 +85,7 @@
                 DataGo = this.Cacher.getData(DataGo.go);
                 DataGo = DataGo.date ? DataGo : {
                     from: 'filterDate',
-                    date: [getDate(0), getDate(0), '今天']
+                    date: [getDate(0), getDate(0), '今日']
                 };
                 if (DataFrom.show == 'vip') {
                     api = 'vipsTop10';

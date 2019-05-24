@@ -1,5 +1,8 @@
 .my-round-button.data-v-71c24da8 {
-  width: 150rpx;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 150rpx;
   height: 54rpx;
   border-radius: 27rpx;
   line-height: 54rpx;
@@ -8,6 +11,7 @@
   font-weight: 500;
   color: #fb6638;
   overflow: visible;
+  padding: 0 20rpx;
 }
 .my-round-button.data-v-71c24da8:after {
     border: 1rpx solid #fb6638;
