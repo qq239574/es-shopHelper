@@ -16,7 +16,7 @@
                 </view>
             </view>
         </block>
-        <view class='card--info__row' v-else>
+        <view class='card--info__row'  v-else>
             <view class='card--info__row__tile'>发货信息</view>
             <view class='card--info__row__status primary'>{{rights.sendStatus}}</view>
         </view>
@@ -121,5 +121,6 @@
                 border-radius: 6upx;
             }
         }
+        
     }
 </style>

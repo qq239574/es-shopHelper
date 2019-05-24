@@ -206,7 +206,7 @@
                                 payedGood: res.sell_data.yesterday_goods_num,
                                 payedVip: res.sell_data.yesterday_pay_member_num
                             }
-                            if (item == searchDay) {
+                            if (item == searchDay.value) {
                                 this.showData = Object.assign({}, cacheData[item]);
                             }
                         }

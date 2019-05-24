@@ -216,7 +216,7 @@ var _getJurisdiction = __webpack_require__(/*! ../../components/my-components/ge
               payedGood: res.sell_data.yesterday_goods_num,
               payedVip: res.sell_data.yesterday_pay_member_num };
 
-            if (item == searchDay) {
+            if (item == searchDay.value) {
               _this.showData = Object.assign({}, cacheData[item]);
             }
           }

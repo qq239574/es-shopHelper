@@ -18,7 +18,7 @@
             <myButton type='primary' @click='clickButton("确认付款")' v-if='bill.info.status=="0"&&Jurisdiction.order_manage'>确认付款</myButton>
             <myButton :type='canSendGood' @click='clickButton("确认发货")' v-if='bill.info.status=="1"&&Jurisdiction.order_send'>确认发货</myButton>
             <myButton type='primary' @click='clickButton(bill.info.payType==3?"确认收款":"确认收货")' v-if='bill.info.status=="2"&&Jurisdiction.order_manage'>{{bill.info.payType==3?"确认收款":"确认收货"}}</myButton>
-            <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus'>维权中</myButton>
+            <myButton type='primary' @click='clickButton("维权中")' v-if='bill.info.subStatus*1'>维权中</myButton>
         </view>
         <!-- 确认付款与收货的弹窗 -->
         <i-modal :visible="showModel" :show-ok='!surePaying' :show-cancel='!surePaying' @ok='sure' @cancel='cancel'>

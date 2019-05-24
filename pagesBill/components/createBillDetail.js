@@ -114,7 +114,9 @@ export default function (result) {
         },
         billInfo6: result.goods_waits.map(item => { //未发货的商品
             if (item.refund_status != 0) {
+               
                 refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
+                console.log('refund_status',refunding)
             }
             return {
                 goodsInfo: [{ //商品信息

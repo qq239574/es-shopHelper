@@ -33,10 +33,17 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
-					"id": 0,
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "from=good",
+					"scene": null
+				},
+				{
+					"id": -1,
 					"name": "good",
 					"pathName": "pagesCommodity/pages/index",
 					"query": "from=good",
@@ -44,9 +51,16 @@
 				},
 				{
 					"id": -1,
-					"name": "good",
-					"pathName": "pages/pages/index",
-					"query": "from=goodManage",
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "from=good",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bildetail",
+					"pathName": "pagesBill/pages/billDetail",
+					"query": "from=bill",
 					"scene": null
 				}
 			]

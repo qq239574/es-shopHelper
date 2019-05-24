@@ -71,7 +71,8 @@
                 maxDate: new Date(getDate(365)).getTime(), //一年后
                 currentDate: '',
                 moving: false,
-                goodDetail: {}
+                goodDetail: {},
+                startScroll: false
             }
         },
         methods: {
@@ -90,7 +91,9 @@
             cancel() {
                 this.showpicker = false;
             },
-            startmove() {},
+            startmove() { 
+              
+            },
             inputCell(val) {
                 cacheGoodDetail = updateGoodInfo.call(this, val, cacheGoodDetail);
             },
@@ -147,13 +150,12 @@
                 DataGo = this.Cacher.getData('editGood');
                 DataGo = Object.assign(DataGo, this.Cacher.getData(DataGo.go));
                 // if (DataGo.go) {
-                    // DataGo = this.Cacher.getData(DataGo.go);
+                // DataGo = this.Cacher.getData(DataGo.go);
                 // }
                 if (DataGo.go == 'editName' || DataGo.go == 'editSubTitle' || DataGo.go == 'selectType' || DataGo.go == 'editCode' || DataGo.go == 'setFreight' || DataGo.go == 'editForm' || DataGo.go == 'editStatus' || DataGo.go == 'editMultiCode' || DataGo.go == 'autoDeliverContent' || DataGo.go == 'addGoodType' || DataGo.go == 'editType') {
                     cacheGoodDetail = updateGoodInfo.call(this, DataGo.needChange, cacheGoodDetail);
-                    this.goodDetail = cacheGoodDetail; 
-                    this.Cacher.clearData([DataGo.go,'editGood'])
-                     
+                    this.goodDetail = cacheGoodDetail;
+                    this.Cacher.clearData([DataGo.go, 'editGood'])
                 }
             }
         },

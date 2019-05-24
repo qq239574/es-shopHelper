@@ -10706,10 +10706,10 @@ var postSelfVerifyInfo = { //订单自提
 
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
-  // base_url: "https://shop.jacjack.com", 
+  base_url: "https://shop.jacjack.com"
   //  base_url: "https://ceshiuser.100cms.com", 
   //  base_url: "http://user.jiangyk.eldev.cn", 
-  base_url: "https://user.qdev.eldev.cn"
+  //  base_url: "https://user.qdev.eldev.cn",
 
   //  base_url: "https://ceshishop.jacjack.com",
 };var _default =
@@ -13689,7 +13689,9 @@ function _default(result) {
       } },
     billInfo6: result.goods_waits.map(function (item) {//未发货的商品
       if (item.refund_status != 0) {
+
         refunding = item.refund_status; //记录商品维权状态，有一个商品维权，订单就处于维权状态
+        console.log('refund_status', refunding);
       }
       return {
         goodsInfo: [{ //商品信息

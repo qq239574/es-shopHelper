@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": false,
   "navigationBarTitleText": "商品编辑",
   "usingComponents": {
     "van-toast": "/wxcomponents/vant-weapp/toast/index",

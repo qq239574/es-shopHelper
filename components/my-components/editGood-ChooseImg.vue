@@ -147,7 +147,7 @@
             },
             //滑动
             touchmove(e) {
-                if (this.flag) {
+                if (this.flag) {  
                     const x = e.touches[0].pageX;
                     const y = e.touches[0].pageY;
                     const absX = x - startPX;
