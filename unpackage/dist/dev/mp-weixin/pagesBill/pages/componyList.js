@@ -24,8 +24,9 @@ var compList = [];var _default =
 
   data: function data() {
     return {
-      list: [] //{label:'公司1',value:'',id:0,code:''}
-    };
+      list: [], //{label:'公司1',value:'',id:0,code:''}
+      defaultIndex: 0 };
+
   },
   methods: {
     select: function select(item) {
@@ -34,7 +35,7 @@ var compList = [];var _default =
       this.Cacher.setData('componyList', express);
     } },
 
-  onLoad: function onLoad(option) {
+  onLoad: function onLoad(option) {var _this = this;
     if (option.from == 'safeQuestions') {
       uni.setNavigationBarTitle({
         title: '选择安全提示问题' });
@@ -45,7 +46,11 @@ var compList = [];var _default =
 
     }
     DataFrom = this.Cacher.getData(option.from);
-    compList = DataFrom.value.info.express.map(function (item) {
+    var defaultCom = DataFrom.value.content;
+    compList = DataFrom.value.info.express.map(function (item, index) {
+      if (defaultCom == item.name) {
+        _this.defaultIndex = index;
+      }
       return {
         label: item.name,
         value: '',
@@ -55,7 +60,7 @@ var compList = [];var _default =
 
     });
     this.list = compList;
-    this.Cacher.setData('componyList', compList[0]);
+    this.Cacher.setData('componyList', compList[this.defaultIndex]);
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

@@ -102,7 +102,7 @@
                 }
                 cacheSelected.forEach((item, index) => {
                     sendBillInfo['order_goods_id[' + index + ']'] = item
-                });  
+                });
                 let canSend = true;
                 if (!this.cityProvide && sendBillInfo['no_express'] == 0) { //需要物流
                     if (!cacheSelected.length) {
@@ -121,7 +121,7 @@
                     this.Request('sendGoods', sendBillInfo).then(res => {
                         this.closePageLoading();
                         uni.navigateBack();
-                    }).catch(res=>{
+                    }).catch(res => {
                         this.closePageLoading();
                         this.Toast(res.message)
                     });
@@ -140,7 +140,7 @@
                     } else if (DataGo.go == 'componyList') {
                         this.provideInfo.provideComp = DataGo.data.label || '';
                         sendBillInfo.express_id = DataGo.data.id;
-                    } 
+                    }
                     this.Request("canSendGoods", {
                         id: DataFrom.bill.bill.id
                     }).then(res => {
@@ -166,6 +166,9 @@
                         this.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
                         this.provideInfo.address = res.address;
                         this.provideInfo.express = res.express;
+                        this.getDetail({
+                            provideType: this.cityProvide == 0 ? "需要物流" : "商家自配送"
+                        })
                     });
                 }
             }
@@ -174,10 +177,10 @@
             this.initPage();
         },
         onLoad(option) {
-            DataFrom = this.Cacher.getData(option.from); 
+            DataFrom = this.Cacher.getData(option.from);
         },
         onUnload() {
-            this.Cacher.clearData(['billProvide','billId','billAddition','componyList']);
+            this.Cacher.clearData(['billProvide', 'billId', 'billAddition', 'componyList']);
         }
     };
 </script>

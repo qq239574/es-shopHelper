@@ -43,6 +43,7 @@
 	import mpvuePicker from '../../graceUI2.0/threeComponents/mpvuePicker.vue';
 	var graceChecker = require("../../graceUI2.0/jsTools/graceChecker.js");
 	let DataFrom = {};
+	let first=true;
 	export default {
 		props: {
 			info: {
@@ -118,8 +119,7 @@
 					})
 				}
 			},
-			onConfirm(e) {
-				console.log(e)
+			onConfirm(e) { 
 				this.$emit('change', Object.assign({}, this.info, {
 					provideType: e.label
 				}))

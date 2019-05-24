@@ -4,14 +4,17 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
-		"minified": true
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
-	"appid": "wx5e5042dfdcd94ba1",
+	"appid": "wx21e66d345b76074d",
 	"projectname": "MobileManager",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -33,7 +36,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 3,
 			"list": [
 				{
 					"id": -1,
@@ -47,6 +50,20 @@
 					"name": "index",
 					"pathName": "pages/index/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bills",
+					"pathName": "pages/bill/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "billDetail",
+					"pathName": "pagesBill/pages/billProvide",
+					"query": "from=bill",
 					"scene": null
 				}
 			]

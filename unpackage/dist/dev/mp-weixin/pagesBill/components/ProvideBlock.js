@@ -52,7 +52,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 var graceChecker = __webpack_require__(/*! ../../graceUI2.0/jsTools/graceChecker.js */ "I:\\CurProject\\ES_Mobile_Manager\\MobileManager\\graceUI2.0\\jsTools\\graceChecker.js");
-var DataFrom = {};var _default =
+var DataFrom = {};
+var first = true;var _default =
 {
   props: {
     info: {
@@ -129,7 +130,6 @@ var DataFrom = {};var _default =
       }
     },
     onConfirm: function onConfirm(e) {
-      console.log(e);
       this.$emit('change', Object.assign({}, this.info, {
         provideType: e.label }));
 

@@ -5,11 +5,11 @@
                 <van-field :placeholder="placeholder1" use-icon-slot @input='getUserId' clearable @clear='getUserId'>
                 </van-field>
                 <view :style='height20'></view>
-                <van-field :type="text" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
+                <van-field type="text" placeholder="输入图形验证码" use-icon-slot @input='getImgCode' @clear='getPassWord' clearable>
                     <imgCodeButton :refreshAgain='refreshAgain' slot='icon' :imageCode='imageCode'></imgCodeButton>
                 </van-field>
                 <view :style='height20'></view>
-                <van-field :type="openEye?'text':'password'" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
+                <van-field type="text" :placeholder="placeholder2" use-icon-slot @input='getPassWord' @clear='getPassWord' clearable>
                     <RoundButton slot='icon' :start='successGetCode' @click='getVCode' @refresh='refreshTiming'></RoundButton>
                 </van-field>
             </van-cell-group>

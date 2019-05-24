@@ -10720,9 +10720,9 @@ var postSelfVerifyInfo = { //订单自提
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var global_settings = {
   // base_url: "https://shop.jacjack.com", 
-  //  base_url: "https://ceshiuser.100cms.com", 
+  base_url: "https://ceshiuser.100cms.com"
   //  base_url: "http://user.jiangyk.eldev.cn", 
-  base_url: "https://user.qdev.eldev.cn"
+  //   base_url: "https://user.qdev.eldev.cn",
   // base_url: "https://ceshishop.jacjack.com",
   //  base_url: "https://www.xiedei.cn",
 };var _default =
@@ -13754,7 +13754,7 @@ function _default(result) {
           sendComp: item.express_name, //物流公司
           sendId: item.express_sn, //快递单号
           sendStatus: '已发货', //发货信息
-          dispatch_type: item.no_express //1无需物流 0需要物流
+          dispatch_type: item.no_express * 1 //1无需物流 0需要物流
         } };
 
     })),

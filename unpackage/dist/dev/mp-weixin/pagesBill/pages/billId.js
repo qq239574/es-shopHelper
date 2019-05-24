@@ -43,7 +43,13 @@ var cache = '';var _default =
       this.disable = !val.detail.value.length;
 
       cache = val.detail.value;
-    } } };exports.default = _default;
+    } },
+
+  onLoad: function onLoad(option) {
+    DataFrom = this.Cacher.getData(option.from);
+    this.val = DataFrom.value.content;
+    this.disable = !this.val;
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 
 /***/ }),

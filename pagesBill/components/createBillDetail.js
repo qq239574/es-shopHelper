@@ -165,7 +165,7 @@ export default function (result) {
                     sendComp: item.express_name, //物流公司
                     sendId: item.express_sn, //快递单号
                     sendStatus: '已发货' ,//发货信息
-                    dispatch_type:item.no_express//1无需物流 0需要物流
+                    dispatch_type:item.no_express*1//1无需物流 0需要物流
                 }
             }
         })),

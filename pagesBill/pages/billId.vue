@@ -35,6 +35,11 @@
                 cache=val.detail.value
             }
         },
+        onLoad(option){
+            DataFrom=this.Cacher.getData(option.from);
+            this.val=DataFrom.value.content;
+            this.disable=!this.val; 
+        }
     }
 </script>
 

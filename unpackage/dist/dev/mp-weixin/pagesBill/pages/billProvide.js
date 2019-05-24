@@ -176,6 +176,9 @@ var _default = {
           _this2.cityProvide = res.is_city_distribution * 1; //是否同城快递，0快递 1同城
           _this2.provideInfo.address = res.address;
           _this2.provideInfo.express = res.express;
+          _this2.getDetail({
+            provideType: _this2.cityProvide == 0 ? "需要物流" : "商家自配送" });
+
         });
       }
     } },
