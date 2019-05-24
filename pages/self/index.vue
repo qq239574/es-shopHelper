@@ -123,9 +123,10 @@
 				}
 			},
 			reBindWX() {
-				this.closePageLoading();
 				bindWx.call(this, true).then(res => {
+					
 				}).finally(res => {
+					this.closePageLoading();
 					this.initPage();
 				});
 			},

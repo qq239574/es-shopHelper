@@ -205,11 +205,11 @@ startPY = 0;var _default =
     showImgs: function showImgs(e) {
       var currentImg = e.currentTarget.dataset.imgurl;
       var that = this;
-      currentImg = /^http|wxfile.+/.test(currentImg) ? currentImg : static_resources_domain + currentImg;
-      uni.previewImage({
-        urls: that.imgLists,
-        current: currentImg });
-
+      // currentImg = /^http|wxfile.+/.test(currentImg) ? currentImg : (static_resources_domain + currentImg);
+      // uni.previewImage({
+      //     urls: that.imgLists,
+      //     current: currentImg
+      // })
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ "./node_modules/@dcloudio/uni-mp-weixin/dist/index.js")["default"]))
 

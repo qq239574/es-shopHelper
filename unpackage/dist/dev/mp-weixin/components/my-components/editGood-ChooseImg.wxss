@@ -95,12 +95,12 @@
         margin-top: 20rpx;
 }
 .editgood-chooseimg .curItems {
-    border: 2rpx dashed #ccc;
+    border: 1rpx dashed #ccc;
 }
 .editgood-chooseimg .item-move {
     display: inline-block;
     width: 143rpx;
     height: 143rpx;
-    border: 1px dashed #fb6638;
+    border: 1rpx dashed #fb6638;
 }
 

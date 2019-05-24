@@ -2,7 +2,7 @@
     <view class="editgood-chooseimg grace-form" id='editimg'>
         <movable-area class='move-area' style='width:100%;height:100%;' ref='ref'>
             <view class="imglist">
-                <view class="items item" :style="endIndex==index?'border:1px dashed #ccc;':''" v-for="(item, index) in imgLists" :key="index" :id="item.index" :data-index='index' @longpress='_longtap' @touchstart='touchstart' @touchend='touchend' @touchmove.stop='touchmove'>
+                <view class="items item" :style="endIndex==index?'border:1px dashed #ccc;':''" v-for="(item, index) in imgLists" :key="index" :id="item.index" :data-index='index' @longpress='_longtap' @touchstart='touchstart' @touchend='touchend' @touchmove='touchmove'>
                     <image mode='aspectFill' class='items--img' :src="getImgUrl(item)" :data-imgurl="getImgUrl(item)" @tap="showImgs"></image>
                     <view class="grace-boxes-img grace-iconfont icon-close" @click='removeImg(index)'></view>
                     <view class="imgTitle" v-if='imgTitle'>{{imgTitle}}</view>
@@ -18,8 +18,8 @@
                 </view>
             </movable-view>
         </movable-area>
-        <view class="stopMove" @touchmove.stop='startMove' v-if='!hidden '>
-        </view>
+        <!-- <view class="stopMove" @touchmove.stop='startMove' v-if='!hidden '>
+        </view> -->
     </view>
 </template>
 <script>
@@ -195,11 +195,11 @@
             showImgs: function(e) {
                 var currentImg = e.currentTarget.dataset.imgurl;
                 let that = this;
-                currentImg = /^http|wxfile.+/.test(currentImg) ? currentImg : (static_resources_domain + currentImg);
-                uni.previewImage({
-                    urls: that.imgLists,
-                    current: currentImg
-                })
+                // currentImg = /^http|wxfile.+/.test(currentImg) ? currentImg : (static_resources_domain + currentImg);
+                // uni.previewImage({
+                //     urls: that.imgLists,
+                //     current: currentImg
+                // })
             },
         }
     }
@@ -284,13 +284,13 @@
             }
         }
         .curItems {
-            border: 2upx dashed #ccc;
+            border: 1upx dashed #ccc;
         }
         .item-move {
             display: inline-block;
             width: 143rpx;
             height: 143rpx;
-            border: 1px dashed #fb6638;
+            border: 1upx dashed #fb6638;
         }
     }
 </style>

@@ -176,7 +176,7 @@ var sessionId = '';var DataFrom = {};var requestBar = '';var _default = { compon
       requestBar = setTimeout(function () {
         requesting = false;
         typeof val == 'boolean' || _this3.Toast('登录时间长，请重试');
-      }, 3000);
+      }, 6000);
       if (!requesting) {//函数节流
         requesting = true; //是否正在请求接口
         this.pageLoading();

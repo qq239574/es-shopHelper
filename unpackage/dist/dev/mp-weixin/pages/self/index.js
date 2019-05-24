@@ -133,9 +133,10 @@ var managerId = '';var _default =
       }
     },
     reBindWX: function reBindWX() {var _this2 = this;
-      this.closePageLoading();
       _bindWx.bindWx.call(this, true).then(function (res) {
+
       }).finally(function (res) {
+        _this2.closePageLoading();
         _this2.initPage();
       });
     },

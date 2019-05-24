@@ -166,7 +166,7 @@
 				requestBar = setTimeout(() => {
 					requesting = false;
 					(typeof val == 'boolean') || this.Toast('登录时间长，请重试');
-				}, 3000);
+				}, 6000);
 				if (!requesting) { //函数节流
 					requesting = true; //是否正在请求接口
 					this.pageLoading();
