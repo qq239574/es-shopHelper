@@ -10,9 +10,9 @@
             </view>
             <view class='maxLength' v-else>*最多添加3个规格</view>
         </view>
-        <cover-view class="footer" v-if='!list[0]||(list[0]&&!list[0].disabled)'>
+        <view class="footer" v-if='!list[0]||(list[0]&&!list[0].disabled)'>
             <longButton @click='sure'>确认</longButton>
-        </cover-view>
+        </view> 
         <van-toast id="van-toast" />
         <van-dialog id="van-dialog" />
     </view>
@@ -91,16 +91,7 @@
 
 <style lang="scss" scoped>
     .multi-block {
-        width: 100%;
-        margin: 0 auto 20upx;
-        .container{
-            position: absolute;
-            top:0;
-            bottom: 124upx;
-            left:0;
-            right:0;
-            overflow: auto;
-        }
+        width: 100%; 
         .isSingle {
             font-size: 40upx;
             font-weight: 700;

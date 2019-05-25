@@ -4,13 +4,10 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
-		"minified": true,
-		"newFeature": true,
-		"autoAudits": false,
-		"checkInvalidKey": true
+		"minified": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.6.4",
@@ -36,34 +33,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 1,
 			"list": [
 				{
-					"id": -1,
-					"name": "provide",
-					"pathName": "pagesBill/pages/billProvide",
-					"query": "from=bill",
+					"id": 0,
+					"name": "good",
+					"pathName": "pagesCommodity/pages/index",
+					"query": "from=good",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "bills",
-					"pathName": "pages/bill/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "billDetail",
-					"pathName": "pagesBill/pages/billProvide",
-					"query": "from=bill",
+					"name": "good",
+					"pathName": "pagesCommodity/pages/index",
+					"query": "from=good",
 					"scene": null
 				}
 			]
